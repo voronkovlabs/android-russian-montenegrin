@@ -50,6 +50,41 @@ android {
     }
 }
 
+/**
+ * Забирает жалобы с подключённого телефона в `app/build/complaints.jsonl`.
+ *
+ * Файл лежит в каталоге приложения на внешней памяти, поэтому root и разрешения
+ * не нужны. Пишет его ComplaintStore; формат — по строке JSON на жалобу.
+ */
+tasks.register<Exec>("pullComplaints") {
+    group = "reporting"
+    description = "Скачивает complaints.jsonl с устройства"
+
+    val adbName = if (System.getProperty("os.name").startsWith("Windows", true)) "adb.exe" else "adb"
+    val adb = File(android.sdkDirectory, "platform-tools/$adbName")
+    val appId = android.defaultConfig.applicationId
+    val target = layout.buildDirectory.file("complaints.jsonl").get().asFile
+
+    commandLine(
+        adb.absolutePath,
+        "pull",
+        "/sdcard/Android/data/$appId/files/complaints.jsonl",
+        target.absolutePath
+    )
+    // Файла может не быть — это не повод валить сборку.
+    isIgnoreExitValue = true
+
+    doFirst { target.parentFile.mkdirs() }
+    doLast {
+        if (target.exists()) {
+            val lines = target.readLines().filter { it.isNotBlank() }
+            logger.lifecycle("Жалоб: ${lines.size} -> ${target.absolutePath}")
+        } else {
+            logger.lifecycle("Жалоб нет (или устройство не подключено).")
+        }
+    }
+}
+
 dependencies {
     implementation(platform("androidx.compose:compose-bom:2024.12.01"))
     implementation("androidx.compose.ui:ui")

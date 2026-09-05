@@ -104,6 +104,21 @@ sealed class Exercise {
     ) : Exercise()
 }
 
+/**
+ * Строковый тип задания — тот же дискриминатор, что в JSON урока.
+ * Нужен в жалобах: по нему видно, какого рода задание оказалось кривым.
+ */
+val Exercise.typeName: String
+    get() = when (this) {
+        is Exercise.TranslateToTarget -> "ru_to_me"
+        is Exercise.TranslateToNative -> "me_to_ru"
+        is Exercise.Choice -> "choice"
+        is Exercise.WordBank -> "word_bank"
+        is Exercise.Form -> "form"
+        is Exercise.Listening -> "listening"
+        is Exercise.Speaking -> "speaking"
+    }
+
 /** Нужен ли интернет и вызов Haiku для проверки этого задания. */
 val Exercise.needsModelCheck: Boolean
     get() = this is Exercise.TranslateToTarget || this is Exercise.TranslateToNative

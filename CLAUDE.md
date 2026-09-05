@@ -20,6 +20,7 @@ cd src
 ./gradlew assembleDebug          # сборка
 ./gradlew installDebug           # установка на подключённое устройство
 ./gradlew :app:compileDebugKotlin  # быстрая проверка компиляции
+./gradlew pullComplaints         # забрать жалобы с телефона в app/build/complaints.jsonl
 ```
 
 Перед первой сборкой нужен `src/local.properties` (шаблон — `src/local.properties.example`):
@@ -81,6 +82,18 @@ Room (cards, lesson_progress) ──> AppDao ────┤
 
 Блок «Повторение» на главном экране собирает все просроченные карточки из всех уроков (`startReview` сопоставляет `dueCards` с `repo.allExercises()`).
 
+### Жалобы на задания
+
+Кнопка «Пожаловаться на задание» на экране результата. Жалоба — заметка себе о том, что задание кривое, и попадает в JSONL: `ComplaintStore` дописывает строку в `complaints.jsonl` в каталоге приложения на внешней памяти (`/sdcard/Android/data/com.montelearn/files/`). Оттуда её забирает `./gradlew pullComplaints` — root и разрешения не нужны, сети тоже: жалоба нужна ровно тогда, когда задание сломано, в том числе офлайн.
+
+Ключ записи — `exerciseId`: он уникален по курсу и не меняется между версиями, поэтому по нему сразу находится строка в файле урока.
+
+Главное поле — **категория** (`ComplaintReason`), а не свободный текст: она говорит, что чинить. `verdict_wrong` — системный промпт в `HaikuChecker.kt`; `reference_wrong`, `ambiguous`, `typo` — JSON урока; `audio_unclear` — само задание. Коды категорий уходят в файл и не должны меняться, иначе старые жалобы не сгруппируются с новыми.
+
+Жалоба заодно **откатывает карточку SRS** к состоянию до ответа (`AppViewModel.cardBeforeAnswer`): ответ на сломанное задание ничего не говорит о знаниях, а лапс возвращал бы карточку каждые 10 минут до самой починки урока.
+
+Схема Room при этом не менялась — жалобы живут в файле, миграция не нужна.
+
 ### Речь
 
 Локали «черногорский» в Android нет — используется `sr-RS` с латиницей (`Speech.kt`). `Speaker` (TTS) озвучивает `listening`-задания; `Listener` (SpeechRecognizer) распознаёт `speaking`. Качество произношения не оценивается: достаточно того, что движок распознал фразу. `Speaker` живёт в `MainActivity` и передаётся в `SessionScreen` параметром.
@@ -91,7 +104,7 @@ Room (cards, lesson_progress) ──> AppDao ────┤
 2. **`id` заданий уникальны по всему курсу и не меняются между версиями** — иначе теряется история повторений. Схема: `l09e01`.
 3. Форматы всех семи типов заданий — в `src/README.md`; канонические типы — в `data/Model.kt`.
 
-При добавлении нового типа задания нужно тронуть четыре места: `Exercise` в `Model.kt`, `referenceAnswer`, `submitText` в `AppViewModel.kt` и рендер в `SessionScreen.kt`.
+При добавлении нового типа задания нужно тронуть пять мест: `Exercise` в `Model.kt`, `referenceAnswer`, `typeName`, `submitText` в `AppViewModel.kt` и рендер в `SessionScreen.kt`.
 
 ## Оформление
 

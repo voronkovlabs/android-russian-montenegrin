@@ -45,6 +45,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.speech.Speaker
@@ -56,6 +57,7 @@ fun SessionScreen(
     onSubmit: (String) -> Unit,
     onNext: () -> Unit,
     onRetryBlock: () -> Unit,
+    onComplain: (ComplaintReason, String) -> Unit,
     onExit: () -> Unit
 ) {
     if (state.finished) {
@@ -119,6 +121,12 @@ fun SessionScreen(
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Ink)
                     ) { Text("Дальше", style = MaterialTheme.typography.titleMedium) }
+                    Spacer(Modifier.height(4.dp))
+                    ComplaintBlock(
+                        exerciseId = state.current.id,
+                        filed = state.complaintFiled,
+                        onComplain = onComplain
+                    )
                 }
                 Phase.Input -> ExerciseBody(state, speaker, enabled = true, onSubmit = onSubmit)
             }
@@ -477,6 +485,85 @@ private fun ResultView(phase: Phase.Result) {
             Spacer(Modifier.height(8.dp))
             Text("Естественнее: ${phase.better}", style = MaterialTheme.typography.bodyMedium, color = Gold)
         }
+    }
+}
+
+/**
+ * Жалоба на задание. Свёрнута в одну строчку, пока не понадобится:
+ * это инструмент правки курса, а не часть учебного потока.
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ComplaintBlock(
+    exerciseId: String,
+    filed: Boolean,
+    onComplain: (ComplaintReason, String) -> Unit
+) {
+    // Ключ по заданию: разворот и выбранная причина не должны переезжать на следующее.
+    var open by remember(exerciseId) { mutableStateOf(false) }
+    var reason by remember(exerciseId) { mutableStateOf<ComplaintReason?>(null) }
+    var note by remember(exerciseId) { mutableStateOf("") }
+
+    if (filed) {
+        Spacer(Modifier.height(8.dp))
+        Text(
+            "Жалоба записана. Карточка не пойдёт в повторение из-за этого ответа.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+        return
+    }
+
+    if (!open) {
+        TextButton(onClick = { open = true }) {
+            Text("Пожаловаться на задание", color = Muted)
+        }
+        return
+    }
+
+    Spacer(Modifier.height(8.dp))
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Surface1)
+            .padding(14.dp)
+    ) {
+        Text("ЧТО НЕ ТАК", style = MaterialTheme.typography.labelSmall, color = Muted)
+        Spacer(Modifier.height(12.dp))
+
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ComplaintReason.entries.forEach { option ->
+                Chip(option.label, filled = reason == option, enabled = true) {
+                    reason = option
+                }
+            }
+        }
+
+        Spacer(Modifier.height(14.dp))
+        OutlinedTextField(
+            value = note,
+            onValueChange = { note = it },
+            modifier = Modifier.fillMaxWidth(),
+            placeholder = { Text("Комментарий, если нужен", color = Muted) },
+            textStyle = MaterialTheme.typography.bodyMedium,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            shape = RoundedCornerShape(12.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Gold,
+                unfocusedBorderColor = Surface2,
+                focusedTextColor = Paper,
+                unfocusedTextColor = Paper,
+                cursorColor = Gold
+            )
+        )
+
+        Spacer(Modifier.height(14.dp))
+        PrimaryButton("Записать жалобу", enabled = reason != null) {
+            reason?.let { onComplain(it, note) }
+        }
+        Spacer(Modifier.height(4.dp))
+        TextButton(onClick = { open = false }) { Text("Отмена", color = Muted) }
     }
 }
 

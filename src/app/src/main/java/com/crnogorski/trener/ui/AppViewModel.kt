@@ -5,8 +5,13 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.crnogorski.trener.BuildConfig
 import com.crnogorski.trener.data.AppDb
 import com.crnogorski.trener.data.CardEntity
+import com.crnogorski.trener.data.Complaint
+import com.crnogorski.trener.data.ComplaintReason
+import com.crnogorski.trener.data.ComplaintStore
+import com.crnogorski.trener.data.ComplaintVerdict
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.LessonProgressEntity
 import com.crnogorski.trener.data.LessonRef
@@ -14,6 +19,7 @@ import com.crnogorski.trener.data.LessonRepository
 import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.needsModelCheck
 import com.crnogorski.trener.data.referenceAnswer
+import com.crnogorski.trener.data.typeName
 import com.crnogorski.trener.net.CheckResult
 import com.crnogorski.trener.net.HaikuChecker
 import com.crnogorski.trener.srs.Scheduler
@@ -58,7 +64,9 @@ data class SessionState(
     val phase: Phase = Phase.Input,
     val correct: Int = 0,
     val isReview: Boolean = false,
-    val finished: Boolean = false
+    val finished: Boolean = false,
+    /** На текущее задание уже пожаловались — второй раз не предлагаем. */
+    val complaintFiled: Boolean = false
 ) {
     val current: Exercise get() = items[index].exercise
     val progress: Float get() = if (items.isEmpty()) 0f else index.toFloat() / items.size
@@ -69,6 +77,17 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val repo = LessonRepository(app)
     private val dao = AppDb.get(app).dao()
     private val checker = HaikuChecker()
+    private val complaints = ComplaintStore(app)
+
+    /** Последний отправленный ответ — попадает в жалобу как есть. */
+    private var lastAnswer: String = ""
+
+    /**
+     * Состояние карточки до последней проверки: `exerciseId` и то, чем она была
+     * (или null, если карточки ещё не существовало). Нужно, чтобы жалоба могла
+     * откатить запись — см. [complain].
+     */
+    private var cardBeforeAnswer: Pair<String, CardEntity?>? = null
 
     private val _home = MutableStateFlow(HomeState())
     val home: StateFlow<HomeState> = _home.asStateFlow()
@@ -145,6 +164,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val state = _session.value ?: return
         val ex = state.current
         if (answer.isBlank()) return
+        lastAnswer = answer
 
         when (ex) {
             is Exercise.TranslateToTarget -> checkWithModel(ex.prompt, ex.reference, answer)
@@ -204,10 +224,52 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             val now = System.currentTimeMillis()
             val existing = dao.card(item.exercise.id)
+            cardBeforeAnswer = item.exercise.id to existing
             val updated: CardEntity = existing
                 ?.let { Scheduler.update(it, correct, now) }
                 ?: Scheduler.newCard(item.exercise.id, item.lessonId, correct, now)
             dao.upsertCard(updated)
+        }
+    }
+
+    /**
+     * Жалоба на текущее задание.
+     *
+     * Пишется в JSONL и заодно откатывает карточку к состоянию до ответа:
+     * если задание кривое, ответ на него ничего не говорит о знаниях, а лапс
+     * вернул бы карточку через 10 минут и мешал бы до самой починки урока.
+     */
+    fun complain(reason: ComplaintReason, note: String) {
+        val state = _session.value ?: return
+        val item = state.items[state.index]
+        val result = state.phase as? Phase.Result
+
+        viewModelScope.launch {
+            complaints.append(
+                Complaint(
+                    ts = complaints.now(),
+                    exerciseId = item.exercise.id,
+                    lessonId = item.lessonId,
+                    type = item.exercise.typeName,
+                    reason = reason.code,
+                    note = note.trim(),
+                    userAnswer = lastAnswer,
+                    expected = item.exercise.referenceAnswer,
+                    verdict = result?.let {
+                        ComplaintVerdict(it.correct, it.feedback, it.better)
+                    },
+                    versionCode = BuildConfig.VERSION_CODE,
+                    versionName = BuildConfig.VERSION_NAME
+                )
+            )
+
+            val snapshot = cardBeforeAnswer
+            if (snapshot != null && snapshot.first == item.exercise.id) {
+                val before = snapshot.second
+                if (before == null) dao.deleteCard(item.exercise.id) else dao.upsertCard(before)
+            }
+
+            _session.value = _session.value?.copy(complaintFiled = true)
         }
     }
 
@@ -216,7 +278,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         if (state.index + 1 >= state.items.size) {
             finish(state)
         } else {
-            _session.value = state.copy(index = state.index + 1, phase = Phase.Input)
+            _session.value = state.copy(
+                index = state.index + 1,
+                phase = Phase.Input,
+                complaintFiled = false
+            )
         }
     }
 

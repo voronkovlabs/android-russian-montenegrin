@@ -50,6 +50,10 @@ interface AppDao {
     @Query("SELECT * FROM cards WHERE exerciseId = :id")
     suspend fun card(id: String): CardEntity?
 
+    /** Нужно для отката: жалоба на сломанное задание снимает карточку, если она только что создалась. */
+    @Query("DELETE FROM cards WHERE exerciseId = :id")
+    suspend fun deleteCard(id: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertLesson(progress: LessonProgressEntity)
 

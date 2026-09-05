@@ -55,6 +55,7 @@ class MainActivity : ComponentActivity() {
                                 onSubmit = vm::submitText,
                                 onNext = vm::next,
                                 onRetryBlock = vm::retryAfterBlock,
+                                onComplain = vm::complain,
                                 onExit = vm::exitSession
                             )
                         }
