@@ -63,24 +63,28 @@ tasks.register<Exec>("pullComplaints") {
     val adbName = if (System.getProperty("os.name").startsWith("Windows", true)) "adb.exe" else "adb"
     val adb = File(android.sdkDirectory, "platform-tools/$adbName")
     val appId = android.defaultConfig.applicationId
-    val target = layout.buildDirectory.file("complaints.jsonl").get().asFile
+    val target = layout.buildDirectory.dir("complaints").get().asFile
 
+    // Тянем каталог целиком, а не один файл: после «Очистить» рядом лежат
+    // complaints-sent-<дата>.jsonl, и они тоже нужны.
     commandLine(
         adb.absolutePath,
         "pull",
-        "/sdcard/Android/data/$appId/files/complaints.jsonl",
+        "/sdcard/Android/data/$appId/files/",
         target.absolutePath
     )
-    // Файла может не быть — это не повод валить сборку.
+    // Каталога может не быть — это не повод валить сборку.
     isIgnoreExitValue = true
 
-    doFirst { target.parentFile.mkdirs() }
+    doFirst { target.mkdirs() }
     doLast {
-        if (target.exists()) {
-            val lines = target.readLines().filter { it.isNotBlank() }
-            logger.lifecycle("Жалоб: ${lines.size} -> ${target.absolutePath}")
-        } else {
+        val files = target.walkTopDown().filter { it.isFile && it.name.endsWith(".jsonl") }.toList()
+        if (files.isEmpty()) {
             logger.lifecycle("Жалоб нет (или устройство не подключено).")
+        } else {
+            val total = files.sumOf { f -> f.readLines().count { it.isNotBlank() } }
+            logger.lifecycle("Жалоб: $total в ${files.size} файле(ах) -> ${target.absolutePath}")
+            files.forEach { logger.lifecycle("  ${it.name}") }
         }
     }
 }
