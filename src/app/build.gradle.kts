@@ -14,7 +14,7 @@ val localProps = Properties().apply {
 }
 
 android {
-    namespace = "com.montelearn"
+    namespace = "com.crnogorski.trener"
     compileSdk = 35
 
     defaultConfig {

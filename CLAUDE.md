@@ -31,18 +31,23 @@ ANTHROPIC_API_KEY=sk-ant-...
 
 Ключ подставляется в `BuildConfig.ANTHROPIC_API_KEY` из `app/build.gradle.kts` и в git не попадает.
 
-**Gradle Wrapper отсутствует** (`src/gradle/` пуста, `gradlew` нет) — его нужно сгенерировать (`gradle wrapper`) или собирать из Android Studio. Тестов в проекте нет.
+Wrapper в репозитории есть — **Gradle 8.11.1**, зафиксирован сознательно: AGP 8.7.2 требует Gradle 8.9+ и с веткой Gradle 9.x не работает. Не обновляй wrapper, не подняв заодно AGP. Тестов в проекте нет.
 
 `minSdk = 35` — обратная совместимость сознательно не поддерживается, единственная цель — телефон владельца.
 
-### Несостыковка namespace ↔ пакет
+### namespace ≠ applicationId — так и задумано
 
-`namespace`/`applicationId` в `app/build.gradle.kts` — `com.montelearn`, а исходники лежат в `com.crnogorski.trener`. Из-за этого:
+`namespace = "com.crnogorski.trener"` (пакет исходников, от него считаются `BuildConfig` и `.MainActivity` в манифесте), а `applicationId = "com.montelearn"` — идентификатор установки на устройстве. Расхождение намеренное: раньше `namespace` был `com.montelearn`, из-за чего не разрешался `com.crnogorski.trener.BuildConfig` и сборка падала. Если решишь свести всё к одному имени — переноси пакеты исходников, а `namespace` держи равным пакету.
 
-- `HaikuChecker.kt` импортирует `com.crnogorski.trener.BuildConfig`, а сгенерирован будет `com.montelearn.BuildConfig`;
-- `android:name=".MainActivity"` в манифесте разрешается в `com.montelearn.MainActivity`.
+### Локальная среда (эта машина)
 
-Это первое, обо что споткнётся сборка. Чинится выбором одного варианта: либо `namespace = "com.crnogorski.trener"`, либо переезд пакетов на `com.montelearn`.
+| | |
+|---|---|
+| Android SDK | `D:\Android\Sdk` (platform 35, build-tools 35.0.0, platform-tools) |
+| JDK | `C:\Program Files\Java\jdk-21` (Oracle 21) |
+| Кэш Gradle | `D:\GradleHome` — вынесен с C:, там мало места |
+
+`ANDROID_HOME`, `ANDROID_SDK_ROOT`, `JAVA_HOME`, `GRADLE_USER_HOME` прописаны в пользовательских переменных среды; `platform-tools` и `cmdline-tools\latest\bin` — в `PATH`. `src/local.properties` создан, но **`ANTHROPIC_API_KEY` в нём пустой** — без него свободные переводы вернут «Ключ API не задан».
 
 ## Архитектура
 

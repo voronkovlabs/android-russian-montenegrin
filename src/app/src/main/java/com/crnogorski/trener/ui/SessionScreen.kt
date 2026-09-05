@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -283,6 +284,7 @@ private fun ChoiceAnswer(ex: Exercise.Choice, enabled: Boolean, onSubmit: (Strin
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun WordBankAnswer(ex: Exercise.WordBank, enabled: Boolean, onSubmit: (String) -> Unit) {
     var picked by remember(ex.id) { mutableStateOf(listOf<String>()) }
