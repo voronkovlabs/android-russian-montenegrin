@@ -1,0 +1,3 @@
+# Скопируй в local.properties и подставь свои значения.
+sdk.dir=/path/to/Android/sdk
+ANTHROPIC_API_KEY=sk-ant-...

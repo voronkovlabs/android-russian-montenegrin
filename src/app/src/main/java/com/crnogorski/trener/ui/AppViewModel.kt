@@ -1,0 +1,248 @@
+package com.crnogorski.trener.ui
+
+import android.app.Application
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.crnogorski.trener.data.AppDb
+import com.crnogorski.trener.data.CardEntity
+import com.crnogorski.trener.data.Exercise
+import com.crnogorski.trener.data.LessonProgressEntity
+import com.crnogorski.trener.data.LessonRef
+import com.crnogorski.trener.data.LessonRepository
+import com.crnogorski.trener.data.LocalCheck
+import com.crnogorski.trener.data.needsModelCheck
+import com.crnogorski.trener.data.referenceAnswer
+import com.crnogorski.trener.net.CheckResult
+import com.crnogorski.trener.net.HaikuChecker
+import com.crnogorski.trener.srs.Scheduler
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
+data class LessonCard(
+    val ref: LessonRef,
+    val done: Boolean,
+    val score: String?
+)
+
+data class HomeState(
+    val lessons: List<LessonCard> = emptyList(),
+    val dueCount: Int = 0,
+    val loading: Boolean = true,
+    val error: String? = null
+)
+
+data class SessionItem(val lessonId: String, val exercise: Exercise)
+
+/** Что показывает экран задания прямо сейчас. */
+sealed interface Phase {
+    data object Input : Phase
+    data object Checking : Phase
+    data class Result(
+        val correct: Boolean,
+        val feedback: String,
+        val better: String,
+        val expected: String
+    ) : Phase
+    data class Blocked(val message: String) : Phase
+}
+
+data class SessionState(
+    val title: String,
+    val note: String = "",
+    val items: List<SessionItem>,
+    val index: Int = 0,
+    val phase: Phase = Phase.Input,
+    val correct: Int = 0,
+    val isReview: Boolean = false,
+    val finished: Boolean = false
+) {
+    val current: Exercise get() = items[index].exercise
+    val progress: Float get() = if (items.isEmpty()) 0f else index.toFloat() / items.size
+}
+
+class AppViewModel(app: Application) : AndroidViewModel(app) {
+
+    private val repo = LessonRepository(app)
+    private val dao = AppDb.get(app).dao()
+    private val checker = HaikuChecker()
+
+    private val _home = MutableStateFlow(HomeState())
+    val home: StateFlow<HomeState> = _home.asStateFlow()
+
+    private val _session = MutableStateFlow<SessionState?>(null)
+    val session: StateFlow<SessionState?> = _session.asStateFlow()
+
+    init {
+        refreshHome()
+    }
+
+    fun refreshHome() {
+        viewModelScope.launch {
+            try {
+                val refs = repo.index().lessons
+                val byId = dao.lessonProgress().associateBy { it.lessonId }
+                _home.value = HomeState(
+                    lessons = refs.map { ref ->
+                        val p = byId[ref.id]
+                        LessonCard(ref, p != null, p?.let { "${it.correct}/${it.total}" })
+                    },
+                    dueCount = dao.dueCards(System.currentTimeMillis()).size,
+                    loading = false
+                )
+            } catch (e: Exception) {
+                _home.value = HomeState(loading = false, error = e.message ?: "Не удалось прочитать уроки")
+            }
+        }
+    }
+
+    fun startLesson(lessonId: String) {
+        viewModelScope.launch {
+            val lesson = repo.lesson(lessonId)
+            val items = lesson.exercises.map { SessionItem(lessonId, it) }
+            _session.value = SessionState(title = lesson.title, note = lesson.note, items = items)
+            guardNetwork(items)
+        }
+    }
+
+    fun startReview() {
+        viewModelScope.launch {
+            val due = dao.dueCards(System.currentTimeMillis())
+            val all = repo.allExercises()
+            val items = due.mapNotNull { card ->
+                all[card.exerciseId]?.let { (lessonId, ex) -> SessionItem(lessonId, ex) }
+            }
+            if (items.isEmpty()) {
+                refreshHome()
+                return@launch
+            }
+            _session.value = SessionState(title = "Повторение", items = items, isReview = true)
+            guardNetwork(items)
+        }
+    }
+
+    /** Свободные переводы без сети не проверить — предупреждаем на входе. */
+    private fun guardNetwork(items: List<SessionItem>) {
+        val needsNet = items.any { it.exercise.needsModelCheck }
+        if (needsNet && !isOnline()) {
+            _session.value = _session.value?.copy(
+                phase = Phase.Blocked("Нет интернета. В уроке есть свободные переводы — их проверяет Claude, офлайн они не засчитаются.")
+            )
+        }
+    }
+
+    fun exitSession() {
+        _session.value = null
+        refreshHome()
+    }
+
+    // --- Проверка ответов ---
+
+    fun submitText(answer: String) {
+        val state = _session.value ?: return
+        val ex = state.current
+        if (answer.isBlank()) return
+
+        when (ex) {
+            is Exercise.TranslateToTarget -> checkWithModel(ex.prompt, ex.reference, answer)
+            is Exercise.TranslateToNative -> checkWithModel(ex.prompt, ex.reference, answer)
+            is Exercise.Form -> localResult(LocalCheck.matches(answer, ex.answer), ex.explanation, ex.answer)
+            is Exercise.Listening -> localResult(
+                LocalCheck.matches(answer, ex.audioText),
+                ex.translation,
+                ex.audioText
+            )
+            is Exercise.Choice -> localResult(LocalCheck.matches(answer, ex.answer), ex.explanation, ex.answer)
+            is Exercise.WordBank -> localResult(LocalCheck.matches(answer, ex.answer), "", ex.answer)
+            is Exercise.Speaking -> localResult(
+                LocalCheck.matchesSpoken(answer, ex.phrase),
+                "Услышано: $answer",
+                ex.phrase
+            )
+        }
+    }
+
+    private fun localResult(correct: Boolean, note: String, expected: String) {
+        record(correct)
+        _session.value = _session.value?.copy(
+            phase = Phase.Result(correct, note, "", expected),
+            correct = (_session.value?.correct ?: 0) + if (correct) 1 else 0
+        )
+    }
+
+    private fun checkWithModel(task: String, reference: String, answer: String) {
+        _session.value = _session.value?.copy(phase = Phase.Checking)
+        viewModelScope.launch {
+            when (val result = checker.check(task, reference, answer)) {
+                is CheckResult.Ok -> {
+                    val v = result.verdict
+                    record(v.correct)
+                    _session.value = _session.value?.copy(
+                        phase = Phase.Result(v.correct, v.feedback, v.better, reference),
+                        correct = (_session.value?.correct ?: 0) + if (v.correct) 1 else 0
+                    )
+                }
+                is CheckResult.Failed -> {
+                    _session.value = _session.value?.copy(
+                        phase = Phase.Blocked("Проверка не прошла: ${result.message}")
+                    )
+                }
+            }
+        }
+    }
+
+    fun retryAfterBlock() {
+        _session.value = _session.value?.copy(phase = Phase.Input)
+    }
+
+    private fun record(correct: Boolean) {
+        val state = _session.value ?: return
+        val item = state.items[state.index]
+        viewModelScope.launch {
+            val now = System.currentTimeMillis()
+            val existing = dao.card(item.exercise.id)
+            val updated: CardEntity = existing
+                ?.let { Scheduler.update(it, correct, now) }
+                ?: Scheduler.newCard(item.exercise.id, item.lessonId, correct, now)
+            dao.upsertCard(updated)
+        }
+    }
+
+    fun next() {
+        val state = _session.value ?: return
+        if (state.index + 1 >= state.items.size) {
+            finish(state)
+        } else {
+            _session.value = state.copy(index = state.index + 1, phase = Phase.Input)
+        }
+    }
+
+    private fun finish(state: SessionState) {
+        viewModelScope.launch {
+            if (!state.isReview) {
+                dao.upsertLesson(
+                    LessonProgressEntity(
+                        lessonId = state.items.first().lessonId,
+                        completedAt = System.currentTimeMillis(),
+                        correct = state.correct,
+                        total = state.items.size
+                    )
+                )
+            }
+            _session.value = state.copy(finished = true)
+        }
+    }
+
+    fun expectedAnswer(): String = _session.value?.current?.referenceAnswer.orEmpty()
+
+    private fun isOnline(): Boolean {
+        val cm = getApplication<Application>()
+            .getSystemService(ConnectivityManager::class.java) ?: return false
+        val caps = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+            caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+    }
+}

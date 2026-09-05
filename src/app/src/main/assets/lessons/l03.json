@@ -1,0 +1,17 @@
+{
+  "id": "l03",
+  "title": "Числа и кафе",
+  "note": "1, 2 и «оба» согласуются с родом: jedan hljeb, jedna kafa, dva hljeba, dvije kafe.",
+  "exercises": [
+    { "type": "choice", "id": "l03e01", "prompt": "Три", "options": ["dva", "tri", "četiri", "pet"], "answer": "tri" },
+    { "type": "listening", "id": "l03e02", "audioText": "Jedna kafa, molim", "translation": "Один кофе, пожалуйста" },
+    { "type": "me_to_ru", "id": "l03e03", "prompt": "Koliko košta ovo?", "reference": "Сколько это стоит?" },
+    { "type": "ru_to_me", "id": "l03e04", "prompt": "Пожалуйста, один чай.", "reference": "Molim vas, jedan čaj." },
+    { "type": "word_bank", "id": "l03e05", "prompt": "Счёт, пожалуйста.", "answer": "Račun molim vas", "bank": ["Račun", "molim", "vas", "hvala", "kafu"] },
+    { "type": "form", "id": "l03e06", "prompt": "Imam ___ brata. (2)", "answer": "dva", "explanation": "Brat — мужской род, поэтому dva, а не dvije." },
+    { "type": "choice", "id": "l03e07", "prompt": "Семь", "options": ["šest", "sedam", "osam", "devet"], "answer": "sedam" },
+    { "type": "ru_to_me", "id": "l03e08", "prompt": "Я хочу воду без газа.", "reference": "Hoću vodu bez gasa." },
+    { "type": "speaking", "id": "l03e09", "phrase": "Molim vas, jednu kafu", "translation": "Один кофе, пожалуйста" },
+    { "type": "me_to_ru", "id": "l03e10", "prompt": "Nemam sitno, izvinite.", "reference": "Извините, у меня нет мелочи." }
+  ]
+}

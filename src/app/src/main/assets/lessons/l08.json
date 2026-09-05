@@ -1,0 +1,17 @@
+{
+  "id": "l08",
+  "title": "Город и направления",
+  "note": "«Где» требует местного падежа (u centru, u Budvi), «куда» — винительного (u centar, na plažu).",
+  "exercises": [
+    { "type": "choice", "id": "l08e01", "prompt": "Налево", "options": ["desno", "lijevo", "pravo", "nazad"], "answer": "lijevo" },
+    { "type": "form", "id": "l08e02", "prompt": "Autobuska stanica je u ___ . (centar)", "answer": "centru" },
+    { "type": "me_to_ru", "id": "l08e03", "prompt": "Idite pravo, pa desno.", "reference": "Идите прямо, затем направо." },
+    { "type": "ru_to_me", "id": "l08e04", "prompt": "Где автобусная станция?", "reference": "Gdje je autobuska stanica?" },
+    { "type": "word_bank", "id": "l08e05", "prompt": "Море далеко отсюда?", "answer": "Je li more daleko odavde", "bank": ["Je", "li", "more", "daleko", "odavde", "blizu"] },
+    { "type": "listening", "id": "l08e06", "audioText": "Plaža je blizu", "translation": "Пляж рядом" },
+    { "type": "form", "id": "l08e07", "prompt": "Živim u ___ . (Budva)", "answer": "Budvi" },
+    { "type": "me_to_ru", "id": "l08e08", "prompt": "Izvinite, gdje je pijaca?", "reference": "Извините, где рынок?" },
+    { "type": "speaking", "id": "l08e09", "phrase": "Gdje je plaža?", "translation": "Где пляж?" },
+    { "type": "ru_to_me", "id": "l08e10", "prompt": "Я иду на пляж, а потом в город.", "reference": "Idem na plažu, a onda u grad." }
+  ]
+}

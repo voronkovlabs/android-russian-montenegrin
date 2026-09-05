@@ -1,0 +1,17 @@
+{
+  "id": "l02",
+  "title": "Быть, откуда ты",
+  "note": "Глагол biti склоняется всегда, но местоимение чаще опускают: «Ja sam iz Rusije» = «Iz Rusije sam».",
+  "exercises": [
+    { "type": "form", "id": "l02e01", "prompt": "Ti ___ iz Rusije. (biti)", "answer": "si" },
+    { "type": "form", "id": "l02e02", "prompt": "Mi ___ turisti. (biti)", "answer": "smo" },
+    { "type": "choice", "id": "l02e03", "prompt": "Как спросить «Откуда ты?»", "options": ["Kako si?", "Odakle si?", "Gdje si?", "Ko si?"], "answer": "Odakle si?", "explanation": "Gdje si? — «где ты», но в разговоре это ещё и просто «привет, как ты»." },
+    { "type": "ru_to_me", "id": "l02e04", "prompt": "Я из России, а живу в Черногории.", "reference": "Ja sam iz Rusije, a živim u Crnoj Gori." },
+    { "type": "me_to_ru", "id": "l02e05", "prompt": "Ona je iz Crne Gore, iz Nikšića.", "reference": "Она из Черногории, из Никшича." },
+    { "type": "word_bank", "id": "l02e06", "prompt": "Мы живём в Подгорице.", "answer": "Živimo u Podgorici", "bank": ["Živimo", "u", "Podgorici", "Podgorica", "živim", "na"] },
+    { "type": "listening", "id": "l02e07", "audioText": "Ja sam iz Rusije", "translation": "Я из России" },
+    { "type": "form", "id": "l02e08", "prompt": "Oni ___ studenti. (biti)", "answer": "su" },
+    { "type": "ru_to_me", "id": "l02e09", "prompt": "Я пока плохо говорю по-черногорски.", "reference": "Još uvijek slabo govorim crnogorski." },
+    { "type": "speaking", "id": "l02e10", "phrase": "Odakle si?", "translation": "Откуда ты?" }
+  ]
+}
