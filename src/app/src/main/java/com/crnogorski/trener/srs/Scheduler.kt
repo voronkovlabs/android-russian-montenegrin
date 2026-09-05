@@ -12,6 +12,7 @@ object Scheduler {
 
     private const val DAY_MS = 24L * 60 * 60 * 1000
     private const val LAPSE_DELAY_MS = 10L * 60 * 1000
+    private const val SKIP_DELAY_MS = 4L * 60 * 60 * 1000
 
     fun newCard(exerciseId: String, lessonId: String, correct: Boolean, now: Long): CardEntity =
         update(
@@ -26,6 +27,29 @@ object Scheduler {
             ),
             correct,
             now
+        )
+
+    /**
+     * Пропуск без штрафа: карточка просто отодвигается на несколько часов.
+     *
+     * `ease`, `repetitions` и `intervalDays` не трогаем — «пропустить» значит
+     * «не могу сейчас» (шумно, нет микрофона), а не «не знаю». Наказывать за это
+     * лапсом значит подталкивать к тому, чтобы вместо пропуска бормотать
+     * что попало ради зачёта.
+     */
+    fun postpone(card: CardEntity, now: Long): CardEntity =
+        card.copy(dueAt = now + SKIP_DELAY_MS)
+
+    /** Пропуск задания, которого ещё не было в SRS: заводим карточку нетронутой. */
+    fun skippedCard(exerciseId: String, lessonId: String, now: Long): CardEntity =
+        CardEntity(
+            exerciseId = exerciseId,
+            lessonId = lessonId,
+            dueAt = now + SKIP_DELAY_MS,
+            intervalDays = 0,
+            ease = 2.5,
+            repetitions = 0,
+            lapses = 0
         )
 
     fun update(card: CardEntity, correct: Boolean, now: Long): CardEntity {

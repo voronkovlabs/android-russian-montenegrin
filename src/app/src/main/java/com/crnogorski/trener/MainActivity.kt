@@ -67,6 +67,7 @@ class MainActivity : ComponentActivity() {
                                 state = active,
                                 speaker = speaker,
                                 onSubmit = vm::submitText,
+                                onSkip = vm::skipCurrent,
                                 onNext = vm::next,
                                 onRetryBlock = vm::retryAfterBlock,
                                 onComplain = vm::complain,

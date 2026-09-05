@@ -55,6 +55,7 @@ fun SessionScreen(
     state: SessionState,
     speaker: Speaker,
     onSubmit: (String) -> Unit,
+    onSkip: () -> Unit,
     onNext: () -> Unit,
     onRetryBlock: () -> Unit,
     onComplain: (ComplaintReason, String) -> Unit,
@@ -94,7 +95,7 @@ fun SessionScreen(
             when (val phase = state.phase) {
                 is Phase.Blocked -> BlockedView(phase.message, onRetryBlock, onExit)
                 is Phase.Checking -> {
-                    ExerciseBody(state, speaker, enabled = false, onSubmit = {})
+                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {})
                     Spacer(Modifier.height(24.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CircularProgressIndicator(
@@ -111,24 +112,18 @@ fun SessionScreen(
                     }
                 }
                 is Phase.Result -> {
-                    ExerciseBody(state, speaker, enabled = false, onSubmit = {})
+                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {})
                     Spacer(Modifier.height(20.dp))
                     ResultView(phase)
-                    Spacer(Modifier.height(20.dp))
-                    Button(
-                        onClick = onNext,
-                        modifier = Modifier.fillMaxWidth().height(52.dp),
-                        shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Ink)
-                    ) { Text("Дальше", style = MaterialTheme.typography.titleMedium) }
-                    Spacer(Modifier.height(4.dp))
-                    ComplaintBlock(
-                        exerciseId = state.current.id,
-                        filed = state.complaintFiled,
-                        onComplain = onComplain
-                    )
+                    AnswerTail(state, onNext, onComplain)
                 }
-                Phase.Input -> ExerciseBody(state, speaker, enabled = true, onSubmit = onSubmit)
+                is Phase.Skipped -> {
+                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {})
+                    Spacer(Modifier.height(20.dp))
+                    SkippedView(phase)
+                    AnswerTail(state, onNext, onComplain)
+                }
+                Phase.Input -> ExerciseBody(state, speaker, enabled = true, onSubmit = onSubmit, onSkip = onSkip)
             }
 
             Spacer(Modifier.height(40.dp))
@@ -163,7 +158,8 @@ private fun ExerciseBody(
     state: SessionState,
     speaker: Speaker,
     enabled: Boolean,
-    onSubmit: (String) -> Unit
+    onSubmit: (String) -> Unit,
+    onSkip: () -> Unit
 ) {
     when (val ex = state.current) {
         is Exercise.TranslateToTarget -> TextAnswer(
@@ -201,7 +197,7 @@ private fun ExerciseBody(
 
         is Exercise.Listening -> ListeningAnswer(ex, speaker, enabled, onSubmit)
 
-        is Exercise.Speaking -> SpeakingAnswer(ex, speaker, enabled, onSubmit)
+        is Exercise.Speaking -> SpeakingAnswer(ex, speaker, enabled, onSubmit, onSkip)
     }
 }
 
@@ -400,7 +396,8 @@ private fun SpeakingAnswer(
     ex: Exercise.Speaking,
     speaker: Speaker,
     enabled: Boolean,
-    onSubmit: (String) -> Unit
+    onSubmit: (String) -> Unit,
+    onSkip: () -> Unit
 ) {
     val context = LocalContext.current
     val listener = remember { Listener(context) }
@@ -451,7 +448,7 @@ private fun SpeakingAnswer(
 
     if (enabled) {
         Spacer(Modifier.height(8.dp))
-        TextButton(onClick = { onSubmit("") }) {
+        TextButton(onClick = onSkip) {
             Text("Пропустить", color = Muted)
         }
     }
@@ -485,6 +482,54 @@ private fun ResultView(phase: Phase.Result) {
             Spacer(Modifier.height(8.dp))
             Text("Естественнее: ${phase.better}", style = MaterialTheme.typography.bodyMedium, color = Gold)
         }
+    }
+}
+
+/** Общий хвост под ответом и под пропуском: «Дальше» плюс жалоба. */
+@Composable
+private fun AnswerTail(
+    state: SessionState,
+    onNext: () -> Unit,
+    onComplain: (ComplaintReason, String) -> Unit
+) {
+    Spacer(Modifier.height(20.dp))
+    Button(
+        onClick = onNext,
+        modifier = Modifier.fillMaxWidth().height(52.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Ink)
+    ) { Text("Дальше", style = MaterialTheme.typography.titleMedium) }
+    Spacer(Modifier.height(4.dp))
+    ComplaintBlock(
+        exerciseId = state.current.id,
+        filed = state.complaintFiled,
+        onComplain = onComplain
+    )
+}
+
+/**
+ * Пропуск — не ошибка, поэтому нейтральные цвета и никакого «ОШИБКА»:
+ * карточка только отодвинута, ease и счётчик повторений не тронуты.
+ */
+@Composable
+private fun SkippedView(phase: Phase.Skipped) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Surface1)
+            .border(1.dp, Surface2, RoundedCornerShape(12.dp))
+            .padding(16.dp)
+    ) {
+        Text("ПРОПУЩЕНО", style = MaterialTheme.typography.labelSmall, color = Muted)
+        Spacer(Modifier.height(10.dp))
+        Text(phase.expected, style = MaterialTheme.typography.bodyLarge, color = Paper)
+        Spacer(Modifier.height(8.dp))
+        Text(
+            "Без штрафа: карточка вернётся через несколько часов.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
     }
 }
 

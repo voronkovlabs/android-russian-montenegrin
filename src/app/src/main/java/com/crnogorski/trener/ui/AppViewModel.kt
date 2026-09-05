@@ -65,6 +65,9 @@ sealed interface Phase {
         val expected: String
     ) : Phase
     data class Blocked(val message: String) : Phase
+
+    /** Задание пропущено осознанно — не ошибка, показываем только правильный ответ. */
+    data class Skipped(val expected: String) : Phase
 }
 
 data class SessionState(
@@ -231,6 +234,29 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 ex.phrase
             )
         }
+    }
+
+    /**
+     * Пропуск задания: показываем правильный ответ и отодвигаем карточку,
+     * не трогая ease и счётчик повторений. Ошибкой не считается и в счёт урока
+     * не идёт — см. [Scheduler.postpone].
+     */
+    fun skipCurrent() {
+        val state = _session.value ?: return
+        val item = state.items[state.index]
+        lastAnswer = ""
+
+        viewModelScope.launch {
+            val now = System.currentTimeMillis()
+            val existing = dao.card(item.exercise.id)
+            cardBeforeAnswer = item.exercise.id to existing
+            dao.upsertCard(
+                existing?.let { Scheduler.postpone(it, now) }
+                    ?: Scheduler.skippedCard(item.exercise.id, item.lessonId, now)
+            )
+        }
+
+        _session.value = state.copy(phase = Phase.Skipped(item.exercise.referenceAnswer))
     }
 
     private fun localResult(correct: Boolean, note: String, expected: String) {
