@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.Exercise
+import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.speech.Speaker
 
@@ -114,7 +115,7 @@ fun SessionScreen(
                 is Phase.Result -> {
                     ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {})
                     Spacer(Modifier.height(20.dp))
-                    ResultView(phase)
+                    ResultView(phase, state.current)
                     AnswerTail(state, onNext, onComplain)
                 }
                 is Phase.Skipped -> {
@@ -455,8 +456,15 @@ private fun SpeakingAnswer(
 }
 
 @Composable
-private fun ResultView(phase: Phase.Result) {
+private fun ResultView(phase: Phase.Result, exercise: Exercise) {
     val accent = if (phase.correct) Gold else Crimson
+
+    // Точное совпадение с эталоном показывать незачем — строка дублировала бы «Правильно».
+    val differs = !LocalCheck.matches(phase.answer, phase.expected)
+    val showAnswer = phase.answer.isNotBlank() && (!phase.correct || differs)
+    // Для произношения это не то, что ты сказал, а то, что расслышал движок.
+    val answerLabel = if (exercise is Exercise.Speaking) "Услышано" else "Твой ответ"
+
     Column(
         Modifier
             .fillMaxWidth()
@@ -471,8 +479,20 @@ private fun ResultView(phase: Phase.Result) {
             color = accent
         )
         Spacer(Modifier.height(10.dp))
+        if (showAnswer) {
+            Text(
+                "$answerLabel: ${phase.answer}",
+                style = MaterialTheme.typography.bodyLarge,
+                color = Paper
+            )
+            Spacer(Modifier.height(8.dp))
+        }
         if (!phase.correct) {
             Text("Правильно: ${phase.expected}", style = MaterialTheme.typography.bodyLarge, color = Paper)
+            Spacer(Modifier.height(8.dp))
+        } else if (showAnswer) {
+            // Ответ засчитан, но не совпал с эталоном: «Правильно» тут вводило бы в заблуждение.
+            Text("Эталон: ${phase.expected}", style = MaterialTheme.typography.bodyMedium, color = Muted)
             Spacer(Modifier.height(8.dp))
         }
         if (phase.feedback.isNotBlank()) {

@@ -62,7 +62,9 @@ sealed interface Phase {
         val correct: Boolean,
         val feedback: String,
         val better: String,
-        val expected: String
+        val expected: String,
+        /** Ответ, на который вынесен вердикт — разбирая ошибку, надо видеть, что именно ты написал. */
+        val answer: String
     ) : Phase
     data class Blocked(val message: String) : Phase
 
@@ -220,18 +222,36 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         when (ex) {
             is Exercise.TranslateToTarget -> checkWithModel(ex.prompt, ex.reference, answer)
             is Exercise.TranslateToNative -> checkWithModel(ex.prompt, ex.reference, answer)
-            is Exercise.Form -> localResult(LocalCheck.matches(answer, ex.answer), ex.explanation, ex.answer)
+            is Exercise.Form -> localResult(
+                LocalCheck.matches(answer, ex.answer),
+                ex.explanation,
+                ex.answer,
+                answer
+            )
             is Exercise.Listening -> localResult(
                 LocalCheck.matches(answer, ex.audioText),
                 ex.translation,
-                ex.audioText
+                ex.audioText,
+                answer
             )
-            is Exercise.Choice -> localResult(LocalCheck.matches(answer, ex.answer), ex.explanation, ex.answer)
-            is Exercise.WordBank -> localResult(LocalCheck.matches(answer, ex.answer), "", ex.answer)
+            is Exercise.Choice -> localResult(
+                LocalCheck.matches(answer, ex.answer),
+                ex.explanation,
+                ex.answer,
+                answer
+            )
+            is Exercise.WordBank -> localResult(
+                LocalCheck.matches(answer, ex.answer),
+                "",
+                ex.answer,
+                answer
+            )
+            // Распознанное показывается отдельной строкой «Услышано», в note дублировать не нужно.
             is Exercise.Speaking -> localResult(
                 LocalCheck.matchesSpoken(answer, ex.phrase),
-                "Услышано: $answer",
-                ex.phrase
+                "",
+                ex.phrase,
+                answer
             )
         }
     }
@@ -259,10 +279,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         _session.value = state.copy(phase = Phase.Skipped(item.exercise.referenceAnswer))
     }
 
-    private fun localResult(correct: Boolean, note: String, expected: String) {
+    private fun localResult(correct: Boolean, note: String, expected: String, answer: String) {
         record(correct)
         _session.value = _session.value?.copy(
-            phase = Phase.Result(correct, note, "", expected),
+            phase = Phase.Result(correct, note, "", expected, answer),
             correct = (_session.value?.correct ?: 0) + if (correct) 1 else 0
         )
     }
@@ -275,7 +295,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     val v = result.verdict
                     record(v.correct)
                     _session.value = _session.value?.copy(
-                        phase = Phase.Result(v.correct, v.feedback, v.better, reference),
+                        phase = Phase.Result(v.correct, v.feedback, v.better, reference, answer),
                         correct = (_session.value?.correct ?: 0) + if (v.correct) 1 else 0
                     )
                 }
