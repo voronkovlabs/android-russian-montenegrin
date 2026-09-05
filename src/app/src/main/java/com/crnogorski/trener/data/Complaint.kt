@@ -93,7 +93,33 @@ class ComplaintStore(private val context: Context) {
         if (target.exists()) target.readLines().count { it.isNotBlank() } else 0
     }
 
+    /**
+     * Откладывает накопленное в сторону после отправки: файл переименовывается
+     * в `complaints-sent-<дата>.jsonl`, новые жалобы пишутся в чистый.
+     *
+     * Именно переименование, а не удаление: Android не сообщает, дошла ли отправка
+     * через share (`ACTION_SEND` не возвращает результат), поэтому удалять по факту
+     * нажатия — значит однажды потерять жалобы молча. Дубли безопаснее: у каждой
+     * записи есть `ts` и `exerciseId`, они схлопываются на стороне разработчика.
+     *
+     * @return сколько записей ушло в архив; 0 — если архивировать было нечего.
+     */
+    suspend fun archive(): Int = withContext(Dispatchers.IO) {
+        val current = file()
+        if (!current.exists()) return@withContext 0
+        val lines = current.readLines().count { it.isNotBlank() }
+        if (lines == 0) {
+            current.delete()
+            return@withContext 0
+        }
+        val name = LocalDateTime.now().format(archiveStamp)
+        val moved = current.renameTo(File(current.parentFile, "complaints-sent-$name.jsonl"))
+        if (moved) lines else 0
+    }
+
     companion object {
         const val FILE_NAME = "complaints.jsonl"
+        private val archiveStamp: DateTimeFormatter =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss")
     }
 }

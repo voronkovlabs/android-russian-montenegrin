@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Каталог приложения на внешней памяти — там лежит complaints.jsonl и архивы.
+    Нужен, чтобы отдать файл в share через content://, а не file://
+    (последнее с Android 7 бросает FileUriExposedException).
+-->
+<paths>
+    <external-files-path name="complaints" path="." />
+</paths>

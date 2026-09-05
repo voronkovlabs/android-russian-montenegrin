@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.File
 
 data class LessonCard(
     val ref: LessonRef,
@@ -39,6 +40,16 @@ data class HomeState(
     val dueCount: Int = 0,
     val loading: Boolean = true,
     val error: String? = null
+)
+
+/** Экран настроек: обслуживание отчёта о жалобах и проверка синтеза речи. */
+data class SettingsState(
+    val complaintCount: Int = 0,
+    val filePath: String = "",
+    val versionName: String = "",
+    val versionCode: Int = 0,
+    /** Результат последнего действия — показывается под кнопками. */
+    val notice: String? = null
 )
 
 data class SessionItem(val lessonId: String, val exercise: Exercise)
@@ -94,6 +105,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _session = MutableStateFlow<SessionState?>(null)
     val session: StateFlow<SessionState?> = _session.asStateFlow()
+
+    private val _settings = MutableStateFlow<SettingsState?>(null)
+    val settings: StateFlow<SettingsState?> = _settings.asStateFlow()
 
     init {
         refreshHome()
@@ -156,6 +170,40 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun exitSession() {
         _session.value = null
         refreshHome()
+    }
+
+    // --- Настройки ---
+
+    fun openSettings() {
+        viewModelScope.launch {
+            _settings.value = SettingsState(
+                complaintCount = complaints.count(),
+                filePath = complaints.file().absolutePath,
+                versionName = BuildConfig.VERSION_NAME,
+                versionCode = BuildConfig.VERSION_CODE
+            )
+        }
+    }
+
+    fun closeSettings() {
+        _settings.value = null
+    }
+
+    /** Файл для отправки через share — отдаётся наружу, чтобы экран собрал интент. */
+    fun complaintsFile(): File = complaints.file()
+
+    fun archiveComplaints() {
+        viewModelScope.launch {
+            val moved = complaints.archive()
+            _settings.value = _settings.value?.copy(
+                complaintCount = complaints.count(),
+                notice = if (moved > 0) {
+                    "Отложено записей: $moved. Файл остался на телефоне рядом с новым."
+                } else {
+                    "Откладывать нечего."
+                }
+            )
+        }
     }
 
     // --- Проверка ответов ---

@@ -14,7 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +32,8 @@ import androidx.compose.ui.unit.dp
 fun HomeScreen(
     state: HomeState,
     onLesson: (String) -> Unit,
-    onReview: () -> Unit
+    onReview: () -> Unit,
+    onSettings: () -> Unit
 ) {
     if (state.loading) {
         Column(
@@ -45,13 +50,24 @@ fun HomeScreen(
     ) {
         item {
             Spacer(Modifier.height(28.dp))
-            Text("CRNOGORSKI", style = MaterialTheme.typography.labelSmall, color = Gold)
-            Spacer(Modifier.height(6.dp))
-            Text(
-                "Курс",
-                style = MaterialTheme.typography.displaySmall,
-                color = Paper
-            )
+            Row(verticalAlignment = Alignment.Top) {
+                Column(Modifier.weight(1f)) {
+                    Text("CRNOGORSKI", style = MaterialTheme.typography.labelSmall, color = Gold)
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        "Курс",
+                        style = MaterialTheme.typography.displaySmall,
+                        color = Paper
+                    )
+                }
+                IconButton(onClick = onSettings) {
+                    Icon(
+                        Icons.Outlined.Settings,
+                        contentDescription = "Настройки",
+                        tint = Muted
+                    )
+                }
+            }
             Spacer(Modifier.height(20.dp))
         }
 

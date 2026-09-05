@@ -17,6 +17,7 @@ import com.crnogorski.trener.ui.CrnogorskiTheme
 import com.crnogorski.trener.ui.HomeScreen
 import com.crnogorski.trener.ui.Ink
 import com.crnogorski.trener.ui.SessionScreen
+import com.crnogorski.trener.ui.SettingsScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
                 val vm: AppViewModel = viewModel()
                 val home by vm.home.collectAsStateWithLifecycle()
                 val session by vm.session.collectAsStateWithLifecycle()
+                val settings by vm.settings.collectAsStateWithLifecycle()
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -39,13 +41,25 @@ class MainActivity : ComponentActivity() {
                 ) { inner ->
                     val content = Modifier.fillMaxSize().padding(inner)
                     val active = session
+                    val openSettings = settings
                     if (active == null) {
                         androidx.compose.foundation.layout.Box(content) {
-                            HomeScreen(
-                                state = home,
-                                onLesson = vm::startLesson,
-                                onReview = vm::startReview
-                            )
+                            if (openSettings != null) {
+                                SettingsScreen(
+                                    state = openSettings,
+                                    speaker = speaker,
+                                    complaintsFile = vm.complaintsFile(),
+                                    onArchive = vm::archiveComplaints,
+                                    onClose = vm::closeSettings
+                                )
+                            } else {
+                                HomeScreen(
+                                    state = home,
+                                    onLesson = vm::startLesson,
+                                    onReview = vm::startReview,
+                                    onSettings = vm::openSettings
+                                )
+                            }
                         }
                     } else {
                         androidx.compose.foundation.layout.Box(content) {
