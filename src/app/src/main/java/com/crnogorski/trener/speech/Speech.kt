@@ -197,6 +197,18 @@ class Listener(private val context: Context) {
         else -> "Ошибка распознавания ($error)"
     }
 
+    /**
+     * Прервать текущий заход, не отпуская сервис.
+     *
+     * Нужно, когда слушать больше не надо, а сейчас же может понадобиться снова:
+     * пересоздание распознавателя — та самая холодная привязка, из-за которой
+     * первое нажатие срывалось с ошибкой 11.
+     */
+    fun cancel() {
+        main.removeCallbacksAndMessages(null)
+        runCatching { recognizer?.cancel() }
+    }
+
     /** Отпустить сервис, уходя с экрана. */
     fun stop() {
         main.removeCallbacksAndMessages(null)

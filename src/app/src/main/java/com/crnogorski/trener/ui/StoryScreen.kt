@@ -13,11 +13,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -25,6 +27,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.speech.Speaker
 
@@ -43,12 +48,15 @@ private const val ATTEMPTS_BEFORE_SKIP = 3
 /**
  * История: связный текст, который читают вслух по отрезкам.
  *
- * Отрезок перечитывают, пока не получится, и только после этого под ним
- * появляется перевод — он тут награда, а не подсказка. Прочитанное остаётся
- * на экране: к концу истории сверху виден весь пройденный путь с переводом.
+ * Пока всё получается, экран ничего не просит нажимать: отрезок появился —
+ * распознавание уже слушает, прочитал — перевод открылся, и следующий отрезок
+ * снова слушает. Должно ощущаться обычным чтением вслух, а не выполнением
+ * заданий по одному.
  *
- * Выход есть: после трёх неудач подряд отрезок можно оставить. Движок
- * распознавания ошибается сам по себе, и упереться в него навсегда нельзя.
+ * Кнопка возвращается ровно тогда, когда что-то пошло не так: не разобрали,
+ * не дали доступ к микрофону или человек сам прервал прослушиванием образца.
+ * После трёх неудач подряд отрезок можно оставить — движок распознавания
+ * ошибается сам по себе, и упереться в него навсегда нельзя.
  */
 @Composable
 fun StoryScreen(
@@ -62,17 +70,33 @@ fun StoryScreen(
 ) {
     val context = LocalContext.current
     val listener = remember { Listener(context) }
-    var listening by remember(state.id, state.index) { mutableStateOf(false) }
+    var listening by remember(state.id) { mutableStateOf(false) }
     var status by remember(state.id, state.index) { mutableStateOf("") }
 
+    // Человек прервал слушание сам — послушал образец. Пока не нажмёт «Читать
+    // вслух», запись не возобновляем: иначе она подхватит голос синтезатора.
+    var paused by remember(state.id, state.index) { mutableStateOf(false) }
+
+    var granted by remember {
+        mutableStateOf(
+            ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
+                PackageManager.PERMISSION_GRANTED
+        )
+    }
+
     BackHandler { onClose() }
+
+    DisposableEffect(Unit) {
+        onDispose { listener.stop() }
+    }
 
     fun start() {
         listening = true
         status = ""
         listener.listen(
             onResult = { heard ->
-                listening = false
+                // listening не гасим: при удаче сразу поедет следующий отрезок,
+                // и мигание кнопкой между ними ни к чему.
                 onSubmit(heard)
             },
             onError = { message ->
@@ -82,10 +106,48 @@ fun StoryScreen(
         )
     }
 
+    // Разрешение только выставляет флаг: слушать начнёт эффект ниже. Позвать
+    // start() ещё и отсюда значило бы запустить распознавание дважды подряд.
     val permission = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        if (granted) start() else status = "Без доступа к микрофону историю не прочитать"
+    ) { ok ->
+        granted = ok
+        if (!ok) status = "Без доступа к микрофону историю не прочитать"
+    }
+
+    fun record() {
+        if (!granted) {
+            permission.launch(Manifest.permission.RECORD_AUDIO)
+            return
+        }
+        paused = false
+        start()
+    }
+
+    fun sample(slow: Boolean) {
+        // Слушать и говорить одновременно нельзя: распознавание примет за чтение
+        // голос синтезатора.
+        listener.cancel()
+        listening = false
+        paused = true
+        speaker.speak(state.chunks.getOrNull(state.index)?.sr.orEmpty(), slow = slow)
+    }
+
+    val done = state.index >= state.chunks.size
+    // Слушаем сами, только пока всё идёт гладко. Сорвалось — ждём нажатия.
+    val auto = granted && !paused && state.attempts == 0 && !done
+
+    // Ключи без paused: снятие паузы — это нажатие кнопки, и запускает его
+    // record(). Будь paused ключом, эффект запустил бы распознавание вторым.
+    LaunchedEffect(state.id, state.index, granted) {
+        if (granted && !paused && state.attempts == 0 && !done) start()
+    }
+
+    // Неудачу экран узнаёт по счётчику попыток: сам onResult не знает, засчитали
+    // прочитанное или нет — это решает AppViewModel. Без этого кнопка осталась бы
+    // навсегда в состоянии «Слушаю…».
+    LaunchedEffect(state.attempts) {
+        if (state.attempts > 0) listening = false
     }
 
     Column(Modifier.fillMaxSize()) {
@@ -153,21 +215,14 @@ fun StoryScreen(
                         )
                         Spacer(Modifier.height(16.dp))
                         CurrentChunkControls(
-                            speakable = chunk.sr,
-                            speaker = speaker,
                             listening = listening,
+                            waiting = auto,
                             status = status,
                             heard = state.heard,
                             note = state.note,
                             attempts = state.attempts,
-                            onRecord = {
-                                val granted = androidx.core.content.ContextCompat
-                                    .checkSelfPermission(
-                                        context, Manifest.permission.RECORD_AUDIO
-                                    ) == PackageManager.PERMISSION_GRANTED
-                                if (granted) start()
-                                else permission.launch(Manifest.permission.RECORD_AUDIO)
-                            },
+                            onSample = ::sample,
+                            onRecord = ::record,
                             onSkip = onSkipChunk
                         )
                         Spacer(Modifier.height(20.dp))
@@ -184,7 +239,7 @@ fun StoryScreen(
                 }
             }
 
-            if (state.index >= state.chunks.size) {
+            if (done) {
                 Spacer(Modifier.height(10.dp))
                 Text("ПРОЧИТАНО", style = MaterialTheme.typography.labelSmall, color = Jade)
                 Spacer(Modifier.height(12.dp))
@@ -205,24 +260,51 @@ fun StoryScreen(
     }
 }
 
+/**
+ * Управление текущим отрезком.
+ *
+ * В гладком случае кнопки нет вовсе — только строка «Слушаю»: нажимать нечего,
+ * просто читай. Кнопка появляется, когда слушание сорвалось или его прервали.
+ */
 @Composable
 private fun CurrentChunkControls(
-    speakable: String,
-    speaker: Speaker,
     listening: Boolean,
+    waiting: Boolean,
     status: String,
     heard: String,
     note: String,
     attempts: Int,
+    onSample: (Boolean) -> Unit,
     onRecord: () -> Unit,
     onSkip: () -> Unit
 ) {
     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-        SmallAction("Послушать") { speaker.speak(speakable) }
-        SmallAction("Медленнее") { speaker.speak(speakable, slow = true) }
+        SmallAction("Послушать") { onSample(false) }
+        SmallAction("Медленнее") { onSample(true) }
     }
     Spacer(Modifier.height(16.dp))
-    PrimaryButton(if (listening) "Слушаю…" else "Читать вслух", enabled = !listening, onClick = onRecord)
+
+    if (waiting) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            CircularProgressIndicator(
+                modifier = Modifier.height(16.dp).width(16.dp),
+                strokeWidth = 2.dp,
+                color = Accent
+            )
+            Spacer(Modifier.width(10.dp))
+            Text(
+                if (listening) "Слушаю — читай вслух" else "Включаю микрофон…",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Accent
+            )
+        }
+    } else {
+        PrimaryButton(
+            if (listening) "Слушаю…" else "Читать вслух",
+            enabled = !listening,
+            onClick = onRecord
+        )
+    }
 
     if (heard.isNotBlank()) {
         Spacer(Modifier.height(12.dp))
