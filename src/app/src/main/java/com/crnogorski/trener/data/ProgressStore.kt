@@ -30,7 +30,9 @@ data class ProgressCard(
 data class ProgressStory(
     val storyId: String,
     val chunksDone: Int,
-    val finishedAt: Long
+    val finishedAt: Long,
+    /** Чтение или перевод. Со значением по умолчанию: в старых копиях режима нет, а было там чтение. */
+    val mode: String = StoryMode.Read.key
 )
 
 @Serializable
@@ -149,7 +151,7 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
                     ProgressLesson(it.lessonId, it.completedAt, it.correct, it.total)
                 },
                 stories = dao.storyProgress().map {
-                    ProgressStory(it.storyId, it.chunksDone, it.finishedAt)
+                    ProgressStory(it.storyId, it.chunksDone, it.finishedAt, it.mode)
                 }
             )
         }
@@ -259,7 +261,9 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
             )
         }
         snap.stories.forEach {
-            dao.upsertStory(StoryProgressEntity(it.storyId, it.chunksDone, it.finishedAt))
+            dao.upsertStory(
+                StoryProgressEntity(it.storyId, it.mode, it.chunksDone, it.finishedAt)
+            )
         }
         return snap.cards.size to snap.lessons.size
     }

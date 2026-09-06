@@ -42,12 +42,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import com.crnogorski.trener.data.StoryMode
 import com.crnogorski.trener.speech.Listener
 import kotlinx.coroutines.delay
 import com.crnogorski.trener.speech.Speaker
 
 /** После скольких неудач подряд даём пройти дальше, не взяв отрезок. */
 private const val ATTEMPTS_BEFORE_SKIP = 3
+
+/**
+ * То же для перевода, но считая от показанного варианта.
+ *
+ * Первые три неудачи там уже потрачены на то, чтобы вспомнить перевод, — после
+ * них показан черногорский текст. Дать бросить прямо в этот момент значит
+ * лишить смысла саму подсказку: произнести-то её всё равно надо.
+ */
+private const val ATTEMPTS_BEFORE_SKIP_REVEALED = 5
 
 /**
  * Сколько раз молча переслушать, если движок вообще ничего не разобрал.
@@ -80,16 +90,24 @@ private const val HEADER_ITEMS = 1
 private val KEEP_ABOVE = 96.dp
 
 /**
- * История: связный текст, который читают вслух по отрезкам.
+ * История: связный текст, который проходят вслух по отрезкам.
  *
- * Пока всё получается, экран ничего не просит нажимать: отрезок появился —
- * распознавание уже слушает, прочитал — перевод открылся, и следующий отрезок
- * снова слушает. Должно ощущаться обычным чтением вслух, а не выполнением
- * заданий по одному.
+ * Два занятия на одном тексте, [StoryMode].
  *
- * Кнопка возвращается ровно тогда, когда что-то пошло не так: не разобрали,
- * не дали доступ к микрофону или человек сам прервал прослушиванием образца.
- * После трёх неудач подряд отрезок можно оставить — движок распознавания
+ * **Чтение вслух.** Пока всё получается, экран ничего не просит нажимать:
+ * отрезок появился — распознавание уже слушает, прочитал — перевод открылся,
+ * и следующий отрезок снова слушает. Должно ощущаться обычным чтением вслух,
+ * а не выполнением заданий по одному. Кнопка возвращается ровно тогда, когда
+ * что-то пошло не так: не разобрали, не дали доступ к микрофону или человек
+ * сам прервал прослушиванием образца.
+ *
+ * **Перевод вслух.** Показан русский, сказать надо по-черногорски. Здесь
+ * кнопка есть всегда и слушать само не начинает: перевод сперва надо
+ * придумать, а самослушающий экран торопил бы. После трёх неудач черногорский
+ * вариант открывается, и дальше отрезок работает как чтение — произнести его
+ * всё равно надо.
+ *
+ * После нескольких неудач подряд отрезок можно оставить — движок распознавания
  * ошибается сам по себе, и упереться в него навсегда нельзя.
  */
 @Composable
@@ -129,13 +147,17 @@ fun StoryScreen(
         onDispose { listener.stop() }
     }
 
+    val reading = state.mode == StoryMode.Read
+
     fun start() {
         listening = true
         status = ""
         listener.listen(
             onResult = { heard ->
-                // listening не гасим: при удаче сразу поедет следующий отрезок,
-                // и мигание кнопкой между ними ни к чему.
+                // При чтении listening не гасим: при удаче сразу поедет следующий
+                // отрезок, и мигание кнопкой между ними ни к чему. При переводе
+                // гасим — дальше ждать вердикта модели, а это уже не «слушаю».
+                if (!reading) listening = false
                 onSubmit(heard)
             },
             onError = { message ->
@@ -144,14 +166,20 @@ fun StoryScreen(
                 status = message
             },
             onSilence = {
-                // Ничего не услышали — скорее всего просто не успели начать.
-                if (silent < SILENT_RETRIES) {
+                // При чтении ничего не услышать — обычно значит «не успели
+                // начать», и переслушать дешевле, чем возвращать кнопку. При
+                // переводе кнопку нажали сознательно: молчание тут настоящее.
+                if (reading && silent < SILENT_RETRIES) {
                     silent++
                     start()
                 } else {
                     listening = false
                     stalled = true
-                    status = "Ничего не расслышал. Нажми, когда будешь готов."
+                    status = if (reading) {
+                        "Ничего не расслышал. Нажми, когда будешь готов."
+                    } else {
+                        "Ничего не расслышал. Нажми и скажи ещё раз."
+                    }
                 }
             }
         )
@@ -187,13 +215,14 @@ fun StoryScreen(
     }
 
     val done = state.index >= state.chunks.size
-    // Слушаем сами, только пока всё идёт гладко. Сорвалось — ждём нажатия.
-    val auto = granted && !paused && !stalled && state.attempts == 0 && !done
+    // Слушаем сами, только пока всё идёт гладко — и только при чтении: перевод
+    // надо сперва придумать, и отсчёт тишины начался бы раньше первого слова.
+    val auto = reading && granted && !paused && !stalled && state.attempts == 0 && !done
 
     // Ключи без paused и stalled: их снимает нажатие кнопки, которое и так зовёт
     // start(). Будь они ключами, эффект запустил бы распознавание вторым.
     LaunchedEffect(state.id, state.index, granted) {
-        if (granted && !paused && !stalled && state.attempts == 0 && !done) {
+        if (reading && granted && !paused && !stalled && state.attempts == 0 && !done) {
             delay(AUTO_START_DELAY_MS)
             start()
         }
@@ -255,7 +284,11 @@ fun StoryScreen(
             contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 40.dp)
         ) {
             item {
-                Text("ИСТОРИЯ", style = MaterialTheme.typography.labelSmall, color = Accent)
+                Text(
+                    state.mode.title.uppercase(),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Accent
+                )
                 Spacer(Modifier.height(6.dp))
                 Text(state.title, style = MaterialTheme.typography.displaySmall, color = Paper)
                 Spacer(Modifier.height(24.dp))
@@ -279,28 +312,55 @@ fun StoryScreen(
                     }
 
                     i == state.index -> {
-                        GlossedText(
-                            chunk.sr, state.glossaryMe,
-                            MaterialTheme.typography.headlineSmall, Paper
-                        )
-                        Spacer(Modifier.height(16.dp))
-                        CurrentChunkControls(
-                            listening = listening,
-                            waiting = auto,
-                            status = status,
-                            heard = state.heard,
-                            note = state.note,
-                            attempts = state.attempts,
-                            onSample = ::sample,
-                            onRecord = ::record,
-                            onSkip = onSkipChunk
-                        )
+                        if (reading) {
+                            GlossedText(
+                                chunk.sr, state.glossaryMe,
+                                MaterialTheme.typography.headlineSmall, Paper
+                            )
+                            Spacer(Modifier.height(16.dp))
+                            ReadingControls(
+                                listening = listening,
+                                waiting = auto,
+                                status = status,
+                                heard = state.heard,
+                                note = state.note,
+                                attempts = state.attempts,
+                                onSample = ::sample,
+                                onRecord = ::record,
+                                onSkip = onSkipChunk
+                            )
+                        } else {
+                            // Подсказки по словам тут не нужны: русский и так
+                            // родной, а черногорский — это и есть ответ.
+                            Text(
+                                chunk.ru,
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = Paper
+                            )
+                            Spacer(Modifier.height(16.dp))
+                            TranslateControls(
+                                listening = listening,
+                                checking = state.checking,
+                                revealed = state.revealed,
+                                reference = chunk.sr,
+                                glossary = state.glossaryMe,
+                                status = status,
+                                heard = state.heard,
+                                note = state.note,
+                                attempts = state.attempts,
+                                onSample = ::sample,
+                                onRecord = ::record,
+                                onSkip = onSkipChunk
+                            )
+                        }
                         Spacer(Modifier.height(20.dp))
                     }
 
                     else -> {
+                        // Впереди показываем ту сторону, с которой работают:
+                        // черногорский текст при переводе был бы ответом.
                         Text(
-                            chunk.sr,
+                            if (reading) chunk.sr else chunk.ru,
                             style = MaterialTheme.typography.bodyLarge,
                             color = Muted.copy(alpha = 0.45f)
                         )
@@ -314,16 +374,20 @@ fun StoryScreen(
             item {
                 if (done) {
                     Spacer(Modifier.height(10.dp))
-                    Text("ПРОЧИТАНО", style = MaterialTheme.typography.labelSmall, color = Jade)
+                    Text(
+                        if (reading) "ПРОЧИТАНО" else "ПЕРЕВЕДЕНО",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Jade
+                    )
                     Spacer(Modifier.height(12.dp))
                     Text(
-                        "История дочитана до конца. Её можно перечитать в любой момент — " +
+                        "История пройдена до конца. К ней можно вернуться в любой момент — " +
                             "на повторение она не встаёт.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Muted
                     )
                     Spacer(Modifier.height(16.dp))
-                    PrimaryButton("Прочитать заново", onClick = onRestart)
+                    PrimaryButton("Пройти заново", onClick = onRestart)
                     Spacer(Modifier.height(4.dp))
                     TextButton(onClick = onClose) { Text("К списку историй", color = Muted) }
                 } else {
@@ -337,13 +401,13 @@ fun StoryScreen(
 }
 
 /**
- * Управление текущим отрезком.
+ * Управление текущим отрезком при чтении вслух.
  *
  * В гладком случае кнопки нет вовсе — только строка «Слушаю»: нажимать нечего,
  * просто читай. Кнопка появляется, когда слушание сорвалось или его прервали.
  */
 @Composable
-private fun CurrentChunkControls(
+private fun ReadingControls(
     listening: Boolean,
     waiting: Boolean,
     status: String,
@@ -400,6 +464,76 @@ private fun CurrentChunkControls(
     }
 
     if (attempts >= ATTEMPTS_BEFORE_SKIP) {
+        Spacer(Modifier.height(8.dp))
+        TextButton(onClick = onSkip) {
+            Text("Не выходит — дальше", color = Muted)
+        }
+    }
+}
+
+/**
+ * Управление текущим отрезком при переводе вслух.
+ *
+ * Кнопка здесь есть всегда, в том числе когда всё получается: перевод надо
+ * сперва придумать, и экран, слушающий сам, торопил бы. Образец звучит только
+ * после того, как вариант показан, — до этого он и был бы ответом.
+ */
+@Composable
+private fun TranslateControls(
+    listening: Boolean,
+    checking: Boolean,
+    revealed: Boolean,
+    reference: String,
+    glossary: Map<String, String>,
+    status: String,
+    heard: String,
+    note: String,
+    attempts: Int,
+    onSample: (Boolean) -> Unit,
+    onRecord: () -> Unit,
+    onSkip: () -> Unit
+) {
+    PrimaryButton(
+        when {
+            checking -> "Проверяю…"
+            listening -> "Слушаю…"
+            revealed -> "Прочитать вслух"
+            else -> "Сказать по-черногорски"
+        },
+        enabled = !listening && !checking,
+        onClick = onRecord
+    )
+
+    if (revealed) {
+        Spacer(Modifier.height(18.dp))
+        Text("СКАЖИ ТАК", style = MaterialTheme.typography.labelSmall, color = Accent)
+        Spacer(Modifier.height(6.dp))
+        GlossedText(reference, glossary, MaterialTheme.typography.bodyLarge, Paper)
+        Spacer(Modifier.height(12.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            SmallAction("Послушать") { onSample(false) }
+            SmallAction("Медленнее") { onSample(true) }
+        }
+    }
+
+    if (heard.isNotBlank()) {
+        Spacer(Modifier.height(12.dp))
+        Text(
+            "Услышано: $heard",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Paper
+        )
+    }
+    if (note.isNotBlank()) {
+        Spacer(Modifier.height(6.dp))
+        Text(note, style = MaterialTheme.typography.bodyMedium, color = Crimson)
+    }
+    if (status.isNotBlank()) {
+        Spacer(Modifier.height(12.dp))
+        Text(status, style = MaterialTheme.typography.bodyMedium, color = Muted)
+    }
+
+    if (revealed && attempts >= ATTEMPTS_BEFORE_SKIP_REVEALED) {
         Spacer(Modifier.height(8.dp))
         TextButton(onClick = onSkip) {
             Text("Не выходит — дальше", color = Muted)

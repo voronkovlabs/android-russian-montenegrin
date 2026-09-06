@@ -23,6 +23,26 @@ data class LessonRef(
     val section: String = ""
 )
 
+/**
+ * Что человек делает с историей. Текст один и тот же, занятие разное.
+ *
+ * [Read] — чтение вслух: показан черногорский, надо его произнести.
+ * [Translate] — перевод вслух: показан русский, надо сказать то же
+ * по-черногорски. Второе тяжелее и проверяется моделью, а не сравнением строк:
+ * одну мысль выражают по-разному, и это не ошибка.
+ *
+ * [key] уходит в базу и в копию прогресса — менять его нельзя, иначе
+ * пройденное перестанет находиться.
+ */
+enum class StoryMode(val key: String, val title: String) {
+    Read("read", "Чтение вслух"),
+    Translate("translate", "Перевод вслух");
+
+    companion object {
+        fun of(key: String): StoryMode = entries.firstOrNull { it.key == key } ?: Read
+    }
+}
+
 @Serializable
 data class StoryIndex(val stories: List<StoryRef> = emptyList())
 

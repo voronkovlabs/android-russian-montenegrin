@@ -22,6 +22,7 @@ import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.NOTE_REASON
 import com.crnogorski.trener.data.ProgressStore
 import com.crnogorski.trener.data.StoryChunk
+import com.crnogorski.trener.data.StoryMode
 import com.crnogorski.trener.data.StoryProgressEntity
 import com.crnogorski.trener.data.StoryRef
 import com.crnogorski.trener.data.needsModelCheck
@@ -55,7 +56,7 @@ data class LessonGroup(
 
 data class HomeState(
     val groups: List<LessonGroup> = emptyList(),
-    val stories: List<StoryCard> = emptyList(),
+    val storyGroups: List<StoryGroup> = emptyList(),
     val dueCount: Int = 0,
     val tab: HomeTab = HomeTab.Lessons,
     /** Заголовки развёрнутых разделов. По умолчанию свёрнуты все. */
@@ -87,23 +88,52 @@ data class SessionItem(val lessonId: String, val exercise: Exercise)
 /** Строка раздела «Истории» на главном экране. */
 data class StoryCard(
     val ref: StoryRef,
+    val mode: StoryMode,
     val done: Int,
     val finished: Boolean
 )
+
+/**
+ * Группа историй на вкладке «Истории» — по одной на занятие.
+ *
+ * Тексты в группах те же самые, разное — что с ними делают. Поэтому группа, а
+ * не отдельный список историй: перевод «На рынке» и чтение «На рынке» — одна
+ * история и два разных прогресса.
+ */
+data class StoryGroup(
+    val mode: StoryMode,
+    val cards: List<StoryCard>
+) {
+    val title: String get() = mode.title
+    val done: Int get() = cards.count { it.finished }
+}
 
 /** Экран истории: где мы в тексте и сколько раз подряд не вышло. */
 data class StoryState(
     val id: String,
     val title: String,
     val chunks: List<StoryChunk>,
+    val mode: StoryMode = StoryMode.Read,
     val index: Int = 0,
     val attempts: Int = 0,
     /** Что расслышал движок на последней попытке — без этого непонятно, что не так. */
     val heard: String = "",
-    /** Насколько совпало: «Совпало слов: 5 из 8». */
+    /** Разбор последней попытки: «Совпало слов: 5 из 8» или замечание от модели. */
     val note: String = "",
+    /**
+     * Показан ли черногорский вариант отрезка в режиме перевода.
+     *
+     * Появляется после нескольких неудач: дальше задача уже не «переведи», а
+     * «произнеси», и проверяется она без сети, как обычное чтение.
+     */
+    val revealed: Boolean = false,
+    /** Ответ ушёл к модели и мы ждём вердикт. */
+    val checking: Boolean = false,
     val glossaryMe: Map<String, String> = emptyMap()
-)
+) {
+    /** Текст, который в этом режиме надо произнести прямо сейчас. */
+    val target: String get() = chunks.getOrNull(index)?.sr.orEmpty()
+}
 
 /** Что показывает экран задания прямо сейчас. */
 sealed interface Phase {
@@ -149,6 +179,15 @@ data class SessionState(
  * карточки никуда не денутся.
  */
 private const val REVIEW_LIMIT = 25
+
+/**
+ * После скольких неудачных переводов подряд показываем черногорский вариант.
+ *
+ * Вспомнить слово с четвёртого раза уже не выйдет, а упереться в отрезок
+ * насовсем — верный способ бросить историю. Показанный вариант превращает
+ * задание в чтение вслух: произнести-то его всё равно надо.
+ */
+private const val ATTEMPTS_BEFORE_REVEAL = 3
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
 
@@ -219,14 +258,26 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                         }
                     }
                 }
-                val storyDone = dao.storyProgress().associateBy { it.storyId }
+                val storyDone = dao.storyProgress().associateBy { it.storyId to it.mode }
+                val storyRefs = repo.stories().stories
                 _home.value = HomeState(
                     tab = tab,
                     expandedGroups = expanded,
                     groups = groups,
-                    stories = repo.stories().stories.map { ref ->
-                        val p = storyDone[ref.id]
-                        StoryCard(ref, p?.chunksDone ?: 0, (p?.finishedAt ?: 0L) > 0L)
+                    // Один и тот же список историй в каждом занятии: прогресс
+                    // у них разный, а тексты общие.
+                    storyGroups = StoryMode.entries.map { mode ->
+                        StoryGroup(
+                            mode,
+                            storyRefs.map { ref ->
+                                val p = storyDone[ref.id to mode.key]
+                                StoryCard(
+                                    ref, mode,
+                                    p?.chunksDone ?: 0,
+                                    (p?.finishedAt ?: 0L) > 0L
+                                )
+                            }
+                        )
                     },
                     dueCount = dao.dueCount(System.currentTimeMillis()),
                     loading = false
@@ -358,8 +409,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * Дочитанную открываем с начала: возвращаться к ней имеет смысл только чтобы
      * перечитать целиком, а «продолжить с конца» — это пустой экран.
      */
-    fun openStory(id: String) {
+    fun openStory(id: String, mode: StoryMode) {
         viewModelScope.launch {
+            // Перевод проверяет модель, и без сети история встала бы на первом
+            // же отрезке. Предупреждаем на входе — как с уроками (guardNetwork).
+            if (mode == StoryMode.Translate && !isOnline()) {
+                _notice.value =
+                    "Нет интернета. Перевод вслух проверяет Claude — офлайн он не засчитается."
+                return@launch
+            }
             // Файл истории может не читаться — не тот путь, битый JSON. Ронять
             // из-за этого приложение нельзя: assets правятся чаще, чем код.
             val story = runCatching { repo.story(id) }.getOrNull()
@@ -367,11 +425,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 _notice.value = "Историю не открыть — файл не читается"
                 return@launch
             }
-            val done = dao.story(id)?.chunksDone ?: 0
+            val done = dao.story(id, mode.key)?.chunksDone ?: 0
             _story.value = StoryState(
                 id = story.id,
                 title = story.title,
                 chunks = story.chunks,
+                mode = mode,
                 index = if (done >= story.chunks.size) 0 else done,
                 glossaryMe = runCatching { repo.glossary().me }.getOrDefault(emptyMap())
             )
@@ -385,22 +444,36 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun restartStory() {
-        _story.value = _story.value?.copy(index = 0, attempts = 0, heard = "", note = "")
+        _story.value = _story.value?.copy(
+            index = 0, attempts = 0, heard = "", note = "",
+            revealed = false, checking = false
+        )
     }
 
     /**
-     * Разбор прочитанного отрезка. Порог тот же, что у чтения в уроках, — доля
-     * слов, прозвучавших по порядку: дословного совпадения движок не даёт.
+     * Разбор того, что человек произнёс.
+     *
+     * Чтение проверяется на месте — долей слов, прозвучавших по порядку:
+     * дословного совпадения движок не даёт. Перевод проверяет модель: одну
+     * мысль выражают по-разному, и сравнение строк тут просто врёт.
+     *
+     * Показанный после неудач вариант снова проверяется на месте: задача с
+     * этого момента не «переведи», а «произнеси», и сеть для неё не нужна.
      */
     fun submitChunk(heard: String) {
         val state = _story.value ?: return
         val chunk = state.chunks.getOrNull(state.index) ?: return
-        val score = LocalCheck.readingScore(heard, chunk.sr)
+        if (state.mode == StoryMode.Read || state.revealed) {
+            gradeReading(state, chunk.sr, heard)
+        } else {
+            gradeTranslation(state, chunk, heard)
+        }
+    }
 
+    private fun gradeReading(state: StoryState, text: String, heard: String) {
+        val score = LocalCheck.readingScore(heard, text)
         if (score.passed) {
-            val next = state.index + 1
-            _story.value = state.copy(index = next, attempts = 0, heard = "", note = "")
-            saveStory(state.id, next, next >= state.chunks.size)
+            advance(state)
         } else {
             _story.value = state.copy(
                 attempts = state.attempts + 1,
@@ -410,19 +483,63 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    /** Отрезок оставлен невзятым: движок ошибается сам по себе, упираться некуда. */
-    fun skipChunk() {
-        val state = _story.value ?: return
-        val next = state.index + 1
-        _story.value = state.copy(index = next, attempts = 0, heard = "", note = "")
-        saveStory(state.id, next, next >= state.chunks.size)
+    private fun gradeTranslation(state: StoryState, chunk: StoryChunk, heard: String) {
+        _story.value = state.copy(checking = true, heard = heard, note = "")
+        viewModelScope.launch {
+            val result = checker.checkSpoken(
+                task = chunk.ru,
+                reference = chunk.sr,
+                heard = heard
+            )
+            // Пока ждали вердикт, историю могли закрыть или уйти с отрезка —
+            // тогда он уже ни о чём.
+            val now = _story.value ?: return@launch
+            if (now.id != state.id || now.index != state.index) return@launch
+
+            when (result) {
+                is CheckResult.Ok ->
+                    if (result.verdict.correct) {
+                        advance(now)
+                    } else {
+                        val attempts = now.attempts + 1
+                        _story.value = now.copy(
+                            checking = false,
+                            attempts = attempts,
+                            note = result.verdict.feedback.ifBlank { "Не то. Попробуй иначе." },
+                            revealed = attempts >= ATTEMPTS_BEFORE_REVEAL
+                        )
+                    }
+
+                // Не ошибка ученика: попытку не засчитываем. Иначе оборванная
+                // связь через три отрезка открыла бы ответ за него.
+                is CheckResult.Failed -> _story.value = now.copy(
+                    checking = false,
+                    note = "Не удалось проверить: ${result.message}"
+                )
+            }
+        }
     }
 
-    private fun saveStory(id: String, done: Int, finished: Boolean) {
+    /** Отрезок взят — или оставлен: движок ошибается сам по себе, упираться некуда. */
+    fun skipChunk() {
+        advance(_story.value ?: return)
+    }
+
+    private fun advance(state: StoryState) {
+        val next = state.index + 1
+        _story.value = state.copy(
+            index = next, attempts = 0, heard = "", note = "",
+            revealed = false, checking = false
+        )
+        saveStory(state.id, state.mode, next, next >= state.chunks.size)
+    }
+
+    private fun saveStory(id: String, mode: StoryMode, done: Int, finished: Boolean) {
         viewModelScope.launch {
             dao.upsertStory(
                 StoryProgressEntity(
                     storyId = id,
+                    mode = mode.key,
                     chunksDone = done,
                     finishedAt = if (finished) System.currentTimeMillis() else 0L
                 )
@@ -558,7 +675,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     ts = complaints.now(),
                     exerciseId = item?.exercise?.id.orEmpty(),
                     lessonId = item?.lessonId ?: openStory?.id.orEmpty(),
-                    type = item?.exercise?.typeName ?: if (openStory != null) "story" else "",
+                    type = item?.exercise?.typeName
+                        ?: openStory?.let { "story-" + it.mode.key }.orEmpty(),
                     reason = NOTE_REASON,
                     note = body,
                     versionCode = BuildConfig.VERSION_CODE,

@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.crnogorski.trener.data.StoryMode
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -42,7 +43,7 @@ fun HomeScreen(
     onLesson: (String) -> Unit,
     onReview: () -> Unit,
     onSettings: () -> Unit,
-    onStory: (String) -> Unit,
+    onStory: (String, StoryMode) -> Unit,
     onTab: (HomeTab) -> Unit,
     onToggleGroup: (String) -> Unit,
     onNote: (String) -> Unit
@@ -113,7 +114,12 @@ fun HomeScreen(
                     val open = group.title.isBlank() || group.title in state.expandedGroups
                     if (group.title.isNotBlank()) {
                         stickyHeader(key = "s-${group.title}") {
-                            SectionHeader(group, open) { onToggleGroup(group.title) }
+                            SectionHeader(
+                                title = group.title,
+                                done = group.done,
+                                total = group.cards.size,
+                                expanded = open
+                            ) { onToggleGroup(group.title) }
                         }
                     }
                     if (open) {
@@ -125,17 +131,32 @@ fun HomeScreen(
             }
 
             HomeTab.Stories -> {
-                if (state.stories.isEmpty()) {
-                    item {
-                        Text(
-                            "Историй пока нет.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Muted
-                        )
+                state.storyGroups.forEach { group ->
+                    val open = group.title in state.expandedGroups
+                    stickyHeader(key = "s-${group.title}") {
+                        SectionHeader(
+                            title = group.title,
+                            done = group.done,
+                            total = group.cards.size,
+                            expanded = open
+                        ) { onToggleGroup(group.title) }
                     }
-                } else {
-                    items(state.stories, key = { it.ref.id }) { card ->
-                        StoryRow(card, onClick = { onStory(card.ref.id) })
+                    if (open) {
+                        if (group.cards.isEmpty()) {
+                            item(key = "empty-${group.mode.key}") {
+                                Text(
+                                    "Историй пока нет.",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Muted
+                                )
+                            }
+                        } else {
+                            // Ключ с режимом: тексты в группах одни и те же, и
+                            // по одному id список нашёл бы две одинаковые строки.
+                            items(group.cards, key = { "${group.mode.key}-${it.ref.id}" }) { card ->
+                                StoryRow(card, onClick = { onStory(card.ref.id, card.mode) })
+                            }
+                        }
                     }
                 }
             }
@@ -170,11 +191,18 @@ private fun TabIcon(
  * Заголовок раздела: липкий и складной, свёрнут по умолчанию.
  *
  * Свёрнут потому, что разделов будет много, а нужен за раз один; липкий потому,
- * что в длинном открытом разделе иначе теряешь, где находишься. Фон непрозрачный
+ * что в длинном открытом разделе иначе теряешь, где находишься. Один и тот же
+ * для уроков и историй: разница между ними в строках под ним, а не в шапке. Фон непрозрачный
  * и во всю ширину — иначе строки уроков просвечивали бы из-под него.
  */
 @Composable
-private fun SectionHeader(group: LessonGroup, expanded: Boolean, onClick: () -> Unit) {
+private fun SectionHeader(
+    title: String,
+    done: Int,
+    total: Int,
+    expanded: Boolean,
+    onClick: () -> Unit
+) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -190,13 +218,13 @@ private fun SectionHeader(group: LessonGroup, expanded: Boolean, onClick: () -> 
             modifier = Modifier.padding(end = 10.dp)
         )
         Text(
-            group.title.uppercase(),
+            title.uppercase(),
             style = MaterialTheme.typography.labelSmall,
             color = Accent,
             modifier = Modifier.weight(1f)
         )
         Text(
-            "${group.done} / ${group.cards.size}",
+            "$done / $total",
             style = MaterialTheme.typography.labelSmall,
             color = Muted
         )
@@ -204,7 +232,7 @@ private fun SectionHeader(group: LessonGroup, expanded: Boolean, onClick: () -> 
 }
 
 /**
- * Строка истории. Показывает не счёт, а сколько отрезков прочитано: истории
+ * Строка истории. Показывает не счёт, а сколько отрезков пройдено: истории
  * не оцениваются и на повторение не встают, важно только, докуда дошёл.
  */
 @Composable
@@ -232,7 +260,8 @@ private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
         )
         Text(
             when {
-                card.finished -> "прочитано"
+                card.finished && card.mode == StoryMode.Read -> "прочитано"
+                card.finished -> "переведено"
                 started -> "${card.done} / ${card.ref.chunks}"
                 else -> "${card.ref.chunks} отрезков"
             },
