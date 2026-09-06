@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.crnogorski.trener.speech.Listener
@@ -68,6 +69,15 @@ private const val AUTO_START_DELAY_MS = 500L
 
 /** Сколько элементов списка идёт до первого отрезка: заголовок истории. */
 private const val HEADER_ITEMS = 1
+
+/**
+ * Сколько места оставляем над читаемой строкой.
+ *
+ * Прижимать её к самому верху неуютно: пропадает только что прочитанное, и
+ * теряется нить. Полоски примерно в одно предложение с переводом хватает,
+ * чтобы видеть, откуда пришёл.
+ */
+private val KEEP_ABOVE = 96.dp
 
 /**
  * История: связный текст, который читают вслух по отрезкам.
@@ -200,9 +210,12 @@ fun StoryScreen(
     // сверху и выталкивает её вниз. Подводим её к верху окна — под ней как раз
     // помещаются кнопки и сообщения, а над ней остаётся пройденное.
     val listState = rememberLazyListState()
+    val keepAbove = with(LocalDensity.current) { KEEP_ABOVE.roundToPx() }
     LaunchedEffect(state.id, state.index, state.attempts) {
+        // Отрицательное смещение оставляет полоску над отрезком, а не прячет её.
         listState.animateScrollToItem(
-            state.index.coerceAtMost(state.chunks.size) + HEADER_ITEMS
+            state.index.coerceAtMost(state.chunks.size) + HEADER_ITEMS,
+            -keepAbove
         )
     }
 
