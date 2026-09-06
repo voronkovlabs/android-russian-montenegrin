@@ -62,6 +62,12 @@ data class SettingsState(
     val versionCode: Int = 0,
     /** Папка для копии прогресса, если выбрана и право на неё живо. */
     val progressFolder: String? = null,
+    /** Путь копии на самом телефоне — она пишется всегда. */
+    val progressLocal: String = "",
+    /** Когда и куда копия легла в последний раз. */
+    val progressLastSave: String? = null,
+    /** Есть ли на телефоне копия, из которой можно восстановиться. */
+    val progressLocalExists: Boolean = false,
     /** Результат последнего действия — показывается под кнопками. */
     val notice: String? = null
 )
@@ -251,7 +257,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 filePath = complaints.file().absolutePath,
                 versionName = BuildConfig.VERSION_NAME,
                 versionCode = BuildConfig.VERSION_CODE,
-                progressFolder = progress.folderLabel()
+                progressFolder = progress.folderLabel(),
+                progressLocal = progress.localFile().absolutePath,
+                progressLastSave = progress.lastSave(),
+                progressLocalExists = progress.localFile().exists()
             )
         }
     }
@@ -289,14 +298,18 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     fun useProgressFolder(uri: Uri) {
         viewModelScope.launch {
-            runCatching { progress.rememberFolder(uri) }
-            val saved = progress.saveToFolder(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
+            val taken = runCatching { progress.rememberFolder(uri) }.isSuccess
+            val r = progress.save(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
             _settings.value = _settings.value?.copy(
                 progressFolder = progress.folderLabel(),
-                notice = if (saved != null) {
-                    "Папка выбрана, копия записана. Карточек: $saved."
-                } else {
-                    "Папку выбрать удалось, а записать в неё — нет."
+                progressLastSave = progress.lastSave(),
+                progressLocalExists = progress.localFile().exists(),
+                notice = when {
+                    !taken -> "Эта папка не даёт постоянного доступа. Выбери другую — " +
+                        "копия на телефоне всё равно пишется."
+                    r.folder == true -> "Папка выбрана, копия записана. Карточек: ${r.cards}."
+                    else -> "Папка выбрана, но записать в неё не вышло: ${r.error.orEmpty()}. " +
+                        "Копия на телефоне сохранена."
                 }
             )
         }
@@ -312,11 +325,34 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun saveProgressNow() {
         viewModelScope.launch {
-            val saved = progress.saveToFolder(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
+            val r = progress.save(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
             _settings.value = _settings.value?.copy(
-                notice = if (saved != null) "Копия обновлена. Карточек: $saved."
-                else "Записать не вышло — выбери папку заново."
+                progressLastSave = progress.lastSave(),
+                progressLocalExists = progress.localFile().exists(),
+                notice = when {
+                    r.folder == true -> "Копия обновлена в папке и на телефоне. Карточек: ${r.cards}."
+                    r.folder == false -> "В папку не вышло: ${r.error.orEmpty()}. " +
+                        "На телефоне копия обновлена, карточек: ${r.cards}."
+                    r.local -> "Копия на телефоне обновлена. Карточек: ${r.cards}. " +
+                        "Папка не выбрана — удаление приложения её унесёт."
+                    else -> "Сохранить не удалось вообще никуда."
+                }
             )
+        }
+    }
+
+    /** Восстановление из копии на телефоне — когда папки нет или она отвалилась. */
+    fun restoreLocalProgress() {
+        viewModelScope.launch {
+            val result = progress.restoreLocal()
+            _settings.value = _settings.value?.copy(
+                notice = if (result == null) {
+                    "Копии на телефоне нет или её не разобрать."
+                } else {
+                    "Из копии на телефоне влито карточек: ${result.first}, уроков: ${result.second}."
+                }
+            )
+            refreshHome()
         }
     }
 
@@ -345,13 +381,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /**
-     * Копия после каждой сессии. Молча: если папки нет, ничего и не происходит,
-     * а лезть с сообщением посреди занятий незачем.
+     * Копия после каждой сессии, молча: лезть с сообщением посреди занятий незачем.
+     *
+     * Идёт всегда, даже когда папка не выбрана: копия на телефоне не требует ничего
+     * и пишется при любом раскладе. Чем кончилось, видно в настройках строкой
+     * «последняя копия» — так неудача не остаётся незамеченной навсегда.
      */
     private fun autoSaveProgress() {
-        if (progress.folder() == null) return
         viewModelScope.launch {
-            progress.saveToFolder(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
+            progress.save(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
         }
     }
 

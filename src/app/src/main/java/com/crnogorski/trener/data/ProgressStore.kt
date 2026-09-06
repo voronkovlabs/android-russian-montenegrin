@@ -9,7 +9,9 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.io.File
 import java.time.Instant
+import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
@@ -47,6 +49,20 @@ data class ProgressSnapshot(
 )
 
 /**
+ * Чем кончилась запись копии.
+ *
+ * [folder] — null, если папка не выбрана вовсе; false — если выбрана, но записать
+ * не вышло. Второе важно отличать от первого: молча не сохранять там, где человек
+ * рассчитывает на сохранение, — худшее, что может делать резервное копирование.
+ */
+data class SaveResult(
+    val cards: Int,
+    val local: Boolean,
+    val folder: Boolean?,
+    val error: String? = null
+)
+
+/**
  * Копия прогресса в папке, которую владелец выбрал сам.
  *
  * Зачем, если есть Auto Backup от Android: тот отстаёт на сутки, молча не
@@ -62,6 +78,19 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
 
     private val json = Json { prettyPrint = true; encodeDefaults = true }
     private val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+
+    /**
+     * Копия рядом с жалобами, в каталоге приложения на внешней памяти.
+     *
+     * Пишется всегда и ничего не требует: ни выбора папки, ни разрешений, ни
+     * установленного облака. Удаление приложения её уносит вместе с каталогом,
+     * зато она есть при любом раскладе и её видно любым файловым менеджером —
+     * достаточно скопировать перед удалением. Забирается и `gradlew pullComplaints`.
+     */
+    fun localFile(): File {
+        val dir = context.getExternalFilesDir(null) ?: context.filesDir
+        return File(dir, FILE_NAME)
+    }
 
     /** Папка, если она выбрана и право на неё ещё живо. */
     fun folder(): Uri? {
@@ -114,25 +143,60 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
         }
 
     /**
-     * Пишет копию в выбранную папку. Файл всегда один и тот же и переписывается:
-     * иначе за полгода занятий в папке накопятся сотни снимков.
+     * Пишет копию: обязательно рядом с приложением, а если выбрана папка — то и туда.
      *
-     * @return число сохранённых карточек или null, если папки нет или запись не удалась.
+     * Имя файла всегда одно и то же и переписывается: иначе за полгода занятий
+     * в папке накопятся сотни снимков.
+     *
+     * Локальная копия — это тот самый запасной путь, ради которого всё и затевалось:
+     * нет облака, нет папки, отозвано право — прогресс всё равно сохранён, просто
+     * в месте, которое не переживёт удаления приложения.
      */
-    suspend fun saveToFolder(versionCode: Int, versionName: String): Int? =
+    suspend fun save(versionCode: Int, versionName: String): SaveResult =
         withContext(Dispatchers.IO) {
-            val tree = folder() ?: return@withContext null
             val snap = snapshot(versionCode, versionName)
-            runCatching {
-                val target = existing(tree, FILE_NAME) ?: create(tree, FILE_NAME)
-                ?: return@withContext null
-                // «wt» — с усечением: без него короткий снимок оставил бы хвост старого.
-                context.contentResolver.openOutputStream(target, "wt")?.use { out ->
-                    out.write(json.encodeToString(snap).toByteArray())
-                } ?: return@withContext null
-                snap.cards.size
-            }.getOrNull()
+            val text = json.encodeToString(snap)
+
+            val local = runCatching {
+                localFile().apply { parentFile?.mkdirs() }.writeText(text)
+            }.isSuccess
+
+            val tree = folder()
+            var folderOk: Boolean? = null
+            var error: String? = null
+            if (tree != null) {
+                val attempt = runCatching {
+                    val target = existing(tree, FILE_NAME) ?: create(tree, FILE_NAME)
+                    ?: error("папка не принимает новые файлы")
+                    // «wt» — с усечением: без него короткий снимок оставил бы хвост старого.
+                    context.contentResolver.openOutputStream(target, "wt")?.use { out ->
+                        out.write(text.toByteArray())
+                    } ?: error("папка недоступна")
+                }
+                folderOk = attempt.isSuccess
+                if (!attempt.isSuccess) {
+                    error = attempt.exceptionOrNull()?.message ?: "запись не удалась"
+                }
+            }
+
+            remember(local, folderOk, error)
+            SaveResult(snap.cards.size, local, folderOk, error)
         }
+
+    private fun remember(local: Boolean, folderOk: Boolean?, error: String?) {
+        val note = when {
+            folderOk == true -> "в папку и на телефон"
+            folderOk == false -> "только на телефон, в папку не вышло: ${error.orEmpty()}"
+            local -> "на телефон"
+            else -> "не удалось"
+        }
+        prefs.edit()
+            .putString(KEY_LAST, "${LOCAL_STAMP.format(LocalDateTime.now())} — $note")
+            .apply()
+    }
+
+    /** Строка о последней копии для экрана настроек. */
+    fun lastSave(): String? = prefs.getString(KEY_LAST, null)
 
     /** Пишет копию в файл, выбранный вручную через системный диалог. */
     suspend fun saveTo(uri: Uri, versionCode: Int, versionName: String): Int? =
@@ -159,20 +223,30 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
             val text = context.contentResolver.openInputStream(uri)?.use {
                 it.readBytes().decodeToString()
             } ?: return@withContext null
-            val snap = json.decodeFromString<ProgressSnapshot>(text)
-            snap.cards.forEach {
-                dao.upsertCard(
-                    CardEntity(it.exerciseId, it.lessonId, it.dueAt, it.intervalDays,
-                        it.ease, it.repetitions, it.lapses)
-                )
-            }
-            snap.lessons.forEach {
-                dao.upsertLesson(
-                    LessonProgressEntity(it.lessonId, it.completedAt, it.correct, it.total)
-                )
-            }
-            snap.cards.size to snap.lessons.size
+            apply(json.decodeFromString<ProgressSnapshot>(text))
         }.getOrNull()
+    }
+
+    /** Восстановление из копии рядом с приложением — когда папки нет или она отвалилась. */
+    suspend fun restoreLocal(): Pair<Int, Int>? = withContext(Dispatchers.IO) {
+        val file = localFile()
+        if (!file.exists()) return@withContext null
+        runCatching { apply(json.decodeFromString<ProgressSnapshot>(file.readText())) }.getOrNull()
+    }
+
+    private suspend fun apply(snap: ProgressSnapshot): Pair<Int, Int> {
+        snap.cards.forEach {
+            dao.upsertCard(
+                CardEntity(it.exerciseId, it.lessonId, it.dueAt, it.intervalDays,
+                    it.ease, it.repetitions, it.lapses)
+            )
+        }
+        snap.lessons.forEach {
+            dao.upsertLesson(
+                LessonProgressEntity(it.lessonId, it.completedAt, it.correct, it.total)
+            )
+        }
+        return snap.cards.size to snap.lessons.size
     }
 
     private fun existing(tree: Uri, name: String): Uri? {
@@ -209,6 +283,9 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
         const val FILE_NAME = "crnogorski-progress.json"
         private const val PREFS = "crnogorski"
         private const val KEY_FOLDER = "progress_folder"
+        private const val KEY_LAST = "progress_last_save"
+        private val LOCAL_STAMP: DateTimeFormatter =
+            DateTimeFormatter.ofPattern("dd.MM HH:mm")
         private val STAMP: DateTimeFormatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC)
     }

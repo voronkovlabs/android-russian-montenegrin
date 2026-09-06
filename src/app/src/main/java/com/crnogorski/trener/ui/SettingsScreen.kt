@@ -58,12 +58,21 @@ fun SettingsScreen(
     onSaveNow: () -> Unit,
     onSaveTo: (Uri) -> Unit,
     onRestore: (Uri) -> Unit,
+    onRestoreLocal: () -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var confirmArchive by remember { mutableStateOf(false) }
     var voiceChecked by remember { mutableStateOf(false) }
+
+    // На урезанных прошивках выбор файлов может отсутствовать вовсе: тогда
+    // launch бросает ActivityNotFoundException, и уронить приложение из-за
+    // резервного копирования было бы совсем нелепо.
+    var pickerMissing by remember { mutableStateOf(false) }
+    fun safely(block: () -> Unit) {
+        runCatching(block).onFailure { pickerMissing = true }
+    }
 
     val pickFolder = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocumentTree()
@@ -107,34 +116,70 @@ fun SettingsScreen(
 
             Text(
                 if (state.progressFolder != null) {
-                    "Копия пишется в «${state.progressFolder}» после каждой сессии, " +
-                        "файл ${ProgressStore.FILE_NAME}. Удаление приложения её не тронет."
+                    "После каждой сессии копия пишется в «${state.progressFolder}» и на сам " +
+                        "телефон. Файл в папке переживёт удаление приложения, копия на " +
+                        "телефоне — нет."
                 } else {
-                    "Папка не выбрана. Android сам делает резервную копию раз в сутки, " +
-                        "но без Google-аккаунта молчит и отстаёт. Своя копия надёжнее."
+                    "Копия пишется на сам телефон после каждой сессии, но удаление " +
+                        "приложения её унесёт. Выбери папку — хоть в облаке, хоть в памяти " +
+                        "телефона, — и копия переживёт переустановку."
                 },
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+
+            if (state.progressLastSave != null) {
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    "Последняя копия: ${state.progressLastSave}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = if (state.progressLastSave.contains("не вышло") ||
+                        state.progressLastSave.contains("не удалось")
+                    ) Crimson else Muted
+                )
+            }
+
+            Spacer(Modifier.height(6.dp))
+            Text(
+                state.progressLocal,
                 style = MaterialTheme.typography.bodyMedium,
                 color = Muted
             )
             Spacer(Modifier.height(14.dp))
 
             if (state.progressFolder == null) {
-                PrimaryAction(text = "Выбрать папку для копии") { pickFolder.launch(null) }
+                PrimaryAction(text = "Выбрать папку для копии") { safely { pickFolder.launch(null) } }
             } else {
                 PrimaryAction(text = "Сохранить сейчас", onClick = onSaveNow)
                 Spacer(Modifier.height(10.dp))
-                SecondaryAction(text = "Другая папка") { pickFolder.launch(null) }
+                SecondaryAction(text = "Другая папка") { safely { pickFolder.launch(null) } }
                 Spacer(Modifier.height(10.dp))
                 SecondaryAction(text = "Не сохранять больше", onClick = onForgetFolder)
             }
 
             Spacer(Modifier.height(10.dp))
+            SecondaryAction(
+                text = "Восстановить с телефона",
+                enabled = state.progressLocalExists,
+                onClick = onRestoreLocal
+            )
+            Spacer(Modifier.height(10.dp))
             SecondaryAction(text = "Восстановить из файла") {
-                pickRestoreFile.launch(arrayOf("application/json", "text/plain", "*/*"))
+                safely { pickRestoreFile.launch(arrayOf("application/json", "text/plain", "*/*")) }
             }
             Spacer(Modifier.height(10.dp))
             SecondaryAction(text = "Сохранить в отдельный файл") {
-                pickSaveFile.launch(ProgressStore.FILE_NAME)
+                safely { pickSaveFile.launch(ProgressStore.FILE_NAME) }
+            }
+
+            if (pickerMissing) {
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    "Системный выбор файлов недоступен. Копия на телефоне при этом " +
+                        "пишется, забрать её можно файловым менеджером.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Crimson
+                )
             }
 
             Spacer(Modifier.height(36.dp))

@@ -77,6 +77,7 @@ class MainActivity : ComponentActivity() {
                                     onSaveNow = vm::saveProgressNow,
                                     onSaveTo = vm::saveProgressTo,
                                     onRestore = vm::restoreProgress,
+                                    onRestoreLocal = vm::restoreLocalProgress,
                                     onClose = vm::closeSettings
                                 )
                             } else {
