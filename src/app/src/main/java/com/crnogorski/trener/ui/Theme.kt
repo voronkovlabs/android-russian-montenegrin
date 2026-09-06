@@ -18,6 +18,9 @@ val Muted = Color(0xFF8E8B85)
 val Gold = Color(0xFFD8B25F)
 val Crimson = Color(0xFFC2384F)
 
+/** Зелёный только для «верно»: золото — акцент интерфейса, им вердикт не отличить от кнопки. */
+val Jade = Color(0xFF5FA47A)
+
 private val scheme = darkColorScheme(
     primary = Gold,
     onPrimary = Ink,

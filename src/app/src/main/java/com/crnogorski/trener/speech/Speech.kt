@@ -19,12 +19,41 @@ private val SERBIAN: Locale = Locale.Builder()
     .setRegion("RS")
     .build()
 
+/** Язык ответа на черногорском — тот же sr-RS, что и у синтеза. */
+const val TAG_TARGET = "sr-RS"
+
+/** Язык ответа на русском: перевод с черногорского набирают и диктуют по-русски. */
+const val TAG_NATIVE = "ru-RU"
+
+/**
+ * Язык ответа. Теги разные: распознаванию нужен sr-RS, а клавиатуре —
+ * sr-Latn-RS, иначе Gboard откроет сербскую кириллицу вместо латиницы.
+ */
+enum class AnswerLanguage(val speech: String, val keyboard: String) {
+    Target(TAG_TARGET, "sr-Latn-RS"),
+    Native(TAG_NATIVE, TAG_NATIVE)
+}
+
+private const val NORMAL_RATE = 0.9f
+
+/** «Медленнее» для аудирования: разобрать на слух с первого раза выходит не всегда. */
+private const val SLOW_RATE = 0.55f
+
 class Speaker(context: Context) {
 
     private var ready = false
     private var missingVoice = false
 
     private var tts: TextToSpeech? = null
+
+    /**
+     * Просьба произнести, пришедшая до готовности движка.
+     *
+     * Инициализация TextToSpeech асинхронная, а задание озвучивается сразу при
+     * появлении на экране — без этой отложенной фразы первое задание за запуск
+     * молчало бы.
+     */
+    private var pending: Pair<String, Boolean>? = null
 
     init {
         tts = TextToSpeech(context.applicationContext) { status ->
@@ -34,17 +63,24 @@ class Speaker(context: Context) {
                 missingVoice = result == TextToSpeech.LANG_MISSING_DATA ||
                     result == TextToSpeech.LANG_NOT_SUPPORTED
                 ready = !missingVoice
-                engine.setSpeechRate(0.9f)
+                engine.setSpeechRate(NORMAL_RATE)
+                pending?.let { (text, slow) -> speak(text, slow) }
             }
+            pending = null
         }
     }
 
     /** true, если голос сербского не установлен — стоит показать подсказку. */
     val voiceUnavailable: Boolean get() = missingVoice
 
-    fun speak(text: String) {
-        if (!ready) return
-        tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, text.hashCode().toString())
+    fun speak(text: String, slow: Boolean = false) {
+        if (!ready) {
+            if (!missingVoice) pending = text to slow
+            return
+        }
+        val engine = tts ?: return
+        engine.setSpeechRate(if (slow) SLOW_RATE else NORMAL_RATE)
+        engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, text.hashCode().toString())
     }
 
     fun release() {
@@ -63,8 +99,16 @@ class Listener(private val context: Context) {
     /**
      * Один заход распознавания. [onResult] получает лучшую гипотезу,
      * [onError] — текст ошибки для показа в интерфейсе.
+     *
+     * [language] — тег языка ответа: черногорский набирают и диктуют на sr-RS,
+     * перевод на русский — на ru-RU. Движку это не подсказка, а требование:
+     * с чужим языком он выдаёт правдоподобную бессмыслицу.
      */
-    fun listen(onResult: (String) -> Unit, onError: (String) -> Unit) {
+    fun listen(
+        language: String = TAG_TARGET,
+        onResult: (String) -> Unit,
+        onError: (String) -> Unit
+    ) {
         stop()
         val sr = SpeechRecognizer.createSpeechRecognizer(context).also { recognizer = it }
 
@@ -73,7 +117,7 @@ class Listener(private val context: Context) {
                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE, "sr-RS")
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, language)
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
         }
 

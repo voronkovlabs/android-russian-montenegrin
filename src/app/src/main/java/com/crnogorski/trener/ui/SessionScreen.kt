@@ -2,6 +2,7 @@ package com.crnogorski.trener.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -23,9 +24,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -33,6 +38,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,11 +49,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.LocalCheck
+import com.crnogorski.trener.speech.AnswerLanguage
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.speech.Speaker
 
@@ -63,6 +71,10 @@ fun SessionScreen(
     onNote: (String) -> Unit,
     onExit: () -> Unit
 ) {
+    // Системная «Назад» должна возвращать к списку уроков, а не закрывать приложение.
+    // Выход из приложения остаётся только на главном экране, где BackHandler-а нет.
+    BackHandler { onExit() }
+
     if (state.finished) {
         FinishedView(state, onExit)
         return
@@ -137,7 +149,13 @@ fun SessionScreen(
 private fun SessionHeader(state: SessionState, onNote: (String) -> Unit, onExit: () -> Unit) {
     Column(Modifier.padding(horizontal = 20.dp, vertical = 14.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            TextButton(onClick = onExit) { Text("Выйти", color = Muted) }
+            IconButton(onClick = onExit) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Выйти из урока",
+                    tint = Muted
+                )
+            }
             Spacer(Modifier.weight(1f))
             Text(
                 "${state.index + 1} / ${state.items.size}",
@@ -172,6 +190,7 @@ private fun ExerciseBody(
             prompt = ex.prompt,
             hint = ex.hint,
             enabled = enabled,
+            language = AnswerLanguage.Target,
             onSubmit = onSubmit
         )
 
@@ -181,6 +200,7 @@ private fun ExerciseBody(
             prompt = ex.prompt,
             hint = ex.hint,
             enabled = enabled,
+            language = AnswerLanguage.Native,
             speakable = ex.prompt,
             speaker = speaker,
             onSubmit = onSubmit
@@ -192,10 +212,11 @@ private fun ExerciseBody(
             prompt = ex.prompt,
             hint = "",
             enabled = enabled,
+            language = AnswerLanguage.Target,
             onSubmit = onSubmit
         )
 
-        is Exercise.Choice -> ChoiceAnswer(ex, enabled, onSubmit)
+        is Exercise.Choice -> ChoiceAnswer(ex, speaker, enabled, onSubmit)
 
         is Exercise.WordBank -> WordBankAnswer(ex, enabled, onSubmit)
 
@@ -223,17 +244,29 @@ private fun TextAnswer(
     prompt: String,
     hint: String,
     enabled: Boolean,
+    language: AnswerLanguage,
     speakable: String? = null,
     speaker: Speaker? = null,
     onSubmit: (String) -> Unit
 ) {
     var value by remember(key) { mutableStateOf("") }
+    var status by remember(key) { mutableStateOf("") }
+
+    // Черногорскую фразу озвучиваем сразу, как только задание появилось: слышать
+    // её нужно раньше, чем разбирать. Только в Input — иначе фраза повторилась бы
+    // при переходе к результату, когда тот же блок перерисовывается неактивным.
+    if (speakable != null && speaker != null) {
+        LaunchedEffect(key) { if (enabled) speaker.speak(speakable) }
+    }
 
     Label(label)
     Prompt(prompt)
     if (speakable != null && speaker != null) {
         Spacer(Modifier.height(10.dp))
-        SmallAction("Прослушать") { speaker.speak(speakable) }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            SmallAction("Прослушать") { speaker.speak(speakable) }
+            SmallAction("Медленнее") { speaker.speak(speakable, slow = true) }
+        }
     }
     if (hint.isNotBlank()) {
         Spacer(Modifier.height(8.dp))
@@ -248,9 +281,22 @@ private fun TextAnswer(
         modifier = Modifier.fillMaxWidth(),
         placeholder = { Text("Ответ", color = Muted) },
         textStyle = MaterialTheme.typography.bodyLarge,
+        trailingIcon = {
+            if (enabled) {
+                MicButton(
+                    language = language.speech,
+                    enabled = true,
+                    onStatus = { status = it },
+                    onText = { value = appendSpoken(value, it) }
+                )
+            }
+        },
         keyboardOptions = KeyboardOptions(
             capitalization = KeyboardCapitalization.None,
-            imeAction = ImeAction.Done
+            imeAction = ImeAction.Done,
+            // Подсказка клавиатуре, на каком языке будет ответ: иначе раскладку
+            // приходится переключать руками на каждом задании.
+            hintLocales = LocaleList(language.keyboard)
         ),
         shape = RoundedCornerShape(12.dp),
         colors = OutlinedTextFieldDefaults.colors(
@@ -263,14 +309,28 @@ private fun TextAnswer(
         )
     )
 
+    if (status.isNotBlank()) {
+        Spacer(Modifier.height(8.dp))
+        Text(status, style = MaterialTheme.typography.bodyMedium, color = Muted)
+    }
+
     if (enabled) {
         Spacer(Modifier.height(16.dp))
         PrimaryButton("Проверить", enabled = value.isNotBlank()) { onSubmit(value) }
     }
 }
 
+/** Продиктованное дописывается к набранному, а не затирает его. */
+private fun appendSpoken(current: String, heard: String): String =
+    if (current.isBlank()) heard else current.trimEnd() + " " + heard
+
 @Composable
-private fun ChoiceAnswer(ex: Exercise.Choice, enabled: Boolean, onSubmit: (String) -> Unit) {
+private fun ChoiceAnswer(
+    ex: Exercise.Choice,
+    speaker: Speaker,
+    enabled: Boolean,
+    onSubmit: (String) -> Unit
+) {
     Label("Выбери вариант")
     Prompt(ex.prompt)
     Spacer(Modifier.height(20.dp))
@@ -283,7 +343,12 @@ private fun ChoiceAnswer(ex: Exercise.Choice, enabled: Boolean, onSubmit: (Strin
                     .clip(RoundedCornerShape(12.dp))
                     .background(Surface1)
                     .border(1.dp, Surface2, RoundedCornerShape(12.dp))
-                    .clickable(enabled = enabled) { onSubmit(option) }
+                    // Вариант проговаривается вслух: выбор глазами не даёт
+                    // услышать, как выбранное звучит.
+                    .clickable(enabled = enabled) {
+                        speaker.speak(option)
+                        onSubmit(option)
+                    }
                     .padding(16.dp)
             ) {
                 Text(option, style = MaterialTheme.typography.bodyLarge, color = Paper)
@@ -352,14 +417,21 @@ private fun ListeningAnswer(
 ) {
     var value by remember(ex.id) { mutableStateOf("") }
 
+    // Фраза звучит сразу: задание в том, чтобы её записать, а не в том,
+    // чтобы догадаться нажать кнопку. Кнопка остаётся — послушать ещё раз.
+    LaunchedEffect(ex.id) { if (enabled) speaker.speak(ex.audioText) }
+
     Label("Запиши услышанное")
     Text(
-        "Нажми на кнопку и набери фразу так, как её произносят.",
+        "Набери фразу так, как её произносят. Можно послушать ещё раз.",
         style = MaterialTheme.typography.bodyMedium,
         color = Muted
     )
     Spacer(Modifier.height(16.dp))
-    PrimaryButton("Прослушать") { speaker.speak(ex.audioText) }
+    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        SmallAction("Прослушать") { speaker.speak(ex.audioText) }
+        SmallAction("Медленнее") { speaker.speak(ex.audioText, slow = true) }
+    }
 
     if (speaker.voiceUnavailable) {
         Spacer(Modifier.height(10.dp))
@@ -378,6 +450,13 @@ private fun ListeningAnswer(
         modifier = Modifier.fillMaxWidth(),
         placeholder = { Text("Что ты услышал", color = Muted) },
         textStyle = MaterialTheme.typography.bodyLarge,
+        // Микрофона здесь нет намеренно: продиктовать услышанное — значит
+        // поручить распознавателю ровно ту работу, ради которой задание и есть.
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            imeAction = ImeAction.Done,
+            hintLocales = LocaleList(AnswerLanguage.Target.keyboard)
+        ),
         shape = RoundedCornerShape(12.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Gold,
@@ -460,7 +539,7 @@ private fun SpeakingAnswer(
 
 @Composable
 private fun ResultView(phase: Phase.Result, exercise: Exercise) {
-    val accent = if (phase.correct) Gold else Crimson
+    val accent = if (phase.correct) Jade else Crimson
 
     // Точное совпадение с эталоном показывать незачем — строка дублировала бы «Правильно».
     val differs = !LocalCheck.matches(phase.answer, phase.expected)
