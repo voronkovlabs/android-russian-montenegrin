@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
                                 SettingsScreen(
                                     state = openSettings,
                                     speaker = speaker,
-                                    complaintsFile = vm.complaintsFile(),
+                                    prepareReport = vm::reportToSend,
                                     onArchive = vm::archiveComplaints,
                                     onClose = vm::closeSettings
                                 )

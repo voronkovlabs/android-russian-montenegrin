@@ -199,8 +199,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         _settings.value = null
     }
 
-    /** Файл для отправки через share — отдаётся наружу, чтобы экран собрал интент. */
-    fun complaintsFile(): File = complaints.file()
+    /**
+     * Копия отчёта под именем с ярлыком устройства и меткой UTC — её и отдаёт
+     * в share экран настроек. Интент собирается там: для него нужен Context
+     * активности, а не приложения.
+     */
+    suspend fun reportToSend(): File? = complaints.prepareForSend()
 
     fun archiveComplaints() {
         viewModelScope.launch {

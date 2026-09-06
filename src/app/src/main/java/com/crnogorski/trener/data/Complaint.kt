@@ -1,13 +1,19 @@
 package com.crnogorski.trener.data
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
+import android.provider.Settings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
+import java.security.MessageDigest
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 /**
@@ -127,8 +133,62 @@ class ComplaintStore(private val context: Context) {
         if (moved) lines else 0
     }
 
+    /**
+     * Готовит копию отчёта для отправки — с именем, по которому файл узнаётся
+     * в чужой папке загрузок: `complaints-<устройство>-<UTC>.jsonl`.
+     *
+     * Копия, а не переименование оригинала: приложение продолжает дописывать
+     * жалобы в тот же `complaints.jsonl`, и оно же ожидается `pullComplaints`-ом.
+     * Копия лежит в кэше, а не рядом с оригиналом, чтобы `pullComplaints` не
+     * считал одни и те же жалобы дважды; систему кэш чистит сама.
+     *
+     * @return файл для share или null, если отправлять нечего.
+     */
+    suspend fun prepareForSend(): File? = withContext(Dispatchers.IO) {
+        val source = file()
+        if (!source.exists() || source.length() == 0L) return@withContext null
+
+        val dir = File(context.cacheDir, SHARE_DIR).apply { mkdirs() }
+        // Прошлые копии не нужны: имя каждый раз новое, иначе кэш растёт молча.
+        dir.listFiles()?.forEach { it.delete() }
+
+        val name = "complaints-${deviceTag()}-${utcStamp()}.jsonl"
+        source.copyTo(File(dir, name), overwrite = true)
+    }
+
+    /** UTC, а не местное время: отчёты приходят из разных часовых поясов. */
+    private fun utcStamp(): String = sendStamp.format(Instant.now())
+
+    /**
+     * Короткий и стабильный ярлык устройства: модель плюс шесть символов
+     * от хеша ANDROID_ID.
+     *
+     * Именно хеш: сам ANDROID_ID — идентификатор, который не должен уезжать
+     * в мессенджер вместе с файлом, а для «с какого телефона это пришло»
+     * достаточно того, что ярлык не меняется от отправки к отправке.
+     */
+    @SuppressLint("HardwareIds")
+    private fun deviceTag(): String {
+        val model = Build.MODEL.lowercase().replace(Regex("[^a-z0-9]+"), "-").trim('-')
+        val androidId = runCatching {
+            Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        }.getOrNull().orEmpty()
+        val short = if (androidId.isBlank()) "" else {
+            MessageDigest.getInstance("SHA-256")
+                .digest(androidId.toByteArray())
+                .take(3)
+                .joinToString("") { "%02x".format(it) }
+        }
+        return listOf(model, short).filter { it.isNotBlank() }.joinToString("-")
+            .ifBlank { "device" }
+            .take(40)
+    }
+
     companion object {
         const val FILE_NAME = "complaints.jsonl"
+        private const val SHARE_DIR = "share"
+        private val sendStamp: DateTimeFormatter =
+            DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'").withZone(ZoneOffset.UTC)
         private val archiveStamp: DateTimeFormatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss")
     }

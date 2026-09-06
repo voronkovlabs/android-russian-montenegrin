@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import com.crnogorski.trener.speech.Speaker
+import kotlinx.coroutines.launch
 import java.io.File
 
 /** Фраза для проверки голоса: короткая, со всеми характерными звуками. */
@@ -41,11 +43,12 @@ private const val VOICE_PROBE = "Dobar dan, kako si?"
 fun SettingsScreen(
     state: SettingsState,
     speaker: Speaker,
-    complaintsFile: File,
+    prepareReport: suspend () -> File?,
     onArchive: () -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     var confirmArchive by remember { mutableStateOf(false) }
     var voiceChecked by remember { mutableStateOf(false) }
 
@@ -102,7 +105,9 @@ fun SettingsScreen(
             PrimaryAction(
                 text = "Отправить отчёт",
                 enabled = state.complaintCount > 0
-            ) { shareComplaints(context, complaintsFile) }
+            ) {
+                scope.launch { prepareReport()?.let { shareComplaints(context, it) } }
+            }
 
             Spacer(Modifier.height(10.dp))
 
@@ -188,6 +193,11 @@ fun SettingsScreen(
  * Отдаёт файл в системную шторку. Через FileProvider: прямой `file://` с Android 7
  * роняет получателя с FileUriExposedException.
  *
+ * Приходит сюда не сам `complaints.jsonl`, а копия с именем вида
+ * `complaints-<устройство>-<UTC>.jsonl`: в папке загрузок на той стороне
+ * одинаковые имена превращаются в «complaints (2).jsonl» и перестают
+ * различаться.
+ *
  * Результат отправки Android не возвращает — поэтому «очистить» отдельной кнопкой,
  * вручную, а не следом за этим вызовом.
  */
@@ -197,7 +207,8 @@ private fun shareComplaints(context: Context, file: File) {
     val send = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_STREAM, uri)
-        putExtra(Intent.EXTRA_SUBJECT, "Crnogorski: жалобы на задания")
+        putExtra(Intent.EXTRA_SUBJECT, "Crnogorski: ${file.name}")
+        putExtra(Intent.EXTRA_TITLE, file.name)
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
     context.startActivity(Intent.createChooser(send, "Отправить отчёт"))

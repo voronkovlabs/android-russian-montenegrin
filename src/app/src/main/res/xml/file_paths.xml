@@ -6,4 +6,6 @@
 -->
 <paths>
     <external-files-path name="complaints" path="." />
+    <!-- Копия отчёта с говорящим именем: её и отдаём в share. -->
+    <cache-path name="share" path="share/" />
 </paths>
