@@ -100,6 +100,8 @@ class MainActivity : ComponentActivity() {
                                     onReview = vm::startReview,
                                     onSettings = vm::openSettings,
                                     onStory = vm::openStory,
+                                    onTab = vm::selectTab,
+                                    onToggleGroup = vm::toggleGroup,
                                     onNote = vm::addNote
                                 )
                             }

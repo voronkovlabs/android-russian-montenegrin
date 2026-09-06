@@ -14,9 +14,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AutoStories
+import androidx.compose.material.icons.outlined.ExpandLess
+import androidx.compose.material.icons.outlined.ExpandMore
+import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -27,6 +30,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
@@ -38,6 +43,8 @@ fun HomeScreen(
     onReview: () -> Unit,
     onSettings: () -> Unit,
     onStory: (String) -> Unit,
+    onTab: (HomeTab) -> Unit,
+    onToggleGroup: (String) -> Unit,
     onNote: (String) -> Unit
 ) {
     if (state.loading) {
@@ -55,16 +62,18 @@ fun HomeScreen(
     ) {
         item {
             Spacer(Modifier.height(28.dp))
-            Row(verticalAlignment = Alignment.Top) {
-                Column(Modifier.weight(1f)) {
-                    Text("CRNOGORSKI", style = MaterialTheme.typography.labelSmall, color = Gold)
-                    Spacer(Modifier.height(6.dp))
-                    Text(
-                        "Курс",
-                        style = MaterialTheme.typography.displaySmall,
-                        color = Paper
-                    )
-                }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                TabIcon(
+                    icon = Icons.Outlined.School,
+                    label = "Уроки",
+                    selected = state.tab == HomeTab.Lessons
+                ) { onTab(HomeTab.Lessons) }
+                TabIcon(
+                    icon = Icons.Outlined.AutoStories,
+                    label = "Истории",
+                    selected = state.tab == HomeTab.Stories
+                ) { onTab(HomeTab.Stories) }
+                Spacer(Modifier.weight(1f))
                 ComplaintButton(onSave = onNote)
                 IconButton(onClick = onSettings) {
                     Icon(
@@ -74,6 +83,14 @@ fun HomeScreen(
                     )
                 }
             }
+            Spacer(Modifier.height(10.dp))
+            Text("CRNOGORSKI", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Spacer(Modifier.height(6.dp))
+            Text(
+                if (state.tab == HomeTab.Lessons) "Курс" else "Истории",
+                style = MaterialTheme.typography.displaySmall,
+                color = Paper
+            )
             Spacer(Modifier.height(20.dp))
         }
 
@@ -83,24 +100,44 @@ fun HomeScreen(
             }
         }
 
-        item {
-            ReviewCard(count = state.dueCount, onClick = onReview)
-            Spacer(Modifier.height(14.dp))
-        }
+        when (state.tab) {
+            HomeTab.Lessons -> {
+                item {
+                    ReviewCard(count = state.dueCount, onClick = onReview)
+                    Spacer(Modifier.height(4.dp))
+                }
 
-        state.groups.forEach { group ->
-            if (group.title.isNotBlank()) {
-                stickyHeader(key = "s-${group.title}") { SectionHeader(group) }
+                state.groups.forEach { group ->
+                    // Урок без раздела показываем без заголовка и всегда открытым:
+                    // прятать его было бы некуда.
+                    val open = group.title.isBlank() || group.title in state.expandedGroups
+                    if (group.title.isNotBlank()) {
+                        stickyHeader(key = "s-${group.title}") {
+                            SectionHeader(group, open) { onToggleGroup(group.title) }
+                        }
+                    }
+                    if (open) {
+                        items(group.cards, key = { it.ref.id }) { card ->
+                            LessonRow(card, onClick = { onLesson(card.ref.id) })
+                        }
+                    }
+                }
             }
-            items(group.cards, key = { it.ref.id }) { card ->
-                LessonRow(card, onClick = { onLesson(card.ref.id) })
-            }
-        }
 
-        if (state.stories.isNotEmpty()) {
-            stickyHeader(key = "s-stories") { StoriesHeader(state.stories) }
-            items(state.stories, key = { it.ref.id }) { card ->
-                StoryRow(card, onClick = { onStory(card.ref.id) })
+            HomeTab.Stories -> {
+                if (state.stories.isEmpty()) {
+                    item {
+                        Text(
+                            "Историй пока нет.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Muted
+                        )
+                    }
+                } else {
+                    items(state.stories, key = { it.ref.id }) { card ->
+                        StoryRow(card, onClick = { onStory(card.ref.id) })
+                    }
+                }
             }
         }
 
@@ -109,20 +146,49 @@ fun HomeScreen(
 }
 
 /**
- * Заголовок раздела. Липкий: на длинном списке всегда видно, где ты находишься.
- *
- * Фон непрозрачный и во всю ширину, включая отступы списка, — иначе строки
- * уроков просвечивали бы из-под него при прокрутке.
+ * Иконка вкладки. Выбранная отличается не только цветом, но и подложкой:
+ * одного оттенка золота на тёмном фоне мало, чтобы понять, где находишься.
  */
 @Composable
-private fun SectionHeader(group: LessonGroup) {
+private fun TabIcon(
+    icon: ImageVector,
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = Modifier
+            .clip(RoundedCornerShape(10.dp))
+            .background(if (selected) Surface1 else Color.Transparent)
+    ) {
+        Icon(icon, contentDescription = label, tint = if (selected) Gold else Muted)
+    }
+}
+
+/**
+ * Заголовок раздела: липкий и складной, свёрнут по умолчанию.
+ *
+ * Свёрнут потому, что разделов будет много, а нужен за раз один; липкий потому,
+ * что в длинном открытом разделе иначе теряешь, где находишься. Фон непрозрачный
+ * и во всю ширину — иначе строки уроков просвечивали бы из-под него.
+ */
+@Composable
+private fun SectionHeader(group: LessonGroup, expanded: Boolean, onClick: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
             .background(Ink)
-            .padding(top = 18.dp, bottom = 10.dp),
+            .clickable(onClick = onClick)
+            .padding(top = 14.dp, bottom = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        Icon(
+            if (expanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
+            contentDescription = if (expanded) "Свернуть" else "Развернуть",
+            tint = Muted,
+            modifier = Modifier.padding(end = 10.dp)
+        )
         Text(
             group.title.uppercase(),
             style = MaterialTheme.typography.labelSmall,
@@ -131,29 +197,6 @@ private fun SectionHeader(group: LessonGroup) {
         )
         Text(
             "${group.done} / ${group.cards.size}",
-            style = MaterialTheme.typography.labelSmall,
-            color = Muted
-        )
-    }
-}
-
-@Composable
-private fun StoriesHeader(stories: List<StoryCard>) {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .background(Ink)
-            .padding(top = 18.dp, bottom = 10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            "ИСТОРИИ",
-            style = MaterialTheme.typography.labelSmall,
-            color = Gold,
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            "${stories.count { it.finished }} / ${stories.size}",
             style = MaterialTheme.typography.labelSmall,
             color = Muted
         )

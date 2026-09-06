@@ -42,6 +42,9 @@ data class LessonCard(
     val score: String?
 )
 
+/** Вкладка главного экрана. Уроки и истории — разные занятия, мешать их в одном списке незачем. */
+enum class HomeTab { Lessons, Stories }
+
 /** Раздел главного экрана: заголовок и уроки под ним, в порядке из `index.json`. */
 data class LessonGroup(
     val title: String,
@@ -54,6 +57,9 @@ data class HomeState(
     val groups: List<LessonGroup> = emptyList(),
     val stories: List<StoryCard> = emptyList(),
     val dueCount: Int = 0,
+    val tab: HomeTab = HomeTab.Lessons,
+    /** Заголовки развёрнутых разделов. По умолчанию свёрнуты все. */
+    val expandedGroups: Set<String> = emptySet(),
     val loading: Boolean = true,
     val error: String? = null
 )
@@ -165,6 +171,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val _home = MutableStateFlow(HomeState())
     val home: StateFlow<HomeState> = _home.asStateFlow()
 
+    /**
+     * Вкладка и развёрнутые разделы живут не в HomeState, а рядом.
+     *
+     * HomeState пересобирается целиком после каждого урока, и то, что человек
+     * открыл руками, схлопывалось бы у него на глазах при каждом возвращении.
+     */
+    private var tab: HomeTab = HomeTab.Lessons
+    private var expanded: Set<String> = emptySet()
+
     private val _session = MutableStateFlow<SessionState?>(null)
     val session: StateFlow<SessionState?> = _session.asStateFlow()
 
@@ -206,6 +221,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 }
                 val storyDone = dao.storyProgress().associateBy { it.storyId }
                 _home.value = HomeState(
+                    tab = tab,
+                    expandedGroups = expanded,
                     groups = groups,
                     stories = repo.stories().stories.map { ref ->
                         val p = storyDone[ref.id]
@@ -218,6 +235,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 _home.value = HomeState(loading = false, error = e.message ?: "Не удалось прочитать уроки")
             }
         }
+    }
+
+    fun selectTab(next: HomeTab) {
+        tab = next
+        _home.value = _home.value.copy(tab = next)
+    }
+
+    fun toggleGroup(title: String) {
+        expanded = if (title in expanded) expanded - title else expanded + title
+        _home.value = _home.value.copy(expandedGroups = expanded)
     }
 
     fun startLesson(lessonId: String) {
