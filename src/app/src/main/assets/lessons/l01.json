@@ -6,12 +6,13 @@
     { "type": "choice", "id": "l01e01", "prompt": "Как поздороваться днём?", "options": ["Dobro jutro", "Dobar dan", "Dobro veče", "Laku noć"], "answer": "Dobar dan", "explanation": "Jutro — утро, dan — день, veče — вечер, noć — ночь." },
     { "type": "me_to_ru", "id": "l01e02", "prompt": "Dobro jutro! Kako si?", "reference": "Доброе утро! Как дела?" },
     { "type": "ru_to_me", "id": "l01e03", "prompt": "Спасибо большое!", "reference": "Hvala lijepo!", "hint": "Дословно «спасибо красиво» — обычная формула вежливости." },
-    { "type": "word_bank", "id": "l01e04", "prompt": "Как тебя зовут?", "answer": "Kako se zoveš", "bank": ["Kako", "se", "zoveš", "zovem", "ste", "šta"] },
+    { "type": "word_bank", "id": "l01e04", "prompt": "Как тебя зовут?", "answer": "Kako se zoveš", "bank": ["Kako", "se", "zoveš", "zovem", "ste", "šta"], "explanation": "Zoveš — «ты зовёшься», zovem — «я зовусь». Возвратное se обязательно." },
     { "type": "listening", "id": "l01e05", "audioText": "Dobro veče", "translation": "Добрый вечер" },
     { "type": "choice", "id": "l01e06", "prompt": "Вежливое «извините», к незнакомому человеку", "options": ["Izvini", "Izvinite", "Molim", "Doviđenja"], "answer": "Izvinite", "explanation": "Izvini — на «ты», izvinite — на «вы»." },
     { "type": "ru_to_me", "id": "l01e07", "prompt": "Меня зовут Иван.", "reference": "Zovem se Ivan." },
     { "type": "form", "id": "l01e08", "prompt": "Ja ___ dobro. (глагол biti, форма для «я»)", "answer": "sam", "explanation": "biti: ja sam, ti si, on je, mi smo, vi ste, oni su." },
     { "type": "speaking", "id": "l01e09", "phrase": "Drago mi je", "translation": "Приятно познакомиться" },
-    { "type": "me_to_ru", "id": "l01e10", "prompt": "Doviđenja, vidimo se!", "reference": "До свидания, увидимся!" }
+    { "type": "me_to_ru", "id": "l01e10", "prompt": "Doviđenja, vidimo se!", "reference": "До свидания, увидимся!" },
+    { "type": "repeat", "id": "l01e11", "phrase": "Dobro jutro, kako si?", "translation": "Доброе утро, как дела?" }
   ]
 }

@@ -8,10 +8,11 @@
     { "type": "choice", "id": "l05e03", "prompt": "Как вежливо спросить «У вас есть молоко?»", "options": ["Imaš mlijeko?", "Imate li mlijeko?", "Gdje je mlijeko?", "Koliko mlijeko?"], "answer": "Imate li mlijeko?" },
     { "type": "ru_to_me", "id": "l05e04", "prompt": "Я хочу хлеб и молоко.", "reference": "Hoću hljeb i mlijeko." },
     { "type": "me_to_ru", "id": "l05e05", "prompt": "Koliko košta ovaj sir?", "reference": "Сколько стоит этот сыр?" },
-    { "type": "word_bank", "id": "l05e06", "prompt": "У вас есть вода?", "answer": "Imate li vodu", "bank": ["Imate", "li", "vodu", "voda", "imaš", "je"] },
+    { "type": "word_bank", "id": "l05e06", "prompt": "У вас есть вода?", "answer": "Imate li vodu", "bank": ["Imate", "li", "vodu", "voda", "imaš", "je"], "explanation": "Вопрос без вопросительного слова строится частицей li сразу после глагола. Voda → vodu, винительный." },
     { "type": "listening", "id": "l05e07", "audioText": "Molim vas, dva hljeba", "translation": "Два хлеба, пожалуйста" },
     { "type": "form", "id": "l05e08", "prompt": "Vidim ___ na pijaci. (žena)", "answer": "ženu" },
     { "type": "speaking", "id": "l05e09", "phrase": "Koliko košta?", "translation": "Сколько стоит?" },
-    { "type": "me_to_ru", "id": "l05e10", "prompt": "Nemamo jaja danas, izvinite.", "reference": "Извините, сегодня у нас нет яиц." }
+    { "type": "me_to_ru", "id": "l05e10", "prompt": "Nemamo jaja danas, izvinite.", "reference": "Извините, сегодня у нас нет яиц." },
+    { "type": "repeat", "id": "l05e11", "phrase": "Imate li mlijeko?", "translation": "У вас есть молоко?" }
   ]
 }

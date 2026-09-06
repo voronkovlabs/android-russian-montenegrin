@@ -292,12 +292,18 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             )
             is Exercise.WordBank -> localResult(
                 LocalCheck.matches(answer, ex.answer),
-                "",
+                ex.explanation,
                 ex.answer,
                 answer
             )
             // Распознанное показывается отдельной строкой «Услышано», в note дублировать не нужно.
             is Exercise.Speaking -> localResult(
+                LocalCheck.matchesSpoken(answer, ex.phrase),
+                "",
+                ex.phrase,
+                answer
+            )
+            is Exercise.Repeat -> localResult(
                 LocalCheck.matchesSpoken(answer, ex.phrase),
                 "",
                 ex.phrase,

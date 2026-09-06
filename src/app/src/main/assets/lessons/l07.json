@@ -9,9 +9,10 @@
     { "type": "choice", "id": "l07e04", "prompt": "«Они знают»", "options": ["zna", "znamo", "znate", "znaju"], "answer": "znaju" },
     { "type": "ru_to_me", "id": "l07e05", "prompt": "Я сегодня не могу, я работаю.", "reference": "Ne mogu danas, radim." },
     { "type": "me_to_ru", "id": "l07e06", "prompt": "Šta radiš večeras?", "reference": "Что ты делаешь сегодня вечером?" },
-    { "type": "word_bank", "id": "l07e07", "prompt": "Я хочу учить черногорский.", "answer": "Hoću da učim crnogorski", "bank": ["Hoću", "da", "učim", "crnogorski", "učiti", "znam"] },
+    { "type": "word_bank", "id": "l07e07", "prompt": "Я хочу учить черногорский.", "answer": "Hoću da učim crnogorski", "bank": ["Hoću", "da", "učim", "crnogorski", "učiti", "znam"], "explanation": "«Хотеть что-то делать» — hoću da плюс личная форма глагола, а не инфинитив: hoću da učim, не hoću učiti." },
     { "type": "listening", "id": "l07e08", "audioText": "Ne razumijem", "translation": "Я не понимаю" },
     { "type": "speaking", "id": "l07e09", "phrase": "Molim vas, ponovite", "translation": "Повторите, пожалуйста" },
-    { "type": "ru_to_me", "id": "l07e10", "prompt": "Мы живём здесь два года.", "reference": "Živimo ovdje dvije godine." }
+    { "type": "ru_to_me", "id": "l07e10", "prompt": "Мы живём здесь два года.", "reference": "Živimo ovdje dvije godine." },
+    { "type": "repeat", "id": "l07e11", "phrase": "Šta radiš večeras?", "translation": "Что ты делаешь сегодня вечером?" }
   ]
 }

@@ -228,6 +228,20 @@ private fun ExerciseBody(
             text = ex.phrase,
             translation = ex.translation,
             longForm = false,
+            byEar = false,
+            speaker = speaker,
+            enabled = enabled,
+            onSubmit = onSubmit,
+            onSkip = onSkip
+        )
+
+        is Exercise.Repeat -> SpokenAnswer(
+            key = ex.id,
+            label = "Повтори на слух",
+            text = ex.phrase,
+            translation = ex.translation,
+            longForm = false,
+            byEar = true,
             speaker = speaker,
             enabled = enabled,
             onSubmit = onSubmit,
@@ -240,6 +254,7 @@ private fun ExerciseBody(
             text = ex.text,
             translation = ex.translation,
             longForm = true,
+            byEar = false,
             speaker = speaker,
             enabled = enabled,
             onSubmit = onSubmit,
@@ -497,11 +512,12 @@ private fun ListeningAnswer(
 }
 
 /**
- * Сказать вслух и сверить с распознанным — и короткая фраза, и целый текст.
+ * Сказать вслух и сверить с распознанным — фраза, текст или повтор на слух.
  *
- * Разница только в [longForm]: при чтении текста движок просят не обрывать
- * запись на паузе между предложениями, а проверку в AppViewModel считают
- * по доле совпавших слов, а не дословно.
+ * Отличий два. [longForm] — чтение целого текста: движок просят не обрывать
+ * запись на паузе между предложениями, а проверку в AppViewModel считают по
+ * доле совпавших слов. [byEar] — фраза звучит сама, а текст закрыт, пока его
+ * не откроют: опереться должно быть не на что, кроме услышанного.
  */
 @Composable
 private fun SpokenAnswer(
@@ -510,6 +526,7 @@ private fun SpokenAnswer(
     text: String,
     translation: String,
     longForm: Boolean,
+    byEar: Boolean,
     speaker: Speaker,
     enabled: Boolean,
     onSubmit: (String) -> Unit,
@@ -519,6 +536,14 @@ private fun SpokenAnswer(
     val listener = remember { Listener(context) }
     var status by remember(key) { mutableStateOf("") }
     var listening by remember(key) { mutableStateOf(false) }
+    var revealed by remember(key) { mutableStateOf(false) }
+
+    // После ответа текст открывается сам: иначе не с чем сверить услышанное.
+    val showText = !byEar || revealed || !enabled
+
+    if (byEar) {
+        LaunchedEffect(key) { if (enabled) speaker.speak(text) }
+    }
 
     fun start() {
         listening = true
@@ -544,11 +569,25 @@ private fun SpokenAnswer(
     }
 
     Label(label)
-    Prompt(text)
+    if (showText) {
+        Prompt(text)
+    } else {
+        Text(
+            "Текст закрыт — слушай и повторяй.",
+            style = MaterialTheme.typography.headlineSmall,
+            color = Muted
+        )
+    }
     Spacer(Modifier.height(8.dp))
     Text(translation, style = MaterialTheme.typography.bodyMedium, color = Muted)
     Spacer(Modifier.height(16.dp))
-    SmallAction("Послушать образец") { speaker.speak(text) }
+    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        SmallAction(if (byEar) "Ещё раз" else "Послушать образец") { speaker.speak(text) }
+        SmallAction("Медленнее") { speaker.speak(text, slow = true) }
+        if (!showText) {
+            SmallAction("Показать текст") { revealed = true }
+        }
+    }
 
     Spacer(Modifier.height(24.dp))
     PrimaryButton(if (listening) "Слушаю…" else "Записать", enabled = enabled && !listening) {
@@ -579,7 +618,9 @@ private fun ResultView(phase: Phase.Result, exercise: Exercise) {
     val differs = !LocalCheck.matches(phase.answer, phase.expected)
     val showAnswer = phase.answer.isNotBlank() && (!phase.correct || differs)
     // Для речи это не то, что ты сказал, а то, что расслышал движок.
-    val spoken = exercise is Exercise.Speaking || exercise is Exercise.Reading
+    val spoken = exercise is Exercise.Speaking ||
+        exercise is Exercise.Repeat ||
+        exercise is Exercise.Reading
     val answerLabel = if (spoken) "Услышано" else "Твой ответ"
 
     Column(

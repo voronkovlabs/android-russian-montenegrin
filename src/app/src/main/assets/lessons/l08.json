@@ -7,7 +7,7 @@
     { "type": "form", "id": "l08e02", "prompt": "Autobuska stanica je u ___ . (centar)", "answer": "centru" },
     { "type": "me_to_ru", "id": "l08e03", "prompt": "Idite pravo, pa desno.", "reference": "Идите прямо, затем направо." },
     { "type": "ru_to_me", "id": "l08e04", "prompt": "Где автобусная станция?", "reference": "Gdje je autobuska stanica?" },
-    { "type": "word_bank", "id": "l08e05", "prompt": "Море далеко отсюда?", "answer": "Je li more daleko odavde", "bank": ["Je", "li", "more", "daleko", "odavde", "blizu"] },
+    { "type": "word_bank", "id": "l08e05", "prompt": "Море далеко отсюда?", "answer": "Je li more daleko odavde", "bank": ["Je", "li", "more", "daleko", "odavde", "blizu"], "explanation": "Je li… — обычное начало вопроса «да/нет». Odavde — «отсюда»." },
     { "type": "listening", "id": "l08e06", "audioText": "Plaža je blizu", "translation": "Пляж рядом" },
     { "type": "form", "id": "l08e07", "prompt": "Živim u ___ . (Budva)", "answer": "Budvi" },
     { "type": "me_to_ru", "id": "l08e08", "prompt": "Izvinite, gdje je pijaca?", "reference": "Извините, где рынок?" },

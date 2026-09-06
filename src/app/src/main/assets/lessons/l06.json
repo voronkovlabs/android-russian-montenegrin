@@ -8,7 +8,7 @@
     { "type": "ru_to_me", "id": "l06e03", "prompt": "Сегодня понедельник.", "reference": "Danas je ponedjeljak." },
     { "type": "form", "id": "l06e04", "prompt": "Sastanak je u ___ . (subota)", "answer": "subotu" },
     { "type": "listening", "id": "l06e05", "audioText": "Sjutra je četvrtak", "translation": "Завтра четверг" },
-    { "type": "word_bank", "id": "l06e06", "prompt": "Который час?", "answer": "Koliko je sati", "bank": ["Koliko", "je", "sati", "sat", "kada", "vrijeme"] },
+    { "type": "word_bank", "id": "l06e06", "prompt": "Который час?", "answer": "Koliko je sati", "bank": ["Koliko", "je", "sati", "sat", "kada", "vrijeme"], "explanation": "Дословно «сколько есть часов»: sati — родительный множественного от sat. Глагол je обязателен, vrijeme в этом вопросе не участвует." },
     { "type": "choice", "id": "l06e07", "prompt": "«Завтра» в черногорской норме", "options": ["sutra", "sjutra", "juče", "danas"], "answer": "sjutra", "explanation": "Sutra — сербский вариант, в Черногории норма sjutra." },
     { "type": "me_to_ru", "id": "l06e08", "prompt": "Juče sam bio u Baru.", "reference": "Вчера я был в Баре." },
     { "type": "speaking", "id": "l06e09", "phrase": "Vidimo se sjutra", "translation": "Увидимся завтра" },

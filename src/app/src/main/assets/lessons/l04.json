@@ -8,7 +8,7 @@
     { "type": "form", "id": "l04e03", "prompt": "Ovo je ___ sestra. (моя)", "answer": "moja" },
     { "type": "ru_to_me", "id": "l04e04", "prompt": "Это моя мать, а это мой отец.", "reference": "Ovo je moja majka, a ovo je moj otac." },
     { "type": "me_to_ru", "id": "l04e05", "prompt": "Imam dvije sestre i jednog brata.", "reference": "У меня две сестры и один брат." },
-    { "type": "word_bank", "id": "l04e06", "prompt": "У меня нет детей.", "answer": "Nemam djecu", "bank": ["Nemam", "djecu", "dijete", "imam", "nemaš"] },
+    { "type": "word_bank", "id": "l04e06", "prompt": "У меня нет детей.", "answer": "Nemam djecu", "bank": ["Nemam", "djecu", "dijete", "imam", "nemaš"], "explanation": "Отрицание пишется слитно с глаголом: imam → nemam. Djeca — собирательное «дети», в винительном djecu." },
     { "type": "listening", "id": "l04e07", "audioText": "Moj otac je iz Nikšića", "translation": "Мой отец из Никшича" },
     { "type": "choice", "id": "l04e08", "prompt": "Ovo je ___ kćerka. (его)", "options": ["njegov", "njegova", "njena", "njihov"], "answer": "njegova", "explanation": "Kćerka женского рода, поэтому njegova." },
     { "type": "speaking", "id": "l04e09", "phrase": "Ovo je moja porodica", "translation": "Это моя семья" },

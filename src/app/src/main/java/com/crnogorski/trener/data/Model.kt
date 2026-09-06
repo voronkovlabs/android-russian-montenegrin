@@ -72,7 +72,8 @@ sealed class Exercise {
         override val id: String,
         val prompt: String,
         val answer: String,
-        val bank: List<String>
+        val bank: List<String>,
+        val explanation: String = ""
     ) : Exercise()
 
     /** Подстановка формы слова: падеж, спряжение. Одно-два слова, строгая проверка. */
@@ -98,6 +99,21 @@ sealed class Exercise {
     @Serializable
     @SerialName("speaking")
     data class Speaking(
+        override val id: String,
+        val phrase: String,
+        val translation: String
+    ) : Exercise()
+
+    /**
+     * Повторение на слух: фраза звучит, текст закрыт.
+     *
+     * От [Speaking] отличается только тем, что видно на экране: там текст перед
+     * глазами и задача — прочитать его вслух, здесь опереться не на что, кроме
+     * услышанного. Проверяется одинаково, `matchesSpoken`.
+     */
+    @Serializable
+    @SerialName("repeat")
+    data class Repeat(
         override val id: String,
         val phrase: String,
         val translation: String
@@ -133,6 +149,7 @@ val Exercise.typeName: String
         is Exercise.Form -> "form"
         is Exercise.Listening -> "listening"
         is Exercise.Speaking -> "speaking"
+        is Exercise.Repeat -> "repeat"
         is Exercise.Reading -> "reading"
     }
 
@@ -150,5 +167,6 @@ val Exercise.referenceAnswer: String
         is Exercise.Form -> answer
         is Exercise.Listening -> audioText
         is Exercise.Speaking -> phrase
+        is Exercise.Repeat -> phrase
         is Exercise.Reading -> text
     }
