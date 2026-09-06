@@ -286,13 +286,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             is Exercise.TranslateToTarget -> checkWithModel(ex.prompt, ex.reference, answer)
             is Exercise.TranslateToNative -> checkWithModel(ex.prompt, ex.reference, answer)
             is Exercise.Form -> localResult(
-                LocalCheck.matches(answer, ex.answer),
+                LocalCheck.matchesTyped(answer, ex.answer),
                 ex.explanation,
                 ex.answer,
                 answer
             )
             is Exercise.Listening -> localResult(
-                LocalCheck.matches(answer, ex.audioText),
+                LocalCheck.matchesTyped(answer, ex.audioText),
                 ex.translation,
                 ex.audioText,
                 answer

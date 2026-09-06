@@ -56,6 +56,9 @@ class LessonRepository(private val context: Context) {
  * Строгая проверка для заданий с единственным верным ответом.
  * Игнорирует регистр, пунктуацию и лишние пробелы. Диакритику не игнорирует:
  * č/ć/š/ž/đ несут смысл, и привыкать печатать их стоит сразу.
+ *
+ * Экавица засчитывается наравне с иекавицей — см. [reflex]: курс черногорский,
+ * но правильный сербский ответ ошибкой не считается.
  */
 object LocalCheck {
 
@@ -65,12 +68,60 @@ object LocalCheck {
         .replace(Regex("[.,!?;:\"'()]"), "")
         .replace(Regex("\\s+"), " ")
 
+    /**
+     * Строгое сравнение: экавица здесь **не** прощается.
+     *
+     * Для заданий, где вариант выбирают из показанных, а не набирают: в l06e07
+     * выбор между `sutra` и `sjutra` — и есть всё задание, прощать тут нечего.
+     */
     fun matches(answer: String, expected: String): Boolean =
         normalize(answer) == normalize(expected)
 
+    /**
+     * Сравнение набранного руками: правильный сербский ответ засчитывается.
+     *
+     * Разница со [matches] в том, что там форму выбирают из двух показанных,
+     * а здесь вспоминают и печатают — и `vreme` вместо `vrijeme` значит, что
+     * слово человек знает.
+     */
+    fun matchesTyped(answer: String, expected: String): Boolean {
+        val a = normalize(answer)
+        val e = normalize(expected)
+        return a == e || reflex(a) == reflex(e)
+    }
+
     /** Для распознавания речи: там диакритика теряется чаще, сверяем мягче. */
     fun matchesSpoken(heard: String, expected: String): Boolean =
-        flatten(heard) == flatten(expected)
+        reflex(flatten(heard)) == reflex(flatten(expected))
+
+    /**
+     * Сводит иекавицу и экавицу к одному виду: `lijepo` и `lepo` после этого
+     * равны, `vrijeme` и `vreme` тоже.
+     *
+     * Замена сплошная (`ije` → `e`, потом `je` → `e`), а не по списку слов:
+     * она применяется к обеим сравниваемым строкам сразу, поэтому «jedan»
+     * и там и там превращается в «edan» и по-прежнему совпадает само с собой.
+     * Столкнуться двум разным словам в одной форме теоретически можно, но за
+     * лишний засчитанный ответ в личном тренажёре платить нечем.
+     *
+     * Слова, где рефлекс не сплошной, идут списком до общего правила:
+     * черногорское `sjutra` от сербского `sutra` заменой `je` → `e` не получить.
+     */
+    fun reflex(normalized: String): String {
+        var s = normalized
+        SPECIAL.forEach { (from, to) -> s = s.replace(from, to) }
+        return s.replace("ije", "e").replace("je", "e")
+    }
+
+    private val SPECIAL = listOf(
+        "sjutra" to "sutra",
+        "śutra" to "sutra",
+        "ovđe" to "ovde",
+        "onđe" to "onde",
+        "đe" to "gde",
+        "śever" to "sever",
+        "iđem" to "idem"
+    )
 
     /**
      * Насколько прочитанное вслух совпало с текстом — доля слов эталона,
@@ -103,7 +154,7 @@ object LocalCheck {
         .replace('š', 's').replace('ž', 'z')
         .replace("đ", "dj")
 
-    private fun words(s: String) = flatten(s).split(' ').filter { it.isNotBlank() }
+    private fun words(s: String) = reflex(flatten(s)).split(' ').filter { it.isNotBlank() }
 }
 
 /**
