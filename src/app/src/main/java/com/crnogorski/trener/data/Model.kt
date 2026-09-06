@@ -15,6 +15,20 @@ data class LessonRef(
     val file: String
 )
 
+/**
+ * Словарь для подсказок по нажатию на слово: `assets/glossary.json`.
+ *
+ * Ключ — словоформа в нижнем регистре ровно в том виде, в каком она стоит
+ * в задании, а не начальная форма: разбирать морфологию на устройстве нечем,
+ * да и «plažu — пляж (вин. п.)» полезнее, чем отсылка к словарной статье.
+ * Слова, которых в словаре нет, просто не подчёркиваются.
+ */
+@Serializable
+data class Glossary(
+    val me: Map<String, String> = emptyMap(),
+    val ru: Map<String, String> = emptyMap()
+)
+
 @Serializable
 data class Lesson(
     val id: String,

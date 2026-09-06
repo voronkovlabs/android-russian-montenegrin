@@ -47,9 +47,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.intl.LocaleList
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.crnogorski.trener.data.ComplaintReason
@@ -191,6 +197,8 @@ private fun ExerciseBody(
             hint = ex.hint,
             enabled = enabled,
             language = AnswerLanguage.Target,
+            // Задание по-русски: подсказка ведёт в черногорский.
+            promptGloss = state.glossary.ru,
             onSubmit = onSubmit
         )
 
@@ -201,6 +209,7 @@ private fun ExerciseBody(
             hint = ex.hint,
             enabled = enabled,
             language = AnswerLanguage.Native,
+            promptGloss = state.glossary.me,
             speakable = ex.prompt,
             speaker = speaker,
             onSubmit = onSubmit
@@ -213,12 +222,13 @@ private fun ExerciseBody(
             hint = "",
             enabled = enabled,
             language = AnswerLanguage.Target,
+            promptGloss = state.glossary.me,
             onSubmit = onSubmit
         )
 
         is Exercise.Choice -> ChoiceAnswer(ex, speaker, enabled, onSubmit)
 
-        is Exercise.WordBank -> WordBankAnswer(ex, enabled, onSubmit)
+        is Exercise.WordBank -> WordBankAnswer(ex, state.glossary.ru, enabled, onSubmit)
 
         is Exercise.Listening -> ListeningAnswer(ex, speaker, enabled, onSubmit)
 
@@ -227,8 +237,9 @@ private fun ExerciseBody(
             label = "Произнеси вслух",
             text = ex.phrase,
             translation = ex.translation,
-            longForm = false,
             byEar = false,
+            gloss = state.glossary.me,
+            translationGloss = state.glossary.ru,
             speaker = speaker,
             enabled = enabled,
             onSubmit = onSubmit,
@@ -240,22 +251,20 @@ private fun ExerciseBody(
             label = "Повтори на слух",
             text = ex.phrase,
             translation = ex.translation,
-            longForm = false,
             byEar = true,
+            gloss = state.glossary.me,
+            translationGloss = state.glossary.ru,
             speaker = speaker,
             enabled = enabled,
             onSubmit = onSubmit,
             onSkip = onSkip
         )
 
-        is Exercise.Reading -> SpokenAnswer(
-            key = ex.id,
-            label = "Прочитай вслух",
-            text = ex.text,
-            translation = ex.translation,
-            longForm = true,
-            byEar = false,
+        is Exercise.Reading -> ReadingAnswer(
+            ex = ex,
             speaker = speaker,
+            gloss = state.glossary.me,
+            translationGloss = state.glossary.ru,
             enabled = enabled,
             onSubmit = onSubmit,
             onSkip = onSkip
@@ -270,9 +279,83 @@ private fun Label(text: String) {
 }
 
 @Composable
-private fun Prompt(text: String) {
-    Text(text, style = MaterialTheme.typography.headlineSmall, color = Paper)
+private fun Prompt(text: String, gloss: Map<String, String> = emptyMap()) {
+    GlossedText(text, gloss, MaterialTheme.typography.headlineSmall, Paper)
 }
+
+/**
+ * Текст задания, где знакомые слова подчёркнуты и по нажатию показывают перевод
+ * строкой ниже.
+ *
+ * Строкой, а не всплывающей подсказкой: на телефоне палец закрывает ровно то
+ * место, куда нажали, и перевод под текстом читается спокойно, пока не нажали
+ * следующее слово. Слов, которых нет в словаре, подчёркивание не касается —
+ * так сразу видно, на что нажимать бесполезно.
+ */
+@Composable
+private fun GlossedText(
+    text: String,
+    gloss: Map<String, String>,
+    style: androidx.compose.ui.text.TextStyle,
+    color: androidx.compose.ui.graphics.Color
+) {
+    if (gloss.isEmpty()) {
+        Text(text, style = style, color = color)
+        return
+    }
+
+    var picked by remember(text) { mutableStateOf<Pair<String, String>?>(null) }
+
+    val annotated = buildAnnotatedString {
+        var cursor = 0
+        WORD.findAll(text).forEach { match ->
+            append(text.substring(cursor, match.range.first))
+            cursor = match.range.last + 1
+
+            val word = match.value
+            val meaning = gloss[word.lowercase()]
+            if (meaning == null) {
+                append(word)
+            } else {
+                withLink(
+                    LinkAnnotation.Clickable(
+                        tag = word,
+                        styles = TextLinkStyles(
+                            style = SpanStyle(textDecoration = TextDecoration.Underline)
+                        )
+                    ) { picked = word to meaning }
+                ) { append(word) }
+            }
+        }
+        append(text.substring(cursor))
+    }
+
+    Text(annotated, style = style, color = color)
+
+    val shown = picked
+    if (shown != null) {
+        Spacer(Modifier.height(8.dp))
+        Text(
+            "${shown.first} — ${shown.second}",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Gold
+        )
+    }
+}
+
+/** Слово для подсказки: буквы и дефис, цифры и знаки не в счёт. */
+private val WORD = Regex("[\\p{L}-]+")
+
+/**
+ * Текст на предложения. Читать вслух целым куском не выходит (см. ReadingAnswer),
+ * поэтому граница предложения — это граница одного захода распознавания.
+ */
+private fun splitSentences(text: String): List<String> =
+    Regex("[^.!?]+[.!?]*")
+        .findAll(text)
+        .map { it.value.trim() }
+        .filter { it.isNotBlank() }
+        .toList()
 
 @Composable
 private fun TextAnswer(
@@ -282,6 +365,7 @@ private fun TextAnswer(
     hint: String,
     enabled: Boolean,
     language: AnswerLanguage,
+    promptGloss: Map<String, String> = emptyMap(),
     speakable: String? = null,
     speaker: Speaker? = null,
     onSubmit: (String) -> Unit
@@ -297,7 +381,7 @@ private fun TextAnswer(
     }
 
     Label(label)
-    Prompt(prompt)
+    Prompt(prompt, promptGloss)
     if (speakable != null && speaker != null) {
         Spacer(Modifier.height(10.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -396,7 +480,12 @@ private fun ChoiceAnswer(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun WordBankAnswer(ex: Exercise.WordBank, enabled: Boolean, onSubmit: (String) -> Unit) {
+private fun WordBankAnswer(
+    ex: Exercise.WordBank,
+    gloss: Map<String, String>,
+    enabled: Boolean,
+    onSubmit: (String) -> Unit
+) {
     var picked by remember(ex.id) { mutableStateOf(listOf<String>()) }
     val remaining = remember(picked) {
         val counts = picked.groupingBy { it }.eachCount().toMutableMap()
@@ -407,7 +496,7 @@ private fun WordBankAnswer(ex: Exercise.WordBank, enabled: Boolean, onSubmit: (S
     }
 
     Label("Собери фразу")
-    Prompt(ex.prompt)
+    Prompt(ex.prompt, gloss)
     Spacer(Modifier.height(20.dp))
 
     Box(
@@ -514,10 +603,9 @@ private fun ListeningAnswer(
 /**
  * Сказать вслух и сверить с распознанным — фраза, текст или повтор на слух.
  *
- * Отличий два. [longForm] — чтение целого текста: движок просят не обрывать
- * запись на паузе между предложениями, а проверку в AppViewModel считают по
- * доле совпавших слов. [byEar] — фраза звучит сама, а текст закрыт, пока его
- * не откроют: опереться должно быть не на что, кроме услышанного.
+ * [byEar] — фраза звучит сама, а текст закрыт, пока его не откроют: опереться
+ * должно быть не на что, кроме услышанного. Длинный текст читается не здесь,
+ * а в ReadingAnswer: один заход распознавания — одна короткая фраза.
  */
 @Composable
 private fun SpokenAnswer(
@@ -525,8 +613,9 @@ private fun SpokenAnswer(
     label: String,
     text: String,
     translation: String,
-    longForm: Boolean,
     byEar: Boolean,
+    gloss: Map<String, String>,
+    translationGloss: Map<String, String>,
     speaker: Speaker,
     enabled: Boolean,
     onSubmit: (String) -> Unit,
@@ -547,9 +636,8 @@ private fun SpokenAnswer(
 
     fun start() {
         listening = true
-        status = if (longForm) "Читай, паузы между предложениями не мешают…" else "Говори…"
+        status = "Говори…"
         listener.listen(
-            longForm = longForm,
             onResult = { heard ->
                 listening = false
                 status = ""
@@ -570,7 +658,7 @@ private fun SpokenAnswer(
 
     Label(label)
     if (showText) {
-        Prompt(text)
+        Prompt(text, gloss)
     } else {
         Text(
             "Текст закрыт — слушай и повторяй.",
@@ -579,7 +667,7 @@ private fun SpokenAnswer(
         )
     }
     Spacer(Modifier.height(8.dp))
-    Text(translation, style = MaterialTheme.typography.bodyMedium, color = Muted)
+    GlossedText(translation, translationGloss, MaterialTheme.typography.bodyMedium, Muted)
     Spacer(Modifier.height(16.dp))
     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
         SmallAction(if (byEar) "Ещё раз" else "Послушать образец") { speaker.speak(text) }
@@ -659,6 +747,128 @@ private fun ResultView(phase: Phase.Result, exercise: Exercise) {
         if (phase.better.isNotBlank()) {
             Spacer(Modifier.height(8.dp))
             Text("Естественнее: ${phase.better}", style = MaterialTheme.typography.bodyMedium, color = Gold)
+        }
+    }
+}
+
+/**
+ * Чтение вслух — по одному предложению за заход.
+ *
+ * Целым текстом не выходит: движок распознавания на длинной фразе возвращает
+ * «ничего не расслышал», а просьбы не обрывать запись на паузе документация
+ * Android разрешает игнорировать — что он и делает. Короткая фраза
+ * распознаётся надёжно, поэтому текст читается по предложению, услышанное
+ * склеивается и оценивается целиком, уже в AppViewModel.
+ *
+ * Ошибка распознавания стоит одного предложения, а не всего текста: сорванное
+ * перечитывается на месте, прочитанное раньше не теряется.
+ */
+@Composable
+private fun ReadingAnswer(
+    ex: Exercise.Reading,
+    speaker: Speaker,
+    gloss: Map<String, String>,
+    translationGloss: Map<String, String>,
+    enabled: Boolean,
+    onSubmit: (String) -> Unit,
+    onSkip: () -> Unit
+) {
+    val context = LocalContext.current
+    val listener = remember { Listener(context) }
+    val sentences = remember(ex.id) { splitSentences(ex.text) }
+    var heard by remember(ex.id) { mutableStateOf(listOf<String>()) }
+    var status by remember(ex.id) { mutableStateOf("") }
+    var listening by remember(ex.id) { mutableStateOf(false) }
+
+    val index = heard.size.coerceAtMost(sentences.size - 1)
+    val current = sentences.getOrElse(index) { ex.text }
+
+    fun start() {
+        listening = true
+        status = ""
+        listener.listen(
+            onResult = { text ->
+                listening = false
+                val collected = heard + text
+                if (collected.size >= sentences.size) {
+                    onSubmit(collected.joinToString(" "))
+                } else {
+                    heard = collected
+                }
+            },
+            onError = { message ->
+                listening = false
+                status = "$message. Это предложение можно перечитать."
+            }
+        )
+    }
+
+    val permission = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) start() else status = "Без доступа к микрофону задание не проверить"
+    }
+
+    Label("Прочитай вслух")
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        sentences.forEachIndexed { i, sentence ->
+            GlossedText(
+                text = sentence,
+                gloss = gloss,
+                style = MaterialTheme.typography.headlineSmall,
+                color = when {
+                    !enabled -> Paper
+                    i < heard.size -> Jade
+                    i == index -> Paper
+                    else -> Muted
+                }
+            )
+        }
+    }
+
+    Spacer(Modifier.height(8.dp))
+    GlossedText(ex.translation, translationGloss, MaterialTheme.typography.bodyMedium, Muted)
+
+    if (enabled) {
+        Spacer(Modifier.height(16.dp))
+        Text(
+            "Предложение ${index + 1} из ${sentences.size} — читается по одному.",
+            style = MaterialTheme.typography.labelSmall,
+            color = Muted
+        )
+        Spacer(Modifier.height(10.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            SmallAction("Послушать") { speaker.speak(current) }
+            SmallAction("Медленнее") { speaker.speak(current, slow = true) }
+            if (heard.isNotEmpty()) {
+                SmallAction("Сначала") {
+                    heard = emptyList()
+                    status = ""
+                }
+            }
+        }
+    }
+
+    Spacer(Modifier.height(24.dp))
+    PrimaryButton(
+        if (listening) "Слушаю…" else "Записать предложение",
+        enabled = enabled && !listening
+    ) {
+        val granted = ContextCompat.checkSelfPermission(
+            context, Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED
+        if (granted) start() else permission.launch(Manifest.permission.RECORD_AUDIO)
+    }
+
+    if (status.isNotBlank()) {
+        Spacer(Modifier.height(12.dp))
+        Text(status, style = MaterialTheme.typography.bodyMedium, color = Muted)
+    }
+
+    if (enabled) {
+        Spacer(Modifier.height(8.dp))
+        TextButton(onClick = onSkip) {
+            Text("Пропустить", color = Muted)
         }
     }
 }

@@ -13,6 +13,7 @@ import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.ComplaintStore
 import com.crnogorski.trener.data.ComplaintVerdict
 import com.crnogorski.trener.data.Exercise
+import com.crnogorski.trener.data.Glossary
 import com.crnogorski.trener.data.LessonProgressEntity
 import com.crnogorski.trener.data.LessonRef
 import com.crnogorski.trener.data.LessonRepository
@@ -83,7 +84,9 @@ data class SessionState(
     val isReview: Boolean = false,
     val finished: Boolean = false,
     /** На текущее задание уже пожаловались — второй раз не предлагаем. */
-    val complaintFiled: Boolean = false
+    val complaintFiled: Boolean = false,
+    /** Словарь подсказок по нажатию на слово; пустой — значит подсказок нет. */
+    val glossary: Glossary = Glossary()
 ) {
     val current: Exercise get() = items[index].exercise
     val progress: Float get() = if (items.isEmpty()) 0f else index.toFloat() / items.size
@@ -146,7 +149,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             val lesson = repo.lesson(lessonId)
             val items = lesson.exercises.map { SessionItem(lessonId, it) }
-            _session.value = SessionState(title = lesson.title, note = lesson.note, items = items)
+            _session.value = SessionState(
+                title = lesson.title,
+                note = lesson.note,
+                items = items,
+                glossary = repo.glossary()
+            )
             guardNetwork(items)
         }
     }
@@ -162,7 +170,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 refreshHome()
                 return@launch
             }
-            _session.value = SessionState(title = "Повторение", items = items, isReview = true)
+            _session.value = SessionState(
+                title = "Повторение",
+                items = items,
+                isReview = true,
+                glossary = repo.glossary()
+            )
             guardNetwork(items)
         }
     }

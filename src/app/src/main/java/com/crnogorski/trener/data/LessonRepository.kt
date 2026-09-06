@@ -13,6 +13,7 @@ class LessonRepository(private val context: Context) {
     }
 
     private var cachedIndex: LessonIndex? = null
+    private var cachedGlossary: Glossary? = null
     private val cachedLessons = mutableMapOf<String, Lesson>()
 
     suspend fun index(): LessonIndex = withContext(Dispatchers.IO) {
@@ -26,6 +27,16 @@ class LessonRepository(private val context: Context) {
             json.decodeFromString<Lesson>(read("lessons/${ref.file}"))
                 .also { cachedLessons[id] = it }
         }
+    }
+
+    /**
+     * Словарь подсказок. Читается один раз за запуск; если файла нет или он
+     * битый, подсказки просто не появятся — задания от этого не ломаются.
+     */
+    suspend fun glossary(): Glossary = withContext(Dispatchers.IO) {
+        cachedGlossary ?: runCatching {
+            json.decodeFromString<Glossary>(read("glossary.json"))
+        }.getOrDefault(Glossary()).also { cachedGlossary = it }
     }
 
     /** Все задания курса, разложенные по id — нужно для сборки сессии повторения. */

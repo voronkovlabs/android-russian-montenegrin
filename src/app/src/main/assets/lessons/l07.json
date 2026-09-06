@@ -1,11 +1,11 @@
 {
   "id": "l07",
   "title": "Глаголы в настоящем времени",
-  "note": "Три типа окончаний: -am (imati: imam, imaš, ima), -im (raditi: radim, radiš, radi), -em (ići: idem, ideš, ide).",
+  "note": "Настоящее время: у глагола меняется окончание по лицу, а личное местоимение обычно опускают — «Radim u Podgorici» значит «Я работаю в Подгорице». Три образца, по первому лицу видно весь ряд. -am, imati: imam, imaš, ima, imamo, imate, imaju — «Imam dva brata». -im, raditi: radim, radiš, radi, radimo, radite, rade — «Šta radiš večeras?». -em, ići: idem, ideš, ide, idemo, idete, idu — «Idemo na plažu». Тип обычно виден по инфинитиву: -ati даёт -am (znati → znam), -iti даёт -im (govoriti → govorim), но ići и hoću приходится помнить отдельно.",
   "exercises": [
-    { "type": "form", "id": "l07e01", "prompt": "Ja ___ u Podgorici. (raditi)", "answer": "radim" },
-    { "type": "form", "id": "l07e02", "prompt": "On ___ crnogorski. (govoriti)", "answer": "govori" },
-    { "type": "form", "id": "l07e03", "prompt": "Mi ___ na plažu. (ići)", "answer": "idemo" },
+    { "type": "form", "id": "l07e01", "prompt": "Ja ___ u Podgorici. (raditi)", "answer": "radim", "explanation": "Raditi — образец на -im: radim, radiš, radi, radimo, radite, rade. Для «я» — radim." },
+    { "type": "form", "id": "l07e02", "prompt": "On ___ crnogorski. (govoriti)", "answer": "govori", "explanation": "Govoriti тоже на -im: govorim, govoriš, govori. Для «он» окончание отпадает — govori." },
+    { "type": "form", "id": "l07e03", "prompt": "Mi ___ na plažu. (ići)", "answer": "idemo", "explanation": "Ići — образец на -em и меняет основу: idem, ideš, ide, idemo, idete, idu. Для «мы» — idemo." },
     { "type": "choice", "id": "l07e04", "prompt": "«Они знают»", "options": ["zna", "znamo", "znate", "znaju"], "answer": "znaju" },
     { "type": "ru_to_me", "id": "l07e05", "prompt": "Я сегодня не могу, я работаю.", "reference": "Ne mogu danas, radim." },
     { "type": "me_to_ru", "id": "l07e06", "prompt": "Šta radiš večeras?", "reference": "Что ты делаешь сегодня вечером?" },

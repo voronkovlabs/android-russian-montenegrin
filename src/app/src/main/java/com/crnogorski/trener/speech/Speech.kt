@@ -104,12 +104,13 @@ class Listener(private val context: Context) {
      * перевод на русский — на ru-RU. Движку это не подсказка, а требование:
      * с чужим языком он выдаёт правдоподобную бессмыслицу.
      *
-     * [longForm] — чтение целого текста: движок просят не обрывать запись на
-     * паузе между предложениями.
+     * Один заход — одна короткая фраза. Просить движок не обрывать запись на
+     * паузе бесполезно: документация разрешает эти просьбы игнорировать, а на
+     * длинном тексте он возвращает «ничего не расслышал». Поэтому длинное
+     * читается по предложению — см. ReadingAnswer.
      */
     fun listen(
         language: String = TAG_TARGET,
-        longForm: Boolean = false,
         onResult: (String) -> Unit,
         onError: (String) -> Unit
     ) {
@@ -123,17 +124,6 @@ class Listener(private val context: Context) {
             )
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, language)
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
-            if (longForm) {
-                // Чтение в несколько предложений: пауза между ними не должна
-                // обрывать запись. Движок вправе эти просьбы проигнорировать —
-                // документация прямо это оговаривает, гарантий тут нет.
-                putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 2500)
-                putExtra(
-                    RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS,
-                    2500
-                )
-                putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 5000)
-            }
         }
 
         sr.setRecognitionListener(object : RecognitionListener {
