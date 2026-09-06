@@ -2,6 +2,9 @@ package com.crnogorski.trener.ui
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -36,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
+import com.crnogorski.trener.data.ProgressStore
 import com.crnogorski.trener.speech.Speaker
 import kotlinx.coroutines.launch
 import java.io.File
@@ -49,12 +53,29 @@ fun SettingsScreen(
     speaker: Speaker,
     prepareReport: suspend () -> File?,
     onArchive: () -> Unit,
+    onFolder: (Uri) -> Unit,
+    onForgetFolder: () -> Unit,
+    onSaveNow: () -> Unit,
+    onSaveTo: (Uri) -> Unit,
+    onRestore: (Uri) -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var confirmArchive by remember { mutableStateOf(false) }
     var voiceChecked by remember { mutableStateOf(false) }
+
+    val pickFolder = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocumentTree()
+    ) { uri -> if (uri != null) onFolder(uri) }
+
+    val pickSaveFile = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("application/json")
+    ) { uri -> if (uri != null) onSaveTo(uri) }
+
+    val pickRestoreFile = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri -> if (uri != null) onRestore(uri) }
 
     // Системная «назад» должна возвращать к списку уроков, а не закрывать приложение.
     BackHandler { onClose() }
@@ -81,7 +102,45 @@ fun SettingsScreen(
         ) {
             Text("НАСТРОЙКИ", style = MaterialTheme.typography.labelSmall, color = Gold)
             Spacer(Modifier.height(6.dp))
-            Text("Отчёт о заданиях", style = MaterialTheme.typography.displaySmall, color = Paper)
+            Text("Прогресс", style = MaterialTheme.typography.displaySmall, color = Paper)
+            Spacer(Modifier.height(16.dp))
+
+            Text(
+                if (state.progressFolder != null) {
+                    "Копия пишется в «${state.progressFolder}» после каждой сессии, " +
+                        "файл ${ProgressStore.FILE_NAME}. Удаление приложения её не тронет."
+                } else {
+                    "Папка не выбрана. Android сам делает резервную копию раз в сутки, " +
+                        "но без Google-аккаунта молчит и отстаёт. Своя копия надёжнее."
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+            Spacer(Modifier.height(14.dp))
+
+            if (state.progressFolder == null) {
+                PrimaryAction(text = "Выбрать папку для копии") { pickFolder.launch(null) }
+            } else {
+                PrimaryAction(text = "Сохранить сейчас", onClick = onSaveNow)
+                Spacer(Modifier.height(10.dp))
+                SecondaryAction(text = "Другая папка") { pickFolder.launch(null) }
+                Spacer(Modifier.height(10.dp))
+                SecondaryAction(text = "Не сохранять больше", onClick = onForgetFolder)
+            }
+
+            Spacer(Modifier.height(10.dp))
+            SecondaryAction(text = "Восстановить из файла") {
+                pickRestoreFile.launch(arrayOf("application/json", "text/plain", "*/*"))
+            }
+            Spacer(Modifier.height(10.dp))
+            SecondaryAction(text = "Сохранить в отдельный файл") {
+                pickSaveFile.launch(ProgressStore.FILE_NAME)
+            }
+
+            Spacer(Modifier.height(36.dp))
+            Text("ОТЧЁТ", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Spacer(Modifier.height(6.dp))
+            Text("Жалобы на задания", style = MaterialTheme.typography.displaySmall, color = Paper)
             Spacer(Modifier.height(24.dp))
 
             Column(

@@ -61,6 +61,10 @@ interface AppDao {
     @Query("SELECT * FROM cards WHERE exerciseId = :id")
     suspend fun card(id: String): CardEntity?
 
+    /** Весь прогресс целиком — для копии в папку владельца. */
+    @Query("SELECT * FROM cards")
+    suspend fun allCards(): List<CardEntity>
+
     /** Нужно для отката: жалоба на сломанное задание снимает карточку, если она только что создалась. */
     @Query("DELETE FROM cards WHERE exerciseId = :id")
     suspend fun deleteCard(id: String)

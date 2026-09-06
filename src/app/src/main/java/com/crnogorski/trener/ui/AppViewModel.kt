@@ -2,6 +2,7 @@ package com.crnogorski.trener.ui
 
 import android.app.Application
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.net.NetworkCapabilities
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,6 +20,7 @@ import com.crnogorski.trener.data.LessonRef
 import com.crnogorski.trener.data.LessonRepository
 import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.NOTE_REASON
+import com.crnogorski.trener.data.ProgressStore
 import com.crnogorski.trener.data.needsModelCheck
 import com.crnogorski.trener.data.referenceAnswer
 import com.crnogorski.trener.data.typeName
@@ -52,12 +54,14 @@ data class HomeState(
     val error: String? = null
 )
 
-/** Экран настроек: обслуживание отчёта о жалобах и проверка синтеза речи. */
+/** Экран настроек: копия прогресса, отчёт о жалобах, проверка синтеза речи. */
 data class SettingsState(
     val complaintCount: Int = 0,
     val filePath: String = "",
     val versionName: String = "",
     val versionCode: Int = 0,
+    /** Папка для копии прогресса, если выбрана и право на неё живо. */
+    val progressFolder: String? = null,
     /** Результат последнего действия — показывается под кнопками. */
     val notice: String? = null
 )
@@ -115,6 +119,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val dao = AppDb.get(app).dao()
     private val checker = HaikuChecker()
     private val complaints = ComplaintStore(app)
+    private val progress = ProgressStore(app, dao)
 
     /** Последний отправленный ответ — попадает в жалобу как есть. */
     private var lastAnswer: String = ""
@@ -233,6 +238,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun exitSession() {
         _session.value = null
+        autoSaveProgress()
         refreshHome()
     }
 
@@ -244,7 +250,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 complaintCount = complaints.count(),
                 filePath = complaints.file().absolutePath,
                 versionName = BuildConfig.VERSION_NAME,
-                versionCode = BuildConfig.VERSION_CODE
+                versionCode = BuildConfig.VERSION_CODE,
+                progressFolder = progress.folderLabel()
             )
         }
     }
@@ -271,6 +278,80 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     "Откладывать нечего."
                 }
             )
+        }
+    }
+
+    // --- Копия прогресса ---
+
+    /**
+     * Запоминает выбранную папку и сразу же кладёт туда копию: иначе непонятно,
+     * сработало ли, до самого конца первой сессии.
+     */
+    fun useProgressFolder(uri: Uri) {
+        viewModelScope.launch {
+            runCatching { progress.rememberFolder(uri) }
+            val saved = progress.saveToFolder(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
+            _settings.value = _settings.value?.copy(
+                progressFolder = progress.folderLabel(),
+                notice = if (saved != null) {
+                    "Папка выбрана, копия записана. Карточек: $saved."
+                } else {
+                    "Папку выбрать удалось, а записать в неё — нет."
+                }
+            )
+        }
+    }
+
+    fun forgetProgressFolder() {
+        progress.forgetFolder()
+        _settings.value = _settings.value?.copy(
+            progressFolder = null,
+            notice = "Папка забыта, копия больше не пишется."
+        )
+    }
+
+    fun saveProgressNow() {
+        viewModelScope.launch {
+            val saved = progress.saveToFolder(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
+            _settings.value = _settings.value?.copy(
+                notice = if (saved != null) "Копия обновлена. Карточек: $saved."
+                else "Записать не вышло — выбери папку заново."
+            )
+        }
+    }
+
+    /** Ручное сохранение в произвольный файл — на случай, когда папки нет. */
+    fun saveProgressTo(uri: Uri) {
+        viewModelScope.launch {
+            val saved = progress.saveTo(uri, BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
+            _settings.value = _settings.value?.copy(
+                notice = if (saved != null) "Сохранено. Карточек: $saved." else "Сохранить не вышло."
+            )
+        }
+    }
+
+    fun restoreProgress(uri: Uri) {
+        viewModelScope.launch {
+            val result = progress.restoreFrom(uri)
+            _settings.value = _settings.value?.copy(
+                notice = if (result == null) {
+                    "Файл не разобрать — это точно копия прогресса?"
+                } else {
+                    "Влито карточек: ${result.first}, уроков: ${result.second}."
+                }
+            )
+            refreshHome()
+        }
+    }
+
+    /**
+     * Копия после каждой сессии. Молча: если папки нет, ничего и не происходит,
+     * а лезть с сообщением посреди занятий незачем.
+     */
+    private fun autoSaveProgress() {
+        if (progress.folder() == null) return
+        viewModelScope.launch {
+            progress.saveToFolder(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
         }
     }
 
@@ -512,6 +593,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 )
             }
             _session.value = state.copy(finished = true)
+            autoSaveProgress()
         }
     }
 

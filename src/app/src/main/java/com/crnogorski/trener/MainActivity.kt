@@ -72,6 +72,11 @@ class MainActivity : ComponentActivity() {
                                     speaker = speaker,
                                     prepareReport = vm::reportToSend,
                                     onArchive = vm::archiveComplaints,
+                                    onFolder = vm::useProgressFolder,
+                                    onForgetFolder = vm::forgetProgressFolder,
+                                    onSaveNow = vm::saveProgressNow,
+                                    onSaveTo = vm::saveProgressTo,
+                                    onRestore = vm::restoreProgress,
                                     onClose = vm::closeSettings
                                 )
                             } else {
