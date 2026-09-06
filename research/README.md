@@ -5,7 +5,8 @@
 
 Всё скачанное лежит в [`data/`](data/), скрипты сбора — в [`tools/`](tools/),
 лицензии — в [`data/LICENSES.md`](data/LICENSES.md). План уроков вынесен в
-[`plan-urokov.md`](plan-urokov.md).
+[`plan-urokov.md`](plan-urokov.md), разведка по словарным карточкам — в
+[`kartochki.md`](kartochki.md).
 
 ## Коротко
 
