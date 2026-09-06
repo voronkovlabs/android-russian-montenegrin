@@ -1,7 +1,7 @@
 {
   "id": "l04",
   "title": "Семья и притяжательные",
-  "note": "Притяжательные согласуются с тем, чем владеют, а не с владельцем: moj brat, moja sestra, njegova kćerka.",
+  "note": "Притяжательные согласуются с тем, чем владеют, а не с владельцем: moj brat, moja sestra, njegova kćerka. Ovo je… — «это…», указание на человека или предмет. Evo — «вот», и за ним идёт родительный падеж: evo moje majke. В заданиях урока нужно ovo.",
   "exercises": [
     { "type": "choice", "id": "l04e01", "prompt": "Сестра", "options": ["majka", "sestra", "kćerka", "žena"], "answer": "sestra" },
     { "type": "form", "id": "l04e02", "prompt": "Ovo je ___ brat. (мой)", "answer": "moj" },
@@ -12,6 +12,7 @@
     { "type": "listening", "id": "l04e07", "audioText": "Moj otac je iz Nikšića", "translation": "Мой отец из Никшича" },
     { "type": "choice", "id": "l04e08", "prompt": "Ovo je ___ kćerka. (его)", "options": ["njegov", "njegova", "njena", "njihov"], "answer": "njegova", "explanation": "Kćerka женского рода, поэтому njegova." },
     { "type": "speaking", "id": "l04e09", "phrase": "Ovo je moja porodica", "translation": "Это моя семья" },
-    { "type": "ru_to_me", "id": "l04e10", "prompt": "Мой брат живёт в Черногории уже пять лет.", "reference": "Moj brat živi u Crnoj Gori već pet godina." }
+    { "type": "ru_to_me", "id": "l04e10", "prompt": "Мой брат живёт в Черногории уже пять лет.", "reference": "Moj brat živi u Crnoj Gori već pet godina." },
+    { "type": "reading", "id": "l04e11", "text": "Ovo je moja porodica. Imam dvije sestre i jednog brata. Moj otac je iz Nikšića, a moja majka je iz Bara.", "translation": "Это моя семья. У меня две сестры и один брат. Мой отец из Никшича, а моя мама из Бара." }
   ]
 }

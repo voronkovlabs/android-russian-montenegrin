@@ -303,6 +303,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 ex.phrase,
                 answer
             )
+            is Exercise.Reading -> {
+                val score = LocalCheck.readingScore(answer, ex.text)
+                localResult(
+                    score.passed,
+                    "Совпало слов: ${score.matched} из ${score.total}.",
+                    ex.text,
+                    answer
+                )
+            }
         }
     }
 

@@ -1,7 +1,7 @@
 {
   "id": "l02",
   "title": "Быть, откуда ты",
-  "note": "Глагол biti склоняется всегда, но местоимение чаще опускают: «Ja sam iz Rusije» = «Iz Rusije sam».",
+  "note": "Глагол biti склоняется всегда, но местоимение чаще опускают: «Ja sam iz Rusije» = «Iz Rusije sam». Про уровень языка говорят slabo — «слабо»; loše — это «плохо, некачественно». Još uvijek — «всё ещё, пока».",
   "exercises": [
     { "type": "form", "id": "l02e01", "prompt": "Ti ___ iz Rusije. (biti)", "answer": "si" },
     { "type": "form", "id": "l02e02", "prompt": "Mi ___ turisti. (biti)", "answer": "smo" },
@@ -11,7 +11,8 @@
     { "type": "word_bank", "id": "l02e06", "prompt": "Мы живём в Подгорице.", "answer": "Živimo u Podgorici", "bank": ["Živimo", "u", "Podgorici", "Podgorica", "živim", "na"] },
     { "type": "listening", "id": "l02e07", "audioText": "Ja sam iz Rusije", "translation": "Я из России" },
     { "type": "form", "id": "l02e08", "prompt": "Oni ___ studenti. (biti)", "answer": "su" },
-    { "type": "ru_to_me", "id": "l02e09", "prompt": "Я пока плохо говорю по-черногорски.", "reference": "Još uvijek slabo govorim crnogorski." },
-    { "type": "speaking", "id": "l02e10", "phrase": "Odakle si?", "translation": "Откуда ты?" }
+    { "type": "ru_to_me", "id": "l02e09", "prompt": "Я пока плохо говорю по-черногорски.", "reference": "Još uvijek slabo govorim crnogorski.", "hint": "još uvijek — всё ещё, пока; slabo — слабо (об уровне, а не о качестве)" },
+    { "type": "speaking", "id": "l02e10", "phrase": "Odakle si?", "translation": "Откуда ты?" },
+    { "type": "reading", "id": "l02e11", "text": "Dobar dan! Zovem se Ivan. Ja sam iz Rusije, a živim u Podgorici. Još uvijek slabo govorim crnogorski.", "translation": "Добрый день! Меня зовут Иван. Я из России, а живу в Подгорице. Я пока плохо говорю по-черногорски." }
   ]
 }

@@ -102,6 +102,22 @@ sealed class Exercise {
         val phrase: String,
         val translation: String
     ) : Exercise()
+
+    /**
+     * Чтение вслух: связный текст в несколько предложений.
+     *
+     * От [Speaking] отличается не длиной, а способом проверки: на трёх
+     * предложениях требовать дословного совпадения бессмысленно, движок
+     * теряет и склеивает слова. Считается доля слов эталона, которые
+     * прозвучали по порядку — см. `LocalCheck.readingScore`.
+     */
+    @Serializable
+    @SerialName("reading")
+    data class Reading(
+        override val id: String,
+        val text: String,
+        val translation: String
+    ) : Exercise()
 }
 
 /**
@@ -117,6 +133,7 @@ val Exercise.typeName: String
         is Exercise.Form -> "form"
         is Exercise.Listening -> "listening"
         is Exercise.Speaking -> "speaking"
+        is Exercise.Reading -> "reading"
     }
 
 /** Нужен ли интернет и вызов Haiku для проверки этого задания. */
@@ -133,4 +150,5 @@ val Exercise.referenceAnswer: String
         is Exercise.Form -> answer
         is Exercise.Listening -> audioText
         is Exercise.Speaking -> phrase
+        is Exercise.Reading -> text
     }

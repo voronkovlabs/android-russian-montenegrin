@@ -1,7 +1,7 @@
 {
   "id": "l05",
   "title": "В магазине: винительный падеж",
-  "note": "Прямое дополнение женского рода на -a получает -u: jabuka → jabuku, voda → vodu. Неодушевлённое мужского рода не меняется: hljeb → hljeb.",
+  "note": "Прямое дополнение женского рода на -a получает -u: jabuka → jabuku, voda → vodu. Неодушевлённое мужского рода не меняется: hljeb → hljeb. Целиком: «Hoću jednu jabuku i hljeb, molim vas» — «Хочу одно яблоко и хлеб, пожалуйста».",
   "exercises": [
     { "type": "form", "id": "l05e01", "prompt": "Hoću jednu ___ . (jabuka)", "answer": "jabuku" },
     { "type": "form", "id": "l05e02", "prompt": "Kupujem ___ i sir. (hljeb)", "answer": "hljeb", "explanation": "Неодушевлённые существительные мужского рода в винительном совпадают с исходной формой." },

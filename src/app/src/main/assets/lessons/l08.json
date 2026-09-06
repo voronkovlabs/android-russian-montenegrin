@@ -12,6 +12,7 @@
     { "type": "form", "id": "l08e07", "prompt": "Živim u ___ . (Budva)", "answer": "Budvi" },
     { "type": "me_to_ru", "id": "l08e08", "prompt": "Izvinite, gdje je pijaca?", "reference": "Извините, где рынок?" },
     { "type": "speaking", "id": "l08e09", "phrase": "Gdje je plaža?", "translation": "Где пляж?" },
-    { "type": "ru_to_me", "id": "l08e10", "prompt": "Я иду на пляж, а потом в город.", "reference": "Idem na plažu, a onda u grad." }
+    { "type": "ru_to_me", "id": "l08e10", "prompt": "Я иду на пляж, а потом в город.", "reference": "Idem na plažu, a onda u grad." },
+    { "type": "reading", "id": "l08e11", "text": "Izvinite, gdje je autobuska stanica? Idite pravo, pa lijevo. Plaža je blizu, a pijaca je u centru.", "translation": "Извините, где автобусная станция? Идите прямо, затем налево. Пляж рядом, а рынок в центре." }
   ]
 }

@@ -12,6 +12,7 @@
     { "type": "choice", "id": "l06e07", "prompt": "«Завтра» в черногорской норме", "options": ["sutra", "sjutra", "juče", "danas"], "answer": "sjutra", "explanation": "Sutra — сербский вариант, в Черногории норма sjutra." },
     { "type": "me_to_ru", "id": "l06e08", "prompt": "Juče sam bio u Baru.", "reference": "Вчера я был в Баре." },
     { "type": "speaking", "id": "l06e09", "phrase": "Vidimo se sjutra", "translation": "Увидимся завтра" },
-    { "type": "ru_to_me", "id": "l06e10", "prompt": "В воскресенье я не работаю.", "reference": "U nedjelju ne radim." }
+    { "type": "ru_to_me", "id": "l06e10", "prompt": "В воскресенье я не работаю.", "reference": "U nedjelju ne radim." },
+    { "type": "reading", "id": "l06e11", "text": "Danas je ponedjeljak, a sjutra je utorak. U petak uveče vidimo se u Baru. U nedjelju ne radim.", "translation": "Сегодня понедельник, а завтра вторник. В пятницу вечером увидимся в Баре. В воскресенье я не работаю." }
   ]
 }

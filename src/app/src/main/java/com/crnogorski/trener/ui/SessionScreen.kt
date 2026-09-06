@@ -222,7 +222,29 @@ private fun ExerciseBody(
 
         is Exercise.Listening -> ListeningAnswer(ex, speaker, enabled, onSubmit)
 
-        is Exercise.Speaking -> SpeakingAnswer(ex, speaker, enabled, onSubmit, onSkip)
+        is Exercise.Speaking -> SpokenAnswer(
+            key = ex.id,
+            label = "Произнеси вслух",
+            text = ex.phrase,
+            translation = ex.translation,
+            longForm = false,
+            speaker = speaker,
+            enabled = enabled,
+            onSubmit = onSubmit,
+            onSkip = onSkip
+        )
+
+        is Exercise.Reading -> SpokenAnswer(
+            key = ex.id,
+            label = "Прочитай вслух",
+            text = ex.text,
+            translation = ex.translation,
+            longForm = true,
+            speaker = speaker,
+            enabled = enabled,
+            onSubmit = onSubmit,
+            onSkip = onSkip
+        )
     }
 }
 
@@ -474,9 +496,20 @@ private fun ListeningAnswer(
     }
 }
 
+/**
+ * Сказать вслух и сверить с распознанным — и короткая фраза, и целый текст.
+ *
+ * Разница только в [longForm]: при чтении текста движок просят не обрывать
+ * запись на паузе между предложениями, а проверку в AppViewModel считают
+ * по доле совпавших слов, а не дословно.
+ */
 @Composable
-private fun SpeakingAnswer(
-    ex: Exercise.Speaking,
+private fun SpokenAnswer(
+    key: String,
+    label: String,
+    text: String,
+    translation: String,
+    longForm: Boolean,
     speaker: Speaker,
     enabled: Boolean,
     onSubmit: (String) -> Unit,
@@ -484,13 +517,14 @@ private fun SpeakingAnswer(
 ) {
     val context = LocalContext.current
     val listener = remember { Listener(context) }
-    var status by remember(ex.id) { mutableStateOf("") }
-    var listening by remember(ex.id) { mutableStateOf(false) }
+    var status by remember(key) { mutableStateOf("") }
+    var listening by remember(key) { mutableStateOf(false) }
 
     fun start() {
         listening = true
-        status = "Говори…"
+        status = if (longForm) "Читай, паузы между предложениями не мешают…" else "Говори…"
         listener.listen(
+            longForm = longForm,
             onResult = { heard ->
                 listening = false
                 status = ""
@@ -509,12 +543,12 @@ private fun SpeakingAnswer(
         if (granted) start() else status = "Без доступа к микрофону задание не проверить"
     }
 
-    Label("Произнеси вслух")
-    Prompt(ex.phrase)
+    Label(label)
+    Prompt(text)
     Spacer(Modifier.height(8.dp))
-    Text(ex.translation, style = MaterialTheme.typography.bodyMedium, color = Muted)
+    Text(translation, style = MaterialTheme.typography.bodyMedium, color = Muted)
     Spacer(Modifier.height(16.dp))
-    SmallAction("Послушать образец") { speaker.speak(ex.phrase) }
+    SmallAction("Послушать образец") { speaker.speak(text) }
 
     Spacer(Modifier.height(24.dp))
     PrimaryButton(if (listening) "Слушаю…" else "Записать", enabled = enabled && !listening) {
@@ -544,8 +578,9 @@ private fun ResultView(phase: Phase.Result, exercise: Exercise) {
     // Точное совпадение с эталоном показывать незачем — строка дублировала бы «Правильно».
     val differs = !LocalCheck.matches(phase.answer, phase.expected)
     val showAnswer = phase.answer.isNotBlank() && (!phase.correct || differs)
-    // Для произношения это не то, что ты сказал, а то, что расслышал движок.
-    val answerLabel = if (exercise is Exercise.Speaking) "Услышано" else "Твой ответ"
+    // Для речи это не то, что ты сказал, а то, что расслышал движок.
+    val spoken = exercise is Exercise.Speaking || exercise is Exercise.Reading
+    val answerLabel = if (spoken) "Услышано" else "Твой ответ"
 
     Column(
         Modifier

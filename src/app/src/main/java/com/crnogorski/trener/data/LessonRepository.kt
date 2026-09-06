@@ -58,11 +58,53 @@ object LocalCheck {
         normalize(answer) == normalize(expected)
 
     /** Для распознавания речи: там диакритика теряется чаще, сверяем мягче. */
-    fun matchesSpoken(heard: String, expected: String): Boolean {
-        fun flatten(s: String) = normalize(s)
-            .replace('č', 'c').replace('ć', 'c')
-            .replace('š', 's').replace('ž', 'z')
-            .replace("đ", "dj")
-        return flatten(heard) == flatten(expected)
+    fun matchesSpoken(heard: String, expected: String): Boolean =
+        flatten(heard) == flatten(expected)
+
+    /**
+     * Насколько прочитанное вслух совпало с текстом — доля слов эталона,
+     * прозвучавших в распознанном по порядку (наибольшая общая подпоследовательность).
+     *
+     * На трёх предложениях дословное совпадение недостижимо: движок склеивает
+     * слова, теряет предлоги и не ставит знаков. Порядок при этом учитывается —
+     * иначе те же слова, прочитанные вразнобой, засчитались бы как чтение.
+     */
+    fun readingScore(heard: String, expected: String): ReadingScore {
+        val want = words(expected)
+        val got = words(heard)
+        if (want.isEmpty()) return ReadingScore(0, 0)
+
+        val dp = Array(want.size + 1) { IntArray(got.size + 1) }
+        for (i in want.indices) {
+            for (j in got.indices) {
+                dp[i + 1][j + 1] = if (want[i] == got[j]) {
+                    dp[i][j] + 1
+                } else {
+                    maxOf(dp[i][j + 1], dp[i + 1][j])
+                }
+            }
+        }
+        return ReadingScore(dp[want.size][got.size], want.size)
+    }
+
+    private fun flatten(s: String) = normalize(s)
+        .replace('č', 'c').replace('ć', 'c')
+        .replace('š', 's').replace('ž', 'z')
+        .replace("đ", "dj")
+
+    private fun words(s: String) = flatten(s).split(' ').filter { it.isNotBlank() }
+}
+
+/**
+ * Результат чтения вслух: сколько слов эталона прозвучало из скольких.
+ *
+ * Порог намеренно не 100%: несколько потерянных движком слов — это его
+ * беда, а не ошибка чтения.
+ */
+data class ReadingScore(val matched: Int, val total: Int) {
+    val passed: Boolean get() = total > 0 && matched.toFloat() / total >= PASS
+
+    companion object {
+        const val PASS = 0.75f
     }
 }
