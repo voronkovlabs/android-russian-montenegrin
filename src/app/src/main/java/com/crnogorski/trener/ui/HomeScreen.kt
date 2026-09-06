@@ -260,8 +260,11 @@ private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
         )
         Text(
             when {
-                card.finished && card.mode == StoryMode.Read -> "прочитано"
-                card.finished -> "переведено"
+                card.finished -> when (card.mode) {
+                    StoryMode.Read -> "прочитано"
+                    StoryMode.Listen -> "разобрано"
+                    StoryMode.Translate -> "переведено"
+                }
                 started -> "${card.done} / ${card.ref.chunks}"
                 else -> "${card.ref.chunks} отрезков"
             },

@@ -9,6 +9,7 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import java.util.Locale
 
 /**
@@ -47,6 +48,7 @@ class Speaker(context: Context) {
     private var missingVoice = false
 
     private var tts: TextToSpeech? = null
+    private val main = Handler(Looper.getMainLooper())
 
     /**
      * Просьба произнести, пришедшая до готовности движка.
@@ -55,7 +57,39 @@ class Speaker(context: Context) {
      * появлении на экране — без этой отложенной фразы первое задание за запуск
      * молчало бы.
      */
-    private var pending: Pair<String, Boolean>? = null
+    private var pending: Pending? = null
+
+    private class Pending(val text: String, val slow: Boolean, val onDone: (() -> Unit)?)
+
+    /**
+     * Номер звучащей сейчас фразы и что делать, когда она договорена.
+     *
+     * Номер сквозной, а не хэш текста: два одинаковых отрезка подряд дали бы
+     * один и тот же идентификатор, и конец первого засчитался бы за конец
+     * второго.
+     */
+    private var utterance = 0L
+    private var currentId: String? = null
+    private var whenDone: (() -> Unit)? = null
+
+    private val progress = object : UtteranceProgressListener() {
+        override fun onStart(utteranceId: String?) {}
+
+        override fun onDone(utteranceId: String?) = finish(utteranceId)
+
+        @Suppress("OVERRIDE_DEPRECATION")
+        override fun onError(utteranceId: String?) = finish(utteranceId)
+
+        override fun onStop(utteranceId: String?, interrupted: Boolean) {
+            // Оборванную фразу не продолжаем: её оборвали намеренно. Сравнение
+            // с текущим номером обязательно — QUEUE_FLUSH останавливает старую
+            // фразу уже после того, как назначена новая.
+            if (utteranceId == currentId) {
+                whenDone = null
+                currentId = null
+            }
+        }
+    }
 
     init {
         tts = TextToSpeech(context.applicationContext) { status ->
@@ -66,7 +100,8 @@ class Speaker(context: Context) {
                     result == TextToSpeech.LANG_NOT_SUPPORTED
                 ready = !missingVoice
                 engine.setSpeechRate(NORMAL_RATE)
-                pending?.let { (text, slow) -> speak(text, slow) }
+                engine.setOnUtteranceProgressListener(progress)
+                pending?.let { speak(it.text, it.slow, it.onDone) }
             }
             pending = null
         }
@@ -75,18 +110,52 @@ class Speaker(context: Context) {
     /** true, если голос сербского не установлен — стоит показать подсказку. */
     val voiceUnavailable: Boolean get() = missingVoice
 
-    fun speak(text: String, slow: Boolean = false) {
+    /**
+     * [onDone] вызывается на главном потоке, когда фраза договорена, — и ровно
+     * один раз. Нужен упражнению «на слух»: слушать и говорить одновременно
+     * нельзя, микрофон включается только после последнего слова.
+     */
+    fun speak(text: String, slow: Boolean = false, onDone: (() -> Unit)? = null) {
         if (!ready) {
-            if (!missingVoice) pending = text to slow
+            if (!missingVoice) {
+                pending = Pending(text, slow, onDone)
+            } else {
+                // Голоса нет и не будет. Продолжение всё равно должно случиться:
+                // иначе экран «на слух» замер бы, дожидаясь конца фразы, которой
+                // не было.
+                onDone?.let { main.post(it) }
+            }
             return
         }
         val engine = tts ?: return
+        val id = (++utterance).toString()
+        currentId = id
+        whenDone = onDone
         engine.setSpeechRate(if (slow) SLOW_RATE else NORMAL_RATE)
-        engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, text.hashCode().toString())
+        if (engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, id) != TextToSpeech.SUCCESS) {
+            finish(id)
+        }
+    }
+
+    /** Замолчать и забыть, что было назначено на конец фразы. */
+    fun silence() {
+        whenDone = null
+        currentId = null
+        tts?.stop()
+    }
+
+    private fun finish(id: String?) {
+        main.post {
+            if (id != currentId) return@post
+            val done = whenDone
+            whenDone = null
+            currentId = null
+            done?.invoke()
+        }
     }
 
     fun release() {
-        tts?.stop()
+        silence()
         tts?.shutdown()
         tts = null
     }
