@@ -1,5 +1,6 @@
 package com.crnogorski.trener.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
@@ -28,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     state: HomeState,
@@ -84,11 +87,45 @@ fun HomeScreen(
             Spacer(Modifier.height(14.dp))
         }
 
-        items(state.lessons, key = { it.ref.id }) { card ->
-            LessonRow(card, onClick = { onLesson(card.ref.id) })
+        state.groups.forEach { group ->
+            if (group.title.isNotBlank()) {
+                stickyHeader(key = "s-${group.title}") { SectionHeader(group) }
+            }
+            items(group.cards, key = { it.ref.id }) { card ->
+                LessonRow(card, onClick = { onLesson(card.ref.id) })
+            }
         }
 
         item { Spacer(Modifier.height(32.dp)) }
+    }
+}
+
+/**
+ * Заголовок раздела. Липкий: на длинном списке всегда видно, где ты находишься.
+ *
+ * Фон непрозрачный и во всю ширину, включая отступы списка, — иначе строки
+ * уроков просвечивали бы из-под него при прокрутке.
+ */
+@Composable
+private fun SectionHeader(group: LessonGroup) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .background(Ink)
+            .padding(top = 18.dp, bottom = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            group.title.uppercase(),
+            style = MaterialTheme.typography.labelSmall,
+            color = Gold,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            "${group.done} / ${group.cards.size}",
+            style = MaterialTheme.typography.labelSmall,
+            color = Muted
+        )
     }
 }
 

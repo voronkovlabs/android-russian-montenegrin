@@ -37,8 +37,16 @@ data class LessonCard(
     val score: String?
 )
 
+/** Раздел главного экрана: заголовок и уроки под ним, в порядке из `index.json`. */
+data class LessonGroup(
+    val title: String,
+    val cards: List<LessonCard>
+) {
+    val done: Int get() = cards.count { it.done }
+}
+
 data class HomeState(
-    val lessons: List<LessonCard> = emptyList(),
+    val groups: List<LessonGroup> = emptyList(),
     val dueCount: Int = 0,
     val loading: Boolean = true,
     val error: String? = null
@@ -92,6 +100,15 @@ data class SessionState(
     val progress: Float get() = if (items.isEmpty()) 0f else index.toFloat() / items.size
 }
 
+/**
+ * Сколько карточек берём в одну сессию повторения.
+ *
+ * Число из головы, но не с потолка: при 11 заданиях в уроке два с небольшим
+ * урока — это подход минут на пятнадцать. Остальное подождёт до следующего раза,
+ * карточки никуда не денутся.
+ */
+private const val REVIEW_LIMIT = 25
+
 class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repo = LessonRepository(app)
@@ -131,12 +148,26 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             try {
                 val refs = repo.index().lessons
                 val byId = dao.lessonProgress().associateBy { it.lessonId }
+                val cards = refs.map { ref ->
+                    val p = byId[ref.id]
+                    LessonCard(ref, p != null, p?.let { "${it.correct}/${it.total}" })
+                }
+                // Группируем подряд идущие, а не сортируем: порядок уроков задаёт
+                // index.json, и раздел не должен его перетасовывать.
+                val groups = buildList<LessonGroup> {
+                    cards.forEach { card ->
+                        val title = card.ref.section
+                        val last = lastOrNull()
+                        if (last != null && last.title == title) {
+                            set(lastIndex, last.copy(cards = last.cards + card))
+                        } else {
+                            add(LessonGroup(title, listOf(card)))
+                        }
+                    }
+                }
                 _home.value = HomeState(
-                    lessons = refs.map { ref ->
-                        val p = byId[ref.id]
-                        LessonCard(ref, p != null, p?.let { "${it.correct}/${it.total}" })
-                    },
-                    dueCount = dao.dueCards(System.currentTimeMillis()).size,
+                    groups = groups,
+                    dueCount = dao.dueCount(System.currentTimeMillis()),
                     loading = false
                 )
             } catch (e: Exception) {
@@ -161,10 +192,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun startReview() {
         viewModelScope.launch {
-            val due = dao.dueCards(System.currentTimeMillis())
-            val all = repo.allExercises()
+            val now = System.currentTimeMillis()
+            val total = dao.dueCount(now)
+            val due = dao.dueCards(now, REVIEW_LIMIT)
+            val byId = repo.exercisesIn(due.map { it.lessonId })
             val items = due.mapNotNull { card ->
-                all[card.exerciseId]?.let { (lessonId, ex) -> SessionItem(lessonId, ex) }
+                byId[card.exerciseId]?.let { (lessonId, ex) -> SessionItem(lessonId, ex) }
             }
             if (items.isEmpty()) {
                 refreshHome()
@@ -172,6 +205,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             }
             _session.value = SessionState(
                 title = "Повторение",
+                // Про остаток говорим прямо, иначе счётчик на главном не сходился бы
+                // с длиной сессии и выглядел бы поломкой.
+                note = if (total > items.size) {
+                    "Просрочено карточек: $total. В этот подход взяты $REVIEW_LIMIT самых старых, " +
+                        "остальные вернутся в следующий раз."
+                } else {
+                    ""
+                },
                 items = items,
                 isReview = true,
                 glossary = repo.glossary()

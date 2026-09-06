@@ -41,8 +41,19 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertCard(card: CardEntity)
 
-    @Query("SELECT * FROM cards WHERE dueAt <= :now ORDER BY dueAt ASC")
-    suspend fun dueCards(now: Long): List<CardEntity>
+    /**
+     * Просроченные карточки, самые старые первыми, не больше [limit].
+     *
+     * Потолок обязателен: без него сессия повторения — это все накопившиеся
+     * карточки разом, а их со временем становятся сотни. Такую сессию нельзя
+     * ни закончить, ни бросить без потери.
+     */
+    @Query("SELECT * FROM cards WHERE dueAt <= :now ORDER BY dueAt ASC LIMIT :limit")
+    suspend fun dueCards(now: Long, limit: Int): List<CardEntity>
+
+    /** Сколько просрочено на самом деле — счётчик на главном экране честный. */
+    @Query("SELECT COUNT(*) FROM cards WHERE dueAt <= :now")
+    suspend fun dueCount(now: Long): Int
 
     @Query("SELECT COUNT(*) FROM cards WHERE dueAt <= :now")
     fun dueCountFlow(now: Long): Flow<Int>

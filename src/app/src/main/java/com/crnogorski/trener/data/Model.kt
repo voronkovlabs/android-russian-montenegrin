@@ -12,7 +12,15 @@ data class LessonIndex(
 data class LessonRef(
     val id: String,
     val title: String,
-    val file: String
+    val file: String,
+    /**
+     * Раздел, в который урок попадает на главном экране.
+     *
+     * Плоский список перестаёт листаться уже на двадцати уроках, а их будет
+     * больше. Пустая строка означает «без раздела» — такие уроки идут первыми
+     * и без заголовка, чтобы старый `index.json` не ломался.
+     */
+    val section: String = ""
 )
 
 /**

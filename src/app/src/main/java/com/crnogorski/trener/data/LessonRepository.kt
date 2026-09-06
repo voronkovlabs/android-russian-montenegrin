@@ -39,14 +39,22 @@ class LessonRepository(private val context: Context) {
         }.getOrDefault(Glossary()).also { cachedGlossary = it }
     }
 
-    /** Все задания курса, разложенные по id — нужно для сборки сессии повторения. */
-    suspend fun allExercises(): Map<String, Pair<String, Exercise>> = withContext(Dispatchers.IO) {
-        buildMap {
-            index().lessons.forEach { ref ->
-                lesson(ref.id).exercises.forEach { ex -> put(ex.id, ref.id to ex) }
+    /**
+     * Задания названных уроков, разложенные по id — для сборки повторения.
+     *
+     * Именно названных, а не всех: у карточки есть `lessonId`, и разбирать
+     * ради десятка просроченных карточек весь курс незачем. При полусотне
+     * уроков разница между двумя файлами и всеми пятьюдесятью заметна на глаз.
+     */
+    suspend fun exercisesIn(lessonIds: Collection<String>): Map<String, Pair<String, Exercise>> =
+        withContext(Dispatchers.IO) {
+            val known = index().lessons.map { it.id }.toSet()
+            buildMap {
+                lessonIds.distinct().filter { it in known }.forEach { id ->
+                    lesson(id).exercises.forEach { ex -> put(ex.id, id to ex) }
+                }
             }
         }
-    }
 
     private fun read(path: String): String =
         context.assets.open(path).bufferedReader().use { it.readText() }
