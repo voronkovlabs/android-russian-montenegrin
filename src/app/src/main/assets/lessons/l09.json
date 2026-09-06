@@ -1,0 +1,18 @@
+{
+  "id": "l09",
+  "title": "Прошедшее время",
+  "note": "Прошедшее время собирается из двух частей: короткого слова от biti и причастия. Причастие меняется по роду: raditi → radio (о мужчине), radila (о женщине), radili (о нескольких). Ja sam radio. Ona je radila. Mi smo radili. Короткое слово sam, si, je, smo, ste, su стоит на втором месте в предложении: «Juče sam radio», а не «Juče radio sam». Отрицание пишется слитно: nisam, nisi, nije, nismo, niste, nisu — «Nisam radio». Причастия, которые надо помнить: biti → bio, bila, bili; ići → išao, išla, išli; razumjeti → razumio, razumjela.",
+  "exercises": [
+    {"type": "form", "id": "l09e01", "prompt": "Ja sam ___ u Podgorici. (raditi, о мужчине)", "answer": "radio", "explanation": "Причастие мужского рода от raditi — radio."},
+    {"type": "form", "id": "l09e02", "prompt": "Ona je ___ u Baru. (raditi)", "answer": "radila", "explanation": "Женский род добавляет -la: radio → radila."},
+    {"type": "form", "id": "l09e03", "prompt": "Mi smo ___ na plaži. (biti)", "answer": "bili", "explanation": "Множественное число: bio → bili. О женщинах было бы bile."},
+    {"type": "form", "id": "l09e04", "prompt": "On je ___ crnogorski. (učiti)", "answer": "učio", "explanation": "Учил — učio; она учила — učila."},
+    {"type": "form", "id": "l09e05", "prompt": "Oni su ___ u grad. (ići)", "answer": "išli", "explanation": "Ići меняет основу: išao, išla, išli. Наизусть."},
+    {"type": "choice", "id": "l09e06", "prompt": "Как сказать «я не работал»?", "options": ["Ne sam radio", "Nisam radio", "Sam ne radio", "Nije sam radio"], "answer": "Nisam radio", "explanation": "Отрицание сливается с глаголом: ne + sam = nisam. Так же nisi, nije, nismo, niste, nisu."},
+    {"type": "word_bank", "id": "l09e07", "prompt": "Вчера я был в Баре.", "answer": "Juče sam bio u Baru", "bank": ["Juče", "sam", "bio", "u", "Baru", "bila", "je"], "explanation": "Короткое sam идёт вторым словом, сразу после Juče. «Juče bio sam» звучит неправильно."},
+    {"type": "ru_to_me", "id": "l09e08", "prompt": "Вчера мы были на пляже.", "reference": "Juče smo bili na plaži."},
+    {"type": "me_to_ru", "id": "l09e09", "prompt": "Nisam razumio, ponovite molim vas.", "reference": "Я не понял, повторите, пожалуйста."},
+    {"type": "listening", "id": "l09e10", "audioText": "Juče sam radio u Podgorici", "translation": "Вчера я работал в Подгорице"},
+    {"type": "repeat", "id": "l09e11", "phrase": "Gdje si bio juče?", "translation": "Где ты был вчера?"}
+  ]
+}
