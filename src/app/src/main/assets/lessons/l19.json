@@ -1,0 +1,18 @@
+{
+  "id": "l19",
+  "title": "Машина: заправка и сервис",
+  "note": "На заправке и в сервисе: benzin — бензин, dizel — дизель, pumpa — заправка, rezervoar — бак, gume — шины, ulje — масло, servis — сервис, kvar — поломка, popravka — ремонт, registracija — техосмотр и регистрация, kazna — штраф. «Машина сломалась» — pokvario mi se auto: возвратное se и дательное mi стоят вторыми, сразу после глагола. «Полный бак» — pun rezervoar.",
+  "exercises": [
+    {"type": "form", "id": "l19e01", "prompt": "Sjutra ___ ići u servis. (ja)", "answer": "ću", "explanation": "Я — ću, вторым словом после Sjutra."},
+    {"type": "form", "id": "l19e02", "prompt": "Majstor ___ pogledati auto. (on)", "answer": "će", "explanation": "Он — će."},
+    {"type": "form", "id": "l19e03", "prompt": "Mi ___ platiti registraciju. (mi)", "answer": "ćemo", "explanation": "Мы — ćemo."},
+    {"type": "form", "id": "l19e04", "prompt": "Auto ___ biti gotov danas. (отрицание, on)", "answer": "neće", "explanation": "Не будет готов — neće biti gotov."},
+    {"type": "form", "id": "l19e05", "prompt": "Ti ___ napuniti rezervoar. (ti)", "answer": "ćeš", "explanation": "Ты — ćeš."},
+    {"type": "choice", "id": "l19e06", "prompt": "Как сказать «полный бак, пожалуйста»?", "options": ["Pun rezervoar, molim", "Puni rezervoar, molim", "Pun rezervoara, molim", "Pun je rezervoar, molim"], "answer": "Pun rezervoar, molim", "explanation": "Pun — краткая форма прилагательного, она и нужна в такой просьбе."},
+    {"type": "word_bank", "id": "l19e07", "prompt": "У меня сломалась машина.", "answer": "Pokvario mi se auto", "bank": ["Pokvario", "mi", "se", "auto", "pokvarila", "je"], "explanation": "Mi se идут сразу после глагола: «Pokvario mi se auto»."},
+    {"type": "ru_to_me", "id": "l19e08", "prompt": "Сколько будет стоить ремонт?", "reference": "Koliko će koštati popravka?", "hint": "popravka — ремонт; će koštati — будет стоить."},
+    {"type": "me_to_ru", "id": "l19e09", "prompt": "Auto će biti gotov u petak.", "reference": "Машина будет готова в пятницу."},
+    {"type": "listening", "id": "l19e10", "audioText": "Treba mi benzin", "translation": "Мне нужен бензин"},
+    {"type": "reading", "id": "l19e11", "text": "Juče se pokvario auto. Sjutra ću ići u servis. Popravka će koštati sto eura.", "translation": "Вчера сломалась машина. Завтра поеду в сервис. Ремонт будет стоить сто евро."}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "l20",
+  "title": "Дательный и творительный",
+  "note": "Дательный отвечает на «кому»: dajem ključ komšiji, javi se majstoru. Мужской род берёт -u (majstor → majstoru), женский -i (sestra → sestri, komšija → komšiji). Сюда же относятся знакомые treba mi и boli me. Творительный отвечает на «чем» и «с кем»: platiću karticom, putujem autobusom, idem sa bratom. Мужской род берёт -om, после мягкой согласной -em (ključ → ključem), женский -om (kartica → karticom). «Чем» — без предлога, «с кем» — с предлогом sa.",
+  "exercises": [
+    {"type": "form", "id": "l20e01", "prompt": "Dajem ključ ___ . (komšija)", "answer": "komšiji", "explanation": "Komšija склоняется как женский род: дательный komšiji."},
+    {"type": "form", "id": "l20e02", "prompt": "Putujem ___ . (autobus)", "answer": "autobusom", "explanation": "Чем еду — творительный без предлога."},
+    {"type": "form", "id": "l20e03", "prompt": "Platio sam ___ . (kartica)", "answer": "karticom", "explanation": "Женский род в творительном: -a → -om."},
+    {"type": "form", "id": "l20e04", "prompt": "Javi se ___ . (majstor)", "answer": "majstoru", "explanation": "Кому — дательный: majstor → majstoru."},
+    {"type": "form", "id": "l20e05", "prompt": "Idem sa ___ . (brat)", "answer": "bratom", "explanation": "С кем — sa плюс творительный."},
+    {"type": "choice", "id": "l20e06", "prompt": "Как сказать «я еду автобусом»?", "options": ["Idem autobusom", "Idem autobusu", "Idem sa autobus", "Idem autobus"], "answer": "Idem autobusom", "explanation": "Средство передвижения — творительный без предлога."},
+    {"type": "word_bank", "id": "l20e07", "prompt": "Я иду с братом в город.", "answer": "Idem sa bratom u grad", "bank": ["Idem", "sa", "bratom", "u", "grad", "brat", "gradom"], "explanation": "Sa bratom — с кем, u grad — куда, винительный."},
+    {"type": "ru_to_me", "id": "l20e08", "prompt": "Я заплачу картой.", "reference": "Platiću karticom.", "hint": "Глагол в начале срастается с ću: platiti + ću = platiću."},
+    {"type": "me_to_ru", "id": "l20e09", "prompt": "Reci to gazdi, ne meni.", "reference": "Скажи это хозяину, а не мне."},
+    {"type": "listening", "id": "l20e10", "audioText": "Idem autobusom u Budvu", "translation": "Еду в Будву автобусом"},
+    {"type": "repeat", "id": "l20e11", "phrase": "Platiću karticom", "translation": "Я заплачу картой"}
+  ]
+}

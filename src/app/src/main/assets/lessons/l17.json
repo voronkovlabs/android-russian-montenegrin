@@ -1,0 +1,18 @@
+{
+  "id": "l17",
+  "title": "Будущее время",
+  "note": "Будущее — короткое слово ću, ćeš, će, ćemo, ćete, će плюс инфинитив: «Ja ću raditi», «Mi ćemo ići». Как и sam в прошедшем, ću стоит вторым словом: «Sjutra ću raditi», а не «Sjutra raditi ću». Если фраза начинается с глагола, они срастаются: «Radiću sjutra», «Doći ću sjutra». Отрицание слитное и меняет форму: neću, nećeš, neće, nećemo, nećete, neće. «Neću doći» — я не приду.",
+  "exercises": [
+    {"type": "form", "id": "l17e01", "prompt": "Sjutra ___ raditi. (ja)", "answer": "ću", "explanation": "Первое лицо единственного — ću."},
+    {"type": "form", "id": "l17e02", "prompt": "Ti ___ doći u petak. (ti)", "answer": "ćeš", "explanation": "Второе лицо — ćeš."},
+    {"type": "form", "id": "l17e03", "prompt": "Mi ___ ići na plažu. (mi)", "answer": "ćemo", "explanation": "Первое лицо множественного — ćemo."},
+    {"type": "form", "id": "l17e04", "prompt": "Oni ___ platiti sjutra. (oni)", "answer": "će", "explanation": "Третье лицо и в единственном, и во множественном — će."},
+    {"type": "form", "id": "l17e05", "prompt": "Ja ___ raditi danas. (отрицание)", "answer": "neću", "explanation": "Отрицание не «ne ću», а neću — одним словом."},
+    {"type": "choice", "id": "l17e06", "prompt": "Как сказать «я не приду»?", "options": ["Neću doći", "Ne ću doći", "Nisam doći", "Ne doći ću"], "answer": "Neću doći", "explanation": "Nisam — это прошедшее. Будущее отрицается через neću."},
+    {"type": "word_bank", "id": "l17e07", "prompt": "Завтра мы поедем в Будву.", "answer": "Sjutra ćemo ići u Budvu", "bank": ["Sjutra", "ćemo", "ići", "u", "Budvu", "ću", "Budva"], "explanation": "Ćemo вторым словом, сразу после Sjutra."},
+    {"type": "ru_to_me", "id": "l17e08", "prompt": "Я приду завтра утром.", "reference": "Doći ću sjutra ujutru.", "hint": "ujutru — утром. Если фраза начинается с глагола, ću идёт сразу за ним."},
+    {"type": "me_to_ru", "id": "l17e09", "prompt": "Kada ćeš doći?", "reference": "Когда ты придёшь?"},
+    {"type": "listening", "id": "l17e10", "audioText": "Sjutra ću biti kod kuće", "translation": "Завтра я буду дома"},
+    {"type": "repeat", "id": "l17e11", "phrase": "Kada ćemo se vidjeti?", "translation": "Когда мы увидимся?"}
+  ]
+}

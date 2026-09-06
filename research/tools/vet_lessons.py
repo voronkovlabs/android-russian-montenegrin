@@ -20,6 +20,11 @@ for line in io.open('src/local.properties', encoding='utf-8'):
     if line.startswith('ANTHROPIC_API_KEY='):
         key = line.split('=', 1)[1].strip()
 
+def tidy(s):
+    """Убирает пробелы перед знаками — их оставляет подстановка вместо ___."""
+    return re.sub(r'\s+([,.!?])', r'', re.sub(r'\s+', ' ', s)).strip()
+
+
 WANT = set(sys.argv[1:]) or {'l10', 'l11', 'l12', 'l13', 'l14'}
 items = []
 for f in sorted(glob.glob(os.path.join(ASSETS, 'lessons', 'l*.json'))):
@@ -45,11 +50,6 @@ for f in sorted(glob.glob(os.path.join(ASSETS, 'lessons', 'l*.json'))):
             items.append((e['id'], e['phrase'], 'произношение'))
         elif t == 'reading':
             items.append((e['id'], e['text'], 'чтение вслух'))
-
-def tidy(s):
-    """Убирает пробелы перед знаками — их оставляет подстановка вместо ___."""
-    return re.sub(r'\s+([,.!?])', r'', re.sub(r'\s+', ' ', s)).strip()
-
 
 SYS = (
     "Ты редактор учебника черногорского языка для русскоязычных начинающих. "

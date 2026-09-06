@@ -1,0 +1,18 @@
+{
+  "id": "l15",
+  "title": "Множественное число",
+  "note": "Мужской род во множественном берёт -i, а короткие слова вставляют -ov-/-ev-: dokument → dokumenti, но stan → stanovi, ključ → ključevi. Женский род на -a даёт -e: kuća → kuće, karta → karte. Средний род на -o даёт -a: selo → sela. Дальше главное правило счёта. После 2, 3, 4 — родительный единственного: dva stana, tri kuće, četiri ključa. После 5 и больше — родительный множественного: pet stanova, pet kuća, pet ključeva. Родительный множественного часто с нулевым окончанием: kuća → kuća, jabuka → jabuka.",
+  "exercises": [
+    {"type": "form", "id": "l15e01", "prompt": "Jedan stan, dva ___ . (stan)", "answer": "stana", "explanation": "После 2, 3, 4 — родительный единственного."},
+    {"type": "form", "id": "l15e02", "prompt": "Pet ___ . (stan)", "answer": "stanova", "explanation": "После 5 и больше — родительный множественного."},
+    {"type": "form", "id": "l15e03", "prompt": "Jedna kuća, tri ___ . (kuća)", "answer": "kuće", "explanation": "Женский род: родительный единственного на -e."},
+    {"type": "form", "id": "l15e04", "prompt": "Pet ___ . (kuća)", "answer": "kuća", "explanation": "Родительный множественного тут с нулевым окончанием — совпадает с исходной формой."},
+    {"type": "form", "id": "l15e05", "prompt": "Ovdje su moji ___ . (ključ)", "answer": "ključevi", "explanation": "После мягкой согласной вставляется -ev-, не -ov-."},
+    {"type": "choice", "id": "l15e06", "prompt": "Как сказать «пять квартир»?", "options": ["pet stanova", "pet stana", "pet stanovi", "pet stan"], "answer": "pet stanova", "explanation": "Dva stana — родительный единственного, pet stanova — множественного."},
+    {"type": "word_bank", "id": "l15e07", "prompt": "У меня два брата и три сестры.", "answer": "Imam dva brata i tri sestre", "bank": ["Imam", "dva", "brata", "i", "tri", "sestre", "sestara", "brat"], "explanation": "И после dva, и после tri — родительный единственного: brata, sestre."},
+    {"type": "ru_to_me", "id": "l15e08", "prompt": "В доме пять квартир.", "reference": "U kući ima pet stanova.", "hint": "ima — «имеется»; после pet родительный множественного."},
+    {"type": "me_to_ru", "id": "l15e09", "prompt": "Ovdje ima mnogo turista.", "reference": "Здесь много туристов."},
+    {"type": "listening", "id": "l15e10", "audioText": "Imam dva ključa", "translation": "У меня два ключа"},
+    {"type": "repeat", "id": "l15e11", "phrase": "Koliko ima stanova?", "translation": "Сколько тут квартир?"}
+  ]
+}

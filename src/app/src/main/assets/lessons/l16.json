@@ -1,0 +1,18 @@
+{
+  "id": "l16",
+  "title": "На рынке: сколько чего",
+  "note": "Счёт на рынке — то же правило: dva hljeba, pet hljebova; tri flaše, pet flaša. Глагол при числе от 5 остаётся в единственном: «Pet jaja košta euro». Полезное у прилавка: sve zajedno — всё вместе, kesa — пакет, sitno — мелочь, još — ещё, dosta — хватит.",
+  "exercises": [
+    {"type": "form", "id": "l16e01", "prompt": "Dva ___ , molim. (hljeb)", "answer": "hljeba", "explanation": "После dva — родительный единственного."},
+    {"type": "form", "id": "l16e02", "prompt": "Pet ___ , molim. (hljeb)", "answer": "hljebova", "explanation": "После pet — родительный множественного: hljebova."},
+    {"type": "form", "id": "l16e03", "prompt": "Tri ___ vode. (flaša)", "answer": "flaše", "explanation": "Женский род после tri: flaša → flaše."},
+    {"type": "form", "id": "l16e04", "prompt": "Deset ___ , molim. (jaje)", "answer": "jaja", "explanation": "Jaje → jaja и в родительном множественного."},
+    {"type": "form", "id": "l16e05", "prompt": "Pet ___ sira. (kilogram)", "answer": "kilograma", "explanation": "Kilogram → kilograma, форма одна и для 2, и для 5."},
+    {"type": "choice", "id": "l16e06", "prompt": "Как спросить «сколько всё вместе»?", "options": ["Koliko košta sve zajedno?", "Koliko sve zajedno je?", "Šta košta sve zajedno?", "Koliko je sve košta?"], "answer": "Koliko košta sve zajedno?", "explanation": "Koliko košta — устойчивое начало вопроса о цене."},
+    {"type": "word_bank", "id": "l16e07", "prompt": "Дайте мне три бутылки воды.", "answer": "Dajte mi tri flaše vode", "bank": ["Dajte", "mi", "tri", "flaše", "vode", "flaša", "voda"], "explanation": "Tri flaše — родительный единственного, vode — родительный после количества."},
+    {"type": "ru_to_me", "id": "l16e08", "prompt": "У вас есть пакет?", "reference": "Imate li kesu?", "hint": "kesa — пакет; в вопросе прямое дополнение, винительный kesu."},
+    {"type": "me_to_ru", "id": "l16e09", "prompt": "Sve zajedno je deset eura.", "reference": "Всё вместе десять евро."},
+    {"type": "listening", "id": "l16e10", "audioText": "Tri flaše vode, molim", "translation": "Три бутылки воды, пожалуйста"},
+    {"type": "speaking", "id": "l16e11", "phrase": "Koliko košta sve zajedno?", "translation": "Сколько всё вместе?"}
+  ]
+}

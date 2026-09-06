@@ -1,0 +1,18 @@
+{
+  "id": "l18",
+  "title": "Автобус и билеты",
+  "note": "Дорожное будущее: «Autobus će krenuti u osam», «Kada ćemo stići?». Слова, которые звучат на станции: karta — билет, povratna karta — обратный, polazak — отправление, dolazak — прибытие, peron — платформа, kreće — отправляется, stiže — прибывает, kasni — опаздывает. «Один билет до Будвы» — jednu kartu do Budve: karta в винительном, Budva после do в родительном.",
+  "exercises": [
+    {"type": "form", "id": "l18e01", "prompt": "Autobus ___ krenuti u osam. (on)", "answer": "će", "explanation": "Третье лицо единственного — će."},
+    {"type": "form", "id": "l18e02", "prompt": "Kada ___ stići u Budvu? (mi)", "answer": "ćemo", "explanation": "Мы — ćemo, и стоит сразу после Kada."},
+    {"type": "form", "id": "l18e03", "prompt": "Ja ___ kupiti kartu. (ja)", "answer": "ću", "explanation": "Я — ću."},
+    {"type": "form", "id": "l18e04", "prompt": "Autobus ___ kasniti. (отрицание, on)", "answer": "neće", "explanation": "Отрицание третьего лица — neće."},
+    {"type": "form", "id": "l18e05", "prompt": "Vi ___ sjediti ovdje. (vi)", "answer": "ćete", "explanation": "Вежливое «вы» — ćete."},
+    {"type": "choice", "id": "l18e06", "prompt": "Как спросить «когда отправляется автобус»?", "options": ["Kada kreće autobus?", "Kada autobus kreće je?", "Kada je kreće autobus?", "Šta kreće autobus?"], "answer": "Kada kreće autobus?", "explanation": "Глагол сразу после вопросительного слова, подлежащее последним."},
+    {"type": "word_bank", "id": "l18e07", "prompt": "Один билет до Будвы, пожалуйста.", "answer": "Jednu kartu do Budve molim", "bank": ["Jednu", "kartu", "do", "Budve", "molim", "karta", "Budva"], "explanation": "Kartu — винительный, Budve — родительный после do."},
+    {"type": "ru_to_me", "id": "l18e08", "prompt": "Автобус опаздывает на полчаса.", "reference": "Autobus kasni pola sata.", "hint": "kasniti — опаздывать; pola sata — полчаса."},
+    {"type": "me_to_ru", "id": "l18e09", "prompt": "Povratna karta košta deset eura.", "reference": "Обратный билет стоит десять евро."},
+    {"type": "listening", "id": "l18e10", "audioText": "Autobus kreće u osam", "translation": "Автобус отправляется в восемь"},
+    {"type": "speaking", "id": "l18e11", "phrase": "Jednu kartu do Budve, molim", "translation": "Один билет до Будвы, пожалуйста"}
+  ]
+}
