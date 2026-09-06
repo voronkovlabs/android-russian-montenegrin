@@ -3,6 +3,8 @@ package com.crnogorski.trener.speech
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -92,7 +94,16 @@ class Speaker(context: Context) {
 
 class Listener(private val context: Context) {
 
+    /**
+     * Распознаватель живёт, пока живёт экран, и **не пересоздаётся** на каждую
+     * попытку.
+     *
+     * Пересоздание и было причиной ошибки 11 (`ERROR_SERVER_DISCONNECTED`) на
+     * первом нажатии: свежий объект привязывается к системному сервису не
+     * мгновенно, и первый заход срывался, а второй уже работал.
+     */
     private var recognizer: SpeechRecognizer? = null
+    private val main = Handler(Looper.getMainLooper())
 
     fun isAvailable(): Boolean = SpeechRecognizer.isRecognitionAvailable(context)
 
@@ -107,15 +118,24 @@ class Listener(private val context: Context) {
      * Один заход — одна короткая фраза. Просить движок не обрывать запись на
      * паузе бесполезно: документация разрешает эти просьбы игнорировать, а на
      * длинном тексте он возвращает «ничего не расслышал». Поэтому длинное
-     * читается по предложению — см. ReadingAnswer.
+     * читается по предложению — см. ReadingAnswer и StoryScreen.
      */
     fun listen(
         language: String = TAG_TARGET,
         onResult: (String) -> Unit,
         onError: (String) -> Unit
     ) {
-        stop()
-        val sr = SpeechRecognizer.createSpeechRecognizer(context).also { recognizer = it }
+        begin(language, onResult, onError, mayRetry = true)
+    }
+
+    private fun begin(
+        language: String,
+        onText: (String) -> Unit,
+        onFail: (String) -> Unit,
+        mayRetry: Boolean
+    ) {
+        val sr = recognizer
+            ?: SpeechRecognizer.createSpeechRecognizer(context).also { recognizer = it }
 
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(
@@ -129,19 +149,24 @@ class Listener(private val context: Context) {
         sr.setRecognitionListener(object : RecognitionListener {
             override fun onResults(results: Bundle?) {
                 val list = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                if (list.isNullOrEmpty()) onError("Ничего не расслышал")
-                else onResult(list.first())
+                if (list.isNullOrEmpty()) onFail("Ничего не расслышал")
+                else onText(list.first())
             }
 
-            override fun onError(error: Int) = onError(
-                when (error) {
-                    SpeechRecognizer.ERROR_NO_MATCH -> "Ничего не расслышал"
-                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "Тишина в микрофоне"
-                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Нет доступа к микрофону"
-                    SpeechRecognizer.ERROR_NETWORK -> "Распознавание не отвечает"
-                    else -> "Ошибка распознавания ($error)"
+            override fun onError(error: Int) {
+                // Срыв на холодной привязке лечится повтором, и делать это должны
+                // мы, а не человек: он всё равно нажмёт кнопку второй раз.
+                if (mayRetry && error in TRANSIENT) {
+                    recognizer?.destroy()
+                    recognizer = null
+                    main.postDelayed(
+                        { begin(language, onText, onFail, mayRetry = false) },
+                        RETRY_DELAY_MS
+                    )
+                    return
                 }
-            )
+                onFail(describe(error))
+            }
 
             override fun onReadyForSpeech(params: Bundle?) {}
             override fun onBeginningOfSpeech() {}
@@ -152,11 +177,42 @@ class Listener(private val context: Context) {
             override fun onEvent(eventType: Int, params: Bundle?) {}
         })
 
+        runCatching { sr.cancel() }
         sr.startListening(intent)
     }
 
+    private fun describe(error: Int): String = when (error) {
+        SpeechRecognizer.ERROR_NO_MATCH -> "Ничего не расслышал"
+        SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "Тишина в микрофоне"
+        SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Нет доступа к микрофону"
+        SpeechRecognizer.ERROR_NETWORK, SpeechRecognizer.ERROR_NETWORK_TIMEOUT ->
+            "Распознавание не отвечает — нет сети?"
+        SpeechRecognizer.ERROR_AUDIO -> "Микрофон занят другим приложением"
+        SpeechRecognizer.ERROR_SERVER, SpeechRecognizer.ERROR_SERVER_DISCONNECTED ->
+            "Распознавание отключилось, попробуй ещё раз"
+        SpeechRecognizer.ERROR_TOO_MANY_REQUESTS -> "Слишком часто, подожди немного"
+        SpeechRecognizer.ERROR_LANGUAGE_NOT_SUPPORTED,
+        SpeechRecognizer.ERROR_LANGUAGE_UNAVAILABLE ->
+            "Сербский язык распознавания не установлен"
+        else -> "Ошибка распознавания ($error)"
+    }
+
+    /** Отпустить сервис, уходя с экрана. */
     fun stop() {
+        main.removeCallbacksAndMessages(null)
         recognizer?.destroy()
         recognizer = null
+    }
+
+    private companion object {
+        /** Ошибки, которые лечатся повтором, а не сообщением. */
+        val TRANSIENT = setOf(
+            SpeechRecognizer.ERROR_SERVER_DISCONNECTED,
+            SpeechRecognizer.ERROR_CLIENT,
+            SpeechRecognizer.ERROR_RECOGNIZER_BUSY
+        )
+
+        /** Пауза перед повтором: пересозданному объекту нужно время на привязку. */
+        const val RETRY_DELAY_MS = 300L
     }
 }
