@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 @Serializable
 data class Verdict(
     val correct: Boolean,
-    val feedback: String,
+    val feedback: String = "",
     val better: String = ""
 )
 
@@ -54,8 +54,11 @@ class HaikuChecker(
         Засчитывай другой порядок слов, синоним, уместную иную форму вежливости,
         опущенное личное местоимение.
         Не засчитывай ошибки в падеже, роде и спряжении, пропуск диакритики
-        (č, ć, š, ž, đ) и экавицу вместо иекавицы (lepo вместо lijepo).
-        Диакритика и иекавица — разные вещи, не называй одно другим.
+        и экавицу вместо иекавицы.
+        Это разные вещи, и подменять их в объяснении нельзя. Диакритика — это
+        č, ć, š, ž, đ, написанные как c, s, z, dj. Разница ije/je и e
+        (lijepo против lepo) — иекавица против экавицы, никакой диакритики
+        в этих словах нет.
 
         Отвечай ТОЛЬКО одним JSON-объектом, без markdown и пояснений вокруг:
         {"correct": true|false, "feedback": "одно-два предложения по-русски", "better": "исправленный вариант или пустая строка"}
@@ -84,12 +87,24 @@ class HaikuChecker(
                 put("max_tokens", 300)
                 put("system", systemPrompt)
                 put("temperature", 0)
-                put("messages", org.json.JSONArray().put(
-                    JSONObject().apply {
-                        put("role", "user")
-                        put("content", userMessage)
-                    }
-                ))
+                put(
+                    "messages",
+                    org.json.JSONArray()
+                        .put(
+                            JSONObject().apply {
+                                put("role", "user")
+                                put("content", userMessage)
+                            }
+                        )
+                        // Ответ за модель начат открывающей скобкой: так она не
+                        // может предварить его ```json-обёрткой или вступлением.
+                        .put(
+                            JSONObject().apply {
+                                put("role", "assistant")
+                                put("content", JSON_PREFILL)
+                            }
+                        )
+                )
             }.toString()
 
             val request = Request.Builder()
@@ -106,19 +121,66 @@ class HaikuChecker(
                     if (!response.isSuccessful) {
                         return@withContext CheckResult.Failed("Сервер ответил ${response.code}")
                     }
-                    val text = JSONObject(raw)
+                    val continued = JSONObject(raw)
                         .getJSONArray("content")
                         .getJSONObject(0)
                         .getString("text")
-                        .trim()
-                        .removePrefix("```json")
-                        .removePrefix("```")
-                        .removeSuffix("```")
-                        .trim()
-                    CheckResult.Ok(json.decodeFromString<Verdict>(text))
+                    // Обычно модель продолжает с «"correct": ...», но иногда
+                    // повторяет скобку сама — тогда вторая была бы лишней.
+                    val text = if (continued.trimStart().startsWith(JSON_PREFILL)) {
+                        continued
+                    } else {
+                        JSON_PREFILL + continued
+                    }
+
+                    val payload = firstJsonObject(text)
+                        ?: return@withContext CheckResult.Failed("модель ответила не JSON-ом")
+                    val verdict = runCatching { json.decodeFromString<Verdict>(payload) }.getOrNull()
+                        ?: return@withContext CheckResult.Failed("ответ модели не разобрать")
+                    CheckResult.Ok(verdict)
                 }
             } catch (e: Exception) {
-                CheckResult.Failed(e.message ?: "Нет связи с сервером")
+                CheckResult.Failed(e.message ?: "нет связи с сервером")
             }
         }
+
+    companion object {
+        /** Начало ответа, написанное за модель, — она продолжает с этого места. */
+        private const val JSON_PREFILL = "{"
+
+        /**
+         * Вырезает первый полный JSON-объект из ответа модели.
+         *
+         * Даже с prefill модель иногда дописывает что-нибудь после закрывающей
+         * скобки — обёртку ``` или извинение с новой формулировкой. Парсер на
+         * таком хвосте падал с «Expected EOF», и задание уходило в Blocked,
+         * хотя вердикт был получен целиком.
+         *
+         * Скобки считаются с оглядкой на строки и экранирование: фигурная
+         * скобка внутри feedback не должна закрывать объект.
+         */
+        internal fun firstJsonObject(raw: String): String? {
+            val start = raw.indexOf('{')
+            if (start < 0) return null
+
+            var depth = 0
+            var inString = false
+            var escaped = false
+            for (i in start until raw.length) {
+                val c = raw[i]
+                when {
+                    escaped -> escaped = false
+                    inString && c == '\\' -> escaped = true
+                    c == '"' -> inString = !inString
+                    inString -> Unit
+                    c == '{' -> depth++
+                    c == '}' -> {
+                        depth--
+                        if (depth == 0) return raw.substring(start, i + 1)
+                    }
+                }
+            }
+            return null
+        }
+    }
 }
