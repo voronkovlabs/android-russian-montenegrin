@@ -1,0 +1,18 @@
+{
+  "id": "l26",
+  "title": "Работа и деньги",
+  "note": "Рабочие слова: posao — работа, plata — зарплата, ugovor — договор, šef — начальник, kolega — коллега, radno vrijeme — рабочее время, odmor — отпуск и перерыв, porez — налог. Время работы задаётся через od и do плюс родительный: «od devet do pet». «Мне нужно сделать» — treba da плюс личная форма: «Treba da potpišem ugovor».",
+  "exercises": [
+    {"type": "form", "id": "l26e01", "prompt": "Ne mogu danas ___ radim. (потому что)", "answer": "jer", "explanation": "Причина вводится через jer."},
+    {"type": "form", "id": "l26e02", "prompt": "Šef je rekao ___ dođem u devet. (чтобы)", "answer": "da", "explanation": "Da плюс личная форма: da dođem."},
+    {"type": "form", "id": "l26e03", "prompt": "Javi mi ___ imaš vremena. (если)", "answer": "ako", "explanation": "Ako открывает условие."},
+    {"type": "form", "id": "l26e04", "prompt": "Reci mi ___ počinješ. (когда)", "answer": "kada", "explanation": "Kada — «когда»."},
+    {"type": "form", "id": "l26e05", "prompt": "Znam ___ je posao težak. (что)", "answer": "da", "explanation": "Da вводит придаточное «что»."},
+    {"type": "choice", "id": "l26e06", "prompt": "Как сказать «я работаю с девяти до пяти»?", "options": ["Radim od devet do pet", "Radim iz devet do pet", "Radim od devet na pet", "Radim devet do pet"], "answer": "Radim od devet do pet", "explanation": "Промежуток времени — od и do, оба с родительным."},
+    {"type": "word_bank", "id": "l26e07", "prompt": "Мне нужно подписать договор.", "answer": "Treba da potpišem ugovor", "bank": ["Treba", "da", "potpišem", "ugovor", "potpisati", "ugovora"], "explanation": "Treba da плюс личная форма — не «treba potpisati»."},
+    {"type": "ru_to_me", "id": "l26e08", "prompt": "Мне нужен трудовой договор.", "reference": "Treba mi ugovor o radu.", "hint": "o radu — о работе, местный падеж после o."},
+    {"type": "me_to_ru", "id": "l26e09", "prompt": "Radno vrijeme je od osam do četiri.", "reference": "Рабочее время с восьми до четырёх."},
+    {"type": "listening", "id": "l26e10", "audioText": "Radim od devet do pet", "translation": "Я работаю с девяти до пяти"},
+    {"type": "repeat", "id": "l26e11", "phrase": "Kada počinje radno vrijeme?", "translation": "Когда начинается рабочий день?"}
+  ]
+}

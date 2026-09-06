@@ -1,0 +1,18 @@
+{
+  "id": "l23",
+  "title": "Больше, меньше, лучше",
+  "note": "Сравнительная степень чаще всего берёт -iji: jeftin → jeftiniji, star → stariji, hladno → hladnije. Часть слов меняет основу: velik → veći, mali → manji, jak → jači, dug → duži. Четыре надо помнить наизусть: dobar → bolji, loš → gori, velik → veći, mali → manji. Превосходная степень — приставка naj-: najbolji, najveći, najljepši. «Чем» передаётся двумя способами: nego juče или od mene — после od идёт родительный.",
+  "exercises": [
+    {"type": "form", "id": "l23e01", "prompt": "Ovaj stan je ___ od onog. (velik)", "answer": "veći", "explanation": "Velik → veći, основу надо помнить."},
+    {"type": "form", "id": "l23e02", "prompt": "Danas je ___ nego juče. (toplo)", "answer": "toplije", "explanation": "Наречие toplo → toplije."},
+    {"type": "form", "id": "l23e03", "prompt": "Ovo je ___ hotel u gradu. (dobar, превосходная)", "answer": "najbolji", "explanation": "Dobar → bolji → najbolji."},
+    {"type": "form", "id": "l23e04", "prompt": "Autobus je ___ od taksija. (jeftin)", "answer": "jeftiniji", "explanation": "Обычный случай: прибавляется -iji."},
+    {"type": "form", "id": "l23e05", "prompt": "Ona govori ___ od mene. (brzo)", "answer": "brže", "explanation": "Brzo → brže, основа смягчается."},
+    {"type": "choice", "id": "l23e06", "prompt": "Как сказать «лучше, чем вчера»?", "options": ["bolje nego juče", "dobrije nego juče", "više dobro nego juče", "najbolje juče"], "answer": "bolje nego juče", "explanation": "У dobro нет формы на -ije: сравнительная — bolje."},
+    {"type": "word_bank", "id": "l23e07", "prompt": "Этот дом больше.", "answer": "Ova kuća je veća", "bank": ["Ova", "kuća", "je", "veća", "velika", "veći"], "explanation": "Kuća женского рода, поэтому veća, а не veći."},
+    {"type": "ru_to_me", "id": "l23e08", "prompt": "Сегодня холоднее, чем вчера.", "reference": "Danas je hladnije nego juče.", "hint": "hladno → hladnije; «чем» — nego."},
+    {"type": "me_to_ru", "id": "l23e09", "prompt": "Ovaj auto je stariji, ali jeftiniji.", "reference": "Эта машина старше, но дешевле."},
+    {"type": "listening", "id": "l23e10", "audioText": "Danas je toplije nego juče", "translation": "Сегодня теплее, чем вчера"},
+    {"type": "repeat", "id": "l23e11", "phrase": "Koji je najbolji?", "translation": "Какой самый лучший?"}
+  ]
+}

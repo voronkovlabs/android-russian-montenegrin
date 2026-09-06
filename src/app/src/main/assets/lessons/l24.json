@@ -1,0 +1,18 @@
+{
+  "id": "l24",
+  "title": "Погода и одежда",
+  "note": "О погоде говорят безлично: hladno je, toplo je, sunčano je, oblačno je. Дождь и снег идут глаголом pada: pada kiša, pada snijeg. Одежда: jakna — куртка, kapa — шапка, cipele — обувь, majica — футболка, pantalone — брюки, kišobran — зонт. «Надень» — obuci (ты), obucite (вы); «возьми» — uzmi, uzmite.",
+  "exercises": [
+    {"type": "form", "id": "l24e01", "prompt": "Sjutra će biti ___ nego danas. (hladno)", "answer": "hladnije", "explanation": "Hladno → hladnije."},
+    {"type": "form", "id": "l24e02", "prompt": "Ljeti je ___ nego zimi. (toplo)", "answer": "toplije", "explanation": "Toplo → toplije."},
+    {"type": "form", "id": "l24e03", "prompt": "Ova jakna je ___ od one. (topao)", "answer": "toplija", "explanation": "Jakna женского рода: toplija."},
+    {"type": "form", "id": "l24e04", "prompt": "Danas je ___ dan u nedjelji. (lijep, превосходная)", "answer": "najljepši", "explanation": "Lijep → ljepši → najljepši."},
+    {"type": "form", "id": "l24e05", "prompt": "Vjetar je ___ nego juče. (jak)", "answer": "jači", "explanation": "Jak → jači, основа смягчается."},
+    {"type": "choice", "id": "l24e06", "prompt": "Как сказать «идёт дождь»?", "options": ["Pada kiša", "Ide kiša", "Kiša je pada", "Kiša pada je"], "answer": "Pada kiša", "explanation": "Дождь и снег «падают», а не «идут»: pada kiša, pada snijeg."},
+    {"type": "word_bank", "id": "l24e07", "prompt": "Возьми куртку, холодно.", "answer": "Uzmi jaknu hladno je", "bank": ["Uzmi", "jaknu", "hladno", "je", "jakna", "uzmite"], "explanation": "Uzmi — на «ты»; jaknu — винительный."},
+    {"type": "ru_to_me", "id": "l24e08", "prompt": "Завтра будет дождь.", "reference": "Sjutra će padati kiša.", "hint": "будущее: će плюс инфинитив padati."},
+    {"type": "me_to_ru", "id": "l24e09", "prompt": "Obucite nešto toplije, napolju je hladno.", "reference": "Наденьте что-нибудь потеплее, на улице холодно."},
+    {"type": "listening", "id": "l24e10", "audioText": "Danas pada kiša", "translation": "Сегодня идёт дождь"},
+    {"type": "speaking", "id": "l24e11", "phrase": "Napolju je hladno", "translation": "На улице холодно"}
+  ]
+}

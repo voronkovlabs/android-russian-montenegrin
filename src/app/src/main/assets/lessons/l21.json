@@ -1,0 +1,18 @@
+{
+  "id": "l21",
+  "title": "Повелительное наклонение",
+  "note": "Повеление строится от настоящего времени: radiš → radi (ты), radite (вы); ideš → idi, idite; ponoviš → ponovi, ponovite. У глаголов на -am окончание -aj: čekaš → čekaj, čekajte; daš → daj, dajte. Вежливая форма — та же с -te, и в Черногории к незнакомому обращаются только так. Отрицание не «ne radi», а nemoj (ты) и nemojte (вы) плюс инфинитив: «Nemojte parkirati ovdje».",
+  "exercises": [
+    {"type": "form", "id": "l21e01", "prompt": "___ pravo, pa lijevo. (ići, вы)", "answer": "idite", "explanation": "Ideš → idi, idite."},
+    {"type": "form", "id": "l21e02", "prompt": "___ , molim vas, ne razumijem. (ponoviti, вы)", "answer": "ponovite", "explanation": "Ponoviš → ponovi, ponovite."},
+    {"type": "form", "id": "l21e03", "prompt": "___ mi ključ. (dati, вы)", "answer": "dajte", "explanation": "Глаголы на -am берут -aj: daj, dajte."},
+    {"type": "form", "id": "l21e04", "prompt": "___ formular. (popuniti, вы)", "answer": "popunite", "explanation": "Popuniš → popuni, popunite."},
+    {"type": "form", "id": "l21e05", "prompt": "___ malo, molim vas. (čekati, вы)", "answer": "čekajte", "explanation": "Čekaš → čekaj, čekajte."},
+    {"type": "choice", "id": "l21e06", "prompt": "Как вежливо попросить повторить?", "options": ["Ponovite, molim vas", "Ponovi, molim vas", "Ponoviti, molim vas", "Ponovim, molim vas"], "answer": "Ponovite, molim vas", "explanation": "На «вы» — окончание -te. Ponovi годится только близкому."},
+    {"type": "word_bank", "id": "l21e07", "prompt": "Подождите немного, пожалуйста.", "answer": "Čekajte malo molim vas", "bank": ["Čekajte", "malo", "molim", "vas", "čekaj", "čekati"], "explanation": "Čekajte — вежливая форма, čekaj — на «ты»."},
+    {"type": "ru_to_me", "id": "l21e08", "prompt": "Позвоните мне завтра.", "reference": "Pozovite me sjutra.", "hint": "pozvati → pozovite; me — меня."},
+    {"type": "me_to_ru", "id": "l21e09", "prompt": "Nemojte parkirati ovdje.", "reference": "Не паркуйтесь здесь."},
+    {"type": "listening", "id": "l21e10", "audioText": "Idite pravo, pa lijevo", "translation": "Идите прямо, затем налево"},
+    {"type": "speaking", "id": "l21e11", "phrase": "Ponovite, molim vas", "translation": "Повторите, пожалуйста"}
+  ]
+}

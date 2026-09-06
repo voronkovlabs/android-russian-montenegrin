@@ -1,0 +1,18 @@
+{
+  "id": "l22",
+  "title": "Соседи и просьбы",
+  "note": "Просьба соседу — то же повеление, только помягче: «Možete li tiše?» звучит вежливее, чем «Budite tiši». Извинение за что-то — zbog плюс родительный: izvinite zbog buke. Слова подъезда: buka — шум, tiho и glasno — тихо и громко, đubre — мусор, lift — лифт, svjetlo — свет, garaža — гараж, napolju — на улице, sinoć — вчера вечером.",
+  "exercises": [
+    {"type": "form", "id": "l22e01", "prompt": "___ mi, molim vas. (pomoći, вы)", "answer": "pomozite", "explanation": "Pomoći меняет основу: pomozi, pomozite."},
+    {"type": "form", "id": "l22e02", "prompt": "___ malo tiši, molim. (biti, вы)", "answer": "budite", "explanation": "Biti даёт budi, budite."},
+    {"type": "form", "id": "l22e03", "prompt": "___ vrata, molim. (zatvoriti, вы)", "answer": "zatvorite", "explanation": "Zatvoriš → zatvori, zatvorite."},
+    {"type": "form", "id": "l22e04", "prompt": "___ me sjutra ujutru. (pozvati, вы)", "answer": "pozovite", "explanation": "Pozvati → pozovi, pozovite."},
+    {"type": "form", "id": "l22e05", "prompt": "___ svjetlo, molim. (ugasiti, вы)", "answer": "ugasite", "explanation": "Ugasiš → ugasi, ugasite."},
+    {"type": "choice", "id": "l22e06", "prompt": "Как сказать «извините за шум»?", "options": ["Izvinite zbog buke", "Izvinite za buka", "Izvinite od buke", "Izvinite buku"], "answer": "Izvinite zbog buke", "explanation": "Zbog требует родительного: buka → buke."},
+    {"type": "word_bank", "id": "l22e07", "prompt": "Помогите мне, пожалуйста.", "answer": "Pomozite mi molim vas", "bank": ["Pomozite", "mi", "molim", "vas", "pomozi", "pomoći"], "explanation": "Mi тут дательный — «мне», а не «мы»."},
+    {"type": "ru_to_me", "id": "l22e08", "prompt": "Можете говорить потише?", "reference": "Možete li tiše?", "hint": "tiše — сравнительная степень от tiho."},
+    {"type": "me_to_ru", "id": "l22e09", "prompt": "Molim vas, ne parkirajte ispred garaže.", "reference": "Пожалуйста, не паркуйтесь перед гаражом."},
+    {"type": "listening", "id": "l22e10", "audioText": "Izvinite zbog buke", "translation": "Извините за шум"},
+    {"type": "reading", "id": "l22e11", "text": "Komšije su sinoć pravile buku. Nisam mogao spavati. Sjutra ću razgovarati sa gazdom.", "translation": "Соседи вчера вечером шумели. Я не мог спать. Завтра поговорю с хозяином."}
+  ]
+}
