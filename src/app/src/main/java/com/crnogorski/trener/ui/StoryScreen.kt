@@ -113,7 +113,7 @@ fun StoryScreen(
                     else state.index.toFloat() / state.chunks.size
                 },
                 modifier = Modifier.fillMaxWidth().height(3.dp).clip(RoundedCornerShape(2.dp)),
-                color = Gold,
+                color = Accent,
                 trackColor = Surface2
             )
         }
@@ -124,7 +124,7 @@ fun StoryScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp)
         ) {
-            Text("ИСТОРИЯ", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("ИСТОРИЯ", style = MaterialTheme.typography.labelSmall, color = Accent)
             Spacer(Modifier.height(6.dp))
             Text(state.title, style = MaterialTheme.typography.displaySmall, color = Paper)
             Spacer(Modifier.height(24.dp))

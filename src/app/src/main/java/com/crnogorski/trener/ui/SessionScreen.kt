@@ -121,7 +121,7 @@ fun SessionScreen(
                         CircularProgressIndicator(
                             modifier = Modifier.height(18.dp),
                             strokeWidth = 2.dp,
-                            color = Gold
+                            color = Accent
                         )
                         Spacer(Modifier.height(0.dp))
                         Text(
@@ -175,7 +175,7 @@ private fun SessionHeader(state: SessionState, onNote: (String) -> Unit, onExit:
         LinearProgressIndicator(
             progress = { state.progress },
             modifier = Modifier.fillMaxWidth().height(3.dp).clip(RoundedCornerShape(2.dp)),
-            color = Gold,
+            color = Accent,
             trackColor = Surface2
         )
     }
@@ -274,7 +274,7 @@ private fun ExerciseBody(
 
 @Composable
 private fun Label(text: String) {
-    Text(text.uppercase(), style = MaterialTheme.typography.labelSmall, color = Gold)
+    Text(text.uppercase(), style = MaterialTheme.typography.labelSmall, color = Accent)
     Spacer(Modifier.height(10.dp))
 }
 
@@ -358,12 +358,12 @@ private fun TextAnswer(
         ),
         shape = RoundedCornerShape(12.dp),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Gold,
+            focusedBorderColor = Accent,
             unfocusedBorderColor = Surface2,
             focusedTextColor = Paper,
             unfocusedTextColor = Paper,
             disabledTextColor = Muted,
-            cursorColor = Gold
+            cursorColor = Accent
         )
     )
 
@@ -522,12 +522,12 @@ private fun ListeningAnswer(
         ),
         shape = RoundedCornerShape(12.dp),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Gold,
+            focusedBorderColor = Accent,
             unfocusedBorderColor = Surface2,
             focusedTextColor = Paper,
             unfocusedTextColor = Paper,
             disabledTextColor = Muted,
-            cursorColor = Gold
+            cursorColor = Accent
         )
     )
 
@@ -683,7 +683,7 @@ private fun ResultView(phase: Phase.Result, exercise: Exercise) {
         }
         if (phase.better.isNotBlank()) {
             Spacer(Modifier.height(8.dp))
-            Text("Естественнее: ${phase.better}", style = MaterialTheme.typography.bodyMedium, color = Gold)
+            Text("Естественнее: ${phase.better}", style = MaterialTheme.typography.bodyMedium, color = Accent)
         }
     }
 }
@@ -822,7 +822,7 @@ private fun AnswerTail(
         onClick = onNext,
         modifier = Modifier.fillMaxWidth().height(52.dp),
         shape = RoundedCornerShape(12.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Ink)
+        colors = ButtonDefaults.buttonColors(containerColor = Accent, contentColor = Ink)
     ) { Text("Дальше", style = MaterialTheme.typography.titleMedium) }
     Spacer(Modifier.height(4.dp))
     ComplaintBlock(
@@ -920,11 +920,11 @@ private fun ComplaintBlock(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Gold,
+                focusedBorderColor = Accent,
                 unfocusedBorderColor = Surface2,
                 focusedTextColor = Paper,
                 unfocusedTextColor = Paper,
-                cursorColor = Gold
+                cursorColor = Accent
             )
         )
 
@@ -956,7 +956,7 @@ private fun FinishedView(state: SessionState, onExit: () -> Unit) {
         Modifier.fillMaxSize().padding(28.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text("ГОТОВО", style = MaterialTheme.typography.labelSmall, color = Gold)
+        Text("ГОТОВО", style = MaterialTheme.typography.labelSmall, color = Accent)
         Spacer(Modifier.height(12.dp))
         Text(state.title, style = MaterialTheme.typography.displaySmall, color = Paper)
         Spacer(Modifier.height(16.dp))
@@ -979,7 +979,7 @@ internal fun PrimaryButton(text: String, enabled: Boolean = true, onClick: () ->
         modifier = Modifier.fillMaxWidth().height(52.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Gold,
+            containerColor = Accent,
             contentColor = Ink,
             disabledContainerColor = Surface2,
             disabledContentColor = Muted
@@ -996,7 +996,7 @@ internal fun SmallAction(text: String, onClick: () -> Unit) {
             .clickable(onClick = onClick)
             .padding(horizontal = 14.dp, vertical = 8.dp)
     ) {
-        Text(text, style = MaterialTheme.typography.bodyMedium, color = Gold)
+        Text(text, style = MaterialTheme.typography.bodyMedium, color = Accent)
     }
 }
 
@@ -1005,10 +1005,10 @@ private fun Chip(text: String, filled: Boolean, enabled: Boolean, onClick: () ->
     Box(
         Modifier
             .clip(RoundedCornerShape(10.dp))
-            .background(if (filled) Gold.copy(alpha = 0.18f) else Surface2)
+            .background(if (filled) Accent.copy(alpha = 0.18f) else Surface2)
             .border(
                 1.dp,
-                if (filled) Gold.copy(alpha = 0.5f) else Surface2,
+                if (filled) Accent.copy(alpha = 0.5f) else Surface2,
                 RoundedCornerShape(10.dp)
             )
             .clickable(enabled = enabled, onClick = onClick)

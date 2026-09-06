@@ -75,7 +75,7 @@ fun GlossedText(
         Text(
             "${shown.first} — ${shown.second}",
             style = MaterialTheme.typography.bodyMedium,
-            color = Gold
+            color = Accent
         )
     }
 }

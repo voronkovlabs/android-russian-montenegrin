@@ -109,7 +109,7 @@ fun SettingsScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp)
         ) {
-            Text("НАСТРОЙКИ", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("НАСТРОЙКИ", style = MaterialTheme.typography.labelSmall, color = Accent)
             Spacer(Modifier.height(6.dp))
             Text("Прогресс", style = MaterialTheme.typography.displaySmall, color = Paper)
             Spacer(Modifier.height(16.dp))
@@ -183,7 +183,7 @@ fun SettingsScreen(
             }
 
             Spacer(Modifier.height(36.dp))
-            Text("ОТЧЁТ", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("ОТЧЁТ", style = MaterialTheme.typography.labelSmall, color = Accent)
             Spacer(Modifier.height(6.dp))
             Text("Жалобы на задания", style = MaterialTheme.typography.displaySmall, color = Paper)
             Spacer(Modifier.height(24.dp))
@@ -204,7 +204,7 @@ fun SettingsScreen(
                 Text(
                     "${state.complaintCount}",
                     style = MaterialTheme.typography.displaySmall,
-                    color = if (state.complaintCount > 0) Gold else Muted
+                    color = if (state.complaintCount > 0) Accent else Muted
                 )
                 Spacer(Modifier.height(14.dp))
                 Text(
@@ -245,7 +245,7 @@ fun SettingsScreen(
 
             Spacer(Modifier.height(36.dp))
 
-            Text("РЕЧЬ", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("РЕЧЬ", style = MaterialTheme.typography.labelSmall, color = Accent)
             Spacer(Modifier.height(12.dp))
             SecondaryAction(text = "Проверить синтез речи") {
                 voiceChecked = true
@@ -292,7 +292,7 @@ fun SettingsScreen(
                 TextButton(onClick = {
                     confirmArchive = false
                     onArchive()
-                }) { Text("Отложить", color = Gold) }
+                }) { Text("Отложить", color = Accent) }
             },
             dismissButton = {
                 TextButton(onClick = { confirmArchive = false }) {
@@ -336,7 +336,7 @@ private fun PrimaryAction(text: String, enabled: Boolean = true, onClick: () -> 
         modifier = Modifier.fillMaxWidth().height(52.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Gold,
+            containerColor = Accent,
             contentColor = Ink,
             disabledContainerColor = Surface2,
             disabledContentColor = Muted

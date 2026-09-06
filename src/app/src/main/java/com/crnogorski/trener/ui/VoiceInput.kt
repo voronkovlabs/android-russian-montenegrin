@@ -87,7 +87,7 @@ fun MicButton(
         Icon(
             if (listening) Icons.Filled.Mic else Icons.Outlined.Mic,
             contentDescription = "Продиктовать ответ",
-            tint = if (listening) Gold else Muted
+            tint = if (listening) Accent else Muted
         )
     }
 }

@@ -18,8 +18,11 @@ import androidx.compose.ui.unit.sp
 
 /**
  * Палитра ролями, а не значениями: `ink` — фон, `paper` — текст по нему,
- * `gold` — акцент. В светлой теме роли те же, светлота меняется местами,
- * поэтому экраны о теме не знают вообще ничего и остаются как были.
+ * `accent` — акцент. Экраны о теме не знают вообще ничего: меняются значения,
+ * имена ролей остаются.
+ *
+ * Тёмная тема — тёплая, золото по чернилам; светлая — голубая, синий по льду.
+ * Оттенок роли меняется вместе с темой, и код это не волнует.
  */
 @Immutable
 data class Palette(
@@ -28,7 +31,7 @@ data class Palette(
     val surface2: Color,
     val paper: Color,
     val muted: Color,
-    val gold: Color,
+    val accent: Color,
     val crimson: Color,
     val jade: Color,
     val outline: Color,
@@ -41,28 +44,36 @@ private val DarkPalette = Palette(
     surface2 = Color(0xFF212127),
     paper = Color(0xFFEDE9E1),
     muted = Color(0xFF8E8B85),
-    gold = Color(0xFFD8B25F),
-    crimson = Color(0xFFC2384F),
+    accent = Color(0xFFD8B25F),
+    // Прежний 0xFFC2384F давал контраст 3,4 к 1 на карточке — для подписи
+    // в 11 пунктов этого мало, и «ОШИБКА» читалась хуже всего остального.
+    crimson = Color(0xFFDB5A70),
     jade = Color(0xFF5FA47A),
     outline = Color(0xFF3A3A42),
     dark = true
 )
 
 /**
- * Светлая тема — та же бумага, только наоборот: тёплый фон, тёмный текст.
- * Золото и зелень заметно темнее, чем в тёмной теме: исходные оттенки
- * на светлом фоне не читались бы ни текстом, ни рамкой.
+ * Светлая тема — голубая: холодный фон, белые карточки, синий акцент.
+ *
+ * Акцент здесь синий, а в тёмной теме золотой, и это не оплошность: `accent` —
+ * роль, а не оттенок. Ровно поэтому цвет и назван по роли: `Accent`, а не
+ * `Gold`, — читающий код не должен гадать, какого он цвета в этой теме.
+ *
+ * Акцент, зелень и красный взяты заметно темнее, чем в тёмной теме: на светлом
+ * фоне исходные оттенки не читались бы ни текстом, ни рамкой. Синий выбран так,
+ * чтобы работать и текстом по фону, и подложкой кнопки со светлым текстом.
  */
 private val LightPalette = Palette(
-    ink = Color(0xFFF6F2E9),
-    surface1 = Color(0xFFFFFDF7),
-    surface2 = Color(0xFFE6E0D1),
-    paper = Color(0xFF1B1A18),
-    muted = Color(0xFF6A665E),
-    gold = Color(0xFF8A6A1F),
-    crimson = Color(0xFFA32338),
-    jade = Color(0xFF2F7A52),
-    outline = Color(0xFFD5CEBE),
+    ink = Color(0xFFEDF3F9),
+    surface1 = Color(0xFFFFFFFF),
+    surface2 = Color(0xFFD6E3F0),
+    paper = Color(0xFF10222F),
+    muted = Color(0xFF56718A),
+    accent = Color(0xFF1F6FA8),
+    crimson = Color(0xFFB02A3C),
+    jade = Color(0xFF1E7A5A),
+    outline = Color(0xFFC5D6E5),
     dark = false
 )
 
@@ -76,7 +87,7 @@ val Surface1: Color @Composable @ReadOnlyComposable get() = LocalPalette.current
 val Surface2: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.surface2
 val Paper: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.paper
 val Muted: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.muted
-val Gold: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.gold
+val Accent: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.accent
 val Crimson: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.crimson
 
 /** Зелёный только для «верно»: золото — акцент интерфейса, им вердикт не отличить от кнопки. */
@@ -84,7 +95,7 @@ val Jade: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.jad
 
 private fun schemeOf(p: Palette) = if (p.dark) {
     darkColorScheme(
-        primary = p.gold,
+        primary = p.accent,
         onPrimary = p.ink,
         secondary = p.paper,
         background = p.ink,
@@ -98,7 +109,7 @@ private fun schemeOf(p: Palette) = if (p.dark) {
     )
 } else {
     lightColorScheme(
-        primary = p.gold,
+        primary = p.accent,
         onPrimary = p.ink,
         secondary = p.paper,
         background = p.ink,

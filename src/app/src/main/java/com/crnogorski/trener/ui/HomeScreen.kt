@@ -52,7 +52,7 @@ fun HomeScreen(
             Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-        ) { CircularProgressIndicator(color = Gold) }
+        ) { CircularProgressIndicator(color = Accent) }
         return
     }
 
@@ -84,7 +84,7 @@ fun HomeScreen(
                 }
             }
             Spacer(Modifier.height(10.dp))
-            Text("CRNOGORSKI", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("CRNOGORSKI", style = MaterialTheme.typography.labelSmall, color = Accent)
             Spacer(Modifier.height(6.dp))
             Text(
                 if (state.tab == HomeTab.Lessons) "Курс" else "Истории",
@@ -147,7 +147,7 @@ fun HomeScreen(
 
 /**
  * Иконка вкладки. Выбранная отличается не только цветом, но и подложкой:
- * одного оттенка золота на тёмном фоне мало, чтобы понять, где находишься.
+ * одного акцентного оттенка мало, чтобы понять, где находишься.
  */
 @Composable
 private fun TabIcon(
@@ -162,7 +162,7 @@ private fun TabIcon(
             .clip(RoundedCornerShape(10.dp))
             .background(if (selected) Surface1 else Color.Transparent)
     ) {
-        Icon(icon, contentDescription = label, tint = if (selected) Gold else Muted)
+        Icon(icon, contentDescription = label, tint = if (selected) Accent else Muted)
     }
 }
 
@@ -192,7 +192,7 @@ private fun SectionHeader(group: LessonGroup, expanded: Boolean, onClick: () -> 
         Text(
             group.title.uppercase(),
             style = MaterialTheme.typography.labelSmall,
-            color = Gold,
+            color = Accent,
             modifier = Modifier.weight(1f)
         )
         Text(
@@ -250,7 +250,7 @@ private fun ReviewCard(count: Int, onClick: () -> Unit) {
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
-            .background(if (active) Gold else Surface1)
+            .background(if (active) Accent else Surface1)
             .clickable(enabled = active, onClick = onClick)
             .padding(18.dp)
     ) {
@@ -277,7 +277,7 @@ private fun LessonRow(card: LessonCard, onClick: () -> Unit) {
             .background(Surface1)
             .border(
                 width = 1.dp,
-                color = if (card.done) Gold.copy(alpha = 0.35f) else Surface2,
+                color = if (card.done) Accent.copy(alpha = 0.35f) else Surface2,
                 shape = RoundedCornerShape(12.dp)
             )
             .clickable(onClick = onClick)
@@ -287,7 +287,7 @@ private fun LessonRow(card: LessonCard, onClick: () -> Unit) {
         Text(
             card.ref.id.uppercase(),
             style = MaterialTheme.typography.labelSmall,
-            color = if (card.done) Gold else Muted,
+            color = if (card.done) Accent else Muted,
             modifier = Modifier.padding(end = 14.dp)
         )
         Text(

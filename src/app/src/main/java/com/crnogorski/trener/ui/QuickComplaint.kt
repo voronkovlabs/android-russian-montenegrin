@@ -69,11 +69,11 @@ fun ComplaintButton(onSave: (String) -> Unit) {
                     minLines = 3,
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Gold,
+                        focusedBorderColor = Accent,
                         unfocusedBorderColor = Surface2,
                         focusedTextColor = Paper,
                         unfocusedTextColor = Paper,
-                        cursorColor = Gold
+                        cursorColor = Accent
                     )
                 )
             }
@@ -86,7 +86,7 @@ fun ComplaintButton(onSave: (String) -> Unit) {
                     open = false
                 },
                 enabled = text.isNotBlank()
-            ) { Text("Записать", color = if (text.isNotBlank()) Gold else Muted) }
+            ) { Text("Записать", color = if (text.isNotBlank()) Accent else Muted) }
         },
         dismissButton = {
             TextButton(onClick = { open = false }) { Text("Отмена", color = Muted) }
