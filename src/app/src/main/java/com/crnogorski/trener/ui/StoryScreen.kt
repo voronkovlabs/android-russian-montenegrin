@@ -13,10 +13,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
@@ -63,6 +65,9 @@ private const val SILENT_RETRIES = 2
  * раньше, чем начиналось чтение.
  */
 private const val AUTO_START_DELAY_MS = 500L
+
+/** Сколько элементов списка идёт до первого отрезка: заголовок истории. */
+private const val HEADER_ITEMS = 1
 
 /**
  * История: связный текст, который читают вслух по отрезкам.
@@ -191,6 +196,16 @@ fun StoryScreen(
         if (state.attempts > 0) listening = false
     }
 
+    // Читаемая строка не должна уезжать за нижний край: прочитанное копится
+    // сверху и выталкивает её вниз. Подводим её к верху окна — под ней как раз
+    // помещаются кнопки и сообщения, а над ней остаётся пройденное.
+    val listState = rememberLazyListState()
+    LaunchedEffect(state.id, state.index, state.attempts) {
+        listState.animateScrollToItem(
+            state.index.coerceAtMost(state.chunks.size) + HEADER_ITEMS
+        )
+    }
+
     Column(Modifier.fillMaxSize()) {
         Column(Modifier.padding(horizontal = 20.dp, vertical = 14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -221,18 +236,19 @@ fun StoryScreen(
             )
         }
 
-        Column(
-            Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp)
+        LazyColumn(
+            state = listState,
+            modifier = Modifier.weight(1f).fillMaxWidth(),
+            contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 40.dp)
         ) {
-            Text("ИСТОРИЯ", style = MaterialTheme.typography.labelSmall, color = Accent)
-            Spacer(Modifier.height(6.dp))
-            Text(state.title, style = MaterialTheme.typography.displaySmall, color = Paper)
-            Spacer(Modifier.height(24.dp))
+            item {
+                Text("ИСТОРИЯ", style = MaterialTheme.typography.labelSmall, color = Accent)
+                Spacer(Modifier.height(6.dp))
+                Text(state.title, style = MaterialTheme.typography.displaySmall, color = Paper)
+                Spacer(Modifier.height(24.dp))
+            }
 
-            state.chunks.forEachIndexed { i, chunk ->
+            itemsIndexed(state.chunks) { i, chunk ->
                 when {
                     i < state.index -> {
                         // Пройденное: текст приглушён, перевод под ним — он и есть награда.
@@ -280,23 +296,29 @@ fun StoryScreen(
                 }
             }
 
-            if (done) {
-                Spacer(Modifier.height(10.dp))
-                Text("ПРОЧИТАНО", style = MaterialTheme.typography.labelSmall, color = Jade)
-                Spacer(Modifier.height(12.dp))
-                Text(
-                    "История дочитана до конца. Её можно перечитать в любой момент — " +
-                        "на повторение она не встаёт.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Muted
-                )
-                Spacer(Modifier.height(16.dp))
-                PrimaryButton("Прочитать заново", onClick = onRestart)
-                Spacer(Modifier.height(4.dp))
-                TextButton(onClick = onClose) { Text("К списку историй", color = Muted) }
+            // Хвост есть всегда, даже пустой: иначе прокрутка к последнему
+            // отрезку упиралась бы в конец списка и не доводила его до верха.
+            item {
+                if (done) {
+                    Spacer(Modifier.height(10.dp))
+                    Text("ПРОЧИТАНО", style = MaterialTheme.typography.labelSmall, color = Jade)
+                    Spacer(Modifier.height(12.dp))
+                    Text(
+                        "История дочитана до конца. Её можно перечитать в любой момент — " +
+                            "на повторение она не встаёт.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Muted
+                    )
+                    Spacer(Modifier.height(16.dp))
+                    PrimaryButton("Прочитать заново", onClick = onRestart)
+                    Spacer(Modifier.height(4.dp))
+                    TextButton(onClick = onClose) { Text("К списку историй", color = Muted) }
+                } else {
+                    // Не fillMaxHeight: внутри списка высота не ограничена, и он
+                    // молча схлопнулся бы в ноль. Нужен размер окна, а не родителя.
+                    Spacer(Modifier.fillParentMaxHeight())
+                }
             }
-
-            Spacer(Modifier.height(40.dp))
         }
     }
 }
