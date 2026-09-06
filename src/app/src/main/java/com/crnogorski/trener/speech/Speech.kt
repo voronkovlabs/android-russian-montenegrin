@@ -123,15 +123,17 @@ class Listener(private val context: Context) {
     fun listen(
         language: String = TAG_TARGET,
         onResult: (String) -> Unit,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
+        onSilence: (() -> Unit)? = null
     ) {
-        begin(language, onResult, onError, mayRetry = true)
+        begin(language, onResult, onError, onSilence, mayRetry = true)
     }
 
     private fun begin(
         language: String,
         onText: (String) -> Unit,
         onFail: (String) -> Unit,
+        onSilence: (() -> Unit)?,
         mayRetry: Boolean
     ) {
         val sr = recognizer
@@ -149,8 +151,11 @@ class Listener(private val context: Context) {
         sr.setRecognitionListener(object : RecognitionListener {
             override fun onResults(results: Bundle?) {
                 val list = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                if (list.isNullOrEmpty()) onFail("Ничего не расслышал")
-                else onText(list.first())
+                if (list.isNullOrEmpty()) {
+                    if (onSilence != null) onSilence() else onFail("Ничего не расслышал")
+                } else {
+                    onText(list.first())
+                }
             }
 
             override fun onError(error: Int) {
@@ -160,9 +165,15 @@ class Listener(private val context: Context) {
                     recognizer?.destroy()
                     recognizer = null
                     main.postDelayed(
-                        { begin(language, onText, onFail, mayRetry = false) },
+                        { begin(language, onText, onFail, onSilence, mayRetry = false) },
                         RETRY_DELAY_MS
                     )
+                    return
+                }
+                // «Не расслышал» и «тишина» — не ошибка чтения, а то, что человек
+                // ещё не начал говорить. Кто хочет, разбирает этот случай отдельно.
+                if (error in SILENT && onSilence != null) {
+                    onSilence()
                     return
                 }
                 onFail(describe(error))
@@ -222,6 +233,12 @@ class Listener(private val context: Context) {
             SpeechRecognizer.ERROR_SERVER_DISCONNECTED,
             SpeechRecognizer.ERROR_CLIENT,
             SpeechRecognizer.ERROR_RECOGNIZER_BUSY
+        )
+
+        /** Движок ничего не услышал — говорить ещё не начали. */
+        val SILENT = setOf(
+            SpeechRecognizer.ERROR_NO_MATCH,
+            SpeechRecognizer.ERROR_SPEECH_TIMEOUT
         )
 
         /** Пауза перед повтором: пересозданному объекту нужно время на привязку. */

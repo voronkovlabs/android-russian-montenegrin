@@ -40,10 +40,29 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.crnogorski.trener.speech.Listener
+import kotlinx.coroutines.delay
 import com.crnogorski.trener.speech.Speaker
 
 /** После скольких неудач подряд даём пройти дальше, не взяв отрезок. */
 private const val ATTEMPTS_BEFORE_SKIP = 3
+
+/**
+ * Сколько раз молча переслушать, если движок вообще ничего не разобрал.
+ *
+ * Это не ошибка чтения, а промежуток между появлением отрезка и первым словом:
+ * человек ещё ведёт глазами по строке, а движок уже сдался. Дважды переслушать
+ * дешевле, чем возвращать кнопку на ровном месте.
+ */
+private const val SILENT_RETRIES = 2
+
+/**
+ * Пауза перед тем, как начать слушать новый отрезок.
+ *
+ * Нужна обеим сторонам: движку — чтобы отпустить предыдущий заход, человеку —
+ * чтобы довести глаза до новой строки. Без неё распознавание успевало сдаться
+ * раньше, чем начиналось чтение.
+ */
+private const val AUTO_START_DELAY_MS = 500L
 
 /**
  * История: связный текст, который читают вслух по отрезкам.
@@ -77,6 +96,11 @@ fun StoryScreen(
     // вслух», запись не возобновляем: иначе она подхватит голос синтезатора.
     var paused by remember(state.id, state.index) { mutableStateOf(false) }
 
+    // Слушание сорвалось не по вине чтения: движок отвалился, нет разрешения,
+    // или он так и не разобрал ни слова. Дальше — только по нажатию.
+    var stalled by remember(state.id, state.index) { mutableStateOf(false) }
+    var silent by remember(state.id, state.index) { mutableStateOf(0) }
+
     var granted by remember {
         mutableStateOf(
             ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
@@ -101,7 +125,19 @@ fun StoryScreen(
             },
             onError = { message ->
                 listening = false
+                stalled = true
                 status = message
+            },
+            onSilence = {
+                // Ничего не услышали — скорее всего просто не успели начать.
+                if (silent < SILENT_RETRIES) {
+                    silent++
+                    start()
+                } else {
+                    listening = false
+                    stalled = true
+                    status = "Ничего не расслышал. Нажми, когда будешь готов."
+                }
             }
         )
     }
@@ -121,6 +157,8 @@ fun StoryScreen(
             return
         }
         paused = false
+        stalled = false
+        silent = 0
         start()
     }
 
@@ -135,12 +173,15 @@ fun StoryScreen(
 
     val done = state.index >= state.chunks.size
     // Слушаем сами, только пока всё идёт гладко. Сорвалось — ждём нажатия.
-    val auto = granted && !paused && state.attempts == 0 && !done
+    val auto = granted && !paused && !stalled && state.attempts == 0 && !done
 
-    // Ключи без paused: снятие паузы — это нажатие кнопки, и запускает его
-    // record(). Будь paused ключом, эффект запустил бы распознавание вторым.
+    // Ключи без paused и stalled: их снимает нажатие кнопки, которое и так зовёт
+    // start(). Будь они ключами, эффект запустил бы распознавание вторым.
     LaunchedEffect(state.id, state.index, granted) {
-        if (granted && !paused && state.attempts == 0 && !done) start()
+        if (granted && !paused && !stalled && state.attempts == 0 && !done) {
+            delay(AUTO_START_DELAY_MS)
+            start()
+        }
     }
 
     // Неудачу экран узнаёт по счётчику попыток: сам onResult не знает, засчитали
