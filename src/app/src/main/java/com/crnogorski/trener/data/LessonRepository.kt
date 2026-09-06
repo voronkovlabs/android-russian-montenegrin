@@ -39,7 +39,7 @@ class LessonRepository(private val context: Context) {
 
     suspend fun story(id: String): Story = withContext(Dispatchers.IO) {
         val ref = stories().stories.first { it.id == id }
-        json.decodeFromString<Story>(read("stories/${'$'}{ref.file}"))
+        json.decodeFromString<Story>(read("stories/" + ref.file))
     }
 
     /**

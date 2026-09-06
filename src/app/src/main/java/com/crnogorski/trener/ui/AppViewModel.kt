@@ -333,15 +333,20 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     fun openStory(id: String) {
         viewModelScope.launch {
-            val story = repo.story(id)
-            val saved = dao.story(id)
-            val done = saved?.chunksDone ?: 0
+            // Файл истории может не читаться — не тот путь, битый JSON. Ронять
+            // из-за этого приложение нельзя: assets правятся чаще, чем код.
+            val story = runCatching { repo.story(id) }.getOrNull()
+            if (story == null) {
+                _notice.value = "Историю не открыть — файл не читается"
+                return@launch
+            }
+            val done = dao.story(id)?.chunksDone ?: 0
             _story.value = StoryState(
                 id = story.id,
                 title = story.title,
                 chunks = story.chunks,
                 index = if (done >= story.chunks.size) 0 else done,
-                glossaryMe = repo.glossary().me
+                glossaryMe = runCatching { repo.glossary().me }.getOrDefault(emptyMap())
             )
         }
     }
