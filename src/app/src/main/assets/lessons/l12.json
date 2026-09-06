@@ -1,0 +1,18 @@
+{
+  "id": "l12",
+  "title": "Родительный падеж",
+  "note": "Родительный отвечает на «чего? кого?» и нужен в четырёх ходовых случаях. Первое — после отрицания: nemam vode, а не nemam voda. Второе — после предлогов iz, od, do, kod, bez, poslije: iz Rusije, kod doktora, bez šećera. Третье — принадлежность: kuća komšije, kopija pasoša. Четвёртое — количество: čaša vode, kilogram sira, malo vremena. Окончания: мужской род -a (ključ → ključa), женский -e (voda → vode, banka → banke), средний -a (vrijeme → vremena).",
+  "exercises": [
+    {"type": "form", "id": "l12e01", "prompt": "Nemam ___ . (ključ)", "answer": "ključa", "explanation": "После отрицания — родительный: ključ → ključa."},
+    {"type": "form", "id": "l12e02", "prompt": "Ovo je kuća ___ . (komšija)", "answer": "komšije", "explanation": "Komšija склоняется как женский род: komšije."},
+    {"type": "form", "id": "l12e03", "prompt": "Idem kod ___ . (doktor)", "answer": "doktora", "explanation": "Kod требует родительного: doktor → doktora."},
+    {"type": "form", "id": "l12e04", "prompt": "Kafa bez ___ , molim. (šećer)", "answer": "šećera", "explanation": "Bez тоже требует родительного."},
+    {"type": "form", "id": "l12e05", "prompt": "Došao sam iz ___ . (Rusija)", "answer": "Rusije", "explanation": "Женский род на -a даёт -e: Rusija → Rusije."},
+    {"type": "choice", "id": "l12e06", "prompt": "Как сказать «у меня нет воды»?", "options": ["Nemam vode", "Nemam voda", "Nemam vodu", "Nema vodu"], "answer": "Nemam vode", "explanation": "Винительный vodu был бы при imam. После отрицания — родительный vode."},
+    {"type": "word_bank", "id": "l12e07", "prompt": "У меня нет времени.", "answer": "Nemam vremena", "bank": ["Nemam", "vremena", "vrijeme", "imam", "nema"], "explanation": "Vrijeme среднего рода, родительный — vremena."},
+    {"type": "ru_to_me", "id": "l12e08", "prompt": "У меня нет денег.", "reference": "Nemam novca.", "hint": "novac — деньги; после отрицания родительный."},
+    {"type": "me_to_ru", "id": "l12e09", "prompt": "Bez pasoša ne možete dalje.", "reference": "Без паспорта дальше нельзя."},
+    {"type": "listening", "id": "l12e10", "audioText": "Idem kod doktora", "translation": "Я иду к врачу"},
+    {"type": "repeat", "id": "l12e11", "phrase": "Nemam vremena danas", "translation": "У меня сегодня нет времени"}
+  ]
+}

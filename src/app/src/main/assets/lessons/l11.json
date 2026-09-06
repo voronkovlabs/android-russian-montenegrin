@@ -1,0 +1,18 @@
+{
+  "id": "l11",
+  "title": "Здоровье: что болит",
+  "note": "Боль строится безлично: болит не «я», а часть тела, а человек стоит в винительном. Boli me glava — дословно «болит меня голова». Boli me zub, boli me stomak. Про другого: boli ga glava (его), boli je glava (её). В прошедшем причастие согласуется с тем, что болело: boljela me glava, boljelo me grlo. «Мне нужно» — treba mi: treba mi lijek, treba mi doktor.",
+  "exercises": [
+    {"type": "form", "id": "l11e01", "prompt": "Juče sam ___ kod ljekara. (biti, о мужчине)", "answer": "bio", "explanation": "Kod ljekara — у врача, с родительным падежом."},
+    {"type": "form", "id": "l11e02", "prompt": "Ona je ___ lijek u apoteci. (kupiti)", "answer": "kupila", "explanation": "Kupiti → kupio, kupila."},
+    {"type": "form", "id": "l11e03", "prompt": "Ja sam ___ na ulici. (pasti, о мужчине)", "answer": "pao", "explanation": "Pasti → pao, pala, pali. Основа теряет -st-."},
+    {"type": "form", "id": "l11e04", "prompt": "Djeca su ___ bolesna. (biti)", "answer": "bila", "explanation": "Djeca — собирательное среднего рода: bila, а не bili."},
+    {"type": "form", "id": "l11e05", "prompt": "Doktor mi je ___ recept. (dati)", "answer": "dao", "explanation": "Dati → dao, dala, dali."},
+    {"type": "choice", "id": "l11e06", "prompt": "Как сказать «у меня болит голова»?", "options": ["Boli me glava", "Bolim glavu", "Ja boli glava", "Glava sam boli"], "answer": "Boli me glava", "explanation": "Боль безлична: болит голова, а человек в винительном — me."},
+    {"type": "word_bank", "id": "l11e07", "prompt": "У меня болит зуб.", "answer": "Boli me zub", "bank": ["Boli", "me", "zub", "glava", "bolim", "je"], "explanation": "Порядок такой же, как в «Boli me glava»: глагол, me, часть тела."},
+    {"type": "ru_to_me", "id": "l11e08", "prompt": "Вчера я был у врача.", "reference": "Juče sam bio kod ljekara.", "hint": "kod требует родительного: ljekar → ljekara."},
+    {"type": "me_to_ru", "id": "l11e09", "prompt": "Boli me stomak od juče.", "reference": "У меня со вчерашнего дня болит живот."},
+    {"type": "listening", "id": "l11e10", "audioText": "Treba mi lijek", "translation": "Мне нужно лекарство"},
+    {"type": "reading", "id": "l11e11", "text": "Juče sam bio bolestan. Boljela me glava. Danas sam bio kod ljekara.", "translation": "Вчера я был болен. У меня болела голова. Сегодня я был у врача."}
+  ]
+}

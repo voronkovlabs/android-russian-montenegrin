@@ -1,0 +1,18 @@
+{
+  "id": "l14",
+  "title": "Документы и учреждения",
+  "note": "Тут родительный работает целый день: nemam pasoša, bez dokumenta, iz banke, do šaltera. «Мне нужно» — treba mi: treba mi potvrda, treba mi dozvola. Вежливая просьба о действии — da плюс настоящее время: «Gdje da potpišem?» — дословно «где чтобы я подписал». Слова, которые встретятся в окошке: šalter — окно приёма, red — очередь, potvrda — справка, dozvola — разрешение, boravak — вид на жительство, formular — бланк.",
+  "exercises": [
+    {"type": "form", "id": "l14e01", "prompt": "Nemam ___ sa sobom. (pasoš)", "answer": "pasoša", "explanation": "После отрицания — родительный: pasoš → pasoša."},
+    {"type": "form", "id": "l14e02", "prompt": "Bez ___ ne mogu ništa. (dokument)", "answer": "dokumenta", "explanation": "Bez требует родительного."},
+    {"type": "form", "id": "l14e03", "prompt": "Idem do ___ . (banka)", "answer": "banke", "explanation": "Do тоже требует родительного: banka → banke."},
+    {"type": "form", "id": "l14e04", "prompt": "Ovdje nema ___ . (red)", "answer": "reda", "explanation": "Nema плюс родительный: red → reda."},
+    {"type": "form", "id": "l14e05", "prompt": "Treba mi potvrda iz ___ . (policija)", "answer": "policije", "explanation": "Iz требует родительного: policija → policije."},
+    {"type": "choice", "id": "l14e06", "prompt": "Как спросить «где мне подписать?»", "options": ["Gdje da potpišem?", "Gdje potpisati ja?", "Gdje sam potpišem?", "Gdje je potpišem?"], "answer": "Gdje da potpišem?", "explanation": "Просьба о действии строится через da плюс настоящее время."},
+    {"type": "word_bank", "id": "l14e07", "prompt": "У меня нет паспорта с собой.", "answer": "Nemam pasoša sa sobom", "bank": ["Nemam", "pasoša", "sa", "sobom", "pasoš", "imam"], "explanation": "Sa sobom — «с собой», устойчиво и не меняется."},
+    {"type": "ru_to_me", "id": "l14e08", "prompt": "Мне нужна справка из банка.", "reference": "Treba mi potvrda iz banke.", "hint": "treba mi — мне нужно; iz требует родительного."},
+    {"type": "me_to_ru", "id": "l14e09", "prompt": "Molim vas, popunite formular.", "reference": "Пожалуйста, заполните бланк."},
+    {"type": "listening", "id": "l14e10", "audioText": "Treba mi potvrda iz banke", "translation": "Мне нужна справка из банка"},
+    {"type": "repeat", "id": "l14e11", "phrase": "Gdje je šalter za boravak?", "translation": "Где окно для вида на жительство?"}
+  ]
+}

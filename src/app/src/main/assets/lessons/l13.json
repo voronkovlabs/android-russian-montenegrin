@@ -1,0 +1,18 @@
+{
+  "id": "l13",
+  "title": "Магазин и рынок",
+  "note": "Количество тянет за собой родительный: litar mlijeka, kilogram sira, čaša vode, pola kilograma. Дословно это «литр молока», как и по-русски. «Больше нет» — nemamo više плюс родительный: nemamo više jaja. Полезное на кассе: gotovina — наличные, kartica — карта, popust — скидка, kesa — пакет, sitno — мелочь.",
+  "exercises": [
+    {"type": "form", "id": "l13e01", "prompt": "Molim vas, litar ___ . (mlijeko)", "answer": "mlijeka", "explanation": "После количества — родительный: mlijeko → mlijeka."},
+    {"type": "form", "id": "l13e02", "prompt": "Pola ___ sira, molim. (kilogram)", "answer": "kilograma", "explanation": "Pola тоже количество: kilogram → kilograma."},
+    {"type": "form", "id": "l13e03", "prompt": "Čaša ___ , molim vas. (voda)", "answer": "vode", "explanation": "Женский род на -a даёт -e."},
+    {"type": "form", "id": "l13e04", "prompt": "Nemamo više ___ . (jaje)", "answer": "jaja", "explanation": "Jaje → jaja, родительный множественного."},
+    {"type": "form", "id": "l13e05", "prompt": "Koliko košta kilogram ___ ? (sir)", "answer": "sira", "explanation": "Sir → sira."},
+    {"type": "choice", "id": "l13e06", "prompt": "Как спросить «у вас есть скидка?»", "options": ["Imate li popust?", "Imate popust li?", "Li imate popust?", "Imate li popusta?"], "answer": "Imate li popust?", "explanation": "Частица li идёт сразу после глагола. Popust тут прямое дополнение, не родительный."},
+    {"type": "word_bank", "id": "l13e07", "prompt": "Полкило сыра, пожалуйста.", "answer": "Molim vas pola kilograma sira", "bank": ["Molim", "vas", "pola", "kilograma", "sira", "sir", "kilogram"], "explanation": "Оба слова после pola — в родительном: kilograma sira."},
+    {"type": "ru_to_me", "id": "l13e08", "prompt": "Можно платить картой?", "reference": "Mogu li platiti karticom?", "hint": "karticom — творительный падеж от kartica, «чем платить»."},
+    {"type": "me_to_ru", "id": "l13e09", "prompt": "Nemamo više jaja, izvinite.", "reference": "Яиц больше нет, извините."},
+    {"type": "listening", "id": "l13e10", "audioText": "Koliko košta kilogram sira", "translation": "Сколько стоит килограмм сыра"},
+    {"type": "speaking", "id": "l13e11", "phrase": "Molim vas, pola kilograma sira", "translation": "Полкило сыра, пожалуйста"}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "l10",
+  "title": "Дом и быт: что случилось",
+  "note": "Перфект в быту. Отрицание перфекта — nije плюс причастие: «Majstor nije došao», не «ne došao» и не «nije doći». Возвратное se тоже клитика и идёт вторым словом: «Juče se pokvario frižider», а не «Juče pokvario se». Если предложение начинается с глагола, se идёт следом: «Pokvario se frižider». Причастия, которые тут нужны: platiti → platio, izgubiti → izgubio, doći → došao, naći → našao, zatvoriti → zatvorio.",
+  "exercises": [
+    {"type": "form", "id": "l10e01", "prompt": "Juče sam ___ stanarinu. (platiti, о мужчине)", "answer": "platio", "explanation": "Platiti → platio; она заплатила — platila."},
+    {"type": "form", "id": "l10e02", "prompt": "Ona je ___ ključ. (izgubiti)", "answer": "izgubila", "explanation": "Женский род: izgubio → izgubila."},
+    {"type": "form", "id": "l10e03", "prompt": "Majstor je ___ juče. (doći)", "answer": "došao", "explanation": "Doći даёт došao, došla, došli — основа меняется."},
+    {"type": "form", "id": "l10e04", "prompt": "Mi smo ___ stan u Baru. (naći)", "answer": "našli", "explanation": "Naći → našao, našla, našli."},
+    {"type": "form", "id": "l10e05", "prompt": "Komšija je ___ vrata. (zatvoriti)", "answer": "zatvorio", "explanation": "Zatvoriti → zatvorio, zatvorila."},
+    {"type": "choice", "id": "l10e06", "prompt": "Как сказать «мастер ещё не пришёл»?", "options": ["Majstor još nije došao", "Majstor još ne došao", "Majstor još nije doći", "Majstor još nisam došao"], "answer": "Majstor još nije došao", "explanation": "Отрицание перфекта: nije плюс причастие. Nisam — только про себя."},
+    {"type": "word_bank", "id": "l10e07", "prompt": "Вчера я заплатил за квартиру.", "answer": "Juče sam platio stanarinu", "bank": ["Juče", "sam", "platio", "stanarinu", "platila", "je", "stanarina"], "explanation": "Короткое sam стоит вторым словом, сразу после Juče."},
+    {"type": "ru_to_me", "id": "l10e08", "prompt": "Вчера сломался холодильник.", "reference": "Juče se pokvario frižider.", "hint": "pokvariti se — сломаться; se стоит вторым словом."},
+    {"type": "me_to_ru", "id": "l10e09", "prompt": "Nemam ključ, gazda ga ima.", "reference": "У меня нет ключа, он у хозяина."},
+    {"type": "listening", "id": "l10e10", "audioText": "Majstor dolazi sjutra", "translation": "Мастер придёт завтра"},
+    {"type": "speaking", "id": "l10e11", "phrase": "Slavina ne radi", "translation": "Кран не работает"}
+  ]
+}
