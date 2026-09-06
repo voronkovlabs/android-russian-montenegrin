@@ -1,0 +1,7 @@
+{
+  "stories": [
+    {"id": "s01", "title": "Prvi dan", "file": "s01.json", "level": 1, "chunks": 12},
+    {"id": "s02", "title": "Moja porodica", "file": "s02.json", "level": 1, "chunks": 11},
+    {"id": "s03", "title": "Na pijaci", "file": "s03.json", "level": 2, "chunks": 12}
+  ]
+}

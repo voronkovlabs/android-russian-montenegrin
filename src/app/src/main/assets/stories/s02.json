@@ -1,0 +1,18 @@
+{
+  "id": "s02",
+  "title": "Moja porodica",
+  "note": "Семья и работа. Слова из уроков 4 и 7.",
+  "chunks": [
+    { "sr": "Ovo je moja porodica.", "ru": "Это моя семья." },
+    { "sr": "Imam dvije sestre i jednog brata.", "ru": "У меня две сестры и один брат." },
+    { "sr": "Moj otac je iz Nikšića.", "ru": "Мой отец из Никшича." },
+    { "sr": "Moja majka je iz Bara.", "ru": "Моя мама из Бара." },
+    { "sr": "Moj brat živi u Crnoj Gori već pet godina.", "ru": "Мой брат живёт в Черногории уже пять лет." },
+    { "sr": "On radi u Budvi.", "ru": "Он работает в Будве." },
+    { "sr": "Moje sestre su studenti.", "ru": "Мои сёстры студентки." },
+    { "sr": "Nemam djecu.", "ru": "У меня нет детей." },
+    { "sr": "U nedjelju ne radim.", "ru": "В воскресенье я не работаю." },
+    { "sr": "Sjutra idemo na plažu.", "ru": "Завтра мы идём на пляж." },
+    { "sr": "Plaža je blizu, a more je toplo.", "ru": "Пляж рядом, а море тёплое." }
+  ]
+}

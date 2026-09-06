@@ -37,6 +37,7 @@ fun HomeScreen(
     onLesson: (String) -> Unit,
     onReview: () -> Unit,
     onSettings: () -> Unit,
+    onStory: (String) -> Unit,
     onNote: (String) -> Unit
 ) {
     if (state.loading) {
@@ -96,6 +97,13 @@ fun HomeScreen(
             }
         }
 
+        if (state.stories.isNotEmpty()) {
+            stickyHeader(key = "s-stories") { StoriesHeader(state.stories) }
+            items(state.stories, key = { it.ref.id }) { card ->
+                StoryRow(card, onClick = { onStory(card.ref.id) })
+            }
+        }
+
         item { Spacer(Modifier.height(32.dp)) }
     }
 }
@@ -125,6 +133,69 @@ private fun SectionHeader(group: LessonGroup) {
             "${group.done} / ${group.cards.size}",
             style = MaterialTheme.typography.labelSmall,
             color = Muted
+        )
+    }
+}
+
+@Composable
+private fun StoriesHeader(stories: List<StoryCard>) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .background(Ink)
+            .padding(top = 18.dp, bottom = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            "ИСТОРИИ",
+            style = MaterialTheme.typography.labelSmall,
+            color = Gold,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            "${stories.count { it.finished }} / ${stories.size}",
+            style = MaterialTheme.typography.labelSmall,
+            color = Muted
+        )
+    }
+}
+
+/**
+ * Строка истории. Показывает не счёт, а сколько отрезков прочитано: истории
+ * не оцениваются и на повторение не встают, важно только, докуда дошёл.
+ */
+@Composable
+private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
+    val started = card.done > 0
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Surface1)
+            .border(
+                width = 1.dp,
+                color = if (card.finished) Jade.copy(alpha = 0.45f) else Surface2,
+                shape = RoundedCornerShape(12.dp)
+            )
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            card.ref.title,
+            style = MaterialTheme.typography.bodyLarge,
+            color = Paper,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            when {
+                card.finished -> "прочитано"
+                started -> "${card.done} / ${card.ref.chunks}"
+                else -> "${card.ref.chunks} отрезков"
+            },
+            style = MaterialTheme.typography.labelSmall,
+            color = if (card.finished) Jade else Muted,
+            textAlign = TextAlign.End
         )
     }
 }

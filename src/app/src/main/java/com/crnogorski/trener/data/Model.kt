@@ -23,6 +23,42 @@ data class LessonRef(
     val section: String = ""
 )
 
+@Serializable
+data class StoryIndex(val stories: List<StoryRef> = emptyList())
+
+@Serializable
+data class StoryRef(
+    val id: String,
+    val title: String,
+    val file: String,
+    /** Уровень сложности, 1-5: истории идут по возрастанию. */
+    val level: Int = 1,
+    /** Сколько отрезков — чтобы главный экран показал прогресс, не читая файл. */
+    val chunks: Int = 0
+)
+
+/**
+ * Отрезок истории: столько, сколько читается вслух за один заход распознавания.
+ *
+ * Нарезано заранее, в файле, а не алгоритмом на устройстве: перевод даётся на
+ * каждый отрезок отдельно, а делить фразу и переводить её половинки — разные
+ * задачи, и вторую машина не решает.
+ */
+@Serializable
+data class StoryChunk(val sr: String, val ru: String)
+
+/**
+ * История для чтения вслух: 10-20 отрезков, каждый перечитывается до тех пор,
+ * пока не получится. Вне SRS: прочитал — и всё, вернуться можно руками.
+ */
+@Serializable
+data class Story(
+    val id: String,
+    val title: String,
+    val note: String = "",
+    val chunks: List<StoryChunk>
+)
+
 /**
  * Словарь для подсказок по нажатию на слово: `assets/glossary.json`.
  *

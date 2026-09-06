@@ -21,6 +21,9 @@ import com.crnogorski.trener.data.LessonRepository
 import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.NOTE_REASON
 import com.crnogorski.trener.data.ProgressStore
+import com.crnogorski.trener.data.StoryChunk
+import com.crnogorski.trener.data.StoryProgressEntity
+import com.crnogorski.trener.data.StoryRef
 import com.crnogorski.trener.data.needsModelCheck
 import com.crnogorski.trener.data.referenceAnswer
 import com.crnogorski.trener.data.typeName
@@ -49,6 +52,7 @@ data class LessonGroup(
 
 data class HomeState(
     val groups: List<LessonGroup> = emptyList(),
+    val stories: List<StoryCard> = emptyList(),
     val dueCount: Int = 0,
     val loading: Boolean = true,
     val error: String? = null
@@ -73,6 +77,27 @@ data class SettingsState(
 )
 
 data class SessionItem(val lessonId: String, val exercise: Exercise)
+
+/** Строка раздела «Истории» на главном экране. */
+data class StoryCard(
+    val ref: StoryRef,
+    val done: Int,
+    val finished: Boolean
+)
+
+/** Экран истории: где мы в тексте и сколько раз подряд не вышло. */
+data class StoryState(
+    val id: String,
+    val title: String,
+    val chunks: List<StoryChunk>,
+    val index: Int = 0,
+    val attempts: Int = 0,
+    /** Что расслышал движок на последней попытке — без этого непонятно, что не так. */
+    val heard: String = "",
+    /** Насколько совпало: «Совпало слов: 5 из 8». */
+    val note: String = "",
+    val glossaryMe: Map<String, String> = emptyMap()
+)
 
 /** Что показывает экран задания прямо сейчас. */
 sealed interface Phase {
@@ -146,6 +171,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val _settings = MutableStateFlow<SettingsState?>(null)
     val settings: StateFlow<SettingsState?> = _settings.asStateFlow()
 
+    private val _story = MutableStateFlow<StoryState?>(null)
+    val story: StateFlow<StoryState?> = _story.asStateFlow()
+
     /** Короткое подтверждение поверх любого экрана — показывается и гасится в MainActivity. */
     private val _notice = MutableStateFlow<String?>(null)
     val notice: StateFlow<String?> = _notice.asStateFlow()
@@ -176,8 +204,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                         }
                     }
                 }
+                val storyDone = dao.storyProgress().associateBy { it.storyId }
                 _home.value = HomeState(
                     groups = groups,
+                    stories = repo.stories().stories.map { ref ->
+                        val p = storyDone[ref.id]
+                        StoryCard(ref, p?.chunksDone ?: 0, (p?.finishedAt ?: 0L) > 0L)
+                    },
                     dueCount = dao.dueCount(System.currentTimeMillis()),
                     loading = false
                 )
@@ -286,6 +319,81 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 } else {
                     "Откладывать нечего."
                 }
+            )
+        }
+    }
+
+    // --- Истории ---
+
+    /**
+     * Открывает историю с того места, где её бросили.
+     *
+     * Дочитанную открываем с начала: возвращаться к ней имеет смысл только чтобы
+     * перечитать целиком, а «продолжить с конца» — это пустой экран.
+     */
+    fun openStory(id: String) {
+        viewModelScope.launch {
+            val story = repo.story(id)
+            val saved = dao.story(id)
+            val done = saved?.chunksDone ?: 0
+            _story.value = StoryState(
+                id = story.id,
+                title = story.title,
+                chunks = story.chunks,
+                index = if (done >= story.chunks.size) 0 else done,
+                glossaryMe = repo.glossary().me
+            )
+        }
+    }
+
+    fun closeStory() {
+        _story.value = null
+        autoSaveProgress()
+        refreshHome()
+    }
+
+    fun restartStory() {
+        _story.value = _story.value?.copy(index = 0, attempts = 0, heard = "", note = "")
+    }
+
+    /**
+     * Разбор прочитанного отрезка. Порог тот же, что у чтения в уроках, — доля
+     * слов, прозвучавших по порядку: дословного совпадения движок не даёт.
+     */
+    fun submitChunk(heard: String) {
+        val state = _story.value ?: return
+        val chunk = state.chunks.getOrNull(state.index) ?: return
+        val score = LocalCheck.readingScore(heard, chunk.sr)
+
+        if (score.passed) {
+            val next = state.index + 1
+            _story.value = state.copy(index = next, attempts = 0, heard = "", note = "")
+            saveStory(state.id, next, next >= state.chunks.size)
+        } else {
+            _story.value = state.copy(
+                attempts = state.attempts + 1,
+                heard = heard,
+                note = "Совпало слов: ${score.matched} из ${score.total}. Ещё раз."
+            )
+        }
+    }
+
+    /** Отрезок оставлен невзятым: движок ошибается сам по себе, упираться некуда. */
+    fun skipChunk() {
+        val state = _story.value ?: return
+        val next = state.index + 1
+        _story.value = state.copy(index = next, attempts = 0, heard = "", note = "")
+        saveStory(state.id, next, next >= state.chunks.size)
+    }
+
+    private fun saveStory(id: String, done: Int, finished: Boolean) {
+        viewModelScope.launch {
+            dao.upsertStory(
+                StoryProgressEntity(
+                    storyId = id,
+                    chunksDone = done,
+                    finishedAt = if (finished) System.currentTimeMillis() else 0L
+                )
             )
         }
     }
@@ -410,14 +518,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val body = text.trim()
         if (body.isEmpty()) return
         val item = _session.value?.let { it.items[it.index] }
+        val openStory = _story.value
 
         viewModelScope.launch {
             complaints.append(
                 Complaint(
                     ts = complaints.now(),
                     exerciseId = item?.exercise?.id.orEmpty(),
-                    lessonId = item?.lessonId.orEmpty(),
-                    type = item?.exercise?.typeName.orEmpty(),
+                    lessonId = item?.lessonId ?: openStory?.id.orEmpty(),
+                    type = item?.exercise?.typeName ?: if (openStory != null) "story" else "",
                     reason = NOTE_REASON,
                     note = body,
                     versionCode = BuildConfig.VERSION_CODE,

@@ -1,0 +1,19 @@
+{
+  "id": "s03",
+  "title": "Na pijaci",
+  "note": "Рынок и магазин. Слова из уроков 5 и 6.",
+  "chunks": [
+    { "sr": "Danas je subota.", "ru": "Сегодня суббота." },
+    { "sr": "Idem na pijacu.", "ru": "Иду на рынок." },
+    { "sr": "Hoću jednu jabuku i hljeb.", "ru": "Хочу одно яблоко и хлеб." },
+    { "sr": "Imate li mlijeko?", "ru": "У вас есть молоко?" },
+    { "sr": "Nemamo mlijeko danas, izvinite.", "ru": "Молока сегодня нет, извините." },
+    { "sr": "Koliko košta ovaj sir?", "ru": "Сколько стоит этот сыр?" },
+    { "sr": "Hoću vodu bez gasa.", "ru": "Хочу воду без газа." },
+    { "sr": "Molim vas, dva hljeba.", "ru": "Два хлеба, пожалуйста." },
+    { "sr": "Nemam sitno, izvinite.", "ru": "Извините, у меня нет мелочи." },
+    { "sr": "Račun, molim vas.", "ru": "Счёт, пожалуйста." },
+    { "sr": "Vidim ženu na pijaci.", "ru": "Вижу женщину на рынке." },
+    { "sr": "Sada idem kući.", "ru": "Сейчас иду домой." }
+  ]
+}

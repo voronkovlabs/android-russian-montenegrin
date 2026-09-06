@@ -24,6 +24,7 @@ import com.crnogorski.trener.ui.Ink
 import com.crnogorski.trener.ui.Paper
 import com.crnogorski.trener.ui.SessionScreen
 import com.crnogorski.trener.ui.SettingsScreen
+import com.crnogorski.trener.ui.StoryScreen
 import com.crnogorski.trener.ui.Surface2
 
 class MainActivity : ComponentActivity() {
@@ -41,6 +42,7 @@ class MainActivity : ComponentActivity() {
                 val home by vm.home.collectAsStateWithLifecycle()
                 val session by vm.session.collectAsStateWithLifecycle()
                 val settings by vm.settings.collectAsStateWithLifecycle()
+                val story by vm.story.collectAsStateWithLifecycle()
                 val notice by vm.notice.collectAsStateWithLifecycle()
 
                 // Подтверждение записанной жалобы: поверх любого экрана и без
@@ -64,9 +66,20 @@ class MainActivity : ComponentActivity() {
                     val content = Modifier.fillMaxSize().padding(inner)
                     val active = session
                     val openSettings = settings
+                    val openStory = story
                     if (active == null) {
                         androidx.compose.foundation.layout.Box(content) {
-                            if (openSettings != null) {
+                            if (openStory != null) {
+                                StoryScreen(
+                                    state = openStory,
+                                    speaker = speaker,
+                                    onSubmit = vm::submitChunk,
+                                    onSkipChunk = vm::skipChunk,
+                                    onRestart = vm::restartStory,
+                                    onNote = vm::addNote,
+                                    onClose = vm::closeStory
+                                )
+                            } else if (openSettings != null) {
                                 SettingsScreen(
                                     state = openSettings,
                                     speaker = speaker,
@@ -86,6 +99,7 @@ class MainActivity : ComponentActivity() {
                                     onLesson = vm::startLesson,
                                     onReview = vm::startReview,
                                     onSettings = vm::openSettings,
+                                    onStory = vm::openStory,
                                     onNote = vm::addNote
                                 )
                             }

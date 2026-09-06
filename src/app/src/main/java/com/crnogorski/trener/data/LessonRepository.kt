@@ -14,6 +14,7 @@ class LessonRepository(private val context: Context) {
 
     private var cachedIndex: LessonIndex? = null
     private var cachedGlossary: Glossary? = null
+    private var cachedStories: StoryIndex? = null
     private val cachedLessons = mutableMapOf<String, Lesson>()
 
     suspend fun index(): LessonIndex = withContext(Dispatchers.IO) {
@@ -27,6 +28,18 @@ class LessonRepository(private val context: Context) {
             json.decodeFromString<Lesson>(read("lessons/${ref.file}"))
                 .also { cachedLessons[id] = it }
         }
+    }
+
+    /** Оглавление историй; отсутствие файла — не ошибка, просто раздел пустой. */
+    suspend fun stories(): StoryIndex = withContext(Dispatchers.IO) {
+        cachedStories ?: runCatching {
+            json.decodeFromString<StoryIndex>(read("stories/index.json"))
+        }.getOrDefault(StoryIndex()).also { cachedStories = it }
+    }
+
+    suspend fun story(id: String): Story = withContext(Dispatchers.IO) {
+        val ref = stories().stories.first { it.id == id }
+        json.decodeFromString<Story>(read("stories/${'$'}{ref.file}"))
     }
 
     /**

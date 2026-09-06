@@ -27,6 +27,13 @@ data class ProgressCard(
 )
 
 @Serializable
+data class ProgressStory(
+    val storyId: String,
+    val chunksDone: Int,
+    val finishedAt: Long
+)
+
+@Serializable
 data class ProgressLesson(
     val lessonId: String,
     val completedAt: Long,
@@ -45,7 +52,9 @@ data class ProgressSnapshot(
     val versionCode: Int = 0,
     val versionName: String = "",
     val cards: List<ProgressCard> = emptyList(),
-    val lessons: List<ProgressLesson> = emptyList()
+    val lessons: List<ProgressLesson> = emptyList(),
+    /** Появилось позже карточек, поэтому со значением по умолчанию: старые копии читаются как были. */
+    val stories: List<ProgressStory> = emptyList()
 )
 
 /**
@@ -138,6 +147,9 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
                 },
                 lessons = dao.lessonProgress().map {
                     ProgressLesson(it.lessonId, it.completedAt, it.correct, it.total)
+                },
+                stories = dao.storyProgress().map {
+                    ProgressStory(it.storyId, it.chunksDone, it.finishedAt)
                 }
             )
         }
@@ -245,6 +257,9 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
             dao.upsertLesson(
                 LessonProgressEntity(it.lessonId, it.completedAt, it.correct, it.total)
             )
+        }
+        snap.stories.forEach {
+            dao.upsertStory(StoryProgressEntity(it.storyId, it.chunksDone, it.finishedAt))
         }
         return snap.cards.size to snap.lessons.size
     }

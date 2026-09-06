@@ -1,0 +1,19 @@
+{
+  "id": "s01",
+  "title": "Prvi dan",
+  "note": "Первый день в Подгорице. Слова из уроков 1–3.",
+  "chunks": [
+    { "sr": "Dobro jutro!", "ru": "Доброе утро!" },
+    { "sr": "Zovem se Ivan.", "ru": "Меня зовут Иван." },
+    { "sr": "Ja sam iz Rusije, a sada živim u Podgorici.", "ru": "Я из России, а сейчас живу в Подгорице." },
+    { "sr": "Još uvijek slabo govorim crnogorski.", "ru": "Я пока плохо говорю по-черногорски." },
+    { "sr": "Danas idem u grad.", "ru": "Сегодня я иду в город." },
+    { "sr": "Autobuska stanica je blizu.", "ru": "Автобусная станция рядом." },
+    { "sr": "Idem pravo, pa lijevo.", "ru": "Иду прямо, затем налево." },
+    { "sr": "U centru je kafe.", "ru": "В центре есть кафе." },
+    { "sr": "Molim vas, jednu kafu.", "ru": "Один кофе, пожалуйста." },
+    { "sr": "Koliko košta?", "ru": "Сколько стоит?" },
+    { "sr": "Hvala lijepo!", "ru": "Большое спасибо!" },
+    { "sr": "Doviđenja, vidimo se sjutra.", "ru": "До свидания, увидимся завтра." }
+  ]
+}

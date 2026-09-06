@@ -10,6 +10,8 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -33,6 +35,17 @@ data class LessonProgressEntity(
     val completedAt: Long,
     val correct: Int,
     val total: Int
+)
+
+/**
+ * Сколько отрезков истории прочитано. Истории вне SRS, поэтому таблица своя
+ * и простая: ключ, счётчик и отметка о том, что дочитано.
+ */
+@Entity(tableName = "story_progress")
+data class StoryProgressEntity(
+    @PrimaryKey val storyId: String,
+    val chunksDone: Int,
+    val finishedAt: Long
 )
 
 @Dao
@@ -77,11 +90,41 @@ interface AppDao {
 
     @Query("SELECT * FROM lesson_progress")
     fun lessonProgressFlow(): Flow<List<LessonProgressEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertStory(progress: StoryProgressEntity)
+
+    @Query("SELECT * FROM story_progress")
+    suspend fun storyProgress(): List<StoryProgressEntity>
+
+    @Query("SELECT * FROM story_progress WHERE storyId = :id")
+    suspend fun story(id: String): StoryProgressEntity?
+}
+
+/**
+ * Версия 2 добавила таблицу историй.
+ *
+ * Миграция, а не разрушающий откат: прогресс — единственное, что в этом
+ * приложении нельзя восстановить, и терять его при обновлении недопустимо.
+ */
+private val MIGRATION_1_2 = object : Migration(1, 2) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        // Форма записи ровно та, что генерирует Room: обратные кавычки и
+        // отдельный PRIMARY KEY в конце. Room сверяет схему при открытии базы,
+        // и расхождение уронило бы приложение на запуске вместе с прогрессом.
+        db.execSQL(
+            "CREATE TABLE IF NOT EXISTS `story_progress` (" +
+                "`storyId` TEXT NOT NULL, " +
+                "`chunksDone` INTEGER NOT NULL, " +
+                "`finishedAt` INTEGER NOT NULL, " +
+                "PRIMARY KEY(`storyId`))"
+        )
+    }
 }
 
 @Database(
-    entities = [CardEntity::class, LessonProgressEntity::class],
-    version = 1,
+    entities = [CardEntity::class, LessonProgressEntity::class, StoryProgressEntity::class],
+    version = 2,
     exportSchema = false
 )
 abstract class AppDb : RoomDatabase() {
@@ -95,7 +138,7 @@ abstract class AppDb : RoomDatabase() {
                 context.applicationContext,
                 AppDb::class.java,
                 "crnogorski.db"
-            ).build().also { instance = it }
+            ).addMigrations(MIGRATION_1_2).build().also { instance = it }
         }
     }
 }

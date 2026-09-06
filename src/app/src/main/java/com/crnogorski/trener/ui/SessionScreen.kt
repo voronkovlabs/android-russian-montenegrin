@@ -284,69 +284,6 @@ private fun Prompt(text: String, gloss: Map<String, String> = emptyMap()) {
 }
 
 /**
- * Текст задания, где знакомые слова подчёркнуты и по нажатию показывают перевод
- * строкой ниже.
- *
- * Строкой, а не всплывающей подсказкой: на телефоне палец закрывает ровно то
- * место, куда нажали, и перевод под текстом читается спокойно, пока не нажали
- * следующее слово. Слов, которых нет в словаре, подчёркивание не касается —
- * так сразу видно, на что нажимать бесполезно.
- */
-@Composable
-private fun GlossedText(
-    text: String,
-    gloss: Map<String, String>,
-    style: androidx.compose.ui.text.TextStyle,
-    color: androidx.compose.ui.graphics.Color
-) {
-    if (gloss.isEmpty()) {
-        Text(text, style = style, color = color)
-        return
-    }
-
-    var picked by remember(text) { mutableStateOf<Pair<String, String>?>(null) }
-
-    val annotated = buildAnnotatedString {
-        var cursor = 0
-        WORD.findAll(text).forEach { match ->
-            append(text.substring(cursor, match.range.first))
-            cursor = match.range.last + 1
-
-            val word = match.value
-            val meaning = gloss[word.lowercase()]
-            if (meaning == null) {
-                append(word)
-            } else {
-                withLink(
-                    LinkAnnotation.Clickable(
-                        tag = word,
-                        styles = TextLinkStyles(
-                            style = SpanStyle(textDecoration = TextDecoration.Underline)
-                        )
-                    ) { picked = word to meaning }
-                ) { append(word) }
-            }
-        }
-        append(text.substring(cursor))
-    }
-
-    Text(annotated, style = style, color = color)
-
-    val shown = picked
-    if (shown != null) {
-        Spacer(Modifier.height(8.dp))
-        Text(
-            "${shown.first} — ${shown.second}",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Gold
-        )
-    }
-}
-
-/** Слово для подсказки: буквы и дефис, цифры и знаки не в счёт. */
-private val WORD = Regex("[\\p{L}-]+")
-
-/**
  * Текст на предложения. Читать вслух целым куском не выходит (см. ReadingAnswer),
  * поэтому граница предложения — это граница одного захода распознавания.
  */
@@ -1035,7 +972,7 @@ private fun FinishedView(state: SessionState, onExit: () -> Unit) {
 }
 
 @Composable
-private fun PrimaryButton(text: String, enabled: Boolean = true, onClick: () -> Unit) {
+internal fun PrimaryButton(text: String, enabled: Boolean = true, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         enabled = enabled,
@@ -1051,7 +988,7 @@ private fun PrimaryButton(text: String, enabled: Boolean = true, onClick: () -> 
 }
 
 @Composable
-private fun SmallAction(text: String, onClick: () -> Unit) {
+internal fun SmallAction(text: String, onClick: () -> Unit) {
     Box(
         Modifier
             .clip(RoundedCornerShape(20.dp))
