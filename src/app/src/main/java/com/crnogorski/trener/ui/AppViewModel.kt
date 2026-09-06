@@ -17,6 +17,7 @@ import com.crnogorski.trener.data.LessonProgressEntity
 import com.crnogorski.trener.data.LessonRef
 import com.crnogorski.trener.data.LessonRepository
 import com.crnogorski.trener.data.LocalCheck
+import com.crnogorski.trener.data.NOTE_REASON
 import com.crnogorski.trener.data.needsModelCheck
 import com.crnogorski.trener.data.referenceAnswer
 import com.crnogorski.trener.data.typeName
@@ -114,6 +115,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val _settings = MutableStateFlow<SettingsState?>(null)
     val settings: StateFlow<SettingsState?> = _settings.asStateFlow()
 
+    /** Короткое подтверждение поверх любого экрана — показывается и гасится в MainActivity. */
+    private val _notice = MutableStateFlow<String?>(null)
+    val notice: StateFlow<String?> = _notice.asStateFlow()
+
     init {
         refreshHome()
     }
@@ -209,6 +214,47 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 }
             )
         }
+    }
+
+    // --- Жалоба не про задание ---
+
+    /**
+     * Свободная жалоба из кнопки рядом с шестерёнкой: доступна в любой момент.
+     *
+     * В отличие от [complain] не трогает ни SRS, ни [SessionState.complaintFiled] —
+     * запись ничего не говорит о текущем задании, поэтому и откатывать нечего,
+     * а урок продолжается с того же места.
+     *
+     * Если жалоба написана посреди урока, задание всё-таки запоминается — как
+     * место, где это случилось. Путать его с предметом жалобы не даёт причина
+     * [NOTE_REASON].
+     */
+    fun addNote(text: String) {
+        val body = text.trim()
+        if (body.isEmpty()) return
+        val item = _session.value?.let { it.items[it.index] }
+
+        viewModelScope.launch {
+            complaints.append(
+                Complaint(
+                    ts = complaints.now(),
+                    exerciseId = item?.exercise?.id.orEmpty(),
+                    lessonId = item?.lessonId.orEmpty(),
+                    type = item?.exercise?.typeName.orEmpty(),
+                    reason = NOTE_REASON,
+                    note = body,
+                    versionCode = BuildConfig.VERSION_CODE,
+                    versionName = BuildConfig.VERSION_NAME
+                )
+            )
+            // Сообщаем после записи, а не по нажатию: иначе подтверждение соврало бы,
+            // если внешняя память вдруг недоступна.
+            _notice.value = "Жалоба записана в отчёт"
+        }
+    }
+
+    fun clearNotice() {
+        _notice.value = null
     }
 
     // --- Проверка ответов ---

@@ -60,6 +60,7 @@ fun SessionScreen(
     onNext: () -> Unit,
     onRetryBlock: () -> Unit,
     onComplain: (ComplaintReason, String) -> Unit,
+    onNote: (String) -> Unit,
     onExit: () -> Unit
 ) {
     if (state.finished) {
@@ -68,7 +69,7 @@ fun SessionScreen(
     }
 
     Column(Modifier.fillMaxSize().imePadding()) {
-        SessionHeader(state, onExit)
+        SessionHeader(state, onNote, onExit)
 
         Column(
             Modifier
@@ -133,7 +134,7 @@ fun SessionScreen(
 }
 
 @Composable
-private fun SessionHeader(state: SessionState, onExit: () -> Unit) {
+private fun SessionHeader(state: SessionState, onNote: (String) -> Unit, onExit: () -> Unit) {
     Column(Modifier.padding(horizontal = 20.dp, vertical = 14.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextButton(onClick = onExit) { Text("Выйти", color = Muted) }
@@ -143,6 +144,8 @@ private fun SessionHeader(state: SessionState, onExit: () -> Unit) {
                 style = MaterialTheme.typography.labelSmall,
                 color = Muted
             )
+            // Пожаловаться можно и посреди задания: диалог поверх, урок не сбивается.
+            ComplaintButton(onSave = onNote)
         }
         Spacer(Modifier.height(8.dp))
         LinearProgressIndicator(

@@ -33,7 +33,8 @@ fun HomeScreen(
     state: HomeState,
     onLesson: (String) -> Unit,
     onReview: () -> Unit,
-    onSettings: () -> Unit
+    onSettings: () -> Unit,
+    onNote: (String) -> Unit
 ) {
     if (state.loading) {
         Column(
@@ -60,6 +61,7 @@ fun HomeScreen(
                         color = Paper
                     )
                 }
+                ComplaintButton(onSave = onNote)
                 IconButton(onClick = onSettings) {
                     Icon(
                         Icons.Outlined.Settings,
