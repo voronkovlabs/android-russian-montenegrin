@@ -1,7 +1,14 @@
 <resources>
-    <style name="Theme.Crnogorski" parent="android:Theme.Material.NoActionBar">
-        <item name="android:statusBarColor">#0E0E10</item>
-        <item name="android:navigationBarColor">#0E0E10</item>
-        <item name="android:windowBackground">#0E0E10</item>
+    <!--
+        Светлая тема по умолчанию, тёмная — в values-night: приложение идёт
+        за ночным режимом системы. Здесь важен фон окна, который видно до
+        первой отрисовки Compose; сами экраны красит Theme.kt.
+    -->
+    <style name="Theme.Crnogorski" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#F6F2E9</item>
+        <item name="android:navigationBarColor">#F6F2E9</item>
+        <item name="android:windowBackground">#F6F2E9</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>
