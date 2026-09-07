@@ -140,18 +140,46 @@ def gap_words(limit=50000):
     return out
 
 
+# Толкование, которому нельзя верить: у слова в словаре только ономастическая
+# статья. Модель на вычитке видит эту пометку и даёт перевод сама.
+UNKNOWN = '?'
+
+# Ономастические статьи Викисловаря: «сербская фамилия», «мужское имя».
+ONOMASTIC = re.compile(r'^(сербск\w+\s+)?(фамилия|имя|топоним)\b', re.IGNORECASE)
+
+
 def glosses():
-    """lemma → русское толкование. Первая статья на слово, они дублируются."""
-    out = {}
+    """
+    lemma → русское толкование.
+
+    Первая статья не годится: у сотни обычных слов Викисловарь держит отдельную
+    статью «сербская фамилия» (фамилии в сербском сплошь и рядом образованы от
+    нарицательных — Zec, Lisica, Glumac), и она нередко идёт первой. Взяв её,
+    мы объявляли «зайца» фамилией, а дальше это подтверждала и модель: ложь
+    правдоподобная, проверить её по самому толкованию нельзя.
+
+    Поэтому ономастические статьи откладываем. Если другого толкования у слова
+    нет вовсе — а так бывает, `priča` и `komad` в этом словаре есть только как
+    фамилии с заглавной буквы, — толкованием становится `?`: слово остаётся в
+    списке, но с честной пометкой «неизвестно», и перевод ему потом даёт
+    модель. Отдать вместо этого «сербскую фамилию» значило бы соврать и себе,
+    и ей.
+    """
+    out, fallback = {}, {}
     with io.open(os.path.join(DATA, 'rjecnik-sr-ru.tsv'), encoding='utf-8') as f:
         next(f)
         for line in f:
             p = line.rstrip('\n').split('\t')
             if len(p) < 5:
                 continue
-            lat, pos, gloss = p[0].lower(), p[2], p[4]
-            if lat and gloss and lat not in out:
-                out[lat] = (pos, gloss)
+            lat, pos, gloss = p[0].lower(), p[2], p[4].strip()
+            if not lat or not gloss:
+                continue
+            target = fallback if ONOMASTIC.match(gloss) else out
+            if lat not in target:
+                target[lat] = (pos, gloss)
+    for lat, (pos, _) in fallback.items():
+        out.setdefault(lat, (pos, UNKNOWN))
     return out
 
 
@@ -177,16 +205,26 @@ def read_lexicon(path, wanted_forms):
 
     Читаем только то, что спрашивали: в лексиконе 6,9 млн строк, и держать их
     все в памяти незачем.
+
+    У написания часто несколько чтений, и берётся **самое частое по корпусу**,
+    а не первое попавшееся. Это не мелочь: `kim` — это творительный падеж от
+    `ko` («кем»), но есть и омонимичное существительное «тмин», а `između` —
+    предлог, у которого есть и наречное чтение. Первое попавшееся чтение
+    заводило в список слова, которых там быть не должно, и отсеивать их
+    приходилось бы моделью — то есть за деньги и ненадёжно.
     """
-    form2lemma = {}
+    best = {}
     for line in gzip.open(path, 'rt', encoding='utf-8'):
         p = line.rstrip('\n').split('\t')
         if len(p) < 7:
             continue
-        form, lemma, upos = p[0].lower(), p[1].lower(), p[4]
-        if form in wanted_forms and form not in form2lemma:
-            form2lemma[form] = (lemma, upos)
-    return form2lemma
+        form = p[0].lower()
+        if form not in wanted_forms:
+            continue
+        freq = int(p[6])
+        if form not in best or freq > best[form][0]:
+            best[form] = (freq, p[1].lower(), p[4])
+    return {form: (lemma, upos) for form, (_, lemma, upos) in best.items()}
 
 
 def read_paradigms(path, lemmas):
@@ -266,10 +304,22 @@ def main(lexpath):
     # --- предложения пула, где кандидат стоит в косвенной форме ---
     print('читаю srLex (проход 2)…')
     paradigms = read_paradigms(lexpath, {c[1] for c in candidates})
+
     form_of = defaultdict(set)
     for lemma, forms in paradigms.items():
         for form, _, _, _ in forms:
             form_of[form].add(lemma)
+
+    # Курс мог показывать слово в форме, лемма которой опозналась иначе:
+    # «zdravo» в уроке — наречие, а в частотном списке победило чтение от
+    # «zdrav». Поэтому знакомым считаем и то, у чего в курсе засветилась
+    # ЛЮБАЯ форма парадигмы, а не только совпала лемма.
+    before = len(candidates)
+    candidates = [
+        c for c in candidates
+        if not any(form in known for form, _, _, _ in paradigms.get(c[1], ()))
+    ]
+    dropped['курс знает форму'] = before - len(candidates)
 
     examples = defaultdict(list)
     for level, sr, ru, sr_id in sentences:
