@@ -1,6 +1,7 @@
 package com.crnogorski.trener.data
 
 import android.content.Context
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Entity
@@ -25,8 +26,24 @@ data class CardEntity(
     val dueAt: Long,
     val intervalDays: Int,
     val ease: Double,
+    /** Верных ответов подряд. Ошибка сбрасывает в ноль — это streak, не счёт. */
     val repetitions: Int,
-    val lapses: Int
+    val lapses: Int,
+    /**
+     * Верных ответов всего, за всю жизнь карточки.
+     *
+     * Отличается от [repetitions] тем, что ошибка его не обнуляет, и нужен он
+     * ровно для одного: сказать, выучено слово или нет. Порог — десять
+     * (`VocabRepository.LEARNED`), и это не выдумка: Saragi, Nation и Meister
+     * (1978) нашли около десяти встреч как минимум, при котором слово
+     * закрепляется, а Webb (2007) намерил, что при десяти и более разнесённых
+     * встречах припоминание через неделю поднимается выше 80%, тогда как при
+     * менее чем шести падает ниже 30%.
+     *
+     * Streak на эту роль не годится: интервалы растут, и десять верных подряд
+     * набегают годами.
+     */
+    @ColumnInfo(defaultValue = "0") val correct: Int = 0
 )
 
 @Entity(tableName = "lesson_progress")
@@ -173,9 +190,23 @@ private val MIGRATION_2_3 = object : Migration(2, 3) {
     }
 }
 
+/**
+ * Версия 4 добавила счётчик верных ответов.
+ *
+ * Самая безопасная из миграций — добавление колонки со значением по умолчанию.
+ * У старых карточек счёт начинается с нуля: узнать, сколько раз на них
+ * ответили верно до этой версии, всё равно неоткуда, а обнулять прогресс
+ * повторений ради счётчика было бы куда хуже.
+ */
+private val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE `cards` ADD COLUMN `correct` INTEGER NOT NULL DEFAULT 0")
+    }
+}
+
 @Database(
     entities = [CardEntity::class, LessonProgressEntity::class, StoryProgressEntity::class],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 abstract class AppDb : RoomDatabase() {
@@ -189,7 +220,8 @@ abstract class AppDb : RoomDatabase() {
                 context.applicationContext,
                 AppDb::class.java,
                 "crnogorski.db"
-            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build().also { instance = it }
+            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                .build().also { instance = it }
         }
     }
 }

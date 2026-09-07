@@ -187,7 +187,16 @@ sealed class Exercise {
         val label: String,
         val prompt: String,
         val answer: String,
-        val explanation: String = ""
+        val explanation: String = "",
+        /**
+         * Ответ по-русски, а не по-черногорски.
+         *
+         * Меняет три вещи: язык распознавания и клавиатуры и то, как сверяется
+         * ответ — у русского толкования вариантов обычно несколько
+         * («говорить, разговаривать, беседовать»), и точное совпадение строки
+         * тут не годится.
+         */
+        val native: Boolean = false
     ) : Exercise()
 
     /** Аудирование: TTS произносит [audioText], надо записать услышанное. */

@@ -52,6 +52,19 @@ object Scheduler {
             lapses = 0
         )
 
+    /**
+     * Тренировка вне расписания: счёт идёт, а интервал не двигается.
+     *
+     * Правило намеренно несимметричное. Верный ответ прибавляется к счётчику и
+     * больше ничего не меняет: прогнав карточку десять раз подряд за минуту,
+     * нельзя получить интервал в полгода — разнесённости в такой прогонке нет,
+     * и выдавать её за прочность значит врать самому себе. Ошибка же считается
+     * полноценной: она и вне расписания означает, что слово не знают.
+     */
+    fun practice(card: CardEntity, correct: Boolean, now: Long): CardEntity =
+        if (correct) card.copy(correct = card.correct + 1)
+        else update(card, false, now)
+
     fun update(card: CardEntity, correct: Boolean, now: Long): CardEntity {
         if (!correct) {
             return card.copy(
@@ -71,6 +84,7 @@ object Scheduler {
         }
         return card.copy(
             repetitions = reps,
+            correct = card.correct + 1,
             intervalDays = interval,
             ease = (card.ease + 0.05).coerceAtMost(3.0),
             dueAt = now + interval * DAY_MS

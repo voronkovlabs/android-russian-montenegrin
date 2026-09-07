@@ -23,7 +23,9 @@ data class ProgressCard(
     val intervalDays: Int,
     val ease: Double,
     val repetitions: Int,
-    val lapses: Int
+    val lapses: Int,
+    /** Появился позже остальных полей: старые копии читаются с нулём. */
+    val correct: Int = 0
 )
 
 @Serializable
@@ -145,7 +147,7 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
                 versionName = versionName,
                 cards = dao.allCards().map {
                     ProgressCard(it.exerciseId, it.lessonId, it.dueAt, it.intervalDays,
-                        it.ease, it.repetitions, it.lapses)
+                        it.ease, it.repetitions, it.lapses, it.correct)
                 },
                 lessons = dao.lessonProgress().map {
                     ProgressLesson(it.lessonId, it.completedAt, it.correct, it.total)
@@ -252,7 +254,7 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
         snap.cards.forEach {
             dao.upsertCard(
                 CardEntity(it.exerciseId, it.lessonId, it.dueAt, it.intervalDays,
-                    it.ease, it.repetitions, it.lapses)
+                    it.ease, it.repetitions, it.lapses, it.correct)
             )
         }
         snap.lessons.forEach {

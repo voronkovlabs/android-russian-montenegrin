@@ -234,8 +234,13 @@ private fun ExerciseBody(
             prompt = ex.prompt,
             hint = "",
             enabled = enabled,
-            language = AnswerLanguage.Target,
-            promptGloss = state.glossary.me,
+            // Язык ответа, а не задания: у обратного перевода отвечают
+            // по-русски, и распознавание с клавиатурой должны быть русскими.
+            language = if (ex.native) AnswerLanguage.Native else AnswerLanguage.Target,
+            promptGloss = if (ex.native) emptyMap() else state.glossary.me,
+            // Слово проще сказать, чем набрать: микрофон включается сам, а
+            // клавиатура остаётся на месте — набрать руками можно всегда.
+            autoListen = true,
             onSubmit = onSubmit
         )
 
@@ -318,6 +323,8 @@ private fun TextAnswer(
     promptGloss: Map<String, String> = emptyMap(),
     speakable: String? = null,
     speaker: Speaker? = null,
+    /** Начинать слушать сразу, не дожидаясь нажатия на микрофон. */
+    autoListen: Boolean = false,
     onSubmit: (String) -> Unit
 ) {
     var value by remember(key) { mutableStateOf("") }
@@ -357,6 +364,7 @@ private fun TextAnswer(
                 MicButton(
                     language = language.speech,
                     enabled = true,
+                    autoKey = if (autoListen) key else null,
                     onStatus = { status = it },
                     onText = { value = appendSpoken(value, it) }
                 )

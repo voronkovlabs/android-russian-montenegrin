@@ -102,7 +102,9 @@ class MainActivity : ComponentActivity() {
                                     onReview = vm::startReview,
                                     onSettings = vm::openSettings,
                                     onStory = vm::openStory,
-                                    onVocab = vm::startVocab,
+                                    onVocab = { back, practice ->
+                                        vm.startVocab(back = back, practice = practice)
+                                    },
                                     onTab = vm::selectTab,
                                     onToggleGroup = vm::toggleGroup,
                                     onNote = vm::addNote

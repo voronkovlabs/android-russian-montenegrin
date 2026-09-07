@@ -11,6 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,11 +30,18 @@ import com.crnogorski.trener.speech.Listener
  *
  * Ошибки уходят в [onStatus], а не проглатываются: без доступа к микрофону
  * кнопка иначе просто не работала бы молча.
+ *
+ * [autoKey] включает самослушание: как только он меняется, распознавание
+ * запускается само. Нужно это словарным карточкам — слово проще сказать, чем
+ * набрать с переключением раскладки, — и там разрешение уже спрашивали, так
+ * что диалога посреди занятия не будет: без выданного доступа автозапуск молча
+ * не срабатывает, и остаётся обычная кнопка.
  */
 @Composable
 fun MicButton(
     language: String,
     enabled: Boolean,
+    autoKey: String? = null,
     onStatus: (String) -> Unit,
     onText: (String) -> Unit
 ) {
@@ -73,6 +81,17 @@ fun MicButton(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) start() else onStatus("Без доступа к микрофону диктовать не выйдет")
+    }
+
+    // Самослушание: спрашивать разрешение отсюда нельзя — диалог выскочил бы
+    // сам, без нажатия, посреди задания. Нет доступа — просто не слушаем.
+    if (autoKey != null) {
+        LaunchedEffect(autoKey) {
+            val granted = ContextCompat.checkSelfPermission(
+                context, Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED
+            if (enabled && granted) start()
+        }
     }
 
     IconButton(

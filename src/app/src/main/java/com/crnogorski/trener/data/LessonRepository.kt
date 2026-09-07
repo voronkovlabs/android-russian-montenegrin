@@ -111,6 +111,32 @@ object LocalCheck {
         return a == e || reflex(a) == reflex(e)
     }
 
+    /**
+     * Ответ на обратный перевод: сверка с русским толкованием.
+     *
+     * Толкование словаря — это список синонимов с пометами
+     * («гастрон. сыр», «говорить, разговаривать; рассказывать»), а не один
+     * ответ. Верным считается любой из них: спрашивают, знает ли человек
+     * слово, а не помнит ли он словарную статью целиком. Пометы и скобки
+     * выбрасываются — набирать «зоол.» никто не станет.
+     */
+    fun matchesGloss(answer: String, gloss: String): Boolean {
+        val given = normalize(answer)
+        if (given.isBlank()) return false
+        return glossVariants(gloss).any { it == given }
+    }
+
+    /** Толкование, разобранное на отдельные варианты ответа. */
+    fun glossVariants(gloss: String): List<String> =
+        gloss.replace(Regex("\\([^)]*\\)"), " ")
+            .replace(Regex("\\b[а-яё]{2,8}\\.(?=\\s|$)"), " ")
+            // Номера значений в статье («вода 1 и 2») — такой же разделитель,
+            // как запятая: без этого весь хвост слипался бы в один вариант.
+            .replace(Regex("\\d+"), ";")
+            .split(';', ',')
+            .map { normalize(it) }
+            .filter { it.isNotBlank() }
+
     /** Для распознавания речи: там диакритика теряется чаще, сверяем мягче. */
     fun matchesSpoken(heard: String, expected: String): Boolean =
         reflex(flatten(heard)) == reflex(flatten(expected))

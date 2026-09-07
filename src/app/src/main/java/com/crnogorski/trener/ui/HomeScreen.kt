@@ -27,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,7 +46,7 @@ fun HomeScreen(
     onReview: () -> Unit,
     onSettings: () -> Unit,
     onStory: (String, StoryMode) -> Unit,
-    onVocab: () -> Unit,
+    onVocab: (Boolean, Boolean) -> Unit,
     onTab: (HomeTab) -> Unit,
     onToggleGroup: (String) -> Unit,
     onNote: (String) -> Unit
@@ -143,7 +144,21 @@ fun HomeScreen(
 
             HomeTab.Words -> {
                 item {
-                    VocabCard(state.vocab, onClick = onVocab)
+                    VocabTile(
+                        title = "С русского",
+                        hint = "Назвать слово и поставить его в форму",
+                        track = state.vocab.toTarget,
+                        onStart = { onVocab(false, false) },
+                        onPractice = { onVocab(false, true) }
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    VocabTile(
+                        title = "На русский",
+                        hint = "Узнать слово: что оно значит",
+                        track = state.vocab.toNative,
+                        onStart = { onVocab(true, false) },
+                        onPractice = { onVocab(true, true) }
+                    )
                     Spacer(Modifier.height(4.dp))
                 }
             }
@@ -294,47 +309,74 @@ private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
 }
 
 /**
- * Словарь: одна панель вместо списка.
+ * Одно направление словаря: плашка вместо списка.
  *
  * Выбирать тут нечего — очередь собирается сама: сперва просроченные карточки,
  * потом новые слова в порядке частоты. Список из тысячи слов был бы витриной,
  * а не занятием.
+ *
+ * Направлений два и плашки поэтому две: назвать слово и узнать слово — разное
+ * знание, и держится оно по-разному. Внизу отдельная кнопка тренировки: она
+ * идёт вне расписания, берёт самое шаткое и доступна всегда, сколько угодно
+ * раз.
  */
 @Composable
-private fun VocabCard(state: VocabSummary, onClick: () -> Unit) {
-    val ready = state.due > 0 || state.fresh > 0
+private fun VocabTile(
+    title: String,
+    hint: String,
+    track: VocabTrack,
+    onStart: () -> Unit,
+    onPractice: () -> Unit
+) {
+    val ready = track.due > 0 || track.fresh > 0
     Column(
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
             .background(if (ready) Surface2 else Surface1)
-            .clickable(enabled = state.total > 0, onClick = onClick)
-            .padding(18.dp)
+            .padding(bottom = 6.dp)
     ) {
-        Text(
-            if (ready) "ЗАНЯТЬСЯ СЛОВАМИ" else "НА СЕГОДНЯ ВСЁ",
-            style = MaterialTheme.typography.labelSmall,
-            color = if (ready) Accent else Muted
-        )
-        Spacer(Modifier.height(8.dp))
-        Text(
-            when {
-                state.total == 0 -> "Словарь не загрузился"
-                state.due > 0 && state.fresh > 0 ->
-                    "${state.due} на повторение, ${state.fresh} новых"
-                state.due > 0 -> "${state.due} на повторение"
-                state.fresh > 0 -> "${state.fresh} новых слов"
-                else -> "Новые слова откроются завтра"
-            },
-            style = MaterialTheme.typography.titleMedium,
-            color = Paper
-        )
-        Spacer(Modifier.height(10.dp))
-        Text(
-            "Начато слов: ${state.started} из ${state.total}",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Muted
-        )
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .clickable(enabled = track.total > 0, onClick = onStart)
+                .padding(18.dp)
+        ) {
+            Text(
+                title.uppercase(),
+                style = MaterialTheme.typography.labelSmall,
+                color = if (ready) Accent else Muted
+            )
+            Spacer(Modifier.height(8.dp))
+            Text(
+                when {
+                    track.total == 0 -> "Словарь не загрузился"
+                    track.due > 0 && track.fresh > 0 ->
+                        "${track.due} на повторение, ${track.fresh} новых"
+                    track.due > 0 -> "${track.due} на повторение"
+                    track.fresh > 0 -> "${track.fresh} новых"
+                    else -> "На сегодня всё"
+                },
+                style = MaterialTheme.typography.titleMedium,
+                color = Paper
+            )
+            Spacer(Modifier.height(6.dp))
+            Text(hint, style = MaterialTheme.typography.bodyMedium, color = Muted)
+            Spacer(Modifier.height(10.dp))
+            Text(
+                "Начато ${track.started} из ${track.total}, выучено ${track.learned}",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+        }
+        if (track.ready > 0) {
+            TextButton(
+                onClick = onPractice,
+                modifier = Modifier.padding(start = 8.dp)
+            ) {
+                Text("Тренировать (${track.ready})", color = Accent)
+            }
+        }
     }
 }
 

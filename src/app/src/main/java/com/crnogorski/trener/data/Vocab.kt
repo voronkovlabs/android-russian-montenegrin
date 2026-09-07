@@ -73,7 +73,16 @@ enum class VocabKind(val key: String) {
     Pattern("decl"),
 
     /** Неожиданная форма: основа поменялась, вывести её нельзя. */
-    Odd("form")
+    Odd("form"),
+
+    /**
+     * Обратный перевод: `apoteka` → «аптека».
+     *
+     * Отдельная карточка, а не оборот той же: узнавание и порождение — разное
+     * знание, и держатся они по-разному. Узнавание проще, поэтому и заводится
+     * само, как только слово вообще заведено.
+     */
+    Recall("back")
 }
 
 /**
@@ -146,6 +155,21 @@ class VocabRepository(private val context: Context) {
         const val LESSON_ID = "vocab"
 
         /**
+         * Сколько верных ответов считаем достаточным, чтобы назвать слово выученным.
+         *
+         * Десять — не круглое число наугад. Saragi, Nation и Meister (1978)
+         * нашли примерно десять встреч как порог, за которым слово
+         * закрепляется; Webb (2007) намерил, что при десяти и более
+         * разнесённых встречах припоминание через неделю держится выше 80%, а
+         * при менее чем шести падает ниже 30%. Порог считается по общему счёту
+         * верных ответов, а не по серии подряд: интервалы растут, и десять
+         * подряд набегали бы годами.
+         *
+         * Выученное из очереди не пропадает — просто перестаёт быть срочным.
+         */
+        const val LEARNED = 10
+
+        /**
          * Идентификатор карточки: `w-apoteka-mean`, `w-apoteka-form-apoteci`.
          *
          * Он уходит в базу и в жалобы, поэтому не меняется никогда — как и
@@ -185,6 +209,15 @@ fun VocabFile.exerciseFor(
     form: String = "",
     repetitions: Int = 0
 ): Exercise? = when (kind) {
+    VocabKind.Recall -> Exercise.Word(
+        id = VocabRepository.cardId(word.id, kind),
+        label = "Что это значит?",
+        prompt = word.id,
+        answer = word.gloss,
+        explanation = "",
+        native = true
+    )
+
     VocabKind.Meaning -> Exercise.Word(
         id = VocabRepository.cardId(word.id, kind),
         label = "Как это по-черногорски?",
