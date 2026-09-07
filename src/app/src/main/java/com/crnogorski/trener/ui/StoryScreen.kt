@@ -529,18 +529,32 @@ fun StoryScreen(
                         // Впереди показываем ту сторону, с которой работают:
                         // черногорский текст был бы ответом и при переводе,
                         // и на слух.
-                        Text(
-                            when {
-                                state.mode == StoryMode.Read -> chunk.sr
-                                state.mode == StoryMode.Listen -> mask(chunk.sr)
-                                // Русский у чужой реплики — тоже ответ: её надо
-                                // разобрать на слух, а не прочитать заранее.
-                                chunk.theirs -> "…"
-                                else -> chunk.ru
-                            },
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = Muted.copy(alpha = 0.45f)
-                        )
+                        if (state.mode == StoryMode.Listen) {
+                            // Плашки, а не прочерки, и без нажатия: открывать
+                            // отрезок, до которого ещё не дошли, незачем — а
+                            // выглядеть он должен так же, как выглядит текущий,
+                            // иначе список выдаёт два разных способа закрыть
+                            // текст там, где способ один.
+                            MaskedText(
+                                text = chunk.sr,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = Muted.copy(alpha = 0.45f),
+                                onReveal = null
+                            )
+                        } else {
+                            Text(
+                                when {
+                                    state.mode == StoryMode.Read -> chunk.sr
+                                    // Русский у чужой реплики — тоже ответ: её
+                                    // надо разобрать на слух, а не прочитать
+                                    // заранее.
+                                    chunk.theirs -> "…"
+                                    else -> chunk.ru
+                                },
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = Muted.copy(alpha = 0.45f)
+                            )
+                        }
                         Spacer(Modifier.height(10.dp))
                     }
                 }
@@ -662,7 +676,8 @@ private fun MaskedText(
     text: String,
     style: TextStyle,
     color: Color,
-    onReveal: () -> Unit
+    /** `null` — плашки не нажимаются: у отрезка впереди открывать нечего. */
+    onReveal: (() -> Unit)?
 ) {
     val measurer = rememberTextMeasurer()
     val density = LocalDensity.current
@@ -693,7 +708,10 @@ private fun MaskedText(
                             .height(tall * 0.72f)
                             .clip(RoundedCornerShape(4.dp))
                             .background(color.copy(alpha = 0.30f))
-                            .clickable(onClick = onReveal)
+                            .then(
+                                if (onReveal == null) Modifier
+                                else Modifier.clickable(onClick = onReveal)
+                            )
                     )
                     if (tail.isNotEmpty()) Text(tail, style = style, color = color)
                 }
@@ -891,16 +909,3 @@ private fun Attempt(heard: String, note: String, status: String) {
  * не потерялось ли слово. Знаки препинания остаются как есть — по ним слышно
  * вопрос и конец фразы.
  */
-private fun mask(text: String): String =
-    text.split(" ").joinToString("   ") { word ->
-        buildString {
-            word.forEach { c ->
-                if (c.isLetterOrDigit()) {
-                    if (isNotEmpty()) append(' ')
-                    append('_')
-                } else {
-                    append(c)
-                }
-            }
-        }
-    }
