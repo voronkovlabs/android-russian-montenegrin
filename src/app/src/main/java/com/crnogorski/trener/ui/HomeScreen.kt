@@ -391,9 +391,13 @@ private fun SectionHeader(
             tint = Muted,
             modifier = Modifier.padding(end = 10.dp)
         )
+        // Не капсом и не мелким: это заголовок раздела, по нему ищут глазами,
+        // а разрядка в одиннадцать пунктов читается тяжелее всего на экране.
+        // Мелкая моноширинная подпись остаётся счётчику — его не читают, на
+        // него смотрят.
         Text(
-            title.uppercase(),
-            style = MaterialTheme.typography.labelSmall,
+            title,
+            style = MaterialTheme.typography.titleMedium,
             color = Accent,
             modifier = Modifier.weight(1f)
         )

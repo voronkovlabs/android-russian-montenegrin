@@ -38,6 +38,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -142,6 +143,14 @@ fun SessionScreen(
                     Spacer(Modifier.height(20.dp))
                     SkippedView(phase)
                     AnswerTail(state, onNext, onComplain)
+                }
+                // Задание остаётся живым: кнопка записи работает, эталон не
+                // показан. Вердикта ещё нет, поэтому нет и хвоста с жалобой —
+                // жаловаться пока не на что, а флажок в шапке никуда не делся.
+                is Phase.Retry -> {
+                    ExerciseBody(state, speaker, enabled = true, onSubmit = onSubmit, onSkip = onSkip)
+                    Spacer(Modifier.height(20.dp))
+                    RetryView(phase)
                 }
                 Phase.Input -> ExerciseBody(state, speaker, enabled = true, onSubmit = onSubmit, onSkip = onSkip)
             }
@@ -585,6 +594,10 @@ private fun SpokenAnswer(
     var listening by remember(key) { mutableStateOf(false) }
     var revealed by remember(key) { mutableStateOf(false) }
 
+    // Уходя с экрана, распознаватель надо отпустить: он держит системный сервис
+    // и заглушку на звуке, поставленную на время записи.
+    DisposableEffect(Unit) { onDispose { listener.stop() } }
+
     // После ответа текст открывается сам: иначе не с чем сверить услышанное.
     val showText = !byEar || revealed || !enabled
 
@@ -627,9 +640,18 @@ private fun SpokenAnswer(
     Spacer(Modifier.height(8.dp))
     GlossedText(translation, translationGloss, MaterialTheme.typography.bodyMedium, Muted)
     Spacer(Modifier.height(16.dp))
+    // Образец обрывает запись: слушать и говорить одновременно нельзя —
+    // микрофон подхватил бы голос синтезатора и засчитал его за ответ.
+    fun sample(slow: Boolean) {
+        listener.cancel()
+        listening = false
+        status = ""
+        speaker.speak(text, slow = slow)
+    }
+
     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-        SmallAction(if (byEar) "Ещё раз" else "Послушать образец") { speaker.speak(text) }
-        SmallAction("Медленнее") { speaker.speak(text, slow = true) }
+        SmallAction(if (byEar) "Ещё раз" else "Послушать образец") { sample(slow = false) }
+        SmallAction("Медленнее") { sample(slow = true) }
         if (!showText) {
             SmallAction("Показать текст") { revealed = true }
         }
@@ -738,6 +760,8 @@ private fun ReadingAnswer(
     var status by remember(ex.id) { mutableStateOf("") }
     var listening by remember(ex.id) { mutableStateOf(false) }
 
+    DisposableEffect(Unit) { onDispose { listener.stop() } }
+
     val index = heard.size.coerceAtMost(sentences.size - 1)
     val current = sentences.getOrElse(index) { ex.text }
 
@@ -796,8 +820,12 @@ private fun ReadingAnswer(
         )
         Spacer(Modifier.height(10.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            SmallAction("Послушать") { speaker.speak(current) }
-            SmallAction("Медленнее") { speaker.speak(current, slow = true) }
+            SmallAction("Послушать") {
+                listener.cancel(); listening = false; speaker.speak(current)
+            }
+            SmallAction("Медленнее") {
+                listener.cancel(); listening = false; speaker.speak(current, slow = true)
+            }
             if (heard.isNotEmpty()) {
                 SmallAction("Сначала") {
                     heard = emptyList()
@@ -955,6 +983,38 @@ private fun ComplaintBlock(
         }
         Spacer(Modifier.height(4.dp))
         TextButton(onClick = { open = false }) { Text("Отмена", color = Muted) }
+    }
+}
+
+/**
+ * Не совпало, но попытки остались.
+ *
+ * Главное здесь — расслышанное. Чаще всего исправлять надо не произношение, а
+ * то, что движок услышал соседнее слово, и увидеть это можно только так.
+ * Эталона нет намеренно: он на экране и есть задание.
+ */
+@Composable
+private fun RetryView(phase: Phase.Retry) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Surface1)
+            .padding(14.dp)
+    ) {
+        Text("НЕ СОВПАЛО", style = MaterialTheme.typography.labelSmall, color = Muted)
+        Spacer(Modifier.height(10.dp))
+        Text(
+            "Услышано: ${phase.heard}",
+            style = MaterialTheme.typography.bodyLarge,
+            color = Paper
+        )
+        Spacer(Modifier.height(6.dp))
+        Text(
+            if (phase.left > 1) "Осталось попыток: ${phase.left}" else "Последняя попытка",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
     }
 }
 

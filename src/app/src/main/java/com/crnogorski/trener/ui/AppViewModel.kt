@@ -260,6 +260,23 @@ sealed interface Phase {
 
     /** Задание пропущено осознанно — не ошибка, показываем только правильный ответ. */
     data class Skipped(val expected: String) : Phase
+
+    /**
+     * Произнесённое не совпало, но попытки ещё есть.
+     *
+     * Отдельная фаза, а не сразу [Result]: движок распознавания ошибается сам
+     * по себе — теряет предлоги, слышит соседнее слово, — и записывать это в
+     * незнание нечестно. В историях отрезок повторяют, пока не выйдет, и в
+     * уроке должно быть так же. Карточка SRS до последней попытки не трогается
+     * вовсе: вердикт по заданию выносится один раз.
+     */
+    data class Retry(
+        val attempts: Int,
+        /** Что расслышал движок — иначе непонятно, что исправлять в следующий раз. */
+        val heard: String,
+        /** Сколько попыток осталось. Считает модель: константа у неё. */
+        val left: Int
+    ) : Phase
 }
 
 data class SessionState(
@@ -379,6 +396,16 @@ private const val WORD_SHARE = 0.33
  * равно надо.
  */
 private const val ATTEMPTS_BEFORE_REVEAL = 3
+
+/**
+ * Сколько заходов даётся на задание, где отвечают голосом.
+ *
+ * Три — столько же, сколько в историях. Одного было мало: движок распознавания
+ * теряет предлоги и слышит соседнее слово сам по себе, и с одной попытки
+ * задание проваливалось не по знанию, а по везению. Больше трёх не нужно: если
+ * не вышло трижды, дело уже не в движке.
+ */
+private const val SPOKEN_ATTEMPTS = 3
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
 
@@ -1224,7 +1251,24 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         )
     }
 
+    /**
+     * Устный перевод отрезка: сперва своя сверка, потом модель.
+     *
+     * Если сказанное после свёртки диакритики и иекавицы совпало с эталоном
+     * дословно, спрашивать не о чем — это он и есть. Модель нужна там, где
+     * перевод другой: свой порядок слов, синоним, иная конструкция.
+     *
+     * Появилось по жалобе: сербское `još uvek` при черногорском эталоне
+     * `još uvijek` модель однажды не засчитала, хотя промпт прямо велит
+     * засчитывать экавицу. Промпт — просьба, а `LocalCheck.matchesSpoken` —
+     * правило, и там, где правила достаточно, просить незачем. Заодно такой
+     * отрезок проходится без сети и без денег.
+     */
     private fun gradeTranslation(state: StoryState, chunk: StoryChunk, heard: String) {
+        if (LocalCheck.matchesSpoken(heard, chunk.sr)) {
+            advance(state)
+            return
+        }
         _story.value = state.copy(checking = true, heard = heard, note = "")
         viewModelScope.launch {
             val result = checker.checkSpoken(
@@ -1479,15 +1523,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 answer
             )
             // Распознанное показывается отдельной строкой «Услышано», в note дублировать не нужно.
-            is Exercise.Speaking -> localResult(
+            is Exercise.Speaking -> spokenResult(
                 LocalCheck.matchesSpoken(answer, ex.phrase),
-                "",
                 ex.phrase,
                 answer
             )
-            is Exercise.Repeat -> localResult(
+            is Exercise.Repeat -> spokenResult(
                 LocalCheck.matchesSpoken(answer, ex.phrase),
-                "",
                 ex.phrase,
                 answer
             )
@@ -1525,6 +1567,34 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
 
         _session.value = state.copy(phase = Phase.Skipped(item.exercise.referenceAnswer))
+    }
+
+    /**
+     * Вердикт по произнесённому: до [SPOKEN_ATTEMPTS] заходов на задание.
+     *
+     * Промах уходит в [Phase.Retry] и не трогает ни SRS, ни счёт урока —
+     * засчитывается только последняя попытка. Так и в историях: отрезок
+     * повторяют, пока не выйдет, потому что чаще всего исправлять надо не
+     * произношение, а то, что движок услышал соседнее слово.
+     *
+     * Верный ответ засчитывается с любой попытки. Делить «с первого раза» и
+     * «с третьего» здесь нечем: разницу между шатким произношением и осечкой
+     * распознавания на устройстве не различить, а `Scheduler` из двух зол
+     * должен выбирать мягкое.
+     *
+     * Время заданию это не приписывает лишнего: [Pace] считает от показа
+     * задания до вердикта, а вердикт один — значит попытки войдут в замер как
+     * часть одного и того же задания, чем они и являются.
+     */
+    private fun spokenResult(correct: Boolean, expected: String, answer: String) {
+        val used = (_session.value?.phase as? Phase.Retry)?.attempts ?: 0
+        if (correct || used + 1 >= SPOKEN_ATTEMPTS) {
+            localResult(correct, "", expected, answer)
+            return
+        }
+        _session.value = _session.value?.copy(
+            phase = Phase.Retry(used + 1, answer, SPOKEN_ATTEMPTS - used - 1)
+        )
     }
 
     private fun localResult(correct: Boolean, note: String, expected: String, answer: String) {

@@ -1,6 +1,7 @@
 package com.crnogorski.trener.speech
 
 import android.content.Context
+import android.media.AudioManager
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -173,6 +174,16 @@ class Listener(private val context: Context) {
      */
     private var recognizer: SpeechRecognizer? = null
     private val main = Handler(Looper.getMainLooper())
+    private val audio = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+    /**
+     * Номер живого захода. По нему отбрасываются ответы отменённых и уже
+     * закрытых: движок иногда присылает и результат, и ошибку.
+     */
+    private var session = 0
+
+    /** Поток заглушён нами — снять надо ровно столько раз, сколько поставили. */
+    private var muted = false
 
     fun isAvailable(): Boolean = SpeechRecognizer.isRecognitionAvailable(context)
 
@@ -195,10 +206,36 @@ class Listener(private val context: Context) {
         onError: (String) -> Unit,
         onSilence: (() -> Unit)? = null
     ) {
-        begin(language, onResult, onError, onSilence, mayRetry = true)
+        val id = ++session
+        mute()
+        // Сторож: движок распознавания умеет не ответить вовсе — ни результатом,
+        // ни ошибкой. Тогда экран навсегда оставался в «Слушаю…», и выйти из
+        // него можно было только из истории целиком. Своего таймаута у
+        // SpeechRecognizer нет, поэтому он тут наш.
+        main.postDelayed({
+            if (claim(id)) onError("Распознавание не ответило. Нажми ещё раз.")
+        }, WATCHDOG_MS)
+        begin(id, language, onResult, onError, onSilence, mayRetry = true)
+    }
+
+    /**
+     * Закрыть заход [id], если он ещё жив.
+     *
+     * Возвращает `true` ровно один раз на заход: второй ответ движка (а он
+     * бывает — результат вслед за ошибкой) и сработавший позже сторож
+     * отбрасываются молча. Заодно снимает заглушку и отменяет всё
+     * отложенное — и повтор, и сторожа.
+     */
+    private fun claim(id: Int): Boolean {
+        if (id != session) return false
+        session++
+        main.removeCallbacksAndMessages(null)
+        unmute()
+        return true
     }
 
     private fun begin(
+        id: Int,
         language: String,
         onText: (String) -> Unit,
         onFail: (String) -> Unit,
@@ -219,6 +256,7 @@ class Listener(private val context: Context) {
 
         sr.setRecognitionListener(object : RecognitionListener {
             override fun onResults(results: Bundle?) {
+                if (!claim(id)) return
                 val list = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 if (list.isNullOrEmpty()) {
                     if (onSilence != null) onSilence() else onFail("Ничего не расслышал")
@@ -231,14 +269,23 @@ class Listener(private val context: Context) {
                 // Срыв на холодной привязке лечится повтором, и делать это должны
                 // мы, а не человек: он всё равно нажмёт кнопку второй раз.
                 if (mayRetry && error in TRANSIENT) {
+                    // Повтор идёт тем же заходом: сторож продолжает тикать, и
+                    // если движок не ответит и со второго раза, выход всё равно
+                    // найдётся.
+                    if (id != session) return
                     recognizer?.destroy()
                     recognizer = null
                     main.postDelayed(
-                        { begin(language, onText, onFail, onSilence, mayRetry = false) },
+                        {
+                            if (id == session) {
+                                begin(id, language, onText, onFail, onSilence, mayRetry = false)
+                            }
+                        },
                         RETRY_DELAY_MS
                     )
                     return
                 }
+                if (!claim(id)) return
                 // «Не расслышал» и «тишина» — не ошибка чтения, а то, что человек
                 // ещё не начал говорить. Кто хочет, разбирает этот случай отдельно.
                 if (error in SILENT && onSilence != null) {
@@ -285,15 +332,51 @@ class Listener(private val context: Context) {
      * первое нажатие срывалось с ошибкой 11.
      */
     fun cancel() {
+        session++
         main.removeCallbacksAndMessages(null)
+        unmute()
         runCatching { recognizer?.cancel() }
     }
 
     /** Отпустить сервис, уходя с экрана. */
     fun stop() {
+        session++
         main.removeCallbacksAndMessages(null)
+        unmute()
         recognizer?.destroy()
         recognizer = null
+    }
+
+    /**
+     * Приглушить сигналы движка на время записи.
+     *
+     * Гудки в начале и конце распознавания играет системный движок, а не мы,
+     * и выключить их нечем: у `SpeechRecognizer` такой настройки нет вовсе.
+     * Что можно — заглушить поток, в который он их играет. Свой синтезатор в
+     * это время молчит по построению (говорить и слушать одновременно
+     * нельзя), так что терять на этом потоке нечего.
+     *
+     * Только `STREAM_MUSIC`: заглушить звонок или уведомления Android даёт
+     * лишь с доступом к «Не беспокоить», а просить его ради двух гудков —
+     * несоразмерно. Если на этом телефоне движок сигналит в другой поток,
+     * гудки останутся, и сделать с ними будет нечего.
+     *
+     * Оставить телефон беззвучным навсегда заглушка не может: поставленную
+     * процессом систему снимает сама, когда процесс умирает.
+     */
+    private fun mute() {
+        if (muted) return
+        muted = runCatching {
+            audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0)
+        }.isSuccess
+    }
+
+    private fun unmute() {
+        if (!muted) return
+        muted = false
+        runCatching {
+            audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0)
+        }
     }
 
     private companion object {
@@ -312,5 +395,15 @@ class Listener(private val context: Context) {
 
         /** Пауза перед повтором: пересозданному объекту нужно время на привязку. */
         const val RETRY_DELAY_MS = 300L
+
+        /**
+         * Через сколько считать, что движок не ответит уже никогда.
+         *
+         * Своё молчание он объявляет сам и гораздо раньше — секунд через пять
+         * тишины приходит `ERROR_SPEECH_TIMEOUT`. Двадцать секунд поэтому не
+         * могут оборвать живое распознавание: столько не длится ни один
+         * отрезок. Они нужны только на случай, когда ответа нет вообще.
+         */
+        const val WATCHDOG_MS = 20_000L
     }
 }
