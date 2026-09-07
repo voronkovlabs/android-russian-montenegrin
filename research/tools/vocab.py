@@ -222,6 +222,15 @@ def main(lexpath):
     known_lemmas = {form2lemma[w][0] for w in known if w in form2lemma}
     print('  лемм в курсе: %d' % len(known_lemmas))
 
+    # Частота ЛЕММЫ, а не словоформы: у наречия вся частота в одном написании,
+    # а у глагола размазана по сотне форм, и по рангу первой встреченной он
+    # проваливается вниз незаслуженно. Складываем по всем формам.
+    lemma_freq = defaultdict(int)
+    for word, _, count in gap:
+        entry = form2lemma.get(word)
+        if entry is not None:
+            lemma_freq[entry[0]] += count
+
     # --- отбор кандидатов ---
     candidates = []
     dropped = defaultdict(int)
@@ -249,7 +258,10 @@ def main(lexpath):
         if transparent(lemma, text):
             dropped['прозрачно для русского'] += 1
             continue
-        candidates.append((rank, lemma, upos, count, text))
+        candidates.append((rank, lemma, upos, lemma_freq[lemma], text))
+
+    # Самые частотные первыми: программа идёт сверху вниз.
+    candidates.sort(key=lambda c: -c[3])
 
     # --- предложения пула, где кандидат стоит в косвенной форме ---
     print('читаю srLex (проход 2)…')
@@ -265,12 +277,17 @@ def main(lexpath):
             for lemma in form_of.get(token, ()):
                 examples[lemma].append((level, token, sr, ru, sr_id))
 
+    # Частота по веб-корпусу — для сравнения регистров, не для порядка.
+    web_freq = {}
+    for lemma, forms in paradigms.items():
+        web_freq[lemma] = sum(freq for _, _, _, freq in forms)
+
     out = os.path.join(DATA, 'vocab-candidates.tsv')
     with io.open(out, 'w', encoding='utf-8', newline='\n') as f:
-        f.write('rank\tlemma\tpos\tfreq\tforms\tsentences\tgloss\n')
-        for rank, lemma, upos, count, text in candidates:
-            f.write('%d\t%s\t%s\t%d\t%d\t%d\t%s\n' % (
-                rank, lemma, upos, count,
+        f.write('order\tlemma\tpos\tspoken\tweb\tforms\tsentences\tgloss\n')
+        for n, (rank, lemma, upos, count, text) in enumerate(candidates, 1):
+            f.write('%d\t%s\t%s\t%d\t%d\t%d\t%d\t%s\n' % (
+                n, lemma, upos, count, web_freq.get(lemma, 0),
                 len(paradigms.get(lemma, ())),
                 len(examples.get(lemma, ())),
                 text.replace('\t', ' ')[:120],
@@ -289,6 +306,10 @@ def main(lexpath):
         '%s %d' % (k, v) for k, v in sorted(by_pos.items(), key=lambda kv: -kv[1])))
     withex = sum(1 for _, lemma, _, _, _ in candidates if examples.get(lemma))
     print('  с примером в пуле: %d' % withex)
+    print()
+    print('голова списка:')
+    for _, lemma, upos, count, text in candidates[:20]:
+        print('  %-14s %-5s %8d  %s' % (lemma, upos, count, text[:44]))
     print('записано: %s' % out)
 
 
