@@ -1,0 +1,18 @@
+{
+  "id": "s15",
+  "title": "Poklon za prijatelja",
+  "note": "Подарок ко дню рождения. Дательный и творительный, урок 20.",
+  "chunks": [
+    { "sr": "Mom prijatelju je sjutra rođendan.", "ru": "У моего друга завтра день рождения." },
+    { "sr": "Moram da mu kupim poklon.", "ru": "Мне надо купить ему подарок." },
+    { "sr": "Pitao sam ženu šta da mu kupim.", "ru": "Я спросил жену, что ему купить." },
+    { "sr": "Rekla mi je da voli knjige.", "ru": "Она сказала мне, что он любит книги." },
+    { "sr": "Otišli smo u knjižaru kolima.", "ru": "Мы поехали в книжный магазин на машине." },
+    { "sr": "Kupio sam mu knjigu o istoriji.", "ru": "Я купил ему книгу по истории." },
+    { "sr": "Prodavačica ju je lijepo upakovala.", "ru": "Продавщица красиво её упаковала." },
+    { "sr": "Sestri sam poslao poruku.", "ru": "Сестре я отправил сообщение." },
+    { "sr": "Ona će doći sa mužem i djecom.", "ru": "Она придёт с мужем и детьми." },
+    { "sr": "Slavićemo kod njega u stanu.", "ru": "Праздновать будем у него дома." },
+    { "sr": "Biće nas deset.", "ru": "Нас будет десять." }
+  ]
+}

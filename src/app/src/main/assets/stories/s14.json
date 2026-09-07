@@ -1,0 +1,18 @@
+{
+  "id": "s14",
+  "title": "Auto i benzin",
+  "note": "Машина, заправка, сервис. Урок 19.",
+  "chunks": [
+    { "sr": "Moj auto je star, ali dobro radi.", "ru": "Моя машина старая, но хорошо работает." },
+    { "sr": "Jutros nije htio da upali.", "ru": "Сегодня утром она не завелась." },
+    { "sr": "Baterija je bila prazna.", "ru": "Аккумулятор был разряжен." },
+    { "sr": "Komšija mi je pomogao.", "ru": "Сосед мне помог." },
+    { "sr": "Poslije sam otišao na benzinsku pumpu.", "ru": "Потом я поехал на заправку." },
+    { "sr": "Sipao sam trideset litara.", "ru": "Залил тридцать литров." },
+    { "sr": "Provjerio sam i gume.", "ru": "Проверил ещё и шины." },
+    { "sr": "Jedna guma je bila slaba.", "ru": "Одно колесо было спущено." },
+    { "sr": "U servisu su rekli da treba nova.", "ru": "В сервисе сказали, что нужно новое." },
+    { "sr": "Nova guma košta osamdeset evra.", "ru": "Новое колесо стоит восемьдесят евро." },
+    { "sr": "Skupo je, ali nema druge.", "ru": "Дорого, но деваться некуда." }
+  ]
+}

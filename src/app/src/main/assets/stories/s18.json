@@ -1,0 +1,18 @@
+{
+  "id": "s18",
+  "title": "Posao i novac",
+  "note": "Работа, зарплата, сомнения. Уроки 25–26.",
+  "chunks": [
+    { "sr": "Radim ovdje već tri godine.", "ru": "Я работаю здесь уже три года." },
+    { "sr": "Plata nije velika, ali je dovoljna.", "ru": "Зарплата небольшая, но её хватает." },
+    { "sr": "Ako budem radio i subotom, zaradiću više.", "ru": "Если буду работать и по субботам, заработаю больше." },
+    { "sr": "Ali onda neću imati vremena za porodicu.", "ru": "Но тогда у меня не будет времени на семью." },
+    { "sr": "Šef je rekao da će biti povišica.", "ru": "Начальник сказал, что будет прибавка." },
+    { "sr": "Nisam siguran, jer to govori svake godine.", "ru": "Я не уверен, потому что он говорит это каждый год." },
+    { "sr": "Ako ne bude povišice, tražiću drugi posao.", "ru": "Если прибавки не будет, буду искать другую работу." },
+    { "sr": "Žena kaže da treba da budem strpljiv.", "ru": "Жена говорит, что надо быть терпеливым." },
+    { "sr": "Možda je u pravu.", "ru": "Может быть, она права." },
+    { "sr": "Novac nije najvažniji.", "ru": "Деньги не самое главное." },
+    { "sr": "Ali bez njega je teško.", "ru": "Но без них трудно." }
+  ]
+}

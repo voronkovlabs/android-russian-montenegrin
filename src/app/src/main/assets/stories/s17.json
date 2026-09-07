@@ -1,0 +1,18 @@
+{
+  "id": "s17",
+  "title": "Vrijeme i odjeća",
+  "note": "Погода и одежда. Сравнение, уроки 23–24.",
+  "chunks": [
+    { "sr": "Jutros je bilo hladnije nego juče.", "ru": "Сегодня утром было холоднее, чем вчера." },
+    { "sr": "Padala je kiša cijelo jutro.", "ru": "Дождь шёл всё утро." },
+    { "sr": "Obukao sam topliju jaknu.", "ru": "Я надел куртку потеплее." },
+    { "sr": "Uzeo sam i kišobran.", "ru": "Взял ещё зонт." },
+    { "sr": "Zima je ovdje kraća nego u Rusiji.", "ru": "Зима здесь короче, чем в России." },
+    { "sr": "Ali vjetar je jači.", "ru": "Но ветер сильнее." },
+    { "sr": "Poslije podne je bilo sunčanije.", "ru": "После обеда было солнечнее." },
+    { "sr": "Skinuo sam jaknu.", "ru": "Я снял куртку." },
+    { "sr": "Sjutra će biti toplije.", "ru": "Завтра будет теплее." },
+    { "sr": "Najbolje vrijeme je u maju.", "ru": "Лучшая погода в мае." },
+    { "sr": "Tada nije ni prevruće ni prehladno.", "ru": "Тогда не слишком жарко и не слишком холодно." }
+  ]
+}

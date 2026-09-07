@@ -1,0 +1,18 @@
+{
+  "id": "s07",
+  "title": "Kod kuće",
+  "note": "Дом и быт: что случилось. Урок 10.",
+  "chunks": [
+    { "sr": "Naš stan je na trećem spratu.", "ru": "Наша квартира на третьем этаже." },
+    { "sr": "Ima dvije sobe, kuhinju i kupatilo.", "ru": "В ней две комнаты, кухня и ванная." },
+    { "sr": "Juče je nestala struja.", "ru": "Вчера пропало электричество." },
+    { "sr": "Nije radio frižider ni televizor.", "ru": "Не работали ни холодильник, ни телевизор." },
+    { "sr": "Zvao sam komšiju.", "ru": "Я позвонил соседу." },
+    { "sr": "Rekao je da je to cijela zgrada.", "ru": "Он сказал, что это весь дом." },
+    { "sr": "Poslije sat vremena struja se vratila.", "ru": "Через час электричество вернулось." },
+    { "sr": "Onda je počela da curi voda.", "ru": "Потом потекла вода." },
+    { "sr": "Zvao sam majstora.", "ru": "Я вызвал мастера." },
+    { "sr": "Došao je ujutru i popravio slavinu.", "ru": "Он пришёл утром и починил кран." },
+    { "sr": "Sada je sve u redu.", "ru": "Теперь всё в порядке." }
+  ]
+}

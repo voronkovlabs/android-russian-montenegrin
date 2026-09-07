@@ -1,0 +1,19 @@
+{
+  "id": "s04",
+  "title": "Radni dan",
+  "note": "Обычный рабочий день. Настоящее время, уроки 7–8.",
+  "chunks": [
+    { "sr": "Ustajem u sedam sati.", "ru": "Встаю в семь часов." },
+    { "sr": "Pijem kafu i jedem hljeb.", "ru": "Пью кофе и ем хлеб." },
+    { "sr": "Moja žena još spava.", "ru": "Моя жена ещё спит." },
+    { "sr": "U osam idem na posao.", "ru": "В восемь иду на работу." },
+    { "sr": "Radim u kancelariji u centru.", "ru": "Работаю в офисе в центре." },
+    { "sr": "Danas imam puno posla.", "ru": "Сегодня у меня много работы." },
+    { "sr": "U podne jedem u restoranu.", "ru": "В полдень ем в ресторане." },
+    { "sr": "Kolega govori brzo, ne razumijem sve.", "ru": "Коллега говорит быстро, я понимаю не всё." },
+    { "sr": "Poslije posla idem u prodavnicu.", "ru": "После работы иду в магазин." },
+    { "sr": "Uveče gledamo film.", "ru": "Вечером мы смотрим фильм." },
+    { "sr": "Volim ovaj grad.", "ru": "Я люблю этот город." },
+    { "sr": "Sada idem da spavam.", "ru": "Теперь иду спать." }
+  ]
+}

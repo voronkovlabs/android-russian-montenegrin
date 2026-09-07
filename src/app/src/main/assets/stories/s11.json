@@ -1,0 +1,18 @@
+{
+  "id": "s11",
+  "title": "Puno ljudi",
+  "note": "Субботний рынок. Множественное число, уроки 15–16.",
+  "chunks": [
+    { "sr": "Subotom na pijaci ima puno ljudi.", "ru": "По субботам на рынке много людей." },
+    { "sr": "Prodavci viču i nude voće.", "ru": "Продавцы кричат и предлагают фрукты." },
+    { "sr": "Kupio sam dva kilograma jabuka.", "ru": "Я купил два килограмма яблок." },
+    { "sr": "Uzeo sam i tri paradajza.", "ru": "Взял ещё три помидора." },
+    { "sr": "Krompir je jeftin, a paprike su skupe.", "ru": "Картошка дешёвая, а перцы дорогие." },
+    { "sr": "Koliko koštaju ove kruške?", "ru": "Сколько стоят эти груши?" },
+    { "sr": "Dva evra kilogram.", "ru": "Два евро килограмм." },
+    { "sr": "Uzeću pola kilograma.", "ru": "Возьму полкило." },
+    { "sr": "Kupio sam i cvijeće za ženu.", "ru": "Я купил ещё цветы для жены." },
+    { "sr": "Torbe su bile teške.", "ru": "Сумки были тяжёлые." },
+    { "sr": "Vratio sam se kući taksijem.", "ru": "Я вернулся домой на такси." }
+  ]
+}

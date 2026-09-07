@@ -1,0 +1,18 @@
+{
+  "id": "s10",
+  "title": "Papiri",
+  "note": "Документы и учреждения. Урок 14.",
+  "chunks": [
+    { "sr": "Treba mi nova lična karta.", "ru": "Мне нужно новое удостоверение личности." },
+    { "sr": "Otišao sam u opštinu.", "ru": "Я пошёл в муниципалитет." },
+    { "sr": "Uzeo sam broj i čekao.", "ru": "Я взял номерок и ждал." },
+    { "sr": "Čekao sam skoro sat vremena.", "ru": "Я ждал почти час." },
+    { "sr": "Službenica je tražila pasoš.", "ru": "Служащая попросила паспорт." },
+    { "sr": "Dao sam joj pasoš i potvrdu.", "ru": "Я дал ей паспорт и справку." },
+    { "sr": "Rekla je da nemam sve papire.", "ru": "Она сказала, что у меня не все документы." },
+    { "sr": "Fali mi potvrda o adresi.", "ru": "Не хватает справки об адресе." },
+    { "sr": "Poslije sam otišao u poštu.", "ru": "Потом я пошёл на почту." },
+    { "sr": "Poslao sam pismo u Rusiju.", "ru": "Я отправил письмо в Россию." },
+    { "sr": "Pismo će stići za dvije nedjelje.", "ru": "Письмо дойдёт за две недели." }
+  ]
+}

@@ -2,6 +2,21 @@
   "stories": [
     {"id": "s01", "title": "Prvi dan", "file": "s01.json", "level": 1, "chunks": 12},
     {"id": "s02", "title": "Moja porodica", "file": "s02.json", "level": 1, "chunks": 11},
-    {"id": "s03", "title": "Na pijaci", "file": "s03.json", "level": 2, "chunks": 12}
+    {"id": "s03", "title": "Na pijaci", "file": "s03.json", "level": 2, "chunks": 12},
+    {"id": "s04", "title": "Radni dan", "file": "s04.json", "level": 2, "chunks": 12},
+    {"id": "s05", "title": "U gradu", "file": "s05.json", "level": 2, "chunks": 12},
+    {"id": "s06", "title": "Šta je bilo juče", "file": "s06.json", "level": 3, "chunks": 11},
+    {"id": "s07", "title": "Kod kuće", "file": "s07.json", "level": 3, "chunks": 11},
+    {"id": "s08", "title": "Kod ljekara", "file": "s08.json", "level": 3, "chunks": 11},
+    {"id": "s09", "title": "Nema ničega", "file": "s09.json", "level": 4, "chunks": 12},
+    {"id": "s10", "title": "Papiri", "file": "s10.json", "level": 4, "chunks": 11},
+    {"id": "s11", "title": "Puno ljudi", "file": "s11.json", "level": 4, "chunks": 11},
+    {"id": "s12", "title": "Sjutra putujem", "file": "s12.json", "level": 4, "chunks": 11},
+    {"id": "s13", "title": "Autobus za Budvu", "file": "s13.json", "level": 5, "chunks": 11},
+    {"id": "s14", "title": "Auto i benzin", "file": "s14.json", "level": 5, "chunks": 11},
+    {"id": "s15", "title": "Poklon za prijatelja", "file": "s15.json", "level": 5, "chunks": 11},
+    {"id": "s16", "title": "Molim te, pomozi", "file": "s16.json", "level": 5, "chunks": 11},
+    {"id": "s17", "title": "Vrijeme i odjeća", "file": "s17.json", "level": 5, "chunks": 11},
+    {"id": "s18", "title": "Posao i novac", "file": "s18.json", "level": 5, "chunks": 11}
   ]
 }

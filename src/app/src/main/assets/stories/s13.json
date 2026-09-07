@@ -1,0 +1,18 @@
+{
+  "id": "s13",
+  "title": "Autobus za Budvu",
+  "note": "Поездка автобусом. Урок 18.",
+  "chunks": [
+    { "sr": "Na stanici sam kupio kartu za Budvu.", "ru": "На станции я купил билет до Будвы." },
+    { "sr": "Karta u jednom pravcu košta šest evra.", "ru": "Билет в одну сторону стоит шесть евро." },
+    { "sr": "Pitao sam kad polazi autobus.", "ru": "Я спросил, когда отправляется автобус." },
+    { "sr": "Polazi u deset i petnaest.", "ru": "Отправляется в десять пятнадцать." },
+    { "sr": "Autobus je kasnio dvadeset minuta.", "ru": "Автобус опоздал на двадцать минут." },
+    { "sr": "Sjeo sam pored prozora.", "ru": "Я сел у окна." },
+    { "sr": "Vozač je vozio brzo.", "ru": "Водитель ехал быстро." },
+    { "sr": "Put ide pored mora.", "ru": "Дорога идёт вдоль моря." },
+    { "sr": "Stali smo u Petrovcu na deset minuta.", "ru": "Мы остановились в Петроваце на десять минут." },
+    { "sr": "Stigli smo u dvanaest.", "ru": "Мы приехали в двенадцать." },
+    { "sr": "Od stanice do hotela sam išao pješke.", "ru": "От станции до отеля я шёл пешком." }
+  ]
+}

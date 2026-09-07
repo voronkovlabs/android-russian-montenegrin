@@ -1,0 +1,18 @@
+{
+  "id": "s12",
+  "title": "Sjutra putujem",
+  "note": "Сборы на море. Будущее время, урок 17.",
+  "chunks": [
+    { "sr": "Sjutra putujem na more.", "ru": "Завтра я еду на море." },
+    { "sr": "Ustaću rano, u šest sati.", "ru": "Встану рано, в шесть часов." },
+    { "sr": "Spakovaću stvari večeras.", "ru": "Вещи соберу сегодня вечером." },
+    { "sr": "Ponijeću peškir i naočare.", "ru": "Возьму полотенце и очки." },
+    { "sr": "Vozićemo se dva sata.", "ru": "Мы будем ехать два часа." },
+    { "sr": "Kad stignemo, ići ćemo na plažu.", "ru": "Когда приедем, пойдём на пляж." },
+    { "sr": "Kupaćemo se cijeli dan.", "ru": "Будем купаться целый день." },
+    { "sr": "Uveče ćemo jesti ribu.", "ru": "Вечером будем есть рыбу." },
+    { "sr": "Ostaćemo tri dana.", "ru": "Останемся на три дня." },
+    { "sr": "Nadam se da će biti sunčano.", "ru": "Надеюсь, будет солнечно." },
+    { "sr": "Biće lijepo.", "ru": "Будет хорошо." }
+  ]
+}

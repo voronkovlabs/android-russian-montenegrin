@@ -1,0 +1,19 @@
+{
+  "id": "s05",
+  "title": "U gradu",
+  "note": "Спросить дорогу. Город и направления, урок 8.",
+  "chunks": [
+    { "sr": "Izvinite, gdje je pošta?", "ru": "Извините, где почта?" },
+    { "sr": "Idite pravo, pa desno.", "ru": "Идите прямо, потом направо." },
+    { "sr": "Pošta je pored banke.", "ru": "Почта рядом с банком." },
+    { "sr": "Hvala, a gdje je apoteka?", "ru": "Спасибо, а где аптека?" },
+    { "sr": "Apoteka je na uglu.", "ru": "Аптека на углу." },
+    { "sr": "Da li je daleko?", "ru": "Это далеко?" },
+    { "sr": "Nije daleko, pet minuta pješke.", "ru": "Недалеко, пять минут пешком." },
+    { "sr": "Ovdje je trg, a tamo je crkva.", "ru": "Здесь площадь, а там церковь." },
+    { "sr": "Tražim hotel pored mora.", "ru": "Ищу отель у моря." },
+    { "sr": "Možete ići autobusom.", "ru": "Можете поехать на автобусе." },
+    { "sr": "Autobus staje na trgu.", "ru": "Автобус останавливается на площади." },
+    { "sr": "Hvala vam puno!", "ru": "Большое вам спасибо!" }
+  ]
+}

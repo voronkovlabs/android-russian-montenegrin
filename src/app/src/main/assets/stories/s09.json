@@ -1,0 +1,19 @@
+{
+  "id": "s09",
+  "title": "Nema ničega",
+  "note": "Пустой холодильник. Родительный падеж, уроки 12–13.",
+  "chunks": [
+    { "sr": "Danas nemam vremena.", "ru": "Сегодня у меня нет времени." },
+    { "sr": "U frižideru nema ničega.", "ru": "В холодильнике ничего нет." },
+    { "sr": "Nema mlijeka, nema sira, nema hljeba.", "ru": "Нет молока, нет сыра, нет хлеба." },
+    { "sr": "Moram u prodavnicu.", "ru": "Мне надо в магазин." },
+    { "sr": "Prodavnica je blizu, kod parka.", "ru": "Магазин рядом, у парка." },
+    { "sr": "Nemaju svježeg mesa danas.", "ru": "Свежего мяса у них сегодня нет." },
+    { "sr": "Uzeo sam pola kilograma sira.", "ru": "Я взял полкило сыра." },
+    { "sr": "Nemam sitnog novca.", "ru": "У меня нет мелких денег." },
+    { "sr": "Platio sam karticom.", "ru": "Я заплатил картой." },
+    { "sr": "Kod kuće nema nikoga.", "ru": "Дома никого нет." },
+    { "sr": "Žena je otišla kod sestre.", "ru": "Жена ушла к сестре." },
+    { "sr": "Večeraću sam.", "ru": "Поужинаю один." }
+  ]
+}

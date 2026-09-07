@@ -1,0 +1,18 @@
+{
+  "id": "s08",
+  "title": "Kod ljekara",
+  "note": "У врача. Здоровье, урок 11.",
+  "chunks": [
+    { "sr": "Jutros me je boljela glava.", "ru": "Сегодня утром у меня болела голова." },
+    { "sr": "Nisam mogao da radim.", "ru": "Я не мог работать." },
+    { "sr": "Otišao sam kod ljekara.", "ru": "Я пошёл к врачу." },
+    { "sr": "Ljekar je pitao šta me boli.", "ru": "Врач спросил, что у меня болит." },
+    { "sr": "Rekao sam da me boli glava i grlo.", "ru": "Я сказал, что у меня болит голова и горло." },
+    { "sr": "Imao sam temperaturu.", "ru": "У меня была температура." },
+    { "sr": "Ljekar je rekao da je to grip.", "ru": "Врач сказал, что это грипп." },
+    { "sr": "Dao mi je recept.", "ru": "Он дал мне рецепт." },
+    { "sr": "Kupio sam lijek u apoteci.", "ru": "Я купил лекарство в аптеке." },
+    { "sr": "Moram da pijem tablete tri dana.", "ru": "Мне надо пить таблетки три дня." },
+    { "sr": "Sjutra će biti bolje.", "ru": "Завтра будет лучше." }
+  ]
+}

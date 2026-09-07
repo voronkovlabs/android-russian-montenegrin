@@ -1,0 +1,18 @@
+{
+  "id": "s16",
+  "title": "Molim te, pomozi",
+  "note": "Соседу нужна помощь. Повелительное наклонение, уроки 21–22.",
+  "chunks": [
+    { "sr": "Komšija je pozvonio na vrata.", "ru": "Сосед позвонил в дверь." },
+    { "sr": "Rekao je: izvini, imaš li ključ?", "ru": "Он сказал: извини, у тебя есть ключ?" },
+    { "sr": "Zaključao je vrata, a ključ je ostao unutra.", "ru": "Он захлопнул дверь, а ключ остался внутри." },
+    { "sr": "Rekao sam mu: sjedi, popij kafu.", "ru": "Я сказал ему: садись, выпей кофе." },
+    { "sr": "Pozovi majstora, on će otvoriti.", "ru": "Позвони мастеру, он откроет." },
+    { "sr": "Daj mi njegov broj, molim te.", "ru": "Дай мне его номер, пожалуйста." },
+    { "sr": "Majstor je došao za pola sata.", "ru": "Мастер пришёл через полчаса." },
+    { "sr": "Otvorio je vrata za dva minuta.", "ru": "Он открыл дверь за две минуты." },
+    { "sr": "Komšija je rekao: hvala ti puno.", "ru": "Сосед сказал: большое тебе спасибо." },
+    { "sr": "Rekao sam: nema na čemu, dođi kad hoćeš.", "ru": "Я сказал: не за что, приходи когда хочешь." },
+    { "sr": "Dobar komšija je bolji od rođaka.", "ru": "Хороший сосед лучше родственника." }
+  ]
+}

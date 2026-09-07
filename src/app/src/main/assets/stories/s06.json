@@ -1,0 +1,18 @@
+{
+  "id": "s06",
+  "title": "Šta je bilo juče",
+  "note": "Вечер у друга. Прошедшее время, урок 9.",
+  "chunks": [
+    { "sr": "Juče sam bio kod prijatelja.", "ru": "Вчера я был у друга." },
+    { "sr": "Došao sam u pet sati.", "ru": "Я пришёл в пять часов." },
+    { "sr": "Njegova žena je kuvala večeru.", "ru": "Его жена готовила ужин." },
+    { "sr": "Jeli smo ribu i salatu.", "ru": "Мы ели рыбу и салат." },
+    { "sr": "Pili smo vino i pričali.", "ru": "Мы пили вино и разговаривали." },
+    { "sr": "Pričali smo o poslu i o djeci.", "ru": "Мы говорили о работе и о детях." },
+    { "sr": "Poslije smo gledali utakmicu.", "ru": "Потом мы смотрели матч." },
+    { "sr": "Naš tim je izgubio.", "ru": "Наша команда проиграла." },
+    { "sr": "Vratio sam se kući u jedanaest.", "ru": "Я вернулся домой в одиннадцать." },
+    { "sr": "Bio je to lijep dan.", "ru": "Это был хороший день." },
+    { "sr": "Danas sam umoran.", "ru": "Сегодня я усталый." }
+  ]
+}
