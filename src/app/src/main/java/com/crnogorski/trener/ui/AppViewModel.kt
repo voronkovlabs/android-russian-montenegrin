@@ -553,21 +553,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             return
         }
 
-        // Новые слова — сколько осталось на сегодня.
-        var taken = 0
-        val budget = (NEW_WORDS_PER_DAY - vocabRepo.introducedToday()).coerceAtLeast(0)
-        for (word in file.words) {
-            if (taken >= budget || items.size >= VOCAB_LIMIT) break
-            if (byId.containsKey(VocabRepository.cardId(word.id, VocabKind.Meaning))) continue
-            val before = items.size
-            add(file.exerciseFor(word, VocabKind.Meaning))
-            if (items.size > before) taken++
-        }
-        vocabRepo.noteIntroduced(taken)
-
-        // Следующая ступень у слов, где предыдущая усвоена. Своей дневной
-        // нормы у них нет: их темп и так задан тем, как быстро усваивается
-        // предыдущая.
+        // Следующая ступень у слов, где предыдущая усвоена, — ПЕРЕД новыми
+        // словами, а не после. Порядок был обратный, и это ошибка: очередь
+        // просроченного со временем упирается в потолок сессии, и падежи не
+        // получали бы слота уже никогда. Открыть следующую ступень у слова,
+        // которое человек уже знает, и дешевле, и полезнее, чем завести ещё
+        // одно незнакомое.
+        //
+        // Своей дневной нормы у ступеней нет: их темп и так задан тем, как
+        // быстро усваивается предыдущая.
         for (word in file.words) {
             if (items.size >= VOCAB_LIMIT) break
             if (!vocabLearned(byId, VocabRepository.cardId(word.id, VocabKind.Meaning))) continue
@@ -583,6 +577,18 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             } ?: continue
             add(file.exerciseFor(word, VocabKind.Odd, form))
         }
+
+        // Новые слова — сколько осталось на сегодня.
+        var taken = 0
+        val budget = (NEW_WORDS_PER_DAY - vocabRepo.introducedToday()).coerceAtLeast(0)
+        for (word in file.words) {
+            if (taken >= budget || items.size >= VOCAB_LIMIT) break
+            if (byId.containsKey(VocabRepository.cardId(word.id, VocabKind.Meaning))) continue
+            val before = items.size
+            add(file.exerciseFor(word, VocabKind.Meaning))
+            if (items.size > before) taken++
+        }
+        vocabRepo.noteIntroduced(taken)
     }
 
     private fun vocabLearned(cards: Map<String, CardEntity>, id: String): Boolean =
