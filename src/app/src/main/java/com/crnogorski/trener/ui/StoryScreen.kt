@@ -5,7 +5,12 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -43,6 +48,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.crnogorski.trener.data.StoryMode
@@ -134,6 +142,7 @@ fun StoryScreen(
     speaker: Speaker,
     onSubmit: (String) -> Unit,
     onSkipChunk: () -> Unit,
+    onReveal: () -> Unit,
     onRestart: () -> Unit,
     onNote: (String) -> Unit,
     onClose: () -> Unit
@@ -448,12 +457,16 @@ fun StoryScreen(
                             )
 
                             hearing -> {
-                                // Не headlineSmall, как открытый текст: прочерки
-                                // читать не надо, а крупными они на длинной фразе
-                                // занимают пол-экрана.
+                                MaskedText(
+                                    text = chunk.sr,
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    color = Muted,
+                                    onReveal = onReveal
+                                )
+                                Spacer(Modifier.height(10.dp))
                                 Text(
-                                    mask(chunk.sr),
-                                    style = MaterialTheme.typography.bodyLarge,
+                                    "Нажми на любое слово — покажу текст.",
+                                    style = MaterialTheme.typography.bodyMedium,
                                     color = Muted
                                 )
                                 Spacer(Modifier.height(16.dp))
@@ -502,6 +515,7 @@ fun StoryScreen(
                                     } else {
                                         ATTEMPTS_BEFORE_SKIP_REVEALED
                                     },
+                                    stalled = stalled,
                                     onSample = ::sample,
                                     onRecord = ::record,
                                     onSkip = onSkipChunk
@@ -627,6 +641,68 @@ private fun TheirLineControls(
 }
 
 /**
+ * Закрытый текст: плашка на каждое слово, шириной ровно с него.
+ *
+ * Ширина не приблизительная, а измеренная тем же начертанием
+ * ([rememberTextMeasurer]), которым слово было бы напечатано, — иначе плашки
+ * врали бы о длине, а длина тут и есть условие задачи: слышно, сколько всего
+ * надо разобрать и не потерялось ли слово. Прочерки по букве говорили то же
+ * самое, но занимали втрое больше места и читались как текст, которым не были.
+ *
+ * Знаки препинания остаются видимыми — они показывают строение фразы и
+ * подсказкой не являются.
+ *
+ * **Нажатие открывает текст**, и это не украшение, а единственный выход из
+ * отрезка: до 1.35 в режиме «на слух» его не было вовсе, если движок ничего
+ * не разбирал (см. `AppViewModel.revealChunk`).
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun MaskedText(
+    text: String,
+    style: TextStyle,
+    color: Color,
+    onReveal: () -> Unit
+) {
+    val measurer = rememberTextMeasurer()
+    val density = LocalDensity.current
+    val words = remember(text) { text.split(' ').filter { it.isNotBlank() } }
+    // Высота плашки — по настоящей строке этого начертания, а не по кеглю:
+    // у выносных элементов буквы выше самого кегля.
+    val tall = with(density) { measurer.measure("Ag", style).size.height.toDp() }
+
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        words.forEach { word ->
+            val core = word.trim { !it.isLetterOrDigit() }
+            val head = word.substringBefore(core, "")
+            val tail = if (core.isEmpty()) "" else word.substringAfterLast(core, "")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if (core.isEmpty()) {
+                    // Кусок целиком из знаков — тире между репликами,
+                    // многоточие: закрывать нечего, печатаем как есть.
+                    Text(word, style = style, color = color)
+                } else {
+                    if (head.isNotEmpty()) Text(head, style = style, color = color)
+                    val wide = with(density) { measurer.measure(core, style).size.width.toDp() }
+                    Box(
+                        Modifier
+                            .width(wide)
+                            .height(tall * 0.72f)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(color.copy(alpha = 0.30f))
+                            .clickable(onClick = onReveal)
+                    )
+                    if (tail.isNotEmpty()) Text(tail, style = style, color = color)
+                }
+            }
+        }
+    }
+}
+
+/**
  * Управление текущим отрезком при чтении вслух.
  *
  * В гладком случае кнопки нет вовсе — только строка «Слушаю»: нажимать нечего,
@@ -641,6 +717,8 @@ private fun ReadingControls(
     note: String,
     attempts: Int,
     skipAfter: Int,
+    /** Движок сдался сам: слушал и не разобрал ничего. */
+    stalled: Boolean,
     onSample: (Boolean) -> Unit,
     onRecord: () -> Unit,
     onSkip: () -> Unit
@@ -675,7 +753,11 @@ private fun ReadingControls(
 
     Attempt(heard = heard, note = note, status = status)
 
-    if (attempts >= skipAfter) {
+    // Выход даётся либо после честных неудач, либо когда сдался сам движок.
+    // Второе обязательно: «ничего не расслышал» попыткой не считается — и это
+    // правильно, это не ошибка чтения, — но без такой оговорки счётчик стоял бы
+    // на нуле, а отрезок не отпускал бы вовсе. Ровно на этом владелец и застрял.
+    if (attempts >= skipAfter || stalled) {
         Spacer(Modifier.height(8.dp))
         TextButton(onClick = onSkip) {
             Text("Не выходит — дальше", color = Muted)

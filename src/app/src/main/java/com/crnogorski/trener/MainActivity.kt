@@ -86,6 +86,7 @@ class MainActivity : ComponentActivity() {
                                     speaker = speaker,
                                     onSubmit = vm::submitChunk,
                                     onSkipChunk = vm::skipChunk,
+                                    onReveal = vm::revealChunk,
                                     onRestart = vm::restartStory,
                                     onNote = vm::addNote,
                                     onClose = vm::closeStory
