@@ -1,0 +1,20 @@
+{
+  "id": "d04",
+  "title": "Stan na izdavanje",
+  "note": "Снять квартиру. Уроки 10 и 16.",
+  "speaker": "Vlasnik",
+  "chunks": [
+    { "who": "them", "sr": "Dobar dan, vi ste zvali za stan?", "ru": "Добрый день, вы звонили насчёт квартиры?" },
+    { "who": "you", "sr": "Da, htio bih da ga vidim.", "ru": "Да, я хотел бы её посмотреть." },
+    { "who": "them", "sr": "Stan je na drugom spratu, ima dvije sobe.", "ru": "Квартира на втором этаже, в ней две комнаты." },
+    { "who": "you", "sr": "Koliko košta mjesečno?", "ru": "Сколько это стоит в месяц?" },
+    { "who": "them", "sr": "Četiristo evra, plus struja i voda.", "ru": "Четыреста евро, плюс электричество и вода." },
+    { "who": "you", "sr": "Da li je namješten?", "ru": "Она с мебелью?" },
+    { "who": "them", "sr": "Jeste, sve je unutra: frižider, mašina, krevet.", "ru": "Да, всё внутри: холодильник, стиральная машина, кровать." },
+    { "who": "you", "sr": "Kada mogu da se uselim?", "ru": "Когда я могу въехать?" },
+    { "who": "them", "sr": "Od prvog sljedećeg mjeseca.", "ru": "С первого числа следующего месяца." },
+    { "who": "you", "sr": "Treba li depozit?", "ru": "Нужен ли залог?" },
+    { "who": "them", "sr": "Da, jedna mjesečna kirija.", "ru": "Да, одна месячная плата." },
+    { "who": "you", "sr": "Dobro, razmisliću i javiću vam se.", "ru": "Хорошо, я подумаю и дам вам знать." }
+  ]
+}

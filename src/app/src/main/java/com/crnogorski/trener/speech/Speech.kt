@@ -40,6 +40,18 @@ enum class AnswerLanguage(val speech: String, val keyboard: String) {
 
 private const val NORMAL_RATE = 0.9f
 
+/** Обычный тон — им говорит «сам текст». */
+private const val NORMAL_PITCH = 1.0f
+
+/**
+ * Тон собеседника в диалоге.
+ *
+ * Голос у `sr-RS` в Android один, выбирать не из чего, поэтому роли разводятся
+ * высотой. Ниже настолько, чтобы разница слышалась сразу, но речь не поехала:
+ * на 0,6 движок начинает бубнить и разбирать становится труднее, чем нужно.
+ */
+private const val LOW_PITCH = 0.78f
+
 /** «Медленнее» для аудирования: разобрать на слух с первого раза выходит не всегда. */
 private const val SLOW_RATE = 0.55f
 
@@ -60,7 +72,12 @@ class Speaker(context: Context) {
      */
     private var pending: Pending? = null
 
-    private class Pending(val text: String, val slow: Boolean, val onDone: (() -> Unit)?)
+    private class Pending(
+        val text: String,
+        val slow: Boolean,
+        val low: Boolean,
+        val onDone: (() -> Unit)?
+    )
 
     /**
      * Номер звучащей сейчас фразы и что делать, когда она договорена.
@@ -102,7 +119,7 @@ class Speaker(context: Context) {
                 ready = !missingVoice
                 engine.setSpeechRate(NORMAL_RATE)
                 engine.setOnUtteranceProgressListener(progress)
-                pending?.let { speak(it.text, it.slow, it.onDone) }
+                pending?.let { speak(it.text, it.slow, it.low, it.onDone) }
             }
             pending = null
         }
@@ -116,10 +133,15 @@ class Speaker(context: Context) {
      * один раз. Нужен упражнению «на слух»: слушать и говорить одновременно
      * нельзя, микрофон включается только после последнего слова.
      */
-    fun speak(text: String, slow: Boolean = false, onDone: (() -> Unit)? = null) {
+    fun speak(
+        text: String,
+        slow: Boolean = false,
+        low: Boolean = false,
+        onDone: (() -> Unit)? = null
+    ) {
         if (!ready) {
             if (!missingVoice) {
-                pending = Pending(text, slow, onDone)
+                pending = Pending(text, slow, low, onDone)
             } else {
                 // Голоса нет и не будет. Продолжение всё равно должно случиться:
                 // иначе экран «на слух» замер бы, дожидаясь конца фразы, которой
@@ -133,6 +155,7 @@ class Speaker(context: Context) {
         currentId = id
         whenDone = onDone
         engine.setSpeechRate(if (slow) SLOW_RATE else NORMAL_RATE)
+        engine.setPitch(if (low) LOW_PITCH else NORMAL_PITCH)
         if (engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, id) != TextToSpeech.SUCCESS) {
             finish(id)
         }

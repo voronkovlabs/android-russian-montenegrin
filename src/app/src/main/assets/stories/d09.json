@@ -1,0 +1,20 @@
+{
+  "id": "d09",
+  "title": "Kupujem kartu",
+  "note": "Билет на автобус. Урок 18.",
+  "speaker": "Prodavac karata",
+  "chunks": [
+    { "who": "them", "sr": "Dobar dan, gdje putujete?", "ru": "Добрый день, куда едете?" },
+    { "who": "you", "sr": "U Budvu, molim vas.", "ru": "В Будву, пожалуйста." },
+    { "who": "them", "sr": "U jednom pravcu ili povratnu?", "ru": "В одну сторону или туда и обратно?" },
+    { "who": "you", "sr": "Povratnu, vraćam se sjutra.", "ru": "Туда и обратно, я возвращаюсь завтра." },
+    { "who": "them", "sr": "To je jedanaest evra.", "ru": "Это одиннадцать евро." },
+    { "who": "you", "sr": "Kada polazi sljedeći autobus?", "ru": "Когда отправляется следующий автобус?" },
+    { "who": "them", "sr": "Za dvadeset minuta, peron broj tri.", "ru": "Через двадцать минут, платформа номер три." },
+    { "who": "you", "sr": "Da li treba platiti prtljag?", "ru": "Нужно ли платить за багаж?" },
+    { "who": "them", "sr": "Jedan evro po koferu, kod vozača.", "ru": "Один евро за чемодан, у водителя." },
+    { "who": "you", "sr": "Razumijem. Hvala vam.", "ru": "Понимаю. Спасибо вам." },
+    { "who": "them", "sr": "Srećan put!", "ru": "Счастливого пути!" },
+    { "who": "you", "sr": "Hvala, doviđenja.", "ru": "Спасибо, до свидания." }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "d02",
+  "title": "U ordinaciji",
+  "note": "У врача: рассказать, что болит. Урок 11.",
+  "speaker": "Ljekar",
+  "chunks": [
+    { "who": "them", "sr": "Izvolite, sjedite. Šta vas muči?", "ru": "Проходите, садитесь. Что вас беспокоит?" },
+    { "who": "you", "sr": "Boli me grlo već tri dana.", "ru": "У меня три дня болит горло." },
+    { "who": "them", "sr": "Imate li temperaturu?", "ru": "У вас есть температура?" },
+    { "who": "you", "sr": "Juče sam imao trideset osam.", "ru": "Вчера у меня было тридцать восемь." },
+    { "who": "them", "sr": "Otvorite usta, molim vas.", "ru": "Откройте рот, пожалуйста." },
+    { "who": "you", "sr": "Da li je ozbiljno?", "ru": "Это серьёзно?" },
+    { "who": "them", "sr": "Nije, ali morate uzimati antibiotik.", "ru": "Нет, но вам надо принимать антибиотик." },
+    { "who": "you", "sr": "Koliko dana?", "ru": "Сколько дней?" },
+    { "who": "them", "sr": "Sedam dana, dva puta dnevno.", "ru": "Семь дней, два раза в день." },
+    { "who": "you", "sr": "Mogu li da radim?", "ru": "Могу ли я работать?" },
+    { "who": "them", "sr": "Bolje ostanite kod kuće dva dana.", "ru": "Лучше останьтесь дома два дня." },
+    { "who": "you", "sr": "Razumijem. Hvala, doktore.", "ru": "Понимаю. Спасибо, доктор." }
+  ]
+}

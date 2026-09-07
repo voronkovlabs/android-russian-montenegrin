@@ -1,0 +1,20 @@
+{
+  "id": "d08",
+  "title": "Kod prodavca voća",
+  "note": "Фрукты на рынке. Уроки 13 и 16.",
+  "speaker": "Prodavačica",
+  "chunks": [
+    { "who": "them", "sr": "Izvolite, šta će vam biti?", "ru": "Пожалуйста, что вам?" },
+    { "who": "you", "sr": "Kilogram jabuka, molim vas.", "ru": "Килограмм яблок, пожалуйста." },
+    { "who": "them", "sr": "Ove su slatke, a ove kiselije.", "ru": "Эти сладкие, а эти кислее." },
+    { "who": "you", "sr": "Uzeću slatke. Koliko koštaju?", "ru": "Возьму сладкие. Сколько они стоят?" },
+    { "who": "them", "sr": "Evro i po kilogram.", "ru": "Полтора евро килограмм." },
+    { "who": "you", "sr": "Imate li kruške?", "ru": "У вас есть груши?" },
+    { "who": "them", "sr": "Danas nemam, dođite sjutra.", "ru": "Сегодня нет, приходите завтра." },
+    { "who": "you", "sr": "Onda još pola kilograma paradajza.", "ru": "Тогда ещё полкило помидоров." },
+    { "who": "them", "sr": "Evo. Sve zajedno tri evra.", "ru": "Вот. Всего три евро." },
+    { "who": "you", "sr": "Nemam sitno, imam samo dvadeset.", "ru": "У меня нет мелочи, только двадцать." },
+    { "who": "them", "sr": "Nema problema, evo kusur.", "ru": "Нет проблем, вот сдача." },
+    { "who": "you", "sr": "Hvala, prijatan dan!", "ru": "Спасибо, хорошего дня!" }
+  ]
+}

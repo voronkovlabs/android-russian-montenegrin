@@ -1,0 +1,20 @@
+{
+  "id": "d01",
+  "title": "Na pošti",
+  "note": "Отправить посылку в Россию. Уроки 14 и 18.",
+  "speaker": "Službenica",
+  "chunks": [
+    { "who": "them", "sr": "Dobar dan, izvolite.", "ru": "Добрый день, слушаю вас." },
+    { "who": "you", "sr": "Dobar dan. Hoću da pošaljem paket u Rusiju.", "ru": "Добрый день. Хочу отправить посылку в Россию." },
+    { "who": "them", "sr": "Šta je unutra?", "ru": "Что внутри?" },
+    { "who": "you", "sr": "Knjige i odjeća.", "ru": "Книги и одежда." },
+    { "who": "them", "sr": "Stavite paket na vagu, molim vas.", "ru": "Поставьте посылку на весы, пожалуйста." },
+    { "who": "you", "sr": "Koliko košta?", "ru": "Сколько стоит?" },
+    { "who": "them", "sr": "Dva kilograma, to je dvadeset dva evra.", "ru": "Два килограмма, это двадцать два евро." },
+    { "who": "you", "sr": "Za koliko dana stiže?", "ru": "За сколько дней дойдёт?" },
+    { "who": "them", "sr": "Obično za dvije nedjelje, ponekad duže.", "ru": "Обычно за две недели, иногда дольше." },
+    { "who": "you", "sr": "Dobro, uzeću to. Mogu li karticom?", "ru": "Хорошо, беру. Можно картой?" },
+    { "who": "them", "sr": "Naravno. Evo vam potvrda.", "ru": "Конечно. Вот вам квитанция." },
+    { "who": "you", "sr": "Hvala vam puno. Doviđenja.", "ru": "Большое спасибо. До свидания." }
+  ]
+}

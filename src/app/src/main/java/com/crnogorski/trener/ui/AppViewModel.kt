@@ -238,10 +238,28 @@ data class StoryState(
     val revealed: Boolean = false,
     /** Ответ ушёл к модели и мы ждём вердикт. */
     val checking: Boolean = false,
+    /** Как зовут собеседника в диалоге. У обычной истории пусто. */
+    val speaker: String = "",
     val glossaryMe: Map<String, String> = emptyMap()
 ) {
+    val current: StoryChunk? get() = chunks.getOrNull(index)
+
     /** Текст, который в этом режиме надо произнести прямо сейчас. */
-    val target: String get() = chunks.getOrNull(index)?.sr.orEmpty()
+    val target: String get() = current?.sr.orEmpty()
+
+    /** Диалог, а не сплошной текст: у отрезков размечены роли. */
+    val dialog: Boolean get() = chunks.any { it.who.isNotBlank() }
+
+    /**
+     * Сейчас говорит собеседник, и отвечать не надо — надо понять.
+     *
+     * Только при переводе вслух. При чтении реплики собеседника читают наравне
+     * со своими (это репетиция диалога целиком), на слух — повторяют за
+     * голосом; разводить их там не на что. А вот перевод — единственный режим,
+     * где роль меняет саму задачу: свою реплику надо сказать по-черногорски,
+     * а чужую просто разобрать на слух.
+     */
+    val theirTurn: Boolean get() = mode == StoryMode.Translate && current?.theirs == true
 }
 
 /** Что показывает экран задания прямо сейчас. */
@@ -1187,6 +1205,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 id = story.id,
                 title = story.title,
                 chunks = story.chunks,
+                speaker = story.speaker,
                 mode = mode,
                 index = if (done >= story.chunks.size) 0 else done,
                 glossaryMe = runCatching { repo.glossary().me }.getOrDefault(emptyMap())

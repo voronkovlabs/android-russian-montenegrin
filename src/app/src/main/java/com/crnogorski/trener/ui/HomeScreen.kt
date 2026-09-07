@@ -430,12 +430,24 @@ private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
             .padding(horizontal = 16.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            card.ref.title,
-            style = MaterialTheme.typography.bodyLarge,
-            color = Paper,
-            modifier = Modifier.weight(1f)
-        )
+        Column(Modifier.weight(1f)) {
+            Text(
+                card.ref.title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = Paper
+            )
+            // Диалог помечен словом, а не только иконками внутри: в списке из
+            // трёх десятков строк надо видеть, что открываешь, до того как
+            // открыл.
+            if (card.ref.dialog) {
+                Spacer(Modifier.height(2.dp))
+                Text(
+                    "Диалог",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Accent
+                )
+            }
+        }
         Text(
             when {
                 card.finished -> when (card.mode) {

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -21,6 +22,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.outlined.Face
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -79,6 +82,15 @@ private const val AUTO_START_DELAY_MS = 500L
 
 /** Сколько элементов списка идёт до первого отрезка: заголовок истории. */
 private const val HEADER_ITEMS = 1
+
+/**
+ * Отступ у ваших реплик в диалоге.
+ *
+ * Иконка и подпись говорят, кто говорит, но читаются они по одной строке за
+ * раз. Ступенька видна всем куском сразу — по ней ясно, что идёт разговор, ещё
+ * до того, как прочитана хоть одна реплика.
+ */
+private val DIALOG_INDENT = 28.dp
 
 /**
  * Сколько места оставляем над читаемой строкой.
@@ -163,9 +175,16 @@ fun StoryScreen(
 
     val reading = state.mode == StoryMode.Read
 
+    // Говорит собеседник: отвечать не надо, надо разобрать на слух.
+    val theirTurn = state.theirTurn
+
+    // Перевод чужой реплики открывают по нажатию — как перевод в обычной
+    // истории: он тут награда за понимание, а не подстрочник.
+    var translated by remember(state.id, state.index) { mutableStateOf(false) }
+
     // Текст ещё закрыт: на слух — прочерками, при переводе — вовсе не показан.
     val hearing = state.mode == StoryMode.Listen && !state.revealed
-    val translating = state.mode == StoryMode.Translate && !state.revealed
+    val translating = state.mode == StoryMode.Translate && !state.revealed && !theirTurn
 
     fun start() {
         listening = true
@@ -229,7 +248,7 @@ fun StoryScreen(
         silent = 0
         speaking = true
         status = ""
-        speaker.speak(state.target, slow = slow) {
+        speaker.speak(state.target, slow = slow, low = state.current?.theirs == true) {
             speaking = false
             start()
         }
@@ -262,19 +281,38 @@ fun StoryScreen(
         listener.cancel()
         listening = false
         paused = true
-        speaker.speak(state.target, slow = slow)
+        speaker.speak(state.target, slow = slow, low = state.current?.theirs == true)
+    }
+
+    /**
+     * Проиграть чужую реплику.
+     *
+     * Отдельно от [sample], потому что тут нечего прерывать и незачем ставить
+     * `paused`: микрофон в чужой ход не включается вовсе.
+     */
+    fun playTheirs(slow: Boolean = false) {
+        speaking = true
+        speaker.speak(state.target, slow = slow, low = true) { speaking = false }
     }
 
     val done = state.index >= state.chunks.size
     // Само идёт, только пока всё гладко, и не при переводе: его надо сперва
     // придумать, и отсчёт тишины начался бы раньше первого слова.
-    val auto = (reading || hearing) && granted && !paused && !stalled &&
+    val auto = (reading || hearing) && !theirTurn && granted && !paused && !stalled &&
         state.attempts == 0 && !done
 
     // Ключи без paused и stalled: их снимает нажатие кнопки, которое и так зовёт
     // start(). Будь они ключами, эффект запустил бы распознавание вторым.
     LaunchedEffect(state.id, state.index, granted) {
-        if (!granted || paused || stalled || state.attempts > 0 || done) return@LaunchedEffect
+        if (done) return@LaunchedEffect
+        // Чужая реплика звучит сама и без разрешения на микрофон: слушать её
+        // можно и не отвечая.
+        if (theirTurn) {
+            delay(AUTO_START_DELAY_MS)
+            playTheirs()
+            return@LaunchedEffect
+        }
+        if (!granted || paused || stalled || state.attempts > 0) return@LaunchedEffect
         when {
             reading -> {
                 delay(AUTO_START_DELAY_MS)
@@ -357,6 +395,10 @@ fun StoryScreen(
             }
 
             itemsIndexed(state.chunks) { i, chunk ->
+              Column(Modifier.padding(start = if (chunk.mine) DIALOG_INDENT else 0.dp)) {
+                if (chunk.who.isNotBlank()) {
+                    RoleMark(theirs = chunk.theirs, speaker = state.speaker)
+                }
                 when {
                     i < state.index -> {
                         // Пройденное: текст приглушён, перевод под ним — он и есть награда.
@@ -377,7 +419,7 @@ fun StoryScreen(
                         // Русская фраза при переводе — само задание, и остаётся
                         // на месте, даже когда ниже открылся черногорский текст.
                         // Подсказки по словам ей не нужны: русский и так родной.
-                        if (state.mode == StoryMode.Translate) {
+                        if (state.mode == StoryMode.Translate && !theirTurn) {
                             Text(
                                 chunk.ru,
                                 style = MaterialTheme.typography.headlineSmall,
@@ -387,6 +429,15 @@ fun StoryScreen(
                         }
 
                         when {
+                            theirTurn -> TheirLineControls(
+                                speaking = speaking,
+                                translated = translated,
+                                translation = chunk.ru,
+                                onReplay = ::playTheirs,
+                                onTranslate = { translated = true },
+                                onNext = onSkipChunk
+                            )
+
                             translating -> TranslateControls(
                                 listening = listening,
                                 checking = state.checking,
@@ -465,10 +516,13 @@ fun StoryScreen(
                         // черногорский текст был бы ответом и при переводе,
                         // и на слух.
                         Text(
-                            when (state.mode) {
-                                StoryMode.Read -> chunk.sr
-                                StoryMode.Listen -> mask(chunk.sr)
-                                StoryMode.Translate -> chunk.ru
+                            when {
+                                state.mode == StoryMode.Read -> chunk.sr
+                                state.mode == StoryMode.Listen -> mask(chunk.sr)
+                                // Русский у чужой реплики — тоже ответ: её надо
+                                // разобрать на слух, а не прочитать заранее.
+                                chunk.theirs -> "…"
+                                else -> chunk.ru
                             },
                             style = MaterialTheme.typography.bodyLarge,
                             color = Muted.copy(alpha = 0.45f)
@@ -476,6 +530,7 @@ fun StoryScreen(
                         Spacer(Modifier.height(10.dp))
                     }
                 }
+              }
             }
 
             // Хвост есть всегда, даже пустой: иначе прокрутка к последнему
@@ -507,6 +562,68 @@ fun StoryScreen(
             }
         }
     }
+}
+
+/**
+ * Кто говорит: иконка, подпись и — для ваших реплик — отступ.
+ *
+ * Подпись берётся из файла («Продавщица», «Врач»), потому что иконка говорит
+ * только «их двое», а кто именно, важно: диалог у врача от диалога на почте
+ * иначе не отличить, глядя на середину списка.
+ */
+@Composable
+private fun RoleMark(theirs: Boolean, speaker: String) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            if (theirs) Icons.Outlined.Person else Icons.Outlined.Face,
+            contentDescription = null,
+            tint = if (theirs) Accent else Muted,
+            modifier = Modifier.size(15.dp)
+        )
+        Spacer(Modifier.width(6.dp))
+        Text(
+            if (theirs) speaker.ifBlank { "Собеседник" } else "Вы",
+            style = MaterialTheme.typography.labelSmall,
+            color = if (theirs) Accent else Muted
+        )
+    }
+    Spacer(Modifier.height(5.dp))
+}
+
+/**
+ * Чужая реплика при переводе вслух: её надо разобрать, а не перевести.
+ *
+ * Микрофона тут нет намеренно. Повторять за собеседником — это занятие «на
+ * слух», и оно уже есть отдельно; здесь реплика нужна как условие задачи —
+ * поняли, что вам сказали, и отвечаете следующим отрезком. Перевод открывается
+ * по нажатию, как в историях: сперва разобрать, потом сверить.
+ */
+@Composable
+private fun TheirLineControls(
+    speaking: Boolean,
+    translated: Boolean,
+    translation: String,
+    onReplay: (Boolean) -> Unit,
+    onTranslate: () -> Unit,
+    onNext: () -> Unit
+) {
+    Text(
+        if (speaking) "Говорит…" else "Слушай, что вам сказали",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+    Spacer(Modifier.height(14.dp))
+    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        SmallAction("Ещё раз") { onReplay(false) }
+        SmallAction("Медленнее") { onReplay(true) }
+        if (!translated) SmallAction("Перевод") { onTranslate() }
+    }
+    if (translated) {
+        Spacer(Modifier.height(12.dp))
+        Text(translation, style = MaterialTheme.typography.bodyMedium, color = Paper)
+    }
+    Spacer(Modifier.height(16.dp))
+    PrimaryButton("Дальше", onClick = onNext)
 }
 
 /**

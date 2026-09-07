@@ -1,0 +1,20 @@
+{
+  "id": "d03",
+  "title": "U kafiću",
+  "note": "Заказ в кафе. Уроки 3 и 5.",
+  "speaker": "Konobar",
+  "chunks": [
+    { "who": "them", "sr": "Dobar dan, izvolite.", "ru": "Добрый день, слушаю." },
+    { "who": "you", "sr": "Jednu kafu, molim vas.", "ru": "Один кофе, пожалуйста." },
+    { "who": "them", "sr": "Espreso ili sa mlijekom?", "ru": "Эспрессо или с молоком?" },
+    { "who": "you", "sr": "Sa mlijekom, i jednu vodu.", "ru": "С молоком, и одну воду." },
+    { "who": "them", "sr": "Vodu sa gasom ili bez?", "ru": "Воду с газом или без?" },
+    { "who": "you", "sr": "Bez gasa, molim.", "ru": "Без газа, пожалуйста." },
+    { "who": "them", "sr": "Želite li nešto da pojedete?", "ru": "Хотите что-нибудь поесть?" },
+    { "who": "you", "sr": "Ne, hvala. Samo piće.", "ru": "Нет, спасибо. Только напитки." },
+    { "who": "them", "sr": "Odmah donosim.", "ru": "Сейчас принесу." },
+    { "who": "you", "sr": "Račun, molim vas.", "ru": "Счёт, пожалуйста." },
+    { "who": "them", "sr": "Tri evra i pedeset.", "ru": "Три евро пятьдесят." },
+    { "who": "you", "sr": "Izvolite. Hvala i doviđenja.", "ru": "Вот, пожалуйста. Спасибо и до свидания." }
+  ]
+}

@@ -17,6 +17,15 @@
     {"id": "s15", "title": "Poklon za prijatelja", "file": "s15.json", "level": 5, "chunks": 11},
     {"id": "s16", "title": "Molim te, pomozi", "file": "s16.json", "level": 5, "chunks": 11},
     {"id": "s17", "title": "Vrijeme i odjeća", "file": "s17.json", "level": 5, "chunks": 11},
-    {"id": "s18", "title": "Posao i novac", "file": "s18.json", "level": 5, "chunks": 11}
+    {"id": "s18", "title": "Posao i novac", "file": "s18.json", "level": 5, "chunks": 11},
+    {"id": "d01", "title": "Na pošti", "file": "d01.json", "level": 4, "chunks": 12, "dialog": true},
+    {"id": "d02", "title": "U ordinaciji", "file": "d02.json", "level": 3, "chunks": 12, "dialog": true},
+    {"id": "d03", "title": "U kafiću", "file": "d03.json", "level": 2, "chunks": 12, "dialog": true},
+    {"id": "d04", "title": "Stan na izdavanje", "file": "d04.json", "level": 4, "chunks": 12, "dialog": true},
+    {"id": "d05", "title": "U servisu", "file": "d05.json", "level": 5, "chunks": 12, "dialog": true},
+    {"id": "d06", "title": "Komšija zvoni", "file": "d06.json", "level": 4, "chunks": 12, "dialog": true},
+    {"id": "d07", "title": "U banci", "file": "d07.json", "level": 5, "chunks": 12, "dialog": true},
+    {"id": "d08", "title": "Kod prodavca voća", "file": "d08.json", "level": 3, "chunks": 12, "dialog": true},
+    {"id": "d09", "title": "Kupujem kartu", "file": "d09.json", "level": 3, "chunks": 12, "dialog": true}
   ]
 }
