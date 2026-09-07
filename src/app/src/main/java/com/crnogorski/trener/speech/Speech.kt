@@ -1,6 +1,7 @@
 package com.crnogorski.trener.speech
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.media.AudioManager
 import android.content.Intent
 import android.os.Bundle
@@ -205,10 +206,37 @@ class Listener(private val context: Context) {
      */
     private var session = 0
 
-    /** Поток заглушён нами — снять надо ровно столько раз, сколько поставили. */
-    private var muted = false
+    /**
+     * Потоки, которые мы заглушили. Снять надо ровно их: до каких дотянулись,
+     * заранее неизвестно.
+     */
+    private val mutedStreams = mutableListOf<Int>()
+
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
     fun isAvailable(): Boolean = SpeechRecognizer.isRecognitionAvailable(context)
+
+    /** Есть ли на телефоне распознавание, работающее без сети. */
+    fun onDeviceAvailable(): Boolean = SpeechRecognizer.isOnDeviceRecognitionAvailable(context)
+
+    /**
+     * Просить ли распознавание на устройстве.
+     *
+     * Настройка, а не наш выбор: у Google под sr-RS есть отдельная модель, но
+     * установлена ли она локально — от телефона к телефону по-разному. Если
+     * локальной нет, заход падает с «язык недоступен», и вернуть галочку надо
+     * человеку, а не гадать за него. По умолчанию выключено: нынешний путь
+     * работает, а этот проверяется.
+     */
+    var onDevice: Boolean
+        get() = prefs.getBoolean(KEY_ON_DEVICE, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_ON_DEVICE, value).apply()
+            // Движок переключается только на новом объекте.
+            stop()
+        }
+
 
     /**
      * Один заход распознавания. [onResult] получает лучшую гипотезу,
@@ -253,9 +281,27 @@ class Listener(private val context: Context) {
         if (id != session) return false
         session++
         main.removeCallbacksAndMessages(null)
-        unmute()
+        // Заглушку снимаем с задержкой: гудок конца записи движок играет уже
+        // после того, как отдал результат, и снятая сразу заглушка попадала бы
+        // ровно на него. Если за это время начался новый заход, не снимаем
+        // вовсе — сравнение с номером об этом и говорит.
+        val closed = session
+        main.postDelayed({ if (session == closed) unmute() }, MUTE_TAIL_MS)
         return true
     }
+
+    /**
+     * Распознаватель: на устройстве или обычный.
+     *
+     * Обычный сам решает, идти в сеть или нет. Локальный не ходит никогда —
+     * но и работает, только если языковая модель скачана.
+     */
+    private fun newRecognizer(): SpeechRecognizer =
+        if (onDevice && onDeviceAvailable()) {
+            SpeechRecognizer.createOnDeviceSpeechRecognizer(context)
+        } else {
+            SpeechRecognizer.createSpeechRecognizer(context)
+        }
 
     private fun begin(
         id: Int,
@@ -265,8 +311,7 @@ class Listener(private val context: Context) {
         onSilence: (() -> Unit)?,
         mayRetry: Boolean
     ) {
-        val sr = recognizer
-            ?: SpeechRecognizer.createSpeechRecognizer(context).also { recognizer = it }
+        val sr = recognizer ?: newRecognizer().also { recognizer = it }
 
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(
@@ -357,6 +402,7 @@ class Listener(private val context: Context) {
     fun cancel() {
         session++
         main.removeCallbacksAndMessages(null)
+        // Здесь снимаем сразу: слушать больше не собираемся, ждать гудка нечего.
         unmute()
         runCatching { recognizer?.cancel() }
     }
@@ -388,18 +434,26 @@ class Listener(private val context: Context) {
      * процессом систему снимает сама, когда процесс умирает.
      */
     private fun mute() {
-        if (muted) return
-        muted = runCatching {
-            audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0)
-        }.isSuccess
+        if (mutedStreams.isNotEmpty()) return
+        // Каким потоком движок играет гудки, не сказано нигде, и на разных
+        // прошивках он разный: одной музыки на HyperOS не хватило. Поэтому
+        // глушим всё, до чего дотягиваемся, и запоминаем что именно — снять
+        // надо ровно это. Звонок, уведомления и системные звуки Android даёт
+        // трогать только с доступом к «Не беспокоить»; без него попытка
+        // молча не проходит, и заглушённой остаётся одна музыка.
+        BEEP_STREAMS.forEach { stream ->
+            val ok = runCatching {
+                audio.adjustStreamVolume(stream, AudioManager.ADJUST_MUTE, 0)
+            }.isSuccess
+            if (ok) mutedStreams += stream
+        }
     }
 
     private fun unmute() {
-        if (!muted) return
-        muted = false
-        runCatching {
-            audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0)
+        mutedStreams.forEach { stream ->
+            runCatching { audio.adjustStreamVolume(stream, AudioManager.ADJUST_UNMUTE, 0) }
         }
+        mutedStreams.clear()
     }
 
     private companion object {
@@ -418,6 +472,31 @@ class Listener(private val context: Context) {
 
         /** Пауза перед повтором: пересозданному объекту нужно время на привязку. */
         const val RETRY_DELAY_MS = 300L
+
+        private const val PREFS = "crnogorski"
+        private const val KEY_ON_DEVICE = "speech_on_device"
+
+        /**
+         * Потоки, в которые движок может играть гудки записи.
+         *
+         * Порядок важен: музыку нам дают глушить всегда, остальное — только с
+         * доступом к «Не беспокоить». Первым идёт то, что сработает наверняка.
+         */
+        val BEEP_STREAMS = listOf(
+            AudioManager.STREAM_MUSIC,
+            AudioManager.STREAM_SYSTEM,
+            AudioManager.STREAM_NOTIFICATION,
+            AudioManager.STREAM_RING
+        )
+
+        /**
+         * Сколько держать заглушку после конца захода.
+         *
+         * Гудок конца записи приходит уже после результата: снятая сразу
+         * заглушка попадала бы ровно на него, и из двух гудков пропадал бы
+         * только первый.
+         */
+        const val MUTE_TAIL_MS = 600L
 
         /**
          * Через сколько считать, что движок не ответит уже никогда.

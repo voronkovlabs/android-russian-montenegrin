@@ -47,7 +47,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import android.app.TimePickerDialog
 import androidx.core.content.FileProvider
+import android.app.NotificationManager
+import android.provider.Settings
 import com.crnogorski.trener.data.Pace
+import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.data.ProgressStore
 import com.crnogorski.trener.speech.Speaker
@@ -383,6 +386,9 @@ fun SettingsScreen(
                 )
             }
 
+            Spacer(Modifier.height(20.dp))
+            RecognitionRow()
+
             Spacer(Modifier.height(36.dp))
             Text(
                 "Версия ${state.versionName} (${state.versionCode})",
@@ -447,6 +453,118 @@ private fun shareComplaints(context: Context, file: File) {
 }
 
 /** Одно число под подписью — плитка вроде той, что считает жалобы. */
+/**
+ * Распознавание речи: локальный движок и гудки записи.
+ *
+ * Обе настройки живут здесь, а не в модели, по той же причине, что и
+ * напоминание: их читает только `Listener`, и тащить их через `AppViewModel`
+ * значило бы связать половину экрана ради двух флагов.
+ *
+ * Строка про гудки — не кнопка, а объяснение. Гудки начала и конца записи
+ * играет системный движок, у `SpeechRecognizer` настройки на это нет вовсе, и
+ * единственное, что в нашей власти, — заглушить поток, в который он их шлёт.
+ * Музыку Android даёт глушить всегда; звонок, уведомления и системные звуки —
+ * только с доступом к «Не беспокоить». Поэтому если гудки слышны и после
+ * 1.28, значит они не в музыке, и выбор тут человека: дать доступ или терпеть.
+ */
+@Composable
+private fun RecognitionRow() {
+    val context = LocalContext.current
+    val listener = remember { Listener(context) }
+    val available = remember { runCatching { listener.onDeviceAvailable() }.getOrDefault(false) }
+    var onDevice by remember { mutableStateOf(listener.onDevice) }
+
+    val notifications = context.getSystemService(NotificationManager::class.java)
+    var dndGranted by remember {
+        mutableStateOf(
+            runCatching { notifications.isNotificationPolicyAccessGranted }.getOrDefault(false)
+        )
+    }
+
+    Text("РАСПОЗНАВАНИЕ", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(12.dp))
+
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .clickable(enabled = available) {
+                onDevice = !onDevice
+                listener.onDevice = onDevice
+            }
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = onDevice,
+            enabled = available,
+            onCheckedChange = {
+                onDevice = it
+                listener.onDevice = it
+            },
+            colors = CheckboxDefaults.colors(
+                checkedColor = Accent, checkmarkColor = Ink, uncheckedColor = Muted
+            )
+        )
+        Spacer(Modifier.width(8.dp))
+        Text(
+            "Распознавать без сети",
+            style = MaterialTheme.typography.titleMedium,
+            color = if (available) Paper else Muted,
+            modifier = Modifier.weight(1f)
+        )
+    }
+    Spacer(Modifier.height(6.dp))
+    Text(
+        if (available) {
+            "Просит у Google локальную модель вместо облачной. Если модель sr-RS не " +
+                "скачана, распознавание начнёт отвечать «язык недоступен» — тогда сними " +
+                "галочку обратно. Иногда заодно пропадают гудки записи: их играет " +
+                "облачный движок."
+        } else {
+            "Этот телефон локального распознавания не предлагает."
+        },
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+
+    Spacer(Modifier.height(18.dp))
+    Text(
+        "Гудки записи",
+        style = MaterialTheme.typography.titleMedium,
+        color = Paper
+    )
+    Spacer(Modifier.height(6.dp))
+    Text(
+        if (dndGranted) {
+            "Доступ есть — на время записи глушатся музыка, системные звуки, " +
+                "уведомления и звонок. Если гудки всё равно слышны, они не в этих потоках, " +
+                "и сделать с ними нечего."
+        } else {
+            "Их играет системный движок, отключить их нечем — можно только заглушить " +
+                "поток, в который он их шлёт. Музыку мы глушим и так, но если гудки " +
+                "остались, значит они в системных звуках, а туда Android пускает только " +
+                "с доступом к «Не беспокоить». Доступ нужен ровно на секунды записи."
+        },
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+    if (!dndGranted) {
+        Spacer(Modifier.height(10.dp))
+        SecondaryAction(text = "Дать доступ к «Не беспокоить»") {
+            runCatching {
+                context.startActivity(
+                    android.content.Intent(
+                        Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
+                    )
+                )
+            }
+            dndGranted =
+                runCatching { notifications.isNotificationPolicyAccessGranted }.getOrDefault(false)
+        }
+    }
+}
+
 /** Шаг настройки длины занятия: пять минут. Минута туда-сюда ничего не решает. */
 private const val MINUTE_STEP = 5
 
