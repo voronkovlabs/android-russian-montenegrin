@@ -20,6 +20,7 @@ import com.crnogorski.trener.data.LessonRef
 import com.crnogorski.trener.data.LessonRepository
 import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.NOTE_REASON
+import com.crnogorski.trener.data.Pace
 import com.crnogorski.trener.data.ProgressStore
 import com.crnogorski.trener.data.StoryChunk
 import com.crnogorski.trener.data.StoryMode
@@ -50,8 +51,15 @@ data class LessonCard(
     val score: String?
 )
 
-/** Вкладка главного экрана. Уроки и истории — разные занятия, мешать их в одном списке незачем. */
-enum class HomeTab { Lessons, Stories, Words }
+/**
+ * Вкладка главного экрана. Уроки и истории — разные занятия, мешать их в одном
+ * списке незачем.
+ *
+ * [Today] стоит первой и открывается по умолчанию: смысл ежедневного задания
+ * в том, чтобы не выбирать. Остальные три — для тех дней, когда выбрать
+ * хочется.
+ */
+enum class HomeTab { Today, Lessons, Stories, Words }
 
 /** Раздел главного экрана: заголовок и уроки под ним, в порядке из `index.json`. */
 data class LessonGroup(
@@ -92,12 +100,63 @@ data class VocabTracks(
     val toNative: VocabTrack = VocabTrack()
 )
 
+/**
+ * Отрезки истории, предложенные на сегодня.
+ *
+ * Истории в общую сессию не подмешиваются: у них свой экран, свой цикл
+ * «послушал — сказал — открылся перевод» и требование говорить вслух. Поэтому
+ * они идут хвостом — отдельным шагом после упражнений. Заодно это удобно:
+ * в транспорте или при людях хвост просто пропускают, а занятие всё равно
+ * считается сделанным.
+ */
+data class StoryStep(
+    val id: String,
+    val title: String,
+    val mode: StoryMode,
+    /** Сколько отрезков предлагаем сегодня. */
+    val chunks: Int,
+    /** Сколько осталось в истории всего. */
+    val left: Int
+)
+
+/**
+ * Ежедневное задание — то, что делают, когда не хотят выбирать.
+ *
+ * Ограничено минутами, а не числом упражнений ([minutes]): двадцать заданий на
+ * выбор варианта и двадцать на чтение вслух — это разное время, и обещать
+ * «двадцать заданий в день» значит обещать неизвестно что. Сколько какой тип
+ * занимает, приложение замеряет само (`Pace`).
+ *
+ * [spent] — сколько минут уже потрачено сегодня, на любые занятия, не только
+ * на ежедневное. [estimate] — во сколько минут оценено набранное.
+ */
+data class DailyPlan(
+    val items: List<SessionItem> = emptyList(),
+    val review: Int = 0,
+    val words: Int = 0,
+    val lesson: Int = 0,
+    val lessonTitle: String = "",
+    val story: StoryStep? = null,
+    val minutes: Int = Pace.DEFAULT_MINUTES,
+    val spent: Int = 0,
+    val estimate: Int = 0,
+    /** Сколько секунд бюджета осталось. Не минут: округление врало бы у нуля. */
+    val left: Int = 0
+) {
+    /** Бюджет на сегодня выбран — можно и дальше, но уже сверх нормы. */
+    val full: Boolean get() = left <= 0
+
+    /** Брать нечего: и курс, и словарь на сегодня исчерпаны. */
+    val empty: Boolean get() = items.isEmpty() && story == null
+}
+
 data class HomeState(
     val groups: List<LessonGroup> = emptyList(),
     val storyGroups: List<StoryGroup> = emptyList(),
     val dueCount: Int = 0,
     val vocab: VocabTracks = VocabTracks(),
-    val tab: HomeTab = HomeTab.Lessons,
+    val daily: DailyPlan = DailyPlan(),
+    val tab: HomeTab = HomeTab.Today,
     /** Заголовки развёрнутых разделов. По умолчанию свёрнуты все. */
     val expandedGroups: Set<String> = emptySet(),
     val loading: Boolean = true,
@@ -118,6 +177,8 @@ data class SettingsState(
     val progressLastSave: String? = null,
     /** Есть ли на телефоне копия, из которой можно восстановиться. */
     val progressLocalExists: Boolean = false,
+    /** Сколько минут в день назначено ежедневному заданию. */
+    val dailyMinutes: Int = Pace.DEFAULT_MINUTES,
     /** Помнить ли ответы, засчитанные Claude. По умолчанию да. */
     val cacheEnabled: Boolean = true,
     /** Сколько ответов уже запомнено. */
@@ -217,6 +278,20 @@ data class SessionState(
      * же считается полноценной — см. `Scheduler.practice`.
      */
     val practice: Boolean = false,
+    /**
+     * Собрано ежедневным заданием.
+     *
+     * Отличается от повторения тем, что может вводить новые уроки порциями, —
+     * а значит на этой сессии урок может закончиться, и запись о нём надо
+     * сделать (см. [AppViewModel.finish]).
+     */
+    val daily: Boolean = false,
+    /**
+     * Когда показали текущее задание. По разнице со временем вердикта
+     * замеряется темп — из него считается, сколько заданий влезает в
+     * пятнадцать минут (`Pace`).
+     */
+    val shownAt: Long = 0L,
     val finished: Boolean = false,
     /** На текущее задание уже пожаловались — второй раз не предлагаем. */
     val complaintFiled: Boolean = false,
@@ -258,6 +333,44 @@ private const val NEW_WORDS_PER_DAY = 10
 private const val LEARNED_REPS = 2
 
 /**
+ * По скольку заданий вводить новый урок в ежедневном задании.
+ *
+ * Урок целиком — это одиннадцать заданий, то есть почти всё занятие, и это
+ * блок: один материал подряд. Интерливинг (перемешивание похожих тем) на
+ * отложенной проверке выигрывает у блоков, хотя во время самой тренировки
+ * ощущается хуже — беглость ниже, ошибок больше. Порция в четыре задания
+ * растягивает урок на два-три дня и оставляет место повторению и словам.
+ */
+private const val LESSON_PORTION = 4
+
+/**
+ * Как делится дневной бюджет между источниками.
+ *
+ * Доли, а не строгий приоритет. Строгий приоритет («сперва весь долг, потом
+ * новое») правилен для одного словаря, но здесь источников четыре, и при
+ * накопившемся долге повторение съедало бы день целиком месяцами: курс не
+ * двигался бы вовсе. Доли гарантируют, что каждый день сдвигается всё
+ * понемногу.
+ *
+ * Неизрасходованная доля не пропадает: она переливается следующему источнику
+ * вторым проходом. Поэтому в день, когда повторять нечего, занятие всё равно
+ * набирается полным.
+ */
+/**
+ * Сколько просроченных карточек рассматривать при сборке.
+ *
+ * Не потолок занятия — потолок задаёт время. Это ограничение на выборку из
+ * базы: в пятнадцать минут больше полусотни заданий не поместится никогда,
+ * а разбирать ради этого весь накопившийся долг незачем.
+ */
+private const val DAILY_POOL = 60
+
+private const val STORY_SHARE = 0.10
+private const val LESSON_SHARE = 0.22
+private const val REVIEW_SHARE = 0.45
+private const val WORD_SHARE = 0.33
+
+/**
  * После скольких неудач подряд показываем черногорский текст отрезка.
  *
  * И при переводе, и на слух: вспомнить или расслышать с четвёртого раза уже не
@@ -276,6 +389,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val progress = ProgressStore(app, dao)
     private val cache = VerdictCache(app)
     private val vocabRepo = VocabRepository(app)
+    private val pace = Pace(app)
 
     /** Последний отправленный ответ — попадает в жалобу как есть. */
     private var lastAnswer: String = ""
@@ -306,7 +420,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * HomeState пересобирается целиком после каждого урока, и то, что человек
      * открыл руками, схлопывалось бы у него на глазах при каждом возвращении.
      */
-    private var tab: HomeTab = HomeTab.Lessons
+    private var tab: HomeTab = HomeTab.Today
     private var expanded: Set<String> = emptySet()
 
     private val _session = MutableStateFlow<SessionState?>(null)
@@ -317,6 +431,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _story = MutableStateFlow<StoryState?>(null)
     val story: StateFlow<StoryState?> = _story.asStateFlow()
+
+    /**
+     * Когда показали текущий отрезок истории.
+     *
+     * Отдельно от [SessionState.shownAt]: у историй свой экран и своё
+     * состояние. Отсчёт сбрасывается на каждой попытке, а не только на удачной,
+     * — неудачная попытка это тоже потраченная минута.
+     */
+    private var storyClock: Long = 0L
 
     /** Короткое подтверждение поверх любого экрана — показывается и гасится в MainActivity. */
     private val _notice = MutableStateFlow<String?>(null)
@@ -371,6 +494,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     },
                     dueCount = dao.dueCount(System.currentTimeMillis(), VocabRepository.LESSON_ID),
                     vocab = vocabSummary(),
+                    daily = buildDaily(),
                     loading = false
                 )
             } catch (e: Exception) {
@@ -389,6 +513,254 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         _home.value = _home.value.copy(expandedGroups = expanded)
     }
 
+    // --- Ежедневное задание ---
+
+    /**
+     * Кандидат в занятие: задание и во сколько секунд оно оценено.
+     *
+     * Оценка нужна до того, как задание показано: набор режется по времени,
+     * а не по числу упражнений.
+     */
+    private class Cand(val item: SessionItem, val seconds: Double)
+
+    /**
+     * Ежедневное задание: что делать сегодня, если открыть и не выбирать.
+     *
+     * Ничего не записывает: плашка на главном пересобирается после каждого
+     * занятия, и если бы сборка отмечала взятые слова, дневная норма выгорала
+     * бы от одного разглядывания экрана. Отмечает [startDaily], по готовому
+     * набору.
+     *
+     * [extra] — «ещё столько же»: бюджет считается от нуля, а не от остатка.
+     * Запрещать заниматься сверх нормы незачем, но и молча продолжать после
+     * пятнадцати минут неправильно — это уже другое решение, и принимает его
+     * человек.
+     */
+    private suspend fun buildDaily(extra: Boolean = false): DailyPlan {
+        val minutes = pace.minutes
+        val spent = (pace.spentToday() + 30) / 60
+        val plan = DailyPlan(minutes = minutes, spent = spent, left = pace.leftToday())
+        val budget = (if (extra) minutes * 60 else pace.leftToday()).toDouble()
+        if (budget <= 0.0) return plan
+
+        val now = System.currentTimeMillis()
+        // Без сети свободные переводы не проверить. Не блокируем всё занятие,
+        // как это делает урок, а просто не берём их: ежедневное задание должно
+        // собираться в метро.
+        val online = isOnline()
+        fun ok(ex: Exercise) = online || !ex.needsModelCheck
+
+        // --- кандидаты ---
+        val portion = nextPortion()
+        val lessonCands = portion?.second.orEmpty().filter(::ok).map {
+            Cand(SessionItem(portion!!.first.id, it), pace.seconds(it.typeName))
+        }
+
+        val due = dao.dueCards(now, DAILY_POOL, VocabRepository.LESSON_ID)
+        val known = repo.exercisesIn(due.map { it.lessonId })
+        val reviewCands = due.mapNotNull { card ->
+            known[card.exerciseId]
+                ?.takeIf { ok(it.second) }
+                ?.let { (lesson, ex) -> Cand(SessionItem(lesson, ex), pace.seconds(ex.typeName)) }
+        }
+
+        val wordCands = dailyWords(now)
+
+        // --- дележ бюджета ---
+        //
+        // Первый проход — каждому источнику своя доля, второй — остаток
+        // переливается тем, у кого материал ещё есть. Порядок второго прохода
+        // не тот же, что первого: лишнее время лучше отдать долгу и словам,
+        // чем вывалить сверх нормы ещё кусок нового урока.
+        val storyBudget = budget * STORY_SHARE
+        val body = budget - storyBudget
+        val lists = listOf(lessonCands, reviewCands, wordCands)
+        val caps = listOf(body * LESSON_SHARE, body * REVIEW_SHARE, body * WORD_SHARE)
+        val cursor = IntArray(3)
+        val picked = List(3) { mutableListOf<Cand>() }
+        var used = 0.0
+
+        fun drain(i: Int, cap: Double, count: Int = Int.MAX_VALUE) {
+            var own = picked[i].sumOf { it.seconds }
+            while (cursor[i] < lists[i].size && picked[i].size < count) {
+                val cand = lists[i][cursor[i]]
+                if (own + cand.seconds > cap || used + cand.seconds > body) break
+                cursor[i]++
+                own += cand.seconds
+                used += cand.seconds
+                picked[i] += cand
+            }
+        }
+
+        // Первый проход: каждому своя доля, урок — ещё и порцией по числу
+        // заданий, иначе доля времени пустила бы в занятие сразу весь урок.
+        drain(0, caps[0], LESSON_PORTION)
+        drain(1, caps[1])
+        drain(2, caps[2])
+
+        // Второй проход: остаток тем, у кого материал ещё есть. Порядок другой
+        // — лишнее время лучше отдать долгу и словам, чем вывалить сверх нормы
+        // ещё кусок нового урока.
+        //
+        // Ограничение порции тут снимается, и это не оплошность. В начале курса
+        // повторять нечего, а дневная норма слов — десять; без этого прохода
+        // первое занятие вышло бы трёхминутным при заказанных пятнадцати. Когда
+        // повторению и словам есть чем занять время, до урока остаток не
+        // доходит, и порция работает как задумано.
+        drain(1, body)
+        drain(2, body)
+        drain(0, body)
+
+        // --- порядок показа ---
+        //
+        // Новый материал идёт первым и подряд: задания урока опираются друг на
+        // друга — сперва объясняют правило, потом его спрашивают, — и
+        // перемешивать их между собой значит спрашивать раньше объяснения.
+        // Всё остальное чередуется по кругу: повторение, слово, повторение,
+        // слово. Это и есть интерливинг, ради которого затевалось.
+        val items = picked[0].map { it.item }.toMutableList()
+        var a = 0
+        var b = 0
+        while (a < picked[1].size || b < picked[2].size) {
+            if (a < picked[1].size) items += picked[1][a++].item
+            if (b < picked[2].size) items += picked[2][b++].item
+        }
+
+        // Истории — хвостом, отдельным шагом. Если упражнений не набралось
+        // вовсе, весь бюджет уходит им: занятие всё равно должно состояться.
+        val forStory = if (items.isEmpty()) budget else storyBudget
+        val story = nextStory(forStory, online)
+
+        return plan.copy(
+            items = items,
+            review = picked[1].size,
+            words = picked[2].size,
+            lesson = picked[0].size,
+            lessonTitle = portion?.first?.title.orEmpty(),
+            story = story,
+            // Только упражнения: у истории свой шаг и свой счёт отрезков.
+            estimate = if (items.isEmpty()) 0 else (used / 60 + 0.5).toInt().coerceAtLeast(1)
+        )
+    }
+
+    /**
+     * Следующая порция нового урока — первые несколько заданий первого урока,
+     * который ещё не заведён целиком.
+     *
+     * Пройденные насквозь уроки отсеиваются по записи в `lesson_progress` — без
+     * неё пришлось бы спрашивать карточки каждого урока курса при каждой
+     * пересборке главного экрана.
+     */
+    private suspend fun nextPortion(): Pair<LessonRef, List<Exercise>>? {
+        val finished = dao.lessonProgress().mapTo(mutableSetOf()) { it.lessonId }
+        for (ref in repo.index().lessons) {
+            if (ref.id in finished) continue
+            val have = dao.cardsIn(ref.id).mapTo(mutableSetOf()) { it.exerciseId }
+            val fresh = repo.lesson(ref.id).exercises.filter { it.id !in have }
+            // Отдаём урок целиком, а не порцией: порцию отрежет дележ бюджета.
+            // Здесь она была бы потолком, из-за которого в пустой день занятие
+            // не набралось бы.
+            if (fresh.isNotEmpty()) return ref to fresh
+        }
+        return null
+    }
+
+    /**
+     * Словарные кандидаты: сперва просроченное, потом открывшееся и новое.
+     *
+     * Оба направления вперемешку и в одной очереди: назвать слово и узнать
+     * слово — разное знание, но время у них общее, и делить его пополам
+     * искусственно незачем.
+     */
+    private suspend fun dailyWords(now: Long): List<Cand> {
+        val file = vocabRepo.load()
+        if (file.words.isEmpty()) return emptyList()
+        val all = dao.vocabCards(VocabRepository.LESSON_ID)
+        val byId = all.associateBy { it.exerciseId }
+        val words = file.words.associateBy { it.id }
+        val items = mutableListOf<SessionItem>()
+
+        all.filter { it.dueAt <= now }.sortedBy { it.dueAt }.forEach { card ->
+            vocabExercise(file, words, card.exerciseId, card.repetitions)?.let {
+                items += SessionItem(VocabRepository.LESSON_ID, it)
+            }
+        }
+        addFreshVocab(file, byId, items, back = false)
+        addFreshVocab(file, byId, items, back = true)
+        return items.map { Cand(it, pace.seconds(it.exercise.typeName)) }
+    }
+
+    /**
+     * Какую историю читать сегодня и сколько отрезков.
+     *
+     * Начатое вперёд недочитанного: возвращаться к брошенной истории через
+     * неделю значит перечитывать её с начала. Перевод вслух без сети не
+     * проверить, поэтому офлайн это занятие не предлагается.
+     */
+    private suspend fun nextStory(seconds: Double, online: Boolean): StoryStep? {
+        val chunks = (seconds / pace.seconds("story")).toInt()
+        if (chunks < 1) return null
+        val refs = repo.stories().stories
+        if (refs.isEmpty()) return null
+        val done = dao.storyProgress().associateBy { it.storyId to it.mode }
+
+        var started: StoryStep? = null
+        var fresh: StoryStep? = null
+        for (ref in refs) {
+            for (mode in StoryMode.entries) {
+                if (mode == StoryMode.Translate && !online) continue
+                val p = done[ref.id to mode.key]
+                val left = ref.chunks - (p?.chunksDone ?: 0)
+                if (left <= 0) continue
+                val step = StoryStep(ref.id, ref.title, mode, minOf(chunks, left), left)
+                if (p != null && started == null) started = step
+                if (p == null && fresh == null) fresh = step
+            }
+        }
+        return started ?: fresh
+    }
+
+    /** Запуск ежедневного задания. [extra] — ещё один заход сверх нормы. */
+    fun startDaily(extra: Boolean = false) {
+        viewModelScope.launch {
+            val plan = buildDaily(extra = extra)
+            if (plan.items.isEmpty()) {
+                _home.value = _home.value.copy(daily = plan)
+                return@launch
+            }
+            // Норма новых слов отмечается тем, что реально попало в занятие,
+            // а не тем, что попало в кандидаты: остальное обрезал бюджет.
+            val cards = dao.vocabCards(VocabRepository.LESSON_ID).associateBy { it.exerciseId }
+            vocabRepo.noteIntroduced(freshWords(plan.items, cards))
+
+            _session.value = SessionState(
+                title = "Сегодня",
+                note = dailyNote(plan),
+                items = plan.items,
+                // Как повторение: записи о прохождении урока делает не конец
+                // сессии, а закрытая порция — см. finish.
+                isReview = true,
+                daily = true,
+                shownAt = System.currentTimeMillis(),
+                glossary = repo.glossary()
+            )
+            guardNetwork(plan.items)
+        }
+    }
+
+    private fun dailyNote(plan: DailyPlan): String = buildList {
+        if (plan.lesson > 0) add("новое из «${plan.lessonTitle}» — ${plan.lesson}")
+        if (plan.review > 0) add("повторение — ${plan.review}")
+        if (plan.words > 0) add("слова — ${plan.words}")
+    }.joinToString(", ").replaceFirstChar { it.uppercase() }
+
+    /** Настройка длины занятия. */
+    fun setDailyMinutes(value: Int) {
+        pace.minutes = value
+        refreshHome()
+        _settings.value = _settings.value?.copy(dailyMinutes = pace.minutes)
+    }
+
     fun startLesson(lessonId: String) {
         viewModelScope.launch {
             val lesson = repo.lesson(lessonId)
@@ -397,6 +769,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 title = lesson.title,
                 note = lesson.note,
                 items = items,
+                shownAt = System.currentTimeMillis(),
                 glossary = repo.glossary()
             )
             guardNetwork(items)
@@ -494,6 +867,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     add(vocabExercise(file, words, card.exerciseId, card.repetitions))
                 }
                 addFreshVocab(file, byId, items, back)
+                vocabRepo.noteIntroduced(freshWords(items, byId))
             }
 
             if (items.isEmpty()) {
@@ -519,6 +893,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 // в копию прогресса.
                 isReview = true,
                 practice = practice,
+                shownAt = System.currentTimeMillis(),
                 glossary = repo.glossary()
             )
         }
@@ -588,8 +963,18 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             add(file.exerciseFor(word, VocabKind.Meaning))
             if (items.size > before) taken++
         }
-        vocabRepo.noteIntroduced(taken)
     }
+
+    /**
+     * Сколько новых слов в наборе.
+     *
+     * Новое — то, у чего карточки значения ещё не было. Считается по готовому
+     * набору, а не по ходу сборки: ежедневное задание режет набранное по
+     * времени, и отметить норму до обрезки значило бы потратить день на слова,
+     * которых человек не увидит.
+     */
+    private fun freshWords(items: List<SessionItem>, byId: Map<String, CardEntity>): Int =
+        items.count { isMeaning(it.exercise.id) && !byId.containsKey(it.exercise.id) }
 
     private fun vocabLearned(cards: Map<String, CardEntity>, id: String): Boolean =
         (cards[id]?.repetitions ?: 0) >= LEARNED_REPS
@@ -646,6 +1031,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 },
                 items = items,
                 isReview = true,
+                shownAt = System.currentTimeMillis(),
                 glossary = repo.glossary()
             )
             guardNetwork(items)
@@ -682,6 +1068,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 progressLocal = progress.localFile().absolutePath,
                 progressLastSave = progress.lastSave(),
                 progressLocalExists = progress.localFile().exists(),
+                dailyMinutes = pace.minutes,
                 cacheEnabled = cache.enabled,
                 cacheCount = cache.count(),
                 cacheHits = stats.hits,
@@ -768,6 +1155,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 return@launch
             }
             val done = dao.story(id, mode.key)?.chunksDone ?: 0
+            storyClock = System.currentTimeMillis()
             _story.value = StoryState(
                 id = story.id,
                 title = story.title,
@@ -780,6 +1168,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun closeStory() {
+        storyClock = 0L
         _story.value = null
         autoSaveProgress()
         refreshHome()
@@ -806,6 +1195,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun submitChunk(heard: String) {
         val state = _story.value ?: return
         val chunk = state.chunks.getOrNull(state.index) ?: return
+        if (storyClock > 0L) {
+            pace.spend((System.currentTimeMillis() - storyClock) / 1000.0)
+        }
+        storyClock = System.currentTimeMillis()
         if (state.mode == StoryMode.Translate && !state.revealed) {
             gradeTranslation(state, chunk, heard)
         } else {
@@ -1118,6 +1511,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun skipCurrent() {
         val state = _session.value ?: return
         val item = state.items[state.index]
+        noteTime(state, item.exercise, measure = false)
         lastAnswer = ""
 
         viewModelScope.launch {
@@ -1209,9 +1603,30 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         _session.value = _session.value?.copy(phase = Phase.Input)
     }
 
+    /**
+     * Замер времени на задание.
+     *
+     * Два разных числа из одного отсчёта. [Pace.record] уточняет, сколько
+     * занимает задание такого типа, — из этого считается, что влезает в
+     * пятнадцать минут. [Pace.spend] списывает время с дневного бюджета, и
+     * списывается оно в любом занятии, не только в ежедневном: урок, пройденный
+     * руками из вкладки, — это тоже потраченное на язык время.
+     *
+     * [measure] снимается при пропуске: пропустить можно мгновенно, и такие
+     * замеры сделали бы тип вдвое быстрее, чем он есть. Время при этом всё
+     * равно списывается — оно потрачено.
+     */
+    private fun noteTime(state: SessionState, ex: Exercise, measure: Boolean = true) {
+        if (state.shownAt <= 0L) return
+        val seconds = (System.currentTimeMillis() - state.shownAt) / 1000.0
+        if (measure) pace.record(ex.typeName, seconds)
+        pace.spend(seconds)
+    }
+
     private fun record(correct: Boolean) {
         val state = _session.value ?: return
         val item = state.items[state.index]
+        noteTime(state, item.exercise)
         viewModelScope.launch {
             val now = System.currentTimeMillis()
             val existing = dao.card(item.exercise.id)
@@ -1280,6 +1695,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             _session.value = state.copy(
                 index = state.index + 1,
                 phase = Phase.Input,
+                shownAt = System.currentTimeMillis(),
                 complaintFiled = false
             )
         }
@@ -1297,8 +1713,42 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     )
                 )
             }
+            if (state.daily) closePortionedLessons(state)
             _session.value = state.copy(finished = true)
             autoSaveProgress()
+        }
+    }
+
+    /**
+     * Отметить уроки, которые ежедневное задание довело до конца.
+     *
+     * Урок оно вводит порциями по несколько заданий, поэтому «пройден» тут не
+     * событие конца сессии, а факт: у всех заданий урока появились карточки.
+     * Без этой записи урок остался бы вечно незакрытым — и на главном экране,
+     * и для [nextPortion], который начал бы вводить его заново.
+     *
+     * В счёт идут задания, отвеченные верно хоть раз за всю жизнь карточки.
+     * Для урока, растянутого на три дня, «сколько угадал с первого раза»
+     * смысла уже не имеет — а вот сколько из него держится, имеет.
+     */
+    private suspend fun closePortionedLessons(state: SessionState) {
+        val touched = state.items.map { it.lessonId }
+            .distinct()
+            .filter { it != VocabRepository.LESSON_ID }
+        val finished = dao.lessonProgress().mapTo(mutableSetOf()) { it.lessonId }
+        for (lessonId in touched) {
+            if (lessonId in finished) continue
+            val total = repo.lesson(lessonId).exercises.size
+            val cards = dao.cardsIn(lessonId)
+            if (cards.size < total) continue
+            dao.upsertLesson(
+                LessonProgressEntity(
+                    lessonId = lessonId,
+                    completedAt = System.currentTimeMillis(),
+                    correct = cards.count { it.correct > 0 },
+                    total = total
+                )
+            )
         }
     }
 

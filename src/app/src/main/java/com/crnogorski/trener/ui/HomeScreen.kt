@@ -22,6 +22,7 @@ import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Style
+import androidx.compose.material.icons.outlined.WbSunny
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -43,6 +44,7 @@ import com.crnogorski.trener.data.StoryMode
 fun HomeScreen(
     state: HomeState,
     onLesson: (String) -> Unit,
+    onDaily: (Boolean) -> Unit,
     onReview: () -> Unit,
     onSettings: () -> Unit,
     onStory: (String, StoryMode) -> Unit,
@@ -67,6 +69,11 @@ fun HomeScreen(
         item {
             Spacer(Modifier.height(28.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
+                TabIcon(
+                    icon = Icons.Outlined.WbSunny,
+                    label = "Сегодня",
+                    selected = state.tab == HomeTab.Today
+                ) { onTab(HomeTab.Today) }
                 TabIcon(
                     icon = Icons.Outlined.School,
                     label = "Уроки",
@@ -97,6 +104,7 @@ fun HomeScreen(
             Spacer(Modifier.height(6.dp))
             Text(
                 when (state.tab) {
+                    HomeTab.Today -> "Сегодня"
                     HomeTab.Lessons -> "Курс"
                     HomeTab.Stories -> "Истории"
                     HomeTab.Words -> "Слова"
@@ -114,6 +122,20 @@ fun HomeScreen(
         }
 
         when (state.tab) {
+            HomeTab.Today -> {
+                item {
+                    DailyTile(state.daily, onStart = onDaily)
+                    val step = state.daily.story
+                    if (step != null) {
+                        Spacer(Modifier.height(12.dp))
+                        StoryStepTile(step, hasItems = state.daily.items.isNotEmpty()) {
+                            onStory(step.id, step.mode)
+                        }
+                    }
+                    Spacer(Modifier.height(4.dp))
+                }
+            }
+
             HomeTab.Lessons -> {
                 item {
                     ReviewCard(count = state.dueCount, onClick = onReview)
@@ -197,6 +219,125 @@ fun HomeScreen(
 
         item { Spacer(Modifier.height(32.dp)) }
     }
+}
+
+/**
+ * Ежедневное задание: одна кнопка вместо четырёх решений.
+ *
+ * Ограничение тут по времени, а не по числу заданий, поэтому крупно стоит
+ * оценка в минутах, а состав — строкой ниже. Число заданий тоже показано:
+ * оценка приблизительная, и без счётчика непонятно, надолго ли это.
+ *
+ * Когда норма на сегодня выбрана, плашка не запрещает продолжать, а
+ * предлагает ещё один заход тем же размером. Заниматься сверх нормы — не
+ * нарушение, но и не то, что случается само собой.
+ */
+@Composable
+private fun DailyTile(plan: DailyPlan, onStart: (Boolean) -> Unit) {
+    val ready = plan.items.isNotEmpty()
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(14.dp))
+            .background(if (ready) Surface2 else Surface1)
+            .clickable(enabled = ready) { onStart(plan.full) }
+            .padding(20.dp)
+    ) {
+        Text(
+            if (plan.full) "СВЕРХ НОРМЫ" else "ЗАНЯТИЕ",
+            style = MaterialTheme.typography.labelSmall,
+            color = if (ready) Accent else Muted
+        )
+        Spacer(Modifier.height(8.dp))
+        Text(
+            when {
+                ready -> "${plan.estimate} мин · ${plan.items.size} заданий"
+                plan.full -> "На сегодня всё"
+                else -> "Сегодня брать нечего"
+            },
+            style = MaterialTheme.typography.titleLarge,
+            color = Paper
+        )
+        Spacer(Modifier.height(8.dp))
+        Text(
+            when {
+                ready && plan.lesson > 0 -> buildString {
+                    append("Новое из «${plan.lessonTitle}» — ${plan.lesson}")
+                    if (plan.review > 0) append(", повторение — ${plan.review}")
+                    if (plan.words > 0) append(", слова — ${plan.words}")
+                }
+
+                ready -> buildString {
+                    if (plan.review > 0) append("Повторение — ${plan.review}")
+                    if (plan.review > 0 && plan.words > 0) append(", ")
+                    if (plan.words > 0) append(if (plan.review > 0) "слова — ${plan.words}" else "Слова — ${plan.words}")
+                }
+
+                plan.full -> "Позанимались ${plan.spent} мин из ${plan.minutes}."
+                else -> "Просроченного нет, дневная норма слов взята, курс введён до конца."
+            },
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+        if (plan.spent > 0 && ready) {
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "Сегодня уже ${plan.spent} мин из ${plan.minutes}.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+        }
+        if (plan.full) {
+            Spacer(Modifier.height(10.dp))
+            TextButton(onClick = { onStart(true) }) {
+                Text("Ещё ${plan.minutes} минут", color = Accent)
+            }
+        }
+    }
+}
+
+/**
+ * Хвост занятия: отрезки истории.
+ *
+ * Отдельной плашкой, а не заданием внутри сессии: у историй свой экран и своё
+ * требование — говорить вслух. При людях хвост пропускают, и занятие от этого
+ * не перестаёт быть сделанным.
+ */
+@Composable
+private fun StoryStepTile(step: StoryStep, hasItems: Boolean, onClick: () -> Unit) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(14.dp))
+            .background(Surface1)
+            .clickable(onClick = onClick)
+            .padding(18.dp)
+    ) {
+        Text(
+            if (hasItems) "ПОТОМ, ВСЛУХ" else "ВСЛУХ",
+            style = MaterialTheme.typography.labelSmall,
+            color = Accent
+        )
+        Spacer(Modifier.height(8.dp))
+        Text(
+            "«${step.title}» — ${step.chunks} ${chunkWord(step.chunks)}",
+            style = MaterialTheme.typography.titleMedium,
+            color = Paper
+        )
+        Spacer(Modifier.height(6.dp))
+        Text(
+            step.mode.title + ". Осталось в истории: ${step.left}.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+    }
+}
+
+private fun chunkWord(n: Int): String = when {
+    n % 100 in 11..14 -> "отрезков"
+    n % 10 == 1 -> "отрезок"
+    n % 10 in 2..4 -> "отрезка"
+    else -> "отрезков"
 }
 
 /**

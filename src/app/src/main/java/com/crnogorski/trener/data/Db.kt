@@ -113,6 +113,16 @@ interface AppDao {
     @Query("SELECT COUNT(*) FROM cards WHERE dueAt <= :now AND lessonId = :lesson")
     suspend fun vocabDue(now: Long, lesson: String): Int
 
+    /**
+     * Карточки одного урока.
+     *
+     * Нужно ежедневному заданию: урок вводится порциями, и чтобы понять, какая
+     * порция следующая, надо знать, какие задания уже заведены. Спрашивать
+     * ради этого всю таблицу нельзя — в ней тысячи словарных карточек.
+     */
+    @Query("SELECT * FROM cards WHERE lessonId = :lesson")
+    suspend fun cardsIn(lesson: String): List<CardEntity>
+
     @Query("SELECT * FROM cards WHERE exerciseId = :id")
     suspend fun card(id: String): CardEntity?
 

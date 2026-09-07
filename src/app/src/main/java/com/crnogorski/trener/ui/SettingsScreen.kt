@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -44,7 +45,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import android.app.TimePickerDialog
 import androidx.core.content.FileProvider
+import com.crnogorski.trener.data.Pace
+import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.data.ProgressStore
 import com.crnogorski.trener.speech.Speaker
 import kotlinx.coroutines.launch
@@ -67,6 +71,7 @@ fun SettingsScreen(
     onRestoreLocal: () -> Unit,
     onCache: (Boolean) -> Unit,
     onClearCache: () -> Unit,
+    onDailyMinutes: (Int) -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
@@ -119,6 +124,46 @@ fun SettingsScreen(
         ) {
             Text("НАСТРОЙКИ", style = MaterialTheme.typography.labelSmall, color = Accent)
             Spacer(Modifier.height(6.dp))
+            Text("Занятие", style = MaterialTheme.typography.displaySmall, color = Paper)
+            Spacer(Modifier.height(16.dp))
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    "Ежедневное задание",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Paper,
+                    modifier = Modifier.weight(1f)
+                )
+                TextButton(
+                    onClick = { onDailyMinutes(state.dailyMinutes - MINUTE_STEP) },
+                    enabled = state.dailyMinutes > Pace.MIN_MINUTES
+                ) { Text("−", color = Accent, style = MaterialTheme.typography.titleLarge) }
+                Text(
+                    "${state.dailyMinutes} мин",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Paper
+                )
+                TextButton(
+                    onClick = { onDailyMinutes(state.dailyMinutes + MINUTE_STEP) },
+                    enabled = state.dailyMinutes < Pace.MAX_MINUTES
+                ) { Text("+", color = Accent, style = MaterialTheme.typography.titleLarge) }
+            }
+
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "Пятнадцать минут каждый день дают больше, чем два часа раз в неделю: " +
+                    "решает регулярность, а не длина. Сколько заданий в эти минуты влезает, " +
+                    "приложение считает по замерам — сколько у тебя на самом деле уходит " +
+                    "на задание каждого типа. Время идёт с любого занятия, не только с " +
+                    "ежедневного.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+
+            Spacer(Modifier.height(18.dp))
+            ReminderRow()
+
+            Spacer(Modifier.height(28.dp))
             Text("Прогресс", style = MaterialTheme.typography.displaySmall, color = Paper)
             Spacer(Modifier.height(16.dp))
 
@@ -402,6 +447,90 @@ private fun shareComplaints(context: Context, file: File) {
 }
 
 /** Одно число под подписью — плитка вроде той, что считает жалобы. */
+/** Шаг настройки длины занятия: пять минут. Минута туда-сюда ничего не решает. */
+private const val MINUTE_STEP = 5
+
+/**
+ * Напоминание: галочка и время.
+ *
+ * Состояние читается из `Reminder` и живёт в самой строке, а не в
+ * [SettingsState]: настройка эта ни на что в приложении не влияет — её
+ * читает только будильник, — и тащить её через модель значило бы связать
+ * половину экрана ради двух чисел.
+ *
+ * Время выбирается системным диалогом, а не своим: у человека уже есть
+ * привычный ему двенадцати- или двадцатичетырёхчасовой выбор, и спорить с
+ * ней незачем.
+ */
+@Composable
+private fun ReminderRow() {
+    val context = LocalContext.current
+    var on by remember { mutableStateOf(Reminder.enabled(context)) }
+    var hour by remember { mutableIntStateOf(Reminder.hour(context)) }
+    var minute by remember { mutableIntStateOf(Reminder.minute(context)) }
+
+    fun apply(nextOn: Boolean, nextHour: Int, nextMinute: Int) {
+        on = nextOn
+        hour = nextHour
+        minute = nextMinute
+        Reminder.set(context, nextOn, nextHour, nextMinute)
+    }
+
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .clickable { apply(!on, hour, minute) }
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = on,
+            onCheckedChange = { apply(it, hour, minute) },
+            colors = CheckboxDefaults.colors(
+                checkedColor = Accent,
+                checkmarkColor = Ink,
+                uncheckedColor = Muted
+            )
+        )
+        Spacer(Modifier.width(8.dp))
+        Text(
+            "Напоминать",
+            style = MaterialTheme.typography.titleMedium,
+            color = Paper,
+            modifier = Modifier.weight(1f)
+        )
+        TextButton(
+            enabled = on,
+            onClick = {
+                TimePickerDialog(
+                    context,
+                    { _, h, m -> apply(true, h, m) },
+                    hour,
+                    minute,
+                    true
+                ).show()
+            }
+        ) {
+            Text(
+                "%02d:%02d".format(hour, minute),
+                style = MaterialTheme.typography.titleMedium,
+                color = if (on) Accent else Muted
+            )
+        }
+    }
+
+    Spacer(Modifier.height(6.dp))
+    Text(
+        "Вечер выбран не наугад: моторный навык — а произношение это он — лучше " +
+            "закрепляется при тренировке перед сном, и сон сразу после занятия держит " +
+            "выученное лучше, чем сон через день бодрствования. Если за день уже " +
+            "позанимались, напоминание не придёт.",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+}
+
 @Composable
 private fun StatBox(modifier: Modifier, label: String, value: Int, color: Color) {
     Column(
