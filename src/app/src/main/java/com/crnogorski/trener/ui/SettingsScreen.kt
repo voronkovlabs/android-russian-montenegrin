@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
@@ -290,10 +292,27 @@ fun SettingsScreen(
                 color = Muted
             )
 
+            Spacer(Modifier.height(18.dp))
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                StatBox(Modifier.weight(1f), "ИЗ ПАМЯТИ", state.cacheHits, Accent)
+                StatBox(Modifier.weight(1f), "СПРОШЕНО", state.cacheAsked, Paper)
+            }
+
+            Spacer(Modifier.height(10.dp))
+            Text(
+                "Считаются только показанные вердикты: сорванная проверка не в счёт. " +
+                    "Кнопка ниже обнуляет и счёт тоже.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+
             Spacer(Modifier.height(14.dp))
             SecondaryAction(
                 text = "Забыть запомненное (${state.cacheCount})",
-                enabled = state.cacheCount > 0,
+                enabled = state.cacheCount > 0 || state.cacheHits > 0 || state.cacheAsked > 0,
                 onClick = onClearCache
             )
 
@@ -380,6 +399,25 @@ private fun shareComplaints(context: Context, file: File) {
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
     context.startActivity(Intent.createChooser(send, "Отправить отчёт"))
+}
+
+/** Одно число под подписью — плитка вроде той, что считает жалобы. */
+@Composable
+private fun StatBox(modifier: Modifier, label: String, value: Int, color: Color) {
+    Column(
+        modifier
+            .clip(RoundedCornerShape(12.dp))
+            .background(Surface1)
+            .padding(16.dp)
+    ) {
+        Text(label, style = MaterialTheme.typography.labelSmall, color = Muted)
+        Spacer(Modifier.height(8.dp))
+        Text(
+            "$value",
+            style = MaterialTheme.typography.displaySmall,
+            color = if (value > 0) color else Muted
+        )
+    }
 }
 
 @Composable

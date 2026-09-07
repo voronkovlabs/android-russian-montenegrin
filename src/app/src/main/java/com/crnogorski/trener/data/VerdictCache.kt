@@ -42,6 +42,26 @@ data class AcceptedEntity(
     val savedAt: Long
 )
 
+/**
+ * Счётчики: сколько вердиктов пришло из памяти, а сколько спросили у модели.
+ *
+ * Строка ровно одна, [id] всегда 0 — это не таблица записей, а два числа,
+ * которым нужно место. Отдельная таблица, а не настройки, потому что считать
+ * их надо там же, где они меняются, и одной транзакцией.
+ *
+ * Счётчики тикают и при снятой галочке: выключенный кэш — тоже часть картины,
+ * тогда всё уходит в сеть, и это должно быть видно.
+ */
+@Entity(tableName = "stats")
+data class StatsEntity(
+    @PrimaryKey val id: Int = 0,
+    val hits: Int = 0,
+    val asked: Int = 0
+)
+
+/** Два числа для экрана настроек. */
+data class CacheStats(val hits: Int = 0, val asked: Int = 0)
+
 @Dao
 interface CacheDao {
 
@@ -60,6 +80,19 @@ interface CacheDao {
 
     @Query("SELECT COUNT(*) FROM accepted")
     suspend fun count(): Int
+
+    /** Заводит строку счётчиков, если её ещё нет. IGNORE — уже заведённую не трогает. */
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun seedStats(row: StatsEntity)
+
+    @Query("UPDATE stats SET hits = hits + :hits, asked = asked + :asked WHERE id = 0")
+    suspend fun bumpStats(hits: Int, asked: Int)
+
+    @Query("SELECT * FROM stats WHERE id = 0")
+    suspend fun stats(): StatsEntity?
+
+    @Query("UPDATE stats SET hits = 0, asked = 0 WHERE id = 0")
+    suspend fun resetStats()
 }
 
 /**
@@ -71,7 +104,7 @@ interface CacheDao {
  * уронить приложение на запуске вместе с единственными невосстановимыми данными.
  * Здесь же схема сносится разрушающе: потеря кэша стоит центы.
  */
-@Database(entities = [AcceptedEntity::class], version = 1, exportSchema = false)
+@Database(entities = [AcceptedEntity::class, StatsEntity::class], version = 2, exportSchema = false)
 abstract class CacheDb : RoomDatabase() {
     abstract fun dao(): CacheDao
 
@@ -127,6 +160,31 @@ class VerdictCache(context: Context) {
     suspend fun find(hash: String): AcceptedEntity? =
         if (enabled) dao.find(hash) else null
 
+    /**
+     * Вердикт достали из памяти.
+     *
+     * Считаем отдельным вызовом, а не внутри [find], чтобы обе половины счёта
+     * стояли рядом в [AppViewModel] и было видно, что складывается во что.
+     */
+    suspend fun countHit() = bump(hits = 1)
+
+    /**
+     * Вердикт пришлось спросить у модели.
+     *
+     * Считается только полученный вердикт: сорванная проверка (нет сети, сервер
+     * ответил ошибкой) вердиктом не стала и в счёт не идёт. Поэтому два числа
+     * в сумме дают ровно столько, сколько вердиктов человек увидел.
+     */
+    suspend fun countAsked() = bump(asked = 1)
+
+    private suspend fun bump(hits: Int = 0, asked: Int = 0) {
+        dao.seedStats(StatsEntity())
+        dao.bumpStats(hits, asked)
+    }
+
+    suspend fun stats(): CacheStats =
+        dao.stats()?.let { CacheStats(it.hits, it.asked) } ?: CacheStats()
+
     suspend fun remember(
         hash: String,
         exerciseId: String,
@@ -163,9 +221,16 @@ class VerdictCache(context: Context) {
      */
     suspend fun forget(exerciseId: String) = dao.forget(exerciseId)
 
+    /**
+     * Забыть всё — вместе со счётчиками.
+     *
+     * Половинчатого забывания тут быть не должно: цифры описывают ту самую
+     * память, которую стирают, и оставленные после стирания они бы врали.
+     */
     suspend fun clear(): Int {
         val had = dao.count()
         dao.clear()
+        dao.resetStats()
         return had
     }
 

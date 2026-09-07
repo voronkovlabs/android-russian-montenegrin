@@ -85,6 +85,10 @@ data class SettingsState(
     val cacheEnabled: Boolean = true,
     /** Сколько ответов уже запомнено. */
     val cacheCount: Int = 0,
+    /** Вердиктов взято из памяти. */
+    val cacheHits: Int = 0,
+    /** Вердиктов спрошено у модели. */
+    val cacheAsked: Int = 0,
     /** Результат последнего действия — показывается под кнопками. */
     val notice: String? = null
 )
@@ -382,6 +386,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun openSettings() {
         viewModelScope.launch {
+            val stats = cache.stats()
             _settings.value = SettingsState(
                 complaintCount = complaints.count(),
                 filePath = complaints.file().absolutePath,
@@ -392,7 +397,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 progressLastSave = progress.lastSave(),
                 progressLocalExists = progress.localFile().exists(),
                 cacheEnabled = cache.enabled,
-                cacheCount = cache.count()
+                cacheCount = cache.count(),
+                cacheHits = stats.hits,
+                cacheAsked = stats.asked
             )
         }
     }
@@ -418,7 +425,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val had = cache.clear()
             _settings.value = _settings.value?.copy(
                 cacheCount = 0,
-                notice = if (had > 0) "Забыто ответов: $had." else "Забывать нечего."
+                cacheHits = 0,
+                cacheAsked = 0,
+                notice = if (had > 0) {
+                    "Забыто ответов: $had. Счёт начат заново."
+                } else {
+                    "Забывать нечего."
+                }
             )
         }
     }
@@ -853,6 +866,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 val key = checker.key(task, reference, answer)
                 val known = cache.find(key)
                 if (known != null) {
+                    cache.countHit()
                     // В памяти лежат только засчитанные ответы, отсюда correct = true.
                     showVerdict(Verdict(true, known.feedback, known.better), reference, answer)
                     return@launch
@@ -862,6 +876,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 when (val result = checker.check(task, reference, answer)) {
                     is CheckResult.Ok -> {
                         val v = result.verdict
+                        cache.countAsked()
                         if (v.correct) {
                             cache.remember(
                                 hash = key,
