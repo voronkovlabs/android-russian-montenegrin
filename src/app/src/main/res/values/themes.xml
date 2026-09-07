@@ -5,9 +5,9 @@
         первой отрисовки Compose; сами экраны красит Theme.kt.
     -->
     <style name="Theme.Crnogorski" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">#EDF3F9</item>
-        <item name="android:navigationBarColor">#EDF3F9</item>
-        <item name="android:windowBackground">#EDF3F9</item>
+        <item name="android:statusBarColor">#F3F2F1</item>
+        <item name="android:navigationBarColor">#F3F2F1</item>
+        <item name="android:windowBackground">#F3F2F1</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
     </style>
