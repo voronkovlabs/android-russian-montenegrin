@@ -3,3 +3,6 @@ local.properties
 build/
 .idea/
 *.iml
+
+# Логи компилятора Kotlin — мусор сборки.
+.kotlin/
