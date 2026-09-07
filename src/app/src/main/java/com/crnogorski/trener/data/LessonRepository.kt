@@ -137,9 +137,14 @@ object LocalCheck {
             .map { normalize(it) }
             .filter { it.isNotBlank() }
 
-    /** Для распознавания речи: там диакритика теряется чаще, сверяем мягче. */
+    /**
+     * Для распознавания речи: там диакритика теряется чаще, сверяем мягче.
+     *
+     * Сравниваются разобранные слова, а не строки: по пути числительные и
+     * единицы измерения приводятся к одному виду — см. [words].
+     */
     fun matchesSpoken(heard: String, expected: String): Boolean =
-        reflex(flatten(heard)) == reflex(flatten(expected))
+        words(heard) == words(expected)
 
     /**
      * Сводит иекавицу и экавицу к одному виду: `lijepo` и `lepo` после этого
@@ -201,7 +206,101 @@ object LocalCheck {
         .replace('š', 's').replace('ž', 'z')
         .replace("đ", "dj")
 
-    private fun words(s: String) = reflex(flatten(s)).split(' ').filter { it.isNotBlank() }
+    /**
+     * Слова для сверки: свёрнутая иекавица, числительные цифрами, единицы
+     * сокращениями.
+     *
+     * Последнее — не украшение, а условие работоспособности. Движок
+     * распознавания **нормализует числа сам**: на «Dva kilograma, to je
+     * dvadeset dva evra» он отдаёт «2 kg to je 20 2 EUR», и посимвольная
+     * сверка давала два слова из семи. Пройти такой отрезок было нельзя вовсе.
+     *
+     * Поэтому к одному виду сводятся обе строки: числительные становятся
+     * цифрами, единицы — сокращениями, а рассыпанное на разряды число
+     * собирается обратно ([join]) — «20 2» и «22» после этого равны.
+     *
+     * Плата за это — «jedan» и «jedna» стали неразличимы: род числительного
+     * «один» на слух больше не проверяется. Терпимо ровно по той же причине,
+     * что и свёртка иекавицы: за лишний засчитанный ответ в личном тренажёре
+     * платить нечем, а за незасчитанный верный — платит человек.
+     */
+    private fun words(s: String) =
+        join(reflex(flatten(s)).split(' ').filter { it.isNotBlank() }.map { CANON[it] ?: it })
+
+    /**
+     * Собрать число обратно из разрядов: «20» и «2» — это 22.
+     *
+     * Движок разбирает «dvadeset dva» то как «22», то как «20 2», и оба вида
+     * надо привести к одному. Складываем только там, где сложение и есть
+     * значение: за круглым десятком — единицы, за круглой сотней — остаток
+     * меньше сотни. «deset i petnaest» (десять пятнадцать, о времени) не
+     * склеивается: между разрядами стоит «i».
+     */
+    private fun join(tokens: List<String>): List<String> {
+        val out = mutableListOf<String>()
+        tokens.forEach { token ->
+            val add = token.toIntOrNull()
+            val base = out.lastOrNull()?.toIntOrNull()
+            if (add != null && base != null && carries(base, add)) {
+                out[out.size - 1] = (base + add).toString()
+            } else {
+                out += token
+            }
+        }
+        return out
+    }
+
+    private fun carries(base: Int, add: Int): Boolean = when {
+        base >= 1000 && base % 1000 == 0 -> add in 1..999
+        base >= 100 && base % 100 == 0 -> add in 1..99
+        base >= 20 && base % 10 == 0 -> add in 1..9
+        else -> false
+    }
+
+    /**
+     * Числительные и единицы — к одному виду. Ключи в том виде, в каком слово
+     * доходит сюда: после [flatten] и [reflex], то есть без диакритики и с
+     * экавицей («dvije» приходит как «dve»).
+     *
+     * Круглого «sto» в таблице намеренно нет: [flatten] сводит к нему «što»,
+     * и «izvini što smetam» превратилось бы в сотню. Сотни есть только
+     * составными словами, где спутать не с чем.
+     */
+    private val CANON: Map<String, String> = buildMap {
+        listOf("nula" to 0,
+               // Семья «jedan» доходит сюда без «j»: [reflex] меняет «je» на «e»
+               // раньше, чем работает эта таблица. Исходные формы оставлены
+               // рядом — они ничего не стоят и не дают забыть, о чём строка.
+               "jedan" to 1, "jedna" to 1, "jedno" to 1, "jednu" to 1, "jednog" to 1,
+               "jednom" to 1, "jedanaest" to 11,
+               "edan" to 1, "edna" to 1, "edno" to 1, "ednu" to 1, "ednog" to 1,
+               "ednom" to 1, "edanaest" to 11,
+               "dva" to 2, "dve" to 2, "tri" to 3, "cetiri" to 4, "pet" to 5,
+               "sest" to 6, "sedam" to 7, "osam" to 8, "devet" to 9, "deset" to 10,
+               "dvanaest" to 12, "trinaest" to 13, "cetrnaest" to 14,
+               "petnaest" to 15, "sesnaest" to 16, "sedamnaest" to 17,
+               "osamnaest" to 18, "devetnaest" to 19,
+               "dvadeset" to 20, "trideset" to 30, "cetrdeset" to 40, "pedeset" to 50,
+               "sezdeset" to 60, "sedamdeset" to 70, "osamdeset" to 80, "devedeset" to 90,
+               "stotina" to 100, "stotinu" to 100,
+               "dvesta" to 200, "dvesto" to 200, "trista" to 300, "tristo" to 300,
+               "cetiristo" to 400, "petsto" to 500, "seststo" to 600,
+               "sedamsto" to 700, "osamsto" to 800, "devetsto" to 900,
+               "hiljada" to 1000, "hiljadu" to 1000, "hiljade" to 1000
+        ).forEach { (word, value) -> put(word, value.toString()) }
+
+        // Единицы: движок пишет их сокращениями, а в тексте они словами.
+        listOf("kilogram", "kilograma", "kilograme", "kilo", "kg").forEach { put(it, "kg") }
+        listOf("gram", "grama", "g").forEach { put(it, "g") }
+        listOf("litar", "litra", "litara", "l").forEach { put(it, "l") }
+        listOf("evro", "evra", "evre", "eura", "eur", "€").forEach { put(it, "eur") }
+        listOf("cent", "centa", "centi").forEach { put(it, "cent") }
+        listOf("kilometar", "kilometara", "km").forEach { put(it, "km") }
+        listOf("metar", "metara", "m").forEach { put(it, "m") }
+        listOf("minut", "minuta", "min").forEach { put(it, "min") }
+        listOf("sat", "sata", "sati", "h").forEach { put(it, "sat") }
+        listOf("procenat", "procenata", "posto", "%").forEach { put(it, "posto") }
+    }
 }
 
 /**
