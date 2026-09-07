@@ -7,6 +7,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -22,6 +24,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -59,6 +63,8 @@ fun SettingsScreen(
     onSaveTo: (Uri) -> Unit,
     onRestore: (Uri) -> Unit,
     onRestoreLocal: () -> Unit,
+    onCache: (Boolean) -> Unit,
+    onClearCache: () -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
@@ -241,6 +247,54 @@ fun SettingsScreen(
                     "Android не сообщает, дошла ли отправка, и терять записи по нажатию нельзя.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Muted
+            )
+
+            Spacer(Modifier.height(36.dp))
+            Text("ПРОВЕРКА", style = MaterialTheme.typography.labelSmall, color = Accent)
+            Spacer(Modifier.height(6.dp))
+            Text("Память ответов", style = MaterialTheme.typography.displaySmall, color = Paper)
+            Spacer(Modifier.height(16.dp))
+
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .clickable { onCache(!state.cacheEnabled) }
+                    .padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(
+                    checked = state.cacheEnabled,
+                    onCheckedChange = onCache,
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Accent,
+                        checkmarkColor = Ink,
+                        uncheckedColor = Muted
+                    )
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    "Помнить засчитанные ответы",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Paper
+                )
+            }
+
+            Spacer(Modifier.height(10.dp))
+            Text(
+                "Ответ, который Claude уже засчитал, второй раз в сеть не уходит: " +
+                    "запрос тот же самый, значит и вердикт тот же, — но появляется он " +
+                    "мгновенно и без интернета. Ошибочные ответы не запоминаются никогда, " +
+                    "а жалоба на задание стирает всё, что по нему запомнено.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+
+            Spacer(Modifier.height(14.dp))
+            SecondaryAction(
+                text = "Забыть запомненное (${state.cacheCount})",
+                enabled = state.cacheCount > 0,
+                onClick = onClearCache
             )
 
             Spacer(Modifier.height(36.dp))

@@ -91,6 +91,8 @@ class MainActivity : ComponentActivity() {
                                     onSaveTo = vm::saveProgressTo,
                                     onRestore = vm::restoreProgress,
                                     onRestoreLocal = vm::restoreLocalProgress,
+                                    onCache = vm::useVerdictCache,
+                                    onClearCache = vm::clearVerdictCache,
                                     onClose = vm::closeSettings
                                 )
                             } else {

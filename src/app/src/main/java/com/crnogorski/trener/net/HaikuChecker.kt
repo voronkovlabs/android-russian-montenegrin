@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
 
 @Serializable
@@ -119,6 +120,42 @@ class HaikuChecker(
         ask(systemPrompt, task, reference, userAnswer)
 
     /**
+     * Отпечаток запроса — ключ кэша принятых ответов.
+     *
+     * Хэшируется ровно то, что уходит в сеть: модель, температура, потолок
+     * ответа, системный промпт и собранное сообщение целиком. Совпадение хэша
+     * значит, что точно такой запрос уже отправлялся, — а тот же запрос при
+     * `temperature = 0` и прибитом снапшоте даёт тот же вердикт.
+     *
+     * Хэшировать JSON задания было бы неверно вдвойне. С одной стороны, там
+     * есть поля, которых модель не видит (`explanation`), и правка опечатки в
+     * разборе зря обнуляла бы кэш. С другой — на вердикт влияет и то, чего в
+     * задании нет вовсе: температура и сам шаблон сообщения. Перепишешь шаблон
+     * — вердикты поедут, а отпечаток задания не шелохнётся.
+     *
+     * Ключ есть только у письменной проверки: у [checkSpoken] его нет намеренно,
+     * и потому устный перевод в историях не кэшируется никак — не забыт, а
+     * невозможен.
+     *
+     * SHA-256, а не `hashCode()`: тридцати двух бит на тысячи записей не хватает,
+     * а столкновение здесь означает чужой вердикт, выданный за свой, молча.
+     * Поля разделены нулевым байтом, иначе «ab» + «c» и «a» + «bc» дали бы
+     * один отпечаток.
+     */
+    fun key(task: String, reference: String, userAnswer: String): String {
+        val request = listOf(
+            MODEL,
+            TEMPERATURE.toString(),
+            MAX_TOKENS.toString(),
+            systemPrompt,
+            userMessage(task, reference, userAnswer)
+        ).joinToString("\u0000")
+        return MessageDigest.getInstance("SHA-256")
+            .digest(request.toByteArray(Charsets.UTF_8))
+            .joinToString("") { "%02x".format(it) }
+    }
+
+    /**
      * Устный перевод отрезка истории: [reference] — эталонный перевод отрезка,
      * [heard] — то, что разобрал движок распознавания.
      */
@@ -138,24 +175,18 @@ class HaikuChecker(
                 )
             }
 
-            val userMessage = """
-                Задание: $task
-                Эталонный перевод: $reference
-                Ответ ученика: $userAnswer
-            """.trimIndent()
-
             val body = JSONObject().apply {
-                put("model", "claude-haiku-4-5-20251001")
-                put("max_tokens", 300)
+                put("model", MODEL)
+                put("max_tokens", MAX_TOKENS)
                 put("system", system)
-                put("temperature", 0)
+                put("temperature", TEMPERATURE)
                 put(
                     "messages",
                     org.json.JSONArray()
                         .put(
                             JSONObject().apply {
                                 put("role", "user")
-                                put("content", userMessage)
+                                put("content", userMessage(task, reference, userAnswer))
                             }
                         )
                         // Ответ за модель начат открывающей скобкой: так она не
@@ -207,6 +238,22 @@ class HaikuChecker(
         }
 
     companion object {
+        /**
+         * Всё, что определяет вердикт помимо промпта, — и всё это входит в [key].
+         * Снапшот модели прибит намеренно: плавающий алиас менял бы судью молча.
+         */
+        private const val MODEL = "claude-haiku-4-5-20251001"
+        private const val MAX_TOKENS = 300
+        private const val TEMPERATURE = 0
+
+        /** Сообщение, которое видит модель. Форма влияет на вердикт — она в [key]. */
+        private fun userMessage(task: String, reference: String, userAnswer: String) =
+            """
+                Задание: $task
+                Эталонный перевод: $reference
+                Ответ ученика: $userAnswer
+            """.trimIndent()
+
         /** Начало ответа, написанное за модель, — она продолжает с этого места. */
         private const val JSON_PREFILL = "{"
 

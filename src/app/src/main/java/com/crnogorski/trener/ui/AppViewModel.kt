@@ -25,11 +25,13 @@ import com.crnogorski.trener.data.StoryChunk
 import com.crnogorski.trener.data.StoryMode
 import com.crnogorski.trener.data.StoryProgressEntity
 import com.crnogorski.trener.data.StoryRef
+import com.crnogorski.trener.data.VerdictCache
 import com.crnogorski.trener.data.needsModelCheck
 import com.crnogorski.trener.data.referenceAnswer
 import com.crnogorski.trener.data.typeName
 import com.crnogorski.trener.net.CheckResult
 import com.crnogorski.trener.net.HaikuChecker
+import com.crnogorski.trener.net.Verdict
 import com.crnogorski.trener.srs.Scheduler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -79,6 +81,10 @@ data class SettingsState(
     val progressLastSave: String? = null,
     /** Есть ли на телефоне копия, из которой можно восстановиться. */
     val progressLocalExists: Boolean = false,
+    /** Помнить ли ответы, засчитанные Claude. По умолчанию да. */
+    val cacheEnabled: Boolean = true,
+    /** Сколько ответов уже запомнено. */
+    val cacheCount: Int = 0,
     /** Результат последнего действия — показывается под кнопками. */
     val notice: String? = null
 )
@@ -198,9 +204,20 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val checker = HaikuChecker()
     private val complaints = ComplaintStore(app)
     private val progress = ProgressStore(app, dao)
+    private val cache = VerdictCache(app)
 
     /** Последний отправленный ответ — попадает в жалобу как есть. */
     private var lastAnswer: String = ""
+
+    /**
+     * Идёт ли проверка прямо сейчас.
+     *
+     * Раньше от повторной отправки защищала [Phase.Checking], которую ставили
+     * сразу: экран с ней ввода не показывает. Теперь между отправкой и этой
+     * фазой есть заглядывание в кэш, и на попадании фазы не будет вовсе —
+     * значит нужен собственный засов, иначе один ответ можно отправить дважды.
+     */
+    private var checking = false
 
     /**
      * Состояние карточки до последней проверки: `exerciseId` и то, чем она была
@@ -373,13 +390,37 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 progressFolder = progress.folderLabel(),
                 progressLocal = progress.localFile().absolutePath,
                 progressLastSave = progress.lastSave(),
-                progressLocalExists = progress.localFile().exists()
+                progressLocalExists = progress.localFile().exists(),
+                cacheEnabled = cache.enabled,
+                cacheCount = cache.count()
             )
         }
     }
 
     fun closeSettings() {
         _settings.value = null
+    }
+
+    fun useVerdictCache(enabled: Boolean) {
+        cache.enabled = enabled
+        _settings.value = _settings.value?.copy(
+            cacheEnabled = enabled,
+            notice = if (enabled) {
+                "Засчитанные ответы снова запоминаются."
+            } else {
+                "Каждый ответ теперь проверяется заново. Запомненное осталось на месте."
+            }
+        )
+    }
+
+    fun clearVerdictCache() {
+        viewModelScope.launch {
+            val had = cache.clear()
+            _settings.value = _settings.value?.copy(
+                cacheCount = 0,
+                notice = if (had > 0) "Забыто ответов: $had." else "Забывать нечего."
+            )
+        }
     }
 
     /**
@@ -706,7 +747,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun submitText(answer: String) {
         val state = _session.value ?: return
         val ex = state.current
-        if (answer.isBlank()) return
+        if (answer.isBlank() || checking) return
         lastAnswer = answer
 
         when (ex) {
@@ -792,25 +833,66 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         )
     }
 
+    /**
+     * Проверка свободного перевода: сперва память о засчитанных ответах, потом сеть.
+     *
+     * Попадание — это не «примерно то же самое», а буквально тот же запрос,
+     * который уже отправлялся (см. `HaikuChecker.key`). Поэтому вердикт из
+     * памяти проходит ровно тот же путь, что живой: карточка SRS двигается,
+     * счётчик растёт, откат по жалобе работает. Кэш подменяет поход в сеть,
+     * а не разбор результата.
+     *
+     * [Phase.Checking] выставляется только после промаха: на попадании ждать
+     * нечего, и «Проверяю…» мелькнуло бы зря.
+     */
     private fun checkWithModel(task: String, reference: String, answer: String) {
-        _session.value = _session.value?.copy(phase = Phase.Checking)
+        val exerciseId = _session.value?.current?.id.orEmpty()
+        checking = true
         viewModelScope.launch {
-            when (val result = checker.check(task, reference, answer)) {
-                is CheckResult.Ok -> {
-                    val v = result.verdict
-                    record(v.correct)
-                    _session.value = _session.value?.copy(
-                        phase = Phase.Result(v.correct, v.feedback, v.better, reference, answer),
-                        correct = (_session.value?.correct ?: 0) + if (v.correct) 1 else 0
-                    )
+            try {
+                val key = checker.key(task, reference, answer)
+                val known = cache.find(key)
+                if (known != null) {
+                    // В памяти лежат только засчитанные ответы, отсюда correct = true.
+                    showVerdict(Verdict(true, known.feedback, known.better), reference, answer)
+                    return@launch
                 }
-                is CheckResult.Failed -> {
-                    _session.value = _session.value?.copy(
-                        phase = Phase.Blocked("Проверка не прошла: ${result.message}")
-                    )
+
+                _session.value = _session.value?.copy(phase = Phase.Checking)
+                when (val result = checker.check(task, reference, answer)) {
+                    is CheckResult.Ok -> {
+                        val v = result.verdict
+                        if (v.correct) {
+                            cache.remember(
+                                hash = key,
+                                exerciseId = exerciseId,
+                                task = task,
+                                reference = reference,
+                                answer = answer,
+                                feedback = v.feedback,
+                                better = v.better
+                            )
+                        }
+                        showVerdict(v, reference, answer)
+                    }
+                    is CheckResult.Failed -> {
+                        _session.value = _session.value?.copy(
+                            phase = Phase.Blocked("Проверка не прошла: ${result.message}")
+                        )
+                    }
                 }
+            } finally {
+                checking = false
             }
         }
+    }
+
+    private fun showVerdict(v: Verdict, reference: String, answer: String) {
+        record(v.correct)
+        _session.value = _session.value?.copy(
+            phase = Phase.Result(v.correct, v.feedback, v.better, reference, answer),
+            correct = (_session.value?.correct ?: 0) + if (v.correct) 1 else 0
+        )
     }
 
     fun retryAfterBlock() {
@@ -861,6 +943,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     versionName = BuildConfig.VERSION_NAME
                 )
             )
+
+            // Жалоба ставит под сомнение и то, что по этому заданию засчитано
+            // раньше: при неверном эталоне модель сравнивала ответ не с тем.
+            cache.forget(item.exercise.id)
 
             val snapshot = cardBeforeAnswer
             if (snapshot != null && snapshot.first == item.exercise.id) {
