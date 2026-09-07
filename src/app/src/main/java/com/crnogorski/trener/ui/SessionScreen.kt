@@ -226,6 +226,19 @@ private fun ExerciseBody(
             onSubmit = onSubmit
         )
 
+        // Подпись приходит с заданием: словарная карточка спрашивает то
+        // значение, то падеж, то особую форму — механика одна, вопрос разный.
+        is Exercise.Word -> TextAnswer(
+            key = ex.id,
+            label = ex.label,
+            prompt = ex.prompt,
+            hint = "",
+            enabled = enabled,
+            language = AnswerLanguage.Target,
+            promptGloss = state.glossary.me,
+            onSubmit = onSubmit
+        )
+
         is Exercise.Choice -> ChoiceAnswer(ex, speaker, enabled, onSubmit)
 
         is Exercise.WordBank -> WordBankAnswer(ex, state.glossary.ru, enabled, onSubmit)

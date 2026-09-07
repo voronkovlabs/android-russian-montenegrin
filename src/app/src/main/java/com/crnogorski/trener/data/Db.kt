@@ -60,21 +60,41 @@ interface AppDao {
     suspend fun upsertCard(card: CardEntity)
 
     /**
-     * Просроченные карточки, самые старые первыми, не больше [limit].
+     * Просроченные карточки уроков, самые старые первыми, не больше [limit].
      *
      * Потолок обязателен: без него сессия повторения — это все накопившиеся
      * карточки разом, а их со временем становятся сотни. Такую сессию нельзя
      * ни закончить, ни бросить без потери.
+     *
+     * Словарные карточки сюда не входят (`skip` — их `lessonId`): их тысячи, и
+     * они бы вытеснили уроки из повторения целиком. У словаря свой раздел и
+     * свой потолок — это решение владельца, а не случайность запроса.
      */
-    @Query("SELECT * FROM cards WHERE dueAt <= :now ORDER BY dueAt ASC LIMIT :limit")
-    suspend fun dueCards(now: Long, limit: Int): List<CardEntity>
+    @Query(
+        "SELECT * FROM cards WHERE dueAt <= :now AND lessonId != :skip " +
+            "ORDER BY dueAt ASC LIMIT :limit"
+    )
+    suspend fun dueCards(now: Long, limit: Int, skip: String): List<CardEntity>
 
     /** Сколько просрочено на самом деле — счётчик на главном экране честный. */
-    @Query("SELECT COUNT(*) FROM cards WHERE dueAt <= :now")
-    suspend fun dueCount(now: Long): Int
+    @Query("SELECT COUNT(*) FROM cards WHERE dueAt <= :now AND lessonId != :skip")
+    suspend fun dueCount(now: Long, skip: String): Int
 
-    @Query("SELECT COUNT(*) FROM cards WHERE dueAt <= :now")
-    fun dueCountFlow(now: Long): Flow<Int>
+    @Query("SELECT COUNT(*) FROM cards WHERE dueAt <= :now AND lessonId != :skip")
+    fun dueCountFlow(now: Long, skip: String): Flow<Int>
+
+    /**
+     * Все словарные карточки разом.
+     *
+     * Именно все, а не просроченные: раздел словаря должен знать и то, что
+     * уже выучено, — образец склонения открывается только после того, как
+     * усвоено значение слова.
+     */
+    @Query("SELECT * FROM cards WHERE lessonId = :lesson")
+    suspend fun vocabCards(lesson: String): List<CardEntity>
+
+    @Query("SELECT COUNT(*) FROM cards WHERE dueAt <= :now AND lessonId = :lesson")
+    suspend fun vocabDue(now: Long, lesson: String): Int
 
     @Query("SELECT * FROM cards WHERE exerciseId = :id")
     suspend fun card(id: String): CardEntity?

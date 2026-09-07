@@ -170,6 +170,26 @@ sealed class Exercise {
         val explanation: String = ""
     ) : Exercise()
 
+    /**
+     * Словарная карточка: набрать черногорское слово или его форму.
+     *
+     * От [Form] отличается тем, что подпись приходит вместе с заданием, а не
+     * прибита в экране: одна и та же механика спрашивает то значение слова, то
+     * падеж, то особую форму, и сказать, что именно, должна карточка.
+     *
+     * В файлах уроков этого типа нет и быть не может — задания собираются на
+     * лету из `assets/vocab/words.json` (см. `exerciseFor`).
+     */
+    @Serializable
+    @SerialName("word")
+    data class Word(
+        override val id: String,
+        val label: String,
+        val prompt: String,
+        val answer: String,
+        val explanation: String = ""
+    ) : Exercise()
+
     /** Аудирование: TTS произносит [audioText], надо записать услышанное. */
     @Serializable
     @SerialName("listening")
@@ -231,6 +251,7 @@ val Exercise.typeName: String
         is Exercise.Choice -> "choice"
         is Exercise.WordBank -> "word_bank"
         is Exercise.Form -> "form"
+        is Exercise.Word -> "word"
         is Exercise.Listening -> "listening"
         is Exercise.Speaking -> "speaking"
         is Exercise.Repeat -> "repeat"
@@ -249,6 +270,7 @@ val Exercise.referenceAnswer: String
         is Exercise.Choice -> answer
         is Exercise.WordBank -> answer
         is Exercise.Form -> answer
+        is Exercise.Word -> answer
         is Exercise.Listening -> audioText
         is Exercise.Speaking -> phrase
         is Exercise.Repeat -> phrase

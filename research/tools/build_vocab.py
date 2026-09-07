@@ -44,14 +44,27 @@ CASES = {'n': 'им.', 'g': 'род.', 'd': 'дат.', 'a': 'вин.', 'l': 'м�
 # Пул — 5987 фраз, и косвенная форма кандидата встречается в нём меньше чем у
 # трети слов. Падеж задаёт рамка, форму даёт srLex, покрытие становится полным.
 # Цена честная: «Vidim pakao» звучит странновато, но упражнение про форму.
-FRAMES = [
-    {'case': 'n', 'pattern': 'Ovo je ___.'},
-    {'case': 'g', 'pattern': 'Nema ___.'},
-    {'case': 'd', 'pattern': 'Idem ka ___.'},
-    {'case': 'a', 'pattern': 'Vidim ___.'},
-    {'case': 'l', 'pattern': 'Mislim o ___.'},
-    {'case': 'i', 'pattern': 'Idem sa ___.'},
-]
+CASE_FRAMES = {
+    'n': 'Ovo je ___.',
+    'g': 'Nema ___.',
+    'd': 'Idem ka ___.',
+    'a': 'Vidim ___.',
+    'l': 'Mislim o ___.',
+    'i': 'Idem sa ___.',
+}
+
+# У глагола рамка заодно учит связке с местоимением — это ровно то, что в
+# сербском обычно и произносят вместе.
+VERB_FRAMES = {
+    'Vmn': 'Moram ___.',
+    'Vmr1s': 'Ja ___.',
+    'Vmr2s': 'Ti ___.',
+    'Vmr3s': 'On ___.',
+    'Vmr1p': 'Mi ___.',
+    'Vmr3p': 'Oni ___.',
+    'Vmp-sm': 'On je ___.',
+    'Vmp-sf': 'Ona je ___.',
+}
 
 # Глагольные ячейки: инфинитив, настоящее и причастие прошедшего. Полная
 # парадигма — сотня форм, и учить её списком незачем.
@@ -113,11 +126,16 @@ def pick(lemma, rows, pos):
        несколько ключевых форм, прилагательному ничего: его склонение — общий
        образец, а не свойство слова.
     """
+    # Именительный единственного у существительного и инфинитив у глагола —
+    # это сама словарная форма. Спрашивать её бессмысленно: лемма стоит в
+    # задании подсказкой, и ответ виден прямо в вопросе.
     if pos == 'NOUN':
         wanted = {msd: msd[4] for _, msd, _, _ in rows
-                  if len(msd) > 4 and msd[0] == 'N' and msd[4] in CASES}
+                  if len(msd) > 4 and msd[0] == 'N' and msd[4] in CASES
+                  and not (msd[4] == 'n' and msd[3] == 's')}
     elif pos == 'VERB':
-        wanted = {msd: msd for _, msd, _, _ in rows if msd in VERB_SLOTS}
+        wanted = {msd: msd for _, msd, _, _ in rows
+                  if msd in VERB_SLOTS and msd != 'Vmn'}
     else:
         return []
 
@@ -152,44 +170,62 @@ def pick(lemma, rows, pos):
     return out
 
 
-def odd_forms(lemma, forms):
+def stem_of(lemma, pos):
+    """
+    Основа слова: то, что не меняется при словоизменении.
+
+    У существительного отрезается конечная гласная (`apoteka` → `apotek`), у
+    глагола — инфинитивное окончание и тематическая гласная (`tražiti` →
+    `traži` → `traž`). Без второго шага «traže» выглядело бы чередованием: `i`
+    и `e` тут спряжение, а не смена основы.
+    """
+    s = lemma
+    if pos == 'VERB':
+        if s.endswith('ti') or s.endswith('ći'):
+            s = s[:-2]
+        if s and s[-1] in 'aeiou':
+            s = s[:-1]
+    elif s and s[-1] in 'aeiou':
+        s = s[:-1]
+    return s
+
+
+def odd_forms(lemma, pos, forms):
     """
     Формы, у которых поменялась основа, — единственные, что учат по отдельности.
 
-    Основа считается по самим формам, а не отрубанием гласной у леммы: лемма
-    глагола — инфинитив, и `pričam` не начинается с `pričat`, отчего «неожиданной»
-    оказывалась каждая глагольная форма. Берём самый длинный префикс, общий хотя
-    бы для большинства форм: у `ići` это `id` (idem, ideš, ide…), и `išao`
-    справедливо остаётся исключением.
+    Форма считается особой, если расходится с основой раньше, чем основа
+    кончилась: `apoteka` → `apoteci` (k → c), `otac` → `oca` (беглое «а»).
+    Обычное окончание, приросшее к целой основе, особым не считается.
 
-    Сравниваются свёрнутые написания, иначе второй рефлекс (`bes` → `bijes`)
-    выглядел бы чередованием, и мы бы выпустили карточку, учащую одну норму
-    как исключение из другой.
+    Свёртки иекавицы тут нет намеренно, хотя в первой версии была. Правило
+    `je` → `e` бьёт по окончанию не хуже, чем по корню: `prijatelje` после
+    свёртки перестаёт начинаться с `prijatelj`, и совершенно правильная форма
+    винительного падежа объявлялась чередованием. Две нормы одного слова
+    схлопываются раньше, в [pick], и до этого места не доходят.
     """
-    flat = [reflex(f['f']) for f in forms]
-    if len(flat) < 2:
-        return []
-    need = max(2, int(len(flat) * 0.6))
-    stem = ''
-    for size in range(min(len(x) for x in flat), 1, -1):
-        counts = {}
-        for word in flat:
-            counts[word[:size]] = counts.get(word[:size], 0) + 1
-        top, hits = max(counts.items(), key=lambda kv: kv[1])
-        if hits >= need:
-            stem = top
-            break
+    stem = stem_of(lemma, pos)
     if not stem:
         return []
-    # Словарная форма исключением быть не может: она и есть то, от чего
-    # отличаются остальные. У `pas` чередование настоящее (psa, psi), но учить
-    # надо косвенные формы, а не сам именительный падеж.
     out = []
-    for f, flatted in zip(forms, flat):
-        if flatted.startswith(stem) or f['f'] == lemma or f['f'] in out:
+    for f in forms:
+        word = f['f']
+        if word == lemma or word in out:
             continue
-        out.append(f['f'])
-    return out
+        common = 0
+        while common < len(word) and common < len(stem) and word[common] == stem[common]:
+            common += 1
+        if common < len(stem):
+            out.append(word)
+
+    # Чередование — один факт, а не столько фактов, сколько форм. У `pas`
+    # основа меняется во всех косвенных (psa, psi, psu, psima), и шесть
+    # карточек учили бы одному и тому же беглому «а». Когда особой оказалась
+    # большая часть парадигмы, хватает одной формы — самой частой; когда
+    # выбивается одна-две, они и есть исключения (`apoteka` → `apoteci`).
+    if len(out) * 2 > len(forms):
+        return out[:1]
+    return out[:2]
 
 
 def main(lexpath):
@@ -205,7 +241,7 @@ def main(lexpath):
     forms_of = {}
     for r in rows:
         r['forms'] = pick(r['lemma'], par.get(r['lemma'], []), r['pos'])
-        r['odd'] = odd_forms(r['lemma'], r['forms'])
+        r['odd'] = odd_forms(r['lemma'], r['pos'], r['forms'])
         for f in r['forms']:
             forms_of.setdefault(f['f'], set()).add(r['lemma'])
 
@@ -217,9 +253,17 @@ def main(lexpath):
                     examples[lemma].append({'sr': sr, 'ru': ru, 'f': token,
                                             'id': sr_id, 'level': level})
 
+    # Рамки плоской картой «ячейка → образец»: приложению не надо ничего
+    # выводить из кода ячейки, а множественное число берёт ту же рамку, что
+    # единственное, — падеж в ней задан предлогом и глаголом, а не числом.
+    frames = dict(VERB_FRAMES)
+    for case, pattern in CASE_FRAMES.items():
+        frames['%s-s' % case] = pattern
+        frames['%s-p' % case] = pattern
+
     out = {
         'version': 1,
-        'frames': FRAMES,
+        'frames': frames,
         # Подписи ячеек — словарём на весь файл: при каждой форме они занимали
         # бы больше места, чем сами формы.
         'slots': dict(

@@ -21,6 +21,7 @@ import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Style
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,6 +45,7 @@ fun HomeScreen(
     onReview: () -> Unit,
     onSettings: () -> Unit,
     onStory: (String, StoryMode) -> Unit,
+    onVocab: () -> Unit,
     onTab: (HomeTab) -> Unit,
     onToggleGroup: (String) -> Unit,
     onNote: (String) -> Unit
@@ -74,6 +76,11 @@ fun HomeScreen(
                     label = "Истории",
                     selected = state.tab == HomeTab.Stories
                 ) { onTab(HomeTab.Stories) }
+                TabIcon(
+                    icon = Icons.Outlined.Style,
+                    label = "Слова",
+                    selected = state.tab == HomeTab.Words
+                ) { onTab(HomeTab.Words) }
                 Spacer(Modifier.weight(1f))
                 ComplaintButton(onSave = onNote)
                 IconButton(onClick = onSettings) {
@@ -88,7 +95,11 @@ fun HomeScreen(
             Text("CRNOGORSKI", style = MaterialTheme.typography.labelSmall, color = Accent)
             Spacer(Modifier.height(6.dp))
             Text(
-                if (state.tab == HomeTab.Lessons) "Курс" else "Истории",
+                when (state.tab) {
+                    HomeTab.Lessons -> "Курс"
+                    HomeTab.Stories -> "Истории"
+                    HomeTab.Words -> "Слова"
+                },
                 style = MaterialTheme.typography.displaySmall,
                 color = Paper
             )
@@ -127,6 +138,13 @@ fun HomeScreen(
                             LessonRow(card, onClick = { onLesson(card.ref.id) })
                         }
                     }
+                }
+            }
+
+            HomeTab.Words -> {
+                item {
+                    VocabCard(state.vocab, onClick = onVocab)
+                    Spacer(Modifier.height(4.dp))
                 }
             }
 
@@ -271,6 +289,51 @@ private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
             style = MaterialTheme.typography.labelSmall,
             color = if (card.finished) Jade else Muted,
             textAlign = TextAlign.End
+        )
+    }
+}
+
+/**
+ * Словарь: одна панель вместо списка.
+ *
+ * Выбирать тут нечего — очередь собирается сама: сперва просроченные карточки,
+ * потом новые слова в порядке частоты. Список из тысячи слов был бы витриной,
+ * а не занятием.
+ */
+@Composable
+private fun VocabCard(state: VocabSummary, onClick: () -> Unit) {
+    val ready = state.due > 0 || state.fresh > 0
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(14.dp))
+            .background(if (ready) Surface2 else Surface1)
+            .clickable(enabled = state.total > 0, onClick = onClick)
+            .padding(18.dp)
+    ) {
+        Text(
+            if (ready) "ЗАНЯТЬСЯ СЛОВАМИ" else "НА СЕГОДНЯ ВСЁ",
+            style = MaterialTheme.typography.labelSmall,
+            color = if (ready) Accent else Muted
+        )
+        Spacer(Modifier.height(8.dp))
+        Text(
+            when {
+                state.total == 0 -> "Словарь не загрузился"
+                state.due > 0 && state.fresh > 0 ->
+                    "${state.due} на повторение, ${state.fresh} новых"
+                state.due > 0 -> "${state.due} на повторение"
+                state.fresh > 0 -> "${state.fresh} новых слов"
+                else -> "Новые слова откроются завтра"
+            },
+            style = MaterialTheme.typography.titleMedium,
+            color = Paper
+        )
+        Spacer(Modifier.height(10.dp))
+        Text(
+            "Начато слов: ${state.started} из ${state.total}",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
         )
     }
 }

@@ -26,6 +26,11 @@ import com.crnogorski.trener.data.StoryMode
 import com.crnogorski.trener.data.StoryProgressEntity
 import com.crnogorski.trener.data.StoryRef
 import com.crnogorski.trener.data.VerdictCache
+import com.crnogorski.trener.data.VocabFile
+import com.crnogorski.trener.data.VocabKind
+import com.crnogorski.trener.data.VocabRepository
+import com.crnogorski.trener.data.VocabWord
+import com.crnogorski.trener.data.exerciseFor
 import com.crnogorski.trener.data.needsModelCheck
 import com.crnogorski.trener.data.referenceAnswer
 import com.crnogorski.trener.data.typeName
@@ -46,7 +51,7 @@ data class LessonCard(
 )
 
 /** Вкладка главного экрана. Уроки и истории — разные занятия, мешать их в одном списке незачем. */
-enum class HomeTab { Lessons, Stories }
+enum class HomeTab { Lessons, Stories, Words }
 
 /** Раздел главного экрана: заголовок и уроки под ним, в порядке из `index.json`. */
 data class LessonGroup(
@@ -56,10 +61,25 @@ data class LessonGroup(
     val done: Int get() = cards.count { it.done }
 }
 
+/**
+ * Словарь на главном экране одной строкой.
+ *
+ * [fresh] — сколько новых слов ещё можно взять сегодня, [started] — сколько
+ * начато вообще. Второе растёт медленно и намеренно: карточке нужно 8–10
+ * встреч, и обещать себе больше десятка слов в день значит копить долг.
+ */
+data class VocabSummary(
+    val due: Int = 0,
+    val fresh: Int = 0,
+    val started: Int = 0,
+    val total: Int = 0
+)
+
 data class HomeState(
     val groups: List<LessonGroup> = emptyList(),
     val storyGroups: List<StoryGroup> = emptyList(),
     val dueCount: Int = 0,
+    val vocab: VocabSummary = VocabSummary(),
     val tab: HomeTab = HomeTab.Lessons,
     /** Заголовки развёрнутых разделов. По умолчанию свёрнуты все. */
     val expandedGroups: Set<String> = emptySet(),
@@ -192,6 +212,27 @@ data class SessionState(
 private const val REVIEW_LIMIT = 25
 
 /**
+ * Потолок словарной сессии и дневная норма новых слов.
+ *
+ * Десять слов в день — то, на чём сходится практика (для начинающих 5–15), и
+ * жёсткое правило при этом одно: сперва доделать сегодняшние повторения, потом
+ * добавлять новое. Отсюда порядок сборки сессии: просроченное, потом новые
+ * слова, потом открывшиеся карточки — и всё это под общим потолком.
+ */
+private const val VOCAB_LIMIT = 25
+private const val NEW_WORDS_PER_DAY = 10
+
+/**
+ * Со скольких удачных повторений карточка считается усвоенной.
+ *
+ * По этому порогу открываются следующие: склонение — когда усвоено значение,
+ * особая форма — когда усвоено склонение. Склонять слово, значения которого не
+ * знаешь, упражнение ни о чём, а нагрузку такой порядок растягивает вдвое без
+ * потери смысла.
+ */
+private const val LEARNED_REPS = 2
+
+/**
  * После скольких неудач подряд показываем черногорский текст отрезка.
  *
  * И при переводе, и на слух: вспомнить или расслышать с четвёртого раза уже не
@@ -209,6 +250,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val complaints = ComplaintStore(app)
     private val progress = ProgressStore(app, dao)
     private val cache = VerdictCache(app)
+    private val vocabRepo = VocabRepository(app)
 
     /** Последний отправленный ответ — попадает в жалобу как есть. */
     private var lastAnswer: String = ""
@@ -302,7 +344,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                             }
                         )
                     },
-                    dueCount = dao.dueCount(System.currentTimeMillis()),
+                    dueCount = dao.dueCount(System.currentTimeMillis(), VocabRepository.LESSON_ID),
+                    vocab = vocabSummary(),
                     loading = false
                 )
             } catch (e: Exception) {
@@ -335,11 +378,139 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    private suspend fun vocabSummary(): VocabSummary {
+        val file = vocabRepo.load()
+        if (file.words.isEmpty()) return VocabSummary()
+        val cards = dao.vocabCards(VocabRepository.LESSON_ID)
+        val started = cards.count { it.exerciseId.endsWith("-" + VocabKind.Meaning.key) }
+        return VocabSummary(
+            due = dao.vocabDue(System.currentTimeMillis(), VocabRepository.LESSON_ID),
+            fresh = minOf(
+                (NEW_WORDS_PER_DAY - vocabRepo.introducedToday()).coerceAtLeast(0),
+                file.words.size - started
+            ),
+            started = started,
+            total = file.words.size
+        )
+    }
+
+    /**
+     * Словарная сессия: просроченное, потом новые слова, потом открывшееся.
+     *
+     * Порядок именно такой и он не косметический. Сперва доделать сегодняшние
+     * повторения, потом добавлять новое — иначе словарь превращается в долг,
+     * который растёт быстрее, чем отдаётся.
+     */
+    fun startVocab() {
+        viewModelScope.launch {
+            val file = vocabRepo.load()
+            if (file.words.isEmpty()) {
+                _home.value = _home.value.copy(error = "Словарь не загрузился.")
+                return@launch
+            }
+            val now = System.currentTimeMillis()
+            val cards = dao.vocabCards(VocabRepository.LESSON_ID)
+            val byId = cards.associateBy { it.exerciseId }
+            val words = file.words.associateBy { it.id }
+            val items = mutableListOf<SessionItem>()
+
+            fun add(ex: Exercise?) {
+                if (ex != null && items.size < VOCAB_LIMIT) {
+                    items += SessionItem(VocabRepository.LESSON_ID, ex)
+                }
+            }
+
+            // 1. Просроченное, самое старое первым.
+            cards.filter { it.dueAt <= now }.sortedBy { it.dueAt }.forEach { card ->
+                add(vocabExercise(file, words, card.exerciseId, card.repetitions))
+            }
+
+            // 2. Новые слова — сколько осталось на сегодня.
+            var taken = 0
+            val budget = (NEW_WORDS_PER_DAY - vocabRepo.introducedToday()).coerceAtLeast(0)
+            for (word in file.words) {
+                if (taken >= budget || items.size >= VOCAB_LIMIT) break
+                if (byId.containsKey(VocabRepository.cardId(word.id, VocabKind.Meaning))) continue
+                val before = items.size
+                add(file.exerciseFor(word, VocabKind.Meaning))
+                if (items.size > before) taken++
+            }
+            vocabRepo.noteIntroduced(taken)
+
+            // 3. Открывшиеся карточки: следующая ступень у слов, где предыдущая
+            //    уже усвоена. Своей дневной нормы у них нет — их темп и так
+            //    задан тем, как быстро усваивается предыдущая.
+            for (word in file.words) {
+                if (items.size >= VOCAB_LIMIT) break
+                if (!vocabLearned(byId, VocabRepository.cardId(word.id, VocabKind.Meaning))) continue
+
+                val declId = VocabRepository.cardId(word.id, VocabKind.Pattern)
+                if (word.forms.isNotEmpty() && !byId.containsKey(declId)) {
+                    add(file.exerciseFor(word, VocabKind.Pattern))
+                    continue
+                }
+                if (!vocabLearned(byId, declId)) continue
+                val form = word.odd.firstOrNull {
+                    !byId.containsKey(VocabRepository.cardId(word.id, VocabKind.Odd, it))
+                } ?: continue
+                add(file.exerciseFor(word, VocabKind.Odd, form))
+            }
+
+            if (items.isEmpty()) {
+                refreshHome()
+                _home.value = _home.value.copy(
+                    error = "На сегодня всё. Новые слова откроются завтра."
+                )
+                return@launch
+            }
+
+            _session.value = SessionState(
+                title = "Слова",
+                note = if (taken > 0) "Новых слов сегодня: $taken." else "",
+                items = items,
+                // Как повторение, а не как урок: словарь не «проходят до конца»,
+                // и запись в lesson_progress означала бы, что урок «vocab»
+                // пройден — она бы переписывалась каждой сессией и уехала бы
+                // в копию прогресса.
+                isReview = true,
+                glossary = repo.glossary()
+            )
+        }
+    }
+
+    private fun vocabLearned(cards: Map<String, CardEntity>, id: String): Boolean =
+        (cards[id]?.repetitions ?: 0) >= LEARNED_REPS
+
+    /**
+     * Задание по идентификатору карточки.
+     *
+     * У образца склонения ячейка выбирается по числу повторений: не случайно —
+     * иначе одно и то же повторение показывало бы разное при каждой
+     * перерисовке экрана.
+     */
+    private fun vocabExercise(
+        file: VocabFile,
+        words: Map<String, VocabWord>,
+        id: String,
+        repetitions: Int
+    ): Exercise? {
+        val word = words[VocabRepository.lemmaOf(id) ?: return null] ?: return null
+        return when {
+            id.endsWith("-" + VocabKind.Meaning.key) ->
+                file.exerciseFor(word, VocabKind.Meaning)
+            id.endsWith("-" + VocabKind.Pattern.key) ->
+                file.exerciseFor(word, VocabKind.Pattern, repetitions = repetitions)
+            else -> id.substringAfter("-" + VocabKind.Odd.key + "-", "")
+                .takeIf { it.isNotBlank() }
+                ?.let { file.exerciseFor(word, VocabKind.Odd, it) }
+        }
+    }
+
     fun startReview() {
         viewModelScope.launch {
             val now = System.currentTimeMillis()
-            val total = dao.dueCount(now)
-            val due = dao.dueCards(now, REVIEW_LIMIT)
+            val total = dao.dueCount(now, VocabRepository.LESSON_ID)
+            val due = dao.dueCards(now, REVIEW_LIMIT, VocabRepository.LESSON_ID)
             val byId = repo.exercisesIn(due.map { it.lessonId })
             val items = due.mapNotNull { card ->
                 byId[card.exerciseId]?.let { (lessonId, ex) -> SessionItem(lessonId, ex) }
@@ -767,6 +938,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             is Exercise.TranslateToTarget -> checkWithModel(ex.prompt, ex.reference, answer)
             is Exercise.TranslateToNative -> checkWithModel(ex.prompt, ex.reference, answer)
             is Exercise.Form -> localResult(
+                LocalCheck.matchesTyped(answer, ex.answer),
+                ex.explanation,
+                ex.answer,
+                answer
+            )
+            is Exercise.Word -> localResult(
                 LocalCheck.matchesTyped(answer, ex.answer),
                 ex.explanation,
                 ex.answer,
