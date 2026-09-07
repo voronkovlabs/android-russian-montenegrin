@@ -1,0 +1,18 @@
+{
+  "id": "l28",
+  "title": "Вид глагола",
+  "note": "У глагола два вида. Несовершенный — процесс или привычка: «Pišem pismo» — пишу. Совершенный — результат: «Napisao sam pismo» — написал. Пары чаще всего различаются приставкой: pisati — napisati, raditi — uraditi, jesti — pojesti, piti — popiti, čitati — pročitati, gledati — pogledati. Со словами длительности («cijelo veče», «sat vremena») идёт несовершенный, со словом «već» и результатом — совершенный.",
+  "exercises": [
+    {"type": "form", "id": "l28e01", "prompt": "Juče sam ___ pismo. (написал — до конца)", "answer": "napisao", "explanation": "Результат — совершенный вид, с приставкой na-."},
+    {"type": "form", "id": "l28e02", "prompt": "Svaki dan ___ novine. (читаю — привычка)", "answer": "čitam", "explanation": "Привычное действие — несовершенный вид."},
+    {"type": "form", "id": "l28e03", "prompt": "Sjutra ću ___ knjigu. (прочитать до конца)", "answer": "pročitati", "explanation": "После ću идёт инфинитив, и совершенный вид значит «дочитаю»."},
+    {"type": "form", "id": "l28e04", "prompt": "Sat vremena sam ___ ovo pismo. (писал — процесс)", "answer": "pisao", "explanation": "Длительность требует несовершенного вида."},
+    {"type": "form", "id": "l28e05", "prompt": "___ sam svu kafu. (выпил всю)", "answer": "Popio", "explanation": "Popiti — выпить до конца; piti — пить."},
+    {"type": "choice", "id": "l28e06", "prompt": "«Я весь вечер смотрел телевизор» — как правильно?", "options": ["Gledao sam televizor cijelo veče", "Pogledao sam televizor cijelo veče", "Gledaću televizor cijelo veče", "Pogledam televizor cijelo veče"], "answer": "Gledao sam televizor cijelo veče", "explanation": "«Cijelo veče» — длительность, поэтому несовершенный gledao."},
+    {"type": "word_bank", "id": "l28e07", "prompt": "Я уже сделал эту работу.", "answer": "Već sam uradio ovaj posao", "bank": ["Već", "sam", "uradio", "ovaj", "posao", "radio", "radim"], "explanation": "Uraditi — сделать до конца; raditi — работать, делать вообще."},
+    {"type": "ru_to_me", "id": "l28e08", "prompt": "Я читал эту книгу, но не дочитал.", "reference": "Čitao sam ovu knjigu, ali je nisam pročitao.", "hint": "Процесс — čitao, результат — pročitao. Оба нужны в одной фразе."},
+    {"type": "me_to_ru", "id": "l28e09", "prompt": "Popio sam kafu i otišao.", "reference": "Я выпил кофе и ушёл."},
+    {"type": "listening", "id": "l28e10", "audioText": "Napisao sam ti poruku", "translation": "Я написал тебе сообщение"},
+    {"type": "repeat", "id": "l28e11", "phrase": "Jesi li pročitao pismo?", "translation": "Ты прочитал письмо?"}
+  ]
+}

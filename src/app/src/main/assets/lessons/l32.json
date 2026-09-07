@@ -1,0 +1,18 @@
+{
+  "id": "l32",
+  "title": "Дорога и граница",
+  "note": "Дальше автобуса: granica — граница, osiguranje — страховка, kazna — штраф, ograničenje brzine — ограничение скорости, gužva — затор и очередь, rezervacija — бронь. «Сколько до чего-то» — koliko ima do плюс родительный. Штраф получают: dobiti kaznu, а платят на месте — platiti na licu mjesta.",
+  "exercises": [
+    {"type": "form", "id": "l32e01", "prompt": "Na ___ smo čekali sat vremena. (границе)", "answer": "granici", "explanation": "После na о месте — местный падеж: granica становится granici."},
+    {"type": "form", "id": "l32e02", "prompt": "Zeleni karton je ___ za auto. (страховка)", "answer": "osiguranje", "explanation": "Osiguranje — страховка, средний род."},
+    {"type": "form", "id": "l32e03", "prompt": "Dobio sam ___ zbog brzine. (штраф)", "answer": "kaznu", "explanation": "Dobiti что — винительный: kazna становится kaznu."},
+    {"type": "form", "id": "l32e04", "prompt": "Koje je ovdje ___ brzine? (ограничение)", "answer": "ograničenje", "explanation": "Ograničenje brzine — ограничение скорости, второе слово в родительном."},
+    {"type": "form", "id": "l32e05", "prompt": "Ovdje je ograničenje ___ osamdeset. (до)", "answer": "do", "explanation": "Do плюс родительный, у числительного форма не меняется."},
+    {"type": "choice", "id": "l32e06", "prompt": "Как спросить, далеко ли до границы?", "options": ["Koliko ima do granice?", "Koliko je do granica?", "Koliko ima na granicu?", "Koliko ima do granica?"], "answer": "Koliko ima do granice?", "explanation": "Do требует родительного: granica становится granice."},
+    {"type": "word_bank", "id": "l32e07", "prompt": "У меня забронирована машина.", "answer": "Imam rezervaciju za auto", "bank": ["Imam", "rezervaciju", "za", "auto", "rezervacija", "kola"], "explanation": "Imati что — винительный: rezervacija становится rezervaciju."},
+    {"type": "ru_to_me", "id": "l32e08", "prompt": "Покажите паспорт и страховку, пожалуйста.", "reference": "Pokažite pasoš i osiguranje, molim vas.", "hint": "Повелительное на -ite — вежливое обращение на «вы»."},
+    {"type": "me_to_ru", "id": "l32e09", "prompt": "Platio sam kaznu na licu mjesta.", "reference": "Я заплатил штраф на месте."},
+    {"type": "listening", "id": "l32e10", "audioText": "Na granici je bila velika gužva", "translation": "На границе была большая очередь"},
+    {"type": "reading", "id": "l32e11", "text": "Krenuli smo rano ujutru. Na granici nije bilo gužve. Stigli smo prije podne.", "translation": "Мы выехали рано утром. На границе не было очереди. Мы приехали до полудня."}
+  ]
+}

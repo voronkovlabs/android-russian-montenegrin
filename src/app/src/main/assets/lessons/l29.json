@@ -1,0 +1,18 @@
+{
+  "id": "l29",
+  "title": "Порядковые числа и даты",
+  "note": "Порядковые: prvi, drugi, treći, četvrti, peti, šesti, sedmi, osmi, deveti, deseti, jedanaesti, dvanaesti; двадцать первый — dvadeset prvi, меняется только последнее слово. Дата — порядковое в родительном плюс месяц в родительном: «prvog maja», «petnaestog avgusta». Месяцы: januar, februar, mart, april, maj, jun, jul, avgust, septembar, oktobar, novembar, decembar. «Какое сегодня число?» — «Koji je danas datum?»",
+  "exercises": [
+    {"type": "form", "id": "l29e01", "prompt": "Stan je na ___ spratu. (третьем)", "answer": "trećem", "explanation": "Порядковое склоняется как прилагательное: treći — trećem."},
+    {"type": "form", "id": "l29e02", "prompt": "Danas je ___ maj. (первое)", "answer": "prvi", "explanation": "Число само по себе — именительный: prvi maj."},
+    {"type": "form", "id": "l29e03", "prompt": "Rođen sam ___ avgusta. (пятнадцатого)", "answer": "petnaestog", "explanation": "«Когда» — родительный: petnaestog avgusta."},
+    {"type": "form", "id": "l29e04", "prompt": "Ovo je ___ put. (второй)", "answer": "drugi", "explanation": "Drugi — второй и другой."},
+    {"type": "form", "id": "l29e05", "prompt": "Vidimo se ___ septembra. (десятого)", "answer": "desetog", "explanation": "Родительный и у числа, и у месяца."},
+    {"type": "choice", "id": "l29e06", "prompt": "Как сказать «двадцать первого июня»?", "options": ["dvadeset prvog juna", "dvadeset prvi jun", "dvadesetog prvog juna", "dvadeset prvog jun"], "answer": "dvadeset prvog juna", "explanation": "Склоняется только последнее слово числа, месяц идёт в родительном."},
+    {"type": "word_bank", "id": "l29e07", "prompt": "Я приезжаю первого октября.", "answer": "Dolazim prvog oktobra", "bank": ["Dolazim", "prvog", "oktobra", "prvi", "oktobar", "do"], "explanation": "Дата ответа на «когда» — родительный без предлога."},
+    {"type": "ru_to_me", "id": "l29e08", "prompt": "Какое сегодня число?", "reference": "Koji je danas datum?", "hint": "Datum — число месяца. «Broj» тут не годится."},
+    {"type": "me_to_ru", "id": "l29e09", "prompt": "Sastanak je dvanaestog decembra u deset.", "reference": "Встреча двенадцатого декабря в десять."},
+    {"type": "listening", "id": "l29e10", "audioText": "Danas je peti mart", "translation": "Сегодня пятое марта"},
+    {"type": "repeat", "id": "l29e11", "phrase": "Kada ti je rođendan?", "translation": "Когда у тебя день рождения?"}
+  ]
+}

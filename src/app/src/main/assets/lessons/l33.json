@@ -1,0 +1,18 @@
+{
+  "id": "l33",
+  "title": "За столом",
+  "note": "Дальше покупки еды: predjelo — закуска, glavno jelo — основное блюдо, desert — десерт, jelovnik — меню, viljuška — вилка, nož — нож, kašika — ложка, tanjir — тарелка, čaša — стакан, salveta — салфетка. Вкус: ljuto — остро, slano — солёно, na žaru — на гриле, kuvano — варёное, pečeno — печёное. Счёт делят: zajedno — вместе, odvojeno — раздельно.",
+  "exercises": [
+    {"type": "form", "id": "l33e01", "prompt": "Donesite mi ___, molim vas. (вилку)", "answer": "viljušku", "explanation": "Viljuška в винительном — viljušku."},
+    {"type": "form", "id": "l33e02", "prompt": "Hoću meso ___ žaru. (на)", "answer": "na", "explanation": "Na žaru — на гриле, застывшее сочетание с местным падежом."},
+    {"type": "form", "id": "l33e03", "prompt": "Ovo je previše ___ za mene. (остро)", "answer": "ljuto", "explanation": "Ljuto — остро; слано будет slano."},
+    {"type": "form", "id": "l33e04", "prompt": "Za ___ hoću sladoled. (десерт)", "answer": "desert", "explanation": "Za плюс винительный, но у desert форма не меняется."},
+    {"type": "form", "id": "l33e05", "prompt": "Donesite ___ vode, molim. (стакан)", "answer": "čašu", "explanation": "Čaša в винительном — čašu, а vode остаётся в родительном."},
+    {"type": "choice", "id": "l33e06", "prompt": "Как сказать «я это не заказывал»?", "options": ["Ovo nisam naručio", "Ovo ne naručio sam", "Ovo nisam naručiti", "Ovo se nisam naručio"], "answer": "Ovo nisam naručio", "explanation": "Отрицание прошедшего — nisam плюс форма на -o, без se и без инфинитива."},
+    {"type": "word_bank", "id": "l33e07", "prompt": "Можно нам счёт раздельно?", "answer": "Možemo li račun odvojeno", "bank": ["Možemo", "li", "račun", "odvojeno", "zajedno", "možete"], "explanation": "Вопрос без вопросительного слова строится через li вторым словом."},
+    {"type": "ru_to_me", "id": "l33e08", "prompt": "Что вы посоветуете?", "reference": "Šta biste preporučili?", "hint": "Условное для вежливости: biste плюс форма на -li — как в уроке 27."},
+    {"type": "me_to_ru", "id": "l33e09", "prompt": "Jelo je bilo odlično, ali malo slano.", "reference": "Блюдо было отличное, но чуть солёное."},
+    {"type": "listening", "id": "l33e10", "audioText": "Za predjelo hoću salatu", "translation": "На закуску я хочу салат"},
+    {"type": "repeat", "id": "l33e11", "phrase": "Možemo li dobiti jelovnik?", "translation": "Можно нам меню?"}
+  ]
+}

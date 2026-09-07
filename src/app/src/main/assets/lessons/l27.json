@@ -1,0 +1,18 @@
+{
+  "id": "l27",
+  "title": "Условное наклонение",
+  "note": "Условное — это bih, bi, bi, bismo, biste, bi плюс форма на -o/-la, та же, что в прошедшем: «Htio bih» — я хотел бы, женщина скажет «Htjela bih». Частица стоит второй в предложении, а не первой. Вежливая просьба строится тем же: «Da li biste mi pomogli?» мягче, чем «Pomozite mi». Условие: «Da imamo vremena, došli bismo» — в первой части da с настоящим, во второй bi.",
+  "exercises": [
+    {"type": "form", "id": "l27e01", "prompt": "Htio ___ jednu kafu. (бы)", "answer": "bih", "explanation": "Bih — первое лицо единственного числа, и стоит вторым словом."},
+    {"type": "form", "id": "l27e02", "prompt": "Da li ___ mi pomogli? (бы вы)", "answer": "biste", "explanation": "Biste — вежливое «вы» и множественное число."},
+    {"type": "form", "id": "l27e03", "prompt": "Mi ___ došli sjutra. (бы)", "answer": "bismo", "explanation": "Bismo — «мы»."},
+    {"type": "form", "id": "l27e04", "prompt": "Ona ___ htjela da ide. (бы)", "answer": "bi", "explanation": "Bi — третье лицо, и оно же второе лицо единственного числа."},
+    {"type": "form", "id": "l27e05", "prompt": "Da imam vremena, pomogao ___ ti. (бы)", "answer": "bih", "explanation": "Следствие ставится в условное, условие — в настоящее с da."},
+    {"type": "choice", "id": "l27e06", "prompt": "Как вежливо попросить счёт?", "options": ["Da li biste mi donijeli račun?", "Da li biste mi donijeti račun?", "Da li ste mi donijeli račun?", "Da li bih mi donijeli račun?"], "answer": "Da li biste mi donijeli račun?", "explanation": "После biste идёт форма на -li, а не инфинитив. «Da li ste» — прошедшее, не просьба."},
+    {"type": "word_bank", "id": "l27e07", "prompt": "Я хотел бы посмотреть квартиру.", "answer": "Htio bih da vidim stan", "bank": ["Htio", "bih", "da", "vidim", "stan", "hoću", "vidjeti"], "explanation": "После bih — da плюс личная форма, как и после hoću."},
+    {"type": "ru_to_me", "id": "l27e08", "prompt": "Если бы у нас было время, мы бы приехали завтра.", "reference": "Da imamo vremena, došli bismo sjutra.", "hint": "Условие — da с настоящим временем, а не с прошедшим."},
+    {"type": "me_to_ru", "id": "l27e09", "prompt": "Biste li mi pokazali gdje je stanica?", "reference": "Вы бы не показали мне, где станция?"},
+    {"type": "listening", "id": "l27e10", "audioText": "Htio bih jednu kafu", "translation": "Я хотел бы один кофе"},
+    {"type": "repeat", "id": "l27e11", "phrase": "Da li biste mi pomogli?", "translation": "Вы бы мне не помогли?"}
+  ]
+}

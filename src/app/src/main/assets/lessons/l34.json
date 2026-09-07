@@ -1,0 +1,18 @@
+{
+  "id": "l34",
+  "title": "Мнение и согласие",
+  "note": "Как сказать, что думаешь: mislim da — я думаю, что; čini mi se da — мне кажется; po mom mišljenju — по-моему; slažem se — согласен; ne slažem se — не согласен; možda — может быть; zapravo — на самом деле; uglavnom — в основном. «Он прав» — on je u pravu, без отдельного глагола. Мягкое несогласие строится условным: «Ne bih se složio».",
+  "exercises": [
+    {"type": "form", "id": "l34e01", "prompt": "___ mi se da je skupo. (кажется)", "answer": "Čini", "explanation": "Činiti se — казаться; лицо стоит в дательном: čini mi se."},
+    {"type": "form", "id": "l34e02", "prompt": "___ se s tobom. (соглашаюсь)", "answer": "Slažem", "explanation": "Slagati se — соглашаться, всегда с se."},
+    {"type": "form", "id": "l34e03", "prompt": "Po mom ___ to nije tačno. (мнению)", "answer": "mišljenju", "explanation": "После po — местный падеж: mišljenje становится mišljenju."},
+    {"type": "form", "id": "l34e04", "prompt": "Nisam siguran, ___ je tako. (может быть)", "answer": "možda", "explanation": "Možda — может быть; «možeš» тут ни при чём."},
+    {"type": "form", "id": "l34e05", "prompt": "Ja ___ da je bolje ovako. (думаю)", "answer": "mislim", "explanation": "Mislim da вводит придаточное «что»."},
+    {"type": "choice", "id": "l34e06", "prompt": "Как вежливо не согласиться?", "options": ["Ne bih se složio s tim.", "Ne bih se složiti s tim.", "Ne se bih složio s tim.", "Ne bih se složio sa to."], "answer": "Ne bih se složio s tim.", "explanation": "После bih — форма на -o, а se стоит между ними. S требует творительного: s tim."},
+    {"type": "word_bank", "id": "l34e07", "prompt": "По-моему, это хорошая идея.", "answer": "Po mom mišljenju to je dobra ideja", "bank": ["Po", "mom", "mišljenju", "to", "je", "dobra", "ideja", "mislim"], "explanation": "Po mom mišljenju — застывший оборот, глагол в нём не нужен."},
+    {"type": "ru_to_me", "id": "l34e08", "prompt": "Мне кажется, что он прав.", "reference": "Čini mi se da je u pravu.", "hint": "U pravu — «прав»; отдельного глагола «быть правым» нет."},
+    {"type": "me_to_ru", "id": "l34e09", "prompt": "Uglavnom se slažem, ali ne u svemu.", "reference": "В основном согласен, но не во всём."},
+    {"type": "listening", "id": "l34e10", "audioText": "Mislim da je to dobra ideja", "translation": "Я думаю, что это хорошая идея"},
+    {"type": "speaking", "id": "l34e11", "phrase": "Šta ti misliš o tome?", "translation": "Что ты об этом думаешь?"}
+  ]
+}

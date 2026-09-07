@@ -1,0 +1,18 @@
+{
+  "id": "l30",
+  "title": "У врача: анализы и направления",
+  "note": "Дальше первого приёма: uput — направление, nalaz — результат анализа, pregled — осмотр, termin — время приёма, krv — кровь, kašalj — кашель, alergija — аллергия, hitna pomoć — скорая. «Записаться» — zakazati pregled или zakazati termin. «У меня аллергия на что-то» — alergičan sam na плюс винительный.",
+  "exercises": [
+    {"type": "form", "id": "l30e01", "prompt": "Treba mi ___ za specijalistu. (направление)", "answer": "uput", "explanation": "Uput — направление к врачу; сам приём — pregled."},
+    {"type": "form", "id": "l30e02", "prompt": "Imam jak ___ već nedjelju dana. (кашель)", "answer": "kašalj", "explanation": "Kašalj — кашель, мужской род."},
+    {"type": "form", "id": "l30e03", "prompt": "Sjutra vadim ___. (кровь)", "answer": "krv", "explanation": "Vaditi krv — сдавать кровь."},
+    {"type": "form", "id": "l30e04", "prompt": "Kada će biti gotov ___? (результат анализа)", "answer": "nalaz", "explanation": "Nalaz — результат обследования, не «rezultat»."},
+    {"type": "form", "id": "l30e05", "prompt": "Alergičan sam ___ penicilin. (на)", "answer": "na", "explanation": "Alergičan na плюс винительный падеж."},
+    {"type": "choice", "id": "l30e06", "prompt": "Как позвать скорую?", "options": ["Zovite hitnu pomoć!", "Zovite brzu pomoć!", "Zovite hitno pomoć!", "Zovite hitna pomoć!"], "answer": "Zovite hitnu pomoć!", "explanation": "Hitna pomoć в винительном — hitnu pomoć: зовут кого, а не что."},
+    {"type": "word_bank", "id": "l30e07", "prompt": "Мне нужно записаться на приём.", "answer": "Treba da zakažem pregled", "bank": ["Treba", "da", "zakažem", "pregled", "zakazati", "termin"], "explanation": "Treba da плюс личная форма — как и в уроке о работе."},
+    {"type": "ru_to_me", "id": "l30e08", "prompt": "У меня температура и болит горло.", "reference": "Imam temperaturu i boli me grlo.", "hint": "«Меня болит» — boli me, а дальше то, что болит, в именительном."},
+    {"type": "me_to_ru", "id": "l30e09", "prompt": "Uzimajte ovaj lijek poslije jela.", "reference": "Принимайте это лекарство после еды."},
+    {"type": "listening", "id": "l30e10", "audioText": "Nalaz će biti gotov u petak", "translation": "Результат будет готов в пятницу"},
+    {"type": "reading", "id": "l30e11", "text": "Otišao sam kod ljekara. Dao mi je uput za analizu krvi. Nalaz će biti gotov za tri dana.", "translation": "Я пошёл к врачу. Он дал мне направление на анализ крови. Результат будет готов через три дня."}
+  ]
+}

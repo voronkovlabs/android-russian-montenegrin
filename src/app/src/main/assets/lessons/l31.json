@@ -1,0 +1,18 @@
+{
+  "id": "l31",
+  "title": "Жильё: счета и поломки",
+  "note": "Дальше переезда: kirija — плата за аренду, depozit — залог, komunalije — коммунальные, računi — счета, struja — электричество, grijanje — отопление, smeće — мусор, kvar — поломка, vlasnik — хозяин, ugovor o zakupu — договор аренды. «Счёт за что-то» — račun za плюс винительный: «račun za struju».",
+  "exercises": [
+    {"type": "form", "id": "l31e01", "prompt": "Plaćam ___ svakog prvog. (аренду)", "answer": "kiriju", "explanation": "Kirija в винительном — kiriju."},
+    {"type": "form", "id": "l31e02", "prompt": "Stigao je račun za ___. (электричество)", "answer": "struju", "explanation": "После za — винительный: struja становится struju."},
+    {"type": "form", "id": "l31e03", "prompt": "Zimi je skupo ___. (отопление)", "answer": "grijanje", "explanation": "Grijanje — отопление, средний род."},
+    {"type": "form", "id": "l31e04", "prompt": "Zovi vlasnika, imamo ___. (поломку)", "answer": "kvar", "explanation": "Kvar — поломка; мужской род неодушевлённый, в винительном не меняется."},
+    {"type": "form", "id": "l31e05", "prompt": "Potpisali smo ugovor ___ zakupu. (о)", "answer": "o", "explanation": "O плюс местный падеж: o zakupu."},
+    {"type": "choice", "id": "l31e06", "prompt": "Как спросить, входят ли коммунальные в цену?", "options": ["Da li su komunalije uključene u cijenu?", "Da li su komunalije uključeni u cijenu?", "Da li je komunalije uključeno u cijenu?", "Da li su komunalije uključene u cijeni?"], "answer": "Da li su komunalije uključene u cijenu?", "explanation": "Komunalije — женский род множественного числа, отсюда uključene. «Входят во что» — винительный."},
+    {"type": "word_bank", "id": "l31e07", "prompt": "Кто платит за воду?", "answer": "Ko plaća vodu", "bank": ["Ko", "plaća", "vodu", "voda", "plaćaju", "za"], "explanation": "Platiti что — прямой винительный, предлог za тут не нужен."},
+    {"type": "ru_to_me", "id": "l31e08", "prompt": "Интернет не работает уже два дня.", "reference": "Internet ne radi već dva dana.", "hint": "Već с длительностью — «уже», и время идёт без предлога."},
+    {"type": "me_to_ru", "id": "l31e09", "prompt": "Depozit se vraća kada se iseliš.", "reference": "Залог возвращается, когда съезжаешь."},
+    {"type": "listening", "id": "l31e10", "audioText": "Račun za struju je stigao", "translation": "Счёт за электричество пришёл"},
+    {"type": "repeat", "id": "l31e11", "phrase": "Kada dolazi majstor?", "translation": "Когда придёт мастер?"}
+  ]
+}
