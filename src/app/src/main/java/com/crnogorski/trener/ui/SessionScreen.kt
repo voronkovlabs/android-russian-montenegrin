@@ -338,6 +338,8 @@ private fun TextAnswer(
 ) {
     var value by remember(key) { mutableStateOf("") }
     var status by remember(key) { mutableStateOf("") }
+    // След последней диктовки — см. Dictation.
+    var dictation by remember(key) { mutableStateOf<Dictation?>(null) }
 
     // Черногорскую фразу озвучиваем сразу, как только задание появилось: слышать
     // её нужно раньше, чем разбирать. Только в Input — иначе фраза повторилась бы
@@ -375,7 +377,16 @@ private fun TextAnswer(
                     enabled = true,
                     autoKey = if (autoListen) key else null,
                     onStatus = { status = it },
-                    onText = { value = appendSpoken(value, it) }
+                    onText = { heard ->
+                        // Диктовка подряд заменяет предыдущую, набранное руками
+                        // не трогает. Что из этого сейчас в поле, говорит
+                        // сравнение с Dictation.after.
+                        val last = dictation
+                        val base = if (last != null && value == last.after) last.before else value
+                        val next = appendSpoken(base, heard)
+                        dictation = Dictation(base, next)
+                        value = next
+                    }
                 )
             }
         },
@@ -407,6 +418,24 @@ private fun TextAnswer(
         PrimaryButton("Проверить", enabled = value.isNotBlank()) { onSubmit(value) }
     }
 }
+
+/**
+ * След последней диктовки: каким поле было до неё ([before]) и каким стало
+ * после ([after]).
+ *
+ * Нужен, чтобы **вторая диктовка подряд заменяла первую**, а не дописывалась к
+ * ней. Само по себе дописывание правильно — набранное руками затирать нельзя,
+ * — но между двумя заходами подряд ничего не набирают: второй заход значит «не
+ * так расслышалось, скажу ещё раз», и склейка двух попыток давала строку, из
+ * которой ответ приходилось выковыривать руками.
+ *
+ * Одно от другого отличается сравнением, а не флагом: если поле с прошлой
+ * диктовки не трогали, оно равно [after], и заменить надо ровно
+ * продиктованное, вернувшись к [before]. Любая правка руками сравнение рушит —
+ * и тогда снова дописываем. Хранить сам распознанный кусок для этого мало:
+ * заменять надо то место, где он стоит, а стоит он в конце того, что было.
+ */
+private data class Dictation(val before: String, val after: String)
 
 /** Продиктованное дописывается к набранному, а не затирает его. */
 private fun appendSpoken(current: String, heard: String): String =
