@@ -24,6 +24,7 @@ import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.speech.Speaker
 import com.crnogorski.trener.ui.AppViewModel
 import com.crnogorski.trener.ui.CrnogorskiTheme
+import com.crnogorski.trener.ui.DailySplash
 import com.crnogorski.trener.ui.HomeScreen
 import com.crnogorski.trener.ui.Ink
 import com.crnogorski.trener.ui.Paper
@@ -56,6 +57,7 @@ class MainActivity : ComponentActivity() {
                 val settings by vm.settings.collectAsStateWithLifecycle()
                 val story by vm.story.collectAsStateWithLifecycle()
                 val stats by vm.stats.collectAsStateWithLifecycle()
+                val splash by vm.splash.collectAsStateWithLifecycle()
                 val notice by vm.notice.collectAsStateWithLifecycle()
 
                 // Подтверждение записанной жалобы: поверх любого экрана и без
@@ -77,6 +79,13 @@ class MainActivity : ComponentActivity() {
                     }
                 ) { inner ->
                     val content = Modifier.fillMaxSize().padding(inner)
+                    // Заставка идёт поверх всего и без отступов Scaffold: она
+                    // во весь экран, и полоса под шторкой резала бы постер.
+                    val done = splash
+                    if (done != null) {
+                        DailySplash(state = done, onClose = vm::closeSplash)
+                        return@Scaffold
+                    }
                     val active = session
                     val openSettings = settings
                     val openStory = story

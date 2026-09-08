@@ -171,6 +171,27 @@ data class StatsBrief(
 )
 
 /**
+ * Заставка после ежедневного задания.
+ *
+ * Собирается один раз, в момент, когда занятие уже записано: числа тут те же,
+ * что в отчёте, но за сегодня и за это занятие. Держать её в состоянии сессии
+ * нельзя — сессия к тому времени закрыта.
+ */
+data class SplashState(
+    /** Черногорская фраза и её перевод: меняются по тому, чем кончился день. */
+    val phrase: String,
+    val gloss: String,
+    val streak: Int,
+    /** Минут за сегодня — всё занятие целиком, не только это. */
+    val minutes: Int,
+    /** Заданий в этом занятии и доля верных с первого раза. */
+    val answers: Int,
+    val accuracy: Int,
+    /** Строка мелким под числами: слова и курс. */
+    val footer: String
+)
+
+/**
  * Отчёт по занятиям.
  *
  * [today] и [total] — одна и та же форма строки: сегодняшний день и сумма всех
@@ -546,6 +567,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _stats = MutableStateFlow<StatsState?>(null)
     val stats: StateFlow<StatsState?> = _stats.asStateFlow()
+
+    private val _splash = MutableStateFlow<SplashState?>(null)
+    val splash: StateFlow<SplashState?> = _splash.asStateFlow()
 
     private val _story = MutableStateFlow<StoryState?>(null)
     val story: StateFlow<StoryState?> = _story.asStateFlow()
@@ -1115,6 +1139,83 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun closeStats() {
         _stats.value = null
+    }
+
+    /**
+     * Закрыть заставку — и вместе с ней занятие.
+     *
+     * Обычного экрана «готово» у ежедневного задания больше нет: заставка его и
+     * заменила, а два подряд экрана с одним и тем же смыслом читались бы как
+     * недоделка.
+     */
+    fun closeSplash() {
+        _splash.value = null
+        exitSession()
+    }
+
+    /**
+     * Что показать на заставке.
+     *
+     * Считается **после** того, как занятие записано в день: иначе минуты и
+     * серия отставали бы ровно на это занятие — то самое, за которое хвалим.
+     */
+    private suspend fun buildSplash(state: SessionState): SplashState {
+        val rows = dao.days()
+        val today = rows.firstOrNull { it.day == LocalDate.now().toString() }
+        val answers = state.items.size
+        val accuracy = if (answers > 0) state.correct * 100 / answers else 0
+        val streak = streakNow(rows)
+        val vocab = dao.vocabCards(VocabRepository.LESSON_ID)
+        val learned = vocab.count {
+            isMeaning(it.exerciseId) && it.correct >= VocabRepository.LEARNED
+        }
+        val lessons = dao.lessonProgress().size
+        val (phrase, gloss) = splashPhrase(
+            streak = streak,
+            accuracy = accuracy,
+            answers = answers,
+            firstDay = rows.count { it.active } <= 1
+        )
+        return SplashState(
+            phrase = phrase,
+            gloss = gloss,
+            streak = streak,
+            minutes = minutesOf(today?.seconds ?: 0),
+            answers = answers,
+            accuracy = accuracy,
+            footer = buildList {
+                val fresh = today?.words ?: 0
+                if (fresh > 0) add("+$fresh новых слов")
+                if (learned > 0) add("$learned выучено")
+                add("курс: $lessons из ${repo.index().lessons.size}")
+            }.joinToString("  ·  ")
+        )
+    }
+
+    /**
+     * Фраза дня: черногорская, с переводом.
+     *
+     * Не одна на все случаи, и это главное в ней. Одна и та же надпись на
+     * седьмой раз перестаёт читаться вовсе, а так заставка каждый раз говорит
+     * что-то про сегодняшний день. Заодно и учит: экран-награда — единственное
+     * место, где фразу читают без всякого задания.
+     *
+     * Порядок проверок — от редкого к обычному. Занятие без единой ошибки реже
+     * длинной серии, поэтому идёт первым; ошибка на последнем задании не должна
+     * отменять неделю подряд, поэтому серия идёт раньше «просто дня».
+     */
+    private fun splashPhrase(
+        streak: Int,
+        accuracy: Int,
+        answers: Int,
+        firstDay: Boolean
+    ): Pair<String, String> = when {
+        // Пять заданий — порог, ниже которого «без ошибок» ничего не значит.
+        answers >= 5 && accuracy == 100 -> "Bez greške!" to "без единой ошибки"
+        streak >= 7 -> "Nema predaje!" to "сдаваться не будем"
+        streak >= 3 -> "Dan po dan!" to "день за днём"
+        firstDay -> "Počelo je!" to "началось"
+        else -> "Samo naprijed!" to "только вперёд"
     }
 
     private fun isMeaning(id: String) = id.endsWith("-" + VocabKind.Meaning.key)
@@ -2264,6 +2365,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             if (state.daily) closed += closePortionedLessons(state)
             bump(sessions = 1, lessons = closed)
             _session.value = state.copy(finished = true)
+            // Заставка только у ежедневного задания: это единственное занятие,
+            // которое человек «сдаёт» целиком, — у повторения и словаря конца
+            // нет по устройству.
+            if (state.daily) _splash.value = buildSplash(state)
             autoSaveProgress()
         }
     }
