@@ -1,5 +1,10 @@
 package com.crnogorski.trener.ui
 
+import android.content.Context
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,12 +30,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.DeviceFontFamilyName
@@ -70,6 +78,7 @@ import com.crnogorski.trener.R
 @Composable
 fun DailySplash(state: SplashState, onClose: () -> Unit) {
     BackHandler { onClose() }
+    riff(LocalContext.current)
 
     Box(Modifier.fillMaxSize().background(SplashInk)) {
         // Продолжение костра вниз: постер кончается раньше экрана.
@@ -214,6 +223,66 @@ private fun plural(n: Int, one: String, few: String, many: String): String {
         else -> many
     }
 }
+
+/**
+ * Гитарный риф, пока заставка открыта.
+ *
+ * Запись живая, не синтез: `res/raw/splash_riff.ogg` — четыре секунды с
+ * Freesound под лицензией CC0 (общественное достояние), 30 КБ. Внутри файла
+ * конец подмешан в начало встречными огибающими, поэтому оборот петли не
+ * щёлкает и не требует попадания в долю: чистого цикла в исходной фразе нет,
+ * и искать его было бесполезно.
+ *
+ * **Молчим, если телефон переведён в тихий режим.** Поток музыки Android в
+ * беззвучном режиме не глушит, так что заставка иначе грянула бы на всю
+ * громкость в метро или на совещании. Звонок выключен — значит человек просил
+ * тишины, и просьба эта не про звонки, а про телефон вообще.
+ *
+ * Гасим не обрывом, а за четверть секунды: резко оборванный риф звучит как
+ * сбой приложения, а не как конец занятия.
+ */
+@Composable
+private fun riff(context: Context) {
+    val on = remember {
+        val prefs = context.getSharedPreferences(SOUND_PREFS, Context.MODE_PRIVATE)
+        val audio = context.getSystemService(AudioManager::class.java)
+        prefs.getBoolean(SPLASH_SOUND_KEY, true) &&
+            audio?.ringerMode == AudioManager.RINGER_MODE_NORMAL &&
+            (audio.getStreamVolume(AudioManager.STREAM_MUSIC) > 0)
+    }
+    DisposableEffect(on) {
+        val player = if (!on) null else runCatching {
+            MediaPlayer.create(context, R.raw.splash_riff)?.apply {
+                isLooping = true
+                setVolume(0.85f, 0.85f)
+                start()
+            }
+        }.getOrNull()
+        onDispose { player?.let(::fadeOut) }
+    }
+}
+
+/** Затухание за 250 мс, потом освобождаем движок. */
+private fun fadeOut(player: MediaPlayer, ms: Long = 250L) {
+    val steps = 10
+    val main = Handler(Looper.getMainLooper())
+    for (i in 1..steps) {
+        main.postDelayed({
+            val v = 1f - i / steps.toFloat()
+            runCatching { player.setVolume(v * 0.85f, v * 0.85f) }
+            if (i == steps) runCatching {
+                player.stop()
+                player.release()
+            }
+        }, ms * i / steps)
+    }
+}
+
+// Настройки лежат в том же файле, что у распознавания и копии прогресса.
+private const val SOUND_PREFS = "crnogorski"
+
+/** Ключ галочки «Звук на заставке» — читается и здесь, и в настройках. */
+const val SPLASH_SOUND_KEY = "splash_sound"
 
 // Цвета заставки: тёмные всегда, в обеих темах — см. описание экрана.
 private val SplashInk = Color(0xFF0E0E10)

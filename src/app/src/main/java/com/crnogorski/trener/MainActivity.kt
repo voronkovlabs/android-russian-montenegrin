@@ -120,6 +120,7 @@ class MainActivity : ComponentActivity() {
                                     onCache = vm::useVerdictCache,
                                     onClearCache = vm::clearVerdictCache,
                                     onDailyMinutes = vm::setDailyMinutes,
+                                    onShowSplash = vm::previewSplash,
                                     onClose = vm::closeSettings
                                 )
                             } else {

@@ -75,6 +75,7 @@ fun SettingsScreen(
     onCache: (Boolean) -> Unit,
     onClearCache: () -> Unit,
     onDailyMinutes: (Int) -> Unit,
+    onShowSplash: () -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
@@ -389,6 +390,9 @@ fun SettingsScreen(
             Spacer(Modifier.height(20.dp))
             RecognitionRow()
 
+            Spacer(Modifier.height(20.dp))
+            SplashRow(onShowSplash)
+
             Spacer(Modifier.height(36.dp))
             Text(
                 "Версия ${state.versionName} (${state.versionCode})",
@@ -563,6 +567,67 @@ private fun RecognitionRow() {
                 runCatching { notifications.isNotificationPolicyAccessGranted }.getOrDefault(false)
         }
     }
+}
+
+/**
+ * Заставка: звук и показ без занятия.
+ *
+ * Кнопка «Показать заставку» нужна не пользователю, а владельцу: иначе увидеть
+ * экран можно только пройдя ежедневное задание до конца, и любая правка в нём
+ * проверяется через пятнадцать минут занятий.
+ *
+ * Галочка звука живёт в тех же настройках, что и распознавание, и читается
+ * прямо на заставке — тащить её через модель ради одного флага незачем.
+ */
+@Composable
+private fun SplashRow(onShow: () -> Unit) {
+    val context = LocalContext.current
+    val prefs = remember { context.getSharedPreferences("crnogorski", Context.MODE_PRIVATE) }
+    var sound by remember { mutableStateOf(prefs.getBoolean(SPLASH_SOUND_KEY, true)) }
+
+    Text("ЗАСТАВКА", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(12.dp))
+
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .clickable {
+                sound = !sound
+                prefs.edit().putBoolean(SPLASH_SOUND_KEY, sound).apply()
+            }
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = sound,
+            onCheckedChange = {
+                sound = it
+                prefs.edit().putBoolean(SPLASH_SOUND_KEY, it).apply()
+            },
+            colors = CheckboxDefaults.colors(
+                checkedColor = Accent, checkmarkColor = Ink, uncheckedColor = Muted
+            )
+        )
+        Spacer(Modifier.width(8.dp))
+        Text(
+            "Звук на заставке",
+            style = MaterialTheme.typography.titleMedium,
+            color = Paper,
+            modifier = Modifier.weight(1f)
+        )
+    }
+    Spacer(Modifier.height(6.dp))
+    Text(
+        "Гитарный риф играет по кругу, пока заставка открыта. В беззвучном режиме " +
+            "телефона молчит в любом случае: поток музыки Android сам не глушит, и " +
+            "иначе заставка грянула бы в метро.",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+
+    Spacer(Modifier.height(14.dp))
+    SecondaryAction(text = "Показать заставку", onClick = onShow)
 }
 
 /** Шаг настройки длины занятия: пять минут. Минута туда-сюда ничего не решает. */

@@ -1150,7 +1150,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     fun closeSplash() {
         _splash.value = null
-        exitSession()
+        // Заставку можно открыть и из настроек, руками: тогда закрывать нечего.
+        if (_session.value != null) exitSession()
+    }
+
+    /** Показать заставку не занимаясь — кнопка внизу настроек. */
+    fun previewSplash() {
+        viewModelScope.launch { _splash.value = buildSplash(null) }
     }
 
     /**
@@ -1159,11 +1165,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * Считается **после** того, как занятие записано в день: иначе минуты и
      * серия отставали бы ровно на это занятие — то самое, за которое хвалим.
      */
-    private suspend fun buildSplash(state: SessionState): SplashState {
+    private suspend fun buildSplash(state: SessionState?): SplashState {
         val rows = dao.days()
         val today = rows.firstOrNull { it.day == LocalDate.now().toString() }
-        val answers = state.items.size
-        val accuracy = if (answers > 0) state.correct * 100 / answers else 0
+        // Без занятия (показ из настроек) считаем по всему дню: это честные
+        // числа, а не выдуманные ради красивого снимка.
+        val answers = state?.items?.size ?: today?.answers ?: 0
+        val right = state?.correct ?: today?.correct ?: 0
+        val accuracy = if (answers > 0) right * 100 / answers else 0
         val streak = streakNow(rows)
         val vocab = dao.vocabCards(VocabRepository.LESSON_ID)
         val learned = vocab.count {
