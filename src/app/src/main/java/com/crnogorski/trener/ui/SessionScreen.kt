@@ -119,10 +119,29 @@ fun SessionScreen(
                 Spacer(Modifier.height(24.dp))
             }
 
-            when (val phase = state.phase) {
-                is Phase.Blocked -> BlockedView(phase.message, onRetryBlock, onExit)
+            // Тело задания рисуется ОДИН раз, до развилки по фазам, и это не
+            // косметика. Раньше каждая ветка `when` звала его сама, а ветки —
+            // разные места композиции: при переходе «ввод → результат» старое
+            // тело выбрасывалось вместе со всем своим состоянием. Собранная
+            // фраза рассыпалась обратно в кучу, набранный текст исчезал, а
+            // сложенные пары показывались несложенными. Теперь место одно, и
+            // ответ остаётся на экране рядом с вердиктом.
+            val phase = state.phase
+            val live = phase is Phase.Input || phase is Phase.Retry
+            ExerciseBody(
+                state, speaker,
+                enabled = live,
+                onSubmit = onSubmit,
+                onSkip = onSkip,
+                onMatch = onMatch
+            )
+
+            when (phase) {
+                is Phase.Blocked -> {
+                    Spacer(Modifier.height(20.dp))
+                    BlockedView(phase.message, onRetryBlock, onExit)
+                }
                 is Phase.Checking -> {
-                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {}, onMatch = {})
                     Spacer(Modifier.height(24.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CircularProgressIndicator(
@@ -139,13 +158,11 @@ fun SessionScreen(
                     }
                 }
                 is Phase.Result -> {
-                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {}, onMatch = {})
                     Spacer(Modifier.height(20.dp))
                     ResultView(phase, state.current)
                     AnswerTail(state, onNext, onComplain)
                 }
                 is Phase.Skipped -> {
-                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {}, onMatch = {})
                     Spacer(Modifier.height(20.dp))
                     SkippedView(phase)
                     AnswerTail(state, onNext, onComplain)
@@ -154,14 +171,10 @@ fun SessionScreen(
                 // показан. Вердикта ещё нет, поэтому нет и хвоста с жалобой —
                 // жаловаться пока не на что, а флажок в шапке никуда не делся.
                 is Phase.Retry -> {
-                    ExerciseBody(state, speaker, enabled = true, onSubmit = onSubmit, onSkip = onSkip, onMatch = {})
                     Spacer(Modifier.height(20.dp))
                     RetryView(phase)
                 }
-                Phase.Input -> ExerciseBody(
-                    state, speaker, enabled = true,
-                    onSubmit = onSubmit, onSkip = onSkip, onMatch = onMatch
-                )
+                Phase.Input -> Unit
             }
 
             Spacer(Modifier.height(40.dp))
@@ -662,9 +675,15 @@ private fun WordBankAnswer(
     onSubmit: (String) -> Unit
 ) {
     var picked by remember(ex.id) { mutableStateOf(listOf<String>()) }
-    val remaining = remember(picked) {
+    // Слова тасуются, а не идут как в файле: там верный ответ стоит первым по
+    // порядку, и задание решалось нажатием слева направо. Тасуем один раз на
+    // задание — иначе плашки прыгали бы под пальцем при каждой перерисовке, —
+    // но при каждом новом появлении заново: порядок, выученный на повторении,
+    // такое же решение по памяти.
+    val bank = remember(ex.id) { ex.bank.shuffled() }
+    val remaining = remember(picked, bank) {
         val counts = picked.groupingBy { it }.eachCount().toMutableMap()
-        ex.bank.filter { word ->
+        bank.filter { word ->
             val left = counts[word] ?: 0
             if (left > 0) { counts[word] = left - 1; false } else true
         }

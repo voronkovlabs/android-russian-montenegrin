@@ -48,7 +48,11 @@ fun HomeScreen(
     onDaily: (Boolean) -> Unit,
     onReview: () -> Unit,
     onSettings: () -> Unit,
-    onStory: (String, StoryMode) -> Unit,
+    /**
+     * Открыть историю. Третий параметр — начать с первой фразы: так делает
+     * плитка ежедневного задания, но не список на вкладке «Истории».
+     */
+    onStory: (String, StoryMode, Boolean) -> Unit,
     onVocab: (Boolean, Boolean) -> Unit,
     onTab: (HomeTab) -> Unit,
     onToggleGroup: (String) -> Unit,
@@ -133,7 +137,7 @@ fun HomeScreen(
                     if (step != null) {
                         Spacer(Modifier.height(12.dp))
                         StoryStepTile(step, hasItems = state.daily.items.isNotEmpty()) {
-                            onStory(step.id, step.mode)
+                            onStory(step.id, step.mode, true)
                         }
                     }
                     Spacer(Modifier.height(4.dp))
@@ -213,7 +217,7 @@ fun HomeScreen(
                             // Ключ с режимом: тексты в группах одни и те же, и
                             // по одному id список нашёл бы две одинаковые строки.
                             items(group.cards, key = { "${group.mode.key}-${it.ref.id}" }) { card ->
-                                StoryRow(card, onClick = { onStory(card.ref.id, card.mode) })
+                                StoryRow(card, onClick = { onStory(card.ref.id, card.mode, false) })
                             }
                         }
                     }

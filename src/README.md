@@ -59,6 +59,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 { "type": "me_to_ru",   "id": "l09e02", "prompt": "Idem kući.", "reference": "Я иду домой." }
 { "type": "choice",     "id": "l09e03", "prompt": "Дом", "options": ["kuća", "grad"], "answer": "kuća", "explanation": "" }
 { "type": "word_bank",  "id": "l09e04", "prompt": "Я иду домой.", "answer": "Idem kući", "bank": ["Idem", "kući", "kuća"] }
+// bank можно писать в любом порядке: на экране слова перемешиваются
 { "type": "form",       "id": "l09e05", "prompt": "Ja ___ kući. (ići)", "answer": "idem", "explanation": "" }
 { "type": "listening",  "id": "l09e06", "audioText": "Idem kući", "translation": "Я иду домой" }
 { "type": "speaking",   "id": "l09e07", "phrase": "Idem kući", "translation": "Я иду домой" }

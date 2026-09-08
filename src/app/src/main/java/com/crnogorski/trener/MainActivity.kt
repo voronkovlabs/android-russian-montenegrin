@@ -130,7 +130,9 @@ class MainActivity : ComponentActivity() {
                                     onDaily = { extra -> vm.startDaily(extra = extra) },
                                     onReview = vm::startReview,
                                     onSettings = vm::openSettings,
-                                    onStory = vm::openStory,
+                                    onStory = { id, mode, fromStart ->
+                                        vm.openStory(id, mode, fromStart)
+                                    },
                                     onVocab = { back, practice ->
                                         vm.startVocab(back = back, practice = practice)
                                     },

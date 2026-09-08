@@ -853,8 +853,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         if (refs.isEmpty()) return null
         val done = dao.storyProgress().associateBy { it.storyId to it.mode }
 
-        var started: StoryStep? = null
+        // Нетронутые вперёд начатых, а не наоборот, — и это перевёрнутое
+        // правило. Ежедневное задание открывает историю **с первой фразы**
+        // (см. openStory), поэтому предлагать начатую значит предлагать
+        // перечитать то же начало; а нетронутая — это каждый день новый текст.
+        // Дочитывают истории до конца с вкладки «Истории», там продолжение с
+        // места работает по-прежнему.
         var fresh: StoryStep? = null
+        var started: StoryStep? = null
         for (ref in refs) {
             for (mode in StoryMode.entries) {
                 if (mode == StoryMode.Translate && !online) continue
@@ -862,11 +868,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 val left = ref.chunks - (p?.chunksDone ?: 0)
                 if (left <= 0) continue
                 val step = StoryStep(ref.id, ref.title, mode, minOf(chunks, left), left)
-                if (p != null && started == null) started = step
                 if (p == null && fresh == null) fresh = step
+                if (p != null && started == null) started = step
             }
         }
-        return started ?: fresh
+        return fresh ?: started
     }
 
     /** Запуск ежедневного задания. [extra] — ещё один заход сверх нормы. */
@@ -1638,7 +1644,20 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * Дочитанную открываем с начала: возвращаться к ней имеет смысл только чтобы
      * перечитать целиком, а «продолжить с конца» — это пустой экран.
      */
-    fun openStory(id: String, mode: StoryMode) {
+    /**
+     * Открыть историю.
+     *
+     * [fromStart] — с первой фразы, а не с места, где бросили. Так открывает
+     * ежедневное задание: по жалобе владельца («любая история в ежедневных
+     * заданиях всегда должна начинаться сначала») — история, начатая с середины,
+     * непонятна, а трёх отрезков в день не хватает, чтобы помнить прошлые.
+     * На вкладке «Истории» продолжение с места осталось: там текст дочитывают.
+     *
+     * Прогресс от такого перечитывания не теряется — `saveStory` не опускает
+     * счётчик, — но и не растёт, поэтому ежедневное задание берёт следующую
+     * историю только когда её дочитают руками.
+     */
+    fun openStory(id: String, mode: StoryMode, fromStart: Boolean = false) {
         viewModelScope.launch {
             // Перевод проверяет модель, и без сети история встала бы на первом
             // же отрезке. Предупреждаем на входе — как с уроками (guardNetwork).
@@ -1654,7 +1673,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 _notice.value = "Историю не открыть — файл не читается"
                 return@launch
             }
-            val done = dao.story(id, mode.key)?.chunksDone ?: 0
+            val done = if (fromStart) 0 else dao.story(id, mode.key)?.chunksDone ?: 0
             storyClock = System.currentTimeMillis()
             _story.value = StoryState(
                 id = story.id,
@@ -1815,14 +1834,25 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         saveStory(state.id, state.mode, next, next >= state.chunks.size)
     }
 
+    /**
+     * Запомнить, докуда дошли.
+     *
+     * Счётчик **не опускается**: ежедневное задание открывает историю с начала,
+     * и без этого правила три отрезка в занятии стирали бы девять, прочитанных
+     * вчера с вкладки. Отметка о том, что дочитано, тоже не снимается.
+     */
     private fun saveStory(id: String, mode: StoryMode, done: Int, finished: Boolean) {
         viewModelScope.launch {
+            val was = dao.story(id, mode.key)
             dao.upsertStory(
                 StoryProgressEntity(
                     storyId = id,
                     mode = mode.key,
-                    chunksDone = done,
-                    finishedAt = if (finished) System.currentTimeMillis() else 0L
+                    chunksDone = maxOf(done, was?.chunksDone ?: 0),
+                    finishedAt = when {
+                        finished -> System.currentTimeMillis()
+                        else -> was?.finishedAt ?: 0L
+                    }
                 )
             )
         }
