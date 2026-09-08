@@ -270,8 +270,15 @@ private fun StatsStrip(stats: StatsBrief, onOpen: () -> Unit) {
             )
             Spacer(Modifier.height(2.dp))
             Text(
-                "Всего ${timeText(stats.totalMinutes * 60)} · ${stats.totalSessions} " +
-                    sessions(stats.totalSessions),
+                buildString {
+                    // Серию показываем со второго дня: «1 день подряд» — это не
+                    // серия, а просто сегодня, и место она занимала бы зря.
+                    if (stats.streak > 1) {
+                        append("${stats.streak} ${days(stats.streak)} подряд · ")
+                    }
+                    append("всего ${timeText(stats.totalMinutes * 60)} · ")
+                    append("${stats.totalSessions} ${sessions(stats.totalSessions)}")
+                },
                 style = MaterialTheme.typography.labelSmall,
                 color = Muted
             )
@@ -290,6 +297,13 @@ private fun answers(n: Int): String = when {
     n % 10 == 1 -> "ответ"
     n % 10 in 2..4 -> "ответа"
     else -> "ответов"
+}
+
+private fun days(n: Int): String = when {
+    n % 100 in 11..14 -> "дней"
+    n % 10 == 1 -> "день"
+    n % 10 in 2..4 -> "дня"
+    else -> "дней"
 }
 
 private fun sessions(n: Int): String = when {

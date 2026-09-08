@@ -166,7 +166,8 @@ data class StatsBrief(
     val todayMinutes: Int = 0,
     val todayAnswers: Int = 0,
     val totalMinutes: Int = 0,
-    val totalSessions: Int = 0
+    val totalSessions: Int = 0,
+    val streak: Int = 0
 )
 
 /**
@@ -195,6 +196,9 @@ data class StatsState(
     val dueWords: Int = 0,
     /** В скольких из тридцати дней вообще занимались. */
     val activeDays: Int = 0,
+    /** Сколько дней подряд занимались сейчас и сколько подряд выходило лучше всего. */
+    val streak: Int = 0,
+    val bestStreak: Int = 0,
     val loading: Boolean = true
 )
 
@@ -1002,8 +1006,53 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             todayMinutes = minutesOf(today?.seconds ?: 0),
             todayAnswers = today?.answers ?: 0,
             totalMinutes = minutesOf(rows.sumOf { it.seconds }),
-            totalSessions = rows.sumOf { it.sessions }
+            totalSessions = rows.sumOf { it.sessions },
+            streak = streakNow(rows)
         )
+    }
+
+    /**
+     * Серия: сколько дней подряд занимались, считая назад от сегодня.
+     *
+     * **Сегодняшний пропуск серию ещё не рвёт.** Если последним днём занятий
+     * было вчера, счёт продолжается: день не кончился, и объявлять серию
+     * прерванной в полдень значило бы врать. Порвётся она сама, когда вчера
+     * станет позавчера.
+     *
+     * Днём занятий считается любой день, где хоть что-то было (см.
+     * [DayStatEntity.active]), а не только день с минутами: у восстановленных
+     * задним числом уроков времени нет вовсе.
+     */
+    private fun streakNow(rows: List<DayStatEntity>): Int {
+        val active = rows.filter { it.active }.mapTo(mutableSetOf()) { it.day }
+        if (active.isEmpty()) return 0
+        val today = LocalDate.now()
+        var cursor = if (today.toString() in active) today else today.minusDays(1)
+        var count = 0
+        while (cursor.toString() in active) {
+            count++
+            cursor = cursor.minusDays(1)
+        }
+        return count
+    }
+
+    /**
+     * Самая длинная серия за всё время.
+     *
+     * Считается по всей истории, а не по тридцати дням графика: рекорд на то и
+     * рекорд, чтобы не исчезать, когда уезжает окно.
+     */
+    private fun bestStreak(rows: List<DayStatEntity>): Int {
+        val active = rows.filter { it.active }.map { LocalDate.parse(it.day) }.sorted()
+        var best = 0
+        var run = 0
+        var prev: LocalDate? = null
+        for (day in active) {
+            run = if (prev != null && prev.plusDays(1) == day) run + 1 else 1
+            if (run > best) best = run
+            prev = day
+        }
+        return best
     }
 
     /**
@@ -1056,7 +1105,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 wordsTotal = vocabRepo.load().words.size,
                 dueLessons = dao.dueCount(now, VocabRepository.LESSON_ID),
                 dueWords = dao.vocabDue(now, VocabRepository.LESSON_ID),
-                activeDays = days.count { it.seconds > 0 },
+                activeDays = days.count { it.active },
+                streak = streakNow(rows.values.toList()),
+                bestStreak = bestStreak(rows.values.toList()),
                 loading = false
             )
         }

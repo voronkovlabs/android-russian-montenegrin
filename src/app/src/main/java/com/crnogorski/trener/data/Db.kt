@@ -106,6 +106,17 @@ data class DayStatEntity(
     val words: Int = 0
 ) {
     val seconds: Int get() = lessonSeconds + reviewSeconds + wordSeconds + storySeconds
+
+    /**
+     * Был ли этот день днём занятий.
+     *
+     * Не «минут больше нуля»: у дней, восстановленных задним числом из
+     * `lesson_progress`, времени нет вовсе — его тогда не хранили, — но урок в
+     * тот день закрыли. Вычёркивать такой день из серии значило бы наказать за
+     * то, что раньше не считали время.
+     */
+    val active: Boolean
+        get() = seconds > 0 || answers > 0 || lessons > 0 || sessions > 0 || chunks > 0
 }
 
 @Dao

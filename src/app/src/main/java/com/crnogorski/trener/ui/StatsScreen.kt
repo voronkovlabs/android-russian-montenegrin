@@ -85,6 +85,9 @@ fun StatsScreen(state: StatsState, onClose: () -> Unit) {
             Spacer(Modifier.height(12.dp))
             DayCard("Всего", state.total)
 
+            Spacer(Modifier.height(12.dp))
+            StreakCard(state.streak, state.bestStreak, state.today.active)
+
             Spacer(Modifier.height(28.dp))
             Section("Тридцать дней")
             DaysChart(state.days)
@@ -169,6 +172,61 @@ private fun DayCard(title: String, day: DayStatEntity) {
             style = MaterialTheme.typography.bodyMedium,
             color = Muted
         )
+    }
+}
+
+/**
+ * Серия дней подряд.
+ *
+ * Появилась в 1.40 по решению владельца: геймификация в проекте не запрещена,
+ * без неё просто обходились. Своя плашка, а не строка в общем списке, потому
+ * что смотрят на неё иначе, чем на остальные числа: не «сколько сделано», а
+ * «не порвалось ли».
+ *
+ * **Сегодняшний пропуск серию ещё не рвёт** — день не кончился. Отсюда вторая
+ * строка: она прямо говорит, засчитан ли сегодняшний день, чтобы «5 дней
+ * подряд» вечером не оказалось приятной неправдой.
+ *
+ * Рекорд показывается только когда он больше нынешней серии: иначе плашка
+ * дважды повторяла бы одно число.
+ */
+@Composable
+private fun StreakCard(streak: Int, best: Int, todayDone: Boolean) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(14.dp))
+            .background(Surface1)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text("ПОДРЯД", style = MaterialTheme.typography.labelSmall, color = Muted)
+            Spacer(Modifier.height(10.dp))
+            Text(
+                if (streak > 0) "$streak ${plural(streak, "день", "дня", "дней")}"
+                else "Серии пока нет",
+                style = MaterialTheme.typography.headlineSmall,
+                color = if (streak > 0) Accent else Muted
+            )
+            Spacer(Modifier.height(6.dp))
+            Text(
+                when {
+                    todayDone -> "Сегодняшний день засчитан."
+                    streak > 0 -> "Сегодня ещё не занимались — до полуночи серия держится."
+                    else -> "Серия начнётся с первого занятия."
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+        }
+        if (best > streak) {
+            Text(
+                "лучшая $best",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+        }
     }
 }
 
