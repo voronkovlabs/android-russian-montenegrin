@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.AutoStories
 import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
@@ -51,6 +52,7 @@ fun HomeScreen(
     onVocab: (Boolean, Boolean) -> Unit,
     onTab: (HomeTab) -> Unit,
     onToggleGroup: (String) -> Unit,
+    onStats: () -> Unit,
     onNote: (String) -> Unit
 ) {
     if (state.loading) {
@@ -112,6 +114,8 @@ fun HomeScreen(
                 style = MaterialTheme.typography.displaySmall,
                 color = Paper
             )
+            Spacer(Modifier.height(14.dp))
+            StatsStrip(state.stats, onStats)
             Spacer(Modifier.height(20.dp))
         }
 
@@ -232,6 +236,69 @@ fun HomeScreen(
  * предлагает ещё один заход тем же размером. Заниматься сверх нормы — не
  * нарушение, но и не то, что случается само собой.
  */
+/**
+ * Строка отчёта под заголовком: сегодня и всего, одной строкой.
+ *
+ * Стоит на всех четырёх вкладках, а не только на «Сегодня», и это не небрежность:
+ * потраченное время — не свойство вкладки, а свойство дня, и заниматься можно
+ * из любой.
+ *
+ * Показаны ровно два числа — сегодняшнее и итог. Всё остальное (уроки, точность,
+ * график) за нажатием: строка должна читаться боковым зрением, а не изучаться.
+ */
+@Composable
+private fun StatsStrip(stats: StatsBrief, onOpen: () -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Surface1)
+            .clickable(onClick = onOpen)
+            .padding(horizontal = 14.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(
+                if (stats.todayMinutes > 0) {
+                    "Сегодня ${stats.todayMinutes} мин · ${stats.todayAnswers} " +
+                        answers(stats.todayAnswers)
+                } else {
+                    "Сегодня ещё не занимались"
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = Paper
+            )
+            Spacer(Modifier.height(2.dp))
+            Text(
+                "Всего ${timeText(stats.totalMinutes * 60)} · ${stats.totalSessions} " +
+                    sessions(stats.totalSessions),
+                style = MaterialTheme.typography.labelSmall,
+                color = Muted
+            )
+        }
+        Text("Отчёт", style = MaterialTheme.typography.labelSmall, color = Accent)
+        Icon(
+            Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+            contentDescription = null,
+            tint = Accent
+        )
+    }
+}
+
+private fun answers(n: Int): String = when {
+    n % 100 in 11..14 -> "ответов"
+    n % 10 == 1 -> "ответ"
+    n % 10 in 2..4 -> "ответа"
+    else -> "ответов"
+}
+
+private fun sessions(n: Int): String = when {
+    n % 100 in 11..14 -> "занятий"
+    n % 10 == 1 -> "занятие"
+    n % 10 in 2..4 -> "занятия"
+    else -> "занятий"
+}
+
 @Composable
 private fun DailyTile(plan: DailyPlan, onStart: (Boolean) -> Unit) {
     val ready = plan.items.isNotEmpty()

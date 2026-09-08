@@ -13,6 +13,7 @@ import com.crnogorski.trener.data.Complaint
 import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.ComplaintStore
 import com.crnogorski.trener.data.ComplaintVerdict
+import com.crnogorski.trener.data.DayStatEntity
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.Glossary
 import com.crnogorski.trener.data.LessonProgressEntity
@@ -47,6 +48,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
+import java.time.LocalDate
 
 data class LessonCard(
     val ref: LessonRef,
@@ -153,12 +155,56 @@ data class DailyPlan(
     val empty: Boolean get() = items.isEmpty() && story == null
 }
 
+/**
+ * Сводка для главного экрана: одна строка, по нажатию — полный отчёт.
+ *
+ * Отдельный кусочек, а не весь [StatsState]: главный экран пересобирается
+ * после каждого занятия, и тянуть ради строки все тридцать дней и весь курс
+ * незачем.
+ */
+data class StatsBrief(
+    val todayMinutes: Int = 0,
+    val todayAnswers: Int = 0,
+    val totalMinutes: Int = 0,
+    val totalSessions: Int = 0
+)
+
+/**
+ * Отчёт по занятиям.
+ *
+ * [today] и [total] — одна и та же форма строки: сегодняшний день и сумма всех
+ * дней. [days] — ровно тридцать дней подряд, **включая пустые**: без них график
+ * молча склеивал бы пропуски и показывал занятия там, где их не было.
+ *
+ * Всё остальное — состояние «прямо сейчас», а не история: сколько уроков курса
+ * закрыто, сколько слов заведено и выучено, сколько карточек просрочено. Копить
+ * это по дням незачем — оно и так восстанавливается из базы в любой момент.
+ */
+data class StatsState(
+    val today: DayStatEntity = DayStatEntity(day = ""),
+    val total: DayStatEntity = DayStatEntity(day = ""),
+    val days: List<DayStatEntity> = emptyList(),
+    val lessonsDone: Int = 0,
+    val lessonsTotal: Int = 0,
+    val exercisesDone: Int = 0,
+    val exercisesTotal: Int = 0,
+    val wordsIntroduced: Int = 0,
+    val wordsLearned: Int = 0,
+    val wordsTotal: Int = 0,
+    val dueLessons: Int = 0,
+    val dueWords: Int = 0,
+    /** В скольких из тридцати дней вообще занимались. */
+    val activeDays: Int = 0,
+    val loading: Boolean = true
+)
+
 data class HomeState(
     val groups: List<LessonGroup> = emptyList(),
     val storyGroups: List<StoryGroup> = emptyList(),
     val dueCount: Int = 0,
     val vocab: VocabTracks = VocabTracks(),
     val daily: DailyPlan = DailyPlan(),
+    val stats: StatsBrief = StatsBrief(),
     val tab: HomeTab = HomeTab.Today,
     /** Заголовки развёрнутых разделов. По умолчанию свёрнуты все. */
     val expandedGroups: Set<String> = emptySet(),
@@ -428,6 +474,23 @@ private const val ATTEMPTS_BEFORE_REVEAL = 3
  */
 private const val SPOKEN_ATTEMPTS = 3
 
+/**
+ * Сколько дней показывает график в отчёте.
+ *
+ * Тридцать — просьба владельца, и число разумное само по себе: месяц виден
+ * целиком, а недельный ритм (выходные-будни) на нём уже читается.
+ */
+private const val STATS_DAYS = 30
+
+/**
+ * Секунды в минуты, округляя к ближайшей.
+ *
+ * Не в UI, потому что округление тут — часть того, что мы утверждаем:
+ * «12 минут» из 11 минут 40 секунд честнее, чем «11». Отсекать хвост значило бы
+ * систематически занижать каждую цифру отчёта.
+ */
+fun minutesOf(seconds: Int): Int = (seconds + 30) / 60
+
 class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repo = LessonRepository(app)
@@ -476,6 +539,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _settings = MutableStateFlow<SettingsState?>(null)
     val settings: StateFlow<SettingsState?> = _settings.asStateFlow()
+
+    private val _stats = MutableStateFlow<StatsState?>(null)
+    val stats: StateFlow<StatsState?> = _stats.asStateFlow()
 
     private val _story = MutableStateFlow<StoryState?>(null)
     val story: StateFlow<StoryState?> = _story.asStateFlow()
@@ -542,6 +608,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     },
                     dueCount = dao.dueCount(System.currentTimeMillis(), VocabRepository.LESSON_ID),
                     vocab = vocabSummary(),
+                    stats = statsBrief(),
                     daily = buildDaily(),
                     loading = false
                 )
@@ -863,6 +930,140 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 fresh = started - cards.count { isBackCard(it.exerciseId) }
             )
         )
+    }
+
+    /**
+     * Прибавить сегодняшнему дню.
+     *
+     * Все слагаемые перечислены явно, хотя у запроса есть значения по
+     * умолчанию: подставлять их через синтетический мост Kotlin в
+     * сгенерированный Room код — лишний риск ради экономии строк.
+     */
+    private suspend fun bump(
+        lessonSeconds: Int = 0,
+        reviewSeconds: Int = 0,
+        wordSeconds: Int = 0,
+        storySeconds: Int = 0,
+        answers: Int = 0,
+        correct: Int = 0,
+        lessons: Int = 0,
+        sessions: Int = 0,
+        chunks: Int = 0,
+        words: Int = 0
+    ) {
+        dao.bumpDay(
+            day = LocalDate.now().toString(),
+            lessonSeconds = lessonSeconds,
+            reviewSeconds = reviewSeconds,
+            wordSeconds = wordSeconds,
+            storySeconds = storySeconds,
+            answers = answers,
+            correct = correct,
+            lessons = lessons,
+            sessions = sessions,
+            chunks = chunks,
+            words = words
+        )
+    }
+
+    /**
+     * Время одного задания — в ту корзину, к которой оно относится.
+     *
+     * Вид занятия определяется не по сессии, а по самому заданию, и это
+     * важнее, чем кажется: ежедневное задание перемешивает урок, повторение и
+     * слова в одном заходе, и «время сессии» не сказало бы ничего. Словарь
+     * виден по `lessonId`, а новый материал от повторения отличает наличие
+     * карточки: её у задания ещё не было — значит его видят впервые.
+     *
+     * [correct] в `null` означает пропуск: время потрачено, ответа не было.
+     */
+    private suspend fun noteAnswer(
+        item: SessionItem,
+        existing: CardEntity?,
+        seconds: Int,
+        correct: Boolean?
+    ) {
+        val vocab = item.lessonId == VocabRepository.LESSON_ID
+        val fresh = existing == null
+        bump(
+            lessonSeconds = if (!vocab && fresh) seconds else 0,
+            reviewSeconds = if (!vocab && !fresh) seconds else 0,
+            wordSeconds = if (vocab) seconds else 0,
+            answers = if (correct == null) 0 else 1,
+            correct = if (correct == true) 1 else 0
+        )
+    }
+
+    /** Строка под заголовком главного экрана. */
+    private suspend fun statsBrief(): StatsBrief {
+        val rows = dao.days()
+        val today = rows.firstOrNull { it.day == LocalDate.now().toString() }
+        return StatsBrief(
+            todayMinutes = minutesOf(today?.seconds ?: 0),
+            todayAnswers = today?.answers ?: 0,
+            totalMinutes = minutesOf(rows.sumOf { it.seconds }),
+            totalSessions = rows.sumOf { it.sessions }
+        )
+    }
+
+    /**
+     * Отчёт целиком.
+     *
+     * Собирается по нажатию, а не держится наготове: тут и все карточки, и все
+     * файлы уроков, и словарь — на главном экране это считалось бы после
+     * каждого задания впустую.
+     */
+    fun openStats() {
+        _stats.value = StatsState(loading = true)
+        viewModelScope.launch {
+            val now = System.currentTimeMillis()
+            val rows = dao.days().associateBy { it.day }
+            val start = LocalDate.now()
+            val days = (STATS_DAYS - 1 downTo 0).map { back ->
+                val key = start.minusDays(back.toLong()).toString()
+                rows[key] ?: DayStatEntity(day = key)
+            }
+            val all = rows.values
+            val lessons = repo.index().lessons
+            val cards = dao.allCards()
+            val vocab = cards.filter { it.lessonId == VocabRepository.LESSON_ID }
+            val meanings = vocab.filter { isMeaning(it.exerciseId) }
+
+            _stats.value = StatsState(
+                today = rows[start.toString()] ?: DayStatEntity(day = start.toString()),
+                total = DayStatEntity(
+                    day = "",
+                    lessonSeconds = all.sumOf { it.lessonSeconds },
+                    reviewSeconds = all.sumOf { it.reviewSeconds },
+                    wordSeconds = all.sumOf { it.wordSeconds },
+                    storySeconds = all.sumOf { it.storySeconds },
+                    answers = all.sumOf { it.answers },
+                    correct = all.sumOf { it.correct },
+                    lessons = all.sumOf { it.lessons },
+                    sessions = all.sumOf { it.sessions },
+                    chunks = all.sumOf { it.chunks },
+                    words = all.sumOf { it.words }
+                ),
+                days = days,
+                lessonsDone = dao.lessonProgress().size,
+                lessonsTotal = lessons.size,
+                // Заведённая карточка и значит «задание проходили»: до первого
+                // ответа её не существует.
+                exercisesDone = cards.count { it.lessonId != VocabRepository.LESSON_ID },
+                exercisesTotal = lessons.sumOf { repo.lesson(it.id).exercises.size },
+                wordsIntroduced = meanings.size,
+                wordsLearned = meanings.count { it.correct >= VocabRepository.LEARNED },
+                wordsTotal = vocabRepo.load().words.size,
+                dueLessons = dao.dueCount(now, VocabRepository.LESSON_ID),
+                dueWords = dao.vocabDue(now, VocabRepository.LESSON_ID),
+                activeDays = days.count { it.seconds > 0 },
+                loading = false
+            )
+        }
+    }
+
+    fun closeStats() {
+        _stats.value = null
     }
 
     private fun isMeaning(id: String) = id.endsWith("-" + VocabKind.Meaning.key)
@@ -1335,7 +1536,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val state = _story.value ?: return
         val chunk = state.chunks.getOrNull(state.index) ?: return
         if (storyClock > 0L) {
-            pace.spend((System.currentTimeMillis() - storyClock) / 1000.0)
+            val seconds = pace.spend((System.currentTimeMillis() - storyClock) / 1000.0)
+            if (seconds > 0) viewModelScope.launch { bump(storySeconds = seconds) }
         }
         storyClock = System.currentTimeMillis()
         if (state.mode == StoryMode.Translate && !state.revealed) {
@@ -1438,10 +1640,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     /** Отрезок взят — или оставлен: движок ошибается сам по себе, упираться некуда. */
     fun skipChunk() {
-        advance(_story.value ?: return)
+        // Оставленный отрезок в счёт прочитанного не идёт: его не прочли.
+        advance(_story.value ?: return, passed = false)
     }
 
-    private fun advance(state: StoryState) {
+    private fun advance(state: StoryState, passed: Boolean = true) {
+        if (passed) viewModelScope.launch { bump(chunks = 1) }
         val next = state.index + 1
         _story.value = state.copy(
             index = next, attempts = 0, heard = "", note = "",
@@ -1709,11 +1913,19 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val ex = state.current as? Exercise.Match ?: return
         if (state.phase != Phase.Input) return
 
-        noteTime(state, ex)
+        val seconds = noteTime(state, ex)
         cardBeforeAnswer = null
         lastAnswer = ""
 
+        val missedCount = ex.pairs.count { it.cardId in wrong }
         viewModelScope.launch {
+            // Экран пар — одно задание в счёте, сколько бы слов на нём ни было:
+            // иначе «ответов за день» мерило бы не работу, а её нарезку.
+            bump(
+                wordSeconds = seconds,
+                answers = 1,
+                correct = if (missedCount == 0) 1 else 0
+            )
             val now = System.currentTimeMillis()
             ex.pairs.forEach { pair ->
                 val ok = pair.cardId !in wrong
@@ -1757,12 +1969,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun skipCurrent() {
         val state = _session.value ?: return
         val item = state.items[state.index]
-        noteTime(state, item.exercise, measure = false)
+        val seconds = noteTime(state, item.exercise, measure = false)
         lastAnswer = ""
 
         viewModelScope.launch {
             val now = System.currentTimeMillis()
             val existing = dao.card(item.exercise.id)
+            // Время потрачено, ответа не было: в счёт заданий пропуск не идёт,
+            // иначе точность росла бы от того, что задания пропускают.
+            noteAnswer(item, existing, seconds, correct = null)
             cardBeforeAnswer = item.exercise.id to existing
             dao.upsertCard(
                 existing?.let { Scheduler.postpone(it, now) }
@@ -1890,20 +2105,23 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * замеры сделали бы тип вдвое быстрее, чем он есть. Время при этом всё
      * равно списывается — оно потрачено.
      */
-    private fun noteTime(state: SessionState, ex: Exercise, measure: Boolean = true) {
-        if (state.shownAt <= 0L) return
+    private fun noteTime(state: SessionState, ex: Exercise, measure: Boolean = true): Int {
+        if (state.shownAt <= 0L) return 0
         val seconds = (System.currentTimeMillis() - state.shownAt) / 1000.0
         if (measure) pace.record(ex.typeName, seconds)
-        pace.spend(seconds)
+        // Возвращаем то, что реально списано: в отчёт должно уйти ровно то же
+        // время, каким ежедневное задание меряет свои пятнадцать минут.
+        return pace.spend(seconds)
     }
 
     private fun record(correct: Boolean) {
         val state = _session.value ?: return
         val item = state.items[state.index]
-        noteTime(state, item.exercise)
+        val seconds = noteTime(state, item.exercise)
         viewModelScope.launch {
             val now = System.currentTimeMillis()
             val existing = dao.card(item.exercise.id)
+            noteAnswer(item, existing, seconds, correct)
             cardBeforeAnswer = item.exercise.id to existing
             val updated: CardEntity = when {
                 existing == null ->
@@ -1977,17 +2195,23 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun finish(state: SessionState) {
         viewModelScope.launch {
+            var closed = 0
             if (!state.isReview) {
+                val lessonId = state.items.first().lessonId
+                // Урок, пройденный второй раз, вторым в счёт не идёт: запись о
+                // нём переписывается, а закрыт он был однажды.
+                if (dao.lessonProgress().none { it.lessonId == lessonId }) closed++
                 dao.upsertLesson(
                     LessonProgressEntity(
-                        lessonId = state.items.first().lessonId,
+                        lessonId = lessonId,
                         completedAt = System.currentTimeMillis(),
                         correct = state.correct,
                         total = state.items.size
                     )
                 )
             }
-            if (state.daily) closePortionedLessons(state)
+            if (state.daily) closed += closePortionedLessons(state)
+            bump(sessions = 1, lessons = closed)
             _session.value = state.copy(finished = true)
             autoSaveProgress()
         }
@@ -2005,7 +2229,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * Для урока, растянутого на три дня, «сколько угадал с первого раза»
      * смысла уже не имеет — а вот сколько из него держится, имеет.
      */
-    private suspend fun closePortionedLessons(state: SessionState) {
+    private suspend fun closePortionedLessons(state: SessionState): Int {
+        var closed = 0
         val touched = state.items.map { it.lessonId }
             .distinct()
             .filter { it != VocabRepository.LESSON_ID }
@@ -2023,7 +2248,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     total = total
                 )
             )
+            closed++
         }
+        return closed
     }
 
     fun expectedAnswer(): String = _session.value?.current?.referenceAnswer.orEmpty()

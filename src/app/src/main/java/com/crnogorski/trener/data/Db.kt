@@ -70,6 +70,44 @@ data class StoryProgressEntity(
     val finishedAt: Long
 )
 
+/**
+ * Один день занятий.
+ *
+ * Отдельная таблица, а не выкладки по карточкам, потому что по карточкам этого
+ * не восстановить: в `cards` лежит только нынешнее состояние — когда карточка
+ * будет спрошена снова, — а не то, что происходило вчера. Историю надо копить,
+ * и копится она здесь.
+ *
+ * Ключ — **календарный день** строкой `2026-09-08`, а не отметка времени.
+ * «Сегодня» человек понимает как день, а не как последние сутки; строкой — чтобы
+ * сортировка по дате была сортировкой по тексту, а границы дня считались один
+ * раз при записи, а не в каждом запросе.
+ *
+ * Время разложено по видам занятий сразу, а не одним числом с разбором потом:
+ * потом разбирать будет нечем, ответ уже забыт. Итог — их сумма ([seconds]), и
+ * отдельной колонки под него нет: две записи одного факта однажды разойдутся.
+ */
+@Entity(tableName = "day_stats")
+data class DayStatEntity(
+    @PrimaryKey val day: String,
+    val lessonSeconds: Int = 0,
+    val reviewSeconds: Int = 0,
+    val wordSeconds: Int = 0,
+    val storySeconds: Int = 0,
+    /** Отвеченных заданий. Экран пар — одно задание, хоть слов на нём пять. */
+    val answers: Int = 0,
+    val correct: Int = 0,
+    /** Закрытых уроков курса: все задания урока заведены. */
+    val lessons: Int = 0,
+    /** Доведённых до конца занятий — любых, включая повторение и словарь. */
+    val sessions: Int = 0,
+    val chunks: Int = 0,
+    /** Новых слов, введённых в этот день. */
+    val words: Int = 0
+) {
+    val seconds: Int get() = lessonSeconds + reviewSeconds + wordSeconds + storySeconds
+}
+
 @Dao
 interface AppDao {
 
@@ -143,6 +181,50 @@ interface AppDao {
     @Query("SELECT * FROM lesson_progress")
     fun lessonProgressFlow(): Flow<List<LessonProgressEntity>>
 
+    /**
+     * Прибавить к сегодняшнему дню.
+     *
+     * Одним запросом, а не «прочитать — сложить — записать»: занятие пишет
+     * статистику из нескольких мест сразу (ответ, конец занятия, отрезок
+     * истории), и корутины между чтением и записью успевают переслоиться.
+     * `ON CONFLICT DO UPDATE` складывает прямо в базе, и потеряться там нечему.
+     */
+    @Query(
+        "INSERT INTO day_stats " +
+            "(day, lessonSeconds, reviewSeconds, wordSeconds, storySeconds, " +
+            "answers, correct, lessons, sessions, chunks, words) " +
+            "VALUES (:day, :lessonSeconds, :reviewSeconds, :wordSeconds, :storySeconds, " +
+            ":answers, :correct, :lessons, :sessions, :chunks, :words) " +
+            "ON CONFLICT(day) DO UPDATE SET " +
+            "lessonSeconds = lessonSeconds + excluded.lessonSeconds, " +
+            "reviewSeconds = reviewSeconds + excluded.reviewSeconds, " +
+            "wordSeconds = wordSeconds + excluded.wordSeconds, " +
+            "storySeconds = storySeconds + excluded.storySeconds, " +
+            "answers = answers + excluded.answers, " +
+            "correct = correct + excluded.correct, " +
+            "lessons = lessons + excluded.lessons, " +
+            "sessions = sessions + excluded.sessions, " +
+            "chunks = chunks + excluded.chunks, " +
+            "words = words + excluded.words"
+    )
+    suspend fun bumpDay(
+        day: String,
+        lessonSeconds: Int = 0,
+        reviewSeconds: Int = 0,
+        wordSeconds: Int = 0,
+        storySeconds: Int = 0,
+        answers: Int = 0,
+        correct: Int = 0,
+        lessons: Int = 0,
+        sessions: Int = 0,
+        chunks: Int = 0,
+        words: Int = 0
+    )
+
+    /** Все дни: строк тут столько, сколько дней занимались, — их немного. */
+    @Query("SELECT * FROM day_stats ORDER BY day")
+    suspend fun days(): List<DayStatEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertStory(progress: StoryProgressEntity)
 
@@ -214,9 +296,59 @@ private val MIGRATION_3_4 = object : Migration(3, 4) {
     }
 }
 
+/**
+ * Версия 5 добавила статистику по дням.
+ *
+ * Таблица новая, старые данные не трогаются — самая безопасная форма миграции
+ * после добавления колонки.
+ *
+ * Заодно **задним числом восстанавливаются закрытые уроки**: у
+ * `lesson_progress` есть `completedAt`, и по нему видно, в какой день урок был
+ * закрыт. Со временем так не выйдет — его история не хранилась нигде, и график
+ * минут начнётся с дня установки. Честнее показать пустое начало, чем
+ * придумывать числа.
+ *
+ * `'localtime'` обязателен: без него полночь считалась бы по Гринвичу, и
+ * вечерние занятия уезжали бы на день вперёд.
+ */
+private val MIGRATION_4_5 = object : Migration(4, 5) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        // Форма ровно та, что генерирует Room (сверено по AppDb_Impl.java):
+        // расхождение уронило бы приложение на запуске вместе с прогрессом.
+        db.execSQL(
+            "CREATE TABLE IF NOT EXISTS `day_stats` (" +
+                "`day` TEXT NOT NULL, " +
+                "`lessonSeconds` INTEGER NOT NULL, " +
+                "`reviewSeconds` INTEGER NOT NULL, " +
+                "`wordSeconds` INTEGER NOT NULL, " +
+                "`storySeconds` INTEGER NOT NULL, " +
+                "`answers` INTEGER NOT NULL, " +
+                "`correct` INTEGER NOT NULL, " +
+                "`lessons` INTEGER NOT NULL, " +
+                "`sessions` INTEGER NOT NULL, " +
+                "`chunks` INTEGER NOT NULL, " +
+                "`words` INTEGER NOT NULL, " +
+                "PRIMARY KEY(`day`))"
+        )
+        db.execSQL(
+            "INSERT INTO `day_stats` " +
+                "(`day`, `lessonSeconds`, `reviewSeconds`, `wordSeconds`, `storySeconds`, " +
+                "`answers`, `correct`, `lessons`, `sessions`, `chunks`, `words`) " +
+                "SELECT date(`completedAt` / 1000, 'unixepoch', 'localtime'), " +
+                "0, 0, 0, 0, 0, 0, COUNT(*), 0, 0, 0 " +
+                "FROM `lesson_progress` GROUP BY 1"
+        )
+    }
+}
+
 @Database(
-    entities = [CardEntity::class, LessonProgressEntity::class, StoryProgressEntity::class],
-    version = 4,
+    entities = [
+        CardEntity::class,
+        LessonProgressEntity::class,
+        StoryProgressEntity::class,
+        DayStatEntity::class
+    ],
+    version = 5,
     exportSchema = false
 )
 abstract class AppDb : RoomDatabase() {
@@ -230,7 +362,7 @@ abstract class AppDb : RoomDatabase() {
                 context.applicationContext,
                 AppDb::class.java,
                 "crnogorski.db"
-            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                 .build().also { instance = it }
         }
     }

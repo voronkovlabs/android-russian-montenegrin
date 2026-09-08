@@ -29,6 +29,7 @@ import com.crnogorski.trener.ui.Ink
 import com.crnogorski.trener.ui.Paper
 import com.crnogorski.trener.ui.SessionScreen
 import com.crnogorski.trener.ui.SettingsScreen
+import com.crnogorski.trener.ui.StatsScreen
 import com.crnogorski.trener.ui.StoryScreen
 import com.crnogorski.trener.ui.Surface2
 
@@ -54,6 +55,7 @@ class MainActivity : ComponentActivity() {
                 val session by vm.session.collectAsStateWithLifecycle()
                 val settings by vm.settings.collectAsStateWithLifecycle()
                 val story by vm.story.collectAsStateWithLifecycle()
+                val stats by vm.stats.collectAsStateWithLifecycle()
                 val notice by vm.notice.collectAsStateWithLifecycle()
 
                 // Подтверждение записанной жалобы: поверх любого экрана и без
@@ -78,6 +80,7 @@ class MainActivity : ComponentActivity() {
                     val active = session
                     val openSettings = settings
                     val openStory = story
+                    val openStats = stats
                     if (active == null) {
                         androidx.compose.foundation.layout.Box(content) {
                             if (openStory != null) {
@@ -91,6 +94,8 @@ class MainActivity : ComponentActivity() {
                                     onNote = vm::addNote,
                                     onClose = vm::closeStory
                                 )
+                            } else if (openStats != null) {
+                                StatsScreen(state = openStats, onClose = vm::closeStats)
                             } else if (openSettings != null) {
                                 SettingsScreen(
                                     state = openSettings,
@@ -121,6 +126,7 @@ class MainActivity : ComponentActivity() {
                                     },
                                     onTab = vm::selectTab,
                                     onToggleGroup = vm::toggleGroup,
+                                    onStats = vm::openStats,
                                     onNote = vm::addNote
                                 )
                             }

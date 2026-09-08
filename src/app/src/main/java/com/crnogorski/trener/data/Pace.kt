@@ -95,14 +95,20 @@ class Pace(context: Context) {
      * него ещё пятнадцать минут было бы враньём. По той же причине обрезка
      * та же, что у замера, — забытое на столе приложение не должно закрывать
      * день само.
+     *
+     * Возвращает **списанное** — уже обрезанное и округлённое. Это же число
+     * уходит в дневную статистику (`day_stats`): бюджет занятия и отчёт должны
+     * считать одно и то же время, а не два похожих. Ноль означает, что время не
+     * засчитано вовсе.
      */
-    fun spend(seconds: Double) {
-        if (seconds < SAMPLE_MIN) return
+    fun spend(seconds: Double): Int {
+        if (seconds < SAMPLE_MIN) return 0
         val value = seconds.coerceAtMost(SAMPLE_MAX).toInt()
         prefs.edit()
             .putString(KEY_DAY, today())
             .putInt(KEY_SPENT, spentToday() + value)
             .apply()
+        return value
     }
 
     /** Сколько секунд дневного бюджета ещё не потрачено. */
