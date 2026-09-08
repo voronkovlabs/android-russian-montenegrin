@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -55,6 +56,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.intl.LocaleList
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
@@ -62,9 +64,11 @@ import androidx.core.content.ContextCompat
 import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.LocalCheck
+import com.crnogorski.trener.data.MatchPair
 import com.crnogorski.trener.speech.AnswerLanguage
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.speech.Speaker
+import kotlinx.coroutines.delay
 
 @Composable
 fun SessionScreen(
@@ -72,6 +76,8 @@ fun SessionScreen(
     speaker: Speaker,
     onSubmit: (String) -> Unit,
     onSkip: () -> Unit,
+    /** Экран пар отвечает не строкой, а списком слов, где ошиблись. */
+    onMatch: (Set<String>) -> Unit,
     onNext: () -> Unit,
     onRetryBlock: () -> Unit,
     onComplain: (ComplaintReason, String) -> Unit,
@@ -116,7 +122,7 @@ fun SessionScreen(
             when (val phase = state.phase) {
                 is Phase.Blocked -> BlockedView(phase.message, onRetryBlock, onExit)
                 is Phase.Checking -> {
-                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {})
+                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {}, onMatch = {})
                     Spacer(Modifier.height(24.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CircularProgressIndicator(
@@ -133,13 +139,13 @@ fun SessionScreen(
                     }
                 }
                 is Phase.Result -> {
-                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {})
+                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {}, onMatch = {})
                     Spacer(Modifier.height(20.dp))
                     ResultView(phase, state.current)
                     AnswerTail(state, onNext, onComplain)
                 }
                 is Phase.Skipped -> {
-                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {})
+                    ExerciseBody(state, speaker, enabled = false, onSubmit = {}, onSkip = {}, onMatch = {})
                     Spacer(Modifier.height(20.dp))
                     SkippedView(phase)
                     AnswerTail(state, onNext, onComplain)
@@ -148,11 +154,14 @@ fun SessionScreen(
                 // показан. Вердикта ещё нет, поэтому нет и хвоста с жалобой —
                 // жаловаться пока не на что, а флажок в шапке никуда не делся.
                 is Phase.Retry -> {
-                    ExerciseBody(state, speaker, enabled = true, onSubmit = onSubmit, onSkip = onSkip)
+                    ExerciseBody(state, speaker, enabled = true, onSubmit = onSubmit, onSkip = onSkip, onMatch = {})
                     Spacer(Modifier.height(20.dp))
                     RetryView(phase)
                 }
-                Phase.Input -> ExerciseBody(state, speaker, enabled = true, onSubmit = onSubmit, onSkip = onSkip)
+                Phase.Input -> ExerciseBody(
+                    state, speaker, enabled = true,
+                    onSubmit = onSubmit, onSkip = onSkip, onMatch = onMatch
+                )
             }
 
             Spacer(Modifier.height(40.dp))
@@ -196,7 +205,8 @@ private fun ExerciseBody(
     speaker: Speaker,
     enabled: Boolean,
     onSubmit: (String) -> Unit,
-    onSkip: () -> Unit
+    onSkip: () -> Unit,
+    onMatch: (Set<String>) -> Unit
 ) {
     when (val ex = state.current) {
         is Exercise.TranslateToTarget -> TextAnswer(
@@ -252,6 +262,8 @@ private fun ExerciseBody(
             autoListen = true,
             onSubmit = onSubmit
         )
+
+        is Exercise.Match -> MatchAnswer(ex, speaker, enabled, onMatch)
 
         is Exercise.Choice -> ChoiceAnswer(ex, speaker, enabled, onSubmit)
 
@@ -473,6 +485,173 @@ private fun ChoiceAnswer(
         }
     }
 }
+
+/**
+ * Пары слов: слева значения, справа черногорские слова.
+ *
+ * Задание на узнавание, и в этом его место в курсе: назвать слово с нуля
+ * труднее, чем узнать его среди пяти, — поэтому пары идут первыми, знакомством
+ * с тем, что через минуту спросят набором. До 1.38 первой встречей со словом
+ * было сразу требование его напечатать.
+ *
+ * **Столбцы перемешиваются независимо**, иначе пара стояла бы напротив пары и
+ * складывать было бы нечего. Порядок держится в `remember` на всё задание:
+ * пересобирать его при перерисовке значило бы тасовать плашки под пальцем.
+ *
+ * **Ошибка не раскрывает пару.** Обе плашки краснеют, снимаются, и слово
+ * приходится искать дальше — экран не закрыть, пока не сложено всё. Раскрывать
+ * значило бы отбирать у человека ровно ту работу, ради которой задание есть,
+ * а зачёт при этом честный: верным считается сложенное с первой попытки.
+ *
+ * Сложенная пара **остаётся на месте**, погашенной. Убирать её значило бы
+ * перекладывать все остальные под пальцем; погашенная же плашка показывает,
+ * сколько сделано, и не мешает искать.
+ *
+ * Черногорское слово звучит, когда пара сошлась, — но не когда его выбирают:
+ * иначе экран озвучивал бы каждое касание при переборе, а слышать слово
+ * полезно вместе с его значением, а не отдельно.
+ */
+@Composable
+private fun MatchAnswer(
+    ex: Exercise.Match,
+    speaker: Speaker,
+    enabled: Boolean,
+    onDone: (Set<String>) -> Unit
+) {
+    val left = remember(ex.id) { ex.pairs.shuffled() }
+    val right = remember(ex.id) { ex.pairs.shuffled() }
+
+    // Выбранная плашка: сторона важна не меньше слова — сложить пару можно
+    // только из разных столбцов.
+    var picked by remember(ex.id) { mutableStateOf<MatchPair?>(null) }
+    var pickedLeft by remember(ex.id) { mutableStateOf(false) }
+    var solved by remember(ex.id) { mutableStateOf(setOf<String>()) }
+    var wrong by remember(ex.id) { mutableStateOf(setOf<String>()) }
+    // Ровно две плашки, которые сейчас краснеют, — по ключу «сторона + слово»:
+    // ошиблись именно этими двумя, а не всеми плашками этих слов.
+    var flash by remember(ex.id) { mutableStateOf(setOf<String>()) }
+
+    fun key(pair: MatchPair, isLeft: Boolean) =
+        (if (isLeft) "L:" else "R:") + pair.cardId
+
+    LaunchedEffect(flash) {
+        if (flash.isNotEmpty()) {
+            delay(FLASH_MS)
+            flash = emptySet()
+        }
+    }
+
+    fun tap(pair: MatchPair, isLeft: Boolean) {
+        // Пока горит красным, экран не принимает нажатий: иначе ответ уехал бы
+        // раньше, чем человек увидел, что именно не сошлось.
+        if (!enabled || flash.isNotEmpty() || pair.cardId in solved) return
+        val chosen = picked
+        if (chosen == null || pickedLeft == isLeft) {
+            // Нажатие по уже выбранной плашке снимает выбор: передумать надо
+            // уметь, не складывая заведомо неверную пару.
+            picked = if (chosen?.cardId == pair.cardId && pickedLeft == isLeft) null else pair
+            pickedLeft = isLeft
+            return
+        }
+        picked = null
+        if (chosen.cardId == pair.cardId) {
+            speaker.speak(pair.me)
+            val next = solved + pair.cardId
+            solved = next
+            if (next.size == ex.pairs.size) onDone(wrong)
+        } else {
+            wrong = wrong + chosen.cardId + pair.cardId
+            flash = setOf(key(chosen, !isLeft), key(pair, isLeft))
+        }
+    }
+
+    Label("Сложи пары")
+    Spacer(Modifier.height(20.dp))
+
+    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Column(
+            Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            left.forEach { pair ->
+                MatchTile(
+                    text = pair.ru,
+                    done = pair.cardId in solved,
+                    chosen = picked?.cardId == pair.cardId && pickedLeft,
+                    failed = key(pair, true) in flash
+                ) { tap(pair, true) }
+            }
+        }
+        Column(
+            Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            right.forEach { pair ->
+                MatchTile(
+                    text = pair.me,
+                    done = pair.cardId in solved,
+                    chosen = picked?.cardId == pair.cardId && !pickedLeft,
+                    failed = key(pair, false) in flash
+                ) { tap(pair, false) }
+            }
+        }
+    }
+}
+
+/**
+ * Плашка экрана пар.
+ *
+ * Состояний четыре, и цвет у каждого свой, потому что читаются они издалека и
+ * мгновенно: обычная, выбранная (акцент), не сошлась (красная), сложена
+ * (погашенная). Погашенная остаётся кликабельной формально, но `tap` её
+ * отсекает — убирать `clickable` значило бы дёргать разметку.
+ */
+@Composable
+private fun MatchTile(
+    text: String,
+    done: Boolean,
+    chosen: Boolean,
+    failed: Boolean,
+    onClick: () -> Unit
+) {
+    val border = when {
+        failed -> Crimson
+        chosen -> Accent
+        done -> Jade.copy(alpha = 0.35f)
+        else -> Surface2
+    }
+    val ink = when {
+        failed -> Crimson
+        done -> Muted
+        else -> Paper
+    }
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 64.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(Surface1)
+            .border(if (chosen || failed) 2.dp else 1.dp, border, RoundedCornerShape(12.dp))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 14.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text,
+            style = MaterialTheme.typography.bodyLarge,
+            color = ink,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+/**
+ * Сколько держать красную подсветку неверной пары.
+ *
+ * Достаточно, чтобы глаз успел прочитать обе плашки, и мало, чтобы не
+ * превратиться в наказание паузой.
+ */
+private const val FLASH_MS = 700L
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -742,7 +921,9 @@ private fun ResultView(phase: Phase.Result, exercise: Exercise) {
             )
             Spacer(Modifier.height(8.dp))
         }
-        if (!phase.correct) {
+        // Эталон бывает пустым — у экрана пар его нет вовсе: он раскрыл себя
+        // сам, пока его собирали.
+        if (!phase.correct && phase.expected.isNotBlank()) {
             Text("Правильно: ${phase.expected}", style = MaterialTheme.typography.bodyLarge, color = Paper)
             Spacer(Modifier.height(8.dp))
         } else if (showAnswer) {

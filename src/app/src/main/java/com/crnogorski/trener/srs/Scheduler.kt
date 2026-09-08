@@ -65,6 +65,30 @@ object Scheduler {
         if (correct) card.copy(correct = card.correct + 1)
         else update(card, false, now)
 
+    /**
+     * Первая встреча со словом — на экране пар.
+     *
+     * Карточка заводится, но не назначается: `dueAt` остаётся «сейчас», а
+     * интервал нулевым. Узнать слово среди пяти, когда ответ тут же на экране,
+     * не значит его знать, и растягивать по такому ответу нечего — но встречей
+     * это было, а счёт [CardEntity.correct] встречи и считает.
+     *
+     * Промах здесь **не** лапс, в отличие от [practice]. Слово новое: не знать
+     * его нормально, и записывать это в ошибку значило бы штрафовать за то,
+     * что человек только начал.
+     */
+    fun metCard(exerciseId: String, lessonId: String, correct: Boolean, now: Long): CardEntity =
+        CardEntity(
+            exerciseId = exerciseId,
+            lessonId = lessonId,
+            dueAt = now,
+            intervalDays = 0,
+            ease = 2.5,
+            repetitions = 0,
+            lapses = 0,
+            correct = if (correct) 1 else 0
+        )
+
     fun update(card: CardEntity, correct: Boolean, now: Long): CardEntity {
         if (!correct) {
             return card.copy(

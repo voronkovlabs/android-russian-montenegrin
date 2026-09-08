@@ -19,6 +19,7 @@ import com.crnogorski.trener.data.LessonProgressEntity
 import com.crnogorski.trener.data.LessonRef
 import com.crnogorski.trener.data.LessonRepository
 import com.crnogorski.trener.data.LocalCheck
+import com.crnogorski.trener.data.MatchPair
 import com.crnogorski.trener.data.NOTE_REASON
 import com.crnogorski.trener.data.Pace
 import com.crnogorski.trener.data.ProgressStore
@@ -32,6 +33,8 @@ import com.crnogorski.trener.data.VocabKind
 import com.crnogorski.trener.data.VocabRepository
 import com.crnogorski.trener.data.VocabWord
 import com.crnogorski.trener.data.exerciseFor
+import com.crnogorski.trener.data.matchExercise
+import com.crnogorski.trener.data.matchPairFor
 import com.crnogorski.trener.data.needsModelCheck
 import com.crnogorski.trener.data.referenceAnswer
 import com.crnogorski.trener.data.typeName
@@ -732,7 +735,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
         addFreshVocab(file, byId, items, back = false)
         addFreshVocab(file, byId, items, back = true)
-        return items.map { Cand(it, pace.seconds(it.exercise.typeName)) }
+
+        // Экраны пар — первыми кандидатами: дележ бюджета берёт список по
+        // порядку, и знакомство должно попадать в занятие раньше, чем набор
+        // тех же слов.
+        val matches = matchScreens(words, byId, items, all)
+            .map { SessionItem(VocabRepository.LESSON_ID, it) }
+        return (matches + items).map { Cand(it, pace.seconds(it.exercise.typeName)) }
     }
 
     /**
@@ -912,8 +921,20 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     add(vocabExercise(file, words, card.exerciseId, card.repetitions))
                 }
                 addFreshVocab(file, byId, items, back)
-                vocabRepo.noteIntroduced(freshWords(items, byId))
             }
+
+            // Пары идут первыми: знакомство раньше проверки. Слово, впервые
+            // взятое в этом заходе, встретится сперва на экране пар и лишь
+            // потом в задании на набор — до 1.38 первой встречей был сразу
+            // набор, то есть требование написать слово, которого человек ещё
+            // ни разу не видел.
+            items.addAll(
+                0,
+                matchScreens(words, byId, items, all)
+                    .map { SessionItem(VocabRepository.LESSON_ID, it) }
+            )
+
+            if (!practice) vocabRepo.noteIntroduced(freshWords(items, byId))
 
             if (items.isEmpty()) {
                 refreshHome()
@@ -1011,15 +1032,87 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /**
+     * Экраны пар из слов, которые и так попали в набор.
+     *
+     * Отдельного отбора слов у пар нет, и это главное решение здесь. Экран
+     * собирается из того, что сессия уже взяла: сперва новые слова этого
+     * захода, потом самые шаткие из его же знакомых. Так пары не заводят
+     * ничего сверх дневной нормы (её отмерил [addFreshVocab]) и не тянут в
+     * занятие слов, которых в нём иначе не было бы, — экран получается
+     * знакомством с тем, что через минуту спросят набором.
+     *
+     * Добор со стороны ([spare]) нужен на случай, когда своих слов не набралось
+     * на экран: тогда берутся самые шаткие из всех незаученных. Экран из двух
+     * пар не собираем вовсе — см. `MATCH_MIN`.
+     *
+     * Два ограничения на состав, и оба обязательные:
+     *
+     *  * **одна пара на лемму.** Слово стоит в очереди дважды — в обе стороны,
+     *    — и обе его карточки дали бы на экране две одинаковые плашки;
+     *  * **одинаковых толкований на экране быть не должно.** Две «спины» в
+     *    левом столбце не различить ничем, и человек ошибётся не по незнанию,
+     *    а потому что задание невозможное. Слово с занятым толкованием просто
+     *    не берётся.
+     *
+     * Годятся только карточки значения и обратного перевода: падеж и особая
+     * форма спрашивают не «что это слово значит», и сопоставлять там нечего.
+     */
+    private fun matchScreens(
+        words: Map<String, VocabWord>,
+        byId: Map<String, CardEntity>,
+        pool: List<SessionItem>,
+        spare: List<CardEntity>
+    ): List<Exercise.Match> {
+        fun pairable(id: String) = isMeaning(id) || isBackCard(id)
+        fun shaky(card: CardEntity) = card.correct - card.lapses * 2
+
+        val mine = pool.map { it.exercise.id }.filter(::pairable)
+        val fresh = mine.filter { it !in byId }
+        val known = mine.filter { it in byId }.sortedBy { shaky(byId.getValue(it)) }
+        val extra = spare
+            .filter { pairable(it.exerciseId) && it.correct < VocabRepository.LEARNED }
+            .sortedBy(::shaky)
+            .map { it.exerciseId }
+
+        val cap = VocabRepository.MATCH_PAIRS * VocabRepository.MATCH_SCREENS
+        val pairs = mutableListOf<MatchPair>()
+        val lemmas = mutableSetOf<String>()
+        val glosses = mutableSetOf<String>()
+        for (cardId in fresh + known + extra) {
+            if (pairs.size >= cap) break
+            val lemma = VocabRepository.lemmaOf(cardId) ?: continue
+            if (lemma in lemmas) continue
+            val word = words[lemma] ?: continue
+            val pair = matchPairFor(cardId, word) ?: continue
+            if (!glosses.add(pair.ru)) continue
+            lemmas += lemma
+            pairs += pair
+        }
+
+        return pairs.chunked(VocabRepository.MATCH_PAIRS)
+            .filter { it.size >= VocabRepository.MATCH_MIN }
+            .map { matchExercise(it) }
+    }
+
+    /**
      * Сколько новых слов в наборе.
      *
      * Новое — то, у чего карточки значения ещё не было. Считается по готовому
      * набору, а не по ходу сборки: ежедневное задание режет набранное по
      * времени, и отметить норму до обрезки значило бы потратить день на слова,
      * которых человек не увидит.
+     *
+     * Экран пар считается наравне с набором: он тоже заводит карточку
+     * (`Scheduler.metCard`), то есть тоже вводит слово. Не считать его значило
+     * бы недосчитаться ровно тех слов, у которых бюджет срезал задание на
+     * набор, а знакомство оставил. Отсюда же `distinct`: одно и то же слово
+     * стоит и в паре, и заданием, а введено оно один раз.
      */
     private fun freshWords(items: List<SessionItem>, byId: Map<String, CardEntity>): Int =
-        items.count { isMeaning(it.exercise.id) && !byId.containsKey(it.exercise.id) }
+        items.flatMap { item ->
+            (item.exercise as? Exercise.Match)?.pairs?.map { it.cardId }
+                ?: listOf(item.exercise.id)
+        }.distinct().count { isMeaning(it) && !byId.containsKey(it) }
 
     private fun vocabLearned(cards: Map<String, CardEntity>, id: String): Boolean =
         (cards[id]?.repetitions ?: 0) >= LEARNED_REPS
@@ -1571,6 +1664,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 ex.phrase,
                 answer
             )
+            // Экран пар строкой не отвечает: у него свой путь, submitMatch.
+            // Ветка нужна компилятору, а её пустота — напоминание, что второго
+            // способа ответить у этого задания нет.
+            is Exercise.Match -> Unit
             is Exercise.Reading -> {
                 val score = LocalCheck.readingScore(answer, ex.text)
                 localResult(
@@ -1581,6 +1678,75 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 )
             }
         }
+    }
+
+    /**
+     * Вердикт по экрану пар: одно задание, пять карточек.
+     *
+     * [wrong] — карточки, замешанные хоть в одной неверной паре. Верным
+     * считается сложенное **с первой попытки**: собрать экран до конца всё
+     * равно придётся, и без этого различия любой экран засчитывался бы целиком.
+     *
+     * Записывается это всегда как тренировка вне расписания
+     * ([Scheduler.practice]) — даже в обычной сессии, и это осознанно. Выбрать
+     * слово из пяти, когда ответ тут же на экране, легче, чем вспомнить его с
+     * нуля; двигать по такому ответу интервал значило бы отложить слово на
+     * месяц по узнаванию с подсказкой. В счёт встреч оно при этом идёт: десять
+     * встреч, после которых слово считается выученным, — это встречи, а не
+     * непременно припоминания. Промах же считается полноценным лапсом:
+     * перепутал — значит слово шаткое.
+     *
+     * Промахом помечаются **оба** слова неверной пары. Перепутать можно только
+     * два слова сразу, и какое из них человек не знал, экран не говорит.
+     *
+     * Карточку до ответа ([cardBeforeAnswer]) здесь не запоминаем: жалоба
+     * откатывает одну карточку, а их тут пять, и какую из них имели в виду,
+     * жалоба не сообщает. Поле обнуляется, чтобы жалоба на экран пар не
+     * откатила заодно предыдущее задание.
+     */
+    fun submitMatch(wrong: Set<String>) {
+        val state = _session.value ?: return
+        val ex = state.current as? Exercise.Match ?: return
+        if (state.phase != Phase.Input) return
+
+        noteTime(state, ex)
+        cardBeforeAnswer = null
+        lastAnswer = ""
+
+        viewModelScope.launch {
+            val now = System.currentTimeMillis()
+            ex.pairs.forEach { pair ->
+                val ok = pair.cardId !in wrong
+                val existing = dao.card(pair.cardId)
+                dao.upsertCard(
+                    existing?.let { Scheduler.practice(it, ok, now) }
+                        ?: Scheduler.metCard(pair.cardId, VocabRepository.LESSON_ID, ok, now)
+                )
+            }
+        }
+
+        val missed = ex.pairs.filter { it.cardId in wrong }
+        _session.value = state.copy(
+            phase = Phase.Result(
+                correct = missed.isEmpty(),
+                feedback = buildString {
+                    append("С первой попытки: ")
+                    append(ex.pairs.size - missed.size)
+                    append(" из ")
+                    append(ex.pairs.size)
+                    append(".")
+                    if (missed.isNotEmpty()) {
+                        append(missed.joinToString(", ", prefix = "\nПерепутано: ") { it.me })
+                    }
+                },
+                better = "",
+                // Эталона у экрана пар нет: он раскрыл себя сам, пока его
+                // собирали, и строка «Правильно: …» повторяла бы экран.
+                expected = "",
+                answer = ""
+            ),
+            correct = state.correct + if (missed.isEmpty()) 1 else 0
+        )
     }
 
     /**

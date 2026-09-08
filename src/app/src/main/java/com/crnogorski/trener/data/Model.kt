@@ -137,6 +137,18 @@ data class Glossary(
     val ru: Map<String, String> = emptyMap()
 )
 
+/**
+ * Пара на экране сопоставления: короткое толкование и слово.
+ *
+ * [cardId] приходит вместе с парой, а не выводится из [me], и это не
+ * избыточность. У слова карточек две — «назови по-черногорски» (`-mean`) и
+ * «назови по-русски» (`-back`), — и засчитать надо ровно ту, из-за которой
+ * слово вообще оказалось на экране. Направление, таким образом, наследуется от
+ * источника, и один и тот же экран годится обеим очередям.
+ */
+@Serializable
+data class MatchPair(val cardId: String, val ru: String, val me: String)
+
 @Serializable
 data class Lesson(
     val id: String,
@@ -237,6 +249,28 @@ sealed class Exercise {
         val native: Boolean = false
     ) : Exercise()
 
+    /**
+     * Пары слов: слева значения, справа черногорские слова, надо сложить.
+     *
+     * Единственное задание, которое отвечает не за одну карточку, а за пять
+     * сразу: экран — это пять слов, и вердикт по каждому свой. Отсюда и
+     * отдельный путь записи (`AppViewModel.submitMatch`) — общий `record`
+     * умеет двигать ровно одну карточку.
+     *
+     * Своей карточки у экрана нет и быть не может: набор слов на нём каждый
+     * раз другой, и заводить SRS на случайную пятёрку бессмысленно. [id] нужен
+     * жалобам и замеру времени, в базу он не попадает никогда.
+     *
+     * В файлах уроков этого типа нет — экраны собираются на лету из
+     * `assets/vocab/words.json`, как и [Word].
+     */
+    @Serializable
+    @SerialName("match")
+    data class Match(
+        override val id: String,
+        val pairs: List<MatchPair>
+    ) : Exercise()
+
     /** Аудирование: TTS произносит [audioText], надо записать услышанное. */
     @Serializable
     @SerialName("listening")
@@ -299,6 +333,7 @@ val Exercise.typeName: String
         is Exercise.WordBank -> "word_bank"
         is Exercise.Form -> "form"
         is Exercise.Word -> "word"
+        is Exercise.Match -> "match"
         is Exercise.Listening -> "listening"
         is Exercise.Speaking -> "speaking"
         is Exercise.Repeat -> "repeat"
@@ -318,6 +353,10 @@ val Exercise.referenceAnswer: String
         is Exercise.WordBank -> answer
         is Exercise.Form -> answer
         is Exercise.Word -> answer
+        // Показывать это как «правильный ответ» некому: экран пар сам себя
+        // раскрывает по ходу. Строка нужна жалобе — по ней видно, какая
+        // пятёрка слов оказалась вместе.
+        is Exercise.Match -> pairs.joinToString("; ") { "${it.me} — ${it.ru}" }
         is Exercise.Listening -> audioText
         is Exercise.Speaking -> phrase
         is Exercise.Repeat -> phrase
