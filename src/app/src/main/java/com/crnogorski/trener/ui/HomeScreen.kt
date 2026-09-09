@@ -381,8 +381,8 @@ private fun DailyTile(plan: DailyPlan, onStart: (Boolean) -> Unit) {
         Text(
             when {
                 ready -> "${plan.estimate} мин · ${plan.items.size} заданий"
-                plan.full -> "На сегодня всё"
-                else -> "Сегодня брать нечего"
+                plan.nothingLeft -> "Сегодня брать нечего"
+                else -> "На сегодня всё"
             },
             style = MaterialTheme.typography.titleLarge,
             color = Paper
