@@ -162,8 +162,26 @@ object LocalCheck {
     fun reflex(normalized: String): String {
         var s = normalized
         SPECIAL.forEach { (from, to) -> s = s.replace(from, to) }
+        WHOLE.forEach { (from, to) -> s = from.replace(s, to) }
         return s.replace("ije", "e").replace("je", "e")
     }
+
+    /**
+     * Иекавские формы, которые общее правило не ловит: перед «о» ять даёт
+     * «-io» там, где в экавице «-eo» — `dio`/`deo`, `cio`/`ceo`.
+     *
+     * Заменяется **слово целиком**, и это не придирка: подстрока «dio» сидит
+     * в «radio» и «studio», а «cio» — в «socio-», и общая замена наделала бы
+     * из них «radeo» и «soceo» на ровном месте.
+     *
+     * Списком, а не правилом «-io в конце → -eo»: под такое правило попал бы
+     * «bio» (был) и стал бы «beo» (белый). Слова разные, а после свёртки
+     * совпали бы — ровно то столкновение, которого свёртка не должна создавать.
+     */
+    private val WHOLE = listOf(
+        Regex("\bdio\b") to "deo",
+        Regex("\bcio\b") to "ceo"
+    )
 
     private val SPECIAL = listOf(
         "sjutra" to "sutra",
