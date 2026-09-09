@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -50,6 +52,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
@@ -62,6 +65,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import com.crnogorski.trener.R
 import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.LocalCheck
@@ -403,6 +407,7 @@ private fun TextAnswer(
         modifier = Modifier.fillMaxWidth(),
         placeholder = { Text("Ответ", color = Muted) },
         textStyle = MaterialTheme.typography.bodyLarge,
+        leadingIcon = { LanguageFlag(language) },
         trailingIcon = {
             if (enabled) {
                 MicButton(
@@ -450,6 +455,29 @@ private fun TextAnswer(
         Spacer(Modifier.height(16.dp))
         PrimaryButton("Проверить", enabled = value.isNotBlank()) { onSubmit(value) }
     }
+}
+
+/**
+ * Флаг языка, на котором ждут ответ.
+ *
+ * Слева в поле, симметрично микрофону справа: смотрят туда перед тем, как
+ * начать печатать. Без него направление перевода приходится держать в голове —
+ * особенно в словарных карточках, где задание меняет сторону каждые несколько
+ * ответов.
+ *
+ * Значки свои, а не эмодзи: на части прошивок черногорского флага в шрифте нет
+ * вовсе, и вместо него показались бы две буквы «ME». Свои весят 1,4 КБ на оба и
+ * выглядят одинаково везде. Герб на такой высоте — золотое пятно, и это
+ * нормально: флаг узнают по сочетанию красного с золотой каймой.
+ */
+@Composable
+private fun LanguageFlag(language: AnswerLanguage) {
+    val native = language == AnswerLanguage.Native
+    Image(
+        painter = painterResource(if (native) R.drawable.flag_ru else R.drawable.flag_me),
+        contentDescription = if (native) "Ответ по-русски" else "Ответ по-черногорски",
+        modifier = Modifier.size(width = 24.dp, height = 17.dp)
+    )
 }
 
 /**
@@ -800,6 +828,7 @@ private fun ListeningAnswer(
         modifier = Modifier.fillMaxWidth(),
         placeholder = { Text("Что ты услышал", color = Muted) },
         textStyle = MaterialTheme.typography.bodyLarge,
+        leadingIcon = { LanguageFlag(AnswerLanguage.Target) },
         // Микрофона здесь нет намеренно: продиктовать услышанное — значит
         // поручить распознавателю ровно ту работу, ради которой задание и есть.
         keyboardOptions = KeyboardOptions(
