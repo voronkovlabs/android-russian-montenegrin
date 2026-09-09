@@ -11,6 +11,27 @@ import kotlin.math.roundToInt
 object Scheduler {
 
     private const val DAY_MS = 24L * 60 * 60 * 1000
+
+    /**
+     * Второй интервал: через сколько дней задание вернётся после двух верных
+     * ответов подряд.
+     *
+     * У уроков неделя, и это **не** классический SM-2: там второй шаг три дня.
+     * Изменено по жалобе — «надоело проходить одни и те же задания», и жалоба
+     * справедливая. При трёх днях задание за первую неделю встречается трижды,
+     * а фраз в уроке одиннадцать: занятие превращается в бубнёж одного и того
+     * же. Скука тут дороже точности расписания — брошенное занятие удерживает
+     * ноль процентов, а слегка растянутое всё же большинство.
+     *
+     * У словаря по-прежнему три дня. Слову нужно около десяти встреч, и они
+     * и есть содержание словарной работы: растянув их, мы не разнообразим
+     * занятие, а просто отодвинем результат на полгода.
+     */
+    private const val LESSON_SECOND = 7
+    private const val VOCAB_SECOND = 3
+
+    /** Тот же ключ, под которым словарные карточки лежат в `cards`. */
+    private const val VOCAB_LESSON = "vocab"
     private const val LAPSE_DELAY_MS = 10L * 60 * 1000
     private const val SKIP_DELAY_MS = 4L * 60 * 60 * 1000
 
@@ -103,7 +124,7 @@ object Scheduler {
         val reps = card.repetitions + 1
         val interval = when (reps) {
             1 -> 1
-            2 -> 3
+            2 -> if (card.lessonId == VOCAB_LESSON) VOCAB_SECOND else LESSON_SECOND
             else -> (card.intervalDays * card.ease).roundToInt().coerceAtLeast(4)
         }
         return card.copy(

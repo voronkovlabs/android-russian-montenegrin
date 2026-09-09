@@ -712,11 +712,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
         val due = dao.dueCards(now, DAILY_POOL, VocabRepository.LESSON_ID)
         val known = repo.exercisesIn(due.map { it.lessonId })
-        val reviewCands = due.mapNotNull { card ->
-            known[card.exerciseId]
-                ?.takeIf { ok(it.second) }
-                ?.let { (lesson, ex) -> Cand(SessionItem(lesson, ex), pace.seconds(ex.typeName)) }
-        }
+        val reviewCands = spread(
+            due.mapNotNull { card ->
+                known[card.exerciseId]
+                    ?.takeIf { ok(it.second) }
+                    ?.let { (lesson, ex) ->
+                        Cand(SessionItem(lesson, ex), pace.seconds(ex.typeName))
+                    }
+            }
+        ) { it.item.lessonId }
 
         val wordCands = dailyWords(now)
 
@@ -1244,6 +1248,28 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         else -> "Samo naprijed!" to "только вперёд"
     }
 
+    /**
+     * Раскладывает список по кругу, чтобы подряд не шли задания одного урока.
+     *
+     * Порядок внутри урока сохраняется — самое старое остаётся первым, — но
+     * между уроками идёт чередование. Без этого повторение выходило пачками:
+     * задания урока заводятся в один день, получают одинаковые интервалы и
+     * становятся просроченными тоже разом, а сортировка по дате ставила их
+     * подряд. Занятие из-за этого читалось как «опять седьмой урок», что и
+     * попало в жалобу.
+     */
+    private fun <T> spread(items: List<T>, key: (T) -> String): List<T> {
+        val queues = LinkedHashMap<String, MutableList<T>>()
+        items.forEach { queues.getOrPut(key(it)) { mutableListOf() } += it }
+        val out = ArrayList<T>(items.size)
+        while (out.size < items.size) {
+            queues.values.forEach { queue ->
+                if (queue.isNotEmpty()) out += queue.removeAt(0)
+            }
+        }
+        return out
+    }
+
     private fun isMeaning(id: String) = id.endsWith("-" + VocabKind.Meaning.key)
 
     private fun isBackCard(id: String) = id.endsWith("-" + VocabKind.Recall.key)
@@ -1529,9 +1555,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val total = dao.dueCount(now, VocabRepository.LESSON_ID)
             val due = dao.dueCards(now, REVIEW_LIMIT, VocabRepository.LESSON_ID)
             val byId = repo.exercisesIn(due.map { it.lessonId })
-            val items = due.mapNotNull { card ->
-                byId[card.exerciseId]?.let { (lessonId, ex) -> SessionItem(lessonId, ex) }
-            }
+            // Вперемешку по урокам: подряд идущие задания одного урока читаются
+            // как «опять седьмой урок» — по жалобе владельца.
+            val items = spread(
+                due.mapNotNull { card ->
+                    byId[card.exerciseId]?.let { (lessonId, ex) -> SessionItem(lessonId, ex) }
+                }
+            ) { it.lessonId }
             if (items.isEmpty()) {
                 refreshHome()
                 return@launch
