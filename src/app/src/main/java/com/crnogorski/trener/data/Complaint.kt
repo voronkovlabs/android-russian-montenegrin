@@ -199,16 +199,44 @@ class ComplaintStore(private val context: Context) {
     }
 
     /**
-     * Короткий и стабильный ярлык устройства: модель плюс шесть символов
-     * от хеша ANDROID_ID.
+     * Кто прислал: имя телефона, как его назвал хозяин.
      *
-     * Именно хеш: сам ANDROID_ID — идентификатор, который не должен уезжать
-     * в мессенджер вместе с файлом, а для «с какого телефона это пришло»
-     * достаточно того, что ярлык не меняется от отправки к отправке.
+     * Имя аккаунта Google приложению недоступно — с Android 8 `GET_ACCOUNTS`
+     * показывает только те аккаунты, которые приложение завело само, а
+     * читать чужие нельзя вовсе. Единственное человеческое имя, которое
+     * система отдаёт без разрешений, — то, что задано в «Настройки → Об
+     * устройстве → Имя устройства» (`Settings.Global.DEVICE_NAME`, оно же
+     * видно по Bluetooth). Его владелец меняет сам, и «Телефон Ани» в issue
+     * говорит ровно то, что нужно: от кого пришло.
+     *
+     * Модель дописывается, только если её нет в имени: «Redmi Note 13» и так
+     * называется моделью по умолчанию, и «Redmi Note 13 (Redmi Note 13)»
+     * выглядело бы глупо.
+     *
+     * Хвост из шести символов хеша ANDROID_ID остаётся как **различитель**:
+     * два телефона одной модели с непереименованными именами иначе слились бы
+     * в один. Именно хеш, а не сам идентификатор: для «с какого телефона это
+     * пришло» достаточно того, что хвост не меняется, а ANDROID_ID — это
+     * идентификатор устройства, и уезжать целиком ему незачем.
      */
     @SuppressLint("HardwareIds")
     fun deviceTag(): String {
-        val model = Build.MODEL.lowercase().replace(Regex("[^a-z0-9]+"), "-").trim('-')
+        // Одно и то же имя лежит в двух таблицах настроек, и на разных
+        // прошивках заполнена то одна, то другая.
+        val readers = listOf<() -> String?>(
+            { Settings.Global.getString(context.contentResolver, Settings.Global.DEVICE_NAME) },
+            { Settings.Secure.getString(context.contentResolver, "bluetooth_name") }
+        )
+        val chosen = readers.firstNotNullOfOrNull { read ->
+            runCatching { read() }.getOrNull()?.trim()?.takeIf { it.isNotBlank() }
+        }
+        val model = Build.MODEL.trim()
+        val name = when {
+            chosen == null -> model
+            model.isBlank() || chosen.contains(model, ignoreCase = true) -> chosen
+            else -> "$chosen ($model)"
+        }
+
         val androidId = runCatching {
             Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
         }.getOrNull().orEmpty()
@@ -218,9 +246,10 @@ class ComplaintStore(private val context: Context) {
                 .take(3)
                 .joinToString("") { "%02x".format(it) }
         }
-        return listOf(model, short).filter { it.isNotBlank() }.joinToString("-")
-            .ifBlank { "device" }
-            .take(40)
+        return listOf(name.ifBlank { "телефон" }, short)
+            .filter { it.isNotBlank() }
+            .joinToString(" · ")
+            .take(60)
     }
 
     companion object {

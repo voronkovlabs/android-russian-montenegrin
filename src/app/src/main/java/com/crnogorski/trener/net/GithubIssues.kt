@@ -102,9 +102,12 @@ class GithubIssues(
      * Разбирать жалобу без вердикта невозможно: по нему и видно, промпт виноват
      * или эталон. Версия важна не меньше — половина жалоб приходит на то, что
      * уже починено.
+     *
+     * Имя телефона стоит первой строкой, а не в подписи внизу: телефонов в семье
+     * два, и «от кого пришло» читают раньше, чем разбирают.
      */
     private fun body(c: Complaint, device: String): String = buildString {
-        appendLine("**${reasonLabel(c.reason)}** · ${c.ts}")
+        appendLine("**${reasonLabel(c.reason)}** · $device · ${c.ts}")
         appendLine()
         line("Задание", c.exerciseId)
         line("Урок", c.lessonId)
@@ -122,7 +125,7 @@ class GithubIssues(
         }
         appendLine()
         appendLine("---")
-        appendLine("<sub>${c.versionName} (${c.versionCode}) · $device · заведено приложением</sub>")
+        appendLine("<sub>${c.versionName} (${c.versionCode}) · заведено приложением</sub>")
     }
 
     private fun StringBuilder.line(name: String, value: String) {
