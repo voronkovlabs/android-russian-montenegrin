@@ -2227,7 +2227,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             is Exercise.TranslateToNative -> checkWithModel(ex.prompt, ex.reference, answer)
             is Exercise.Form -> localResult(
                 LocalCheck.matchesTyped(answer, ex.answer),
-                ex.explanation,
+                withReflexNote(answer, ex.answer, ex.explanation),
                 ex.answer,
                 answer
             )
@@ -2237,13 +2237,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 if (ex.native) LocalCheck.matchesGloss(answer, ex.answer)
                 else LocalCheck.matchesTyped(answer, ex.answer) ||
                     ex.also.any { LocalCheck.matchesTyped(answer, it) },
-                ex.explanation,
+                if (ex.native) ex.explanation
+                else withReflexNote(answer, ex.answer, ex.explanation),
                 ex.answer,
                 answer
             )
             is Exercise.Listening -> localResult(
                 LocalCheck.matchesTyped(answer, ex.audioText),
-                ex.translation,
+                withReflexNote(answer, ex.audioText, ex.translation),
                 ex.audioText,
                 answer
             )
@@ -2417,6 +2418,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             phase = Phase.Retry(used + 1, answer, SPOKEN_ATTEMPTS - used - 1)
         )
     }
+
+    /**
+     * Дописывает к разбору замечание про сербскую и черногорскую формы.
+     *
+     * Впереди пояснения задания: «засчитано, но пишется иначе» — это про сам
+     * ответ, а пояснение про грамматику подождёт строкой ниже.
+     */
+    private fun withReflexNote(answer: String, expected: String, note: String): String =
+        listOfNotNull(LocalCheck.reflexNote(answer, expected), note.ifBlank { null })
+            .joinToString(" ")
 
     private fun localResult(correct: Boolean, note: String, expected: String, answer: String) {
         record(correct)
