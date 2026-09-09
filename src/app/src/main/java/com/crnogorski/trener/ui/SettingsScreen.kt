@@ -72,6 +72,8 @@ fun SettingsScreen(
     onDailyMinutes: (Int) -> Unit,
     onShowSplash: () -> Unit,
     onRefreshTuning: () -> Unit,
+    onCheckUpdate: () -> Unit,
+    onInstallUpdate: () -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
@@ -393,6 +395,9 @@ fun SettingsScreen(
             Spacer(Modifier.height(20.dp))
             SplashRow(onShowSplash)
 
+            Spacer(Modifier.height(20.dp))
+            UpdateRow(state, onCheckUpdate, onInstallUpdate)
+
             Spacer(Modifier.height(36.dp))
             Text(
                 "Версия ${state.versionName} (${state.versionCode})",
@@ -517,6 +522,41 @@ private fun RecognitionRow() {
                 runCatching { notifications.isNotificationPolicyAccessGranted }.getOrDefault(false)
         }
     }
+}
+
+/**
+ * Обновление приложения из релизов GitHub.
+ *
+ * Две кнопки, а не одна: проверка стоит одного запроса, а скачивание — шестьдесят
+ * мегабайт, и по мобильной сети это человек должен разрешить сам, а не обнаружить
+ * постфактум. Поэтому «Проверить» сперва говорит, что есть и сколько весит.
+ */
+@Composable
+private fun UpdateRow(
+    state: SettingsState,
+    onCheck: () -> Unit,
+    onInstall: () -> Unit
+) {
+    Text("ОБНОВЛЕНИЕ", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(12.dp))
+    if (state.updateState != null) {
+        Text(state.updateState, style = MaterialTheme.typography.bodyMedium, color = Paper)
+        Spacer(Modifier.height(10.dp))
+    }
+    val fresh = state.update
+    if (fresh != null && fresh.newer) {
+        PrimaryAction(text = "Скачать и установить ${fresh.version}", onClick = onInstall)
+        Spacer(Modifier.height(10.dp))
+    }
+    SecondaryAction(text = "Проверить обновление", onClick = onCheck)
+    Spacer(Modifier.height(8.dp))
+    Text(
+        "Берётся из релизов репозитория. Ставит его сама система, поэтому один раз " +
+            "она спросит разрешение на установку из этого приложения. Прогресс " +
+            "сохраняется: подпись у сборок одна и та же.",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
 }
 
 /**

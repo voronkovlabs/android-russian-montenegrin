@@ -10,6 +10,12 @@
          RECEIVE_BOOT_COMPLETED обязателен — будильники Android перезагрузку не переживают. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--
+        Обновление из релизов GitHub: приложение показывает скачанный APK
+        системному установщику, ставит его Android. Разрешение «установка из
+        этого источника» человек выдаёт отдельно, на экране системы.
+    -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <queries>
         <intent>

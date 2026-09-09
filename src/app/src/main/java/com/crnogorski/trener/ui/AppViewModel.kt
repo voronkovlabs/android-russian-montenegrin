@@ -44,6 +44,8 @@ import com.crnogorski.trener.data.typeName
 import com.crnogorski.trener.net.CheckResult
 import com.crnogorski.trener.net.GithubIssues
 import com.crnogorski.trener.net.HaikuChecker
+import com.crnogorski.trener.net.Release
+import com.crnogorski.trener.net.Updater
 import com.crnogorski.trener.net.Verdict
 import com.crnogorski.trener.srs.Scheduler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -270,6 +272,10 @@ data class SettingsState(
     val cacheHits: Int = 0,
     /** Вердиктов спрошено у модели. */
     val cacheAsked: Int = 0,
+    /** Что известно про свежий релиз: null — ещё не спрашивали. */
+    val update: Release? = null,
+    /** Что происходит с обновлением прямо сейчас — показывается строкой. */
+    val updateState: String? = null,
     /** Когда настройки курса забирали в последний раз и чем это кончилось. */
     val tuningFetched: String? = null,
     /** Результат последнего действия — показывается под кнопками. */
@@ -536,6 +542,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val checker = HaikuChecker()
     private val complaints = ComplaintStore(app)
     private val issues = GithubIssues()
+    private val updater = Updater(app)
     private val progress = ProgressStore(app, dao)
     private val cache = VerdictCache(app)
     private val vocabRepo = VocabRepository(app)
@@ -1179,6 +1186,65 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             _settings.value = _settings.value?.copy(tuningFetched = Config.lastFetch)
             _notice.value = if (ok) "Настройки курса обновлены." else Config.lastFetch
             refreshHome()
+        }
+    }
+
+    /**
+     * Проверить, нет ли свежего релиза.
+     *
+     * Только спрашивает — скачивание и установка отдельным нажатием: шестьдесят
+     * мегабайт по мобильной сети человек должен разрешить сам, а не обнаружить
+     * постфактум.
+     */
+    fun checkUpdate() {
+        _settings.value = _settings.value?.copy(updateState = "Проверяю…")
+        viewModelScope.launch {
+            updater.check()
+                .onSuccess { release ->
+                    _settings.value = _settings.value?.copy(
+                        update = release,
+                        updateState = if (release.newer) {
+                            "Есть ${release.version} — ${release.sizeMb} МБ"
+                        } else {
+                            "Установлена последняя версия"
+                        }
+                    )
+                }
+                .onFailure {
+                    _settings.value = _settings.value?.copy(
+                        updateState = "Не вышло проверить: ${it.message}"
+                    )
+                }
+        }
+    }
+
+    /**
+     * Скачать и отдать системному установщику.
+     *
+     * Разрешение на установку спрашивается ровно тогда, когда оно нужно:
+     * заранее оно выглядело бы как требование неизвестно зачем.
+     */
+    fun installUpdate() {
+        val release = _settings.value?.update ?: return
+        if (!updater.canInstall()) {
+            _settings.value = _settings.value?.copy(
+                updateState = "Нужно разрешить установку из этого приложения"
+            )
+            updater.askForInstallRights()
+            return
+        }
+        _settings.value = _settings.value?.copy(updateState = "Скачиваю ${release.sizeMb} МБ…")
+        viewModelScope.launch {
+            updater.download(release)
+                .onSuccess {
+                    _settings.value = _settings.value?.copy(updateState = "Открываю установщик…")
+                    updater.install(it)
+                }
+                .onFailure {
+                    _settings.value = _settings.value?.copy(
+                        updateState = "Не скачалось: ${it.message}"
+                    )
+                }
         }
     }
 

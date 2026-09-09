@@ -127,6 +127,8 @@ class MainActivity : ComponentActivity() {
                                     onDailyMinutes = vm::setDailyMinutes,
                                     onShowSplash = vm::previewSplash,
                                     onRefreshTuning = vm::refreshTuning,
+                                    onCheckUpdate = vm::checkUpdate,
+                                    onInstallUpdate = vm::installUpdate,
                                     onClose = vm::closeSettings
                                 )
                             } else {

@@ -8,4 +8,6 @@
     <external-files-path name="complaints" path="." />
     <!-- Копия отчёта с говорящим именем: её и отдаём в share. -->
     <cache-path name="share" path="share/" />
+    <!-- Скачанный APK: его же отдаём системному установщику. -->
+    <cache-path name="update" path="update/" />
 </paths>
