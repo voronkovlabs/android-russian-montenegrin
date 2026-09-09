@@ -98,8 +98,8 @@ def main():
     name, code = version()
     tag = 'v' + name
 
-    # Имя вложения — то же, что у файла в OneDrive: по нему сразу видно версию,
-    # а «app-debug.apk» в папке загрузок не говорит ничего.
+    # Имя вложения с версией: «app-debug.apk» в папке загрузок телефона не
+    # говорит ничего, а по «crnogorski-1.59.apk» сразу видно, что ставишь.
     tmp = os.path.join(tempfile.gettempdir(), 'crnogorski-%s.apk' % name)
     shutil.copyfile(APK, tmp)
 
