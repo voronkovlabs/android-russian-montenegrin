@@ -6,12 +6,14 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +21,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -27,8 +28,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.outlined.Face
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -98,7 +97,17 @@ private const val HEADER_ITEMS = 1
  * раз. Ступенька видна всем куском сразу — по ней ясно, что идёт разговор, ещё
  * до того, как прочитана хоть одна реплика.
  */
-private val DIALOG_INDENT = 28.dp
+private val BUBBLE_CORNER = 14.dp
+
+/**
+ * Сколько места пузырь оставляет противоположному краю.
+ *
+ * Не украшение: пузырь во всю ширину не читается как реплика — сторона видна
+ * только по свободному полю рядом. Восьмой доли хватает, чтобы поле было
+ * заметно, и она не режет строку сверх нужного: черногорский текст тут крупный,
+ * и каждый отнятый процент ширины — лишний перенос.
+ */
+private const val BUBBLE_MARGIN = 0.12f
 
 /**
  * Сколько места оставляем над читаемой строкой.
@@ -406,23 +415,28 @@ fun StoryScreen(
             }
 
             itemsIndexed(state.chunks) { i, chunk ->
-              Column(Modifier.padding(start = if (chunk.mine) DIALOG_INDENT else 0.dp)) {
-                if (chunk.who.isNotBlank()) {
-                    RoleMark(theirs = chunk.theirs, speaker = state.speaker)
+              // Роли размечены только у диалога; у обычной истории пузырей нет
+              // вовсе — там говорит один человек, и делить нечего.
+              val dialog = chunk.who.isNotBlank()
+              Column(Modifier.fillMaxWidth()) {
+                if (dialog && chunk.theirs) {
+                    SpeakerName(state.speaker)
                 }
                 when {
                     i < state.index -> {
                         // Пройденное: текст приглушён, перевод под ним — он и есть награда.
-                        GlossedText(
-                            chunk.sr, state.glossaryMe,
-                            MaterialTheme.typography.bodyLarge, Jade
-                        )
-                        Spacer(Modifier.height(2.dp))
-                        Text(
-                            chunk.ru,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Muted
-                        )
+                        Bubble(dialog, chunk.mine) {
+                            GlossedText(
+                                chunk.sr, state.glossaryMe,
+                                MaterialTheme.typography.bodyLarge, Jade
+                            )
+                            Spacer(Modifier.height(2.dp))
+                            Text(
+                                chunk.ru,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Muted
+                            )
+                        }
                         Spacer(Modifier.height(14.dp))
                     }
 
@@ -431,11 +445,13 @@ fun StoryScreen(
                         // на месте, даже когда ниже открылся черногорский текст.
                         // Подсказки по словам ей не нужны: русский и так родной.
                         if (state.mode == StoryMode.Translate && !theirTurn) {
-                            Text(
-                                chunk.ru,
-                                style = MaterialTheme.typography.headlineSmall,
-                                color = Paper
-                            )
+                            Bubble(dialog, chunk.mine) {
+                                Text(
+                                    chunk.ru,
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    color = Paper
+                                )
+                            }
                             Spacer(Modifier.height(14.dp))
                         }
 
@@ -459,12 +475,14 @@ fun StoryScreen(
                             )
 
                             hearing -> {
-                                MaskedText(
-                                    text = chunk.sr,
-                                    style = MaterialTheme.typography.headlineSmall,
-                                    color = Muted,
-                                    onReveal = onReveal
-                                )
+                                Bubble(dialog, chunk.mine) {
+                                    MaskedText(
+                                        text = chunk.sr,
+                                        style = MaterialTheme.typography.headlineSmall,
+                                        color = Muted,
+                                        onReveal = onReveal
+                                    )
+                                }
                                 Spacer(Modifier.height(10.dp))
                                 Text(
                                     "Нажми на любое слово — покажу текст.",
@@ -497,10 +515,12 @@ fun StoryScreen(
                                     )
                                     Spacer(Modifier.height(8.dp))
                                 }
-                                GlossedText(
-                                    chunk.sr, state.glossaryMe,
-                                    MaterialTheme.typography.headlineSmall, Paper
-                                )
+                                Bubble(dialog, chunk.mine) {
+                                    GlossedText(
+                                        chunk.sr, state.glossaryMe,
+                                        MaterialTheme.typography.headlineSmall, Paper
+                                    )
+                                }
                                 Spacer(Modifier.height(16.dp))
                                 ReadingControls(
                                     listening = listening,
@@ -531,31 +551,33 @@ fun StoryScreen(
                         // Впереди показываем ту сторону, с которой работают:
                         // черногорский текст был бы ответом и при переводе,
                         // и на слух.
-                        if (state.mode == StoryMode.Listen) {
-                            // Плашки, а не прочерки, и без нажатия: открывать
-                            // отрезок, до которого ещё не дошли, незачем — а
-                            // выглядеть он должен так же, как выглядит текущий,
-                            // иначе список выдаёт два разных способа закрыть
-                            // текст там, где способ один.
-                            MaskedText(
-                                text = chunk.sr,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = Muted.copy(alpha = 0.45f),
-                                onReveal = null
-                            )
-                        } else {
-                            Text(
-                                when {
-                                    state.mode == StoryMode.Read -> chunk.sr
-                                    // Русский у чужой реплики — тоже ответ: её
-                                    // надо разобрать на слух, а не прочитать
-                                    // заранее.
-                                    chunk.theirs -> "…"
-                                    else -> chunk.ru
-                                },
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = Muted.copy(alpha = 0.45f)
-                            )
+                        Bubble(dialog, chunk.mine) {
+                            if (state.mode == StoryMode.Listen) {
+                                // Плашки, а не прочерки, и без нажатия: открывать
+                                // отрезок, до которого ещё не дошли, незачем — а
+                                // выглядеть он должен так же, как выглядит текущий,
+                                // иначе список выдаёт два разных способа закрыть
+                                // текст там, где способ один.
+                                MaskedText(
+                                    text = chunk.sr,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = Muted.copy(alpha = 0.45f),
+                                    onReveal = null
+                                )
+                            } else {
+                                Text(
+                                    when {
+                                        state.mode == StoryMode.Read -> chunk.sr
+                                        // Русский у чужой реплики — тоже ответ: её
+                                        // надо разобрать на слух, а не прочитать
+                                        // заранее.
+                                        chunk.theirs -> "…"
+                                        else -> chunk.ru
+                                    },
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = Muted.copy(alpha = 0.45f)
+                                )
+                            }
                         }
                         Spacer(Modifier.height(10.dp))
                     }
@@ -602,22 +624,66 @@ fun StoryScreen(
  * иначе не отличить, глядя на середину списка.
  */
 @Composable
-private fun RoleMark(theirs: Boolean, speaker: String) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Icon(
-            if (theirs) Icons.Outlined.Person else Icons.Outlined.Face,
-            contentDescription = null,
-            tint = if (theirs) Accent else Muted,
-            modifier = Modifier.size(15.dp)
-        )
-        Spacer(Modifier.width(6.dp))
-        Text(
-            if (theirs) speaker.ifBlank { "Собеседник" } else "Вы",
-            style = MaterialTheme.typography.labelSmall,
-            color = if (theirs) Accent else Muted
-        )
-    }
+private fun SpeakerName(speaker: String) {
+    Text(
+        speaker.ifBlank { "Собеседник" },
+        style = MaterialTheme.typography.labelSmall,
+        color = Accent
+    )
     Spacer(Modifier.height(5.dp))
+}
+
+/**
+ * Реплика диалога — пузырём, как в мессенджере.
+ *
+ * До 1.60 роль разводили иконкой, подписью и ступенькой в 28 dp. Читалось это
+ * плохо: ступенька теряется, а подпись приходится читать, чтобы понять, кто
+ * говорит. Пузырь отвечает на тот же вопрос формой — её видно раньше, чем
+ * прочитана хоть буква.
+ *
+ * **Свои реплики отличаются рамкой, а не заливкой** — так выбрал владелец из
+ * трёх показанных вариантов. Цветная подложка под черногорским текстом спорила
+ * бы с ним за внимание: тут не переписка, а то, что надо прочесть вслух.
+ *
+ * Внутрь пузыря идёт **только текст**. Кнопки и строка распознавания остаются
+ * снаружи, во всю ширину: они относятся к занятию, а не к реплике, и прыгали
+ * бы слева направо вместе с ролью говорящего.
+ *
+ * У обычной истории пузырей нет вовсе (`dialog = false`): говорит один человек,
+ * делить нечего, а рамка вокруг каждого отрезка превратила бы текст в список.
+ */
+@Composable
+private fun Bubble(
+    dialog: Boolean,
+    mine: Boolean,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    if (!dialog) {
+        Column(content = content)
+        return
+    }
+    val shape = RoundedCornerShape(BUBBLE_CORNER)
+    Row(
+        Modifier.fillMaxWidth(),
+        horizontalArrangement = if (mine) Arrangement.End else Arrangement.Start
+    ) {
+        if (mine) Spacer(Modifier.weight(BUBBLE_MARGIN))
+        Column(
+            Modifier
+                // fill = false: пузырь по содержимому, но не шире своей доли —
+                // короткая реплика должна оставаться короткой.
+                .weight(1f, fill = false)
+                .clip(shape)
+                .background(Surface1)
+                .then(
+                    if (mine) Modifier.border(1.dp, Accent.copy(alpha = 0.55f), shape)
+                    else Modifier
+                )
+                .padding(horizontal = 14.dp, vertical = 10.dp),
+            content = content
+        )
+        if (!mine) Spacer(Modifier.weight(BUBBLE_MARGIN))
+    }
 }
 
 /**
