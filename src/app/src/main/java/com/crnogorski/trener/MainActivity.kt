@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.core.content.ContextCompat
+import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.speech.Speaker
 import com.crnogorski.trener.ui.AppViewModel
@@ -41,6 +42,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        // Настройки курса поднимаются с диска до первого их чтения: файл
+        // маленький, а разъехавшиеся значения в первые секунды работы хуже,
+        // чем несколько миллисекунд на старте. Свежий тянется фоном.
+        Config.load(this)
         speaker = Speaker(this)
 
         // Напоминание назначается при каждом запуске: будильник Android не
@@ -121,6 +126,7 @@ class MainActivity : ComponentActivity() {
                                     onClearCache = vm::clearVerdictCache,
                                     onDailyMinutes = vm::setDailyMinutes,
                                     onShowSplash = vm::previewSplash,
+                                    onRefreshTuning = vm::refreshTuning,
                                     onClose = vm::closeSettings
                                 )
                             } else {

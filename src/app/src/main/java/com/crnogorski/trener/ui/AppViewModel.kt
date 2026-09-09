@@ -13,6 +13,7 @@ import com.crnogorski.trener.data.Complaint
 import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.ComplaintStore
 import com.crnogorski.trener.data.ComplaintVerdict
+import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.data.DayStatEntity
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.Glossary
@@ -269,6 +270,8 @@ data class SettingsState(
     val cacheHits: Int = 0,
     /** Вердиктов спрошено у модели. */
     val cacheAsked: Int = 0,
+    /** Когда настройки курса забирали в последний раз и чем это кончилось. */
+    val tuningFetched: String? = null,
     /** Результат последнего действия — показывается под кнопками. */
     val notice: String? = null
 )
@@ -426,7 +429,9 @@ data class SessionState(
  * урока — это подход минут на пятнадцать. Остальное подождёт до следующего раза,
  * карточки никуда не денутся.
  */
-private const val REVIEW_LIMIT = 25
+// Значения приходят из config/tuning.json (см. data/Tuning.kt): имена
+// и места использования те же, менять их теперь можно без пересборки.
+private val REVIEW_LIMIT: Int get() = Config.current.srs.reviewLimit
 
 /**
  * Потолок словарной сессии и дневная норма новых слов.
@@ -436,8 +441,8 @@ private const val REVIEW_LIMIT = 25
  * добавлять новое. Отсюда порядок сборки сессии: просроченное, потом новые
  * слова, потом открывшиеся карточки — и всё это под общим потолком.
  */
-private const val VOCAB_LIMIT = 25
-private const val NEW_WORDS_PER_DAY = 10
+private val VOCAB_LIMIT: Int get() = Config.current.vocab.sessionLimit
+private val NEW_WORDS_PER_DAY: Int get() = Config.current.vocab.newPerDay
 
 /**
  * Со скольких удачных повторений карточка считается усвоенной.
@@ -447,7 +452,7 @@ private const val NEW_WORDS_PER_DAY = 10
  * знаешь, упражнение ни о чём, а нагрузку такой порядок растягивает вдвое без
  * потери смысла.
  */
-private const val LEARNED_REPS = 2
+private val LEARNED_REPS: Int get() = Config.current.vocab.stepReps
 
 /**
  * По скольку заданий вводить новый урок в ежедневном задании.
@@ -458,7 +463,7 @@ private const val LEARNED_REPS = 2
  * ощущается хуже — беглость ниже, ошибок больше. Порция в четыре задания
  * растягивает урок на два-три дня и оставляет место повторению и словам.
  */
-private const val LESSON_PORTION = 4
+private val LESSON_PORTION: Int get() = Config.current.daily.lessonPortion
 
 /**
  * Как делится дневной бюджет между источниками.
@@ -480,12 +485,12 @@ private const val LESSON_PORTION = 4
  * базы: в пятнадцать минут больше полусотни заданий не поместится никогда,
  * а разбирать ради этого весь накопившийся долг незачем.
  */
-private const val DAILY_POOL = 60
+private val DAILY_POOL: Int get() = Config.current.daily.pool
 
-private const val STORY_SHARE = 0.10
-private const val LESSON_SHARE = 0.22
-private const val REVIEW_SHARE = 0.45
-private const val WORD_SHARE = 0.33
+private val STORY_SHARE: Double get() = Config.current.daily.storyShare
+private val LESSON_SHARE: Double get() = Config.current.daily.lessonShare
+private val REVIEW_SHARE: Double get() = Config.current.daily.reviewShare
+private val WORD_SHARE: Double get() = Config.current.daily.wordShare
 
 /**
  * После скольких неудач подряд показываем черногорский текст отрезка.
@@ -495,7 +500,7 @@ private const val WORD_SHARE = 0.33
  * Показанный текст превращает отрезок в чтение вслух: произнести-то его всё
  * равно надо.
  */
-private const val ATTEMPTS_BEFORE_REVEAL = 3
+private val ATTEMPTS_BEFORE_REVEAL: Int get() = Config.current.story.attemptsBeforeReveal
 
 /**
  * Сколько заходов даётся на задание, где отвечают голосом.
@@ -505,7 +510,7 @@ private const val ATTEMPTS_BEFORE_REVEAL = 3
  * задание проваливалось не по знанию, а по везению. Больше трёх не нужно: если
  * не вышло трижды, дело уже не в движке.
  */
-private const val SPOKEN_ATTEMPTS = 3
+private val SPOKEN_ATTEMPTS: Int get() = Config.current.daily.spokenAttempts
 
 /**
  * Сколько дней показывает график в отчёте.
@@ -598,6 +603,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         refreshHome()
+        // Свежие настройки курса: пришли — применились сразу, не пришли —
+        // работаем на вчерашних, и это не повод шуметь.
+        viewModelScope.launch { Config.refresh(app) }
         // Неотправленное с прошлого раза: сети могло не быть, когда жаловались.
         sendComplaints()
     }
@@ -1158,6 +1166,22 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    /**
+     * Забрать настройки курса из репозитория по просьбе.
+     *
+     * Само приложение делает это при запуске молча; кнопка нужна, чтобы
+     * увидеть правку сразу, не перезапуская, — и чтобы понять, дошла ли она
+     * вообще.
+     */
+    fun refreshTuning() {
+        viewModelScope.launch {
+            val ok = Config.refresh(getApplication())
+            _settings.value = _settings.value?.copy(tuningFetched = Config.lastFetch)
+            _notice.value = if (ok) "Настройки курса обновлены." else Config.lastFetch
+            refreshHome()
+        }
+    }
+
     fun closeStats() {
         _stats.value = null
     }
@@ -1621,7 +1645,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 cacheEnabled = cache.enabled,
                 cacheCount = cache.count(),
                 cacheHits = stats.hits,
-                cacheAsked = stats.asked
+                cacheAsked = stats.asked,
+                tuningFetched = Config.lastFetch
             )
         }
     }

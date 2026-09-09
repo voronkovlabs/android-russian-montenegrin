@@ -137,9 +137,9 @@ class Pace(context: Context) {
          * кучу» не следует, что тридцать минут вредны. Пятнадцать выбраны
          * как то, что реально делается каждый день.
          */
-        const val DEFAULT_MINUTES = 15
-        const val MIN_MINUTES = 5
-        const val MAX_MINUTES = 60
+        val DEFAULT_MINUTES: Int get() = Config.current.daily.defaultMinutes
+        val MIN_MINUTES: Int get() = Config.current.daily.minMinutes
+        val MAX_MINUTES: Int get() = Config.current.daily.maxMinutes
 
         /** Меньше этого — не ответ, а промах по кнопке. */
         private const val SAMPLE_MIN = 1.5

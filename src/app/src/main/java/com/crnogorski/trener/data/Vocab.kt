@@ -167,7 +167,7 @@ class VocabRepository(private val context: Context) {
          *
          * Выученное из очереди не пропадает — просто перестаёт быть срочным.
          */
-        const val LEARNED = 10
+        val LEARNED: Int get() = Config.current.vocab.learned
 
         /**
          * Идентификатор карточки: `w-apoteka-mean`, `w-apoteka-form-apoteci`.
@@ -193,9 +193,9 @@ class VocabRepository(private val context: Context) {
          * набором слов, и превращать занятие в сплошное узнавание нельзя.
          * Узнать слово легче, чем вспомнить, и лёгкое вытесняло бы трудное.
          */
-        const val MATCH_PAIRS = 5
-        const val MATCH_MIN = 4
-        const val MATCH_SCREENS = 2
+        val MATCH_PAIRS: Int get() = Config.current.vocab.matchPairs
+        val MATCH_MIN: Int get() = Config.current.vocab.matchMin
+        val MATCH_SCREENS: Int get() = Config.current.vocab.matchScreens
 
         fun isVocab(exerciseId: String): Boolean = exerciseId.startsWith("w-")
 

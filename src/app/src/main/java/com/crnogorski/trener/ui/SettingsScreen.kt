@@ -71,6 +71,7 @@ fun SettingsScreen(
     onClearCache: () -> Unit,
     onDailyMinutes: (Int) -> Unit,
     onShowSplash: () -> Unit,
+    onRefreshTuning: () -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
@@ -387,6 +388,9 @@ fun SettingsScreen(
             RecognitionRow()
 
             Spacer(Modifier.height(20.dp))
+            TuningRow(state.tuningFetched, onRefreshTuning)
+
+            Spacer(Modifier.height(20.dp))
             SplashRow(onShowSplash)
 
             Spacer(Modifier.height(36.dp))
@@ -513,6 +517,41 @@ private fun RecognitionRow() {
                 runCatching { notifications.isNotificationPolicyAccessGranted }.getOrDefault(false)
         }
     }
+}
+
+/**
+ * Настройки курса — те, что лежат файлом в репозитории.
+ *
+ * Интервалы повторений, доли занятия, норма новых слов и прочая методика
+ * читаются из `config/tuning.json` и меняются без пересборки — правкой файла
+ * прямо в вебе GitHub, хоть с телефона. Приложение забирает его при каждом
+ * запуске; кнопка нужна, чтобы увидеть правку сразу и понять, дошла ли она.
+ *
+ * Строка о последней попытке важнее кнопки: молчаливое «ничего не изменилось»
+ * — худшее, что может делать обновление настроек.
+ */
+@Composable
+private fun TuningRow(fetched: String?, onRefresh: () -> Unit) {
+    Text("НАСТРОЙКИ КУРСА", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(12.dp))
+    Text(
+        when {
+            fetched == null -> "Ещё не забирались — работают вшитые значения."
+            fetched.startsWith("не вышло") -> "Последняя попытка: $fetched"
+            else -> "Обновлены $fetched"
+        },
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+    Spacer(Modifier.height(10.dp))
+    SecondaryAction(text = "Обновить настройки курса", onClick = onRefresh)
+    Spacer(Modifier.height(8.dp))
+    Text(
+        "Интервалы повторений, доли занятия, норма новых слов. Правятся файлом " +
+            "config/tuning.json в репозитории — пересобирать приложение не нужно.",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
 }
 
 /**

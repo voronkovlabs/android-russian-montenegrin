@@ -313,6 +313,6 @@ data class ReadingScore(val matched: Int, val total: Int) {
     val passed: Boolean get() = total > 0 && matched.toFloat() / total >= PASS
 
     companion object {
-        const val PASS = 0.75f
+        val PASS: Float get() = Config.current.story.readingPass.toFloat()
     }
 }

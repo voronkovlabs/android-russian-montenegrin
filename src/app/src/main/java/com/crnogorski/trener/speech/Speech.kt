@@ -2,6 +2,7 @@ package com.crnogorski.trener.speech
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.crnogorski.trener.data.Config
 import android.media.AudioManager
 import android.content.Intent
 import android.os.Bundle
@@ -39,7 +40,7 @@ enum class AnswerLanguage(val speech: String, val keyboard: String) {
     Native(TAG_NATIVE, TAG_NATIVE)
 }
 
-private const val NORMAL_RATE = 0.9f
+private val NORMAL_RATE: Float get() = Config.current.speech.normalRate.toFloat()
 
 /** Обычный тон — им говорит «сам текст». */
 private const val NORMAL_PITCH = 1.0f
@@ -51,7 +52,7 @@ private const val NORMAL_PITCH = 1.0f
  * высотой. Ниже настолько, чтобы разница слышалась сразу, но речь не поехала:
  * на 0,6 движок начинает бубнить и разбирать становится труднее, чем нужно.
  */
-private const val LOW_PITCH = 0.78f
+private val LOW_PITCH: Float get() = Config.current.speech.lowPitch.toFloat()
 
 /**
  * «Медленнее» для аудирования: разобрать на слух с первого раза выходит не всегда.
@@ -60,7 +61,7 @@ private const val LOW_PITCH = 0.78f
  * 0,4. Ниже опускаться незачем: движок начинает рвать слова на слоги, и
  * разбирать становится труднее, а не легче.
  */
-private const val SLOW_RATE = 0.40f
+private val SLOW_RATE: Float get() = Config.current.speech.slowRate.toFloat()
 
 class Speaker(context: Context) {
 
@@ -477,7 +478,7 @@ class Listener(private val context: Context) {
         )
 
         /** Пауза перед повтором: пересозданному объекту нужно время на привязку. */
-        const val RETRY_DELAY_MS = 300L
+        val RETRY_DELAY_MS: Long get() = Config.current.speech.retryDelayMs.toLong()
 
         private const val PREFS = "crnogorski"
         private const val KEY_ON_DEVICE = "speech_on_device"
@@ -502,7 +503,7 @@ class Listener(private val context: Context) {
          * заглушка попадала бы ровно на него, и из двух гудков пропадал бы
          * только первый.
          */
-        const val MUTE_TAIL_MS = 600L
+        val MUTE_TAIL_MS: Long get() = Config.current.speech.muteTailMs.toLong()
 
         /**
          * Через сколько считать, что движок не ответит уже никогда.
@@ -512,6 +513,6 @@ class Listener(private val context: Context) {
          * могут оборвать живое распознавание: столько не длится ни один
          * отрезок. Они нужны только на случай, когда ответа нет вообще.
          */
-        const val WATCHDOG_MS = 20_000L
+        val WATCHDOG_MS: Long get() = Config.current.speech.watchdogSeconds * 1000L
     }
 }

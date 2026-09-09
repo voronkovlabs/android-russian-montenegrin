@@ -1,0 +1,53 @@
+{
+  "_": "Настройки курса. Правь прямо здесь — приложение забирает файл при каждом запуске, пересобирать не надо. Любой ключ можно убрать: чего нет, берётся из значений по умолчанию в data/Tuning.kt. Значения вне разумных пределов обрезаются, а не отвергаются.",
+
+  "srs": {
+    "firstDays": 1,
+    "lessonSecondDays": 7,
+    "vocabSecondDays": 3,
+    "easeStart": 2.5,
+    "easeStep": 0.05,
+    "easeMin": 1.3,
+    "easeMax": 3.0,
+    "lapseMinutes": 10,
+    "skipHours": 4,
+    "reviewLimit": 25
+  },
+
+  "daily": {
+    "defaultMinutes": 15,
+    "minMinutes": 5,
+    "maxMinutes": 60,
+    "lessonPortion": 4,
+    "pool": 60,
+    "lessonShare": 0.22,
+    "reviewShare": 0.45,
+    "wordShare": 0.33,
+    "storyShare": 0.10,
+    "spokenAttempts": 3
+  },
+
+  "vocab": {
+    "newPerDay": 10,
+    "sessionLimit": 25,
+    "learned": 10,
+    "stepReps": 2,
+    "matchPairs": 5,
+    "matchMin": 4,
+    "matchScreens": 2
+  },
+
+  "story": {
+    "attemptsBeforeReveal": 3,
+    "readingPass": 0.75
+  },
+
+  "speech": {
+    "slowRate": 0.40,
+    "normalRate": 0.9,
+    "lowPitch": 0.78,
+    "watchdogSeconds": 20,
+    "muteTailMs": 600,
+    "retryDelayMs": 300
+  }
+}
