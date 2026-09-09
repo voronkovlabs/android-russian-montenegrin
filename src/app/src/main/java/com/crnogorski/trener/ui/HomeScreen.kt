@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.crnogorski.trener.data.StoryMode
+import com.crnogorski.trener.net.Release
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -57,6 +58,7 @@ fun HomeScreen(
     onTab: (HomeTab) -> Unit,
     onToggleGroup: (String) -> Unit,
     onStats: () -> Unit,
+    onUpdate: () -> Unit,
     onNote: (String) -> Unit,
     onIdea: (String) -> Unit
 ) {
@@ -122,6 +124,11 @@ fun HomeScreen(
             )
             Spacer(Modifier.height(14.dp))
             StatsStrip(state.stats, onStats)
+            val fresh = state.update
+            if (fresh != null) {
+                Spacer(Modifier.height(8.dp))
+                UpdateStrip(fresh.version, fresh.sizeMb, onUpdate)
+            }
             Spacer(Modifier.height(20.dp))
         }
 
@@ -290,6 +297,41 @@ private fun StatsStrip(stats: StatsBrief, onOpen: () -> Unit) {
             )
         }
         Text("Отчёт", style = MaterialTheme.typography.labelSmall, color = Accent)
+        Icon(
+            Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+            contentDescription = null,
+            tint = Accent
+        )
+    }
+}
+
+/**
+ * Строка про свежую версию — только когда она есть.
+ *
+ * На главном, а не в настройках: сюда заходят каждый день, а в настройки раз в
+ * месяц. Размер написан прямо в строке — нажатие сразу начинает скачивание, и
+ * шестьдесят мегабайт по мобильной сети человек должен видеть до нажатия, а не
+ * после.
+ */
+@Composable
+private fun UpdateStrip(version: String, sizeMb: Int, onUpdate: () -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Surface1)
+            .border(1.dp, Accent.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
+            .clickable(onClick = onUpdate)
+            .padding(horizontal = 14.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            "Есть версия $version · $sizeMb МБ",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Paper,
+            modifier = Modifier.weight(1f)
+        )
+        Text("Обновить", style = MaterialTheme.typography.labelSmall, color = Accent)
         Icon(
             Icons.AutoMirrored.Outlined.KeyboardArrowRight,
             contentDescription = null,

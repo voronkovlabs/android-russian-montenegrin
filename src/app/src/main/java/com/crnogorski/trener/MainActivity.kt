@@ -147,6 +147,7 @@ class MainActivity : ComponentActivity() {
                                     onTab = vm::selectTab,
                                     onToggleGroup = vm::toggleGroup,
                                     onStats = vm::openStats,
+                                    onUpdate = vm::installUpdate,
                                     onNote = vm::addNote,
                                     onIdea = vm::addIdea
                                 )

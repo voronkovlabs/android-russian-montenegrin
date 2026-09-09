@@ -122,6 +122,11 @@ fun SettingsScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp)
         ) {
+            // Обновление — первым: за ним приходят чаще, чем за длиной занятия,
+            // а искать его в конце длинного экрана каждый раз утомительно.
+            UpdateRow(state, onCheckUpdate, onInstallUpdate)
+
+            Spacer(Modifier.height(36.dp))
             Text("НАСТРОЙКИ", style = MaterialTheme.typography.labelSmall, color = Accent)
             Spacer(Modifier.height(6.dp))
             Text("Занятие", style = MaterialTheme.typography.displaySmall, color = Paper)
@@ -394,9 +399,6 @@ fun SettingsScreen(
 
             Spacer(Modifier.height(20.dp))
             SplashRow(onShowSplash)
-
-            Spacer(Modifier.height(20.dp))
-            UpdateRow(state, onCheckUpdate, onInstallUpdate)
 
             Spacer(Modifier.height(36.dp))
             Text(

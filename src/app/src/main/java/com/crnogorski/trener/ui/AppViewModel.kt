@@ -235,6 +235,8 @@ data class HomeState(
     val vocab: VocabTracks = VocabTracks(),
     val daily: DailyPlan = DailyPlan(),
     val stats: StatsBrief = StatsBrief(),
+    /** Свежий релиз, если он есть: строка появляется только тогда. */
+    val update: Release? = null,
     val tab: HomeTab = HomeTab.Today,
     /** Заголовки развёрнутых разделов. По умолчанию свёрнуты все. */
     val expandedGroups: Set<String> = emptySet(),
@@ -543,6 +545,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val complaints = ComplaintStore(app)
     private val issues = GithubIssues()
     private val updater = Updater(app)
+
+    /**
+     * Свежий релиз, если он есть.
+     *
+     * Живёт в модели, а не только в состоянии настроек: о нём должен знать и
+     * главный экран, куда человек заходит каждый день, — в настройки же
+     * заглядывают раз в месяц.
+     */
+    private var freshRelease: Release? = null
     private val progress = ProgressStore(app, dao)
     private val cache = VerdictCache(app)
     private val vocabRepo = VocabRepository(app)
@@ -613,6 +624,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Свежие настройки курса: пришли — применились сразу, не пришли —
         // работаем на вчерашних, и это не повод шуметь.
         viewModelScope.launch { Config.refresh(app) }
+        lookForUpdate()
         // Неотправленное с прошлого раза: сети могло не быть, когда жаловались.
         sendComplaints()
     }
@@ -663,6 +675,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     dueCount = dao.dueCount(System.currentTimeMillis(), VocabRepository.LESSON_ID),
                     vocab = vocabSummary(),
                     stats = statsBrief(),
+                    update = freshRelease,
                     daily = buildDaily(),
                     loading = false
                 )
@@ -1196,11 +1209,33 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * мегабайт по мобильной сети человек должен разрешить сам, а не обнаружить
      * постфактум.
      */
+    /**
+     * Тихая проверка обновления — один раз за запуск приложения.
+     *
+     * Именно в `init`, а не в `refreshHome`: главный экран пересобирается после
+     * каждого занятия, и проверка ходила бы в сеть по десять раз на дню ради
+     * ответа, который меняется раз в неделю.
+     *
+     * Молчит, если обновления нет или спросить не вышло: строка «проверить не
+     * удалось» на главном экране каждый день — это шум, а не забота.
+     */
+    private fun lookForUpdate() {
+        viewModelScope.launch {
+            updater.check().getOrNull()?.let { release ->
+                if (!release.newer) return@let
+                freshRelease = release
+                _home.value = _home.value.copy(update = release)
+            }
+        }
+    }
+
     fun checkUpdate() {
         _settings.value = _settings.value?.copy(updateState = "Проверяю…")
         viewModelScope.launch {
             updater.check()
                 .onSuccess { release ->
+                    freshRelease = release.takeIf { it.newer }
+                    _home.value = _home.value.copy(update = freshRelease)
                     _settings.value = _settings.value?.copy(
                         update = release,
                         updateState = if (release.newer) {
@@ -1225,27 +1260,33 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * заранее оно выглядело бы как требование неизвестно зачем.
      */
     fun installUpdate() {
-        val release = _settings.value?.update ?: return
+        val release = freshRelease ?: return
         if (!updater.canInstall()) {
-            _settings.value = _settings.value?.copy(
-                updateState = "Нужно разрешить установку из этого приложения"
-            )
+            say("Разреши установку из этого приложения — открываю настройки системы")
             updater.askForInstallRights()
             return
         }
-        _settings.value = _settings.value?.copy(updateState = "Скачиваю ${release.sizeMb} МБ…")
+        say("Скачиваю ${release.sizeMb} МБ…")
         viewModelScope.launch {
             updater.download(release)
                 .onSuccess {
-                    _settings.value = _settings.value?.copy(updateState = "Открываю установщик…")
+                    say("Открываю установщик…")
                     updater.install(it)
                 }
-                .onFailure {
-                    _settings.value = _settings.value?.copy(
-                        updateState = "Не скачалось: ${it.message}"
-                    )
-                }
+                .onFailure { say("Не скачалось: ${it.message}") }
         }
+    }
+
+    /**
+     * Сказать про обновление и в настройки, и всплывающей строкой.
+     *
+     * Нажать «обновить» можно с главного экрана, где настроек не видно: без
+     * всплывающей строки скачивание шестидесяти мегабайт шло бы молча, и
+     * человек успел бы нажать второй раз.
+     */
+    private fun say(text: String) {
+        _settings.value = _settings.value?.copy(updateState = text)
+        _notice.value = text
     }
 
     fun closeStats() {
