@@ -147,7 +147,7 @@ class ComplaintStore(private val context: Context) {
      * Отправленное не удаляется, а переезжает в `complaints-sent.jsonl`: issue
      * когда-нибудь закроют, а запись о том, что человек говорил, останется.
      */
-    suspend fun flush(send: suspend (Complaint) -> Result<Int>): Flushed =
+    suspend fun flush(send: suspend (Complaint, String) -> Result<Int>): Flushed =
         withContext(Dispatchers.IO) {
             lock.withLock {
                 val current = file()
@@ -172,7 +172,9 @@ class ComplaintStore(private val context: Context) {
                         left += line
                         continue
                     }
-                    val result = send(complaint)
+                    // Отдаём и разобранную запись, и саму строку: в issue
+                    // уезжает то, что записал телефон, — байт в байт.
+                    val result = send(complaint, line)
                     if (result.isSuccess) {
                         sent++
                         done += line

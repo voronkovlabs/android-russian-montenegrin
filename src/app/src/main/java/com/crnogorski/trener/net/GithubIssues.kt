@@ -49,14 +49,14 @@ class GithubIssues(
      * Завести issue. Возвращает её номер или ошибку — по ошибке решают,
      * оставлять ли жалобу в очереди.
      */
-    suspend fun create(complaint: Complaint, device: String): Result<Int> =
+    suspend fun create(complaint: Complaint, raw: String, device: String): Result<Int> =
         withContext(Dispatchers.IO) {
             if (!configured) {
                 return@withContext Result.failure(IllegalStateException("Токен GitHub не задан"))
             }
             val payload = JSONObject()
                 .put("title", title(complaint))
-                .put("body", body(complaint, device))
+                .put("body", body(complaint, raw, device))
                 .put("labels", JSONArray(labels(complaint)))
 
             val request = Request.Builder()
@@ -105,8 +105,20 @@ class GithubIssues(
      *
      * Имя телефона стоит первой строкой, а не в подписи внизу: телефонов в семье
      * два, и «от кого пришло» читают раньше, чем разбирают.
+     *
+     * Внизу — **исходная строка JSONL целиком**, свёрнутая в `<details>`.
+     * Настоящим вложением её не сделать: загрузка файлов к issue есть только в
+     * веб-интерфейсе, у API такого метода нет. А смысл у блока не тот, что
+     * кажется: разметку выше человек читает глазами, но разобрать её обратно в
+     * запись нельзя — пустые поля выброшены, а всё остальное перемешано с
+     * подписями. Строка же разбирается `json.loads` и годится для пакетного
+     * разбора жалоб, как раньше годился файл.
+     *
+     * Второе, и не менее важное: строка переживает **поля, о которых этот код
+     * не знает**. Появится в `Complaint` новое поле — разметка его не покажет,
+     * пока сюда не допишут строчку, а в JSON оно будет с первого же дня.
      */
-    private fun body(c: Complaint, device: String): String = buildString {
+    private fun body(c: Complaint, raw: String, device: String): String = buildString {
         appendLine("**${reasonLabel(c.reason)}** · $device · ${c.ts}")
         appendLine()
         line("Задание", c.exerciseId)
@@ -123,6 +135,13 @@ class GithubIssues(
             appendLine()
             appendLine("> ${c.note.replace("\n", "\n> ")}")
         }
+        appendLine()
+        appendLine("<details><summary>Запись целиком</summary>")
+        appendLine()
+        appendLine("```json")
+        appendLine(raw.trim())
+        appendLine("```")
+        appendLine("</details>")
         appendLine()
         appendLine("---")
         appendLine("<sub>${c.versionName} (${c.versionCode}) · заведено приложением</sub>")

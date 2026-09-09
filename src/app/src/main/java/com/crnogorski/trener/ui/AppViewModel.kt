@@ -1651,7 +1651,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
         viewModelScope.launch {
             val device = complaints.deviceTag()
-            val result = complaints.flush { issues.create(it, device) }
+            val result = complaints.flush { complaint, raw ->
+                issues.create(complaint, raw, device)
+            }
             _settings.value = _settings.value?.copy(
                 complaintCount = result.left,
                 complaintsLeft = result.left,
