@@ -101,6 +101,7 @@ class MainActivity : ComponentActivity() {
                                     onReveal = vm::revealChunk,
                                     onRestart = vm::restartStory,
                                     onNote = vm::addNote,
+                                    onIdea = vm::addIdea,
                                     onClose = vm::closeStory
                                 )
                             } else if (openStats != null) {
@@ -138,7 +139,8 @@ class MainActivity : ComponentActivity() {
                                     onTab = vm::selectTab,
                                     onToggleGroup = vm::toggleGroup,
                                     onStats = vm::openStats,
-                                    onNote = vm::addNote
+                                    onNote = vm::addNote,
+                                    onIdea = vm::addIdea
                                 )
                             }
                         }
@@ -154,6 +156,7 @@ class MainActivity : ComponentActivity() {
                                 onRetryBlock = vm::retryAfterBlock,
                                 onComplain = vm::complain,
                                 onNote = vm::addNote,
+                                onIdea = vm::addIdea,
                                 onExit = vm::exitSession
                             )
                         }

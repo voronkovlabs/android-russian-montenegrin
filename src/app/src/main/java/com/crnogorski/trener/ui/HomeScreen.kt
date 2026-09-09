@@ -57,7 +57,8 @@ fun HomeScreen(
     onTab: (HomeTab) -> Unit,
     onToggleGroup: (String) -> Unit,
     onStats: () -> Unit,
-    onNote: (String) -> Unit
+    onNote: (String) -> Unit,
+    onIdea: (String) -> Unit
 ) {
     if (state.loading) {
         Column(
@@ -96,6 +97,7 @@ fun HomeScreen(
                     selected = state.tab == HomeTab.Words
                 ) { onTab(HomeTab.Words) }
                 Spacer(Modifier.weight(1f))
+                IdeaButton(onSave = onIdea)
                 ComplaintButton(onSave = onNote)
                 IconButton(onClick = onSettings) {
                     Icon(

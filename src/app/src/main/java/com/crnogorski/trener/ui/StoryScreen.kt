@@ -145,6 +145,7 @@ fun StoryScreen(
     onReveal: () -> Unit,
     onRestart: () -> Unit,
     onNote: (String) -> Unit,
+    onIdea: (String) -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
@@ -373,6 +374,7 @@ fun StoryScreen(
                     style = MaterialTheme.typography.labelSmall,
                     color = Muted
                 )
+                IdeaButton(onSave = onIdea)
                 ComplaintButton(onSave = onNote)
             }
             Spacer(Modifier.height(8.dp))

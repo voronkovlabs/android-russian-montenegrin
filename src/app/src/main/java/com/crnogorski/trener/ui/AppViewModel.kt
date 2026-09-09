@@ -21,6 +21,7 @@ import com.crnogorski.trener.data.LessonRef
 import com.crnogorski.trener.data.LessonRepository
 import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.MatchPair
+import com.crnogorski.trener.data.IDEA_REASON
 import com.crnogorski.trener.data.NOTE_REASON
 import com.crnogorski.trener.data.Pace
 import com.crnogorski.trener.data.ProgressStore
@@ -2006,7 +2007,19 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * место, где это случилось. Путать его с предметом жалобы не даёт причина
      * [NOTE_REASON].
      */
-    fun addNote(text: String) {
+    /**
+     * Идея — «сделать бы», а не «сломано».
+     *
+     * Тем же путём, что заметка: файл как очередь, потом issue. Отличается
+     * только код причины, из него берётся метка. Разводить их по разным
+     * механизмам незачем — а вот метку человек должен поставить в момент
+     * записи, задним числом по тексту её не восстановить.
+     */
+    fun addIdea(text: String) = addRemark(text, IDEA_REASON, "Идея записана")
+
+    fun addNote(text: String) = addRemark(text, NOTE_REASON, "Жалоба записана")
+
+    private fun addRemark(text: String, reason: String, said: String) {
         val body = text.trim()
         if (body.isEmpty()) return
         val item = _session.value?.let { it.items[it.index] }
@@ -2020,7 +2033,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     lessonId = item?.lessonId ?: openStory?.id.orEmpty(),
                     type = item?.exercise?.typeName
                         ?: openStory?.let { "story-" + it.mode.key }.orEmpty(),
-                    reason = NOTE_REASON,
+                    reason = reason,
                     note = body,
                     versionCode = BuildConfig.VERSION_CODE,
                     versionName = BuildConfig.VERSION_NAME
@@ -2028,7 +2041,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             )
             // Сообщаем после записи, а не по нажатию: иначе подтверждение соврало бы,
             // если внешняя память вдруг недоступна.
-            _notice.value = "Жалоба записана"
+            _notice.value = said
             sendComplaints()
         }
     }

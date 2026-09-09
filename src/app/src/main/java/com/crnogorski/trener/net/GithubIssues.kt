@@ -2,6 +2,7 @@ package com.crnogorski.trener.net
 
 import com.crnogorski.trener.BuildConfig
 import com.crnogorski.trener.data.Complaint
+import com.crnogorski.trener.data.IDEA_REASON
 import com.crnogorski.trener.data.NOTE_REASON
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -87,7 +88,9 @@ class GithubIssues(
      * категории обычно хватает, и тогда заголовком становится она.
      */
     private fun title(c: Complaint): String {
-        val where = c.exerciseId.ifBlank { "заметка" }
+        val where = c.exerciseId.ifBlank {
+            if (c.reason == IDEA_REASON) "идея" else "заметка"
+        }
         val what = c.note.replace('\n', ' ').trim().ifBlank { reasonLabel(c.reason) }
         val cut = if (what.length > 70) what.take(69).trimEnd() + "…" else what
         return "[$where] $cut"
@@ -134,7 +137,10 @@ class GithubIssues(
      * и без описания, поэтому список тут и там держат одинаковым.
      */
     private fun labels(c: Complaint): List<String> =
-        listOf("жалоба", reasonTag(c.reason))
+        // У идеи общей метки «жалоба» нет: она ничего не ломает, и в списке
+        // сломанного ей не место.
+        if (c.reason == IDEA_REASON) listOf(reasonTag(c.reason))
+        else listOf("жалоба", reasonTag(c.reason))
 
     private fun reasonTag(code: String): String = when (code) {
         "reference_wrong" -> "эталон неверен"
@@ -143,6 +149,7 @@ class GithubIssues(
         "audio_unclear" -> "плохо слышно"
         "typo" -> "опечатка"
         NOTE_REASON -> "заметка"
+        IDEA_REASON -> "идея"
         else -> "другое"
     }
 
@@ -153,6 +160,7 @@ class GithubIssues(
         "audio_unclear" -> "Плохо слышно"
         "typo" -> "Опечатка"
         NOTE_REASON -> "Заметка"
+        IDEA_REASON -> "Идея"
         else -> "Другое"
     }
 

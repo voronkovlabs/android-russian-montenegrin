@@ -21,8 +21,8 @@ android {
         applicationId = "com.montelearn"
         minSdk = 34
         targetSdk = 35
-        versionCode = 47
-        versionName = "1.44"
+        versionCode = 48
+        versionName = "1.45"
         buildConfigField(
             "String",
             "ANTHROPIC_API_KEY",

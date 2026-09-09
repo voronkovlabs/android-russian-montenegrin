@@ -82,6 +82,7 @@ fun SessionScreen(
     onRetryBlock: () -> Unit,
     onComplain: (ComplaintReason, String) -> Unit,
     onNote: (String) -> Unit,
+    onIdea: (String) -> Unit,
     onExit: () -> Unit
 ) {
     // Системная «Назад» должна возвращать к списку уроков, а не закрывать приложение.
@@ -94,7 +95,7 @@ fun SessionScreen(
     }
 
     Column(Modifier.fillMaxSize().imePadding()) {
-        SessionHeader(state, onNote, onExit)
+        SessionHeader(state, onNote, onIdea, onExit)
 
         Column(
             Modifier
@@ -183,7 +184,12 @@ fun SessionScreen(
 }
 
 @Composable
-private fun SessionHeader(state: SessionState, onNote: (String) -> Unit, onExit: () -> Unit) {
+private fun SessionHeader(
+    state: SessionState,
+    onNote: (String) -> Unit,
+    onIdea: (String) -> Unit,
+    onExit: () -> Unit
+) {
     Column(Modifier.padding(horizontal = 20.dp, vertical = 14.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onExit) {
@@ -200,6 +206,7 @@ private fun SessionHeader(state: SessionState, onNote: (String) -> Unit, onExit:
                 color = Muted
             )
             // Пожаловаться можно и посреди задания: диалог поверх, урок не сбивается.
+            IdeaButton(onSave = onIdea)
             ComplaintButton(onSave = onNote)
         }
         Spacer(Modifier.height(8.dp))
