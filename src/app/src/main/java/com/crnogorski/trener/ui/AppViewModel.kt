@@ -14,6 +14,7 @@ import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.ComplaintStore
 import com.crnogorski.trener.data.ComplaintVerdict
 import com.crnogorski.trener.data.Config
+import com.crnogorski.trener.data.Stress
 import com.crnogorski.trener.data.DayStatEntity
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.Glossary
@@ -631,6 +632,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Свежие настройки курса: пришли — применились сразу, не пришли —
         // работаем на вчерашних, и это не повод шуметь.
         viewModelScope.launch { Config.refresh(app) }
+        // Ударения: файл маленький, читается один раз за запуск. Не прочитался
+        // — метки останутся только у коротких слов, где их считает правило.
+        viewModelScope.launch { Stress.load(app) }
         lookForUpdate()
         // Неотправленное с прошлого раза: сети могло не быть, когда жаловались.
         sendComplaints()

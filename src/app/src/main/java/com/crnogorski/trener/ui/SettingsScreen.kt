@@ -400,6 +400,9 @@ fun SettingsScreen(
             Spacer(Modifier.height(20.dp))
             SplashRow(onShowSplash)
 
+            Spacer(Modifier.height(28.dp))
+            SourcesRow()
+
             Spacer(Modifier.height(36.dp))
             Text(
                 "Версия ${state.versionName} (${state.versionCode})",
@@ -655,6 +658,28 @@ private fun SplashRow(onShow: () -> Unit) {
 
     Spacer(Modifier.height(14.dp))
     SecondaryAction(text = "Показать заставку", onClick = onShow)
+}
+
+/**
+ * Чужой материал, уехавший в APK, и его лицензии.
+ *
+ * Не украшение и не вежливость: ударения взяты из английского Викисловаря под
+ * CC BY-SA, а она требует называть источник везде, где данные разошлись. Риф
+ * под CC0 указания автора не требует вовсе — он здесь потому, что в одном
+ * месте перечислить всё чужое дешевле, чем каждый раз вспоминать, что откуда.
+ *
+ * Мелким шрифтом внизу: читают это раз в жизни, а место занимать оно не должно.
+ */
+@Composable
+private fun SourcesRow() {
+    Text("ИСТОЧНИКИ", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(8.dp))
+    Text(
+        "Ударения в словах — English Wiktionary (CC BY-SA 4.0). " +
+            "Гитарный риф на заставке — Freesound (CC0).",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
 }
 
 /** Шаг настройки длины занятия: пять минут. Минута туда-сюда ничего не решает. */

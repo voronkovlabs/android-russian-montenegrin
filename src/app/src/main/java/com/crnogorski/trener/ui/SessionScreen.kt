@@ -53,6 +53,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
@@ -282,6 +283,10 @@ private fun ExerciseBody(
             // по-русски, и распознавание с клавиатурой должны быть русскими.
             language = if (ex.native) AnswerLanguage.Native else AnswerLanguage.Target,
             promptGloss = if (ex.native) emptyMap() else state.glossary.me,
+            // Обратный перевод показывает черногорское слово — там ударение и
+            // нужно. В остальных карточках условие русское или это рамка с
+            // пропуском, то есть фраза: во фразе ударение уезжает на предлог.
+            stressPrompt = ex.native,
             // Слово проще сказать, чем набрать: микрофон включается сам, а
             // клавиатура остаётся на месте — набрать руками можно всегда.
             autoListen = true,
@@ -343,8 +348,17 @@ private fun Label(text: String) {
 }
 
 @Composable
-private fun Prompt(text: String, gloss: Map<String, String> = emptyMap()) {
-    GlossedText(text, gloss, MaterialTheme.typography.headlineSmall, Paper)
+private fun Prompt(
+    text: String,
+    gloss: Map<String, String> = emptyMap(),
+    /** Условие — одно черногорское слово: показать в нём ударение. */
+    stress: Boolean = false
+) {
+    if (stress) {
+        Text(stressed(text), style = MaterialTheme.typography.headlineSmall, color = Paper)
+    } else {
+        GlossedText(text, gloss, MaterialTheme.typography.headlineSmall, Paper)
+    }
 }
 
 /**
@@ -367,6 +381,8 @@ private fun TextAnswer(
     enabled: Boolean,
     language: AnswerLanguage,
     promptGloss: Map<String, String> = emptyMap(),
+    /** Условие — черногорское слово, а не фраза: см. [Prompt]. */
+    stressPrompt: Boolean = false,
     speakable: String? = null,
     speaker: Speaker? = null,
     /** Начинать слушать сразу, не дожидаясь нажатия на микрофон. */
@@ -386,7 +402,7 @@ private fun TextAnswer(
     }
 
     Label(label)
-    Prompt(prompt, promptGloss)
+    Prompt(prompt, promptGloss, stress = stressPrompt)
     if (speakable != null && speaker != null) {
         Spacer(Modifier.height(10.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -642,7 +658,7 @@ private fun MatchAnswer(
         ) {
             left.forEach { pair ->
                 MatchTile(
-                    text = pair.ru,
+                    text = AnnotatedString(pair.ru),
                     done = pair.cardId in solved,
                     chosen = picked?.cardId == pair.cardId && pickedLeft,
                     failed = key(pair, true) in flash
@@ -655,7 +671,7 @@ private fun MatchAnswer(
         ) {
             right.forEach { pair ->
                 MatchTile(
-                    text = pair.me,
+                    text = stressed(pair.me),
                     done = pair.cardId in solved,
                     chosen = picked?.cardId == pair.cardId && !pickedLeft,
                     failed = key(pair, false) in flash
@@ -675,7 +691,7 @@ private fun MatchAnswer(
  */
 @Composable
 private fun MatchTile(
-    text: String,
+    text: AnnotatedString,
     done: Boolean,
     chosen: Boolean,
     failed: Boolean,
@@ -976,6 +992,19 @@ private fun ResultView(phase: Phase.Result, exercise: Exercise) {
         exercise is Exercise.Repeat ||
         exercise is Exercise.Reading
     val answerLabel = if (spoken) "Услышано" else "Твой ответ"
+    // Ударение — только у черногорского ответа: размечать русское слово по
+    // сербской норме значило бы врать. Фразы отсеет сам Stress.of — во фразе
+    // ударение уходит на проклитику, и словное там неверно.
+    val target = when (exercise) {
+        is Exercise.TranslateToNative -> false
+        is Exercise.Word -> !exercise.native
+        else -> true
+    }
+
+    fun reference(prefix: String) = buildAnnotatedString {
+        append(prefix)
+        append(if (target) stressed(phase.expected) else AnnotatedString(phase.expected))
+    }
 
     Column(
         Modifier
@@ -1002,11 +1031,11 @@ private fun ResultView(phase: Phase.Result, exercise: Exercise) {
         // Эталон бывает пустым — у экрана пар его нет вовсе: он раскрыл себя
         // сам, пока его собирали.
         if (!phase.correct && phase.expected.isNotBlank()) {
-            Text("Правильно: ${phase.expected}", style = MaterialTheme.typography.bodyLarge, color = Paper)
+            Text(reference("Правильно: "), style = MaterialTheme.typography.bodyLarge, color = Paper)
             Spacer(Modifier.height(8.dp))
         } else if (showAnswer) {
             // Ответ засчитан, но не совпал с эталоном: «Правильно» тут вводило бы в заблуждение.
-            Text("Эталон: ${phase.expected}", style = MaterialTheme.typography.bodyMedium, color = Muted)
+            Text(reference("Эталон: "), style = MaterialTheme.typography.bodyMedium, color = Muted)
             Spacer(Modifier.height(8.dp))
         }
         if (phase.feedback.isNotBlank()) {
