@@ -354,6 +354,9 @@ private fun Prompt(
     /** Условие — одно черногорское слово: показать в нём ударение. */
     stress: Boolean = false
 ) {
+    // Ударение теперь ставит сам GlossedText — и в отдельном слове, и во фразе.
+    // Флаг остался ради обратного перевода: там условие это черногорское слово,
+    // подсказок к нему нет, и таблица подсказок пустая.
     if (stress) {
         Text(stressed(text), style = MaterialTheme.typography.headlineSmall, color = Paper)
     } else {
@@ -1001,9 +1004,12 @@ private fun ResultView(phase: Phase.Result, exercise: Exercise) {
         else -> true
     }
 
+    val expected = if (target) stressedPhrase(phase.expected)
+    else AnnotatedString(phase.expected)
+
     fun reference(prefix: String) = buildAnnotatedString {
         append(prefix)
-        append(if (target) stressed(phase.expected) else AnnotatedString(phase.expected))
+        append(expected)
     }
 
     Column(

@@ -17,6 +17,7 @@ import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import com.crnogorski.trener.data.Stress
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 
@@ -36,8 +37,9 @@ fun GlossedText(
     style: TextStyle,
     color: Color
 ) {
+    val mark = markStyle()
     if (gloss.isEmpty()) {
-        Text(text, style = style, color = color)
+        Text(stressedPhrase(text), style = style, color = color)
         return
     }
 
@@ -45,14 +47,18 @@ fun GlossedText(
 
     val annotated = buildAnnotatedString {
         var cursor = 0
+        // Предыдущее слово нужно ударению: после проклитики оно уезжает на неё.
+        var previous = ""
         WORD.findAll(text).forEach { match ->
             append(text.substring(cursor, match.range.first))
             cursor = match.range.last + 1
 
             val word = match.value
             val meaning = gloss[word.lowercase()]
+            val at = Stress.inPhrase(word, previous)
+            previous = word
             if (meaning == null) {
-                append(word)
+                if (at == null) append(word) else appendMarked(word, at, mark)
             } else {
                 withLink(
                     LinkAnnotation.Clickable(
@@ -61,7 +67,9 @@ fun GlossedText(
                             style = SpanStyle(textDecoration = TextDecoration.Underline)
                         )
                     ) { picked = word to meaning }
-                ) { append(word) }
+                ) {
+                    if (at == null) append(word) else appendMarked(word, at, mark)
+                }
             }
         }
         append(text.substring(cursor))
