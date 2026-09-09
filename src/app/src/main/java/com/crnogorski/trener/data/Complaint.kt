@@ -5,15 +5,15 @@ import android.content.Context
 import android.os.Build
 import android.provider.Settings
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.security.MessageDigest
-import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 /**
@@ -45,6 +45,14 @@ enum class ComplaintReason(val code: String, val label: String) {
  * заполнен, — место, где заметку написали, а не то, на что жалуются.
  */
 const val NOTE_REASON = "note"
+
+/**
+ * Чем кончилась отправка очереди.
+ *
+ * [left] — сколько осталось ждать, [error] — почему остановились. Ноль и `null`
+ * значит «очередь пуста», а не «всё хорошо»: в настройках это разные строки.
+ */
+data class Flushed(val sent: Int = 0, val left: Int = 0, val error: String? = null)
 
 /** Вердикт проверяющего на момент жалобы — по нему видно, промпт виноват или эталон. */
 @Serializable
@@ -98,66 +106,88 @@ class ComplaintStore(private val context: Context) {
 
     fun now(): String = LocalDateTime.now().format(stamp)
 
+    /**
+     * Замок на файл.
+     *
+     * Отправка переписывает файл целиком (неотправленное остаётся, отправленное
+     * уезжает в архив), а жалобу могут написать ровно в этот момент — тогда
+     * строка потерялась бы молча. Дописывание и отправка теперь не пересекаются.
+     */
+    private val lock = Mutex()
+
     suspend fun append(complaint: Complaint) = withContext(Dispatchers.IO) {
-        val target = file()
-        target.parentFile?.mkdirs()
-        target.appendText(json.encodeToString(complaint) + "\n")
+        lock.withLock {
+            val target = file()
+            target.parentFile?.mkdirs()
+            target.appendText(json.encodeToString(complaint) + "\n")
+        }
     }
+
+    /**
+     * Отправить накопленное и вычеркнуть то, что ушло.
+     *
+     * Файл — очередь: жалоба сперва ложится на диск и только потом уезжает.
+     * Порядок именно такой, потому что жалоба нужна ровно тогда, когда что-то
+     * сломалось, — в том числе без сети, и терять её из-за этого нельзя.
+     *
+     * **Первая же неудача останавливает проход.** Если сеть отвалилась, десять
+     * оставшихся попыток отвалятся тоже — а десять таймаутов подряд это полторы
+     * минуты впустую и разряженный аккумулятор. Остальное подождёт следующего
+     * раза.
+     *
+     * Отправленное не удаляется, а переезжает в `complaints-sent.jsonl`: issue
+     * когда-нибудь закроют, а запись о том, что человек говорил, останется.
+     */
+    suspend fun flush(send: suspend (Complaint) -> Result<Int>): Flushed =
+        withContext(Dispatchers.IO) {
+            lock.withLock {
+                val current = file()
+                if (!current.exists()) return@withLock Flushed()
+                val lines = current.readLines().filter { it.isNotBlank() }
+                if (lines.isEmpty()) return@withLock Flushed()
+
+                val left = mutableListOf<String>()
+                val done = mutableListOf<String>()
+                var sent = 0
+                var failure: String? = null
+
+                for (line in lines) {
+                    val complaint = runCatching { json.decodeFromString<Complaint>(line) }.getOrNull()
+                    if (complaint == null) {
+                        // Битую строку в очереди держать незачем: она не уедет
+                        // никогда. В архив — там её хотя бы видно.
+                        done += line
+                        continue
+                    }
+                    if (failure != null) {
+                        left += line
+                        continue
+                    }
+                    val result = send(complaint)
+                    if (result.isSuccess) {
+                        sent++
+                        done += line
+                    } else {
+                        failure = result.exceptionOrNull()?.message ?: "не отправилось"
+                        left += line
+                    }
+                }
+
+                if (done.isNotEmpty()) {
+                    File(current.parentFile, SENT_NAME)
+                        .appendText(done.joinToString("\n", postfix = "\n"))
+                }
+                if (left.isEmpty()) current.delete()
+                else current.writeText(left.joinToString("\n", postfix = "\n"))
+
+                Flushed(sent = sent, left = left.size, error = failure)
+            }
+        }
 
     suspend fun count(): Int = withContext(Dispatchers.IO) {
         val target = file()
         if (target.exists()) target.readLines().count { it.isNotBlank() } else 0
     }
-
-    /**
-     * Откладывает накопленное в сторону после отправки: файл переименовывается
-     * в `complaints-sent-<дата>.jsonl`, новые жалобы пишутся в чистый.
-     *
-     * Именно переименование, а не удаление: Android не сообщает, дошла ли отправка
-     * через share (`ACTION_SEND` не возвращает результат), поэтому удалять по факту
-     * нажатия — значит однажды потерять жалобы молча. Дубли безопаснее: у каждой
-     * записи есть `ts` и `exerciseId`, они схлопываются на стороне разработчика.
-     *
-     * @return сколько записей ушло в архив; 0 — если архивировать было нечего.
-     */
-    suspend fun archive(): Int = withContext(Dispatchers.IO) {
-        val current = file()
-        if (!current.exists()) return@withContext 0
-        val lines = current.readLines().count { it.isNotBlank() }
-        if (lines == 0) {
-            current.delete()
-            return@withContext 0
-        }
-        val name = LocalDateTime.now().format(archiveStamp)
-        val moved = current.renameTo(File(current.parentFile, "complaints-sent-$name.jsonl"))
-        if (moved) lines else 0
-    }
-
-    /**
-     * Готовит копию отчёта для отправки — с именем, по которому файл узнаётся
-     * в чужой папке загрузок: `complaints-<устройство>-<UTC>.jsonl`.
-     *
-     * Копия, а не переименование оригинала: приложение продолжает дописывать
-     * жалобы в тот же `complaints.jsonl`, и оно же ожидается `pullComplaints`-ом.
-     * Копия лежит в кэше, а не рядом с оригиналом, чтобы `pullComplaints` не
-     * считал одни и те же жалобы дважды; систему кэш чистит сама.
-     *
-     * @return файл для share или null, если отправлять нечего.
-     */
-    suspend fun prepareForSend(): File? = withContext(Dispatchers.IO) {
-        val source = file()
-        if (!source.exists() || source.length() == 0L) return@withContext null
-
-        val dir = File(context.cacheDir, SHARE_DIR).apply { mkdirs() }
-        // Прошлые копии не нужны: имя каждый раз новое, иначе кэш растёт молча.
-        dir.listFiles()?.forEach { it.delete() }
-
-        val name = "complaints-${deviceTag()}-${utcStamp()}.jsonl"
-        source.copyTo(File(dir, name), overwrite = true)
-    }
-
-    /** UTC, а не местное время: отчёты приходят из разных часовых поясов. */
-    private fun utcStamp(): String = sendStamp.format(Instant.now())
 
     /**
      * Короткий и стабильный ярлык устройства: модель плюс шесть символов
@@ -168,7 +198,7 @@ class ComplaintStore(private val context: Context) {
      * достаточно того, что ярлык не меняется от отправки к отправке.
      */
     @SuppressLint("HardwareIds")
-    private fun deviceTag(): String {
+    fun deviceTag(): String {
         val model = Build.MODEL.lowercase().replace(Regex("[^a-z0-9]+"), "-").trim('-')
         val androidId = runCatching {
             Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
@@ -186,10 +216,8 @@ class ComplaintStore(private val context: Context) {
 
     companion object {
         const val FILE_NAME = "complaints.jsonl"
-        private const val SHARE_DIR = "share"
-        private val sendStamp: DateTimeFormatter =
-            DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'").withZone(ZoneOffset.UTC)
-        private val archiveStamp: DateTimeFormatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss")
+
+        /** Отправленное. Не удаляем: issue закроют, а сказанное останется. */
+        const val SENT_NAME = "complaints-sent.jsonl"
     }
 }

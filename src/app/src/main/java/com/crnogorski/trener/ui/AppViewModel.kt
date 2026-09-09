@@ -40,6 +40,7 @@ import com.crnogorski.trener.data.needsModelCheck
 import com.crnogorski.trener.data.referenceAnswer
 import com.crnogorski.trener.data.typeName
 import com.crnogorski.trener.net.CheckResult
+import com.crnogorski.trener.net.GithubIssues
 import com.crnogorski.trener.net.HaikuChecker
 import com.crnogorski.trener.net.Verdict
 import com.crnogorski.trener.srs.Scheduler
@@ -255,6 +256,12 @@ data class SettingsState(
     val dailyMinutes: Int = Pace.DEFAULT_MINUTES,
     /** Помнить ли ответы, засчитанные Claude. По умолчанию да. */
     val cacheEnabled: Boolean = true,
+    /** Сколько жалоб ждёт отправки в GitHub. */
+    val complaintsLeft: Int = 0,
+    /** Почему очередь встала, если встала. */
+    val complaintsError: String? = null,
+    /** Настроен ли токен: без него отправлять нечем. */
+    val issuesReady: Boolean = false,
     /** Сколько ответов уже запомнено. */
     val cacheCount: Int = 0,
     /** Вердиктов взято из памяти. */
@@ -522,6 +529,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val dao = AppDb.get(app).dao()
     private val checker = HaikuChecker()
     private val complaints = ComplaintStore(app)
+    private val issues = GithubIssues()
     private val progress = ProgressStore(app, dao)
     private val cache = VerdictCache(app)
     private val vocabRepo = VocabRepository(app)
@@ -589,6 +597,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         refreshHome()
+        // Неотправленное с прошлого раза: сети могло не быть, когда жаловались.
+        sendComplaints()
     }
 
     fun refreshHome() {
@@ -1567,6 +1577,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val stats = cache.stats()
             _settings.value = SettingsState(
                 complaintCount = complaints.count(),
+                complaintsLeft = complaints.count(),
+                issuesReady = issues.configured,
                 filePath = complaints.file().absolutePath,
                 versionName = BuildConfig.VERSION_NAME,
                 versionCode = BuildConfig.VERSION_CODE,
@@ -1620,21 +1632,41 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * в share экран настроек. Интент собирается там: для него нужен Context
      * активности, а не приложения.
      */
-    suspend fun reportToSend(): File? = complaints.prepareForSend()
-
-    fun archiveComplaints() {
+    /**
+     * Отправить накопленные жалобы в issues.
+     *
+     * Зовётся сама — после каждой жалобы и при запуске приложения, — и руками
+     * из настроек. Без токена не делает ничего: жалобы просто копятся в файле,
+     * и это не поломка, а работа вхолостую.
+     *
+     * [loud] отличает ручной запуск от автоматического. Молча уведомлять не о
+     * чем: отправка идёт фоном и человека не касается. А на нажатие кнопки
+     * ответить нужно всегда, даже если ответ — «отправлять нечего».
+     */
+    fun sendComplaints(loud: Boolean = false) {
+        if (!issues.configured) {
+            if (loud) _notice.value = "Токен GitHub не задан — жалобы копятся в файле."
+            return
+        }
         viewModelScope.launch {
-            val moved = complaints.archive()
+            val device = complaints.deviceTag()
+            val result = complaints.flush { issues.create(it, device) }
             _settings.value = _settings.value?.copy(
-                complaintCount = complaints.count(),
-                notice = if (moved > 0) {
-                    "Отложено записей: $moved. Файл остался на телефоне рядом с новым."
-                } else {
-                    "Откладывать нечего."
-                }
+                complaintCount = result.left,
+                complaintsLeft = result.left,
+                complaintsError = result.error
             )
+            val text = when {
+                result.sent > 0 && result.left == 0 -> "Отправлено в GitHub: ${result.sent}."
+                result.sent > 0 -> "Отправлено ${result.sent}, осталось ${result.left}."
+                result.error != null -> "Не отправилось: ${result.error}"
+                loud -> "Отправлять нечего."
+                else -> null
+            }
+            if (text != null && (loud || result.sent > 0)) _notice.value = text
         }
     }
+
 
     // --- Истории ---
 
@@ -1996,7 +2028,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             )
             // Сообщаем после записи, а не по нажатию: иначе подтверждение соврало бы,
             // если внешняя память вдруг недоступна.
-            _notice.value = "Жалоба записана в отчёт"
+            _notice.value = "Жалоба записана"
+            sendComplaints()
         }
     }
 
@@ -2367,6 +2400,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             }
 
             _session.value = _session.value?.copy(complaintFiled = true)
+            sendComplaints()
         }
     }
 

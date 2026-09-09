@@ -21,13 +21,22 @@ android {
         applicationId = "com.montelearn"
         minSdk = 34
         targetSdk = 35
-        versionCode = 46
-        versionName = "1.43"
+        versionCode = 47
+        versionName = "1.44"
         buildConfigField(
             "String",
             "ANTHROPIC_API_KEY",
             "\"${localProps.getProperty("ANTHROPIC_API_KEY") ?: ""}\""
         )
+        // Токен для issue с жалобами. Мелкий (fine-grained), выданный на один
+        // этот репозиторий с правом Issues: write — из APK он достаётся так же
+        // легко, как ключ Anthropic, и шире права давать нельзя.
+        buildConfigField(
+            "String",
+            "GITHUB_TOKEN",
+            "\"${localProps.getProperty("GITHUB_TOKEN") ?: ""}\""
+        )
+        buildConfigField("String", "GITHUB_REPO", "\"voronkovlabs/android-russian-montenegrin\"")
     }
 
     buildTypes {

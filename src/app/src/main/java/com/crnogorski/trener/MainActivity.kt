@@ -109,8 +109,7 @@ class MainActivity : ComponentActivity() {
                                 SettingsScreen(
                                     state = openSettings,
                                     speaker = speaker,
-                                    prepareReport = vm::reportToSend,
-                                    onArchive = vm::archiveComplaints,
+                                    onSendComplaints = { vm.sendComplaints(loud = true) },
                                     onFolder = vm::useProgressFolder,
                                     onForgetFolder = vm::forgetProgressFolder,
                                     onSaveNow = vm::saveProgressNow,

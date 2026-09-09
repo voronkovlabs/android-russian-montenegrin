@@ -1,7 +1,6 @@
 package com.crnogorski.trener.ui
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -37,7 +36,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,7 +44,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import android.app.TimePickerDialog
-import androidx.core.content.FileProvider
 import android.app.NotificationManager
 import android.provider.Settings
 import com.crnogorski.trener.data.Pace
@@ -55,7 +52,6 @@ import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.data.ProgressStore
 import com.crnogorski.trener.speech.Speaker
 import kotlinx.coroutines.launch
-import java.io.File
 
 /** Фраза для проверки голоса: короткая, со всеми характерными звуками. */
 private const val VOICE_PROBE = "Dobar dan, kako si?"
@@ -64,8 +60,7 @@ private const val VOICE_PROBE = "Dobar dan, kako si?"
 fun SettingsScreen(
     state: SettingsState,
     speaker: Speaker,
-    prepareReport: suspend () -> File?,
-    onArchive: () -> Unit,
+    onSendComplaints: () -> Unit,
     onFolder: (Uri) -> Unit,
     onForgetFolder: () -> Unit,
     onSaveNow: () -> Unit,
@@ -79,8 +74,6 @@ fun SettingsScreen(
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    var confirmArchive by remember { mutableStateOf(false) }
     var voiceChecked by remember { mutableStateOf(false) }
 
     // На урезанных прошивках выбор файлов может отсутствовать вовсе: тогда
@@ -253,7 +246,7 @@ fun SettingsScreen(
                     .padding(16.dp)
             ) {
                 Text(
-                    "НАКОПЛЕНО ЖАЛОБ",
+                    "ЖДУТ ОТПРАВКИ",
                     style = MaterialTheme.typography.labelSmall,
                     color = Muted
                 )
@@ -274,18 +267,10 @@ fun SettingsScreen(
             Spacer(Modifier.height(20.dp))
 
             PrimaryAction(
-                text = "Отправить отчёт",
-                enabled = state.complaintCount > 0
-            ) {
-                scope.launch { prepareReport()?.let { shareComplaints(context, it) } }
-            }
-
-            Spacer(Modifier.height(10.dp))
-
-            SecondaryAction(
-                text = "Очистить (уже отправлено)",
-                enabled = state.complaintCount > 0
-            ) { confirmArchive = true }
+                text = "Отправить сейчас",
+                enabled = state.complaintsLeft > 0 && state.issuesReady,
+                onClick = onSendComplaints
+            )
 
             if (state.notice != null) {
                 Spacer(Modifier.height(14.dp))
@@ -294,8 +279,19 @@ fun SettingsScreen(
 
             Spacer(Modifier.height(12.dp))
             Text(
-                "Очистка не удаляет жалобы, а откладывает их в отдельный файл рядом: " +
-                    "Android не сообщает, дошла ли отправка, и терять записи по нажатию нельзя.",
+                when {
+                    !state.issuesReady ->
+                        "Токен GitHub не задан, поэтому жалобы только копятся в файле. " +
+                            "Добавь GITHUB_TOKEN в local.properties и пересобери."
+                    state.complaintsError != null ->
+                        "Прошлая отправка не прошла: ${state.complaintsError}. " +
+                            "Жалобы на месте, попробуем снова при следующем запуске."
+                    state.complaintsLeft > 0 ->
+                        "Уедут в issues сами — при следующей жалобе или запуске приложения."
+                    else ->
+                        "Каждая жалоба заводит issue в репозитории. Файл на телефоне — " +
+                            "очередь отправки: сеть бывает не всегда, а жалоба нужна сразу."
+                },
                 style = MaterialTheme.typography.bodyMedium,
                 color = Muted
             )
@@ -403,58 +399,8 @@ fun SettingsScreen(
         }
     }
 
-    if (confirmArchive) {
-        AlertDialog(
-            onDismissRequest = { confirmArchive = false },
-            containerColor = Surface1,
-            titleContentColor = Paper,
-            textContentColor = Muted,
-            title = { Text("Отложить ${state.complaintCount} шт.?") },
-            text = {
-                Text(
-                    "Записи уйдут в отдельный файл, счётчик обнулится. " +
-                        "Делай это после того, как убедишься, что отчёт дошёл."
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    confirmArchive = false
-                    onArchive()
-                }) { Text("Отложить", color = Accent) }
-            },
-            dismissButton = {
-                TextButton(onClick = { confirmArchive = false }) {
-                    Text("Отмена", color = Muted)
-                }
-            }
-        )
-    }
 }
 
-/**
- * Отдаёт файл в системную шторку. Через FileProvider: прямой `file://` с Android 7
- * роняет получателя с FileUriExposedException.
- *
- * Приходит сюда не сам `complaints.jsonl`, а копия с именем вида
- * `complaints-<устройство>-<UTC>.jsonl`: в папке загрузок на той стороне
- * одинаковые имена превращаются в «complaints (2).jsonl» и перестают
- * различаться.
- *
- * Результат отправки Android не возвращает — поэтому «очистить» отдельной кнопкой,
- * вручную, а не следом за этим вызовом.
- */
-private fun shareComplaints(context: Context, file: File) {
-    if (!file.exists()) return
-    val uri = FileProvider.getUriForFile(context, "${context.packageName}.files", file)
-    val send = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_STREAM, uri)
-        putExtra(Intent.EXTRA_SUBJECT, "Crnogorski: ${file.name}")
-        putExtra(Intent.EXTRA_TITLE, file.name)
-        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    }
-    context.startActivity(Intent.createChooser(send, "Отправить отчёт"))
-}
 
 /** Одно число под подписью — плитка вроде той, что считает жалобы. */
 /**
