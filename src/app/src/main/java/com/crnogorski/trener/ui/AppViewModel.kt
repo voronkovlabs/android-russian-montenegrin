@@ -2073,7 +2073,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // и точное совпадение строки тут не годится.
             is Exercise.Word -> localResult(
                 if (ex.native) LocalCheck.matchesGloss(answer, ex.answer)
-                else LocalCheck.matchesTyped(answer, ex.answer),
+                else LocalCheck.matchesTyped(answer, ex.answer) ||
+                    ex.also.any { LocalCheck.matchesTyped(answer, it) },
                 ex.explanation,
                 ex.answer,
                 answer

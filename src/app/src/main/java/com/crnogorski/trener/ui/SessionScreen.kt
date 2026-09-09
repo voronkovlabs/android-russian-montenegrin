@@ -47,6 +47,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.LinkAnnotation
@@ -469,9 +470,27 @@ private fun TextAnswer(
  */
 private data class Dictation(val before: String, val after: String)
 
-/** Продиктованное дописывается к набранному, а не затирает его. */
-private fun appendSpoken(current: String, heard: String): String =
-    if (current.isBlank()) heard else current.trimEnd() + " " + heard
+/**
+ * Продиктованное дописывается к набранному, а не затирает его.
+ *
+ * Первая буква поднимается в заглавную: движок распознавания отдаёт всё
+ * строчными, и ответ выглядел неряшливо. На проверку это не влияет вовсе —
+ * `matchesTyped` регистр не различает, — но читать своё же предложение
+ * приятнее.
+ *
+ * Точку в конце **не ставим**. Вопрос это или утверждение, здесь неизвестно, а
+ * подсмотреть знак у эталона значило бы подсказать: «?» в конце сразу говорит,
+ * что ответ — вопрос. Пунктуация при сверке всё равно отбрасывается.
+ */
+private fun appendSpoken(current: String, heard: String): String {
+    val said = heard.trim()
+    val text = if (current.isBlank()) {
+        said.replaceFirstChar { it.uppercase() }
+    } else {
+        current.trimEnd() + " " + said
+    }
+    return text
+}
 
 @Composable
 private fun ChoiceAnswer(
@@ -649,6 +668,10 @@ private fun MatchTile(
         Modifier
             .fillMaxWidth()
             .heightIn(min = 64.dp)
+            // Сложенная пара гаснет, но остаётся на месте. Убрать её нельзя:
+            // остальные плашки перепрыгнули бы под пальцем, а гашение и так
+            // отвечает на вопрос «что уже сделано» — по жалобе владельца.
+            .alpha(if (done) 0.32f else 1f)
             .clip(RoundedCornerShape(12.dp))
             .background(Surface1)
             .border(if (chosen || failed) 2.dp else 1.dp, border, RoundedCornerShape(12.dp))
@@ -1214,8 +1237,15 @@ private fun ComplaintBlock(
         )
 
         Spacer(Modifier.height(14.dp))
-        PrimaryButton("Записать жалобу", enabled = reason != null) {
-            reason?.let { onComplain(it, note) }
+        // Категория важнее текста, но текст без категории — тоже жалоба: по
+        // жалобе владельца, который написал комментарий к верно решённому
+        // заданию и не смог его сохранить. Тогда причина «другое»: она и значит
+        // «ни одна категория не подошла».
+        PrimaryButton(
+            "Записать жалобу",
+            enabled = reason != null || note.isNotBlank()
+        ) {
+            onComplain(reason ?: ComplaintReason.Other, note)
         }
         Spacer(Modifier.height(4.dp))
         TextButton(onClick = { open = false }) { Text("Отмена", color = Muted) }

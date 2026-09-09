@@ -240,6 +240,10 @@ fun VocabFile.exerciseFor(
         label = "Как это по-черногорски?",
         prompt = word.gloss,
         answer = word.id,
+        // Слова с тем же толкованием засчитываются наравне с эталоном: по
+        // словарю таких пар 55, и «дочь» — это и ćerka, и kći. Ключ тот же,
+        // что у экрана пар: первый вариант статьи после разбора помет.
+        also = synonyms(word),
         explanation = ""
     )
 
@@ -280,6 +284,25 @@ fun VocabFile.exerciseFor(
             explanation = "Основа меняется: ${word.id} → $form"
         )
     }
+}
+
+/**
+ * Другие слова словаря с тем же толкованием.
+ *
+ * Перебор по всем словам на каждое задание — 1152 сравнения, доли миллисекунды;
+ * заводить ради этого индекс в кэше не стоит того, чтобы усложнять `VocabFile`.
+ *
+ * Сравнивается **первый вариант статьи**, а не вся строка: у «postojati»
+ * толкование «быть, существовать», у соседа может быть просто «быть», и по
+ * целой строке они не совпали бы никогда.
+ */
+private fun VocabFile.synonyms(word: VocabWord): List<String> {
+    val key = LocalCheck.glossVariants(word.gloss).firstOrNull() ?: return emptyList()
+    return words.asSequence()
+        .filter { it.id != word.id }
+        .filter { LocalCheck.glossVariants(it.gloss).firstOrNull() == key }
+        .map { it.id }
+        .toList()
 }
 
 /**

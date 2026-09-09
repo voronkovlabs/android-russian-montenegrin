@@ -10,7 +10,7 @@
     {"type": "form", "id": "l13e05", "prompt": "Koliko košta kilogram ___ ? (sir)", "answer": "sira", "explanation": "Sir → sira."},
     {"type": "choice", "id": "l13e06", "prompt": "Как спросить «у вас есть скидка?»", "options": ["Imate li popust?", "Imate popust li?", "Li imate popust?", "Imate li popusta?"], "answer": "Imate li popust?", "explanation": "Частица li идёт сразу после глагола. Popust тут прямое дополнение, не родительный."},
     {"type": "word_bank", "id": "l13e07", "prompt": "Полкило сыра, пожалуйста.", "answer": "Molim vas pola kilograma sira", "bank": ["Molim", "vas", "pola", "kilograma", "sira", "sir", "kilogram"], "explanation": "Оба слова после pola — в родительном: kilograma sira."},
-    {"type": "ru_to_me", "id": "l13e08", "prompt": "Можно платить картой?", "reference": "Mogu li platiti karticom?", "hint": "karticom — творительный падеж от kartica, «чем платить»."},
+    {"type": "ru_to_me", "id": "l13e08", "prompt": "Можно оплатить картой?", "reference": "Mogu li platiti karticom?", "hint": "karticom — творительный падеж от kartica, «чем платить»."},
     {"type": "me_to_ru", "id": "l13e09", "prompt": "Nemamo više jaja, izvinite.", "reference": "Яиц больше нет, извините."},
     {"type": "listening", "id": "l13e10", "audioText": "Koliko košta kilogram sira", "translation": "Сколько стоит килограмм сыра"},
     {"type": "speaking", "id": "l13e11", "phrase": "Molim vas, pola kilograma sira", "translation": "Полкило сыра, пожалуйста"}
