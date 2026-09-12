@@ -228,6 +228,11 @@ fun VocabFile.exerciseFor(
     form: String = "",
     repetitions: Int = 0
 ): Exercise? = when (kind) {
+    // Картинки тут нет намеренно: спрашивают, что значит слово, и картинка
+    // была бы ответом. Показать её после ответа было бы можно, но тело задания
+    // рисуется один раз, до развилки по фазам (см. SessionScreen), и «покажи
+    // только на результате» потребовало бы протащить фазу внутрь. Не стоит
+    // того, пока никто не попросил.
     VocabKind.Recall -> Exercise.Word(
         id = VocabRepository.cardId(word.id, kind),
         label = "Что это значит?",
@@ -246,7 +251,10 @@ fun VocabFile.exerciseFor(
         // словарю таких пар 55, и «дочь» — это и ćerka, и kći. Ключ тот же,
         // что у экрана пар: первый вариант статьи после разбора помет.
         also = synonyms(word),
-        explanation = ""
+        explanation = "",
+        // Картинка рядом с русским условием ответа не выдаёт: она значит ровно
+        // то же, что написанное слово, а спрашивают черногорское.
+        icon = WordEmoji.of(word.id).orEmpty()
     )
 
     VocabKind.Pattern -> {
@@ -267,7 +275,10 @@ fun VocabFile.exerciseFor(
                     ?: "Поставь в нужную форму",
                 prompt = "$prompt  (${word.id})",
                 answer = it.f,
-                explanation = sample?.ru.orEmpty()
+                explanation = sample?.ru.orEmpty(),
+                // Слово тут и так написано в скобках — картинка ничего не
+                // открывает, зато держит перед глазами, о чём идёт речь.
+                icon = WordEmoji.of(word.id).orEmpty()
             )
         }
     }
@@ -283,7 +294,8 @@ fun VocabFile.exerciseFor(
             answer = form,
             // Основа тут меняется, и сказать об этом стоит прямо: иначе
             // выглядит как опечатка в задании.
-            explanation = "Основа меняется: ${word.id} → $form"
+            explanation = "Основа меняется: ${word.id} → $form",
+            icon = WordEmoji.of(word.id).orEmpty()
         )
     }
 }

@@ -65,6 +65,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.crnogorski.trener.R
 import com.crnogorski.trener.data.ComplaintReason
@@ -277,6 +278,7 @@ private fun ExerciseBody(
             key = ex.id,
             label = ex.label,
             prompt = ex.prompt,
+            icon = ex.icon,
             hint = "",
             enabled = enabled,
             // Язык ответа, а не задания: у обратного перевода отвечают
@@ -380,6 +382,8 @@ private fun TextAnswer(
     key: String,
     label: String,
     prompt: String,
+    /** Картинка к слову: эмодзи или пусто. Бывает только у словарных карточек. */
+    icon: String = "",
     hint: String,
     enabled: Boolean,
     language: AnswerLanguage,
@@ -405,6 +409,12 @@ private fun TextAnswer(
     }
 
     Label(label)
+    // Картинка стоит над условием и крупно: она тут вместо картинки в бумажном
+    // словаре — на неё смотрят до того, как прочтут слово, а не после.
+    if (icon.isNotBlank()) {
+        Text(icon, fontSize = 40.sp, lineHeight = 46.sp)
+        Spacer(Modifier.height(4.dp))
+    }
     Prompt(prompt, promptGloss, stress = stressPrompt)
     if (speakable != null && speaker != null) {
         Spacer(Modifier.height(10.dp))
