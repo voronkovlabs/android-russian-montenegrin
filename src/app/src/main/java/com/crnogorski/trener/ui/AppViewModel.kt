@@ -614,6 +614,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     /** Имя телефона для отчётов — считается один раз, читает системные настройки. */
     private val device: String by lazy { complaints.deviceTag() }
 
+    /**
+     * Чей это телефон. Не `by lazy`, в отличие от [device]: карта имён
+     * приходит с настройками, а они догоняются фоном уже после запуска, и
+     * запомненное однажды «не знаю» осталось бы таким до конца дня.
+     */
+    private val person: String? get() = complaints.person()
+
     /** Контекст для того, что зовут из методов: `app` виден только в инициализации. */
     private val ctx: android.content.Context = app.applicationContext
 
@@ -1965,7 +1972,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
         viewModelScope.launch {
             val result = Trace.span("сеть: отправка жалоб") {
-                complaints.flush { complaint, raw -> issues.create(complaint, raw, device) }
+                complaints.flush { complaint, raw ->
+                    issues.create(complaint, raw, device, person)
+                }
             }
             _settings.value = _settings.value?.copy(
                 complaintCount = result.left,
@@ -2353,7 +2362,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 if (!auto) _notice.value = "Токен GitHub не задан — отчёт остался в файле."
                 return@launch
             }
-            issues.diagnostics(report.title, report.body)
+            issues.diagnostics(report.title, report.body, person)
                 .onSuccess {
                     // Стираем только после удачной отправки: неудачный отчёт
                     // дороже места, которое он занимает.

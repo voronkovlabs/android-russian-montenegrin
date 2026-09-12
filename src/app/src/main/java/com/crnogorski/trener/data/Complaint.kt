@@ -228,6 +228,13 @@ class ComplaintStore(private val context: Context) {
      * называется моделью по умолчанию, и «Redmi Note 13 (Redmi Note 13)»
      * выглядело бы глупо.
      *
+     * **Впереди имени телефона стоит имя человека**, если хвост хеша нашёлся
+     * в карте `people` из подтягиваемых настроек (`Tuning.people`). Модель
+     * отвечает на вопрос «с какого аппарата», а разбирают жалобы по другому —
+     * «от кого», и до 1.71 этот перевод делался в уме, по отдельным записям.
+     * Карта лежит в настройках, потому что будет меняться: сброс телефона к
+     * заводским меняет ANDROID_ID, а с ним и хвост.
+     *
      * Хвост из шести символов хеша ANDROID_ID остаётся как **различитель**:
      * два телефона одной модели с непереименованными именами иначе слились бы
      * в один. Именно хеш, а не сам идентификатор: для «с какого телефона это
@@ -252,19 +259,44 @@ class ComplaintStore(private val context: Context) {
             else -> "$chosen ($model)"
         }
 
+        // Длину режем у имени телефона, а не у всей строки: хвост хеша стоит
+        // последним, и общий `take` откусил бы именно его — то единственное,
+        // по чему телефоны и различают.
+        return listOf(person().orEmpty(), name.ifBlank { "телефон" }.take(40), hash())
+            .filter { it.isNotBlank() }
+            .joinToString(" · ")
+    }
+
+    /**
+     * Чей это телефон — или `null`, если хвоста нет в карте.
+     *
+     * Отдельно от [deviceTag], потому что уходит отдельно: в метку issue.
+     * Метка видна в списке, не открывая, а «от кого пришло» читают раньше, чем
+     * разбирают. В теле имя тоже остаётся: метки живут своей жизнью, их
+     * переименовывают и снимают, а текст issue не меняется.
+     *
+     * Незнакомый телефон не выдумывается: пусто значит пусто, и в issue
+     * останется модель с хвостом — по ней и добавят строчку в настройки.
+     */
+    fun person(): String? = Config.current.people[hash()]?.takeIf { it.isNotBlank() }
+
+    /**
+     * Хвост хеша ANDROID_ID — различитель телефона.
+     *
+     * Именно хеш, а не сам идентификатор: для «с какого телефона это пришло»
+     * довольно того, что хвост не меняется, а ANDROID_ID уезжать целиком
+     * незачем.
+     */
+    @SuppressLint("HardwareIds")
+    private fun hash(): String {
         val androidId = runCatching {
             Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
         }.getOrNull().orEmpty()
-        val short = if (androidId.isBlank()) "" else {
-            MessageDigest.getInstance("SHA-256")
-                .digest(androidId.toByteArray())
-                .take(3)
-                .joinToString("") { "%02x".format(it) }
-        }
-        return listOf(name.ifBlank { "телефон" }, short)
-            .filter { it.isNotBlank() }
-            .joinToString(" · ")
-            .take(60)
+        if (androidId.isBlank()) return ""
+        return MessageDigest.getInstance("SHA-256")
+            .digest(androidId.toByteArray())
+            .take(3)
+            .joinToString("") { "%02x".format(it) }
     }
 
     companion object {

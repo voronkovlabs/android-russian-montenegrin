@@ -50,8 +50,13 @@ class GithubIssues(
      * Завести issue. Возвращает её номер или ошибку — по ошибке решают,
      * оставлять ли жалобу в очереди.
      */
-    suspend fun create(complaint: Complaint, raw: String, device: String): Result<Int> =
-        post(title(complaint), body(complaint, raw, device), labels(complaint))
+    suspend fun create(
+        complaint: Complaint,
+        raw: String,
+        device: String,
+        person: String? = null
+    ): Result<Int> =
+        post(title(complaint), body(complaint, raw, device), labels(complaint) + person(person))
 
     /**
      * Отчёт диагностики — тем же путём, что и жалоба, но со своей меткой.
@@ -60,8 +65,23 @@ class GithubIssues(
      * починить, он сырьё для разбора, и в списке сломанного ему не место. По
      * той же причине, что и у идей.
      */
-    suspend fun diagnostics(title: String, body: String): Result<Int> =
-        post(title, body, listOf("диагностика"))
+    suspend fun diagnostics(title: String, body: String, person: String? = null): Result<Int> =
+        post(title, body, listOf("диагностика") + person(person))
+
+    /**
+     * Метка с именем человека, если мы знаем, чей это телефон.
+     *
+     * Имя стоит и в теле, но метка видна **в списке, не открывая issue**, и по
+     * ней фильтруют: «покажи всё, на что жаловалась Катя». Берётся оно из
+     * карты в подтягиваемых настройках (`Tuning.people`), поэтому новое имя
+     * заводится правкой файла, а не сборкой.
+     *
+     * Метку под незнакомое имя GitHub создаст сам — серую и без описания, как
+     * и всякую, которой в репозитории нет. Это терпимо: цвет дописывается
+     * руками один раз, а молчаливая потеря метки была бы хуже.
+     */
+    private fun person(name: String?): List<String> =
+        name?.trim()?.takeIf { it.isNotBlank() }?.let { listOf(it) }.orEmpty()
 
     /** Общий путь: завести issue с заголовком, телом и метками. */
     private suspend fun post(title: String, body: String, labels: List<String>): Result<Int> =
