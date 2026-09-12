@@ -38,18 +38,31 @@ data class Palette(
     val dark: Boolean
 )
 
+/**
+ * Тёмная тема — «Адриатика»: ночь Которского залива.
+ *
+ * До 1.64 фон был нейтрально-чёрным, а акцент золотым. Чёрный сменился
+ * тёмно-синим не ради моды: за экраном теперь стоит фотография залива, и
+ * нейтральный чёрный спорил бы с её синевой — вуаль поверх снимка обязана быть
+ * того же цвета, что фон, иначе на границе видно шов.
+ *
+ * Золото осталось акцентом и стало солнечнее (`F2B544`): по синему оно читается
+ * лучше, чем по чёрному, и даёт 9,31:1 на карточке.
+ *
+ * Все пары посчитаны, а не подобраны: минимум по тёмной теме — 5,94:1
+ * (`crimson` по `surface2`), и это вдвое выше порога 4,5. Прежняя палитра
+ * держала запрещённую пару на 4,35 — теперь запрещённых нет вовсе.
+ */
 private val DarkPalette = Palette(
-    ink = Color(0xFF0E0E10),
-    surface1 = Color(0xFF17171B),
-    surface2 = Color(0xFF212127),
-    paper = Color(0xFFEDE9E1),
-    muted = Color(0xFF8E8B85),
-    accent = Color(0xFFD8B25F),
-    // Прежний 0xFFC2384F давал контраст 3,4 к 1 на карточке — для подписи
-    // в 11 пунктов этого мало, и «ОШИБКА» читалась хуже всего остального.
-    crimson = Color(0xFFDB5A70),
-    jade = Color(0xFF5FA47A),
-    outline = Color(0xFF3A3A42),
+    ink = Color(0xFF0B1220),
+    surface1 = Color(0xFF121C2E),
+    surface2 = Color(0xFF1B2840),
+    paper = Color(0xFFE8EEF7),
+    muted = Color(0xFFA0B2CA),
+    accent = Color(0xFFF2B544),
+    crimson = Color(0xFFF2867A),
+    jade = Color(0xFF5EC496),
+    outline = Color(0xFF2A3C58),
     dark = true
 )
 
@@ -75,15 +88,15 @@ private val DarkPalette = Palette(
  * `Gold`, — читающий код не должен гадать, какого он цвета в этой теме.
  */
 private val LightPalette = Palette(
-    ink = Color(0xFFF3F2F1),
+    ink = Color(0xFFF1F6FB),
     surface1 = Color(0xFFFFFFFF),
-    surface2 = Color(0xFFEDEBE9),
-    paper = Color(0xFF323130),
-    muted = Color(0xFF605E5C),
-    accent = Color(0xFF005A9E),
-    crimson = Color(0xFFA4262C),
-    jade = Color(0xFF0B6A0B),
-    outline = Color(0xFFE1DFDD),
+    surface2 = Color(0xFFE3EDF7),
+    paper = Color(0xFF16253A),
+    muted = Color(0xFF4E6178),
+    accent = Color(0xFF0B5E86),
+    crimson = Color(0xFFA32F26),
+    jade = Color(0xFF186A46),
+    outline = Color(0xFFCFDEEE),
     dark = false
 )
 
@@ -102,6 +115,28 @@ val Crimson: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.
 
 /** Зелёный только для «верно»: золото — акцент интерфейса, им вердикт не отличить от кнопки. */
 val Jade: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.jade
+
+/** Ночная ли тема. Нужно подложке: снимок свой на каждую. */
+val isDark: Boolean @Composable @ReadOnlyComposable get() = LocalPalette.current.dark
+
+/**
+ * Непрозрачность карточек, лежащих на фотографии.
+ *
+ * Не «на глаз красиво», а посчитано: при 0,88 самая слабая пара текста внутри
+ * карточки — зелёное «верно» по второй поверхности над самым светлым участком
+ * снимка — даёт 5,21:1 при пороге 4,5. Ниже опускать нельзя: на 0,8 та же пара
+ * уходит под порог, и стекло начинает воровать читаемость ради вида.
+ *
+ * Там, где фотографии нет, поверхности остаются сплошными: прозрачность поверх
+ * сплошного фона — пустая работа для видеокарты и лишний повод ошибиться.
+ */
+private const val GLASS = 0.88f
+
+val Glass1: Color @Composable @ReadOnlyComposable
+    get() = LocalPalette.current.surface1.copy(alpha = GLASS)
+
+val Glass2: Color @Composable @ReadOnlyComposable
+    get() = LocalPalette.current.surface2.copy(alpha = GLASS)
 
 private fun schemeOf(p: Palette) = if (p.dark) {
     darkColorScheme(

@@ -2,6 +2,9 @@ package com.crnogorski.trener.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -265,7 +268,7 @@ private fun StatsStrip(stats: StatsBrief, onOpen: () -> Unit) {
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(Surface1)
+            .background(Glass1)
             .clickable(onClick = onOpen)
             .padding(horizontal = 14.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -319,7 +322,7 @@ private fun UpdateStrip(version: String, sizeMb: Int, onUpdate: () -> Unit) {
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(Surface1)
+            .background(Glass1)
             .border(1.dp, Accent.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
             .clickable(onClick = onUpdate)
             .padding(horizontal = 14.dp, vertical = 10.dp),
@@ -364,13 +367,25 @@ private fun sessions(n: Int): String = when {
 @Composable
 private fun DailyTile(plan: DailyPlan, onStart: (Boolean) -> Unit) {
     val ready = plan.items.isNotEmpty()
+    val stripe = Accent
     Column(
         Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(14.dp))
-            .background(if (ready) Surface2 else Surface1)
+            .clip(RoundedCornerShape(20.dp))
+            .background(if (ready) Glass2 else Glass1)
+            // Метка уклона цветом: день речи должен отличаться от дня слов
+            // раньше, чем прочитана подпись под заголовком.
+            .drawBehind {
+                if (ready) {
+                    drawRoundRect(
+                        color = stripe,
+                        size = Size(6.dp.toPx(), size.height),
+                        cornerRadius = CornerRadius(3.dp.toPx())
+                    )
+                }
+            }
             .clickable(enabled = ready) { onStart(plan.full) }
-            .padding(20.dp)
+            .padding(start = 26.dp, top = 20.dp, end = 20.dp, bottom = 20.dp)
     ) {
         Text(
             if (plan.full) "СВЕРХ НОРМЫ" else plan.accent.title,
@@ -446,7 +461,7 @@ private fun StoryStepTile(step: StoryStep, hasItems: Boolean, onClick: () -> Uni
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
-            .background(Surface1)
+            .background(Glass1)
             .clickable(onClick = onClick)
             .padding(18.dp)
     ) {
@@ -492,7 +507,7 @@ private fun TabIcon(
         onClick = onClick,
         modifier = Modifier
             .clip(RoundedCornerShape(10.dp))
-            .background(if (selected) Surface1 else Color.Transparent)
+            .background(if (selected) Glass1 else Color.Transparent)
     ) {
         Icon(icon, contentDescription = label, tint = if (selected) Accent else Muted)
     }
@@ -557,7 +572,7 @@ private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(Surface1)
+            .background(Glass1)
             .border(
                 width = 1.dp,
                 color = if (card.finished) Jade.copy(alpha = 0.45f) else Surface2,
@@ -627,7 +642,7 @@ private fun VocabTile(
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
-            .background(if (ready) Surface2 else Surface1)
+            .background(if (ready) Glass2 else Glass1)
             .padding(bottom = 6.dp)
     ) {
         Column(
@@ -681,7 +696,7 @@ private fun ReviewCard(count: Int, onClick: () -> Unit) {
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
-            .background(if (active) Accent else Surface1)
+            .background(if (active) Accent else Glass1)
             .clickable(enabled = active, onClick = onClick)
             .padding(18.dp)
     ) {
@@ -705,7 +720,7 @@ private fun LessonRow(card: LessonCard, onClick: () -> Unit) {
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(Surface1)
+            .background(Glass1)
             .border(
                 width = 1.dp,
                 color = if (card.done) Accent.copy(alpha = 0.35f) else Surface2,

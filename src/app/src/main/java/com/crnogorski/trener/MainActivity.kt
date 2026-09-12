@@ -27,6 +27,7 @@ import com.crnogorski.trener.data.Trace
 import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.speech.Speaker
 import com.crnogorski.trener.ui.AppViewModel
+import com.crnogorski.trener.ui.Backdrop
 import com.crnogorski.trener.ui.CrnogorskiTheme
 import com.crnogorski.trener.ui.DailySplash
 import com.crnogorski.trener.ui.HomeScreen
@@ -132,7 +133,7 @@ class MainActivity : ComponentActivity() {
                                     onClose = vm::closeStory
                                 )
                             } else if (openStats != null) {
-                                StatsScreen(state = openStats, onClose = vm::closeStats)
+                                Backdrop { StatsScreen(state = openStats, onClose = vm::closeStats) }
                             } else if (openSettings != null) {
                                 SettingsScreen(
                                     state = openSettings,
@@ -156,6 +157,9 @@ class MainActivity : ComponentActivity() {
                                     onClose = vm::closeSettings
                                 )
                             } else {
+                                // Фотография залива — только под главным и
+                                // отчётом: там содержимое разложено карточками.
+                                Backdrop {
                                 HomeScreen(
                                     state = home,
                                     onLesson = vm::startLesson,
@@ -175,6 +179,7 @@ class MainActivity : ComponentActivity() {
                                     onNote = vm::addNote,
                                     onIdea = vm::addIdea
                                 )
+                                }
                             }
                         }
                     } else {

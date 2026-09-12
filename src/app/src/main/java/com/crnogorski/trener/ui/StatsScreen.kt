@@ -140,7 +140,7 @@ private fun DayCard(title: String, day: DayStatEntity) {
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
-            .background(Surface1)
+            .background(Glass1)
             .padding(16.dp)
     ) {
         Text(title.uppercase(), style = MaterialTheme.typography.labelSmall, color = Muted)
@@ -196,7 +196,7 @@ private fun StreakCard(streak: Int, best: Int, todayDone: Boolean) {
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
-            .background(Surface1)
+            .background(Glass1)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
