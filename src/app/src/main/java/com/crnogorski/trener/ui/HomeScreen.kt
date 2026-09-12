@@ -529,12 +529,21 @@ private fun SectionHeader(
     expanded: Boolean,
     onClick: () -> Unit
 ) {
+    // Заголовок — такая же карточка, как всё остальное на экране.
+    //
+    // Раньше он заливался сплошным `Ink` во всю ширину: так было верно, пока
+    // фон был однотонным, — заголовок липнет к верху, и строки под ним
+    // просвечивать не должны. На фотографии (1.64) та же заливка превратилась
+    // в чёрную плиту поперёк снимка, и владелец сказал «жутко». Теперь это
+    // скруглённое стекло: непрозрачность своя, повышенная, — см. GlassHeader.
     Row(
         Modifier
             .fillMaxWidth()
-            .background(Ink)
+            .padding(vertical = 4.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(GlassHeader)
             .clickable(onClick = onClick)
-            .padding(top = 14.dp, bottom = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -692,24 +701,38 @@ private fun VocabTile(
 @Composable
 private fun ReviewCard(count: Int, onClick: () -> Unit) {
     val active = count > 0
+    val stripe = Accent
+    // Важное отмечается **одним** приёмом на весь экран — цветной полосой
+    // слева, как у плашки занятия. Сплошная заливка акцентом (до 1.66) была
+    // придумана для чёрного фона; на фотографии она стала жёлтым кирпичом во
+    // всю ширину и спорила с самим снимком.
     Column(
         Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(14.dp))
-            .background(if (active) Accent else Glass1)
+            .clip(RoundedCornerShape(18.dp))
+            .background(if (active) Glass2 else Glass1)
+            .drawBehind {
+                if (active) {
+                    drawRoundRect(
+                        color = stripe,
+                        size = Size(6.dp.toPx(), size.height),
+                        cornerRadius = CornerRadius(3.dp.toPx())
+                    )
+                }
+            }
             .clickable(enabled = active, onClick = onClick)
-            .padding(18.dp)
+            .padding(start = 24.dp, top = 18.dp, end = 18.dp, bottom = 18.dp)
     ) {
         Text(
             "ПОВТОРЕНИЕ",
             style = MaterialTheme.typography.labelSmall,
-            color = if (active) Ink.copy(alpha = 0.7f) else Muted
+            color = if (active) Accent else Muted
         )
         Spacer(Modifier.height(6.dp))
         Text(
             if (active) "$count ${cardsWord(count)} к повторению" else "Сейчас нечего повторять",
             style = MaterialTheme.typography.titleMedium,
-            color = if (active) Ink else Muted
+            color = if (active) Paper else Muted
         )
     }
 }

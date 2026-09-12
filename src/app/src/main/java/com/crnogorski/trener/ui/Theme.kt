@@ -138,6 +138,17 @@ val Glass1: Color @Composable @ReadOnlyComposable
 val Glass2: Color @Composable @ReadOnlyComposable
     get() = LocalPalette.current.surface2.copy(alpha = GLASS)
 
+/**
+ * Стекло для липких заголовков — плотнее обычного.
+ *
+ * Заголовок раздела прилипает к верху, и под ним проезжают строки списка. При
+ * обычных 0,88 они просвечивали бы сквозь него мутной тенью, а это хуже, чем
+ * отсутствие фотографии вовсе. 0,96 оставляет снимку ровно столько, чтобы
+ * заголовок не читался вырезанным из другого экрана.
+ */
+val GlassHeader: Color @Composable @ReadOnlyComposable
+    get() = LocalPalette.current.surface1.copy(alpha = 0.96f)
+
 private fun schemeOf(p: Palette) = if (p.dark) {
     darkColorScheme(
         primary = p.accent,
