@@ -42,7 +42,8 @@ data class Tuning(
     val daily: Daily = Daily(),
     val vocab: Vocab = Vocab(),
     val story: Story = Story(),
-    val speech: Speech = Speech()
+    val speech: Speech = Speech(),
+    val diag: Diag = Diag()
 ) {
     /** Интервальные повторения. Дни, если не сказано иначе. */
     @Serializable
@@ -122,6 +123,22 @@ data class Tuning(
     )
 
     /**
+     * Диагностика подвисаний. Пороги тут не для красоты: их придётся крутить
+     * по ходу поиска, а пересобирать APK ради одного числа — полдня.
+     */
+    @Serializable
+    data class Diag(
+        /** С какой длительности событие попадает в сырой список, а не только в сводку. */
+        val slowMs: Int = 300,
+        /** С какой задержки главного потока считать, что приложение подвисло. */
+        val freezeMs: Int = 700,
+        /** Сколько копить, прежде чем отправить отчёт. */
+        val windowMinutes: Int = 60,
+        /** Потолок записей: набралось больше — отправляем не дожидаясь срока. */
+        val maxRecords: Int = 600
+    )
+
+    /**
      * Приводит значения в разумные пределы.
      *
      * Не «проверяет и отвергает», а именно правит: отвергнутый файл оставил бы
@@ -173,6 +190,12 @@ data class Tuning(
             watchdogSeconds = speech.watchdogSeconds.coerceIn(5, 120),
             muteTailMs = speech.muteTailMs.coerceIn(0, 5000),
             retryDelayMs = speech.retryDelayMs.coerceIn(0, 5000)
+        ),
+        diag = diag.copy(
+            slowMs = diag.slowMs.coerceIn(1, 60_000),
+            freezeMs = diag.freezeMs.coerceIn(50, 60_000),
+            windowMinutes = diag.windowMinutes.coerceIn(1, 7 * 24 * 60),
+            maxRecords = diag.maxRecords.coerceIn(10, 10_000)
         )
     )
 }

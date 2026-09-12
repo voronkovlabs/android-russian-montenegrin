@@ -74,6 +74,8 @@ fun SettingsScreen(
     onRefreshTuning: () -> Unit,
     onCheckUpdate: () -> Unit,
     onInstallUpdate: () -> Unit,
+    onDiagnostics: (Boolean) -> Unit,
+    onSendDiagnostics: () -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
@@ -400,6 +402,9 @@ fun SettingsScreen(
             Spacer(Modifier.height(20.dp))
             SplashRow(onShowSplash)
 
+            Spacer(Modifier.height(20.dp))
+            DiagnosticsRow(state, onDiagnostics, onSendDiagnostics)
+
             Spacer(Modifier.height(28.dp))
             SourcesRow()
 
@@ -658,6 +663,69 @@ private fun SplashRow(onShow: () -> Unit) {
 
     Spacer(Modifier.height(14.dp))
     SecondaryAction(text = "Показать заставку", onClick = onShow)
+}
+
+/**
+ * Диагностика подвисаний: галочка, счётчик и кнопка «Отправить сейчас».
+ *
+ * По умолчанию выключена, и это не осторожность, а смысл: замеры нужны, пока
+ * ищут причину. Включённой она заводит по issue за окно с каждого телефона —
+ * терпимо, пока ловим, и шум, когда поймали.
+ *
+ * Счётчик показывает замеры **этого запуска**: то, что уже легло в файл, из
+ * памяти ушло. Поэтому число маленькое — это не ошибка, а признак того, что
+ * запись идёт.
+ */
+@Composable
+private fun DiagnosticsRow(
+    state: SettingsState,
+    onToggle: (Boolean) -> Unit,
+    onSend: () -> Unit
+) {
+    Text("ДИАГНОСТИКА", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(12.dp))
+
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .clickable { onToggle(!state.diagOn) }
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = state.diagOn,
+            onCheckedChange = onToggle,
+            colors = CheckboxDefaults.colors(
+                checkedColor = Accent, checkmarkColor = Ink, uncheckedColor = Muted
+            )
+        )
+        Spacer(Modifier.width(8.dp))
+        Text(
+            "Записывать задержки",
+            style = MaterialTheme.typography.titleMedium,
+            color = Paper,
+            modifier = Modifier.weight(1f)
+        )
+    }
+    Spacer(Modifier.height(6.dp))
+    Text(
+        if (state.diagOn) {
+            "Замеров за этот запуск: ${state.diagRecords}. Отчёт уезжает в issues " +
+                "с меткой «диагностика» при следующем запуске — трасса запуска " +
+                "дописывается уже после него."
+        } else {
+            "Выключено. Включи, если приложение снова подвиснет: тогда станет " +
+                "видно, что именно тормозило и сколько."
+        },
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+
+    if (state.diagOn) {
+        Spacer(Modifier.height(14.dp))
+        SecondaryAction(text = "Отправить отчёт сейчас", onClick = onSend)
+    }
 }
 
 /**

@@ -42,6 +42,12 @@
     "readingPass": 0.75
   },
 
+  "diag": {
+    "slowMs": 300,
+    "freezeMs": 700,
+    "windowMinutes": 60,
+    "maxRecords": 600
+  },
   "speech": {
     "slowRate": 0.40,
     "normalRate": 0.9,

@@ -15,6 +15,7 @@ import com.crnogorski.trener.data.ComplaintStore
 import com.crnogorski.trener.data.ComplaintVerdict
 import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.data.Stress
+import com.crnogorski.trener.data.Trace
 import com.crnogorski.trener.data.DayStatEntity
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.Glossary
@@ -282,6 +283,10 @@ data class SettingsState(
     val cacheHits: Int = 0,
     /** Вердиктов спрошено у модели. */
     val cacheAsked: Int = 0,
+    /** Пишутся ли задержки. По умолчанию нет: диагностика нужна не всегда. */
+    val diagOn: Boolean = false,
+    /** Сколько замеров накоплено в этом запуске. */
+    val diagRecords: Int = 0,
     /** Что известно про свежий релиз: null — ещё не спрашивали. */
     val update: Release? = null,
     /** Что происходит с обновлением прямо сейчас — показывается строкой. */
@@ -554,6 +559,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val issues = GithubIssues()
     private val updater = Updater(app)
 
+    /** Имя телефона для отчётов — считается один раз, читает системные настройки. */
+    private val device: String by lazy { complaints.deviceTag() }
+
+    /** Контекст для того, что зовут из методов: `app` виден только в инициализации. */
+    private val ctx: android.content.Context = app.applicationContext
+
     /**
      * Свежий релиз, если он есть.
      *
@@ -631,20 +642,27 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         refreshHome()
         // Свежие настройки курса: пришли — применились сразу, не пришли —
         // работаем на вчерашних, и это не повод шуметь.
-        viewModelScope.launch { Config.refresh(app) }
+        viewModelScope.launch { Trace.span("сеть: настройки курса") { Config.refresh(app) } }
         // Ударения: файл маленький, читается один раз за запуск. Не прочитался
         // — метки останутся только у коротких слов, где их считает правило.
         viewModelScope.launch { Stress.load(app) }
         lookForUpdate()
         // Неотправленное с прошлого раза: сети могло не быть, когда жаловались.
         sendComplaints()
+        // Отчёт диагностики за прошлые запуски — если он созрел. Пятым делом и
+        // фоном: он про запуск, а не участник запуска.
+        sendDiagnostics(auto = true)
     }
 
     fun refreshHome() {
         viewModelScope.launch {
+          Trace.span("главный экран целиком") {
             try {
                 val refs = repo.index().lessons
-                val byId = dao.lessonProgress().associateBy { it.lessonId }
+                // Первый запрос к базе за запуск — тут же открытие файла базы и
+                // миграции, если версия сменилась.
+                val byId = Trace.span("база: пройденные уроки") { dao.lessonProgress() }
+                    .associateBy { it.lessonId }
                 val cards = refs.map { ref ->
                     val p = byId[ref.id]
                     LessonCard(ref, p != null, p?.let { "${it.correct}/${it.total}" })
@@ -662,7 +680,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                         }
                     }
                 }
-                val storyDone = dao.storyProgress().associateBy { it.storyId to it.mode }
+                val storyDone = Trace.span("база: прогресс историй") { dao.storyProgress() }
+                    .associateBy { it.storyId to it.mode }
                 val storyRefs = repo.stories().stories
                 _home.value = HomeState(
                     tab = tab,
@@ -683,16 +702,19 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                             }
                         )
                     },
-                    dueCount = dao.dueCount(System.currentTimeMillis(), VocabRepository.LESSON_ID),
-                    vocab = vocabSummary(),
-                    stats = statsBrief(),
+                    dueCount = Trace.span("база: сколько просрочено") {
+                        dao.dueCount(System.currentTimeMillis(), VocabRepository.LESSON_ID)
+                    },
+                    vocab = Trace.span("словарь: сводка") { vocabSummary() },
+                    stats = Trace.span("база: сводка за день") { statsBrief() },
                     update = freshRelease,
-                    daily = buildDaily(),
+                    daily = Trace.span("сборка ежедневного задания") { buildDaily() },
                     loading = false
                 )
             } catch (e: Exception) {
                 _home.value = HomeState(loading = false, error = e.message ?: "Не удалось прочитать уроки")
             }
+          }
         }
     }
 
@@ -740,16 +762,18 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Без сети свободные переводы не проверить. Не блокируем всё занятие,
         // как это делает урок, а просто не берём их: ежедневное задание должно
         // собираться в метро.
-        val online = isOnline()
+        val online = Trace.span("сеть: есть ли связь") { isOnline() }
         fun ok(ex: Exercise) = online || !ex.needsModelCheck
 
         // --- кандидаты ---
-        val portion = nextPortion()
+        val portion = Trace.span("подбор: следующая порция урока") { nextPortion() }
         val lessonCands = portion?.second.orEmpty().filter(::ok).map {
             Cand(SessionItem(portion!!.first.id, it), pace.seconds(it.typeName))
         }
 
-        val due = dao.dueCards(now, DAILY_POOL, VocabRepository.LESSON_ID)
+        val due = Trace.span("база: просроченные карточки") {
+            dao.dueCards(now, DAILY_POOL, VocabRepository.LESSON_ID)
+        }
         val known = repo.exercisesIn(due.map { it.lessonId })
         val reviewCands = spread(
             due.mapNotNull { card ->
@@ -761,7 +785,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             }
         ) { it.item.lessonId }
 
-        val wordCands = dailyWords(now)
+        val wordCands = Trace.span("подбор: слова на сегодня") { dailyWords(now) }
 
         // --- дележ бюджета ---
         //
@@ -826,7 +850,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Истории — хвостом, отдельным шагом. Если упражнений не набралось
         // вовсе, весь бюджет уходит им: занятие всё равно должно состояться.
         val forStory = if (items.isEmpty()) budget else storyBudget
-        val story = nextStory(forStory, online)
+        val story = Trace.span("подбор: история") { nextStory(forStory, online) }
 
         return plan.copy(
             items = items,
@@ -1232,7 +1256,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     private fun lookForUpdate() {
         viewModelScope.launch {
-            updater.check().getOrNull()?.let { release ->
+            Trace.span("сеть: проверка обновления") { updater.check() }.getOrNull()?.let { release ->
                 if (!release.newer) return@let
                 freshRelease = release
                 _home.value = _home.value.copy(update = release)
@@ -1764,6 +1788,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 cacheCount = cache.count(),
                 cacheHits = stats.hits,
                 cacheAsked = stats.asked,
+                diagOn = Trace.enabled,
+                diagRecords = Trace.count(),
                 tuningFetched = Config.lastFetch
             )
         }
@@ -1823,9 +1849,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             return
         }
         viewModelScope.launch {
-            val device = complaints.deviceTag()
-            val result = complaints.flush { complaint, raw ->
-                issues.create(complaint, raw, device)
+            val result = Trace.span("сеть: отправка жалоб") {
+                complaints.flush { complaint, raw -> issues.create(complaint, raw, device) }
             }
             _settings.value = _settings.value?.copy(
                 complaintCount = result.left,
@@ -2165,8 +2190,75 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     private fun autoSaveProgress() {
         viewModelScope.launch {
-            progress.save(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
+            Trace.span("диск: копия прогресса") {
+                progress.save(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME)
+            }
         }
+    }
+
+    // --- Диагностика подвисаний ---
+
+    /**
+     * Включить или выключить запись задержек.
+     *
+     * Выключение стирает и накопленное: диагностику выключают, когда она больше
+     * не нужна, и держать после этого недосказанный отчёт незачем.
+     */
+    fun setDiagnostics(on: Boolean) {
+        Trace.setEnabled(ctx, on)
+        if (!on) Trace.clear(ctx)
+        _settings.value = _settings.value?.copy(
+            diagOn = on,
+            diagRecords = if (on) Trace.count() else 0
+        )
+    }
+
+    /**
+     * Отправить отчёт в issue с меткой «диагностика».
+     *
+     * `auto = true` — это заход при запуске: молча и только если отчёт созрел
+     * (окно вышло или записей набралось больше предела). По кнопке (`false`)
+     * отправляется что есть, и о результате говорится вслух.
+     *
+     * Память сбрасывается в файл перед отправкой только по кнопке. При запуске
+     * — наоборот, нельзя: нынешний запуск ещё не кончился, и в отчёт попала бы
+     * половина трассы ровно того, что мы ловим.
+     */
+    fun sendDiagnostics(auto: Boolean = false) {
+        if (!Trace.enabled && auto) return
+        viewModelScope.launch {
+            if (!auto) Trace.park(ctx)
+            if (auto && !Trace.due(ctx)) return@launch
+            val report = Trace.report(ctx, device)
+            if (report == null) {
+                if (!auto) _notice.value = "Диагностика: отправлять нечего."
+                return@launch
+            }
+            if (!issues.configured) {
+                if (!auto) _notice.value = "Токен GitHub не задан — отчёт остался в файле."
+                return@launch
+            }
+            issues.diagnostics(report.title, report.body)
+                .onSuccess {
+                    // Стираем только после удачной отправки: неудачный отчёт
+                    // дороже места, которое он занимает.
+                    Trace.clear(ctx)
+                    _settings.value = _settings.value?.copy(diagRecords = 0)
+                    if (!auto) _notice.value = "Диагностика отправлена: issue №$it."
+                }
+                .onFailure { if (!auto) _notice.value = "Не отправилось: ${it.message}" }
+        }
+    }
+
+    /**
+     * Сбросить накопленное на диск — при уходе с экрана.
+     *
+     * Процесс могут убить в любой момент, а трасса запуска нужна целиком, и
+     * дописывается она уже после того, как запуск кончился.
+     */
+    fun parkDiagnostics() {
+        if (!Trace.enabled) return
+        viewModelScope.launch { Trace.park(ctx) }
     }
 
     // --- Жалоба не про задание ---
@@ -2466,7 +2558,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             try {
                 val key = checker.key(task, reference, answer)
-                val known = cache.find(key)
+                val known = Trace.span("база: память вердиктов") { cache.find(key) }
                 if (known != null) {
                     cache.countHit()
                     // В памяти лежат только засчитанные ответы, отсюда correct = true.
@@ -2475,7 +2567,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 }
 
                 _session.value = _session.value?.copy(phase = Phase.Checking)
-                when (val result = checker.check(task, reference, answer)) {
+                when (val result = Trace.span("сеть: проверка у Haiku") {
+                    checker.check(task, reference, answer)
+                }) {
                     is CheckResult.Ok -> {
                         val v = result.verdict
                         cache.countAsked()

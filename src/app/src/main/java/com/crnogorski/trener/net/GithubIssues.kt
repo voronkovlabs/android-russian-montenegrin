@@ -50,14 +50,30 @@ class GithubIssues(
      * оставлять ли жалобу в очереди.
      */
     suspend fun create(complaint: Complaint, raw: String, device: String): Result<Int> =
+        post(title(complaint), body(complaint, raw, device), labels(complaint))
+
+    /**
+     * Отчёт диагностики — тем же путём, что и жалоба, но со своей меткой.
+     *
+     * Отдельная метка «диагностика», а не «жалоба»: отчёт ничего не просит
+     * починить, он сырьё для разбора, и в списке сломанного ему не место. По
+     * той же причине, что и у идей.
+     */
+    suspend fun diagnostics(title: String, body: String): Result<Int> =
+        post(title, body, listOf("диагностика"))
+
+    /** Общий путь: завести issue с заголовком, телом и метками. */
+    private suspend fun post(title: String, body: String, labels: List<String>): Result<Int> =
         withContext(Dispatchers.IO) {
             if (!configured) {
                 return@withContext Result.failure(IllegalStateException("Токен GitHub не задан"))
             }
             val payload = JSONObject()
-                .put("title", title(complaint))
-                .put("body", body(complaint, raw, device))
-                .put("labels", JSONArray(labels(complaint)))
+                .put("title", title)
+                // Тело issue у GitHub ограничено 65536 символами; режем с запасом,
+                // и режем здесь, а не в отчёте: правило про размер — про issue.
+                .put("body", body.take(60_000))
+                .put("labels", JSONArray(labels))
 
             val request = Request.Builder()
                 .url("https://api.github.com/repos/$repo/issues")

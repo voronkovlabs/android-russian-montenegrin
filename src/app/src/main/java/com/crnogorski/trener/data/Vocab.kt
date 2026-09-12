@@ -105,11 +105,13 @@ class VocabRepository(private val context: Context) {
 
     /** Отсутствие файла — не ошибка: раздел просто окажется пустым. */
     suspend fun load(): VocabFile = withContext(Dispatchers.IO) {
-        cached ?: runCatching {
-            json.decodeFromString<VocabFile>(
-                context.assets.open(PATH).bufferedReader().use { it.readText() }
-            )
-        }.getOrDefault(VocabFile()).also { cached = it }
+        cached ?: Trace.span("assets: словарь (407 КБ)") {
+            runCatching {
+                json.decodeFromString<VocabFile>(
+                    context.assets.open(PATH).bufferedReader().use { it.readText() }
+                )
+            }.getOrDefault(VocabFile())
+        }.also { cached = it }
     }
 
     /**

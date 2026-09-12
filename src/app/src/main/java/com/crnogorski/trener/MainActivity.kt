@@ -20,7 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.core.content.ContextCompat
+import android.os.Process
+import android.os.SystemClock
 import com.crnogorski.trener.data.Config
+import com.crnogorski.trener.data.Trace
 import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.speech.Speaker
 import com.crnogorski.trener.ui.AppViewModel
@@ -41,18 +44,37 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Первой строкой: всё, что случится дальше, уже можно мерить. Читает
+        // одну галочку из настроек — если она снята, дальше ничего не стоит.
+        Trace.init(this)
+        // Сколько прошло от рождения процесса до нашего кода. Это чужое время —
+        // загрузка классов, Application, система, — и без него непонятно, наша
+        // ли вина в долгом запуске вообще.
+        Trace.event(
+            "запуск: процесс → onCreate",
+            SystemClock.uptimeMillis() - Process.getStartUptimeMillis()
+        )
+
         enableEdgeToEdge()
         // Настройки курса поднимаются с диска до первого их чтения: файл
         // маленький, а разъехавшиеся значения в первые секунды работы хуже,
         // чем несколько миллисекунд на старте. Свежий тянется фоном.
-        Config.load(this)
-        speaker = Speaker(this)
+        Trace.span("запуск: настройки курса с диска") { Config.load(this) }
+        Trace.span("запуск: синтезатор речи") { speaker = Speaker(this) }
 
         // Напоминание назначается при каждом запуске: будильник Android не
         // переживает ни перезагрузку, ни обновление приложения, а вызов
         // идемпотентен — старый заменяется тем же PendingIntent.
-        Reminder.schedule(this)
+        Trace.span("запуск: напоминание") { Reminder.schedule(this) }
         askForNotifications()
+
+        // Конец видимого запуска: до этого мига человек смотрит на пустоту.
+        // Меряем от onCreate, потому что «процесс → onCreate» уже записан
+        // отдельно, и складывать их в одно число значило бы прятать, где ждали.
+        val created = SystemClock.uptimeMillis()
+        window.decorView.post {
+            Trace.event("запуск: onCreate → первый кадр", SystemClock.uptimeMillis() - created)
+        }
 
         setContent {
             CrnogorskiTheme {
@@ -128,6 +150,8 @@ class MainActivity : ComponentActivity() {
                                     onShowSplash = vm::previewSplash,
                                     onRefreshTuning = vm::refreshTuning,
                                     onCheckUpdate = vm::checkUpdate,
+                                    onDiagnostics = vm::setDiagnostics,
+                                    onSendDiagnostics = { vm.sendDiagnostics() },
                                     onInstallUpdate = vm::installUpdate,
                                     onClose = vm::closeSettings
                                 )
@@ -192,6 +216,18 @@ class MainActivity : ComponentActivity() {
         if (granted) return
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
             .launch(Manifest.permission.POST_NOTIFICATIONS)
+    }
+
+    /**
+     * Уходим с экрана — сбрасываем накопленные замеры на диск.
+     *
+     * Именно тут, а не в `onDestroy`: до него дело может не дойти вовсе, если
+     * систему прижмёт память. Трасса запуска нужна целиком, и дописывается она
+     * уже после того, как запуск кончился.
+     */
+    override fun onStop() {
+        Trace.parkAsync(this)
+        super.onStop()
     }
 
     override fun onDestroy() {

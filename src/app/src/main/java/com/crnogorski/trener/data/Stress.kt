@@ -87,11 +87,11 @@ object Stress {
      * останутся метки по правилу, а слова длиннее двух слогов будут без них.
      */
     suspend fun load(context: Context) = withContext(Dispatchers.IO) {
-        lexicon = runCatching {
+        lexicon = Trace.span("assets: ударения") { runCatching {
             json.decodeFromString<Map<String, Int>>(
                 context.assets.open(PATH).bufferedReader().use { it.readText() }
             )
-        }.getOrDefault(emptyMap())
+        }.getOrDefault(emptyMap()) }
     }
 
     /**

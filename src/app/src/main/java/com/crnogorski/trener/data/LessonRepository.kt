@@ -18,15 +18,17 @@ class LessonRepository(private val context: Context) {
     private val cachedLessons = mutableMapOf<String, Lesson>()
 
     suspend fun index(): LessonIndex = withContext(Dispatchers.IO) {
-        cachedIndex ?: json.decodeFromString<LessonIndex>(read("lessons/index.json"))
-            .also { cachedIndex = it }
+        cachedIndex ?: Trace.span("assets: оглавление уроков") {
+            json.decodeFromString<LessonIndex>(read("lessons/index.json"))
+        }.also { cachedIndex = it }
     }
 
     suspend fun lesson(id: String): Lesson = withContext(Dispatchers.IO) {
         cachedLessons[id] ?: run {
             val ref = index().lessons.first { it.id == id }
-            json.decodeFromString<Lesson>(read("lessons/${ref.file}"))
-                .also { cachedLessons[id] = it }
+            Trace.span("assets: урок", id) {
+                json.decodeFromString<Lesson>(read("lessons/${ref.file}"))
+            }.also { cachedLessons[id] = it }
         }
     }
 
@@ -47,9 +49,11 @@ class LessonRepository(private val context: Context) {
      * битый, подсказки просто не появятся — задания от этого не ломаются.
      */
     suspend fun glossary(): Glossary = withContext(Dispatchers.IO) {
-        cachedGlossary ?: runCatching {
-            json.decodeFromString<Glossary>(read("glossary.json"))
-        }.getOrDefault(Glossary()).also { cachedGlossary = it }
+        cachedGlossary ?: Trace.span("assets: подсказки по словам") {
+            runCatching {
+                json.decodeFromString<Glossary>(read("glossary.json"))
+            }.getOrDefault(Glossary())
+        }.also { cachedGlossary = it }
     }
 
     /**
@@ -61,12 +65,14 @@ class LessonRepository(private val context: Context) {
      */
     suspend fun exercisesIn(lessonIds: Collection<String>): Map<String, Pair<String, Exercise>> =
         withContext(Dispatchers.IO) {
+          Trace.span("assets: уроки под повторение", "${lessonIds.distinct().size} шт.") {
             val known = index().lessons.map { it.id }.toSet()
             buildMap {
                 lessonIds.distinct().filter { it in known }.forEach { id ->
                     lesson(id).exercises.forEach { ex -> put(ex.id, id to ex) }
                 }
             }
+          }
         }
 
     private fun read(path: String): String =
