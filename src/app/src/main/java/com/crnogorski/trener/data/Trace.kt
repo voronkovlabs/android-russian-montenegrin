@@ -1,6 +1,7 @@
 package com.crnogorski.trener.data
 
 import android.content.Context
+import com.crnogorski.trener.BuildConfig
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
@@ -218,6 +219,12 @@ object Trace {
                 JSONObject()
                     .put("t", "run")
                     .put("at", now())
+                    // Версия — в каждом запуске, а не в заголовке отчёта: в
+                    // одном отчёте могут лежать запуски разных сборок, и без
+                    // этого непонятно, что уже починено. В первых трёх отчётах
+                    // её не было вовсе, и версию пришлось восстанавливать по
+                    // времени выпуска.
+                    .put("ver", BuildConfig.VERSION_NAME)
                     .put("uptime", SystemClock.uptimeMillis() - started)
                     .toString()
             )
@@ -299,8 +306,10 @@ object Trace {
         lines.forEach { line ->
             val o = runCatching { JSONObject(line) }.getOrNull() ?: return@forEach
             when (o.optString("t")) {
-                "run" -> runs += "%s (в приложении %s)".format(
-                    o.optString("at"), human(o.optLong("uptime"))
+                "run" -> runs += "%s · %s (в приложении %s)".format(
+                    o.optString("at"),
+                    o.optString("ver").ifBlank { "версия неизвестна" },
+                    human(o.optLong("uptime"))
                 )
 
                 "a" -> {

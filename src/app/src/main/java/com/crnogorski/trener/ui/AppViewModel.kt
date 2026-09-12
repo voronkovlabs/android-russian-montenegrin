@@ -54,7 +54,9 @@ import com.crnogorski.trener.srs.Scheduler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.time.LocalDate
 
@@ -704,9 +706,22 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         sendDiagnostics(auto = true)
     }
 
+    /**
+     * Пересобрать главный экран.
+     *
+     * **Считается в `Dispatchers.Default`, а не там, где запущено.**
+     * `viewModelScope` по умолчанию — главный поток, и до 1.69 вся сборка шла
+     * на нём: разбор словаря, отбор карточек, дележ бюджета. Диагностика с
+     * телефона показала ровно это — «главный поток занят» до 5,8 секунды, то
+     * есть приложение стояло колом, пока экран собирался.
+     *
+     * Состояние публикуется прямо отсюда, из фонового потока: `StateFlow`
+     * этого не запрещает, а Compose сам перерисуется на своём.
+     */
     fun refreshHome() {
         viewModelScope.launch {
           Trace.span("главный экран целиком") {
+           withContext(Dispatchers.Default) {
             try {
                 val refs = repo.index().lessons
                 // Первый запрос к базе за запуск — тут же открытие файла базы и
@@ -755,7 +770,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     dueCount = Trace.span("база: сколько просрочено") {
                         dao.dueCount(System.currentTimeMillis(), VocabRepository.LESSON_ID)
                     },
-                    vocab = Trace.span("словарь: сводка") { vocabSummary() },
+                    // Сводка словаря тут не считается вовсе: она тянет за собой
+                    // разбор 407 КБ, а это 2,5–4,6 секунды на телефоне владельца
+                    // — и всё это до первого кадра. Берём прошлую и обновляем
+                    // вторым проходом; на вкладке «Слова» числа догонят сами.
+                    vocab = _home.value.vocab,
                     stats = Trace.span("база: сводка за день") { statsBrief() },
                     update = freshRelease,
                     daily = Trace.span("сборка ежедневного задания") { buildDaily() },
@@ -764,7 +783,25 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             } catch (e: Exception) {
                 _home.value = HomeState(loading = false, error = e.message ?: "Не удалось прочитать уроки")
             }
+           }
           }
+          refreshVocabSummary()
+        }
+    }
+
+    /**
+     * Сводка словаря — вторым проходом, после того как экран уже показан.
+     *
+     * Она нужна одной вкладке из четырёх, а стоит разбора всего словарного
+     * файла. Ждать её до первого кадра значило бы платить четыре секунды за
+     * числа, на которые человек в этот заход может и не взглянуть.
+     */
+    private fun refreshVocabSummary() {
+        viewModelScope.launch {
+            val tracks = Trace.span("словарь: сводка") {
+                withContext(Dispatchers.Default) { vocabSummary() }
+            }
+            _home.value = _home.value.copy(vocab = tracks)
         }
     }
 
@@ -801,12 +838,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * пятнадцати минут неправильно — это уже другое решение, и принимает его
      * человек.
      */
-    private suspend fun buildDaily(extra: Boolean = false): DailyPlan {
+    private suspend fun buildDaily(extra: Boolean = false): DailyPlan =
+      withContext(Dispatchers.Default) {
         val minutes = pace.minutes
         val spent = (pace.spentToday() + 30) / 60
         val plan = DailyPlan(minutes = minutes, spent = spent, left = pace.leftToday())
         val budget = (if (extra) minutes * 60 else pace.leftToday()).toDouble()
-        if (budget <= 0.0) return plan
+        if (budget <= 0.0) return@withContext plan
 
         val accent = DailyAccent.of()
         val now = System.currentTimeMillis()
@@ -913,7 +951,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val forStory = if (items.isEmpty()) budget else storyBudget
         val story = Trace.span("подбор: история") { nextStory(forStory, online) }
 
-        return plan.copy(
+        return@withContext plan.copy(
             items = items,
             review = picked[1].size,
             words = picked[2].size,
@@ -924,7 +962,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // Только упражнения: у истории свой шаг и свой счёт отрезков.
             estimate = if (items.isEmpty()) 0 else (used / 60 + 0.5).toInt().coerceAtLeast(1)
         )
-    }
+      }
 
     /**
      * Следующая порция нового урока — первые несколько заданий первого урока,
@@ -1078,31 +1116,46 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val cards = dao.vocabCards(VocabRepository.LESSON_ID)
         val words = file.words.size
 
-        fun track(back: Boolean, fresh: Int): VocabTrack {
-            val mine = cards.filter { isBackCard(it.exerciseId) == back }
-            return VocabTrack(
-                due = mine.count { it.dueAt <= now },
-                fresh = fresh,
-                // Тренировать можно всё, что заведено и ещё не выучено, —
-                // расписание тут не указ, на то она и тренировка.
-                ready = mine.count { it.correct < VocabRepository.LEARNED },
-                learned = mine.count { it.correct >= VocabRepository.LEARNED },
-                started = if (back) mine.size else mine.count { isMeaning(it.exerciseId) },
-                total = words
-            )
+        // Один проход вместо десяти. Раньше каждая цифра считалась своим
+        // `count`, а `isBackCard` разбирает строку идентификатора — на двух
+        // с половиной тысячах карточек это десяток полных обходов с разбором
+        // строк на каждом. Считаем всё разом.
+        var backDue = 0; var backReady = 0; var backLearned = 0; var backTotal = 0
+        var frontDue = 0; var frontReady = 0; var frontLearned = 0
+        var started = 0
+        for (card in cards) {
+            val back = isBackCard(card.exerciseId)
+            val due = card.dueAt <= now
+            val learned = card.correct >= VocabRepository.LEARNED
+            if (back) {
+                backTotal++
+                if (due) backDue++
+                if (learned) backLearned++ else backReady++
+            } else {
+                if (due) frontDue++
+                if (learned) frontLearned++ else frontReady++
+                if (isMeaning(card.exerciseId)) started++
+            }
         }
 
-        val started = cards.count { isMeaning(it.exerciseId) }
+        fun track(back: Boolean, fresh: Int) = VocabTrack(
+            due = if (back) backDue else frontDue,
+            fresh = fresh,
+            // Тренировать можно всё, что заведено и ещё не выучено, —
+            // расписание тут не указ, на то она и тренировка.
+            ready = if (back) backReady else frontReady,
+            learned = if (back) backLearned else frontLearned,
+            started = if (back) backTotal else started,
+            total = words
+        )
+
         val budget = (NEW_WORDS_PER_DAY - vocabRepo.introducedToday()).coerceAtLeast(0)
         return VocabTracks(
             toTarget = track(back = false, fresh = minOf(budget, words - started)),
             // Обратный перевод своей дневной нормы не имеет: слово в него
             // попадает не «новым», а уже заведённым — назвать его надо было
             // раньше, чем узнать.
-            toNative = track(
-                back = true,
-                fresh = started - cards.count { isBackCard(it.exerciseId) }
-            )
+            toNative = track(back = true, fresh = started - backTotal)
         )
     }
 
