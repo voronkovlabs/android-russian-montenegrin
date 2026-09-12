@@ -1018,22 +1018,38 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val all = dao.vocabCards(VocabRepository.LESSON_ID)
         val byId = all.associateBy { it.exerciseId }
         val words = file.words.associateBy { it.id }
-        val items = mutableListOf<SessionItem>()
 
+        val due = mutableListOf<SessionItem>()
         all.filter { it.dueAt <= now }.sortedBy { it.dueAt }.forEach { card ->
             vocabExercise(file, words, card.exerciseId, card.repetitions)?.let {
-                items += SessionItem(VocabRepository.LESSON_ID, it)
+                due += SessionItem(VocabRepository.LESSON_ID, it)
             }
         }
-        addFreshVocab(file, byId, items, back = false)
-        addFreshVocab(file, byId, items, back = true)
+
+        val fresh = mutableListOf<SessionItem>()
+        addFreshVocab(file, byId, fresh, back = false)
+        addFreshVocab(file, byId, fresh, back = true)
 
         // Экраны пар — первыми кандидатами: дележ бюджета берёт список по
         // порядку, и знакомство должно попадать в занятие раньше, чем набор
         // тех же слов.
-        val matches = matchScreens(words, byId, items, all)
+        val matches = matchScreens(words, byId, fresh + due, all)
             .map { SessionItem(VocabRepository.LESSON_ID, it) }
-        return (matches + items).map { Cand(it, pace.seconds(it.exercise.typeName)) }
+
+        // **Несколько новых слов идут вперёд долга**, и это не вкусовщина, а
+        // починка по замеру (копия прогресса, 12.09.2026). До 1.75 порядок был
+        // «всё просроченное, потом новое», и новое не наступало никогда:
+        // словарю достаётся 174 секунды занятия, из них 80 съедают два экрана
+        // пар, на карточки остаётся семь штук в день — а созревает их около
+        // двадцати. Очередь долга не кончается, и за две недели в словаре
+        // завелось тридцать слов из тысячи ста пятидесяти двух.
+        //
+        // Долг от этого растёт быстрее — каждое новое слово это ещё две
+        // карточки в обороте, — и это осознанная плата. Словарь, в который не
+        // входят новые слова, это не словарь, а список из тридцати позиций.
+        val lead = Config.current.daily.freshLead
+        return (matches + fresh.take(lead) + due + fresh.drop(lead))
+            .map { Cand(it, pace.seconds(it.exercise.typeName)) }
     }
 
     /**

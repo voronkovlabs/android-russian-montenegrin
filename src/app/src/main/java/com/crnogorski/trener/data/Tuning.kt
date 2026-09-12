@@ -100,7 +100,22 @@ data class Tuning(
         val wordShare: Double = 0.22,
         val storyShare: Double = 0.120,
         /** Сколько заходов даётся на задание, где отвечают голосом. */
-        val spokenAttempts: Int = 3
+        val spokenAttempts: Int = 3,
+        /**
+         * Сколько новых слов пропускается **вперёд словарного долга**.
+         *
+         * Ноль значит «как было до 1.75»: сперва всё просроченное, новые слова
+         * следом. По замеру копии прогресса от 12.09.2026 это означало, что
+         * новых слов не бывает вовсе — за две недели их завелось тридцать
+         * вместо полутора сотен. Словарного времени хватает на семь карточек
+         * в день, а созревает их двадцать, и очередь долга не кончается
+         * никогда.
+         *
+         * Три — это примерно сорок секунд занятия и девяносто слов в месяц.
+         * Цена честная и её стоит знать: долг от этого растёт быстрее, потому
+         * что каждое новое слово — это ещё две карточки в обороте.
+         */
+        val freshLead: Int = 3
     )
 
     /** Словарь. */
@@ -187,7 +202,11 @@ data class Tuning(
             reviewShare = daily.reviewShare.coerceIn(0.0, 1.0),
             wordShare = daily.wordShare.coerceIn(0.0, 1.0),
             storyShare = daily.storyShare.coerceIn(0.0, 0.9),
-            spokenAttempts = daily.spokenAttempts.coerceIn(1, 10)
+            spokenAttempts = daily.spokenAttempts.coerceIn(1, 10),
+            // Потолок тут не от балды: больше десяти новых слов в день не
+            // пропустит дневная норма, и «сто вперёд долга» просто выкинуло бы
+            // повторение из занятия целиком.
+            freshLead = daily.freshLead.coerceIn(0, 10)
         ),
         vocab = vocab.copy(
             newPerDay = vocab.newPerDay.coerceIn(0, 100),

@@ -22,7 +22,8 @@
     "reviewShare": 0.34,
     "wordShare": 0.22,
     "storyShare": 0.12,
-    "spokenAttempts": 3
+    "spokenAttempts": 3,
+    "freshLead": 3
   },
   "vocab": {
     "newPerDay": 10,
