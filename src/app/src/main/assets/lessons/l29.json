@@ -10,7 +10,7 @@
     {"type": "form", "id": "l29e05", "prompt": "Vidimo se ___ septembra. (десятого)", "answer": "desetog", "explanation": "Родительный и у числа, и у месяца."},
     {"type": "choice", "id": "l29e06", "prompt": "Как сказать «двадцать первого июня»?", "options": ["dvadeset prvog juna", "dvadeset prvi jun", "dvadesetog prvog juna", "dvadeset prvog jun"], "answer": "dvadeset prvog juna", "explanation": "Склоняется только последнее слово числа, месяц идёт в родительном."},
     {"type": "word_bank", "id": "l29e07", "prompt": "Я приезжаю первого октября.", "answer": "Dolazim prvog oktobra", "bank": ["Dolazim", "prvog", "oktobra", "prvi", "oktobar", "do"], "explanation": "Дата ответа на «когда» — родительный без предлога."},
-    {"type": "ru_to_me", "id": "l29e08", "prompt": "Какое сегодня число?", "reference": "Koji je danas datum?", "hint": "Datum — число месяца. «Broj» тут не годится."},
+    {"type": "ru_to_me", "id": "l29e08", "prompt": "Какое сегодня число?", "reference": "Koji je danas datum?", "hint": "Datum — число месяца, «broj» тут не годится. Слово мужского рода: «какое» здесь — koji, а не koje."},
     {"type": "me_to_ru", "id": "l29e09", "prompt": "Sastanak je dvanaestog decembra u deset.", "reference": "Встреча двенадцатого декабря в десять."},
     {"type": "listening", "id": "l29e10", "audioText": "Danas je peti mart", "translation": "Сегодня пятое марта"},
     {"type": "repeat", "id": "l29e11", "phrase": "Kada ti je rođendan?", "translation": "Когда у тебя день рождения?"}
