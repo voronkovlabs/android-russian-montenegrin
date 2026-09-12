@@ -2678,6 +2678,34 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private fun checkWithModel(task: String, reference: String, answer: String) {
         val exerciseId = _session.value?.current?.id.orEmpty()
         checking = true
+
+        // Ответ, совпавший с эталоном, модели не показываем вовсе.
+        //
+        // Заведено по четырём жалобам подряд на одно задание (l07e05,
+        // «Ne mogu danas, radim»): ученик писал то же самое без запятой, а
+        // Haiku раз за разом отвечала «пропущена запятая» и ставила «неверно»
+        // — хотя в системном промпте прямым текстом сказано, что пунктуация не
+        // проверяется. Промпт — просьба, `matchesTyped` — правило.
+        //
+        // Сверка тут та же, что у заданий на форму: регистр, пунктуация и
+        // пробелы не в счёт, диакритика в счёт, экавица засчитывается. То есть
+        // засчитывается ровно то, что и так верно, — а спорное по-прежнему
+        // уходит модели.
+        //
+        // Побочная выгода крупнее самой починки: точный ответ перестал стоить
+        // и денег, и ожидания сети. Раньше он обходился в 0,1 ¢ и полторы
+        // секунды даже тогда, когда совпадал с эталоном буква в букву.
+        if (LocalCheck.matchesTyped(answer, reference)) {
+            checking = false
+            localResult(
+                correct = true,
+                note = withReflexNote(answer, reference, ""),
+                expected = reference,
+                answer = answer
+            )
+            return
+        }
+
         viewModelScope.launch {
             try {
                 val key = checker.key(task, reference, answer)

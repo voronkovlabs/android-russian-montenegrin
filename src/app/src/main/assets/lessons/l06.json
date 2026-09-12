@@ -3,16 +3,93 @@
   "title": "Дни недели и время",
   "note": "Черногорская иекавица: sjutra (не sutra), nedjelja, srijeda. «В понедельник» — u ponedjeljak, винительный. Разговорное đe существует наряду с gdje, но на письме и в заданиях пишем gdje; формы đje нет вообще — đ и gd не взаимозаменяемы.",
   "exercises": [
-    { "type": "choice", "id": "l06e01", "prompt": "Среда", "options": ["utorak", "srijeda", "četvrtak", "subota"], "answer": "srijeda" },
-    { "type": "me_to_ru", "id": "l06e02", "prompt": "Vidimo se u petak uveče.", "reference": "Увидимся в пятницу вечером." },
-    { "type": "ru_to_me", "id": "l06e03", "prompt": "Сегодня понедельник.", "reference": "Danas je ponedjeljak." },
-    { "type": "form", "id": "l06e04", "prompt": "Sastanak je u ___ . (subota)", "answer": "subotu" },
-    { "type": "listening", "id": "l06e05", "audioText": "Sjutra je četvrtak", "translation": "Завтра четверг" },
-    { "type": "word_bank", "id": "l06e06", "prompt": "Который час?", "answer": "Koliko je sati", "bank": ["Koliko", "je", "sati", "sat", "kada", "vrijeme"], "explanation": "Дословно «сколько есть часов»: sati — родительный множественного от sat. Глагол je обязателен, vrijeme в этом вопросе не участвует." },
-    { "type": "choice", "id": "l06e07", "prompt": "«Завтра» в черногорской норме", "options": ["sutra", "sjutra", "juče", "danas"], "answer": "sjutra", "explanation": "Sutra — сербский вариант, в Черногории норма sjutra." },
-    { "type": "me_to_ru", "id": "l06e08", "prompt": "Juče sam bio u Baru.", "reference": "Вчера я был в Баре." },
-    { "type": "speaking", "id": "l06e09", "phrase": "Vidimo se sjutra", "translation": "Увидимся завтра" },
-    { "type": "ru_to_me", "id": "l06e10", "prompt": "В воскресенье я не работаю.", "reference": "U nedjelju ne radim." },
-    { "type": "reading", "id": "l06e11", "text": "Danas je ponedjeljak, a sjutra je utorak. U petak uveče vidimo se u Baru. U nedjelju ne radim.", "translation": "Сегодня понедельник, а завтра вторник. В пятницу вечером увидимся в Баре. В воскресенье я не работаю." }
+    {
+      "type": "choice",
+      "id": "l06e01",
+      "prompt": "Среда",
+      "options": [
+        "utorak",
+        "srijeda",
+        "četvrtak",
+        "subota"
+      ],
+      "answer": "srijeda"
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l06e02",
+      "prompt": "Vidimo se u petak uveče.",
+      "reference": "Увидимся в пятницу вечером."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l06e03",
+      "prompt": "Сегодня понедельник.",
+      "reference": "Danas je ponedjeljak."
+    },
+    {
+      "type": "form",
+      "id": "l06e04",
+      "prompt": "Sastanak je u ___ . (subota)",
+      "answer": "subotu"
+    },
+    {
+      "type": "listening",
+      "id": "l06e05",
+      "audioText": "Sjutra je četvrtak",
+      "translation": "Завтра четверг"
+    },
+    {
+      "type": "word_bank",
+      "id": "l06e06",
+      "prompt": "Который час?",
+      "answer": "Koliko je sati",
+      "bank": [
+        "Koliko",
+        "je",
+        "sati",
+        "sat",
+        "kada",
+        "vrijeme"
+      ],
+      "explanation": "Дословно «сколько есть часов»: sati — родительный множественного от sat. Глагол je обязателен, vrijeme в этом вопросе не участвует."
+    },
+    {
+      "type": "choice",
+      "id": "l06e07",
+      "prompt": "«Завтра» в черногорской норме",
+      "options": [
+        "sutra",
+        "sjutra",
+        "juče",
+        "danas"
+      ],
+      "answer": "sjutra",
+      "explanation": "Sutra — сербский вариант, в Черногории норма sjutra."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l06e08",
+      "prompt": "Juče sam bio u Ulcinju.",
+      "reference": "Вчера я был в Улцине."
+    },
+    {
+      "type": "speaking",
+      "id": "l06e09",
+      "phrase": "Vidimo se sjutra",
+      "translation": "Увидимся завтра"
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l06e10",
+      "prompt": "В воскресенье я не работаю.",
+      "reference": "U nedjelju ne radim."
+    },
+    {
+      "type": "reading",
+      "id": "l06e11",
+      "text": "Danas je ponedjeljak, a sjutra je utorak. U petak uveče vidimo se u Baru. U nedjelju ne radim.",
+      "translation": "Сегодня понедельник, а завтра вторник. В пятницу вечером увидимся в Баре. В воскресенье я не работаю."
+    }
   ]
 }

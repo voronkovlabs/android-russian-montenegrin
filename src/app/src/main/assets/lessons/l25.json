@@ -3,16 +3,93 @@
   "title": "Что, если и потому что",
   "note": "Четыре союза, на которых держится связная речь. Da — «что» и «чтобы»: «Znam da radiš», «Hoću da idem». Важно: там, где по-русски инфинитив, здесь чаще da плюс личная форма — не «hoću ići», а «hoću da idem». Jer — «потому что»: «Ne mogu jer radim». Ako — «если»: «Ako možeš, javi mi». Kada — «когда»: «Reci mi kada dođeš». «Ли» передаётся через da li: «Ne znam da li je otvoreno».",
   "exercises": [
-    {"type": "form", "id": "l25e01", "prompt": "Znam ___ radiš danas. (что)", "answer": "da", "explanation": "Da вводит и «что», и «чтобы»."},
-    {"type": "form", "id": "l25e02", "prompt": "Ne mogu doći ___ radim. (потому что)", "answer": "jer", "explanation": "Jer — «потому что»."},
-    {"type": "form", "id": "l25e03", "prompt": "Javi mi ___ možeš. (если)", "answer": "ako", "explanation": "Ako — «если»."},
-    {"type": "form", "id": "l25e04", "prompt": "Reci mi ___ dođeš. (когда)", "answer": "kada", "explanation": "Kada — «когда»; в разговоре часто просто kad."},
-    {"type": "form", "id": "l25e05", "prompt": "Hoću ___ učim crnogorski. (чтобы)", "answer": "da", "explanation": "После hoću идёт da плюс личная форма, а не инфинитив."},
-    {"type": "choice", "id": "l25e06", "prompt": "Как сказать «я хочу пойти домой»?", "options": ["Hoću da idem kući", "Hoću ići kući", "Hoću idem kući", "Hoću da idem kuću"], "answer": "Hoću da idem kući", "explanation": "Da плюс личная форма. Kući — «домой», особая форма."},
-    {"type": "word_bank", "id": "l25e07", "prompt": "Я не могу, потому что работаю.", "answer": "Ne mogu jer radim", "bank": ["Ne", "mogu", "jer", "radim", "da", "ako"], "explanation": "Jer соединяет причину, da и ako тут не подходят."},
-    {"type": "ru_to_me", "id": "l25e08", "prompt": "Скажи мне, если что-то нужно.", "reference": "Reci mi ako nešto treba.", "hint": "nešto — что-нибудь; treba — нужно."},
-    {"type": "me_to_ru", "id": "l25e09", "prompt": "Ne znam da li je otvoreno.", "reference": "Не знаю, открыто ли."},
-    {"type": "listening", "id": "l25e10", "audioText": "Ne mogu jer radim", "translation": "Не могу, потому что работаю"},
-    {"type": "repeat", "id": "l25e11", "phrase": "Reci mi kada dođeš", "translation": "Скажи мне, когда придёшь"}
+    {
+      "type": "form",
+      "id": "l25e01",
+      "prompt": "Znam ___ radiš danas. (что)",
+      "answer": "da",
+      "explanation": "Da вводит и «что», и «чтобы»."
+    },
+    {
+      "type": "form",
+      "id": "l25e02",
+      "prompt": "Ne mogu doći ___ radim. (потому что)",
+      "answer": "jer",
+      "explanation": "Jer — «потому что»."
+    },
+    {
+      "type": "form",
+      "id": "l25e03",
+      "prompt": "Javi mi ___ možeš. (если)",
+      "answer": "ako",
+      "explanation": "Ako — «если»."
+    },
+    {
+      "type": "form",
+      "id": "l25e04",
+      "prompt": "Reci mi ___ dođeš. (когда)",
+      "answer": "kada",
+      "explanation": "Kada — «когда»; в разговоре часто просто kad."
+    },
+    {
+      "type": "form",
+      "id": "l25e05",
+      "prompt": "Hoću ___ učim crnogorski. (частица перед личной формой)",
+      "answer": "da",
+      "explanation": "Hoću da učim — «хочу учить». Отдельного русского слова для da тут нет: по-русски на его месте инфинитив, а по-черногорски — da плюс личная форма, не «hoću učiti»."
+    },
+    {
+      "type": "choice",
+      "id": "l25e06",
+      "prompt": "Как сказать «я хочу пойти домой»?",
+      "options": [
+        "Hoću da idem kući",
+        "Hoću ići kući",
+        "Hoću idem kući",
+        "Hoću da idem kuću"
+      ],
+      "answer": "Hoću da idem kući",
+      "explanation": "Da плюс личная форма. Kući — «домой», особая форма."
+    },
+    {
+      "type": "word_bank",
+      "id": "l25e07",
+      "prompt": "Я не могу, потому что работаю.",
+      "answer": "Ne mogu jer radim",
+      "bank": [
+        "Ne",
+        "mogu",
+        "jer",
+        "radim",
+        "da",
+        "ako"
+      ],
+      "explanation": "Jer соединяет причину, da и ako тут не подходят."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l25e08",
+      "prompt": "Скажи мне, если что-то нужно.",
+      "reference": "Reci mi ako nešto treba.",
+      "hint": "nešto — что-нибудь; treba — нужно."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l25e09",
+      "prompt": "Ne znam da li je otvoreno.",
+      "reference": "Не знаю, открыто ли."
+    },
+    {
+      "type": "listening",
+      "id": "l25e10",
+      "audioText": "Ne mogu jer radim",
+      "translation": "Не могу, потому что работаю"
+    },
+    {
+      "type": "repeat",
+      "id": "l25e11",
+      "phrase": "Reci mi kada dođeš",
+      "translation": "Скажи мне, когда придёшь"
+    }
   ]
 }
