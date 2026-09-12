@@ -621,6 +621,18 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     private val person: String? get() = complaints.person()
 
+    /**
+     * Сколько скачано обновления, от нуля до единицы. `null` — не качаем.
+     *
+     * Своим потоком, а не полем в [HomeState]: главный экран пересобирается
+     * целиком после каждого занятия и после прихода настроек, и доля,
+     * положенная внутрь состояния, обнулялась бы посреди скачивания. Заодно
+     * одно и то же число видно и на главном, и в настройках — нажать
+     * «обновить» можно с обоих экранов.
+     */
+    private val _download = MutableStateFlow<Float?>(null)
+    val download: StateFlow<Float?> = _download
+
     /** Контекст для того, что зовут из методов: `app` виден только в инициализации. */
     private val ctx: android.content.Context = app.applicationContext
 
@@ -1423,14 +1435,22 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             updater.askForInstallRights()
             return
         }
+        // Второе нажатие во время скачивания начало бы всё заново: каталог
+        // чистится перед закачкой, и первый проход писал бы в удалённый файл.
+        if (_download.value != null) return
         say("Скачиваю ${release.sizeMb} МБ…")
+        _download.value = 0f
         viewModelScope.launch {
-            updater.download(release)
+            updater.download(release) { part -> _download.value = part }
                 .onSuccess {
+                    _download.value = null
                     say("Открываю установщик…")
                     updater.install(it)
                 }
-                .onFailure { say("Не скачалось: ${it.message}") }
+                .onFailure {
+                    _download.value = null
+                    say("Не скачалось: ${it.message}")
+                }
         }
     }
 

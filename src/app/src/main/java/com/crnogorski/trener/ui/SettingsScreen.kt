@@ -28,6 +28,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -76,6 +77,8 @@ fun SettingsScreen(
     onInstallUpdate: () -> Unit,
     onDiagnostics: (Boolean) -> Unit,
     onSendDiagnostics: () -> Unit,
+    /** Доля скачанного обновления, если оно идёт прямо сейчас. */
+    download: Float? = null,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
@@ -126,7 +129,7 @@ fun SettingsScreen(
         ) {
             // Обновление — первым: за ним приходят чаще, чем за длиной занятия,
             // а искать его в конце длинного экрана каждый раз утомительно.
-            UpdateRow(state, onCheckUpdate, onInstallUpdate)
+            UpdateRow(state, download, onCheckUpdate, onInstallUpdate)
 
             Spacer(Modifier.height(36.dp))
             Text("НАСТРОЙКИ", style = MaterialTheme.typography.labelSmall, color = Accent)
@@ -544,6 +547,7 @@ private fun RecognitionRow() {
 @Composable
 private fun UpdateRow(
     state: SettingsState,
+    download: Float?,
     onCheck: () -> Unit,
     onInstall: () -> Unit
 ) {
@@ -553,8 +557,22 @@ private fun UpdateRow(
         Text(state.updateState, style = MaterialTheme.typography.bodyMedium, color = Paper)
         Spacer(Modifier.height(10.dp))
     }
+    if (download != null) {
+        LinearProgressIndicator(
+            progress = { download },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(3.dp)
+                .clip(RoundedCornerShape(2.dp)),
+            color = Accent,
+            trackColor = Surface2
+        )
+        Spacer(Modifier.height(10.dp))
+    }
     val fresh = state.update
-    if (fresh != null && fresh.newer) {
+    // Кнопки во время скачивания нет вовсе: нажать её второй раз — начать
+    // всё заново, а полоса уже говорит, что дело идёт.
+    if (fresh != null && fresh.newer && download == null) {
         PrimaryAction(text = "Скачать и установить ${fresh.version}", onClick = onInstall)
         Spacer(Modifier.height(10.dp))
     }

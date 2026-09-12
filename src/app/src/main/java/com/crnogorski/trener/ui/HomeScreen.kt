@@ -28,6 +28,7 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Style
 import androidx.compose.material.icons.outlined.WbSunny
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -64,6 +65,8 @@ fun HomeScreen(
     onToggleGroup: (String) -> Unit,
     onStats: () -> Unit,
     onUpdate: () -> Unit,
+    /** Доля скачанного обновления, если оно идёт прямо сейчас. */
+    download: Float?,
     onNote: (String) -> Unit,
     onIdea: (String, Boolean) -> Unit
 ) {
@@ -132,7 +135,7 @@ fun HomeScreen(
             val fresh = state.update
             if (fresh != null) {
                 Spacer(Modifier.height(8.dp))
-                UpdateStrip(fresh.version, fresh.sizeMb, onUpdate)
+                UpdateStrip(fresh.version, fresh.sizeMb, download, onUpdate)
             }
             Spacer(Modifier.height(20.dp))
         }
@@ -319,29 +322,62 @@ private fun StatsStrip(stats: StatsBrief, onOpen: () -> Unit) {
  * после.
  */
 @Composable
-private fun UpdateStrip(version: String, sizeMb: Int, onUpdate: () -> Unit) {
-    Row(
+private fun UpdateStrip(version: String, sizeMb: Int, progress: Float?, onUpdate: () -> Unit) {
+    Column(
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .background(Glass1)
             .border(1.dp, Accent.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
-            .clickable(onClick = onUpdate)
-            .padding(horizontal = 14.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically
+            // Пока идёт скачивание, нажимать нечего: строка рассказывает, а не
+            // предлагает. Второе нажатие всё равно ничего бы не начало, но
+            // живая кнопка, от которой ничего не происходит, читается как
+            // поломка.
+            .clickable(enabled = progress == null, onClick = onUpdate)
+            .padding(horizontal = 14.dp, vertical = 10.dp)
     ) {
-        Text(
-            "Есть версия $version · $sizeMb МБ",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Paper,
-            modifier = Modifier.weight(1f)
-        )
-        Text("Обновить", style = MaterialTheme.typography.labelSmall, color = Accent)
-        Icon(
-            Icons.AutoMirrored.Outlined.KeyboardArrowRight,
-            contentDescription = null,
-            tint = Accent
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                if (progress == null) {
+                    "Есть версия $version · $sizeMb МБ"
+                } else {
+                    // Мегабайты, а не одни проценты: по ним видно скорость, и
+                    // «12 из 58» на медленной сети честнее говорит, сколько ещё
+                    // ждать, чем «21%».
+                    val got = (sizeMb * progress).toInt()
+                    "Качаю $version · $got из $sizeMb МБ"
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = Paper,
+                modifier = Modifier.weight(1f)
+            )
+            if (progress == null) {
+                Text("Обновить", style = MaterialTheme.typography.labelSmall, color = Accent)
+                Icon(
+                    Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = Accent
+                )
+            } else {
+                Text(
+                    "${(progress * 100).toInt()}%",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Accent
+                )
+            }
+        }
+        if (progress != null) {
+            Spacer(Modifier.height(8.dp))
+            LinearProgressIndicator(
+                progress = { progress },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(3.dp)
+                    .clip(RoundedCornerShape(2.dp)),
+                color = Accent,
+                trackColor = Surface2
+            )
+        }
     }
 }
 

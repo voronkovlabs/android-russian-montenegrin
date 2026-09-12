@@ -87,6 +87,7 @@ class MainActivity : ComponentActivity() {
                 val stats by vm.stats.collectAsStateWithLifecycle()
                 val splash by vm.splash.collectAsStateWithLifecycle()
                 val notice by vm.notice.collectAsStateWithLifecycle()
+                val download by vm.download.collectAsStateWithLifecycle()
 
                 // Подтверждение записанной жалобы: поверх любого экрана и без
                 // остановки — нажатие на шестерёнку не должно прерывать урок.
@@ -154,6 +155,7 @@ class MainActivity : ComponentActivity() {
                                     onDiagnostics = vm::setDiagnostics,
                                     onSendDiagnostics = { vm.sendDiagnostics() },
                                     onInstallUpdate = vm::installUpdate,
+                                    download = download,
                                     onClose = vm::closeSettings
                                 )
                             } else {
@@ -176,6 +178,7 @@ class MainActivity : ComponentActivity() {
                                     onToggleGroup = vm::toggleGroup,
                                     onStats = vm::openStats,
                                     onUpdate = vm::installUpdate,
+                                    download = download,
                                     onNote = vm::addNote,
                                     onIdea = vm::addIdea
                                 )

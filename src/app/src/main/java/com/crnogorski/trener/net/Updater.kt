@@ -24,6 +24,15 @@ data class Release(
     val assetId: Long,
     val assetName: String,
     val sizeMb: Int,
+    /**
+     * Размер вложения в байтах — им меряется полоса скачивания.
+     *
+     * Не выводится из [sizeMb]: там целые мегабайты, и полоса дёргалась бы
+     * с шагом в полтора процента. А главное — размер известен **до** запроса,
+     * поэтому полоса определённая с первого байта, а не «крутится, пока что-то
+     * идёт».
+     */
+    val sizeBytes: Long,
     val notes: String,
     val newer: Boolean
 )
@@ -91,6 +100,7 @@ class Updater(private val context: Context) {
                     assetId = asset.optLong("id"),
                     assetName = asset.optString("name"),
                     sizeMb = (asset.optLong("size") / 1_048_576).toInt(),
+                    sizeBytes = asset.optLong("size"),
                     notes = json.optString("body").lineSequence().firstOrNull().orEmpty(),
                     newer = isNewer(version, BuildConfig.VERSION_NAME)
                 )
@@ -103,8 +113,17 @@ class Updater(private val context: Context) {
      *
      * Кладём в кэш: система вычистит его сама, а держать шестьдесят мегабайт
      * рядом с прогрессом незачем.
+     *
+     * [onProgress] зовётся долей от нуля до единицы — по ней рисуется полоса.
+     * Шестьдесят мегабайт по мобильной сети идут минуту и дольше, и молчащее
+     * приложение в это время неотличимо от зависшего: до 1.72 единственным
+     * признаком жизни была всплывающая строка «Скачиваю 58 МБ…», сказанная
+     * один раз в самом начале.
      */
-    suspend fun download(release: Release): Result<File> = withContext(Dispatchers.IO) {
+    suspend fun download(
+        release: Release,
+        onProgress: (Float) -> Unit = {}
+    ): Result<File> = withContext(Dispatchers.IO) {
         runCatching {
             val dir = File(context.cacheDir, "update").apply { mkdirs() }
             dir.listFiles()?.forEach { it.delete() }
@@ -132,8 +151,34 @@ class Updater(private val context: Context) {
                 }
                 body.use { file ->
                     if (!file.isSuccessful) error("скачивание: ${file.code}")
-                    val stream = file.body?.byteStream() ?: error("пустой ответ")
-                    target.outputStream().use { out -> stream.copyTo(out) }
+                    val payload = file.body ?: error("пустой ответ")
+                    // Сколько всего. Хранилище обычно говорит само, но если
+                    // ответ придёт кусками, длины в нём не будет вовсе — тогда
+                    // берём размер вложения, он известен из релиза.
+                    val total = payload.contentLength().takeIf { it > 0 }
+                        ?: release.sizeBytes
+                    val stream = payload.byteStream()
+                    val buffer = ByteArray(64 * 1024)
+                    var done = 0L
+                    var shown = -1
+                    target.outputStream().use { out ->
+                        while (true) {
+                            val read = stream.read(buffer)
+                            if (read < 0) break
+                            out.write(buffer, 0, read)
+                            done += read
+                            if (total <= 0) continue
+                            // Сообщаем, только когда сменился процент: кусков
+                            // тут около тысячи, а разных чисел на полосе сто, и
+                            // девятьсот лишних перерисовок экрана — это работа,
+                            // отнятая у самого скачивания.
+                            val percent = (done * 100 / total).toInt()
+                            if (percent != shown) {
+                                shown = percent
+                                onProgress(percent / 100f)
+                            }
+                        }
+                    }
                 }
             }
             if (target.length() < 1_000_000) {
