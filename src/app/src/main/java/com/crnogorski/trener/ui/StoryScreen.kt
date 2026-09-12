@@ -162,7 +162,7 @@ fun StoryScreen(
     onReveal: () -> Unit,
     onRestart: () -> Unit,
     onNote: (String) -> Unit,
-    onIdea: (String) -> Unit,
+    onIdea: (String, Boolean) -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current

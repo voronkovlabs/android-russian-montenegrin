@@ -26,6 +26,7 @@ import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.MatchPair
 import com.crnogorski.trener.data.IDEA_REASON
 import com.crnogorski.trener.data.NOTE_REASON
+import com.crnogorski.trener.data.PHRASE_REASON
 import com.crnogorski.trener.data.Pace
 import com.crnogorski.trener.data.ProgressStore
 import com.crnogorski.trener.data.StoryChunk
@@ -2343,7 +2344,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * механизмам незачем — а вот метку человек должен поставить в момент
      * записи, задним числом по тексту её не восстановить.
      */
-    fun addIdea(text: String) = addRemark(text, IDEA_REASON, "Идея записана")
+    /**
+     * Идея или подслушанная фраза — тип выбирают в самом диалоге.
+     *
+     * Разными кодами причины, а не полем: код проходит весь путь до метки на
+     * issue сам, ничего по дороге не дописывая.
+     */
+    fun addIdea(text: String, phrase: Boolean = false) =
+        if (phrase) addRemark(text, PHRASE_REASON, "Фраза записана")
+        else addRemark(text, IDEA_REASON, "Идея записана")
 
     fun addNote(text: String) = addRemark(text, NOTE_REASON, "Жалоба записана")
 

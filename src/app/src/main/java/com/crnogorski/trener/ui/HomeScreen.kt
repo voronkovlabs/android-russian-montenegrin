@@ -65,7 +65,7 @@ fun HomeScreen(
     onStats: () -> Unit,
     onUpdate: () -> Unit,
     onNote: (String) -> Unit,
-    onIdea: (String) -> Unit
+    onIdea: (String, Boolean) -> Unit
 ) {
     if (state.loading) {
         Column(

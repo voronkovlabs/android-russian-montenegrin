@@ -4,6 +4,7 @@ import com.crnogorski.trener.BuildConfig
 import com.crnogorski.trener.data.Complaint
 import com.crnogorski.trener.data.IDEA_REASON
 import com.crnogorski.trener.data.NOTE_REASON
+import com.crnogorski.trener.data.PHRASE_REASON
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
@@ -105,7 +106,11 @@ class GithubIssues(
      */
     private fun title(c: Complaint): String {
         val where = c.exerciseId.ifBlank {
-            if (c.reason == IDEA_REASON) "идея" else "заметка"
+            when (c.reason) {
+                IDEA_REASON -> "идея"
+                PHRASE_REASON -> "фраза"
+                else -> "заметка"
+            }
         }
         val what = c.note.replace('\n', ' ').trim().ifBlank { reasonLabel(c.reason) }
         val cut = if (what.length > 70) what.take(69).trimEnd() + "…" else what
@@ -177,8 +182,14 @@ class GithubIssues(
     private fun labels(c: Complaint): List<String> =
         // У идеи общей метки «жалоба» нет: она ничего не ломает, и в списке
         // сломанного ей не место.
-        if (c.reason == IDEA_REASON) listOf(reasonTag(c.reason))
-        else listOf("жалоба", reasonTag(c.reason))
+        when (c.reason) {
+            // Общая метка у идей своя — «идея»: по ней они и разбираются
+            // скопом. Живая фраза получает вдобавок собственную, потому что
+            // разбирают её отдельно и в другое время.
+            IDEA_REASON -> listOf("идея")
+            PHRASE_REASON -> listOf("идея", "живая фраза")
+            else -> listOf("жалоба", reasonTag(c.reason))
+        }
 
     private fun reasonTag(code: String): String = when (code) {
         "reference_wrong" -> "эталон неверен"
@@ -188,6 +199,7 @@ class GithubIssues(
         "typo" -> "опечатка"
         NOTE_REASON -> "заметка"
         IDEA_REASON -> "идея"
+        PHRASE_REASON -> "живая фраза"
         else -> "другое"
     }
 
@@ -199,6 +211,7 @@ class GithubIssues(
         "typo" -> "Опечатка"
         NOTE_REASON -> "Заметка"
         IDEA_REASON -> "Идея"
+        PHRASE_REASON -> "Живая фраза"
         else -> "Другое"
     }
 
