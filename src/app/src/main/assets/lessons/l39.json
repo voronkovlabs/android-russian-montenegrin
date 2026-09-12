@@ -1,0 +1,96 @@
+{
+  "id": "l39",
+  "title": "Порядок коротких слов",
+  "note": "Короткие безударные слова — se, je, sam, mi, ti, ga, li — стоят на втором месте в предложении и в строгом порядке: li, глагольные (sam, si, je), потом дательные (mi, ti), потом винительные (ga, je), и se впереди всех глагольных. Отсюда kako ti se sviđa, а не kako se ti sviđa. Это самое заметное место, где русская привычка ставить слова как угодно сразу слышна.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l39e01",
+      "prompt": "Kako ___ se zove? (он)",
+      "answer": "on",
+      "explanation": "Полное местоимение ударное и стоит свободно; se остаётся вторым."
+    },
+    {
+      "type": "form",
+      "id": "l39e02",
+      "prompt": "Kako ti ___ sviđa grad? (частица se)",
+      "answer": "se",
+      "explanation": "Порядок жёсткий: сперва дательное ti, потом se."
+    },
+    {
+      "type": "form",
+      "id": "l39e03",
+      "prompt": "Da ___ si dobro? (вопросительная частица)",
+      "answer": "li",
+      "explanation": "Da li стоит в самом начале, и li идёт впереди остальных коротких слов."
+    },
+    {
+      "type": "form",
+      "id": "l39e04",
+      "prompt": "Vidio sam ___ juče. (его)",
+      "answer": "ga",
+      "explanation": "Ga — краткая форма винительного, стоит сразу после глагольной части."
+    },
+    {
+      "type": "form",
+      "id": "l39e05",
+      "prompt": "Dao ___ sam knjigu. (ему)",
+      "answer": "mu",
+      "explanation": "Дательное mu идёт перед sam: dao mu sam. В речи чаще слышно dao sam mu — оба понятны."
+    },
+    {
+      "type": "choice",
+      "id": "l39e06",
+      "prompt": "Как правильно спросить «как тебе нравится Подгорица»?",
+      "options": [
+        "Kako ti se sviđa Podgorica?",
+        "Kako se ti sviđa Podgorica?",
+        "Kako ti sviđa se Podgorica?",
+        "Kako sviđa ti se Podgorica?"
+      ],
+      "answer": "Kako ti se sviđa Podgorica?",
+      "explanation": "Сперва дательное ti, потом se, и только потом глагол."
+    },
+    {
+      "type": "word_bank",
+      "id": "l39e07",
+      "prompt": "Мне это очень нравится.",
+      "answer": "To mi se mnogo sviđa",
+      "bank": [
+        "To",
+        "mi",
+        "se",
+        "mnogo",
+        "sviđa",
+        "meni",
+        "jako"
+      ],
+      "explanation": "Короткие слова идут парой сразу после первого слова: to mi se."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l39e08",
+      "prompt": "Как это называется?",
+      "reference": "Kako se to zove?",
+      "hint": "Se стоит вторым, сразу после kako."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l39e09",
+      "prompt": "Da li ti se dopada ovdje?",
+      "reference": "Тебе здесь нравится?"
+    },
+    {
+      "type": "listening",
+      "id": "l39e10",
+      "audioText": "Kako ti se sviđa ovaj grad",
+      "translation": "Как тебе нравится этот город"
+    },
+    {
+      "type": "speaking",
+      "id": "l39e11",
+      "phrase": "Kako se to kaže na crnogorskom?",
+      "translation": "Как это сказать по-черногорски?"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "id": "l37",
+  "title": "Когда и пока: время в придаточных",
+  "note": "Kad — когда, dok — пока, čim — как только, prije nego što — прежде чем, poslije toga — после этого. Главная ловушка для русского: после kad о будущем глагол стоит в настоящем времени — kad dođeš, javi se, дословно «когда приходишь». Čim значит «сразу как» и звучит живее, чем kad.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l37e01",
+      "prompt": "___ dođeš, javi mi se. (когда)",
+      "answer": "Kad",
+      "explanation": "После kad о будущем идёт настоящее время: kad dođeš."
+    },
+    {
+      "type": "form",
+      "id": "l37e02",
+      "prompt": "___ čekaš, popij kafu. (пока)",
+      "answer": "Dok",
+      "explanation": "Dok — пока, о действии, которое длится."
+    },
+    {
+      "type": "form",
+      "id": "l37e03",
+      "prompt": "___ stignem, zovem te. (как только)",
+      "answer": "Čim",
+      "explanation": "Čim — как только; тоже с настоящим временем."
+    },
+    {
+      "type": "form",
+      "id": "l37e04",
+      "prompt": "Operi ruke ___ nego što jedeš. (прежде)",
+      "answer": "prije",
+      "explanation": "Prije nego što — целый союз, менять в нём ничего нельзя."
+    },
+    {
+      "type": "form",
+      "id": "l37e05",
+      "prompt": "Poslije ___ idemo kući. (этого)",
+      "answer": "toga",
+      "explanation": "После poslije — родительный падеж: to становится toga."
+    },
+    {
+      "type": "choice",
+      "id": "l37e06",
+      "prompt": "Как сказать «позвони мне, когда приедешь»?",
+      "options": [
+        "Zovi me kad stigneš.",
+        "Zovi me kad ćeš stići.",
+        "Zovi me kad stigao.",
+        "Zovi me kada bi stigao."
+      ],
+      "answer": "Zovi me kad stigneš.",
+      "explanation": "Про будущее после kad говорят настоящим временем — будущего там не ставят."
+    },
+    {
+      "type": "word_bank",
+      "id": "l37e07",
+      "prompt": "Пока ты спал, я всё сделал.",
+      "answer": "Dok si spavao ja sam sve uradio",
+      "bank": [
+        "Dok",
+        "si",
+        "spavao",
+        "ja",
+        "sam",
+        "sve",
+        "uradio",
+        "kad"
+      ],
+      "explanation": "О прошлом dok идёт с перфектом: dok si spavao."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l37e08",
+      "prompt": "Как только закончу работу, приду.",
+      "reference": "Čim završim posao, doći ću.",
+      "hint": "Čim + настоящее время, а в главной части можно будущее."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l37e09",
+      "prompt": "Prije nego što potpišeš, pročitaj ugovor.",
+      "reference": "Прежде чем подписать, прочитай договор."
+    },
+    {
+      "type": "listening",
+      "id": "l37e10",
+      "audioText": "Javi mi se čim stigneš",
+      "translation": "Дай мне знать, как только приедешь"
+    },
+    {
+      "type": "speaking",
+      "id": "l37e11",
+      "phrase": "Kad se vraćaš kući?",
+      "translation": "Когда ты возвращаешься домой?"
+    }
+  ]
+}

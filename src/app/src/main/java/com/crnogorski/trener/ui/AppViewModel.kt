@@ -151,6 +151,8 @@ data class DailyPlan(
     val story: StoryStep? = null,
     val minutes: Int = Pace.DEFAULT_MINUTES,
     val spent: Int = 0,
+    /** Чем сегодняшнее занятие отличается от вчерашнего. */
+    val accent: DailyAccent = DailyAccent.Plain,
     val estimate: Int = 0,
     /** Сколько секунд бюджета осталось. Не минут: округление врало бы у нуля. */
     val left: Int = 0
@@ -487,6 +489,50 @@ private val LEARNED_REPS: Int get() = Config.current.vocab.stepReps
 private val LESSON_PORTION: Int get() = Config.current.daily.lessonPortion
 
 /**
+ * Уклон дня: чем сегодняшнее занятие отличается от вчерашнего.
+ *
+ * Заведён по словам владельца «сейчас скучновато». Скука была не ощущением, а
+ * арифметикой: три четверти занятия уходили на повторение и словарь, а нового
+ * было четыре задания, и так каждый день. Доли починили половину беды —
+ * вторую половину чинит то, что дни перестали быть одинаковыми.
+ *
+ * Уклон **не отменяет** ни одного источника, а только меняет пропорции: долг
+ * всё равно разбирается каждый день, просто в «день слов» ему достаётся
+ * меньше. Иначе один пропущенный вид занятий копился бы неделями.
+ *
+ * Уклон виден на плашке, и это обязательное условие: незаметное разнообразие
+ * ничем не отличается от его отсутствия.
+ */
+enum class DailyAccent(
+    val title: String,
+    val note: String,
+    val lesson: Double,
+    val review: Double,
+    val word: Double,
+    val story: Double,
+    /** Речь вперёд: в повторении задания вслух идут первыми. */
+    val spokenFirst: Boolean = false,
+    /** Добавка к порции нового урока. */
+    val portionBonus: Int = 0
+) {
+    New("НОВОЕ", "Сегодня больше нового материала", 1.8, 0.8, 0.8, 1.0, portionBonus = 4),
+    Debt("ПОВТОРЕНИЕ", "Сегодня разбираем долги", 0.6, 1.6, 0.9, 0.8),
+    Words("СЛОВА", "Сегодня упор на словарь", 0.8, 0.9, 1.8, 0.8),
+    Aloud("ВСЛУХ", "Сегодня больше речи и чтения вслух", 0.9, 0.9, 0.8, 2.5, spokenFirst = true),
+    Plain("ЗАНЯТИЕ", "Обычный день: всего понемногу", 1.0, 1.0, 1.0, 1.0);
+
+    companion object {
+        /**
+         * Уклон дня. Считается от календарного дня, а не случайно: случайный
+         * уклон нельзя ни предвидеть, ни пропустить сознательно, а «завтра
+         * будет день речи» — это уже повод вернуться завтра.
+         */
+        fun of(day: java.time.LocalDate = java.time.LocalDate.now()): DailyAccent =
+            entries[(day.toEpochDay().mod(entries.size))]
+    }
+}
+
+/**
  * Как делится дневной бюджет между источниками.
  *
  * Доли, а не строгий приоритет. Строгий приоритет («сперва весь долг, потом
@@ -507,6 +553,9 @@ private val LESSON_PORTION: Int get() = Config.current.daily.lessonPortion
  * а разбирать ради этого весь накопившийся долг незачем.
  */
 private val DAILY_POOL: Int get() = Config.current.daily.pool
+
+/** Задания, где надо говорить или читать вслух. */
+private val SPOKEN_TYPES = setOf("speaking", "repeat", "reading", "listening")
 
 private val STORY_SHARE: Double get() = Config.current.daily.storyShare
 private val LESSON_SHARE: Double get() = Config.current.daily.lessonShare
@@ -758,6 +807,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val budget = (if (extra) minutes * 60 else pace.leftToday()).toDouble()
         if (budget <= 0.0) return plan
 
+        val accent = DailyAccent.of()
         val now = System.currentTimeMillis()
         // Без сети свободные переводы не проверить. Не блокируем всё занятие,
         // как это делает урок, а просто не берём их: ежедневное задание должно
@@ -775,7 +825,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             dao.dueCards(now, DAILY_POOL, VocabRepository.LESSON_ID)
         }
         val known = repo.exercisesIn(due.map { it.lessonId })
-        val reviewCands = spread(
+        val spreadReview = spread(
             due.mapNotNull { card ->
                 known[card.exerciseId]
                     ?.takeIf { ok(it.second) }
@@ -784,6 +834,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     }
             }
         ) { it.item.lessonId }
+        // В день речи задания вслух идут первыми — но только внутри повторения:
+        // порядок заданий урока трогать нельзя, они опираются друг на друга.
+        val reviewCands = if (!accent.spokenFirst) spreadReview else {
+            val (spoken, rest) = spreadReview.partition { it.item.exercise.typeName in SPOKEN_TYPES }
+            spoken + rest
+        }
 
         val wordCands = Trace.span("подбор: слова на сегодня") { dailyWords(now) }
 
@@ -793,10 +849,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // переливается тем, у кого материал ещё есть. Порядок второго прохода
         // не тот же, что первого: лишнее время лучше отдать долгу и словам,
         // чем вывалить сверх нормы ещё кусок нового урока.
-        val storyBudget = budget * STORY_SHARE
+        val storyBudget = budget * STORY_SHARE * accent.story
         val body = budget - storyBudget
         val lists = listOf(lessonCands, reviewCands, wordCands)
-        val caps = listOf(body * LESSON_SHARE, body * REVIEW_SHARE, body * WORD_SHARE)
+        val caps = listOf(
+            body * LESSON_SHARE * accent.lesson,
+            body * REVIEW_SHARE * accent.review,
+            body * WORD_SHARE * accent.word
+        )
         val cursor = IntArray(3)
         val picked = List(3) { mutableListOf<Cand>() }
         var used = 0.0
@@ -815,7 +875,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
         // Первый проход: каждому своя доля, урок — ещё и порцией по числу
         // заданий, иначе доля времени пустила бы в занятие сразу весь урок.
-        drain(0, caps[0], LESSON_PORTION)
+        drain(0, caps[0], LESSON_PORTION + accent.portionBonus)
         drain(1, caps[1])
         drain(2, caps[2])
 
@@ -858,6 +918,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             words = picked[2].size,
             lesson = picked[0].size,
             lessonTitle = portion?.first?.title.orEmpty(),
+            accent = accent,
             story = story,
             // Только упражнения: у истории свой шаг и свой счёт отрезков.
             estimate = if (items.isEmpty()) 0 else (used / 60 + 0.5).toInt().coerceAtLeast(1)

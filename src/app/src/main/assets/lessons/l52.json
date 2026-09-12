@@ -1,0 +1,94 @@
+{
+  "id": "l52",
+  "title": "Интернет и телефон",
+  "note": "Mreža — сеть, signal — сигнал, dopuna — пополнение, paket — тариф и пакет, ne radi — не работает, spor — медленный. «У меня нет связи» — nemam signala, «интернет не работает» — internet ne radi. Оператор спросит broj telefona и ime i prezime.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l52e01",
+      "prompt": "Internet ___ radi od jutros. (не)",
+      "answer": "ne",
+      "explanation": "Отрицание стоит прямо перед глаголом: ne radi."
+    },
+    {
+      "type": "form",
+      "id": "l52e02",
+      "prompt": "Nemam ___ ovdje. (сигнала)",
+      "answer": "signala",
+      "explanation": "После nemam — родительный: signala."
+    },
+    {
+      "type": "form",
+      "id": "l52e03",
+      "prompt": "Treba mi ___ za telefon. (пополнение)",
+      "answer": "dopuna",
+      "explanation": "Dopuna — пополнение счёта; dopuniti — пополнить."
+    },
+    {
+      "type": "form",
+      "id": "l52e04",
+      "prompt": "Koji ___ imate za internet? (тариф)",
+      "answer": "paket",
+      "explanation": "Paket — и пакет, и тариф; koji мужского рода."
+    },
+    {
+      "type": "form",
+      "id": "l52e05",
+      "prompt": "Veza je previše ___ . (медленная)",
+      "answer": "spora",
+      "explanation": "Veza женского рода, значит spora."
+    },
+    {
+      "type": "choice",
+      "id": "l52e06",
+      "prompt": "Как пожаловаться, что интернет работает плохо?",
+      "options": [
+        "Internet radi jako loše.",
+        "Internet radi jako loš.",
+        "Internet je radi loše.",
+        "Internet radi jako loša."
+      ],
+      "answer": "Internet radi jako loše.",
+      "explanation": "Как работает — наречие loše, а не прилагательное."
+    },
+    {
+      "type": "word_bank",
+      "id": "l52e07",
+      "prompt": "У меня здесь нет сигнала.",
+      "answer": "Nemam signala ovdje",
+      "bank": [
+        "Nemam",
+        "signala",
+        "ovdje",
+        "signal",
+        "nema"
+      ],
+      "explanation": "После nemam всегда родительный: signala."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l52e08",
+      "prompt": "Интернет не работает со вчерашнего дня.",
+      "reference": "Internet ne radi od juče.",
+      "hint": "Od juče — со вчерашнего дня."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l52e09",
+      "prompt": "Možete li da provjerite zašto je veza tako spora?",
+      "reference": "Можете проверить, почему связь такая медленная?"
+    },
+    {
+      "type": "listening",
+      "id": "l52e10",
+      "audioText": "Internet ne radi od jutros",
+      "translation": "Интернет не работает с утра"
+    },
+    {
+      "type": "repeat",
+      "id": "l52e11",
+      "phrase": "Nemam signala, zovem te kasnije.",
+      "translation": "У меня нет связи, позвоню тебе позже."
+    }
+  ]
+}

@@ -73,13 +73,13 @@ data class Tuning(
         val minMinutes: Int = 5,
         val maxMinutes: Int = 60,
         /** По скольку заданий вводится новый урок. */
-        val lessonPortion: Int = 4,
+        val lessonPortion: Int = 6,
         /** Сколько просроченных карточек рассматривать при сборке. */
         val pool: Int = 60,
-        val lessonShare: Double = 0.22,
-        val reviewShare: Double = 0.45,
-        val wordShare: Double = 0.33,
-        val storyShare: Double = 0.10,
+        val lessonShare: Double = 0.34,
+        val reviewShare: Double = 0.34,
+        val wordShare: Double = 0.22,
+        val storyShare: Double = 0.120,
         /** Сколько заходов даётся на задание, где отвечают голосом. */
         val spokenAttempts: Int = 3
     )

@@ -1,0 +1,96 @@
+{
+  "id": "l47",
+  "title": "Половина, проценты и двое",
+  "note": "Pola — половина (pola sata, pola kilograma), četvrt — четверть. Проценты: pedeset odsto или posto. Деньги говорят словами: dva i po evra — два с половиной евро; дробную цифру вслух не произносят. Для людей вместе есть особые числа: dvoje, troje, četvoro — dvoje djece, nas troje.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l47e01",
+      "prompt": "Čekam već ___ sata. (полчаса)",
+      "answer": "pola",
+      "explanation": "Pola требует родительного: pola sata."
+    },
+    {
+      "type": "form",
+      "id": "l47e02",
+      "prompt": "Popust je pedeset ___ . (процентов)",
+      "answer": "odsto",
+      "explanation": "Odsto или posto — оба верны, форма не меняется."
+    },
+    {
+      "type": "form",
+      "id": "l47e03",
+      "prompt": "Imamo ___ djece. (двое)",
+      "answer": "dvoje",
+      "explanation": "Для детей и смешанных групп — dvoje, а не dva."
+    },
+    {
+      "type": "form",
+      "id": "l47e04",
+      "prompt": "Nas ___ idemo zajedno. (трое)",
+      "answer": "troje",
+      "explanation": "Nas troje — нас трое; глагол во множественном числе."
+    },
+    {
+      "type": "form",
+      "id": "l47e05",
+      "prompt": "Daj mi ___ i po paradajza. (кило)",
+      "answer": "kilo",
+      "explanation": "Kilo i po — кило с половиной: сперва целое, потом i po."
+    },
+    {
+      "type": "choice",
+      "id": "l47e06",
+      "prompt": "Как сказать «два с половиной евро»?",
+      "options": [
+        "dva i po evra",
+        "dva i pola evra",
+        "dva zarez pet evra",
+        "dva i po evro"
+      ],
+      "answer": "dva i po evra",
+      "explanation": "I po — устойчивая половина; после два — форма evra."
+    },
+    {
+      "type": "word_bank",
+      "id": "l47e07",
+      "prompt": "Скидка тридцать процентов на всё.",
+      "answer": "Popust je trideset odsto na sve",
+      "bank": [
+        "Popust",
+        "je",
+        "trideset",
+        "odsto",
+        "na",
+        "sve",
+        "procenata"
+      ],
+      "explanation": "Odsto не склоняется, что бы ни стояло перед ним."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l47e08",
+      "prompt": "Дайте, пожалуйста, полкило сыра.",
+      "reference": "Dajte mi pola kile sira, molim vas.",
+      "hint": "Pola плюс родительный: pola kile, pola sata."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l47e09",
+      "prompt": "Imamo dvoje djece i stan od pedeset kvadrata.",
+      "reference": "У нас двое детей и квартира пятьдесят квадратов."
+    },
+    {
+      "type": "listening",
+      "id": "l47e10",
+      "audioText": "Kilo i po jabuka molim",
+      "translation": "Полтора кило яблок, пожалуйста"
+    },
+    {
+      "type": "repeat",
+      "id": "l47e11",
+      "phrase": "Koliko košta pola kile?",
+      "translation": "Сколько стоит полкило?"
+    }
+  ]
+}

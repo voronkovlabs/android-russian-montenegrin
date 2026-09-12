@@ -1,0 +1,97 @@
+{
+  "id": "l41",
+  "title": "Если бы знал",
+  "note": "Нереальное условие: da sam znao, došao bih — если бы я знал, я бы пришёл. В части с da — перфект, в главной — bih плюс форма на -o/-la. Про возможное будущее говорят иначе, через ako и настоящее: ako budeš imao vremena, javi se. Путать ako и da тут нельзя: ako — это «если получится», da — «если бы, но не вышло».",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l41e01",
+      "prompt": "Da sam znao, ___ bih ranije. (пришёл)",
+      "answer": "došao",
+      "explanation": "После bih — форма на -o, как в перфекте, но без sam."
+    },
+    {
+      "type": "form",
+      "id": "l41e02",
+      "prompt": "___ sam imao vremena, pomogao bih. (если бы)",
+      "answer": "Da",
+      "explanation": "Нереальное условие вводит da, а не ako."
+    },
+    {
+      "type": "form",
+      "id": "l41e03",
+      "prompt": "___ imaš vremena, javi se. (если)",
+      "answer": "Ako",
+      "explanation": "Ako — о том, что ещё может случиться; с настоящим временем."
+    },
+    {
+      "type": "form",
+      "id": "l41e04",
+      "prompt": "Ona ___ došla da je znala. (бы пришла)",
+      "answer": "bi",
+      "explanation": "У третьего лица форма bi: ona bi došla."
+    },
+    {
+      "type": "form",
+      "id": "l41e05",
+      "prompt": "Mi ___ ostali još jedan dan. (остались бы)",
+      "answer": "bismo",
+      "explanation": "Мы — bismo; формы такие: bih, bi, bi, bismo, biste, bi."
+    },
+    {
+      "type": "choice",
+      "id": "l41e06",
+      "prompt": "Как сказать «если бы у меня было время, я бы приехал»?",
+      "options": [
+        "Da sam imao vremena, došao bih.",
+        "Ako sam imao vremena, došao bih.",
+        "Da bih imao vremena, došao sam.",
+        "Da imam vremena, došao sam."
+      ],
+      "answer": "Da sam imao vremena, došao bih.",
+      "explanation": "В части с da — перфект, в главной — bih плюс форма на -o."
+    },
+    {
+      "type": "word_bank",
+      "id": "l41e07",
+      "prompt": "Если бы ты сказал раньше, я бы подождал.",
+      "answer": "Da si rekao ranije ja bih sačekao",
+      "bank": [
+        "Da",
+        "si",
+        "rekao",
+        "ranije",
+        "ja",
+        "bih",
+        "sačekao",
+        "ako"
+      ],
+      "explanation": "Ako сюда не годится: речь о том, чего уже не будет."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l41e08",
+      "prompt": "Если будет дождь, останемся дома.",
+      "reference": "Ako bude padala kiša, ostaćemo kod kuće.",
+      "hint": "Возможное будущее — ako; про нереальное говорят da."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l41e09",
+      "prompt": "Da sam znao da dolaziš, spremio bih ručak.",
+      "reference": "Если бы я знал, что ты придёшь, приготовил бы обед."
+    },
+    {
+      "type": "listening",
+      "id": "l41e10",
+      "audioText": "Da sam znao došao bih ranije",
+      "translation": "Если бы я знал, пришёл бы раньше"
+    },
+    {
+      "type": "speaking",
+      "id": "l41e11",
+      "phrase": "Ja bih to uradio drugačije.",
+      "translation": "Я бы сделал это по-другому."
+    }
+  ]
+}

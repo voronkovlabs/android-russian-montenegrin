@@ -1,0 +1,96 @@
+{
+  "id": "l57",
+  "title": "Поездка: отель и бронь",
+  "note": "Rezervacija — бронь, soba — номер, noćenje — ночь проживания, doručak uključen — завтрак включён, prijava и odjava — заезд и выезд, prtljag — багаж. «На двоих» — za dvoje, «на три ночи» — na tri noći. Спросить о свободных местах: imate li slobodnih soba.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l57e01",
+      "prompt": "Imam ___ na to ime. (бронь)",
+      "answer": "rezervaciju",
+      "explanation": "После imam — винительный: rezervaciju."
+    },
+    {
+      "type": "form",
+      "id": "l57e02",
+      "prompt": "Treba mi soba za ___ noći. (три)",
+      "answer": "tri",
+      "explanation": "После tri — noći, форма множественного числа."
+    },
+    {
+      "type": "form",
+      "id": "l57e03",
+      "prompt": "Je li doručak ___ ? (включён)",
+      "answer": "uključen",
+      "explanation": "Doručak мужского рода, значит uključen."
+    },
+    {
+      "type": "form",
+      "id": "l57e04",
+      "prompt": "Kada je ___ iz sobe? (выезд)",
+      "answer": "odjava",
+      "explanation": "Odjava — выезд, prijava — заезд и регистрация."
+    },
+    {
+      "type": "form",
+      "id": "l57e05",
+      "prompt": "Mogu li da ostavim ___ ovdje? (багаж)",
+      "answer": "prtljag",
+      "explanation": "Prtljag мужского рода, винительный совпадает с именительным."
+    },
+    {
+      "type": "choice",
+      "id": "l57e06",
+      "prompt": "Как спросить, есть ли свободные номера?",
+      "options": [
+        "Imate li slobodnih soba?",
+        "Imate li slobodne sobe?",
+        "Imate li slobodna soba?",
+        "Imate li slobodnim sobama?"
+      ],
+      "answer": "Imate li slobodnih soba?",
+      "explanation": "О неопределённом количестве спрашивают родительным множественного."
+    },
+    {
+      "type": "word_bank",
+      "id": "l57e07",
+      "prompt": "У меня бронь на две ночи.",
+      "answer": "Imam rezervaciju na dvije noći",
+      "bank": [
+        "Imam",
+        "rezervaciju",
+        "na",
+        "dvije",
+        "noći",
+        "dva",
+        "rezervacija"
+      ],
+      "explanation": "Noć женского рода, поэтому dvije, а не dva."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l57e08",
+      "prompt": "Во сколько нужно освободить номер?",
+      "reference": "U koliko sati treba napustiti sobu?",
+      "hint": "U koliko sati — во сколько; treba плюс инфинитив."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l57e09",
+      "prompt": "Doručak je uključen u cijenu, a parking je poseban.",
+      "reference": "Завтрак включён в цену, а парковка отдельно."
+    },
+    {
+      "type": "listening",
+      "id": "l57e10",
+      "audioText": "Imate li slobodnih soba za dvoje",
+      "translation": "У вас есть свободные номера на двоих"
+    },
+    {
+      "type": "repeat",
+      "id": "l57e11",
+      "phrase": "Imam rezervaciju na svoje ime.",
+      "translation": "У меня бронь на моё имя."
+    }
+  ]
+}

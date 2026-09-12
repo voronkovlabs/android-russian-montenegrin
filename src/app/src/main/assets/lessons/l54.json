@@ -1,0 +1,96 @@
+{
+  "id": "l54",
+  "title": "Дети и школа",
+  "note": "Vrtić — детский сад, škola — школа, razred — класс, učiteljica — учительница младших классов, roditeljski sastanak — родительское собрание, domaći — домашнее задание, raspust — каникулы. Возраст ребёнка: ima šest godina; «пошёл в первый класс» — krenuo je u prvi razred.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l54e01",
+      "prompt": "Sin ide u prvi ___ . (класс)",
+      "answer": "razred",
+      "explanation": "Razred — класс; после u о направлении винительный."
+    },
+    {
+      "type": "form",
+      "id": "l54e02",
+      "prompt": "Kćerka ide u ___ . (детский сад)",
+      "answer": "vrtić",
+      "explanation": "Vrtić — детский сад, дословно «садик»."
+    },
+    {
+      "type": "form",
+      "id": "l54e03",
+      "prompt": "Jesi li uradio ___ ? (домашнее задание)",
+      "answer": "domaći",
+      "explanation": "Domaći — сокращение от domaći zadatak, мужской род."
+    },
+    {
+      "type": "form",
+      "id": "l54e04",
+      "prompt": "Kada je roditeljski ___ ? (собрание)",
+      "answer": "sastanak",
+      "explanation": "Roditeljski sastanak — родительское собрание."
+    },
+    {
+      "type": "form",
+      "id": "l54e05",
+      "prompt": "Djeca su na ___ do septembra. (каникулах)",
+      "answer": "raspustu",
+      "explanation": "После na о положении — местный падеж: na raspustu."
+    },
+    {
+      "type": "choice",
+      "id": "l54e06",
+      "prompt": "Как сказать «моей дочери шесть лет»?",
+      "options": [
+        "Kćerka ima šest godina.",
+        "Kćerka ima šest godine.",
+        "Kćerki je šest godina.",
+        "Kćerka je šest godina."
+      ],
+      "answer": "Kćerka ima šest godina.",
+      "explanation": "Возраст — через imati: ima šest godina, родительный множественного."
+    },
+    {
+      "type": "word_bank",
+      "id": "l54e07",
+      "prompt": "Сын пошёл в первый класс.",
+      "answer": "Sin je krenuo u prvi razred",
+      "bank": [
+        "Sin",
+        "je",
+        "krenuo",
+        "u",
+        "prvi",
+        "razred",
+        "razredu"
+      ],
+      "explanation": "Krenuti u — пойти куда-то, винительный: u prvi razred."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l54e08",
+      "prompt": "Когда родительское собрание?",
+      "reference": "Kada je roditeljski sastanak?",
+      "hint": "Порядок слов как в русском, глагол je вторым."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l54e09",
+      "prompt": "Učiteljica je rekla da djeca imaju domaći za ponedjeljak.",
+      "reference": "Учительница сказала, что у детей домашнее задание к понедельнику."
+    },
+    {
+      "type": "listening",
+      "id": "l54e10",
+      "audioText": "Djeca su na raspustu do septembra",
+      "translation": "Дети на каникулах до сентября"
+    },
+    {
+      "type": "repeat",
+      "id": "l54e11",
+      "phrase": "Moj sin ima šest godina.",
+      "translation": "Моему сыну шесть лет."
+    }
+  ]
+}

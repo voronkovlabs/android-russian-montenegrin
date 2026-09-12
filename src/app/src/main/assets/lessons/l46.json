@@ -1,0 +1,95 @@
+{
+  "id": "l46",
+  "title": "Куда и где: предлоги по падежам",
+  "note": "Один и тот же предлог меняет падеж вместе со смыслом: idem u grad (куда — винительный), živim u gradu (где — местный). Так же na: na posao и na poslu. Только откуда — всегда родительный: iz grada, od doktora, do centra, kod komšije. С кем и чем — творительный: s tobom, autobusom.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l46e01",
+      "prompt": "Idem u ___ . (город — куда)",
+      "answer": "grad",
+      "explanation": "Движение куда — винительный, у неодушевлённого он как именительный."
+    },
+    {
+      "type": "form",
+      "id": "l46e02",
+      "prompt": "Živim u ___ . (городе — где)",
+      "answer": "gradu",
+      "explanation": "Место где — местный падеж: u gradu."
+    },
+    {
+      "type": "form",
+      "id": "l46e03",
+      "prompt": "Vraćam se iz ___ . (школы)",
+      "answer": "škole",
+      "explanation": "Iz — откуда, всегда родительный."
+    },
+    {
+      "type": "form",
+      "id": "l46e04",
+      "prompt": "Bio sam kod ___ . (врача)",
+      "answer": "doktora",
+      "explanation": "Kod — у кого-то, тоже родительный."
+    },
+    {
+      "type": "form",
+      "id": "l46e05",
+      "prompt": "Putujem ___ . (автобусом)",
+      "answer": "autobusom",
+      "explanation": "Чем едешь — творительный, без предлога."
+    },
+    {
+      "type": "choice",
+      "id": "l46e06",
+      "prompt": "Как сказать «я на работе»?",
+      "options": [
+        "Na poslu sam.",
+        "Na posao sam.",
+        "U poslu sam.",
+        "Na posla sam."
+      ],
+      "answer": "Na poslu sam.",
+      "explanation": "Где — местный: na poslu. Na posao значило бы «на работу»."
+    },
+    {
+      "type": "word_bank",
+      "id": "l46e07",
+      "prompt": "Я иду от врача домой.",
+      "answer": "Idem od doktora kući",
+      "bank": [
+        "Idem",
+        "od",
+        "doktora",
+        "kući",
+        "do",
+        "doktoru"
+      ],
+      "explanation": "Od — от кого, родительный; kući — домой, особая форма."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l46e08",
+      "prompt": "Завтра я еду в Будву на машине.",
+      "reference": "Sjutra idem u Budvu kolima.",
+      "hint": "Куда — винительный (Budvu), чем — творительный (kolima)."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l46e09",
+      "prompt": "Poslije posla idem kod prijatelja, on živi blizu pijace.",
+      "reference": "После работы я иду к другу, он живёт рядом с рынком."
+    },
+    {
+      "type": "listening",
+      "id": "l46e10",
+      "audioText": "Idem na posao autobusom",
+      "translation": "Я еду на работу на автобусе"
+    },
+    {
+      "type": "speaking",
+      "id": "l46e11",
+      "phrase": "Kako se ide do centra?",
+      "translation": "Как пройти до центра?"
+    }
+  ]
+}

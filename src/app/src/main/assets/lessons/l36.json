@@ -1,0 +1,95 @@
+{
+  "id": "l36",
+  "title": "Плата и ожидание: слова на -nje",
+  "note": "От глагола делается существительное на -nje: platiti → plaćanje (оплата), čekati → čekanje (ожидание), parkirati → parkiranje. Такими словами написаны счета, вывески и правила, а по-русски там часто стоит просто глагол. Ударение и падежи у них обычные, средний род: plaćanje, plaćanja, plaćanju.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l36e01",
+      "prompt": "___ karticom je moguće. (оплата)",
+      "answer": "Plaćanje",
+      "explanation": "Plaćanje — средний род, поэтому je moguće, а не moguć."
+    },
+    {
+      "type": "form",
+      "id": "l36e02",
+      "prompt": "___ je besplatno prvi sat. (парковка)",
+      "answer": "Parkiranje",
+      "explanation": "От parkirati — parkiranje; besplatno тоже среднего рода."
+    },
+    {
+      "type": "form",
+      "id": "l36e03",
+      "prompt": "Hvala na ___ . (ожидании)",
+      "answer": "čekanju",
+      "explanation": "После na — местный падеж: čekanje становится čekanju."
+    },
+    {
+      "type": "form",
+      "id": "l36e04",
+      "prompt": "Potrebno je ___ dokumenata. (заполнение)",
+      "answer": "popunjavanje",
+      "explanation": "Popunjavati → popunjavanje; после него родительный: dokumenata."
+    },
+    {
+      "type": "form",
+      "id": "l36e05",
+      "prompt": "Zabranjeno je ___ smeća. (выбрасывание)",
+      "answer": "bacanje",
+      "explanation": "Bacati → bacanje. На табличках это обычная форма запрета."
+    },
+    {
+      "type": "choice",
+      "id": "l36e06",
+      "prompt": "Что написано на счёте за квартиру?",
+      "options": [
+        "Rok za plaćanje je petnaesti u mjesecu.",
+        "Rok za plaćanju je petnaesti u mjesecu.",
+        "Rok za platiti je petnaesti u mjesecu.",
+        "Rok za plaćanja je petnaesti u mjesecu."
+      ],
+      "answer": "Rok za plaćanje je petnaesti u mjesecu.",
+      "explanation": "После za — винительный, а у среднего рода он совпадает с именительным."
+    },
+    {
+      "type": "word_bank",
+      "id": "l36e07",
+      "prompt": "Оплата наличными не принимается.",
+      "answer": "Plaćanje gotovinom nije moguće",
+      "bank": [
+        "Plaćanje",
+        "gotovinom",
+        "nije",
+        "moguće",
+        "plaćanju",
+        "moguć"
+      ],
+      "explanation": "Gotovina в творительном — чем платят: gotovinom."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l36e08",
+      "prompt": "Спасибо за ожидание, всё готово.",
+      "reference": "Hvala na čekanju, sve je spremno.",
+      "hint": "Hvala na — и дальше местный падеж."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l36e09",
+      "prompt": "Parkiranje je besplatno za goste hotela.",
+      "reference": "Парковка бесплатная для гостей отеля."
+    },
+    {
+      "type": "listening",
+      "id": "l36e10",
+      "audioText": "Plaćanje karticom je moguće",
+      "translation": "Оплата картой возможна"
+    },
+    {
+      "type": "repeat",
+      "id": "l36e11",
+      "phrase": "Hvala na čekanju.",
+      "translation": "Спасибо за ожидание."
+    }
+  ]
+}

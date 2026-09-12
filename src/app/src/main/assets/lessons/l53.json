@@ -1,0 +1,95 @@
+{
+  "id": "l53",
+  "title": "Мастер и ремонт",
+  "note": "Majstor — мастер, popraviti — починить, pokvario se — сломался, curi — течёт, zamijeniti — заменить, dijelovi — детали. Про сломавшееся говорят возвратно: pokvario se bojler, а не «я сломал». Сроки спрашивают так: kada možete doći и koliko će trajati.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l53e01",
+      "prompt": "___ se bojler. (сломался)",
+      "answer": "Pokvario",
+      "explanation": "Pokvariti se — сломаться; про вещь говорят возвратно."
+    },
+    {
+      "type": "form",
+      "id": "l53e02",
+      "prompt": "Možete li da ___ šporet? (починить)",
+      "answer": "popravite",
+      "explanation": "После da — личная форма второго лица множественного: popravite."
+    },
+    {
+      "type": "form",
+      "id": "l53e03",
+      "prompt": "Voda ___ ispod sudopere. (течёт)",
+      "answer": "curi",
+      "explanation": "Curiti — течь, капать; в быту это первое слово про протечку."
+    },
+    {
+      "type": "form",
+      "id": "l53e04",
+      "prompt": "Treba ___ cijev. (заменить)",
+      "answer": "zamijeniti",
+      "explanation": "Zamijeniti — заменить; в иекавице через ije."
+    },
+    {
+      "type": "form",
+      "id": "l53e05",
+      "prompt": "Koliko će ___ popravka? (длиться)",
+      "answer": "trajati",
+      "explanation": "После će — инфинитив: će trajati."
+    },
+    {
+      "type": "choice",
+      "id": "l53e06",
+      "prompt": "Как сказать «у меня сломался холодильник»?",
+      "options": [
+        "Pokvario mi se frižider.",
+        "Pokvario sam frižider.",
+        "Frižider je pokvaren mene.",
+        "Meni pokvario frižider."
+      ],
+      "answer": "Pokvario mi se frižider.",
+      "explanation": "Mi — дательный «у меня», и se обязательно."
+    },
+    {
+      "type": "word_bank",
+      "id": "l53e07",
+      "prompt": "Когда вы можете прийти?",
+      "answer": "Kada možete da dođete",
+      "bank": [
+        "Kada",
+        "možete",
+        "da",
+        "dođete",
+        "doći",
+        "dolazite"
+      ],
+      "explanation": "Možete da dođete — обычный разговорный оборот вместо инфинитива."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l53e08",
+      "prompt": "Под раковиной течёт вода.",
+      "reference": "Voda curi ispod sudopere.",
+      "hint": "Ispod — под чем, родительный падеж."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l53e09",
+      "prompt": "Majstor dolazi sjutra ujutro i donosi dijelove.",
+      "reference": "Мастер придёт завтра утром и привезёт детали."
+    },
+    {
+      "type": "listening",
+      "id": "l53e10",
+      "audioText": "Pokvario mi se bojler možete li doći",
+      "translation": "У меня сломался бойлер, можете прийти"
+    },
+    {
+      "type": "speaking",
+      "id": "l53e11",
+      "phrase": "Koliko će koštati popravka?",
+      "translation": "Сколько будет стоить ремонт?"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "id": "l40",
+  "title": "Сделал или делал: вид глагола",
+  "note": "У большинства глаголов есть пара: raditi — uraditi, čitati — pročitati, pisati — napisati. Без приставки — про занятие и повторение, с приставкой — про законченное дело. Čitao sam knjigu значит «читал», pročitao sam knjigu — «прочитал до конца». В будущем и после početi, nastaviti, prestati годится только глагол без приставки: počeo sam učiti.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l40e01",
+      "prompt": "Juče sam ___ pismo. (написал)",
+      "answer": "napisao",
+      "explanation": "Napisati — законченное действие; pisao sam значило бы «писал»."
+    },
+    {
+      "type": "form",
+      "id": "l40e02",
+      "prompt": "Cijelo veče sam ___ knjigu. (читал)",
+      "answer": "čitao",
+      "explanation": "Cijelo veče — длительность, поэтому без приставки."
+    },
+    {
+      "type": "form",
+      "id": "l40e03",
+      "prompt": "Jesi li ___ posao? (сделал)",
+      "answer": "uradio",
+      "explanation": "Uraditi — довести до конца; вопрос именно о результате."
+    },
+    {
+      "type": "form",
+      "id": "l40e04",
+      "prompt": "Počeo sam ___ crnogorski prošle godine. (учить)",
+      "answer": "učiti",
+      "explanation": "После početi идёт глагол без приставки: počeo sam učiti."
+    },
+    {
+      "type": "form",
+      "id": "l40e05",
+      "prompt": "Još nisam ___ ručak. (приготовил)",
+      "answer": "spremio",
+      "explanation": "Spremiti — приготовить до конца; с još nisam это обычная пара."
+    },
+    {
+      "type": "choice",
+      "id": "l40e06",
+      "prompt": "Что значит «Pročitao sam knjigu»?",
+      "options": [
+        "Я прочитал книгу до конца.",
+        "Я читал книгу каждый день.",
+        "Я буду читать книгу.",
+        "Я начал читать книгу."
+      ],
+      "answer": "Я прочитал книгу до конца.",
+      "explanation": "Приставка pro- закрывает действие: результат есть."
+    },
+    {
+      "type": "word_bank",
+      "id": "l40e07",
+      "prompt": "Я целый день работал и всё сделал.",
+      "answer": "Cijeli dan sam radio i sve uradio",
+      "bank": [
+        "Cijeli",
+        "dan",
+        "sam",
+        "radio",
+        "i",
+        "sve",
+        "uradio",
+        "uraditi"
+      ],
+      "explanation": "Сперва занятие (radio), потом результат (uradio) — в одном предложении оба."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l40e08",
+      "prompt": "Я начал учить черногорский в прошлом году.",
+      "reference": "Počeo sam učiti crnogorski prošle godine.",
+      "hint": "После početi — глагол без приставки."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l40e09",
+      "prompt": "Čitao sam cijelo veče, ali nisam pročitao.",
+      "reference": "Я читал весь вечер, но не дочитал."
+    },
+    {
+      "type": "listening",
+      "id": "l40e10",
+      "audioText": "Jesi li uradio sve što si htio",
+      "translation": "Ты сделал всё, что хотел"
+    },
+    {
+      "type": "reading",
+      "id": "l40e11",
+      "text": "Juče sam cijeli dan radio. Napisao sam dva pisma i pročitao ugovor. Posao još nisam završio, ali sjutra nastavljam.",
+      "translation": "Вчера я работал целый день. Написал два письма и прочитал договор. Работу я ещё не закончил, но завтра продолжу."
+    }
+  ]
+}

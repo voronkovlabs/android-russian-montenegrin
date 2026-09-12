@@ -1,0 +1,97 @@
+{
+  "id": "l42",
+  "title": "Он сказал, что…",
+  "note": "Чужие слова передают через da: rekao je da dolazi — он сказал, что придёт. Время в придаточной части **не сдвигается**, как в русском: говорят так, как сказал сам человек. Вопрос передаётся через da li или кто/что/где: pitao je da li imam vremena, pitao je gdje živim.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l42e01",
+      "prompt": "Rekao je ___ dolazi sjutra. (что)",
+      "answer": "da",
+      "explanation": "Da вводит чужие слова; «što» здесь не годится."
+    },
+    {
+      "type": "form",
+      "id": "l42e02",
+      "prompt": "Pitala je ___ li imam vremena. (частица da)",
+      "answer": "da",
+      "explanation": "Da li — готовая пара для переданного вопроса."
+    },
+    {
+      "type": "form",
+      "id": "l42e03",
+      "prompt": "Rekli su nam ___ čekamo ovdje. (чтобы)",
+      "answer": "da",
+      "explanation": "Просьбу и приказ тоже передают через da: rekli su da čekamo."
+    },
+    {
+      "type": "form",
+      "id": "l42e04",
+      "prompt": "Pitao me ___ živim. (где)",
+      "answer": "gdje",
+      "explanation": "Вопросительное слово остаётся тем же, порядок как в утверждении."
+    },
+    {
+      "type": "form",
+      "id": "l42e05",
+      "prompt": "Nije ___ da neće doći. (сказал)",
+      "answer": "rekao",
+      "explanation": "Nije rekao — не сказал; отрицание уходит к самому глаголу."
+    },
+    {
+      "type": "choice",
+      "id": "l42e06",
+      "prompt": "Как передать «он спросил, когда я приеду»?",
+      "options": [
+        "Pitao je kad dolazim.",
+        "Pitao je kad sam dolazio.",
+        "Pitao je da kad dolazim.",
+        "Pitao je kada bih dolazio."
+      ],
+      "answer": "Pitao je kad dolazim.",
+      "explanation": "Время не сдвигается: как спросили, так и передают."
+    },
+    {
+      "type": "word_bank",
+      "id": "l42e07",
+      "prompt": "Она сказала, что не может прийти.",
+      "answer": "Rekla je da ne može doći",
+      "bank": [
+        "Rekla",
+        "je",
+        "da",
+        "ne",
+        "može",
+        "doći",
+        "što",
+        "nije"
+      ],
+      "explanation": "Отрицание стоит в придаточной части, а не в rekla je."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l42e08",
+      "prompt": "Врач сказал, что всё в порядке.",
+      "reference": "Doktor je rekao da je sve u redu.",
+      "hint": "Da плюс обычное предложение, без сдвига времени."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l42e09",
+      "prompt": "Komšija je pitao da li nam treba pomoć.",
+      "reference": "Сосед спросил, не нужна ли нам помощь."
+    },
+    {
+      "type": "listening",
+      "id": "l42e10",
+      "audioText": "Rekao je da će doći poslije posla",
+      "translation": "Он сказал, что придёт после работы"
+    },
+    {
+      "type": "repeat",
+      "id": "l42e11",
+      "phrase": "Izvinite, šta ste rekli?",
+      "translation": "Извините, что вы сказали?"
+    }
+  ]
+}

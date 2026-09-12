@@ -1,0 +1,97 @@
+{
+  "id": "l59",
+  "title": "Спорить и отказывать",
+  "note": "Вежливый отказ: nažalost ne mogu — к сожалению, не могу; možda drugi put — может, в другой раз. Несогласие: ne bih se složio, nije baš tako, razumijem ali. Настоять: ipak mislim da, ostajem pri tome. Грубость тут не нужна вовсе — хватает nažalost и ipak.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l59e01",
+      "prompt": "___ ne mogu doći. (к сожалению)",
+      "answer": "Nažalost",
+      "explanation": "Nažalost — одним словом, смягчает отказ."
+    },
+    {
+      "type": "form",
+      "id": "l59e02",
+      "prompt": "Možda drugi ___ . (раз)",
+      "answer": "put",
+      "explanation": "Drugi put — в другой раз."
+    },
+    {
+      "type": "form",
+      "id": "l59e03",
+      "prompt": "Ne bih se ___ s tim. (согласился)",
+      "answer": "složio",
+      "explanation": "После bih — форма на -o: složio."
+    },
+    {
+      "type": "form",
+      "id": "l59e04",
+      "prompt": "___ mislim da nisi u pravu. (всё-таки)",
+      "answer": "Ipak",
+      "explanation": "Ipak — всё-таки, возвращает к своему мнению."
+    },
+    {
+      "type": "form",
+      "id": "l59e05",
+      "prompt": "___ te, ali ne slažem se. (понимаю)",
+      "answer": "Razumijem",
+      "explanation": "Razumjeti — понимать; в первом лице razumijem."
+    },
+    {
+      "type": "choice",
+      "id": "l59e06",
+      "prompt": "Как вежливо отказаться от приглашения?",
+      "options": [
+        "Hvala, ali nažalost ne mogu.",
+        "Hvala, ali nažalost ne moći.",
+        "Hvala, ali nažalost ne možem.",
+        "Hvala, ali nažalost ne mogao."
+      ],
+      "answer": "Hvala, ali nažalost ne mogu.",
+      "explanation": "Первое лицо от moći — mogu, без изменений в основе."
+    },
+    {
+      "type": "word_bank",
+      "id": "l59e07",
+      "prompt": "Я понимаю вас, но всё-таки не согласен.",
+      "answer": "Razumijem vas ali ipak se ne slažem",
+      "bank": [
+        "Razumijem",
+        "vas",
+        "ali",
+        "ipak",
+        "se",
+        "ne",
+        "slažem",
+        "složiti"
+      ],
+      "explanation": "Se стоит перед отрицанием и глаголом: ipak se ne slažem."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l59e08",
+      "prompt": "К сожалению, я не смогу прийти в субботу.",
+      "reference": "Nažalost, neću moći doći u subotu.",
+      "hint": "Neću moći — не смогу; дальше инфинитив doći."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l59e09",
+      "prompt": "Razumijem šta hoćeš da kažeš, ali ne bih se složio.",
+      "reference": "Я понимаю, что ты хочешь сказать, но не согласился бы."
+    },
+    {
+      "type": "listening",
+      "id": "l59e10",
+      "audioText": "Nažalost ne mogu možda drugi put",
+      "translation": "К сожалению, не могу, может, в другой раз"
+    },
+    {
+      "type": "repeat",
+      "id": "l59e11",
+      "phrase": "Razumijem, ali se ne slažem.",
+      "translation": "Понимаю, но не согласен."
+    }
+  ]
+}

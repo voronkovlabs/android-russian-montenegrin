@@ -1,0 +1,96 @@
+{
+  "id": "l38",
+  "title": "Потому что и чтобы",
+  "note": "Причина — jer и zato što (оба значат «потому что», jer короче и живее). Цель — da bi или kako bi плюс форма на -o/-la: došao sam da bih pomogao. Zbog — из-за, требует родительного: zbog kiše. Разница важная: jer объясняет, что уже случилось, da bi — ради чего делают.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l38e01",
+      "prompt": "Ne idem ___ pada kiša. (потому что)",
+      "answer": "jer",
+      "explanation": "Jer — самое обычное «потому что» в разговоре."
+    },
+    {
+      "type": "form",
+      "id": "l38e02",
+      "prompt": "Kasnim ___ gužve. (из-за)",
+      "answer": "zbog",
+      "explanation": "После zbog — родительный: gužva становится gužve."
+    },
+    {
+      "type": "form",
+      "id": "l38e03",
+      "prompt": "Došao sam ___ bih pomogao. (чтобы)",
+      "answer": "da",
+      "explanation": "Da bih — цель; после неё форма на -o, как в условном."
+    },
+    {
+      "type": "form",
+      "id": "l38e04",
+      "prompt": "Učim crnogorski ___ bih lakše živio ovdje. (чтобы)",
+      "answer": "kako",
+      "explanation": "Kako bi и da bi значат одно; kako чуть книжнее."
+    },
+    {
+      "type": "form",
+      "id": "l38e05",
+      "prompt": "___ što nemam vremena, ne mogu doći. (потому)",
+      "answer": "Zato",
+      "explanation": "Zato što — то же «потому что», только в двух словах."
+    },
+    {
+      "type": "choice",
+      "id": "l38e06",
+      "prompt": "Как сказать «я пришёл, чтобы помочь»?",
+      "options": [
+        "Došao sam da pomognem.",
+        "Došao sam da pomoći.",
+        "Došao sam za pomoći.",
+        "Došao sam da pomagao."
+      ],
+      "answer": "Došao sam da pomognem.",
+      "explanation": "Da плюс личная форма глагола; инфинитив после da не ставят."
+    },
+    {
+      "type": "word_bank",
+      "id": "l38e07",
+      "prompt": "Я не пришёл, потому что был болен.",
+      "answer": "Nisam došao jer sam bio bolestan",
+      "bank": [
+        "Nisam",
+        "došao",
+        "jer",
+        "sam",
+        "bio",
+        "bolestan",
+        "zbog"
+      ],
+      "explanation": "Jer вводит целое предложение, а zbog — только существительное."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l38e08",
+      "prompt": "Из-за дождя мы остались дома.",
+      "reference": "Zbog kiše smo ostali kod kuće.",
+      "hint": "Zbog + родительный падеж."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l38e09",
+      "prompt": "Učim jezik da bih se lakše snašao ovdje.",
+      "reference": "Я учу язык, чтобы легче освоиться здесь."
+    },
+    {
+      "type": "listening",
+      "id": "l38e10",
+      "audioText": "Kasnim zbog gužve u saobraćaju",
+      "translation": "Я опаздываю из-за пробки"
+    },
+    {
+      "type": "repeat",
+      "id": "l38e11",
+      "phrase": "Izvini, kasnim jer pada kiša.",
+      "translation": "Извини, опаздываю, потому что идёт дождь."
+    }
+  ]
+}

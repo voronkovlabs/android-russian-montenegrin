@@ -1,0 +1,97 @@
+{
+  "id": "l49",
+  "title": "Банк: счёт и перевод",
+  "note": "Račun — счёт, otvoriti račun — открыть счёт, uplata и isplata — внесение и снятие, prenos или uplata na račun — перевод, provizija — комиссия, bankomat — банкомат. Личный номер, который спросят везде: JMBG. Карта — kartica, наличные — gotovina.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l49e01",
+      "prompt": "Htio bih da ___ račun. (открыть)",
+      "answer": "otvorim",
+      "explanation": "После da — личная форма: da otvorim."
+    },
+    {
+      "type": "form",
+      "id": "l49e02",
+      "prompt": "Kolika je ___ za prenos? (комиссия)",
+      "answer": "provizija",
+      "explanation": "Provizija женского рода, поэтому kolika."
+    },
+    {
+      "type": "form",
+      "id": "l49e03",
+      "prompt": "Mogu li da podignem novac na ___ ? (банкомате)",
+      "answer": "bankomatu",
+      "explanation": "После na о месте — местный падеж."
+    },
+    {
+      "type": "form",
+      "id": "l49e04",
+      "prompt": "Treba mi ___ na račun. (перевод)",
+      "answer": "uplata",
+      "explanation": "Uplata — внесение или перевод на счёт; isplata — наоборот."
+    },
+    {
+      "type": "form",
+      "id": "l49e05",
+      "prompt": "Platiću ___ , nemam gotovine. (картой)",
+      "answer": "karticom",
+      "explanation": "Чем платят — творительный: karticom, gotovinom."
+    },
+    {
+      "type": "choice",
+      "id": "l49e06",
+      "prompt": "Что спросят в банке при открытии счёта?",
+      "options": [
+        "Imate li ličnu kartu i JMBG?",
+        "Imate li lična karta i JMBG?",
+        "Imate li ličnom kartom i JMBG?",
+        "Imate li lične karte i JMBG?"
+      ],
+      "answer": "Imate li ličnu kartu i JMBG?",
+      "explanation": "После imati — винительный: ličnu kartu."
+    },
+    {
+      "type": "word_bank",
+      "id": "l49e07",
+      "prompt": "Я хотел бы перевести деньги на этот счёт.",
+      "answer": "Htio bih da prebacim novac na ovaj račun",
+      "bank": [
+        "Htio",
+        "bih",
+        "da",
+        "prebacim",
+        "novac",
+        "na",
+        "ovaj",
+        "račun"
+      ],
+      "explanation": "Na ovaj račun — куда, поэтому винительный."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l49e08",
+      "prompt": "Какая комиссия за перевод за границу?",
+      "reference": "Kolika je provizija za prenos u inostranstvo?",
+      "hint": "Kolika — про женский род; provizija именно такая."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l49e09",
+      "prompt": "Novac stiže na račun za dva radna dana.",
+      "reference": "Деньги придут на счёт за два рабочих дня."
+    },
+    {
+      "type": "listening",
+      "id": "l49e10",
+      "audioText": "Kolika je provizija za ovu uplatu",
+      "translation": "Какая комиссия за этот перевод"
+    },
+    {
+      "type": "repeat",
+      "id": "l49e11",
+      "phrase": "Htio bih da otvorim račun.",
+      "translation": "Я хотел бы открыть счёт."
+    }
+  ]
+}

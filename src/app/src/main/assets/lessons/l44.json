@@ -1,0 +1,97 @@
+{
+  "id": "l44",
+  "title": "Как будто и чем дальше",
+  "note": "Kao — как, при сравнении вещей: bijelo kao snijeg. Kao da — как будто, и после него обычное предложение: izgleda kao da će kiša. Nego — чем, после сравнительной степени: bolje nego juče. И связка što… to…: što prije, to bolje — чем раньше, тем лучше.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l44e01",
+      "prompt": "Danas je toplije ___ juče. (чем)",
+      "answer": "nego",
+      "explanation": "После сравнительной степени — nego."
+    },
+    {
+      "type": "form",
+      "id": "l44e02",
+      "prompt": "Izgleda ___ da će padati kiša. (как будто)",
+      "answer": "kao",
+      "explanation": "Kao da — «как будто»; после него обычное предложение."
+    },
+    {
+      "type": "form",
+      "id": "l44e03",
+      "prompt": "Što prije, ___ bolje. (тем)",
+      "answer": "to",
+      "explanation": "Пара što… to… — «чем… тем…»."
+    },
+    {
+      "type": "form",
+      "id": "l44e04",
+      "prompt": "Radi ___ profesionalac. (как)",
+      "answer": "kao",
+      "explanation": "Простое сравнение с существительным — просто kao."
+    },
+    {
+      "type": "form",
+      "id": "l44e05",
+      "prompt": "Nije tako skupo ___ što izgleda. (как)",
+      "answer": "kao",
+      "explanation": "Tako… kao što… — «так… как…»."
+    },
+    {
+      "type": "choice",
+      "id": "l44e06",
+      "prompt": "Как сказать «он говорит так, будто всё знает»?",
+      "options": [
+        "Priča kao da sve zna.",
+        "Priča kao sve zna.",
+        "Priča kao da sve znati.",
+        "Priča nego da sve zna."
+      ],
+      "answer": "Priča kao da sve zna.",
+      "explanation": "Kao da плюс личная форма глагола."
+    },
+    {
+      "type": "word_bank",
+      "id": "l44e07",
+      "prompt": "Здесь дешевле, чем в городе.",
+      "answer": "Ovdje je jeftinije nego u gradu",
+      "bank": [
+        "Ovdje",
+        "je",
+        "jeftinije",
+        "nego",
+        "u",
+        "gradu",
+        "kao",
+        "od"
+      ],
+      "explanation": "После сравнительной степени — nego, а не kao."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l44e08",
+      "prompt": "Чем раньше приедешь, тем лучше.",
+      "reference": "Što prije dođeš, to bolje.",
+      "hint": "Пара što… to…, оба слова обязательны."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l44e09",
+      "prompt": "Danas se osjećam mnogo bolje nego juče.",
+      "reference": "Сегодня я чувствую себя намного лучше, чем вчера."
+    },
+    {
+      "type": "listening",
+      "id": "l44e10",
+      "audioText": "Izgleda kao da će padati kiša",
+      "translation": "Похоже, будто пойдёт дождь"
+    },
+    {
+      "type": "repeat",
+      "id": "l44e11",
+      "phrase": "Što prije, to bolje.",
+      "translation": "Чем раньше, тем лучше."
+    }
+  ]
+}

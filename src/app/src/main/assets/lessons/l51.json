@@ -1,0 +1,97 @@
+{
+  "id": "l51",
+  "title": "Курсы и учёба",
+  "note": "Kurs — курс, čas — занятие и час, upisati se — записаться, ispit — экзамен, potvrda — справка, ocjena — оценка. «Учить язык» — učiti jezik, а «учиться где-то» — studirati или ići u školu. Записаться на курс — upisati se na kurs.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l51e01",
+      "prompt": "Htio bih da se ___ na kurs. (запишусь)",
+      "answer": "upišem",
+      "explanation": "Upisati se — записаться; после da личная форма upišem."
+    },
+    {
+      "type": "form",
+      "id": "l51e02",
+      "prompt": "Kada je sljedeći ___ ? (занятие)",
+      "answer": "čas",
+      "explanation": "Čas — и урок, и час; здесь про занятие."
+    },
+    {
+      "type": "form",
+      "id": "l51e03",
+      "prompt": "Položio sam ___ . (экзамен)",
+      "answer": "ispit",
+      "explanation": "Položiti ispit — сдать экзамен; pasti na ispitu — провалить."
+    },
+    {
+      "type": "form",
+      "id": "l51e04",
+      "prompt": "Treba mi ___ da sam pohađao kurs. (справка)",
+      "answer": "potvrda",
+      "explanation": "Potvrda — справка, подтверждение."
+    },
+    {
+      "type": "form",
+      "id": "l51e05",
+      "prompt": "___ crnogorski već godinu dana. (учу)",
+      "answer": "Učim",
+      "explanation": "Učiti jezik — учить язык; studirati о вузе."
+    },
+    {
+      "type": "choice",
+      "id": "l51e06",
+      "prompt": "Как спросить, сколько стоит курс в месяц?",
+      "options": [
+        "Koliko košta kurs mjesečno?",
+        "Koliko košta kurs mjesec?",
+        "Koliko košta kurs u mjesecu?",
+        "Koliko košta kurs mjeseca?"
+      ],
+      "answer": "Koliko košta kurs mjesečno?",
+      "explanation": "Регулярность — наречием mjesečno, как и nedjeljno."
+    },
+    {
+      "type": "word_bank",
+      "id": "l51e07",
+      "prompt": "Я хочу записаться на курс черногорского.",
+      "answer": "Želim da se upišem na kurs crnogorskog",
+      "bank": [
+        "Želim",
+        "da",
+        "se",
+        "upišem",
+        "na",
+        "kurs",
+        "crnogorskog",
+        "upisati"
+      ],
+      "explanation": "После da — личная форма, инфинитив там не ставят."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l51e08",
+      "prompt": "Когда начинается следующий курс?",
+      "reference": "Kada počinje sljedeći kurs?",
+      "hint": "Počinjati — начинаться; sljedeći — следующий."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l51e09",
+      "prompt": "Časovi su dva puta nedjeljno, utorkom i četvrtkom.",
+      "reference": "Занятия два раза в неделю, по вторникам и четвергам."
+    },
+    {
+      "type": "listening",
+      "id": "l51e10",
+      "audioText": "Kada je sljedeći čas",
+      "translation": "Когда следующее занятие"
+    },
+    {
+      "type": "speaking",
+      "id": "l51e11",
+      "phrase": "Gdje mogu da upišem kurs jezika?",
+      "translation": "Где я могу записаться на языковой курс?"
+    }
+  ]
+}

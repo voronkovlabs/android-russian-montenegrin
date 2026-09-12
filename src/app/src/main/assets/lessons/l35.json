@@ -1,0 +1,96 @@
+{
+  "id": "l35",
+  "title": "Здесь не курят: безличное se",
+  "note": "Когда действующее лицо не важно, черногорский ставит se и глагол в третьем лице: ovdje se ne puši — здесь не курят, kako se kaže — как говорится. Если предмет во множественном числе, глагол тоже: ovdje se prodaju karte. Так написаны почти все объявления и правила, поэтому конструкцию надо узнавать с первого взгляда.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l35e01",
+      "prompt": "Ovdje se ne ___ . (курят)",
+      "answer": "puši",
+      "explanation": "Безличное se требует третьего лица единственного числа: se puši."
+    },
+    {
+      "type": "form",
+      "id": "l35e02",
+      "prompt": "Kako se ovo ___ na crnogorskom? (говорится)",
+      "answer": "kaže",
+      "explanation": "Kako se kaže — готовый оборот, с ним спрашивают любое слово."
+    },
+    {
+      "type": "form",
+      "id": "l35e03",
+      "prompt": "Na stanici se ___ karte. (продаются)",
+      "answer": "prodaju",
+      "explanation": "Предмет во множественном числе — и глагол во множественном: karte se prodaju."
+    },
+    {
+      "type": "form",
+      "id": "l35e04",
+      "prompt": "Nedjeljom se ne ___ . (работают)",
+      "answer": "radi",
+      "explanation": "Nedjeljom — по воскресеньям; глагол остаётся в единственном числе."
+    },
+    {
+      "type": "form",
+      "id": "l35e05",
+      "prompt": "Ovdje se ne ___ parkirati. (можно)",
+      "answer": "smije",
+      "explanation": "Smjeti — сметь; ne smije se значит «нельзя», а не «не умеет»."
+    },
+    {
+      "type": "choice",
+      "id": "l35e06",
+      "prompt": "Как на табличке написано «вход запрещён»?",
+      "options": [
+        "Ulaz je zabranjen.",
+        "Ulaz je zabranjena.",
+        "Ulaz su zabranjeni.",
+        "Ulaz zabranjeno je."
+      ],
+      "answer": "Ulaz je zabranjen.",
+      "explanation": "Ulaz мужского рода, поэтому zabranjen без окончания."
+    },
+    {
+      "type": "word_bank",
+      "id": "l35e07",
+      "prompt": "Здесь нельзя фотографировать.",
+      "answer": "Ovdje se ne smije fotografisati",
+      "bank": [
+        "Ovdje",
+        "se",
+        "ne",
+        "smije",
+        "fotografisati",
+        "može",
+        "moći"
+      ],
+      "explanation": "Порядок такой: место, se, отрицание, глагол."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l35e08",
+      "prompt": "Как это говорится по-черногорски?",
+      "reference": "Kako se ovo kaže na crnogorskom?",
+      "hint": "Безличное se и третье лицо: se kaže."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l35e09",
+      "prompt": "Radno vrijeme je od osam do šesnaest, a nedjeljom se ne radi.",
+      "reference": "Рабочее время с восьми до шестнадцати, а по воскресеньям не работают."
+    },
+    {
+      "type": "listening",
+      "id": "l35e10",
+      "audioText": "Ovdje se ne puši",
+      "translation": "Здесь не курят"
+    },
+    {
+      "type": "speaking",
+      "id": "l35e11",
+      "phrase": "Gdje se ovdje plaća?",
+      "translation": "Где здесь платят?"
+    }
+  ]
+}

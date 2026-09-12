@@ -1,0 +1,97 @@
+{
+  "id": "l50",
+  "title": "Работа: собеседование и договор",
+  "note": "Konkurs — вакансия и конкурс, razgovor za posao — собеседование, ugovor — договор, plata — зарплата, radno vrijeme — рабочее время, godišnji odmor — отпуск, otkaz — увольнение. Стаж — radno iskustvo; «работать по договору» — raditi po ugovoru.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l50e01",
+      "prompt": "Imam pet godina radnog ___ . (опыта)",
+      "answer": "iskustva",
+      "explanation": "После количества — родительный: radnog iskustva."
+    },
+    {
+      "type": "form",
+      "id": "l50e02",
+      "prompt": "Kada potpisujemo ___ ? (договор)",
+      "answer": "ugovor",
+      "explanation": "Ugovor мужского рода, винительный совпадает с именительным."
+    },
+    {
+      "type": "form",
+      "id": "l50e03",
+      "prompt": "Kolika je ___ ? (зарплата)",
+      "answer": "plata",
+      "explanation": "Plata женского рода, отсюда kolika."
+    },
+    {
+      "type": "form",
+      "id": "l50e04",
+      "prompt": "Idem na ___ odmor u julu. (годовой)",
+      "answer": "godišnji",
+      "explanation": "Godišnji odmor — отпуск, дословно «годовой отдых»."
+    },
+    {
+      "type": "form",
+      "id": "l50e05",
+      "prompt": "Radim ___ ugovoru. (по)",
+      "answer": "po",
+      "explanation": "Po ugovoru — по договору, местный падеж."
+    },
+    {
+      "type": "choice",
+      "id": "l50e06",
+      "prompt": "Как спросить про рабочее время на собеседовании?",
+      "options": [
+        "Kakvo je radno vrijeme?",
+        "Kakav je radno vrijeme?",
+        "Kakva je radno vrijeme?",
+        "Kakvo je radni vrijeme?"
+      ],
+      "answer": "Kakvo je radno vrijeme?",
+      "explanation": "Vrijeme среднего рода: kakvo je, radno."
+    },
+    {
+      "type": "word_bank",
+      "id": "l50e07",
+      "prompt": "У меня пять лет опыта в этой области.",
+      "answer": "Imam pet godina iskustva u toj oblasti",
+      "bank": [
+        "Imam",
+        "pet",
+        "godina",
+        "iskustva",
+        "u",
+        "toj",
+        "oblasti",
+        "iskustvo"
+      ],
+      "explanation": "После pet — родительный множественного: godina, iskustva."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l50e08",
+      "prompt": "Когда мы подписываем договор?",
+      "reference": "Kada potpisujemo ugovor?",
+      "hint": "Настоящее время годится и для ближайшего будущего."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l50e09",
+      "prompt": "Radno vrijeme je od osam do četiri, a godišnji je trideset dana.",
+      "reference": "Рабочее время с восьми до четырёх, а отпуск тридцать дней."
+    },
+    {
+      "type": "listening",
+      "id": "l50e10",
+      "audioText": "Kada počinjem da radim",
+      "translation": "Когда я начинаю работать"
+    },
+    {
+      "type": "reading",
+      "id": "l50e11",
+      "text": "Bio sam na razgovoru za posao. Pitali su me koliko imam iskustva i kada mogu da počnem. Rekli su da će mi javiti za nedjelju dana.",
+      "translation": "Я был на собеседовании. Меня спросили, сколько у меня опыта и когда я могу начать. Сказали, что сообщат мне через неделю."
+    }
+  ]
+}

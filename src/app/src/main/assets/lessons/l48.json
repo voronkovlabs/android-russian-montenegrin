@@ -1,0 +1,96 @@
+{
+  "id": "l48",
+  "title": "Три года назад и через час",
+  "note": "Назад — prije: prije tri godine, prije sat vremena. Через — za: za pola sata, za dva dana. От и до — od… do: od devet do pet. Регулярность говорят творительным или наречием: subotom — по субботам, jednom nedjeljno — раз в неделю, svaki drugi dan — через день.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l48e01",
+      "prompt": "Došao sam ovdje ___ tri godine. (три года назад)",
+      "answer": "prije",
+      "explanation": "Prije плюс срок — «столько-то назад»."
+    },
+    {
+      "type": "form",
+      "id": "l48e02",
+      "prompt": "Vidimo se ___ pola sata. (через)",
+      "answer": "za",
+      "explanation": "Za плюс срок — «через столько-то»."
+    },
+    {
+      "type": "form",
+      "id": "l48e03",
+      "prompt": "Radim ___ devet do pet. (с)",
+      "answer": "od",
+      "explanation": "Od… do… — с… до…, оба требуют родительного."
+    },
+    {
+      "type": "form",
+      "id": "l48e04",
+      "prompt": "___ idem na pijacu. (по субботам)",
+      "answer": "Subotom",
+      "explanation": "Творительный от дня недели значит регулярность: subotom, nedjeljom."
+    },
+    {
+      "type": "form",
+      "id": "l48e05",
+      "prompt": "Treniram svaki ___ dan. (второй)",
+      "answer": "drugi",
+      "explanation": "Svaki drugi dan — через день."
+    },
+    {
+      "type": "choice",
+      "id": "l48e06",
+      "prompt": "Как сказать «я вернусь через два дня»?",
+      "options": [
+        "Vraćam se za dva dana.",
+        "Vraćam se prije dva dana.",
+        "Vraćam se poslije dva dana.",
+        "Vraćam se u dva dana."
+      ],
+      "answer": "Vraćam se za dva dana.",
+      "explanation": "Za — вперёд по времени, prije — назад."
+    },
+    {
+      "type": "word_bank",
+      "id": "l48e07",
+      "prompt": "Я работаю с девяти до пяти.",
+      "answer": "Radim od devet do pet",
+      "bank": [
+        "Radim",
+        "od",
+        "devet",
+        "do",
+        "pet",
+        "subotom",
+        "za"
+      ],
+      "explanation": "Od… do… — с… до…, оба с родительным падежом."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l48e08",
+      "prompt": "Мы переехали сюда два года назад.",
+      "reference": "Doselili smo se ovdje prije dvije godine.",
+      "hint": "Prije плюс срок; godina после dvije — dvije godine."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l48e09",
+      "prompt": "Idem kod ljekara jednom mjesečno, obično srijedom.",
+      "reference": "Я хожу к врачу раз в месяц, обычно по средам."
+    },
+    {
+      "type": "listening",
+      "id": "l48e10",
+      "audioText": "Vidimo se za pola sata ispred pošte",
+      "translation": "Увидимся через полчаса перед почтой"
+    },
+    {
+      "type": "speaking",
+      "id": "l48e11",
+      "phrase": "Radim od devet do pet.",
+      "translation": "Я работаю с девяти до пяти."
+    }
+  ]
+}

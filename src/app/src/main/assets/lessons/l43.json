@@ -1,0 +1,97 @@
+{
+  "id": "l43",
+  "title": "Тот, который",
+  "note": "Koji — который, и он меняется по роду, числу и падежу: čovjek koji radi, žena koja radi, ljudi koji rade. Падеж берётся не от главного слова, а от роли внутри придаточной части: knjiga koju čitam — «которую читаю», винительный. У одушевлённого мужского рода винительный совпадает с родительным: čovjek kojeg vidim.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l43e01",
+      "prompt": "To je čovjek ___ radi u banci. (который)",
+      "answer": "koji",
+      "explanation": "Мужской род, именительный: он сам работает."
+    },
+    {
+      "type": "form",
+      "id": "l43e02",
+      "prompt": "Ovo je knjiga ___ čitam. (которую)",
+      "answer": "koju",
+      "explanation": "Внутри придаточной книга — предмет действия, поэтому винительный koju."
+    },
+    {
+      "type": "form",
+      "id": "l43e03",
+      "prompt": "Žena ___ nam je pomogla je ljekarka. (которая)",
+      "answer": "koja",
+      "explanation": "Женский род, именительный: помогала она."
+    },
+    {
+      "type": "form",
+      "id": "l43e04",
+      "prompt": "Grad u ___ živim je mali. (котором)",
+      "answer": "kojem",
+      "explanation": "После u о месте — местный падеж: u kojem."
+    },
+    {
+      "type": "form",
+      "id": "l43e05",
+      "prompt": "Prijatelj ___ sam vidio juče se zove Marko. (которого)",
+      "answer": "kojeg",
+      "explanation": "Одушевлённый мужской: винительный как родительный — kojeg."
+    },
+    {
+      "type": "choice",
+      "id": "l43e06",
+      "prompt": "Как сказать «дом, в котором мы живём»?",
+      "options": [
+        "kuća u kojoj živimo",
+        "kuća u koja živimo",
+        "kuća u koju živimo",
+        "kuća koja u živimo"
+      ],
+      "answer": "kuća u kojoj živimo",
+      "explanation": "Kuća женского рода, после u о месте — местный: u kojoj."
+    },
+    {
+      "type": "word_bank",
+      "id": "l43e07",
+      "prompt": "Это человек, которого я вчера видел.",
+      "answer": "To je čovjek kojeg sam juče vidio",
+      "bank": [
+        "To",
+        "je",
+        "čovjek",
+        "kojeg",
+        "sam",
+        "juče",
+        "vidio",
+        "koji"
+      ],
+      "explanation": "Видел его — винительный одушевлённый, значит kojeg."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l43e08",
+      "prompt": "Автобус, который идёт в центр, номер шесть.",
+      "reference": "Autobus koji ide u centar je broj šest.",
+      "hint": "Автобус сам идёт — именительный koji."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l43e09",
+      "prompt": "Ljudi s kojima radim su vrlo ljubazni.",
+      "reference": "Люди, с которыми я работаю, очень любезные."
+    },
+    {
+      "type": "listening",
+      "id": "l43e10",
+      "audioText": "Ovo je knjiga koju sam kupio juče",
+      "translation": "Это книга, которую я купил вчера"
+    },
+    {
+      "type": "speaking",
+      "id": "l43e11",
+      "phrase": "Gdje je autobus koji ide na more?",
+      "translation": "Где автобус, который идёт на море?"
+    }
+  ]
+}

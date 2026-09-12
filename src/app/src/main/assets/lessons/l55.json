@@ -1,0 +1,96 @@
+{
+  "id": "l55",
+  "title": "Праздники и гости",
+  "note": "Slava — семейный праздник, rođendan — день рождения, čestitam — поздравляю, pozvati — пригласить, domaćin — хозяин. За столом говорят živjeli — за здоровье, prijatno — приятного аппетита. Приглашение: dođi kod nas — приходи к нам; гость отвечает rado — с удовольствием.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l55e01",
+      "prompt": "___ ti rođendan! (поздравляю)",
+      "answer": "Čestitam",
+      "explanation": "Čestitam плюс дательный лица: čestitam ti."
+    },
+    {
+      "type": "form",
+      "id": "l55e02",
+      "prompt": "Htio bih da vas ___ na večeru. (пригласить)",
+      "answer": "pozovem",
+      "explanation": "После da — личная форма: da pozovem."
+    },
+    {
+      "type": "form",
+      "id": "l55e03",
+      "prompt": "Dođite ___ nas u subotu. (к)",
+      "answer": "kod",
+      "explanation": "Kod nas — к нам, в гости; родительный."
+    },
+    {
+      "type": "form",
+      "id": "l55e04",
+      "prompt": "___ ! (за здоровье, тост)",
+      "answer": "Živjeli",
+      "explanation": "Živjeli — универсальный тост, дословно «чтобы жили»."
+    },
+    {
+      "type": "form",
+      "id": "l55e05",
+      "prompt": "Hvala na ___ . (приглашении)",
+      "answer": "pozivu",
+      "explanation": "Hvala na плюс местный: na pozivu."
+    },
+    {
+      "type": "choice",
+      "id": "l55e06",
+      "prompt": "Что говорят гостю, который садится за стол?",
+      "options": [
+        "Izvolite, prijatno!",
+        "Izvolite, prijatan!",
+        "Izvolite, prijatna!",
+        "Izvolite, prijatni!"
+      ],
+      "answer": "Izvolite, prijatno!",
+      "explanation": "Prijatno — застывшее пожелание, форма не меняется."
+    },
+    {
+      "type": "word_bank",
+      "id": "l55e07",
+      "prompt": "Спасибо за приглашение, приду с удовольствием.",
+      "answer": "Hvala na pozivu doći ću rado",
+      "bank": [
+        "Hvala",
+        "na",
+        "pozivu",
+        "doći",
+        "ću",
+        "rado",
+        "poziv"
+      ],
+      "explanation": "Doći ću — будущее; rado значит «охотно»."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l55e08",
+      "prompt": "Поздравляю тебя с днём рождения!",
+      "reference": "Čestitam ti rođendan!",
+      "hint": "Предлог тут не нужен: čestitam ti rođendan."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l55e09",
+      "prompt": "Pozvali su nas na slavu, idemo u subotu uveče.",
+      "reference": "Нас пригласили на праздник, идём в субботу вечером."
+    },
+    {
+      "type": "listening",
+      "id": "l55e10",
+      "audioText": "Čestitam ti rođendan sve najbolje",
+      "translation": "Поздравляю с днём рождения, всего наилучшего"
+    },
+    {
+      "type": "reading",
+      "id": "l55e11",
+      "text": "U subotu smo bili kod komšija. Bilo je puno gostiju i dosta hrane. Domaćin je rekao živjeli, a mi smo ostali do ponoći.",
+      "translation": "В субботу мы были у соседей. Было много гостей и много еды. Хозяин сказал «за здоровье», а мы остались до полуночи."
+    }
+  ]
+}

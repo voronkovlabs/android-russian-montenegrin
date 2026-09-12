@@ -373,7 +373,7 @@ private fun DailyTile(plan: DailyPlan, onStart: (Boolean) -> Unit) {
             .padding(20.dp)
     ) {
         Text(
-            if (plan.full) "СВЕРХ НОРМЫ" else "ЗАНЯТИЕ",
+            if (plan.full) "СВЕРХ НОРМЫ" else plan.accent.title,
             style = MaterialTheme.typography.labelSmall,
             color = if (ready) Accent else Muted
         )
@@ -408,6 +408,14 @@ private fun DailyTile(plan: DailyPlan, onStart: (Boolean) -> Unit) {
             style = MaterialTheme.typography.bodyMedium,
             color = Muted
         )
+        if (ready) {
+            Spacer(Modifier.height(6.dp))
+            Text(
+                plan.accent.note,
+                style = MaterialTheme.typography.bodyMedium,
+                color = Accent
+            )
+        }
         if (plan.spent > 0 && ready) {
             Spacer(Modifier.height(6.dp))
             Text(

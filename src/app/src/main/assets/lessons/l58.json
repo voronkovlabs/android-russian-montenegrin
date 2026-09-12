@@ -1,0 +1,95 @@
+{
+  "id": "l58",
+  "title": "Если случилась беда",
+  "note": "Hitna pomoć — скорая, policija — полиция, prijaviti — заявить, ukrali su mi — у меня украли, izgubio sam — я потерял, nezgoda — происшествие. Номер общей службы — sto dvanaest. «Мне нужна помощь» — treba mi pomoć; «вызовите скорую» — pozovite hitnu.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l58e01",
+      "prompt": "___ su mi telefon. (украли)",
+      "answer": "Ukrali",
+      "explanation": "Ukrali su mi — безличное «у меня украли»; пострадавший в дательном."
+    },
+    {
+      "type": "form",
+      "id": "l58e02",
+      "prompt": "___ sam dokumenta. (потерял)",
+      "answer": "Izgubio",
+      "explanation": "Izgubiti — потерять; форма на -o для мужского рода."
+    },
+    {
+      "type": "form",
+      "id": "l58e03",
+      "prompt": "Treba da ___ krađu. (заявить)",
+      "answer": "prijavim",
+      "explanation": "Prijaviti — заявить; после treba da — личная форма."
+    },
+    {
+      "type": "form",
+      "id": "l58e04",
+      "prompt": "Pozovite ___ pomoć! (скорую)",
+      "answer": "hitnu",
+      "explanation": "Hitna pomoć в винительном — hitnu pomoć."
+    },
+    {
+      "type": "form",
+      "id": "l58e05",
+      "prompt": "Desila se ___ na putu. (авария)",
+      "answer": "nezgoda",
+      "explanation": "Desiti se — случиться; nezgoda женского рода."
+    },
+    {
+      "type": "choice",
+      "id": "l58e06",
+      "prompt": "Как сказать «у меня украли кошелёк»?",
+      "options": [
+        "Ukrali su mi novčanik.",
+        "Ukrali su me novčanik.",
+        "Ukrao sam novčanik.",
+        "Ukrali su mi novčanika."
+      ],
+      "answer": "Ukrali su mi novčanik.",
+      "explanation": "Mi — дательный пострадавшего; предмет в винительном."
+    },
+    {
+      "type": "word_bank",
+      "id": "l58e07",
+      "prompt": "Мне нужно заявить о краже.",
+      "answer": "Treba da prijavim krađu",
+      "bank": [
+        "Treba",
+        "da",
+        "prijavim",
+        "krađu",
+        "prijaviti",
+        "krađa"
+      ],
+      "explanation": "После prijaviti — винительный: krađu."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l58e08",
+      "prompt": "Я потерял паспорт, что мне делать?",
+      "reference": "Izgubio sam pasoš, šta da radim?",
+      "hint": "Šta da radim — устойчивый вопрос «что мне делать»."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l58e09",
+      "prompt": "Pozovite policiju, desila se nezgoda ispred zgrade.",
+      "reference": "Вызовите полицию, перед зданием случилась авария."
+    },
+    {
+      "type": "listening",
+      "id": "l58e10",
+      "audioText": "Izgubio sam dokumenta i treba mi pomoć",
+      "translation": "Я потерял документы, и мне нужна помощь"
+    },
+    {
+      "type": "speaking",
+      "id": "l58e11",
+      "phrase": "Molim vas, pozovite hitnu pomoć.",
+      "translation": "Пожалуйста, вызовите скорую помощь."
+    }
+  ]
+}

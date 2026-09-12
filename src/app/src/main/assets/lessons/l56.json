@@ -1,0 +1,96 @@
+{
+  "id": "l56",
+  "title": "Тело и движение",
+  "note": "Вежбать — vježbati, teretana — спортзал, trčati — бегать, plivati — плавать, umoran — усталый, boli me — у меня болит. Про самочувствие говорят безлично: boli me leđa, а не «я болею спиной». Часто — često, редко — rijetko, каждый день — svaki dan.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l56e01",
+      "prompt": "___ tri puta nedjeljno. (тренируюсь)",
+      "answer": "Vježbam",
+      "explanation": "Vježbati — заниматься, тренироваться; в иекавице через je."
+    },
+    {
+      "type": "form",
+      "id": "l56e02",
+      "prompt": "Idem u ___ poslije posla. (спортзал)",
+      "answer": "teretanu",
+      "explanation": "Направление — винительный: u teretanu."
+    },
+    {
+      "type": "form",
+      "id": "l56e03",
+      "prompt": "___ me leđa. (болит)",
+      "answer": "Bole",
+      "explanation": "Leđa множественного числа, поэтому bole, а не boli."
+    },
+    {
+      "type": "form",
+      "id": "l56e04",
+      "prompt": "Ljeti ___ u moru. (плаваю)",
+      "answer": "plivam",
+      "explanation": "Plivati — плавать; ljeti — летом."
+    },
+    {
+      "type": "form",
+      "id": "l56e05",
+      "prompt": "Danas sam jako ___ . (усталый)",
+      "answer": "umoran",
+      "explanation": "Umoran — мужской род; женщина скажет umorna."
+    },
+    {
+      "type": "choice",
+      "id": "l56e06",
+      "prompt": "Как сказать «у меня болит голова»?",
+      "options": [
+        "Boli me glava.",
+        "Bolim glavu.",
+        "Glava me bole.",
+        "Boli mi glava."
+      ],
+      "answer": "Boli me glava.",
+      "explanation": "Безлично: boli плюс винительное me, а болящее — подлежащее."
+    },
+    {
+      "type": "word_bank",
+      "id": "l56e07",
+      "prompt": "Я бегаю каждое утро полчаса.",
+      "answer": "Trčim svako jutro po pola sata",
+      "bank": [
+        "Trčim",
+        "svako",
+        "jutro",
+        "po",
+        "pola",
+        "sata",
+        "svaki"
+      ],
+      "explanation": "Jutro среднего рода, значит svako jutro."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l56e08",
+      "prompt": "После тренировки я всегда устаю.",
+      "reference": "Poslije treninga sam uvijek umoran.",
+      "hint": "Poslije — родительный: poslije treninga."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l56e09",
+      "prompt": "Bole me noge jer sam mnogo hodao.",
+      "reference": "У меня болят ноги, потому что я много ходил."
+    },
+    {
+      "type": "listening",
+      "id": "l56e10",
+      "audioText": "Vježbam tri puta nedjeljno",
+      "translation": "Я тренируюсь три раза в неделю"
+    },
+    {
+      "type": "speaking",
+      "id": "l56e11",
+      "phrase": "Boli me glava, treba mi odmor.",
+      "translation": "У меня болит голова, мне нужен отдых."
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "id": "l45",
+  "title": "Уже, ещё, только что",
+  "note": "Маленькие слова, которые меняют смысл целиком: već — уже, još — ещё, tek — только что или всего лишь, više ne — больше не, uskoro — скоро. Различие, на котором спотыкаются: još nisam значит «ещё не», а već nisam так не говорят вовсе; «больше не» — это više ne: više ne radim tamo.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l45e01",
+      "prompt": "___ sam završio posao. (уже)",
+      "answer": "Već",
+      "explanation": "Već — уже, про то, что случилось раньше ожидаемого."
+    },
+    {
+      "type": "form",
+      "id": "l45e02",
+      "prompt": "___ nisam spreman. (ещё)",
+      "answer": "Još",
+      "explanation": "«Ещё не» — это još nisam; već сюда не подходит."
+    },
+    {
+      "type": "form",
+      "id": "l45e03",
+      "prompt": "___ ne radim tamo. (больше)",
+      "answer": "Više",
+      "explanation": "Više ne — больше не; порядок слов именно такой."
+    },
+    {
+      "type": "form",
+      "id": "l45e04",
+      "prompt": "___ sam stigao, daj mi minut. (только что)",
+      "answer": "Tek",
+      "explanation": "Tek — только что; с ним часто идёт просьба подождать."
+    },
+    {
+      "type": "form",
+      "id": "l45e05",
+      "prompt": "Vidimo se ___ . (скоро)",
+      "answer": "uskoro",
+      "explanation": "Uskoro — скоро; в прощании звучит как «до скорого»."
+    },
+    {
+      "type": "choice",
+      "id": "l45e06",
+      "prompt": "Как сказать «я здесь больше не работаю»?",
+      "options": [
+        "Više ne radim ovdje.",
+        "Ne više radim ovdje.",
+        "Već ne radim ovdje.",
+        "Još ne radim ovdje."
+      ],
+      "answer": "Više ne radim ovdje.",
+      "explanation": "Više стоит перед ne, и вместе они значат «больше не»."
+    },
+    {
+      "type": "word_bank",
+      "id": "l45e07",
+      "prompt": "Я ещё не закончил, осталось немного.",
+      "answer": "Još nisam završio ostalo je malo",
+      "bank": [
+        "Još",
+        "nisam",
+        "završio",
+        "ostalo",
+        "je",
+        "malo",
+        "već",
+        "više"
+      ],
+      "explanation": "Još nisam — устойчивая пара для «ещё не»."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l45e08",
+      "prompt": "Я только что приехал и ещё не устроился.",
+      "reference": "Tek sam stigao i još se nisam smjestio.",
+      "hint": "Tek — только что; još se nisam — ещё не."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l45e09",
+      "prompt": "Već je kasno, a posao još nije gotov.",
+      "reference": "Уже поздно, а работа ещё не готова."
+    },
+    {
+      "type": "listening",
+      "id": "l45e10",
+      "audioText": "Još nisam završio ali uskoro ću",
+      "translation": "Я ещё не закончил, но скоро закончу"
+    },
+    {
+      "type": "reading",
+      "id": "l45e11",
+      "text": "Tek sam stigao u Podgoricu. Već znam gdje je pijaca, ali još ne znam kako se ide do mora. Uskoro ću kupiti kartu i probati.",
+      "translation": "Я только что приехал в Подгорицу. Уже знаю, где рынок, но ещё не знаю, как добраться до моря. Скоро куплю билет и попробую."
+    }
+  ]
+}

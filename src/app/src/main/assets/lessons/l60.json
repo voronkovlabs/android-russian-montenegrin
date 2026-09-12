@@ -1,0 +1,98 @@
+{
+  "id": "l60",
+  "title": "Всё вместе",
+  "note": "Итоговый урок: ничего нового, только то, что уже было, — условное, придаточные, чужие слова, вид глагола и предлоги с падежами вперемешку. Если тут всё выходит, курс пройден: дальше язык добирается разговором, историями и словарём, а не уроками.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "l60e01",
+      "prompt": "Da sam imao vremena, ___ bih ti pomogao. (бы)",
+      "answer": "rado",
+      "explanation": "Rado bih — охотно бы; сама форма bih уже стоит в предложении."
+    },
+    {
+      "type": "form",
+      "id": "l60e02",
+      "prompt": "Rekao je da ___ doći poslije posla. (будет)",
+      "answer": "će",
+      "explanation": "Время в чужих словах не сдвигается: da će doći."
+    },
+    {
+      "type": "form",
+      "id": "l60e03",
+      "prompt": "Čovjek ___ sam upoznao radi u banci. (которого)",
+      "answer": "kojeg",
+      "explanation": "Одушевлённый мужской в винительном — kojeg."
+    },
+    {
+      "type": "form",
+      "id": "l60e04",
+      "prompt": "Vraćam se ___ pola sata. (через)",
+      "answer": "za",
+      "explanation": "Za плюс срок — вперёд по времени."
+    },
+    {
+      "type": "form",
+      "id": "l60e05",
+      "prompt": "Još nisam ___ ugovor. (прочитал)",
+      "answer": "pročitao",
+      "explanation": "Результат нужен целиком, значит с приставкой."
+    },
+    {
+      "type": "choice",
+      "id": "l60e06",
+      "prompt": "Какое предложение построено верно?",
+      "options": [
+        "Kako ti se sviđa stan koji smo gledali?",
+        "Kako se ti sviđa stan koji smo gledali?",
+        "Kako ti se sviđa stan kojeg smo gledali?",
+        "Kako ti sviđa se stan koji smo gledali?"
+      ],
+      "answer": "Kako ti se sviđa stan koji smo gledali?",
+      "explanation": "Порядок коротких слов ti se, а stan неодушевлённый — koji."
+    },
+    {
+      "type": "word_bank",
+      "id": "l60e07",
+      "prompt": "Если бы я знал, что ты приедешь, я бы остался дома.",
+      "answer": "Da sam znao da dolaziš ostao bih kod kuće",
+      "bank": [
+        "Da",
+        "sam",
+        "znao",
+        "da",
+        "dolaziš",
+        "ostao",
+        "bih",
+        "kod",
+        "kuće"
+      ],
+      "explanation": "Первое da — условие, второе вводит чужие слова."
+    },
+    {
+      "type": "ru_to_me",
+      "id": "l60e08",
+      "prompt": "Мастер сказал, что придёт завтра и всё починит.",
+      "reference": "Majstor je rekao da će doći sjutra i sve popraviti.",
+      "hint": "Da će doći — чужие слова с будущим временем."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "l60e09",
+      "prompt": "Kad bih imao više vremena, išao bih na more svaki vikend.",
+      "reference": "Если бы у меня было больше времени, я бы ездил на море каждые выходные."
+    },
+    {
+      "type": "listening",
+      "id": "l60e10",
+      "audioText": "Javi mi se čim stigneš da se dogovorimo",
+      "translation": "Дай знать, как только приедешь, чтобы договориться"
+    },
+    {
+      "type": "reading",
+      "id": "l60e11",
+      "text": "Prošle godine sam se doselio u Podgoricu. U početku nisam znao ni gdje se kupuju karte, ni kako se traži majstor. Sad već razumijem komšije, pitam u banci šta me zanima i mogu da kažem ono što mislim. Još griješim, ali me ljudi razumiju.",
+      "translation": "В прошлом году я переехал в Подгорицу. Сначала я не знал ни где покупают билеты, ни как искать мастера. Теперь я уже понимаю соседей, спрашиваю в банке то, что меня интересует, и могу сказать то, что думаю. Ещё ошибаюсь, но люди меня понимают."
+    }
+  ]
+}
