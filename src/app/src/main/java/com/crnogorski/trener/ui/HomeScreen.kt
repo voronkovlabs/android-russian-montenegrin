@@ -39,8 +39,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.crnogorski.trener.data.StoryMode
 import com.crnogorski.trener.net.Release
 
@@ -536,36 +538,51 @@ private fun SectionHeader(
     // просвечивать не должны. На фотографии (1.64) та же заливка превратилась
     // в чёрную плиту поперёк снимка, и владелец сказал «жутко». Теперь это
     // скруглённое стекло: непрозрачность своя, повышенная, — см. GlassHeader.
+    // Заголовок отличается от своих строк **тремя** вещами сразу, и это не
+    // избыточность: одной разницы не хватило (1.66 — «сливаются по цвету»).
+    // Оттенок отвечает на расстоянии, отступ строк — при беглом взгляде,
+    // а насыщенность заголовка — когда читают.
     Row(
         Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(GlassHeader)
+            // Тёплая подложка поверх стекла: в тёмной теме заголовок уходит в
+            // тепло, в светлой — в синеву. Сдвиг по тону, а не по светлоте:
+            // светлота в двух темах меняется местами, а тон работает в обеих.
+            .background(Accent.copy(alpha = 0.14f))
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             if (expanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
             contentDescription = if (expanded) "Свернуть" else "Развернуть",
-            tint = Muted,
+            tint = Accent,
             modifier = Modifier.padding(end = 10.dp)
         )
         // Не капсом и не мелким: это заголовок раздела, по нему ищут глазами,
         // а разрядка в одиннадцать пунктов читается тяжелее всего на экране.
         // Мелкая моноширинная подпись остаётся счётчику — его не читают, на
         // него смотрят.
+        // Заголовок белый и полужирный, а золото уходит счётчику и значку:
+        // когда золотом набрано и название раздела, и код урока в строке под
+        // ним, глазу не за что зацепиться — раньше строки выходили громче
+        // собственного заголовка.
         Text(
             title,
-            style = MaterialTheme.typography.titleMedium,
-            color = Accent,
+            style = MaterialTheme.typography.titleMedium.copy(
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 19.sp
+            ),
+            color = Paper,
             modifier = Modifier.weight(1f)
         )
         Text(
             "$done / $total",
             style = MaterialTheme.typography.labelSmall,
-            color = Muted
+            color = Accent
         )
     }
 }
@@ -579,6 +596,9 @@ private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
     val started = card.done > 0
     Row(
         Modifier
+            // Отступ такой же, как у строки урока: заголовки у вкладок общие,
+            // значит и подчинение должно выглядеть одинаково.
+            .padding(start = 18.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .background(Glass1)
@@ -741,16 +761,17 @@ private fun ReviewCard(count: Int, onClick: () -> Unit) {
 private fun LessonRow(card: LessonCard, onClick: () -> Unit) {
     Row(
         Modifier
+            // Отступ слева — самый дешёвый признак подчинения: видно, что
+            // строка принадлежит заголовку, ещё до того как прочитан текст.
+            .padding(start = 18.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .background(Glass1)
-            .border(
-                width = 1.dp,
-                color = if (card.done) Accent.copy(alpha = 0.35f) else Surface2,
-                shape = RoundedCornerShape(12.dp)
-            )
+            // Рамки нет вовсе. Золотая рамка у пройденного урока (до 1.67)
+            // делала строку заметнее собственного заголовка; о пройденности
+            // и так говорят золотой код урока и счёт справа.
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 15.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
