@@ -3,10 +3,12 @@ package com.crnogorski.trener.speech
 import android.content.Context
 import android.content.SharedPreferences
 import com.crnogorski.trener.data.Config
+import com.crnogorski.trener.data.Trace
 import android.media.AudioManager
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.SystemClock
 import android.os.Looper
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
@@ -265,15 +267,20 @@ class Listener(private val context: Context) {
         onSilence: (() -> Unit)? = null
     ) {
         val id = ++session
+        val started = SystemClock.uptimeMillis()
+        Trace.event("речь: заход начат", 0, language)
         mute()
         // Сторож: движок распознавания умеет не ответить вовсе — ни результатом,
         // ни ошибкой. Тогда экран навсегда оставался в «Слушаю…», и выйти из
         // него можно было только из истории целиком. Своего таймаута у
         // SpeechRecognizer нет, поэтому он тут наш.
         main.postDelayed({
-            if (claim(id)) onError("Распознавание не ответило. Нажми ещё раз.")
+            if (claim(id)) {
+                Trace.event("речь: сторож сработал", SystemClock.uptimeMillis() - started)
+                onError("Распознавание не ответило. Нажми ещё раз.")
+            }
         }, WATCHDOG_MS)
-        begin(id, language, onResult, onError, onSilence, mayRetry = true)
+        begin(id, started, language, onResult, onError, onSilence, mayRetry = true)
     }
 
     /**
@@ -312,6 +319,7 @@ class Listener(private val context: Context) {
 
     private fun begin(
         id: Int,
+        started: Long,
         language: String,
         onText: (String) -> Unit,
         onFail: (String) -> Unit,
@@ -331,7 +339,13 @@ class Listener(private val context: Context) {
 
         sr.setRecognitionListener(object : RecognitionListener {
             override fun onResults(results: Bundle?) {
-                if (!claim(id)) return
+                Trace.event("речь: ответ движка", SystemClock.uptimeMillis() - started)
+                if (!claim(id)) {
+                    // Ответ в уже закрытый заход. Раньше это было невидимо, а
+                    // именно тут теряются экраны: заход закрыт, а экран ждёт.
+                    Trace.event("речь: ответ в закрытый заход", 0)
+                    return
+                }
                 val list = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 if (list.isNullOrEmpty()) {
                     if (onSilence != null) onSilence() else onFail("Ничего не расслышал")
@@ -341,6 +355,7 @@ class Listener(private val context: Context) {
             }
 
             override fun onError(error: Int) {
+                Trace.event("речь: ошибка движка", SystemClock.uptimeMillis() - started, "код $error")
                 // Срыв на холодной привязке лечится повтором, и делать это должны
                 // мы, а не человек: он всё равно нажмёт кнопку второй раз.
                 if (mayRetry && error in TRANSIENT) {
@@ -353,7 +368,7 @@ class Listener(private val context: Context) {
                     main.postDelayed(
                         {
                             if (id == session) {
-                                begin(id, language, onText, onFail, onSilence, mayRetry = false)
+                                begin(id, started, language, onText, onFail, onSilence, mayRetry = false)
                             }
                         },
                         RETRY_DELAY_MS
@@ -463,7 +478,7 @@ class Listener(private val context: Context) {
         mutedStreams.clear()
     }
 
-    private companion object {
+    companion object {
         /** Ошибки, которые лечатся повтором, а не сообщением. */
         val TRANSIENT = setOf(
             SpeechRecognizer.ERROR_SERVER_DISCONNECTED,
