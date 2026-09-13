@@ -13,10 +13,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.core.content.ContextCompat
@@ -80,6 +84,20 @@ class MainActivity : ComponentActivity() {
         setContent {
             CrnogorskiTheme {
                 val vm: AppViewModel = viewModel()
+
+                // Возвращение в приложение — единственный случай, когда экран
+                // может оказаться собранным на вчера: процесс переживает ночь,
+                // и без этого «Сегодня» показывало бы вчерашние числа (жалоба
+                // 64). Сама проверка внутри — сравнение двух дат.
+                val owner = LocalLifecycleOwner.current
+                DisposableEffect(owner) {
+                    val watch = LifecycleEventObserver { _, event ->
+                        if (event == Lifecycle.Event.ON_START) vm.refreshIfNewDay()
+                    }
+                    owner.lifecycle.addObserver(watch)
+                    onDispose { owner.lifecycle.removeObserver(watch) }
+                }
+
                 val home by vm.home.collectAsStateWithLifecycle()
                 val session by vm.session.collectAsStateWithLifecycle()
                 val settings by vm.settings.collectAsStateWithLifecycle()
