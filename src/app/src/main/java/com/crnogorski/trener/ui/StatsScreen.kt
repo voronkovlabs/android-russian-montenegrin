@@ -18,6 +18,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import com.crnogorski.trener.data.CheckupEntity
 import com.crnogorski.trener.data.DayStatEntity
 
 /**
@@ -50,7 +53,7 @@ import com.crnogorski.trener.data.DayStatEntity
  * не держится наготове: тут и все карточки, и файлы всех уроков, и словарь.
  */
 @Composable
-fun StatsScreen(state: StatsState, onClose: () -> Unit) {
+fun StatsScreen(state: StatsState, onClose: () -> Unit, onCheckup: () -> Unit) {
     BackHandler { onClose() }
 
     Column(Modifier.fillMaxSize()) {
@@ -88,6 +91,17 @@ fun StatsScreen(state: StatsState, onClose: () -> Unit) {
             Spacer(Modifier.height(24.dp))
 
             Showcase(state)
+            Spacer(Modifier.height(12.dp))
+
+            if (state.before.real && state.after.real) {
+                BeforeAfter(state)
+                Spacer(Modifier.height(12.dp))
+            }
+            if (state.saidThen != null && state.saidNow != null) {
+                SaidCard(state.saidThen, state.saidNow)
+                Spacer(Modifier.height(12.dp))
+            }
+            CheckupCard(state.checkups, onCheckup)
             Spacer(Modifier.height(12.dp))
 
             DayCard("Сегодня", state.today)
@@ -323,6 +337,284 @@ private fun humanDate(day: String): String = runCatching {
 private fun hoursText(hours: Double): String =
     if (hours >= 10) "${hours.toInt()} ч"
     else String.format(Locale("ru"), "%.1f ч", hours)
+
+/**
+ * «Было — стало»: первые дни занятий против последних.
+ *
+ * Сравниваются **дни занятий, а не календарные недели** — тогда в обеих
+ * колонках лежит одинаковое количество работы, а пропуски ничего не сдвигают.
+ * Окно семь дней, но не больше половины прожитого, иначе половины
+ * перекрылись бы и отрезок сравнивался бы сам с собой; пока дней мало, плашки
+ * нет вовсе.
+ *
+ * **Главная строка — секунды на ответ.** Это единственное здесь, что мерит
+ * не усердие, а беглость: сколько времени уходит на то, чтобы понять задание и
+ * ответить. Время реакции — обычная мера автоматизма, и меряется оно одним и
+ * тем же прибором в обеих точках.
+ *
+ * Оговорку надо держать в голове, и она записана рядом на экране: состав
+ * занятия день ото дня разный, а типы заданий отличаются по времени втрое
+ * (выбор варианта — восемь секунд, экран пар — сорок). Часть движения на этой
+ * строке — не беглость, а перекос дня.
+ *
+ * Точность тоже сравнивается, и у неё свой подвох в другую сторону: первые
+ * уроки легче последних, так что рост точности отчасти съеден усложнением
+ * материала. Обе оговорки честнее написать, чем спрятать: число, в которое
+ * нельзя ткнуть пальцем, на снимке ничего не стоит.
+ */
+@Composable
+private fun BeforeAfter(state: StatsState) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(14.dp))
+            .background(Glass1)
+            .padding(16.dp)
+    ) {
+        Text("БЫЛО — СТАЛО", style = MaterialTheme.typography.labelSmall, color = Accent)
+        Spacer(Modifier.height(4.dp))
+        Text(
+            "первые ${state.before.days} и последние ${state.after.days} " +
+                plural(state.after.days, "день занятий", "дня занятий", "дней занятий"),
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+
+        Spacer(Modifier.height(16.dp))
+        Versus(
+            "секунд на ответ",
+            "${state.before.perAnswer} с",
+            "${state.after.perAnswer} с",
+            better = state.after.perAnswer in 1 until state.before.perAnswer
+        )
+        Versus(
+            "верных ответов",
+            "${state.before.accuracy}%",
+            "${state.after.accuracy}%",
+            better = state.after.accuracy > state.before.accuracy
+        )
+        Versus(
+            "новых слов",
+            "${state.before.words}",
+            "${state.after.words}",
+            better = state.after.words > state.before.words
+        )
+        Versus(
+            "минут",
+            "${state.before.minutes}",
+            "${state.after.minutes}",
+            better = state.after.minutes > state.before.minutes
+        )
+
+        if (state.wordsCurve.size > 2) {
+            Spacer(Modifier.height(18.dp))
+            Text("Словарь", style = MaterialTheme.typography.labelSmall, color = Muted)
+            Spacer(Modifier.height(8.dp))
+            Curve(state.wordsCurve)
+        }
+
+        Spacer(Modifier.height(14.dp))
+        Text(
+            "Секунды на ответ зависят и от состава занятия: выбор варианта быстрее " +
+                "разговорного задания втрое. Точность — от того, что поздние уроки труднее ранних.",
+            style = MaterialTheme.typography.labelSmall,
+            color = Muted
+        )
+    }
+}
+
+/** Одна строка сравнения: подпись слева, два числа справа. */
+@Composable
+private fun Versus(label: String, before: String, after: String, better: Boolean) {
+    Row(
+        Modifier.fillMaxWidth().padding(vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted,
+            modifier = Modifier.weight(1f)
+        )
+        Text(before, style = MaterialTheme.typography.titleMedium, color = Muted)
+        Text(
+            "  →  ",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+        Text(
+            after,
+            style = MaterialTheme.typography.titleMedium,
+            color = if (better) Jade else Paper
+        )
+    }
+}
+
+/**
+ * Кривая накопленного словаря.
+ *
+ * Накопительная, а не по дням: по дневным столбикам роста не видно вовсе —
+ * там всюду ноль-десять, — а накопительная линия и есть ответ на вопрос
+ * «двигается ли дело».
+ */
+@Composable
+private fun Curve(values: List<Int>) {
+    val line = Accent
+    val top = values.lastOrNull()?.coerceAtLeast(1) ?: 1
+    Canvas(Modifier.fillMaxWidth().height(64.dp)) {
+        val stepX = size.width / (values.size - 1).coerceAtLeast(1)
+        var prev: Offset? = null
+        values.forEachIndexed { i, v ->
+            val point = Offset(i * stepX, size.height - size.height * v / top)
+            prev?.let { drawLine(line, it, point, strokeWidth = 3f) }
+            prev = point
+        }
+    }
+}
+
+/**
+ * «Что я мог сказать тогда и что сегодня».
+ *
+ * Самая убедительная часть отчёта и единственная без единого числа. Люди
+ * понимают разницу между «Zovem se Sergej» и фразой на семь слов мгновенно, а
+ * проценты в чужой ленте не значат ничего.
+ *
+ * Обе фразы — **настоящие задания из закрытых уроков**, не подобранные для
+ * красоты: первая из урока, закрытого раньше всех, вторая из закрытого
+ * последним. Даты стоят рядом по той же причине, по которой они стоят на
+ * витрине: без них рост не измеряется ничем.
+ */
+@Composable
+private fun SaidCard(then: Milestone, now: Milestone) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(14.dp))
+            .background(Glass1)
+            .padding(16.dp)
+    ) {
+        Text("ЧТО Я МОГ СКАЗАТЬ", style = MaterialTheme.typography.labelSmall, color = Accent)
+
+        Spacer(Modifier.height(14.dp))
+        Said(humanDate(then.day), then, Muted)
+        Spacer(Modifier.height(16.dp))
+        Said(humanDate(now.day), now, Paper)
+    }
+}
+
+@Composable
+private fun Said(when_: String, it: Milestone, tint: Color) {
+    Text(when_, style = MaterialTheme.typography.labelSmall, color = Muted)
+    Spacer(Modifier.height(4.dp))
+    Text(it.me, style = MaterialTheme.typography.titleMedium, color = tint)
+    Text(it.ru, style = MaterialTheme.typography.bodyMedium, color = Muted)
+}
+
+/**
+ * Срез: единственное здесь, что мерит знание, а не усердие.
+ *
+ * Остальные числа отчёта отвечают на вопрос «сколько я занимался». На вопрос
+ * «стал ли я знать больше» они не отвечают и не могут: материал каждый день
+ * разный и разной трудности, и рост точности на нём значит в лучшем случае
+ * «сегодня попалось попроще». Срез спрашивает **одинаково**, поэтому два его
+ * результата можно честно поставить рядом — и это единственное место в
+ * приложении, где слова «было — стало» сказаны без оговорок.
+ *
+ * Первый результат будет низким, и это не поломка: слова берутся из всего
+ * словаря, а не из пройденных, то есть срез мерит знание языка, а не память
+ * на свои карточки.
+ *
+ * Одна пара срезов ничего не доказывает — тридцать слов из 1152 дают разброс
+ * в несколько процентов. Доказывает направление на трёх-четырёх, поэтому
+ * список показывается целиком, а не только «было и стало».
+ */
+@Composable
+private fun CheckupCard(checkups: List<CheckupEntity>, onCheckup: () -> Unit) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(14.dp))
+            .background(Glass1)
+            .padding(16.dp)
+    ) {
+        Text("СРЕЗ", style = MaterialTheme.typography.labelSmall, color = Accent)
+        Spacer(Modifier.height(4.dp))
+        Text(
+            "Тридцать слов из всего словаря, без подсказок. На интервалы и " +
+                "счёт дня не влияет.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+
+        if (checkups.isNotEmpty()) {
+            Spacer(Modifier.height(16.dp))
+            val first = checkups.first()
+            val last = checkups.last()
+            if (checkups.size > 1) {
+                Row(verticalAlignment = Alignment.Bottom) {
+                    Score(first, Muted)
+                    Text(
+                        "  →  ",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Muted
+                    )
+                    Score(last, if (share(last) > share(first)) Jade else Paper)
+                }
+            } else {
+                Score(first, Paper)
+            }
+
+            if (checkups.size > 2) {
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    checkups.joinToString("   ") {
+                        "${humanShort(it.day)} ${it.correct}/${it.total}"
+                    },
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Muted
+                )
+            }
+        }
+
+        Spacer(Modifier.height(16.dp))
+        Button(
+            onClick = onCheckup,
+            modifier = Modifier.fillMaxWidth().height(52.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Accent, contentColor = Ink)
+        ) {
+            Text(
+                if (checkups.isEmpty()) "Пройти срез" else "Пройти ещё раз",
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
+}
+
+@Composable
+private fun Score(checkup: CheckupEntity, tint: Color) {
+    Column {
+        Text(humanShort(checkup.day), style = MaterialTheme.typography.labelSmall, color = Muted)
+        Text(
+            "${checkup.correct}/${checkup.total}",
+            style = MaterialTheme.typography.headlineSmall,
+            color = tint
+        )
+        Text(
+            "${share(checkup)}%",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+    }
+}
+
+private fun share(checkup: CheckupEntity): Int =
+    if (checkup.total > 0) checkup.correct * 100 / checkup.total else 0
+
+/** «2026-09-13» → «13 сен». В списке срезов год не нужен, а место нужно. */
+private fun humanShort(day: String): String = runCatching {
+    LocalDate.parse(day).format(DateTimeFormatter.ofPattern("d MMM", Locale("ru")))
+}.getOrDefault(day)
 
 /**
  * Плашка дня: время крупно, остальное строкой под ним.

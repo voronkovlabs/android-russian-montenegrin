@@ -152,7 +152,13 @@ class MainActivity : ComponentActivity() {
                                     onClose = vm::closeStory
                                 )
                             } else if (openStats != null) {
-                                Backdrop { StatsScreen(state = openStats, onClose = vm::closeStats) }
+                                Backdrop {
+                                    StatsScreen(
+                                        state = openStats,
+                                        onClose = vm::closeStats,
+                                        onCheckup = vm::startCheckup
+                                    )
+                                }
                             } else if (openSettings != null) {
                                 SettingsScreen(
                                     state = openSettings,

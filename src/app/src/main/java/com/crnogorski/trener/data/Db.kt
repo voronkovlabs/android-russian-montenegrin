@@ -87,6 +87,29 @@ data class StoryProgressEntity(
  * потом разбирать будет нечем, ответ уже забыт. Итог — их сумма ([seconds]), и
  * отдельной колонки под него нет: две записи одного факта однажды разойдутся.
  */
+/**
+ * Один пройденный срез: одинаковая проверка, повторяемая время от времени.
+ *
+ * Смысл таблицы — в том, чего нет в остальных: **сравнимая точка во времени**.
+ * `cards` хранит нынешнее состояние, `day_stats` — усердие; ни то, ни другое
+ * не отвечает на вопрос «стал ли я знать больше», потому что и материал, и его
+ * трудность меняются каждый день. Срез спрашивает одно и то же одинаковым
+ * способом, поэтому два его результата можно честно поставить рядом.
+ *
+ * Ключ — время начала: срезов за день может быть и два, а склеивать их в один
+ * день значило бы терять половину.
+ */
+@Entity(tableName = "checkups")
+data class CheckupEntity(
+    @PrimaryKey val takenAt: Long,
+    /** Календарный день, для подписи на экране. */
+    val day: String,
+    val total: Int,
+    val correct: Int,
+    /** Сколько секунд занял — сам по себе показатель беглости. */
+    val seconds: Int
+)
+
 @Entity(tableName = "day_stats")
 data class DayStatEntity(
     @PrimaryKey val day: String,
@@ -236,11 +259,27 @@ interface AppDao {
     @Query("SELECT * FROM day_stats ORDER BY day")
     suspend fun days(): List<DayStatEntity>
 
+    /**
+     * Положить день целиком — для восстановления из копии.
+     *
+     * Отдельно от [bumpDay], и это не дубль: тот **прибавляет**, а
+     * восстановление обязано класть ровно то, что в файле. Прибавлением
+     * восстановление удвоило бы день, если копию накатить дважды.
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertDay(day: DayStatEntity)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertStory(progress: StoryProgressEntity)
 
     @Query("SELECT * FROM story_progress")
     suspend fun storyProgress(): List<StoryProgressEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addCheckup(checkup: CheckupEntity)
+
+    @Query("SELECT * FROM checkups ORDER BY takenAt")
+    suspend fun checkups(): List<CheckupEntity>
 
     @Query("SELECT * FROM story_progress WHERE storyId = :id AND mode = :mode")
     suspend fun story(id: String, mode: String): StoryProgressEntity?
@@ -352,14 +391,37 @@ private val MIGRATION_4_5 = object : Migration(4, 5) {
     }
 }
 
+/**
+ * Версия 6 добавила срезы.
+ *
+ * Таблица новая, старого не трогает: самая безопасная форма миграции. Задним
+ * числом тут восстанавливать нечего и не из чего — срез это измерение, а не
+ * побочный след занятий, и до 1.82 его просто никто не делал.
+ */
+private val MIGRATION_5_6 = object : Migration(5, 6) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        // Форма ровно та, что генерирует Room (сверено по AppDb_Impl.java).
+        db.execSQL(
+            "CREATE TABLE IF NOT EXISTS `checkups` (" +
+                "`takenAt` INTEGER NOT NULL, " +
+                "`day` TEXT NOT NULL, " +
+                "`total` INTEGER NOT NULL, " +
+                "`correct` INTEGER NOT NULL, " +
+                "`seconds` INTEGER NOT NULL, " +
+                "PRIMARY KEY(`takenAt`))"
+        )
+    }
+}
+
 @Database(
     entities = [
+        CheckupEntity::class,
         CardEntity::class,
         LessonProgressEntity::class,
         StoryProgressEntity::class,
         DayStatEntity::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class AppDb : RoomDatabase() {
@@ -373,7 +435,9 @@ abstract class AppDb : RoomDatabase() {
                 context.applicationContext,
                 AppDb::class.java,
                 "crnogorski.db"
-            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+            ).addMigrations(
+                MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6
+            )
                 .build().also { instance = it }
         }
     }

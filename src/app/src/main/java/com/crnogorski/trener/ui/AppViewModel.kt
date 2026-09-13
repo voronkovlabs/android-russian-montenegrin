@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.crnogorski.trener.BuildConfig
 import com.crnogorski.trener.data.AppDb
 import com.crnogorski.trener.data.CardEntity
+import com.crnogorski.trener.data.CheckupEntity
 import com.crnogorski.trener.data.Complaint
 import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.ComplaintStore
@@ -60,7 +61,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
 
 data class LessonCard(
     val ref: LessonRef,
@@ -223,6 +226,42 @@ data class SplashState(
  * закрыто, сколько слов заведено и выучено, сколько карточек просрочено. Копить
  * это по дням незачем — оно и так восстанавливается из базы в любой момент.
  */
+/**
+ * Отрезок занятий для сравнения «было — стало».
+ *
+ * Считается по **дням занятий, а не по календарным неделям**: пропуски тогда
+ * не искажают сравнение, и в обеих колонках стоит одинаковое количество
+ * работы, а не одинаковое количество прошедшего времени.
+ */
+data class Stretch(
+    val from: String = "",
+    val to: String = "",
+    val days: Int = 0,
+    val minutes: Int = 0,
+    val answers: Int = 0,
+    val correct: Int = 0,
+    val words: Int = 0
+) {
+    /** Секунд на один ответ — тот самый показатель беглости. Ноль, если ответов не было. */
+    val perAnswer: Int get() = if (answers > 0) minutes * 60 / answers else 0
+    val accuracy: Int get() = if (answers > 0) correct * 100 / answers else 0
+    val real: Boolean get() = days > 0 && answers > 0
+}
+
+/**
+ * «Что я мог сказать тогда и что сегодня» — фраза из закрытого урока.
+ *
+ * Берётся самая длинная черногорская фраза урока: длина предложения — то
+ * единственное, по чему человек со стороны мгновенно видит разницу, без
+ * процентов и полосок.
+ */
+data class Milestone(
+    val me: String,
+    val ru: String,
+    val day: String,
+    val lesson: String
+)
+
 data class StatsState(
     val today: DayStatEntity = DayStatEntity(day = ""),
     val total: DayStatEntity = DayStatEntity(day = ""),
@@ -247,6 +286,15 @@ data class StatsState(
     val daysLearned: Int = 0,
     val storiesDone: Int = 0,
     val storiesTotal: Int = 0,
+    /** Первые и последние дни занятий — для сравнения «было — стало». */
+    val before: Stretch = Stretch(),
+    val after: Stretch = Stretch(),
+    /** Накопительный счёт заведённых слов по дням, для кривой роста. */
+    val wordsCurve: List<Int> = emptyList(),
+    val saidThen: Milestone? = null,
+    val saidNow: Milestone? = null,
+    /** Пройденные срезы, от старого к свежему. */
+    val checkups: List<CheckupEntity> = emptyList(),
     val loading: Boolean = true
 )
 
@@ -441,6 +489,15 @@ data class SessionState(
      */
     val daily: Boolean = false,
     /**
+     * Срез: измерение, а не занятие.
+     *
+     * Такая сессия **не трогает ничего** — ни интервалы, ни счёт дня, ни темп.
+     * Это не экономия, а условие годности: прибор, который двигает то, что
+     * измеряет, мерит собственный след. По той же причине у среза нет ни
+     * подсказок по словам, ни второй попытки.
+     */
+    val checkup: Boolean = false,
+    /**
      * Когда показали текущее задание. По разнице со временем вердикта
      * замеряется темп — из него считается, сколько заданий влезает в
      * пятнадцать минут (`Pace`).
@@ -600,6 +657,34 @@ private val SPOKEN_ATTEMPTS: Int get() = Config.current.daily.spokenAttempts
  * целиком, а недельный ритм (выходные-будни) на нём уже читается.
  */
 private const val STATS_DAYS = 30
+
+/**
+ * Сколько дней занятий берётся в каждую половину сравнения «было — стало».
+ *
+ * Семь — неделя работы, а не неделя календаря: за это время набирается
+ * достаточно ответов, чтобы среднее не прыгало от одного удачного дня.
+ */
+private const val STRETCH_DAYS = 7
+
+/** Сколько последних дней показывает кривая роста словаря. */
+private const val CURVE_DAYS = 90
+
+/**
+ * Сколько слов спрашивает срез и на сколько полос делится словарь.
+ *
+ * Тридцать — это около семи минут, то есть половина занятия: срез, который
+ * жалко начинать, не делают вовсе. Выборка **случайная и по полосам частоты**,
+ * а не фиксированный список: фиксированный человек за три раза выучит наизусть
+ * и будет мерить не язык, а память на сам тест. Полосы же срезают главную беду
+ * случайной выборки — один раз попались десять простых слов, другой десять
+ * редких, и числа скачут без всякой связи со знанием.
+ *
+ * Платой остаётся ошибка выборки: тридцать слов из 1152 дают разброс в
+ * несколько процентов, и одна пара срезов ничего не доказывает. Доказывает
+ * направление на трёх-четырёх.
+ */
+private const val CHECKUP_ITEMS = 30
+private const val CHECKUP_BANDS = 3
 
 /**
  * Секунды в минуты, округляя к ближайшей.
@@ -1310,6 +1395,48 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         )
     }
 
+    /** Сложить отрезок дней в одну строку сравнения. */
+    private fun stretch(days: List<DayStatEntity>): Stretch {
+        if (days.isEmpty()) return Stretch()
+        return Stretch(
+            from = days.first().day,
+            to = days.last().day,
+            days = days.size,
+            minutes = minutesOf(days.sumOf { it.seconds }),
+            answers = days.sumOf { it.answers },
+            correct = days.sumOf { it.correct },
+            words = days.sumOf { it.words }
+        )
+    }
+
+    /**
+     * Показательная фраза закрытого урока.
+     *
+     * Годятся только задания, где черногорская сторона — целая фраза: перевод
+     * на черногорский, сборка из слов и обе речевые. У `me_to_ru` черногорского
+     * ответа нет вовсе, а `form` спрашивает одно слово — ни то, ни другое на
+     * витрине ничего не показывает.
+     */
+    private suspend fun milestone(lesson: LessonProgressEntity?): Milestone? {
+        if (lesson == null) return null
+        val best = repo.lesson(lesson.lessonId).exercises.mapNotNull {
+            when (it) {
+                is Exercise.Speaking -> it.phrase to it.translation
+                is Exercise.Repeat -> it.phrase to it.translation
+                is Exercise.TranslateToTarget -> it.reference to it.prompt
+                is Exercise.WordBank -> it.answer to it.prompt
+                else -> null
+            }
+        }.maxByOrNull { it.first.split(' ').size } ?: return null
+        return Milestone(
+            me = best.first,
+            ru = best.second,
+            day = Instant.ofEpochMilli(lesson.completedAt)
+                .atZone(ZoneId.systemDefault()).toLocalDate().toString(),
+            lesson = lesson.lessonId
+        )
+    }
+
     /** Строка под заголовком главного экрана. */
     private suspend fun statsBrief(): StatsBrief {
         val rows = dao.days()
@@ -1386,6 +1513,29 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             }
             val all = rows.values
             val lessons = repo.index().lessons
+
+            // Дни занятий по порядку. Окно — семь дней, но не больше половины
+            // прожитого: иначе «было» и «стало» перекрылись бы и сравнивали бы
+            // отрезок сам с собой.
+            val activeDays = all.filter { it.active }.sortedBy { it.day }
+            val window = minOf(STRETCH_DAYS, activeDays.size / 2)
+
+            // Кривая словаря — по календарю, а не по дням занятий: пропуск
+            // это тоже часть истории, и полка на графике честнее склейки.
+            val curve = buildList {
+                var sum = 0
+                val begin = activeDays.firstOrNull()?.day?.let { LocalDate.parse(it) }
+                if (begin != null) {
+                    var d = maxOf(begin, LocalDate.now().minusDays(CURVE_DAYS - 1L))
+                    while (!d.isAfter(LocalDate.now())) {
+                        sum += rows[d.toString()]?.words ?: 0
+                        add(sum)
+                        d = d.plusDays(1)
+                    }
+                }
+            }
+
+            val doneLessons = dao.lessonProgress().sortedBy { it.completedAt }
             val cards = dao.allCards()
             val vocab = cards.filter { it.lessonId == VocabRepository.LESSON_ID }
             val meanings = vocab.filter { isMeaning(it.exerciseId) }
@@ -1406,7 +1556,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     words = all.sumOf { it.words }
                 ),
                 days = days,
-                lessonsDone = dao.lessonProgress().size,
+                lessonsDone = doneLessons.size,
                 lessonsTotal = lessons.size,
                 // Заведённая карточка и значит «задание проходили»: до первого
                 // ответа её не существует.
@@ -1424,6 +1574,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 // отвечает на вопрос «сколько всего», и урезать её окном
                 // значило бы занижать собственный итог.
                 since = all.filter { it.active }.minOfOrNull { it.day }.orEmpty(),
+                before = stretch(activeDays.take(window)),
+                after = stretch(activeDays.takeLast(window)),
+                wordsCurve = curve,
+                saidThen = milestone(doneLessons.firstOrNull()),
+                saidNow = milestone(doneLessons.lastOrNull()?.takeIf { doneLessons.size > 1 }),
+                checkups = dao.checkups(),
                 daysLearned = all.count { it.active },
                 storiesDone = dao.storyProgress().count { it.finishedAt > 0 },
                 storiesTotal = repo.stories().stories.size,
@@ -1933,6 +2089,75 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 ?.let { file.exerciseFor(word, VocabKind.Odd, it) }
         }
     }
+
+    /**
+     * Срез: одна и та же проверка, повторяемая время от времени.
+     *
+     * Всё остальное в отчёте отвечает на вопрос «сколько я занимался»; срез —
+     * единственное, что отвечает на «стал ли я знать больше». Разница в том,
+     * что обычные числа мерят каждый день **разный** материал разной
+     * трудности, а срез спрашивает одинаково, поэтому два его результата можно
+     * честно поставить рядом.
+     *
+     * Спрашивается перевод **на черногорский** — то есть порождение, а не
+     * узнавание: узнать слово среди других легче, и по узнаванию уровень
+     * завышается.
+     *
+     * Слова берутся **из всего словаря, а не из пройденных**. Это важнее всего
+     * прочего: выборка только из выученного мерила бы, помнит ли человек свои
+     * карточки, а надо — сколько он знает вообще. Отсюда и низкий результат
+     * первого среза: он честный.
+     *
+     * Подсказок по словам тут нет вовсе (`glossary` пустой): подсказка
+     * превратила бы измерение в упражнение.
+     */
+    fun startCheckup() {
+        viewModelScope.launch {
+            val file = vocabRepo.load()
+            if (file.words.isEmpty()) {
+                _notice.value = "Словарь не загрузился."
+                return@launch
+            }
+            val size = file.words.size
+            val perBand = CHECKUP_ITEMS / CHECKUP_BANDS
+            val picked = (0 until CHECKUP_BANDS).flatMap { band ->
+                // Полоса — это просто отрезок списка: словарь лежит по
+                // убыванию частоты. Проверено, а не принято на веру — порядок
+                // в words.json сверен с частотным списком srLex (`sr_50k`) на
+                // тех 1010 словах, что нашлись в обоих: корреляция рангов
+                // 0,82, медианный частотный ранг по полосам 5 000, 18 000 и
+                // 35 000. То есть полосы действительно разной частоты, а не
+                // три случайные трети.
+                val from = size * band / CHECKUP_BANDS
+                val to = size * (band + 1) / CHECKUP_BANDS
+                file.words.subList(from, to).shuffled().take(perBand)
+            }.shuffled()
+
+            val items = picked.mapNotNull { word ->
+                file.exerciseFor(word, VocabKind.Meaning)
+                    ?.let { SessionItem(VocabRepository.LESSON_ID, it) }
+            }
+            if (items.isEmpty()) {
+                _notice.value = "Срез не собрался."
+                return@launch
+            }
+
+            checkupStartedAt = System.currentTimeMillis()
+            _session.value = SessionState(
+                title = "Срез",
+                note = "Проверка без подсказок. Ничего не запоминается и не " +
+                    "двигается — это измерение, а не занятие.",
+                items = items,
+                isReview = true,
+                checkup = true,
+                shownAt = System.currentTimeMillis(),
+                glossary = Glossary()
+            )
+        }
+    }
+
+    /** Когда начат нынешний срез — чтобы записать, сколько он занял. */
+    private var checkupStartedAt: Long = 0L
 
     fun startReview() {
         viewModelScope.launch {
@@ -2903,6 +3128,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun record(correct: Boolean) {
         val state = _session.value ?: return
+        // Срез не двигает ничего: ни интервалов, ни счёта дня, ни темпа.
+        // Прибор, который меняет измеряемое, мерит собственный след — и
+        // заодно испортил бы «секунды на ответ» в отчёте, потому что без
+        // подсказок отвечают заметно дольше обычного.
+        if (state.checkup) return
         val item = state.items[state.index]
         // Сырые секунды снимаются **до** noteTime: тот отдаёт уже списанное,
         // а списанное у ответа быстрее полутора секунд равно нулю — то есть
@@ -3020,6 +3250,20 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                         total = state.items.size
                     )
                 )
+            }
+            if (state.checkup) {
+                val now = System.currentTimeMillis()
+                dao.addCheckup(
+                    CheckupEntity(
+                        takenAt = checkupStartedAt.takeIf { it > 0 } ?: now,
+                        day = LocalDate.now().toString(),
+                        total = state.items.size,
+                        correct = state.correct,
+                        seconds = ((now - (checkupStartedAt.takeIf { it > 0 } ?: now)) / 1000).toInt()
+                    )
+                )
+                _session.value = state.copy(finished = true)
+                return@launch
             }
             if (state.daily) closed += closePortionedLessons(state)
             bump(sessions = 1, lessons = closed)

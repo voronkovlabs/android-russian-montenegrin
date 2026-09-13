@@ -46,6 +46,31 @@ data class ProgressLesson(
 )
 
 /**
+ * Один день занятий в копии.
+ *
+ * История дней хранится **только** в `day_stats`, и из карточек её не
+ * восстановить: там лежит нынешнее состояние, а не то, что было вчера.
+ * До 1.82 в копию она не попадала вовсе — то есть весь рост, все графики и
+ * всякое сравнение «было — стало» жили в одном экземпляре на телефоне и
+ * исчезали вместе с приложением. Карточки при этом переживали и переустановку,
+ * и смену телефона.
+ */
+@Serializable
+data class ProgressDay(
+    val day: String,
+    val lessonSeconds: Int = 0,
+    val reviewSeconds: Int = 0,
+    val wordSeconds: Int = 0,
+    val storySeconds: Int = 0,
+    val answers: Int = 0,
+    val correct: Int = 0,
+    val lessons: Int = 0,
+    val sessions: Int = 0,
+    val chunks: Int = 0,
+    val words: Int = 0
+)
+
+/**
  * Снимок прогресса целиком. [version] — версия формата, а не приложения:
  * понадобится, если однажды поменяется схема.
  */
@@ -58,7 +83,9 @@ data class ProgressSnapshot(
     val cards: List<ProgressCard> = emptyList(),
     val lessons: List<ProgressLesson> = emptyList(),
     /** Появилось позже карточек, поэтому со значением по умолчанию: старые копии читаются как были. */
-    val stories: List<ProgressStory> = emptyList()
+    val stories: List<ProgressStory> = emptyList(),
+    /** История занятий по дням. Появилась в 1.82, старые копии читаются без неё. */
+    val days: List<ProgressDay> = emptyList()
 )
 
 /**
@@ -154,6 +181,13 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
                 },
                 stories = dao.storyProgress().map {
                     ProgressStory(it.storyId, it.chunksDone, it.finishedAt, it.mode)
+                },
+                days = dao.days().map {
+                    ProgressDay(
+                        it.day, it.lessonSeconds, it.reviewSeconds, it.wordSeconds,
+                        it.storySeconds, it.answers, it.correct, it.lessons,
+                        it.sessions, it.chunks, it.words
+                    )
                 }
             )
         }
@@ -265,6 +299,18 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
         snap.stories.forEach {
             dao.upsertStory(
                 StoryProgressEntity(it.storyId, it.mode, it.chunksDone, it.finishedAt)
+            )
+        }
+        // День из файла кладётся целиком, а не прибавляется: иначе накатить
+        // копию дважды значило бы удвоить историю. Побеждает файл — то же
+        // правило, что у карточек.
+        snap.days.forEach {
+            dao.upsertDay(
+                DayStatEntity(
+                    it.day, it.lessonSeconds, it.reviewSeconds, it.wordSeconds,
+                    it.storySeconds, it.answers, it.correct, it.lessons,
+                    it.sessions, it.chunks, it.words
+                )
             )
         }
         return snap.cards.size to snap.lessons.size
