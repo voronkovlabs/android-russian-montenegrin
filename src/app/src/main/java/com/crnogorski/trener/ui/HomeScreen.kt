@@ -68,7 +68,7 @@ fun HomeScreen(
     /** Доля скачанного обновления, если оно идёт прямо сейчас. */
     download: Float?,
     onNote: (String) -> Unit,
-    onIdea: (String, Boolean) -> Unit
+    onIdea: (String, String) -> Unit
 ) {
     if (state.loading) {
         Column(

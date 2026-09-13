@@ -35,6 +35,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.crnogorski.trener.data.IDEA_REASON
+import com.crnogorski.trener.data.MY_PHRASE_REASON
+import com.crnogorski.trener.data.NOTE_REASON
+import com.crnogorski.trener.data.PHRASE_REASON
 
 /**
  * Вид записи внутри одного диалога: подпись, подсказка и пример.
@@ -47,7 +51,15 @@ import androidx.compose.ui.unit.dp
 data class QuickKind(
     val title: String,
     val hint: String,
-    val placeholder: String
+    val placeholder: String,
+    /**
+     * Код причины, с которым уйдёт запись этого вида.
+     *
+     * Лежит **рядом со словами**, а не считается по номеру в списке: номер
+     * ничего не значит сам по себе, и вставленный посередине вид молча
+     * перевесил бы метки у соседей. Видов уже три, и порядок их ещё изменится.
+     */
+    val reason: String
 )
 
 /**
@@ -72,7 +84,8 @@ fun ComplaintButton(onSave: (String) -> Unit) {
             QuickKind(
                 title = "Жалоба",
                 hint = "Что не так? Уйдёт в issues с меткой «заметка».",
-                placeholder = "Например: голос читает слишком быстро"
+                placeholder = "Например: голос читает слишком быстро",
+                reason = NOTE_REASON
             )
         )
     ) { text, _ -> onSave(text) }
@@ -87,18 +100,23 @@ fun ComplaintButton(onSave: (String) -> Unit) {
  * в issues только тогда и работает, когда её ставит человек в момент записи, а
  * не разработчик задним числом по догадке.
  *
- * **Видов идеи два**, и выбираются они выпадающим списком. «Общая» — обычное
- * «сделать бы». «Живая фраза» — как здесь говорят на самом деле: подслушанное
- * на рынке или у врача, сырьё для будущих уроков и историй. Ровно по тому же
- * доводу это отдельный вид, а не примечание в тексте: в файле «Kako ide?» и
- * «сделать кнопку побольше» выглядят одинаково, а метку задним числом не
- * восстановить.
+ * **Видов идеи три**, и выбираются они выпадающим списком. «Общая» — обычное
+ * «сделать бы». «Реальная фраза» — как здесь говорят на самом деле:
+ * подслушанное на рынке или у врача. «Мои фразы» — то, что понадобилось
+ * сказать самому, а нечем было. Ровно по тому же доводу это отдельные виды, а
+ * не примечание в тексте: в файле «Kako ide?» и «сделать кнопку побольше»
+ * выглядят одинаково, а метку задним числом не восстановить.
+ *
+ * Две фразовые записи разведены **по источнику**. Подслушанное пополняет курс
+ * тем, что в языке есть; своё отвечает на другой вопрос — чему учить дальше
+ * именно этого человека. Смешанные в одну стопку, второй вопрос они
+ * показывать перестают.
  *
  * Записывается тем же путём, что жалобы (файл как очередь → issue), поэтому и
  * без сети не теряется.
  */
 @Composable
-fun IdeaButton(onSave: (String, Boolean) -> Unit) {
+fun IdeaButton(onSave: (String, String) -> Unit) {
     QuickNote(
         icon = Icons.Outlined.Lightbulb,
         description = "Записать идею",
@@ -107,15 +125,23 @@ fun IdeaButton(onSave: (String, Boolean) -> Unit) {
             QuickKind(
                 title = "Общая",
                 hint = "Что стоит сделать? Уйдёт в issues с меткой «идея».",
-                placeholder = "Например: показывать перевод по долгому нажатию"
+                placeholder = "Например: показывать перевод по долгому нажатию",
+                reason = IDEA_REASON
             ),
             QuickKind(
                 title = "Реальная фраза",
                 hint = "Как здесь говорят на самом деле. Уйдёт с меткой «живая фраза».",
-                placeholder = "Например: Kako ide? — вместо «Kako si?» на рынке"
+                placeholder = "Например: Kako ide? — вместо «Kako si?» на рынке",
+                reason = PHRASE_REASON
+            ),
+            QuickKind(
+                title = "Мои фразы",
+                hint = "Что хотелось сказать самому, а нечем. Уйдёт с меткой «мои фразы».",
+                placeholder = "Например: «можно счёт?» — не смог сказать в кафе",
+                reason = MY_PHRASE_REASON
             )
         )
-    ) { text, kind -> onSave(text, kind == 1) }
+    ) { text, reason -> onSave(text, reason) }
 }
 
 /**
@@ -131,7 +157,7 @@ private fun QuickNote(
     description: String,
     title: String,
     kinds: List<QuickKind>,
-    onSave: (String, Int) -> Unit
+    onSave: (String, String) -> Unit
 ) {
     var open by rememberSaveable { mutableStateOf(false) }
     // Черновик переживает и поворот экрана, и случайную отмену — терять набранное обидно.
@@ -182,7 +208,7 @@ private fun QuickNote(
         confirmButton = {
             TextButton(
                 onClick = {
-                    onSave(text, kind)
+                    onSave(text, chosen.reason)
                     text = ""
                     kind = 0
                     open = false
@@ -199,9 +225,9 @@ private fun QuickNote(
 /**
  * Выпадающий список видов.
  *
- * Выпадашка, а не два чипа рядом: видов может стать больше двух (живая фраза
- * появилась третьей записью за неделю), и чипы тогда полезут в две строки, а
- * список останется той же одной строкой.
+ * Выпадашка, а не чипы рядом: видов уже три — живая фраза появилась третьей
+ * записью за неделю, свои фразы следом, — и чипы полезли бы в две строки, а
+ * список остаётся той же одной строкой.
  */
 @Composable
 private fun KindPicker(kinds: List<QuickKind>, chosen: Int, onPick: (Int) -> Unit) {

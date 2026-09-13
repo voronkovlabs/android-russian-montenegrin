@@ -89,7 +89,7 @@ fun SessionScreen(
     onRetryBlock: () -> Unit,
     onComplain: (ComplaintReason, String) -> Unit,
     onNote: (String) -> Unit,
-    onIdea: (String, Boolean) -> Unit,
+    onIdea: (String, String) -> Unit,
     onExit: () -> Unit
 ) {
     // Системная «Назад» должна возвращать к списку уроков, а не закрывать приложение.
@@ -194,7 +194,7 @@ fun SessionScreen(
 private fun SessionHeader(
     state: SessionState,
     onNote: (String) -> Unit,
-    onIdea: (String, Boolean) -> Unit,
+    onIdea: (String, String) -> Unit,
     onExit: () -> Unit
 ) {
     Column(Modifier.padding(horizontal = 20.dp, vertical = 14.dp)) {

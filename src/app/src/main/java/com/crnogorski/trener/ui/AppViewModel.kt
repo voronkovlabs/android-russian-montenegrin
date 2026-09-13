@@ -26,6 +26,7 @@ import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.MatchPair
 import com.crnogorski.trener.data.IDEA_REASON
 import com.crnogorski.trener.data.NOTE_REASON
+import com.crnogorski.trener.data.MY_PHRASE_REASON
 import com.crnogorski.trener.data.PHRASE_REASON
 import com.crnogorski.trener.data.Pace
 import com.crnogorski.trener.data.ProgressStore
@@ -2443,14 +2444,22 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * записи, задним числом по тексту её не восстановить.
      */
     /**
-     * Идея или подслушанная фраза — тип выбирают в самом диалоге.
+     * Идея, подслушанная фраза или своя — вид выбирают в самом диалоге.
      *
      * Разными кодами причины, а не полем: код проходит весь путь до метки на
-     * issue сам, ничего по дороге не дописывая.
+     * issue сам, ничего по дороге не дописывая. Приходит он сюда **готовым
+     * кодом, а не номером вида**: номер значил бы, что модель обязана знать
+     * порядок пунктов в выпадашке, и перестановка пунктов молча переклеила бы
+     * метки на новых записях.
+     *
+     * Незнакомый код записывается обычной идеей, а не отбрасывается: положить
+     * запись не в ту стопку лучше, чем потерять.
      */
-    fun addIdea(text: String, phrase: Boolean = false) =
-        if (phrase) addRemark(text, PHRASE_REASON, "Фраза записана")
-        else addRemark(text, IDEA_REASON, "Идея записана")
+    fun addIdea(text: String, reason: String = IDEA_REASON) = when (reason) {
+        PHRASE_REASON -> addRemark(text, PHRASE_REASON, "Фраза записана")
+        MY_PHRASE_REASON -> addRemark(text, MY_PHRASE_REASON, "Фраза записана")
+        else -> addRemark(text, IDEA_REASON, "Идея записана")
+    }
 
     fun addNote(text: String) = addRemark(text, NOTE_REASON, "Жалоба записана")
 

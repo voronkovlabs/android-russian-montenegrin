@@ -4,6 +4,7 @@ import com.crnogorski.trener.BuildConfig
 import com.crnogorski.trener.data.Complaint
 import com.crnogorski.trener.data.IDEA_REASON
 import com.crnogorski.trener.data.NOTE_REASON
+import com.crnogorski.trener.data.MY_PHRASE_REASON
 import com.crnogorski.trener.data.PHRASE_REASON
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -129,6 +130,7 @@ class GithubIssues(
             when (c.reason) {
                 IDEA_REASON -> "идея"
                 PHRASE_REASON -> "фраза"
+                MY_PHRASE_REASON -> "моя фраза"
                 else -> "заметка"
             }
         }
@@ -208,6 +210,7 @@ class GithubIssues(
             // разбирают её отдельно и в другое время.
             IDEA_REASON -> listOf("идея")
             PHRASE_REASON -> listOf("идея", "живая фраза")
+            MY_PHRASE_REASON -> listOf("идея", "мои фразы")
             else -> listOf("жалоба", reasonTag(c.reason))
         }
 
@@ -220,6 +223,7 @@ class GithubIssues(
         NOTE_REASON -> "заметка"
         IDEA_REASON -> "идея"
         PHRASE_REASON -> "живая фраза"
+        MY_PHRASE_REASON -> "мои фразы"
         else -> "другое"
     }
 
@@ -232,6 +236,7 @@ class GithubIssues(
         NOTE_REASON -> "Заметка"
         IDEA_REASON -> "Идея"
         PHRASE_REASON -> "Живая фраза"
+        MY_PHRASE_REASON -> "Моя фраза"
         else -> "Другое"
     }
 
