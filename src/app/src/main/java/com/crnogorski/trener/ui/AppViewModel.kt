@@ -2939,35 +2939,47 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * не идёт — см. [Scheduler.postpone].
      */
     /**
-     * Отложить слово надолго — кнопка на словарной карточке.
+     * Отложить задание надолго и сразу подменить его нетронутым.
      *
      * По словам владельца: «надоело учить одни и те же слова, которые не
      * кажутся полезными для моей жизни прямо сейчас». Словарь набран по
-     * частотному списку, а чужая частота — не своя.
+     * частотному списку, а чужая частота — не своя: живущему у моря «снегопад»
+     * не нужен ещё год, и каждая встреча с ним отнимает место у нужного.
      *
-     * **Откладывается слово целиком, а не карточка.** Это главное здесь и
-     * ровно то, ради чего кнопка делается: у слова до четырёх карточек
-     * (значение, склонение, особая форма, обратный перевод), и отложив одну,
-     * человек встретил бы то же слово завтра с другой стороны — то есть
-     * получил бы ровно ту докуку, от которой отказался. Прячутся все карточки
-     * леммы, включая те, что ещё не заведены: иначе отбор предложил бы слово
-     * назавтра как новое.
+     * ## Подмена, а не пропуск
      *
-     * Заодно из **текущего занятия** убирается всё остальное про это слово:
-     * оно уже набрано в сессию, и без этого слово вернулось бы через три
-     * задания, сколько его ни откладывай.
+     * Отложенное **заменяется на месте** заданием, которого человек ещё не
+     * видел, — слово с нетронутой леммой или упражнение без карточки. Иначе
+     * кнопка укорачивала бы занятие, и отложить десяток слов значило бы
+     * отделаться половиной урока. Занятие остаётся той же длины, меняется
+     * только его состав.
+     *
+     * ## Что именно прячется
+     *
+     * У словарной карточки — **лемма целиком**, все её карточки от значения до
+     * особой формы, включая ещё не заведённые. Перечисляются они полностью, и
+     * это не перестраховка: ступени слова предлагаются **по отсутствию
+     * карточки**, так что спрятав только заведённое, мы открыли бы назавтра
+     * склонение того же слова.
+     *
+     * У задания урока — оно само. Соседние задания того же урока не трогаются:
+     * урок это связный кусок, и выкинуть из него всё по одному нажатию значит
+     * отменить объяснение целиком.
+     *
+     * ## Чего это стоит
+     *
+     * Спрятанное задание урока получает карточку, а урок считается пройденным,
+     * когда карточки есть у всех его заданий. Значит отложенное задание может
+     * **закрыть урок раньше срока**, с меньшим счётом верных. Материал при
+     * этом не теряется: карточка вернётся по расписанию через две недели.
      *
      * SRS не трогается ничем — ни лёгкость, ни счёт встреч, ни ошибки. Это не
-     * «не знаю» и не «знаю», это «не сейчас», и наказывать за такое нечем.
-     *
-     * Экран пар кнопки не получает: слов на нём пять, и какое имелось в виду,
-     * нажатие не говорит. Тот же довод, по которому жалоба с экрана пар не
-     * откатывает карточку.
+     * «не знаю» и не «знаю», а «не сейчас».
      */
-    fun snoozeWord() {
+    fun snoozeCurrent() {
         val state = _session.value ?: return
         val item = state.items[state.index]
-        val lemma = VocabRepository.lemmaOf(item.exercise.id) ?: return
+        val lemma = VocabRepository.lemmaOf(item.exercise.id)
         val seconds = noteTime(state, item.exercise, measure = false)
         lastAnswer = ""
 
@@ -2978,49 +2990,117 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             noteAnswer(item, dao.card(item.exercise.id), seconds, correct = null)
             cardBeforeAnswer = null
 
-            val mine = dao.vocabCards(VocabRepository.LESSON_ID)
-                .filter { VocabRepository.lemmaOf(it.exerciseId) == lemma }
-            mine.forEach { dao.upsertCard(Scheduler.snooze(it, now)) }
+            if (lemma != null) hideLemma(lemma, now) else hideExercise(item, now)
 
-            // Карточки, которых ещё нет, заводим сразу спрятанными — и это не
-            // перестраховка. Ступени слова (склонение, особая форма)
-            // предлагаются именно **по отсутствию карточки**: `addFreshVocab`
-            // ищет слово, у которого значение усвоено, а карточки склонения
-            // ещё нет. Спрячь мы только то, что заведено, — у знакомого слова
-            // назавтра открылось бы склонение, и «отложил» превратилось бы в
-            // «поменял сторону». Поэтому перечисляем **все** карточки, какие
-            // лемма способна породить.
-            val have = mine.map { it.exerciseId }.toSet()
-            val word = vocabRepo.load().words.firstOrNull { it.id == lemma }
-            val all = buildList {
-                add(VocabRepository.cardId(lemma, VocabKind.Meaning))
-                add(VocabRepository.cardId(lemma, VocabKind.Recall))
-                if (word != null && word.forms.isNotEmpty()) {
-                    add(VocabRepository.cardId(lemma, VocabKind.Pattern))
-                }
-                word?.odd?.forEach {
-                    add(VocabRepository.cardId(lemma, VocabKind.Odd, it))
-                }
+            val fresh = if (lemma != null) untouchedWord() else untouchedExercise(state, item)
+            _notice.value = when {
+                lemma != null -> "«$lemma» отложено на ${Config.current.srs.snoozeDays} дн."
+                else -> "Задание отложено на ${Config.current.srs.snoozeDays} дн."
             }
-            all.filter { it !in have }.forEach {
-                dao.upsertCard(Scheduler.snoozedCard(it, VocabRepository.LESSON_ID, now))
+
+            // Остаток занятия про то же слово убираем: оно уже набрано в
+            // сессию и вернулось бы через три задания. Пройденное не трогаем —
+            // сдвинь мы индекс, занятие перескочило бы через соседа.
+            val rest = state.items.filterIndexed { i, other ->
+                i <= state.index || lemma == null ||
+                    VocabRepository.lemmaOf(other.exercise.id) != lemma
+            }.toMutableList()
+
+            if (fresh != null) {
+                rest[state.index] = fresh
+                _session.value = state.copy(
+                    items = rest,
+                    phase = Phase.Input,
+                    shownAt = System.currentTimeMillis(),
+                    complaintFiled = false
+                )
+            } else {
+                // Заменить нечем — всё пройдено или нет сети под свободный
+                // перевод. Тогда просто идём дальше: общий путь сам знает, что
+                // делать, когда заданий не осталось.
+                _session.value = state.copy(items = rest)
+                next()
             }
         }
+    }
 
-        _notice.value = "«$lemma» отложено на ${Config.current.srs.snoozeDays} дн."
+    /**
+     * Спрятать лемму целиком: все карточки, какие она способна породить.
+     *
+     * Незаведённые заводятся сразу спрятанными — иначе отбор предложил бы
+     * слово назавтра как новое, а у знакомого открыл бы следующую ступень.
+     */
+    private suspend fun hideLemma(lemma: String, now: Long) {
+        val mine = dao.vocabCards(VocabRepository.LESSON_ID)
+            .filter { VocabRepository.lemmaOf(it.exerciseId) == lemma }
+        mine.forEach { dao.upsertCard(Scheduler.snooze(it, now)) }
 
-        // Выкидываем из набора остаток заданий про это же слово. Текущее и всё
-        // пройденное остаётся на месте: сдвинь мы индекс, занятие перескочило
-        // бы через соседнее задание. Экраны пар не трогаем — они собраны из
-        // пяти слов, и вынуть из готового экрана одно нельзя.
-        _session.value = state.copy(
-            items = state.items.filterIndexed { i, it ->
-                i <= state.index || VocabRepository.lemmaOf(it.exercise.id) != lemma
+        val have = mine.map { it.exerciseId }.toSet()
+        val word = vocabRepo.load().words.firstOrNull { it.id == lemma }
+        buildList {
+            add(VocabRepository.cardId(lemma, VocabKind.Meaning))
+            add(VocabRepository.cardId(lemma, VocabKind.Recall))
+            if (word != null && word.forms.isNotEmpty()) {
+                add(VocabRepository.cardId(lemma, VocabKind.Pattern))
             }
+            word?.odd?.forEach { add(VocabRepository.cardId(lemma, VocabKind.Odd, it)) }
+        }.filter { it !in have }.forEach {
+            dao.upsertCard(Scheduler.snoozedCard(it, VocabRepository.LESSON_ID, now))
+        }
+    }
+
+    /** Спрятать одно задание урока. Соседей по уроку не трогаем. */
+    private suspend fun hideExercise(item: SessionItem, now: Long) {
+        val card = dao.card(item.exercise.id)
+        dao.upsertCard(
+            card?.let { Scheduler.snooze(it, now) }
+                ?: Scheduler.snoozedCard(item.exercise.id, item.lessonId, now)
         )
-        // Переход и конец занятия — общим путём: он уже знает, что делать,
-        // когда заданий больше нет.
-        next()
+    }
+
+    /**
+     * Слово, лемма которого ещё ни разу не тренировалась.
+     *
+     * Берётся самое частотное из таких — словарь лежит по убыванию частоты,
+     * так что первое найденное и есть самое полезное. Отложенные слова сюда не
+     * попадают сами собой: у них теперь есть карточки.
+     */
+    private suspend fun untouchedWord(): SessionItem? {
+        val file = vocabRepo.load()
+        val byId = dao.vocabCards(VocabRepository.LESSON_ID).associateBy { it.exerciseId }
+        val word = file.words.firstOrNull {
+            !byId.containsKey(VocabRepository.cardId(it.id, VocabKind.Meaning))
+        } ?: return null
+        val ex = file.exerciseFor(word, VocabKind.Meaning) ?: return null
+        // Слово вводится по-настоящему, значит идёт в дневную норму: иначе
+        // кнопка «отложить» стала бы способом получить сверх неё.
+        vocabRepo.noteIntroduced(1)
+        return SessionItem(VocabRepository.LESSON_ID, ex)
+    }
+
+    /**
+     * Задание курса, которого человек ещё не видел.
+     *
+     * Сперва из того же урока — занятие не должно перескакивать на чужую тему
+     * из-за одного нажатия, — потом по порядку курса.
+     *
+     * Свободные переводы без сети пропускаются: набор обязан собираться в
+     * метро, и подменять задание на то, которое сразу упрётся в `Blocked`,
+     * незачем.
+     */
+    private suspend fun untouchedExercise(state: SessionState, item: SessionItem): SessionItem? {
+        val seen = dao.allCards().mapTo(mutableSetOf()) { it.exerciseId }
+        val inSession = state.items.mapTo(mutableSetOf()) { it.exercise.id }
+        val online = isOnline()
+        val order = listOf(item.lessonId) +
+            repo.index().lessons.map { it.id }.filter { it != item.lessonId }
+        for (lessonId in order) {
+            val next = repo.lesson(lessonId).exercises.firstOrNull {
+                it.id !in seen && it.id !in inSession && (online || !it.needsModelCheck)
+            }
+            if (next != null) return SessionItem(lessonId, next)
+        }
+        return null
     }
 
     fun skipCurrent() {

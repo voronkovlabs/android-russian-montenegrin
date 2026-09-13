@@ -143,9 +143,22 @@ fun SessionScreen(
                 enabled = live,
                 onSubmit = onSubmit,
                 onSkip = onSkip,
-                onSnooze = onSnooze,
                 onMatch = onMatch
             )
+
+            // «Отложить» — одной кнопкой на все виды заданий, под телом, а не
+            // внутри каждого блока ответа. Блоков семь, и своя кнопка в каждом
+            // означала бы семь мест, где её забудут поправить, и семь разных
+            // отступов на экране.
+            //
+            // Экран пар её не получает: слов на нём пять, и какое имелось в
+            // виду, нажатие не говорит. Тот же довод, по которому жалоба с
+            // экрана пар не откатывает карточку.
+            if (live && state.current !is Exercise.Match) {
+                TextButton(onClick = onSnooze) {
+                    Text("Отложить на потом", color = Muted)
+                }
+            }
 
             when (phase) {
                 is Phase.Blocked -> {
@@ -236,7 +249,6 @@ private fun ExerciseBody(
     enabled: Boolean,
     onSubmit: (String) -> Unit,
     onSkip: () -> Unit,
-    onSnooze: () -> Unit,
     onMatch: (Set<String>) -> Unit
 ) {
     when (val ex = state.current) {
@@ -280,7 +292,6 @@ private fun ExerciseBody(
         // значение, то падеж, то особую форму — механика одна, вопрос разный.
         is Exercise.Word -> TextAnswer(
             key = ex.id,
-            onSnooze = onSnooze,
             label = ex.label,
             prompt = ex.prompt,
             icon = ex.icon,
@@ -399,15 +410,6 @@ private fun TextAnswer(
     speaker: Speaker? = null,
     /** Начинать слушать сразу, не дожидаясь нажатия на микрофон. */
     autoListen: Boolean = false,
-    /**
-     * «Отложить на потом» — только у словарных карточек с одним словом.
-     *
-     * `null` значит «кнопки нет», и так у всего остального. У заданий урока её
-     * быть не должно: порядок там задан курсом, и выкинуть из него фразу на
-     * две недели значит порвать объяснение. У экрана пар тоже нет — слов на
-     * нём пять, и какое имелось в виду, нажатие не говорит.
-     */
-    onSnooze: (() -> Unit)? = null,
     onSubmit: (String) -> Unit
 ) {
     var value by remember(key) { mutableStateOf("") }
@@ -499,16 +501,6 @@ private fun TextAnswer(
         PrimaryButton("Проверить", enabled = value.isNotBlank()) { onSubmit(value) }
     }
 
-    // Отложить — **под** кнопкой проверки и мелко: это не равный ей выбор, а
-    // отговорка для случая, когда слово не нужно вовсе. Стой она рядом,
-    // нажималась бы вместо «Проверить» по невнимательности, а цена промаха
-    // тут — две недели без слова.
-    if (enabled && onSnooze != null) {
-        Spacer(Modifier.height(4.dp))
-        TextButton(onClick = onSnooze) {
-            Text("Отложить на потом", color = Muted)
-        }
-    }
 }
 
 /**

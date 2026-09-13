@@ -216,7 +216,7 @@ class MainActivity : ComponentActivity() {
                                 speaker = speaker,
                                 onSubmit = vm::submitText,
                                 onSkip = vm::skipCurrent,
-                                onSnooze = vm::snoozeWord,
+                                onSnooze = vm::snoozeCurrent,
                                 onMatch = vm::submitMatch,
                                 onNext = vm::next,
                                 onRetryBlock = vm::retryAfterBlock,
