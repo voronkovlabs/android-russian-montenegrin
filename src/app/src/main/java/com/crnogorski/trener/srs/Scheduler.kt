@@ -72,6 +72,43 @@ object Scheduler {
     fun postpone(card: CardEntity, now: Long): CardEntity =
         card.copy(dueAt = now + SKIP_DELAY_MS)
 
+    /**
+     * Отложить слово надолго: «сейчас мне это не нужно».
+     *
+     * Заведено по словам владельца: «надоело учить одни и те же слова, которые
+     * не кажутся полезными для моей жизни прямо сейчас». Частотный список
+     * честно даёт частотное, но чужая частота — не своя: человеку, живущему у
+     * моря, «снегопад» и «налогоплательщик» не нужны ещё год.
+     *
+     * От [postpone] отличается только сроком, и разница смысловая: пропуск это
+     * «не могу ответить сейчас» (шумно, нет микрофона) на несколько часов, а
+     * это — «не хочу это слово» на недели.
+     *
+     * `ease`, `repetitions`, `lapses` и счёт встреч не трогаются вовсе.
+     * Откладывание не ошибка и не достижение: слово вернётся ровно таким,
+     * каким ушло, с той же историей.
+     */
+    fun snooze(card: CardEntity, now: Long): CardEntity =
+        card.copy(dueAt = now + cfg.snoozeDays * DAY_MS)
+
+    /**
+     * Отложенное слово, которого ещё не было в SRS.
+     *
+     * Бывает и так: слово показали впервые, и оно сразу не нужно. Карточка
+     * заводится пустой, но с далёкой датой — иначе отбор предложил бы его
+     * завтра же как новое, и кнопка не сделала бы ничего.
+     */
+    fun snoozedCard(exerciseId: String, lessonId: String, now: Long): CardEntity =
+        CardEntity(
+            exerciseId = exerciseId,
+            lessonId = lessonId,
+            dueAt = now + cfg.snoozeDays * DAY_MS,
+            intervalDays = 0,
+            ease = cfg.easeStart,
+            repetitions = 0,
+            lapses = 0
+        )
+
     /** Пропуск задания, которого ещё не было в SRS: заводим карточку нетронутой. */
     fun skippedCard(exerciseId: String, lessonId: String, now: Long): CardEntity =
         CardEntity(

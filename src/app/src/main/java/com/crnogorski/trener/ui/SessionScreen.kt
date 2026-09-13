@@ -83,6 +83,8 @@ fun SessionScreen(
     speaker: Speaker,
     onSubmit: (String) -> Unit,
     onSkip: () -> Unit,
+    /** Отложить слово надолго — кнопка есть только у словарных карточек. */
+    onSnooze: () -> Unit,
     /** Экран пар отвечает не строкой, а списком слов, где ошиблись. */
     onMatch: (Set<String>) -> Unit,
     onNext: () -> Unit,
@@ -141,6 +143,7 @@ fun SessionScreen(
                 enabled = live,
                 onSubmit = onSubmit,
                 onSkip = onSkip,
+                onSnooze = onSnooze,
                 onMatch = onMatch
             )
 
@@ -233,6 +236,7 @@ private fun ExerciseBody(
     enabled: Boolean,
     onSubmit: (String) -> Unit,
     onSkip: () -> Unit,
+    onSnooze: () -> Unit,
     onMatch: (Set<String>) -> Unit
 ) {
     when (val ex = state.current) {
@@ -276,6 +280,7 @@ private fun ExerciseBody(
         // значение, то падеж, то особую форму — механика одна, вопрос разный.
         is Exercise.Word -> TextAnswer(
             key = ex.id,
+            onSnooze = onSnooze,
             label = ex.label,
             prompt = ex.prompt,
             icon = ex.icon,
@@ -394,6 +399,15 @@ private fun TextAnswer(
     speaker: Speaker? = null,
     /** Начинать слушать сразу, не дожидаясь нажатия на микрофон. */
     autoListen: Boolean = false,
+    /**
+     * «Отложить на потом» — только у словарных карточек с одним словом.
+     *
+     * `null` значит «кнопки нет», и так у всего остального. У заданий урока её
+     * быть не должно: порядок там задан курсом, и выкинуть из него фразу на
+     * две недели значит порвать объяснение. У экрана пар тоже нет — слов на
+     * нём пять, и какое имелось в виду, нажатие не говорит.
+     */
+    onSnooze: (() -> Unit)? = null,
     onSubmit: (String) -> Unit
 ) {
     var value by remember(key) { mutableStateOf("") }
@@ -483,6 +497,17 @@ private fun TextAnswer(
     if (enabled) {
         Spacer(Modifier.height(16.dp))
         PrimaryButton("Проверить", enabled = value.isNotBlank()) { onSubmit(value) }
+    }
+
+    // Отложить — **под** кнопкой проверки и мелко: это не равный ей выбор, а
+    // отговорка для случая, когда слово не нужно вовсе. Стой она рядом,
+    // нажималась бы вместо «Проверить» по невнимательности, а цена промаха
+    // тут — две недели без слова.
+    if (enabled && onSnooze != null) {
+        Spacer(Modifier.height(4.dp))
+        TextButton(onClick = onSnooze) {
+            Text("Отложить на потом", color = Muted)
+        }
     }
 }
 

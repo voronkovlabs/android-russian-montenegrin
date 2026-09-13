@@ -2938,6 +2938,79 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * не трогая ease и счётчик повторений. Ошибкой не считается и в счёт урока
      * не идёт — см. [Scheduler.postpone].
      */
+    /**
+     * Отложить слово надолго — кнопка на словарной карточке.
+     *
+     * По словам владельца: «надоело учить одни и те же слова, которые не
+     * кажутся полезными для моей жизни прямо сейчас». Словарь набран по
+     * частотному списку, а чужая частота — не своя.
+     *
+     * **Откладывается слово целиком, а не карточка.** Это главное здесь и
+     * ровно то, ради чего кнопка делается: у слова до четырёх карточек
+     * (значение, склонение, особая форма, обратный перевод), и отложив одну,
+     * человек встретил бы то же слово завтра с другой стороны — то есть
+     * получил бы ровно ту докуку, от которой отказался. Прячутся все карточки
+     * леммы, включая те, что ещё не заведены: иначе отбор предложил бы слово
+     * назавтра как новое.
+     *
+     * Заодно из **текущего занятия** убирается всё остальное про это слово:
+     * оно уже набрано в сессию, и без этого слово вернулось бы через три
+     * задания, сколько его ни откладывай.
+     *
+     * SRS не трогается ничем — ни лёгкость, ни счёт встреч, ни ошибки. Это не
+     * «не знаю» и не «знаю», это «не сейчас», и наказывать за такое нечем.
+     *
+     * Экран пар кнопки не получает: слов на нём пять, и какое имелось в виду,
+     * нажатие не говорит. Тот же довод, по которому жалоба с экрана пар не
+     * откатывает карточку.
+     */
+    fun snoozeWord() {
+        val state = _session.value ?: return
+        val item = state.items[state.index]
+        val lemma = VocabRepository.lemmaOf(item.exercise.id) ?: return
+        val seconds = noteTime(state, item.exercise, measure = false)
+        lastAnswer = ""
+
+        viewModelScope.launch {
+            val now = System.currentTimeMillis()
+            // Время потрачено — в отчёт идёт; ответа не было — в счёт заданий
+            // не идёт, как и у пропуска.
+            noteAnswer(item, dao.card(item.exercise.id), seconds, correct = null)
+            cardBeforeAnswer = null
+
+            val mine = dao.vocabCards(VocabRepository.LESSON_ID)
+                .filter { VocabRepository.lemmaOf(it.exerciseId) == lemma }
+            mine.forEach { dao.upsertCard(Scheduler.snooze(it, now)) }
+
+            // Карточки, которых ещё нет: слово могло встретиться впервые.
+            // Заводим спрятанными — обе входные, значение и обратный перевод.
+            val have = mine.map { it.exerciseId }.toSet()
+            listOf(VocabKind.Meaning, VocabKind.Recall)
+                .map { VocabRepository.cardId(lemma, it) }
+                .filter { it !in have }
+                .forEach {
+                    dao.upsertCard(
+                        Scheduler.snoozedCard(it, VocabRepository.LESSON_ID, now)
+                    )
+                }
+        }
+
+        _notice.value = "«$lemma» отложено на ${Config.current.srs.snoozeDays} дн."
+
+        // Выкидываем из набора остаток заданий про это же слово. Текущее и всё
+        // пройденное остаётся на месте: сдвинь мы индекс, занятие перескочило
+        // бы через соседнее задание. Экраны пар не трогаем — они собраны из
+        // пяти слов, и вынуть из готового экрана одно нельзя.
+        _session.value = state.copy(
+            items = state.items.filterIndexed { i, it ->
+                i <= state.index || VocabRepository.lemmaOf(it.exercise.id) != lemma
+            }
+        )
+        // Переход и конец занятия — общим путём: он уже знает, что делать,
+        // когда заданий больше нет.
+        next()
+    }
+
     fun skipCurrent() {
         val state = _session.value ?: return
         val item = state.items[state.index]

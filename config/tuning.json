@@ -11,6 +11,7 @@
     "lapseMinutes": 10,
     "skipHours": 4,
     "reviewLimit": 25,
+    "snoozeDays": 14,
     "easyUnder": 0.5,
     "easyBonus": 1.6
   },
