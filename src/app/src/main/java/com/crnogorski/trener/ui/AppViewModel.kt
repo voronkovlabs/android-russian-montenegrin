@@ -2982,17 +2982,29 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 .filter { VocabRepository.lemmaOf(it.exerciseId) == lemma }
             mine.forEach { dao.upsertCard(Scheduler.snooze(it, now)) }
 
-            // Карточки, которых ещё нет: слово могло встретиться впервые.
-            // Заводим спрятанными — обе входные, значение и обратный перевод.
+            // Карточки, которых ещё нет, заводим сразу спрятанными — и это не
+            // перестраховка. Ступени слова (склонение, особая форма)
+            // предлагаются именно **по отсутствию карточки**: `addFreshVocab`
+            // ищет слово, у которого значение усвоено, а карточки склонения
+            // ещё нет. Спрячь мы только то, что заведено, — у знакомого слова
+            // назавтра открылось бы склонение, и «отложил» превратилось бы в
+            // «поменял сторону». Поэтому перечисляем **все** карточки, какие
+            // лемма способна породить.
             val have = mine.map { it.exerciseId }.toSet()
-            listOf(VocabKind.Meaning, VocabKind.Recall)
-                .map { VocabRepository.cardId(lemma, it) }
-                .filter { it !in have }
-                .forEach {
-                    dao.upsertCard(
-                        Scheduler.snoozedCard(it, VocabRepository.LESSON_ID, now)
-                    )
+            val word = vocabRepo.load().words.firstOrNull { it.id == lemma }
+            val all = buildList {
+                add(VocabRepository.cardId(lemma, VocabKind.Meaning))
+                add(VocabRepository.cardId(lemma, VocabKind.Recall))
+                if (word != null && word.forms.isNotEmpty()) {
+                    add(VocabRepository.cardId(lemma, VocabKind.Pattern))
                 }
+                word?.odd?.forEach {
+                    add(VocabRepository.cardId(lemma, VocabKind.Odd, it))
+                }
+            }
+            all.filter { it !in have }.forEach {
+                dao.upsertCard(Scheduler.snoozedCard(it, VocabRepository.LESSON_ID, now))
+            }
         }
 
         _notice.value = "«$lemma» отложено на ${Config.current.srs.snoozeDays} дн."
