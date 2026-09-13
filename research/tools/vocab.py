@@ -164,6 +164,19 @@ def glosses():
     списке, но с честной пометкой «неизвестно», и перевод ему потом даёт
     модель. Отдать вместо этого «сербскую фамилию» значило бы соврать и себе,
     и ей.
+
+    **Аббревиатуры откладываем так же.** У `sto` в словаре две статьи: `STO`
+    (Светска трговинска организација) и `sto` («стол»), и первой шла
+    аббревиатура — слово «стол» получало толкование «ВТО», после чего
+    отсеивалось фильтром прозрачности как похожее на русское. Одна строка
+    данных стоила курсу самого частотного предмета мебели.
+
+    **Второй источник — `rjecnik-ru-sr.tsv`**, собранный из блоков перевода
+    русских статей (см. `build_gloss_from_translations.py`). Он идёт
+    **дополнением, а не заменой**: у старого словаря настоящие толкования со
+    значениями и пометами, у нового — список русских соответствий. Там, где
+    старый молчит, новый закрывает дыру; там, где говорит, ничего не меняется,
+    и уже собранные карточки остаются какими были.
     """
     out, fallback = {}, {}
     with io.open(os.path.join(DATA, 'rjecnik-sr-ru.tsv'), encoding='utf-8') as f:
@@ -175,9 +188,25 @@ def glosses():
             lat, pos, gloss = p[0].lower(), p[2], p[4].strip()
             if not lat or not gloss:
                 continue
+            if pos == 'abbrev':
+                continue
             target = fallback if ONOMASTIC.match(gloss) else out
             if lat not in target:
                 target[lat] = (pos, gloss)
+
+    # Блоки перевода русских статей: закрывают дыры, ничего не перекрывая.
+    extra = os.path.join(DATA, 'rjecnik-ru-sr.tsv')
+    if os.path.exists(extra):
+        with io.open(extra, encoding='utf-8') as f:
+            next(f)
+            for line in f:
+                p = line.rstrip('\n').split('\t')
+                if len(p) < 5:
+                    continue
+                lat, gloss = p[0].lower(), p[4].strip()
+                if lat and gloss and lat not in out:
+                    out[lat] = ('', gloss)
+
     for lat, (pos, _) in fallback.items():
         out.setdefault(lat, (pos, UNKNOWN))
     return out

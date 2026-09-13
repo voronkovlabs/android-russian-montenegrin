@@ -11,8 +11,10 @@
 
 Результат дописывается в `data/vocab-vetted.tsv` пачками, и повторный запуск
 продолжает с того места, где остановился: за проверенное платить второй раз
-незачем. **Если `vocab-candidates.tsv` пересобран, файл вычитки надо удалить**
-— нумерация в нём своя, и продолжение легло бы не на те слова.
+незачем. Продолжение опознаётся **по лемме**, поэтому пересборка
+`vocab-candidates.tsv` ничего не ломает: новые слова проверятся, старые нет.
+До 13.09.2026 ключом был номер строки, и после пополнения словаря продолжение
+раздало бы новым словам чужие вердикты — молча.
 
 Модель отвечает строкой только про те слова, с которыми что-то не так, а в
 конце — числом просмотренных. JSON-объект на каждое слово стоил бы втрое
@@ -101,16 +103,24 @@ def candidates():
 
 
 def done_ids():
-    """Что уже проверено: повторный прогон не платит за это второй раз."""
+    """
+    Что уже проверено: повторный прогон не платит за это второй раз.
+
+    Ключ — **лемма, а не номер по порядку**. Номер зависит от того, сколько
+    кандидатов нашлось и как они легли по частоте, а 13.09.2026 словарь
+    пополнился блоками перевода, и весь список переехал: под номером 300 теперь
+    другое слово. По номеру повторный прогон решил бы, что новые слова давно
+    проверены, и раздал бы им чужие вердикты — молча и необратимо.
+    """
     if not os.path.exists(OUT):
         return set()
     seen = set()
     with io.open(OUT, encoding='utf-8') as f:
         next(f, None)
         for line in f:
-            p = line.split('\t')
-            if p and p[0].isdigit():
-                seen.add(int(p[0]))
+            p = line.rstrip('\n').split('\t')
+            if len(p) >= 2 and p[1]:
+                seen.add(p[1])
     return seen
 
 
@@ -193,11 +203,11 @@ def merge():
             p = line.rstrip('\n').split('\t')
             if len(p) < 7 or not p[0].isdigit():
                 continue
-            order, verdict, fix, why = int(p[0]), p[3], p[4], p[5]
+            lemma, verdict, fix, why = p[1], p[3], p[4], p[5]
             if verdict == 'gloss' and fix:
-                fixes[order] = fix
+                fixes[lemma] = fix
             elif verdict != 'ok':
-                doubts[order] = verdict + (': ' + why if why else '')
+                doubts[lemma] = verdict + (': ' + why if why else '')
 
     src = io.open(SRC, encoding='utf-8')
     head = next(src).rstrip('\n').split('\t')
@@ -207,10 +217,10 @@ def merge():
         p = line.rstrip('\n').split('\t')
         if len(p) < len(head):
             continue
-        order = int(p[i['order']])
-        rows.append((order, p[i['lemma']], p[i['pos']], p[i['spoken']],
+        order, lemma = int(p[i['order']]), p[i['lemma']]
+        rows.append((order, lemma, p[i['pos']], p[i['spoken']],
                      p[i['forms']], p[i['sentences']],
-                     fixes.get(order, p[i['gloss']]), doubts.get(order, '')))
+                     fixes.get(lemma, p[i['gloss']]), doubts.get(lemma, '')))
     src.close()
 
     with io.open(FINAL, 'w', encoding='utf-8', newline='\n') as f:
@@ -237,7 +247,7 @@ def main():
 
     rows = candidates()
     seen = done_ids()
-    todo = [r for r in rows if r['order'] not in seen]
+    todo = [r for r in rows if r['lemma'] not in seen]
     batches = [todo[i:i + BATCH] for i in range(0, len(todo), BATCH)]
     if limit is not None:
         batches = batches[:limit]
