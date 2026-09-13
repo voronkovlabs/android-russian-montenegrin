@@ -241,6 +241,12 @@ data class StatsState(
     /** Сколько дней подряд занимались сейчас и сколько подряд выходило лучше всего. */
     val streak: Int = 0,
     val bestStreak: Int = 0,
+    /** День первого занятия — `2026-08-25`. Пустая строка, если занятий ещё не было. */
+    val since: String = "",
+    /** Дней занятий за всю историю, а не за тридцать дней графика. */
+    val daysLearned: Int = 0,
+    val storiesDone: Int = 0,
+    val storiesTotal: Int = 0,
     val loading: Boolean = true
 )
 
@@ -1414,6 +1420,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 activeDays = days.count { it.active },
                 streak = streakNow(rows.values.toList()),
                 bestStreak = bestStreak(rows.values.toList()),
+                // По всей истории, а не по тридцати дням графика: витрина
+                // отвечает на вопрос «сколько всего», и урезать её окном
+                // значило бы занижать собственный итог.
+                since = all.filter { it.active }.minOfOrNull { it.day }.orEmpty(),
+                daysLearned = all.count { it.active },
+                storiesDone = dao.storyProgress().count { it.finishedAt > 0 },
+                storiesTotal = repo.stories().stories.size,
                 loading = false
             )
         }

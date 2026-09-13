@@ -29,8 +29,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import com.crnogorski.trener.data.DayStatEntity
 
 /**
@@ -81,6 +87,9 @@ fun StatsScreen(state: StatsState, onClose: () -> Unit) {
             Text("Занятия", style = MaterialTheme.typography.displaySmall, color = Paper)
             Spacer(Modifier.height(24.dp))
 
+            Showcase(state)
+            Spacer(Modifier.height(12.dp))
+
             DayCard("Сегодня", state.today)
             Spacer(Modifier.height(12.dp))
             DayCard("Всего", state.total)
@@ -127,6 +136,193 @@ fun StatsScreen(state: StatsState, onClose: () -> Unit) {
         }
     }
 }
+
+/**
+ * Витрина: одна плашка, с которой не стыдно сделать снимок.
+ *
+ * Заведена 13.09.2026 по просьбе владельца — «нужна секция, где видно,
+ * насколько приложение улучшает мой уровень, яркая и наглядная, чтобы сделать
+ * скриншот». Всё, что на ней написано, и так лежало в отчёте, но лежало
+ * строчками мелким шрифтом вперемешку с просроченными карточками: читать её
+ * можно было только зная, что ищешь.
+ *
+ * ## Что на ней есть и чего нет
+ *
+ * **Уровня по CEFR тут нет и не будет.** Соблазн написать «A2» большой, а
+ * права такого у приложения нет никакого: A2 — это внешняя рамка, которую
+ * ставит экзамен, а не тренажёр, считающий собственные карточки. Курс
+ * **составлен** по программе A1–A2, и это правда; «твой уровень A2» — уже
+ * неправда, и на снимке в чужой ленте она была бы враньём не мне, а
+ * посторонним людям.
+ *
+ * Поэтому показано то, что действительно измерено: сколько слов заведено и
+ * сколько из них знается твёрдо (десять верных ответов, `VocabRepository.LEARNED`),
+ * сколько курса пройдено, сколько часов и дней потрачено, какая доля ответов
+ * верна. Ни одного придуманного сводного балла: «индекс владения языком» из
+ * этих чисел собрать легко, и он был бы красив и бессмыслен.
+ *
+ * ## Почему она такая
+ *
+ * **Снимок уходит туда, где про приложение не знают ничего**, поэтому плашка
+ * самодостаточна: на ней есть имя, язык и дата начала. Без даты числа не
+ * значат ничего — «148 слов» это подвиг за месяц и позор за три года.
+ *
+ * Единственное крупное число — слова. Не потому, что оно самое лестное
+ * (сейчас как раз нет), а потому, что вопрос «сколько ты знаешь слов» —
+ * единственный вопрос про язык, который человек со стороны понимает без
+ * пояснений.
+ *
+ * Заливка своя, с уклоном в акцент, и это тут не украшение: плашка обязана
+ * отличаться от соседних стеклянных карточек, иначе на снимке она станет
+ * одной из. Тон берётся из палитры, а не задаётся числом, поэтому работает в
+ * обеих темах.
+ */
+@Composable
+private fun Showcase(state: StatsState) {
+    val hours = state.total.seconds / 3600.0
+    val course =
+        if (state.exercisesTotal > 0) state.exercisesDone.toFloat() / state.exercisesTotal else 0f
+
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(20.dp))
+            .background(Surface1)
+            .background(
+                Brush.verticalGradient(
+                    listOf(Accent.copy(alpha = 0.20f), Color.Transparent)
+                )
+            )
+            .padding(20.dp)
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "CRNOGORSKI",
+                style = MaterialTheme.typography.labelSmall,
+                color = Accent,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(Modifier.weight(1f))
+            if (state.since.isNotBlank()) {
+                Text(
+                    "учу с " + humanDate(state.since),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Muted
+                )
+            }
+        }
+
+        Spacer(Modifier.height(18.dp))
+        Text(
+            state.wordsIntroduced.toString(),
+            style = MaterialTheme.typography.displayLarge,
+            color = Paper
+        )
+        Text(
+            "слов черногорского",
+            style = MaterialTheme.typography.titleMedium,
+            color = Accent
+        )
+        if (state.wordsLearned > 0) {
+            Spacer(Modifier.height(4.dp))
+            Text(
+                "из них ${state.wordsLearned} знаю твёрдо",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+        }
+
+        Spacer(Modifier.height(18.dp))
+        Bar(course)
+        Spacer(Modifier.height(6.dp))
+        Text(
+            "Курс пройден на ${(course * 100).toInt()}% · " +
+                "${state.exercisesDone} из ${state.exercisesTotal} заданий",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+
+        Spacer(Modifier.height(18.dp))
+        // Три колонки, а не четыре: на узком экране (Redmi 13C — 360 dp,
+        // минус отступы экрана и плашки остаётся около 280) четвёртая подпись
+        // переносится на вторую строку и ряд перестаёт читаться рядом.
+        // Тексты вслух ушли в строку под ним — там перенос не страшен.
+        Row(Modifier.fillMaxWidth()) {
+            Brag("${state.lessonsDone}/${state.lessonsTotal}", "уроков")
+            Brag(hoursText(hours), "занятий")
+            Brag(
+                "${state.daysLearned}",
+                plural(state.daysLearned, "день", "дня", "дней")
+            )
+        }
+
+        val tail = listOfNotNull(
+            if (state.total.answers > 0) {
+                "${state.total.answers} " +
+                    plural(state.total.answers, "ответ", "ответа", "ответов") +
+                    " · ${state.total.correct * 100 / state.total.answers}% верных"
+            } else null,
+            if (state.storiesDone > 0) {
+                "${state.storiesDone} " +
+                    plural(state.storiesDone, "текст", "текста", "текстов") +
+                    " прочитано вслух"
+            } else null
+        )
+        if (tail.isNotEmpty()) {
+            Spacer(Modifier.height(16.dp))
+            Text(
+                tail.joinToString(" · "),
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
+        }
+    }
+}
+
+/** Одно число витрины с подписью. Четыре в ряд — ширина делится поровну. */
+@Composable
+private fun RowScope.Brag(value: String, label: String) {
+    Column(Modifier.weight(1f)) {
+        Text(value, style = MaterialTheme.typography.titleLarge, color = Paper)
+        Text(label, style = MaterialTheme.typography.labelSmall, color = Muted)
+    }
+}
+
+/**
+ * Полоса пройденного курса.
+ *
+ * Своя, а не `LinearProgressIndicator`: тому нельзя задать скругление, а на
+ * витрине полоса стоит рядом с крупным числом и прямыми углами выдаёт
+ * служебный виджет посреди плаката.
+ */
+@Composable
+private fun Bar(fraction: Float) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(8.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(Surface2)
+    ) {
+        Box(
+            Modifier
+                .fillMaxWidth(fraction.coerceIn(0f, 1f))
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(4.dp))
+                .background(Accent)
+        )
+    }
+}
+
+/** «2026-08-25» → «25 августа 2026». Для снимка дата важнее всех чисел. */
+private fun humanDate(day: String): String = runCatching {
+    LocalDate.parse(day).format(DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("ru")))
+}.getOrDefault(day)
+
+/** Часы с одним знаком, пока их мало: «7,4 ч» честнее, чем «7 ч». */
+private fun hoursText(hours: Double): String =
+    if (hours >= 10) "${hours.toInt()} ч"
+    else String.format(Locale("ru"), "%.1f ч", hours)
 
 /**
  * Плашка дня: время крупно, остальное строкой под ним.
