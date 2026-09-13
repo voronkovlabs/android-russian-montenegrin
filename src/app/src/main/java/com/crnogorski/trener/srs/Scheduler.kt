@@ -39,7 +39,13 @@ object Scheduler {
     private val LAPSE_DELAY_MS get() = cfg.lapseMinutes * 60_000L
     private val SKIP_DELAY_MS get() = cfg.skipHours * 60L * 60 * 1000
 
-    fun newCard(exerciseId: String, lessonId: String, correct: Boolean, now: Long): CardEntity =
+    fun newCard(
+        exerciseId: String,
+        lessonId: String,
+        correct: Boolean,
+        now: Long,
+        easy: Boolean = false
+    ): CardEntity =
         update(
             CardEntity(
                 exerciseId = exerciseId,
@@ -51,7 +57,8 @@ object Scheduler {
                 lapses = 0
             ),
             correct,
-            now
+            now,
+            easy
         )
 
     /**
@@ -114,7 +121,41 @@ object Scheduler {
             correct = if (correct) 1 else 0
         )
 
-    fun update(card: CardEntity, correct: Boolean, now: Long): CardEntity {
+    /**
+     * Верный ответ двигает карточку вперёд, неверный — сбрасывает.
+     *
+     * [easy] — ответили **уверенно**, то есть заметно быстрее обычного для
+     * этого типа задания. Заведено по жалобе владельца (issue 67): «если
+     * пользователь делает упражнение уверенно и без ошибок с первого раза, его
+     * надо откладывать надолго, потому что оно для него слишком простое и
+     * становится скучно». Это уже вторая жалоба на одно и то же — по первой
+     * второй шаг у уроков стал неделей вместо трёх дней, и, судя по всему,
+     * не добрал.
+     *
+     * В настоящем SM-2 оценок четыре, у нас двоичная, и [easy] возвращает
+     * половину потерянного: «верно» и «легко» снова разные вещи. Спрашивать об
+     * этом человека кнопкой было бы вернее всего и хуже всего — трение на
+     * каждой карточке в приложении, смысл которого «открыл, нажал, сделал».
+     * Поэтому мерим время: оно у нас и так замеряется по каждому типу
+     * (`Pace.seconds`), и порог берётся от среднего этого же типа — выбор
+     * варианта быстрее набора текста сам по себе, и сравнивать их между собой
+     * не нужно.
+     *
+     * **Перекос намеренно односторонний.** Бонус даётся только за быстрый
+     * ответ; медленный не наказывается ничем. Отвлеклись на телефон —
+     * бонуса нет, и всё; наоборот это работать не должно, потому что медленный
+     * ответ может значить и «думал», и «пришла смс».
+     *
+     * Плата прямая и её надо знать: интервалы растут быстрее, значит растёт и
+     * забывание. Это обмен скуки на точность расписания, а не бесплатное
+     * улучшение. Ноль в `srs.easyUnder` возвращает прежнее поведение.
+     */
+    fun update(
+        card: CardEntity,
+        correct: Boolean,
+        now: Long,
+        easy: Boolean = false
+    ): CardEntity {
         if (!correct) {
             return card.copy(
                 repetitions = 0,
@@ -126,17 +167,23 @@ object Scheduler {
         }
 
         val reps = card.repetitions + 1
-        val interval = when (reps) {
+        val base = when (reps) {
             1 -> cfg.firstDays
             2 -> if (card.lessonId == VOCAB_LESSON) cfg.vocabSecondDays
             else cfg.lessonSecondDays
             else -> (card.intervalDays * card.ease).roundToInt().coerceAtLeast(4)
         }
+        // Множитель бьёт и по первым шагам, а не только по разгону: скука
+        // живёт именно там — задание, отвеченное с лёту, возвращается завтра.
+        val interval = if (easy) (base * cfg.easyBonus).roundToInt().coerceAtLeast(base) else base
+        // Лёгкость растёт втрое быстрее: одна прибавка — это шаг, которого на
+        // разгоне не видно, а весь смысл в том, чтобы разгон ускорился.
+        val step = if (easy) cfg.easeStep * 3 else cfg.easeStep
         return card.copy(
             repetitions = reps,
             correct = card.correct + 1,
             intervalDays = interval,
-            ease = (card.ease + cfg.easeStep).coerceAtMost(cfg.easeMax),
+            ease = (card.ease + step).coerceAtMost(cfg.easeMax),
             dueAt = now + interval * DAY_MS
         )
     }

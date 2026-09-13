@@ -2593,12 +2593,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             )
             // Распознанное показывается отдельной строкой «Услышано», в note дублировать не нужно.
             is Exercise.Speaking -> spokenResult(
-                LocalCheck.matchesSpoken(answer, ex.phrase),
+                LocalCheck.spokenScore(answer, ex.phrase).passed,
                 ex.phrase,
                 answer
             )
             is Exercise.Repeat -> spokenResult(
-                LocalCheck.matchesSpoken(answer, ex.phrase),
+                LocalCheck.spokenScore(answer, ex.phrase).passed,
                 ex.phrase,
                 answer
             )
@@ -2891,7 +2891,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private fun record(correct: Boolean) {
         val state = _session.value ?: return
         val item = state.items[state.index]
+        // Сырые секунды снимаются **до** noteTime: тот отдаёт уже списанное,
+        // а списанное у ответа быстрее полутора секунд равно нулю — то есть
+        // ровно самый уверенный ответ выглядел бы как «времени не было».
+        val elapsed =
+            if (state.shownAt > 0) (System.currentTimeMillis() - state.shownAt) / 1000.0 else 0.0
         val seconds = noteTime(state, item.exercise)
+        val easy = correct && confident(item.exercise.typeName, elapsed)
         viewModelScope.launch {
             val now = System.currentTimeMillis()
             val existing = dao.card(item.exercise.id)
@@ -2899,13 +2905,30 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             cardBeforeAnswer = item.exercise.id to existing
             val updated: CardEntity = when {
                 existing == null ->
-                    Scheduler.newCard(item.exercise.id, item.lessonId, correct, now)
+                    Scheduler.newCard(item.exercise.id, item.lessonId, correct, now, easy)
                 // Тренировка вне расписания интервал не двигает: см. Scheduler.
                 state.practice -> Scheduler.practice(existing, correct, now)
-                else -> Scheduler.update(existing, correct, now)
+                else -> Scheduler.update(existing, correct, now, easy)
             }
             dao.upsertCard(updated)
         }
+    }
+
+    /**
+     * Уверенный ли это ответ — то есть заметно быстрее обычного.
+     *
+     * Сравнивается со средним **по этому же типу задания** (`Pace.seconds`), а
+     * не с общим: выбрать вариант быстрее, чем набрать фразу, само по себе, и
+     * общий порог объявил бы лёгкими все `choice` подряд.
+     *
+     * Ноль в `srs.easyUnder` выключает послабление целиком. Нулевое время —
+     * это «замера не было» (задание показано не через сессию), и уверенностью
+     * оно не считается: молчание не ответ.
+     */
+    private fun confident(type: String, elapsed: Double): Boolean {
+        val ratio = Config.current.srs.easyUnder
+        if (ratio <= 0.0 || elapsed <= 0.0) return false
+        return elapsed <= pace.seconds(type) * ratio
     }
 
     /**

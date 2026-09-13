@@ -200,6 +200,93 @@ object LocalCheck {
         words(heard) == words(expected)
 
     /**
+     * Сказанное — с двойной скидкой на слух.
+     *
+     * Заведено по жалобе Кати (issue 68): «повторяет фразу три раза, и каждый
+     * раз распознавалка видит ошибку в одном-двух звуках». До 1.80 проверка
+     * [matchesSpoken] требовала совпадения **слово в слово**, и одно слово
+     * мимо означало промах целиком — трижды подряд.
+     *
+     * Скидок две, и одной из них не хватило бы.
+     *
+     * * **По знакам.** Движок отдаёт слово чуть иначе — «vidjet» вместо
+     *   «vidjeti», — и по словам это промах целиком. Поэтому слово считается
+     *   тем же, если расходится на пару знаков ([close]);
+     * * **по словам.** Предлог движок глотает совсем, и никакая точность
+     *   внутри слова этого не покроет. Поэтому дальше считается доля
+     *   совпавших слов, порог в настройках (`speech.spokenPass`).
+     *
+     * Порядок при этом важен, считается он тем же способом, что у чтения
+     * вслух, — наибольшей общей подпоследовательностью. Те же слова вразнобой
+     * фразой не являются.
+     *
+     * Чем за это плачено, стоит помнить: настоящие оговорки — не тот предлог,
+     * не то окончание — теперь чаще проходят. Проект и так решил не оценивать
+     * качество произношения («достаточно того, что движок распознал фразу»), а
+     * из двух зол расписание должно выбирать мягкое: заброшенное занятие
+     * удерживает ноль процентов. Единица в `spokenPass` возвращает прежнюю
+     * строгость.
+     *
+     * На фразе из двух слов любой порог остаётся «всё или ничего» — там
+     * работает только скидка по знакам.
+     */
+    fun spokenScore(heard: String, expected: String): ReadingScore {
+        val want = words(expected)
+        val got = words(heard)
+        if (want.isEmpty()) return ReadingScore(0, 0)
+
+        val dp = Array(want.size + 1) { IntArray(got.size + 1) }
+        for (i in want.indices) {
+            for (j in got.indices) {
+                dp[i + 1][j + 1] = if (close(want[i], got[j])) {
+                    dp[i][j] + 1
+                } else {
+                    maxOf(dp[i][j + 1], dp[i + 1][j])
+                }
+            }
+        }
+        return ReadingScore(dp[want.size][got.size], want.size, spoken = true)
+    }
+
+    /**
+     * Одно ли это слово с точностью до пары знаков.
+     *
+     * Допуск растёт с длиной, и это не косметика: для «u» и «i» любой допуск
+     * означал бы, что предлоги неразличимы вовсе, а они несут падеж. Поэтому
+     * до четырёх знаков — совпадение точное, дальше знак, у длинных слов
+     * `speech.spokenSlack`.
+     */
+    fun close(a: String, b: String): Boolean {
+        if (a == b) return true
+        val slack = when {
+            maxOf(a.length, b.length) < 4 -> 0
+            maxOf(a.length, b.length) < 7 -> 1
+            else -> Config.current.speech.spokenSlack
+        }
+        if (slack == 0) return false
+        if (kotlin.math.abs(a.length - b.length) > slack) return false
+        return distance(a, b) <= slack
+    }
+
+    /**
+     * Расстояние Левенштейна — на двух коротких словах это дешевле, чем любая
+     * хитрость вокруг. Строка памяти одна: полная таблица тут не нужна.
+     */
+    private fun distance(a: String, b: String): Int {
+        var prev = IntArray(b.length + 1) { it }
+        val cur = IntArray(b.length + 1)
+        for (i in 1..a.length) {
+            cur[0] = i
+            for (j in 1..b.length) {
+                val sub = prev[j - 1] + if (a[i - 1] == b[j - 1]) 0 else 1
+                cur[j] = minOf(sub, prev[j] + 1, cur[j - 1] + 1)
+            }
+            prev = cur.copyOf()
+        }
+        return prev[b.length]
+    }
+
+    /**
      * Сводит иекавицу и экавицу к одному виду: `lijepo` и `lepo` после этого
      * равны, `vrijeme` и `vreme` тоже.
      *
@@ -380,10 +467,20 @@ object LocalCheck {
  * Порог намеренно не 100%: несколько потерянных движком слов — это его
  * беда, а не ошибка чтения.
  */
-data class ReadingScore(val matched: Int, val total: Int) {
-    val passed: Boolean get() = total > 0 && matched.toFloat() / total >= PASS
+/**
+ * Доля прозвучавшего: сколько слов эталона нашлось в услышанном, по порядку.
+ *
+ * [spoken] говорит, каким порогом мерить. Их два, и это не недосмотр: чтение
+ * трёх предложений подряд и одна фраза за три захода — разные задачи, и
+ * прощать им надо разное. Порог чтения живёт в `story.readingPass`, порог
+ * одной фразы — в `speech.spokenPass`.
+ */
+data class ReadingScore(val matched: Int, val total: Int, val spoken: Boolean = false) {
+    val passed: Boolean
+        get() = total > 0 && matched.toFloat() / total >= if (spoken) SPOKEN_PASS else PASS
 
     companion object {
         val PASS: Float get() = Config.current.story.readingPass.toFloat()
+        val SPOKEN_PASS: Float get() = Config.current.speech.spokenPass.toFloat()
     }
 }

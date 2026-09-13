@@ -10,7 +10,9 @@
     "easeMax": 3.0,
     "lapseMinutes": 10,
     "skipHours": 4,
-    "reviewLimit": 25
+    "reviewLimit": 25,
+    "easyUnder": 0.5,
+    "easyBonus": 1.6
   },
   "daily": {
     "defaultMinutes": 15,
@@ -50,7 +52,9 @@
     "lowPitch": 0.78,
     "watchdogSeconds": 20,
     "muteTailMs": 600,
-    "retryDelayMs": 300
+    "retryDelayMs": 300,
+    "spokenPass": 0.7,
+    "spokenSlack": 2
   },
   "_people": "Чей телефон. Ключ — хвост хеша, он стоит последним в метке устройства у любой issue; значение — имя, оно уходит и в текст жалобы, и в метку GitHub. Новый телефон добавляется сюда, пересобирать приложение не надо.",
   "people": {

@@ -82,7 +82,17 @@ data class Tuning(
         /** Через сколько часов вернуть пропущенное задание. */
         val skipHours: Int = 4,
         /** Сколько карточек берётся в один подход повторения. */
-        val reviewLimit: Int = 25
+        val reviewLimit: Int = 25,
+        /**
+         * Насколько быстрее среднего должен быть ответ, чтобы считаться лёгким.
+         *
+         * Доля от замеренного среднего по этому типу задания: 0,5 значит
+         * «вдвое быстрее обычного». **Ноль выключает** послабление вовсе —
+         * тогда расписание работает как до 1.80.
+         */
+        val easyUnder: Double = 0.5,
+        /** Во сколько раз дальше откладывается легко отвеченное. */
+        val easyBonus: Double = 1.6
     )
 
     /** Ежедневное задание. */
@@ -153,7 +163,18 @@ data class Tuning(
         val watchdogSeconds: Int = 20,
         /** Сколько держать заглушку гудков после конца записи. */
         val muteTailMs: Int = 600,
-        val retryDelayMs: Int = 300
+        val retryDelayMs: Int = 300,
+        /**
+         * Какая доля слов должна совпасть, чтобы сказанное было засчитано.
+         *
+         * Единица возвращает прежнюю строгость: слово в слово.
+         */
+        val spokenPass: Double = 0.70,
+        /**
+         * На сколько знаков слово может разойтись с эталоном и всё же считаться
+         * тем же словом. Для коротких слов допуск меньше — см. `LocalCheck.close`.
+         */
+        val spokenSlack: Int = 2
     )
 
     /**
@@ -190,7 +211,11 @@ data class Tuning(
             easeMax = srs.easeMax.coerceIn(1.3, 5.0),
             lapseMinutes = srs.lapseMinutes.coerceIn(1, 24 * 60),
             skipHours = srs.skipHours.coerceIn(1, 72),
-            reviewLimit = srs.reviewLimit.coerceIn(1, 200)
+            reviewLimit = srs.reviewLimit.coerceIn(1, 200),
+            easyUnder = srs.easyUnder.coerceIn(0.0, 1.0),
+            // Ниже единицы множитель означал бы «за лёгкий ответ спросим
+            // раньше», а это не послабление, а наказание за знание.
+            easyBonus = srs.easyBonus.coerceIn(1.0, 5.0)
         ),
         daily = daily.copy(
             defaultMinutes = daily.defaultMinutes.coerceIn(1, 240),
@@ -227,7 +252,9 @@ data class Tuning(
             lowPitch = speech.lowPitch.coerceIn(0.5, 1.5),
             watchdogSeconds = speech.watchdogSeconds.coerceIn(5, 120),
             muteTailMs = speech.muteTailMs.coerceIn(0, 5000),
-            retryDelayMs = speech.retryDelayMs.coerceIn(0, 5000)
+            retryDelayMs = speech.retryDelayMs,
+            spokenPass = speech.spokenPass.coerceIn(0.1, 1.0),
+            spokenSlack = speech.spokenSlack.coerceIn(0, 3).coerceIn(0, 5000)
         ),
         diag = diag.copy(
             slowMs = diag.slowMs.coerceIn(1, 60_000),
