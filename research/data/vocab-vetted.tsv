@@ -1739,3 +1739,1764 @@ order	lemma	pos	verdict	fix	why	gloss
 1644	slaganje	NOUN	gloss	укладка, складирование	«штабелирование» узко	штабелирование
 1645	razotkrivanje	NOUN	ok			раскрытие
 1647	kompromitovati	ADJ	gloss	компрометировать	глагол, а не прилагательное	скомпрометировать
+1	dati	VERB	ok			дать
+2	sam	ADJ	ok			сам
+3	moći	VERB	ok			мочь
+4	znati	VERB	ok			знать
+5	imati	VERB	ok			иметь
+6	sav	ADJ	ok			весь
+7	ala	NOUN	drop_transparent	интerjection	это восклицание, не существительное	ах, ах как
+8	misliti	VERB	ok			думать
+9	dobro	ADV	ok			хорошо
+11	reći	VERB	ok			сказать
+12	morati	VERB	ok			должен
+13	kako	ADV	ok			как
+14	bilo	NOUN	gloss	кость	bilo — это кость, не запястье	запястье
+15	videti	VERB	ok			видеть
+16	ići	VERB	ok			идти
+17	ako	ADV	gloss	если	ako — условный союз, не наречие	если, хотя
+18	kao	ADV	ok			как
+19	ovde	ADV	ok			здесь, тут
+20	tako	ADV	ok			так
+21	raditi	VERB	ok			делать; работать
+22	čovek	NOUN	ok			человек
+23	red	NOUN	gloss	порядок	red — порядок, очередь; орден — вторичное значение	вереница, орден
+24	još	ADV	ok			ещё
+25	bit	NOUN	ok			комп. бит (аналогично русскому слову)
+26	jedan	ADJ	ok			один
+27	kazati	VERB	ok			сказать
+28	gde	ADV	ok			где (аналогично русскому слову)
+29	kad	ADV	ok			когда
+30	hvala	NOUN	ok			спасибо
+31	doći	VERB	gloss	прийти	doći — прийти, а не «явиться»	явиться
+32	dobar	ADJ	ok			хороший, добрый
+34	malo	ADV	ok			чуть-чуть
+35	onda	ADV	ok			тогда; потом
+36	sada	ADV	ok			сейчас, теперь
+37	vreme	NOUN	ok			время; погода
+38	stvar	NOUN	ok			вещь
+39	dan	NOUN	ok			день
+40	drugi	ADJ	ok			другой; второй
+41	ništa	ADV	gloss	ничего	ništa — ничего, не наречие в узком смысле	ничто
+42	moliti	VERB	ok			просить, умолять
+43	godina	NOUN	ok			год
+44	put	ADV	gloss	путь	put — путь, дорога; как наречие — редко	дорога, путь
+46	vaš	NOUN	drop_grammar	possessive pronoun	vaš — притяжательное местоимение	ваш
+47	tamo	ADV	ok			там, туда
+48	kuća	NOUN	ok			дом
+49	posao	NOUN	ok			дело
+51	ubiti	VERB	ok			убить
+52	uvek	ADV	ok			всегда
+55	naći	VERB	ok			найти, отыскать; обнаружить
+56	bog	NOUN	ok			религ. Бог (аналогично русскому слову)
+57	zvati	VERB	ok			звонить
+59	baš	ADV	ok			вполне; именно
+60	žena	NOUN	ok			жена (аналогично русскому слову)
+62	koliko	ADV	ok			сколько
+63	čekati	VERB	ok			ждать
+64	već	ADV	ok			а, но, уже
+65	gospodin	NOUN	ok			господин
+66	nego	ADV	ok			чем
+67	dok	NOUN	drop_grammar	conjunction	dok — союз, служебное слово	пока, в то время как
+71	mesto	NOUN	ok			место (аналогично русскому слову)
+72	uzeti	VERB	ok			взять
+73	otac	NOUN	ok			отец
+74	govoriti	VERB	ok			говорить
+75	mali	ADJ	ok			малый, маленький
+79	kod	NOUN	drop_grammar	preposition	kod — предлог	у, возле, около
+80	mama	NOUN	ok			мама (аналогично русскому слову)
+83	oko	ADV	gloss	глаз	oko — глаз; око — архаичный вариант	анат. глаз, око
+85	prvi	ADJ	ok			первый
+88	razumeti	VERB	ok			понимать
+89	živeti	VERB	ok			жить
+90	problem	NOUN	ok			проблема
+91	slušati	VERB	ok			слушать
+92	devojka	NOUN	ok			девушка
+94	novac	NOUN	ok			деньги
+96	veza	NOUN	gloss	связь	veza — связь, отношение; контакт — узко	контакт
+97	ruka	NOUN	ok			рука (аналогично русскому слову)
+99	majka	NOUN	ok			мать
+100	dolaziti	VERB	ok			приходить
+101	sat	NOUN	ok			час
+102	star	ADJ	ok			старый
+103	danas	ADV	ok			сегодня
+104	umreti	VERB	ok			умереть
+105	nikada	ADV	ok			никогда
+106	soba	NOUN	ok			комната
+109	noć	NOUN	ok			ночь
+110	završiti	VERB	ok			оканчивать
+111	duša	NOUN	ok			душа (аналогично русскому слову)
+112	držati	VERB	ok			держать
+113	čak	ADV	ok			даже
+116	kraj	NOUN	ok			конец, прекращение; край, конец, предел
+117	igrati	VERB	ok			играть; танцевать, плясать
+120	brzo	ADV	ok			быстро
+121	zemlja	NOUN	ok			земля; страна
+122	sin	NOUN	ok			сын
+123	zlo	ADV	gloss	дурно, зло	в черногорском zlo — наречие со значением «дурно, зло», а не прилагательное «плохо»	плохо
+124	glava	NOUN	ok			голова
+125	grad	NOUN	ok			город, град (аналог. русск. град II)
+129	strana	NOUN	ok			сторона; страница
+131	lep	ADJ	ok			красивый, милый, хорошенький
+132	dovoljno	ADV	ok			достаточно, довольно
+133	sutra	ADV	ok			завтра
+134	mesec	NOUN	ok			месяц (промежуток времени); месяц, луна
+135	stići	VERB	ok			прибыть, приехать; догнать
+136	kasno	ADV	ok			поздно
+137	zajedno	ADV	ok			вместе
+139	sto	NOUN	ok			стол
+141	poslednji	ADJ	ok			последний
+142	vrata	NOUN	ok			ворота
+143	važan	ADJ	ok			важный, значимый
+145	nositi	VERB	ok			носить
+146	odavde	ADV	ok			отсюда
+147	drago	ADV	gloss	мило, приятно	drago в значении наречия — «мило, приятно», а не «дорого»	дорого, мило, приятно; рад, рада
+148	auto	NOUN	ok			автомобиль
+150	potreban	ADJ	ok			нужный
+151	vrlo	ADV	gloss	очень	vrlo — стандартное наречие «очень», толкование содержит опечатки	очень, очюнь, порато
+152	pokazati	VERB	gloss	показать	pokazati — обычный глагол «показать», а не архаичное «явить»	явить
+153	porodica	NOUN	ok			семья
+154	pod	NOUN	ok			пол
+155	spavati	VERB	ok			спать
+156	policija	NOUN	ok			полиция
+157	srce	NOUN	ok			сердце
+158	ljubav	NOUN	ok			любовь
+159	nekoliko	ADV	ok			несколько
+160	smrt	NOUN	ok			смерть
+161	voda	NOUN	ok			вода (аналогично русскому слову) 1 (влага) и 2 (H₂O)
+162	nedelja	NOUN	ok			воскресенье; неделя
+164	škola	NOUN	ok			школа (аналогично русскому слову)
+165	loše	ADV	ok			плохо
+167	minuta	NOUN	ok			минута (аналогично русскому слову)
+169	ovako	ADV	ok			так
+170	sestra	NOUN	ok			сестра (аналогично русскому слову)
+171	kupiti	VERB	ok			купить
+172	brat	NOUN	ok			брат (аналогично русскому слову)
+173	ideja	NOUN	gloss	идея	ideja — прямое заимствование, значит «идея», а не «замысел»	замысел
+174	jesti	VERB	ok			есть, кушать
+177	telo	NOUN	ok			тело (аналогично русскому слову)
+178	pomoć	NOUN	ok			помощь
+181	unutra	ADV	ok			внутри
+183	srećan	ADJ	ok			счастливый
+184	loš	ADJ	ok			плохой
+185	lice	NOUN	gloss	лицо	lice — в первую очередь анатомическое «лицо», вторичные значения менее важны	анат. лицо; особа, человек, персона
+186	šansa	NOUN	ok			шанс
+188	platiti	VERB	ok			платить
+192	pisati	VERB	ok			писать
+193	krv	NOUN	ok			кровь
+194	jutro	NOUN	ok			утро
+196	san	NOUN	ok			сон, сновидение
+197	knjiga	NOUN	ok			книга
+201	film	NOUN	ok			кинофильм
+203	stajati	VERB	ok			стоять
+204	jebati	VERB	drop_rare	обсценное слово	jebati — грубое ругательство, начинающему не нужно	обсц. ебать
+206	noga	NOUN	ok			анат. нога
+207	gospođa	NOUN	ok			госпожа
+208	lagati	VERB	ok			лгать
+209	telefon	NOUN	ok			телефон (аналогично русскому слову)
+210	večer	NOUN	ok			вечер (аналогично русскому слову)
+211	muž	NOUN	ok			муж (аналогично русскому слову)
+213	šef	NOUN	ok			шеф
+214	odlično	ADV	ok			отлично
+215	skoro	ADV	ok			скоро; почти
+218	blizu	ADV	gloss	близко	толкование неполное	у
+219	oružje	NOUN	ok			оружие
+220	lak	ADJ	ok			лёгкий (по весу); лёгкий, нетрудный
+221	krevet	NOUN	ok			кровать
+222	nazad	ADV	ok			назад (аналогично русскому слову)
+225	sastanak	NOUN	ok			встреча, собрание, заседание, совещание; свидание
+227	pun	ADJ	ok			полный, наполненный; полный, целый
+229	zadnji	ADJ	ok			задний
+230	mir	NOUN	ok			мир (отсутствие войны)
+231	piti	VERB	ok			пить
+232	zabava	NOUN	ok			забава (аналогично русскому слову); бал, вечер
+233	živ	ADJ	ok			живой
+234	ubistvo	NOUN	ok			убийство
+237	tada	ADV	ok			тогда
+239	moguć	ADJ	gloss	возможный	«мощный» — другое значение	возможный; мощный, могучий
+240	davati	VERB	ok			давать
+241	ponekad	ADV	ok			иногда
+242	ulica	NOUN	ok			улица (аналогично русскому слову)
+243	pištolj	NOUN	ok			пистолет
+244	između	ADV	ok			между
+246	glavni	ADJ	ok			главный
+247	bolnica	NOUN	ok			больница
+250	pošta	NOUN	ok			почта
+251	stan	NOUN	ok			квартира
+254	pored	ADV	ok			возле, рядом, у; наряду с
+255	jak	ADJ	ok			крепкий, сильный
+256	napisati	VERB	ok			написать
+257	ubica	NOUN	ok			убийца
+259	odakle	ADV	ok			откуда, откудова
+261	žrtva	NOUN	ok			жертва
+264	para	NOUN	gloss	пара	в черногорском — супружеская пара, не физический пар	физ. пар (газ в равновесии с жидкостью)
+266	koma	NOUN	ok			мед. кома
+267	milion	NOUN	ok			миллион
+269	čitati	VERB	ok			читать
+271	rad	NOUN	ok			работа
+273	smetati	VERB	gloss	мешать	«обременить» неверно	обременить
+274	dug	NOUN	drop_transparent	долгий	часть речи ошибочна: это прилагательное	далёкий, длинный
+275	crn	ADJ	ok			чёрный
+277	igra	NOUN	ok			игра (аналогично русскому слову); танец, пляска
+279	pesma	NOUN	ok			песня
+282	um	NOUN	ok			ум
+283	agent	NOUN	ok			агент
+284	težak	ADJ	ok			тяжёлый
+286	konj	NOUN	ok			конь; шахм. конь
+290	poziv	NOUN	ok			приглашение
+292	zakon	NOUN	ok			закон (аналогично русскому слову)
+294	pomagati	VERB	ok			помогать
+295	prošli	ADJ	ok			прошлый
+297	gotov	ADJ	ok			готовый
+298	borba	NOUN	ok			борьба; бой
+300	pismo	NOUN	ok			письмо; алфавит
+302	ključ	NOUN	ok			ключ для открывания замка
+303	svetlo	NOUN	ok			свет
+304	smisao	NOUN	ok			смысл
+307	roditi	ADJ	drop_transparent	родить	часть речи ошибочна: это глагол	родить
+309	tih	ADJ	ok			тихий
+310	kontrola	NOUN	ok			контроль
+312	informacija	NOUN	ok			информация
+316	situacija	NOUN	ok			ситуация
+317	zvezda	NOUN	ok			астрон. звезда [1]
+319	narod	NOUN	ok			народ, национальность
+320	visok	ADJ	ok			высокий
+321	kosa	NOUN	gloss	волосы	«коса» — одно из значений, но основное — волосы	коса I; с.-х. коса II
+322	grupa	NOUN	ok			группа
+324	sladak	ADJ	ok			сладкий
+327	sistem	NOUN	ok			система
+330	seks	NOUN	ok			секс (аналогично русскому слову)
+331	hotel	NOUN	ok			отель, гостиница
+332	životinja	NOUN	ok			животное
+333	sekunda	NOUN	ok			секунда (аналогично русскому слову) [1]; секунда (аналогично русскому слову) [2]
+334	hladan	ADJ	ok			холодный
+335	bolestan	ADJ	ok			больной
+336	lek	NOUN	gloss	брак	в черногорском — супружество, не производственный брак	лека́рство, медикамент
+338	brak	NOUN	ok			брак, супружество
+340	sunce	NOUN	ok			Солнце
+346	sud	NOUN	ok			суд (аналогично русскому слову)
+347	advokat	NOUN	ok			адвокат (аналог. русск. адвокат [1]
+350	cena	NOUN	ok			цена (аналогично русскому слову)
+352	riba	NOUN	ok			рыба
+354	ubijati	VERB	ok			убивать
+355	menjati	VERB	ok			менять; обменивать; разменивать
+357	često	ADV	drop_grammar	често је наречје времена, али је служебно		зачастую
+358	poklon	NOUN	ok			дар, подарок
+361	gospodar	NOUN	ok			господарь, хозяин
+362	plakati	VERB	ok			плакать
+364	bol	NOUN	ok			боль
+365	nit	NOUN	ok			нить
+366	pivo	NOUN	ok			пиво (аналогично русскому слову)
+367	glupost	NOUN	ok			бредятина, глупость
+369	stizati	VERB	ok			прибывать, приезжать; достигать
+372	ostatak	NOUN	ok			остаток; сдача
+376	čist	ADJ	ok			чистый
+377	francuski	ADJ	ok			французский
+379	muzika	NOUN	ok			музыка
+380	strah	NOUN	ok			страх (аналог. русск. страх I)
+383	usta	NOUN	gloss	уста, уста	толкование дает "рот", а уста — множина од "уста" (архаично)	рот
+384	centar	NOUN	ok			центр
+385	treći	ADJ	ok			третий
+387	čas	NOUN	ok			час (единица измерения времени); урок, лекция
+388	padati	VERB	ok			падать
+389	general	NOUN	ok			воен. генерал (аналогично русскому слову)
+390	banka	NOUN	ok			банк
+394	poseban	ADJ	ok			особенный
+396	linija	NOUN	ok			линия
+403	nebo	NOUN	ok			небо (аналогично русскому слову)
+404	kuda	ADV	drop_grammar	куда је упитно наречје, служебно		куда (аналогично русскому слову)
+405	ručak	NOUN	ok			обед
+407	ženski	ADJ	ok			женский
+408	crkva	NOUN	ok			церковь
+409	država	NOUN	ok			страна, государство, держава
+410	brz	ADJ	ok			быстрый
+413	minut	NOUN	ok			минута
+417	smešan	ADJ	ok			смешной
+424	jezik	NOUN	ok			язык (средство общения)
+426	zao	ADJ	ok			злой
+427	juče	ADV	drop_grammar	јуче је наречје времена, служебно		вчера
+428	običan	ADJ	ok			обычный, обыкновенный
+429	novina	NOUN	gloss	новина	толкование "новшество" је погрешно; новина значи "вест" или "новост"	новшество
+432	opasnost	NOUN	ok			опасность
+433	jaje	NOUN	ok			яйцо
+434	papir	NOUN	gloss	папир	толкование "папирус" је погрешно; папир значи "папир"	папирус
+436	pacijent	NOUN	ok			мед. пациент
+438	klijent	NOUN	ok			заказчик, клиент
+439	prodaja	NOUN	ok			продажа
+440	vazduh	NOUN	ok			воздух
+441	selo	NOUN	ok			село (аналогично русскому слову)
+442	razlika	NOUN	ok			различие, разница
+443	zadatak	NOUN	ok			задача
+446	vino	NOUN	ok			вино (аналогично русскому слову)
+448	ostavljati	VERB	ok			оставлять
+449	bogat	ADJ	ok			богатый
+450	zub	NOUN	ok			анат. зуб
+451	gost	NOUN	ok			гость
+453	kreten	NOUN	ok			кретин
+454	služiti	VERB	ok			служить
+456	pokazivati	VERB	ok			показывать, являть
+457	primer	NOUN	ok			пример
+458	laž	NOUN	ok			ложь
+459	poručnik	NOUN	ok			поручик
+460	kazna	NOUN	ok			наказание
+463	granica	NOUN	ok			граница
+464	restoran	NOUN	ok			ресторан
+467	motor	NOUN	ok			двигатель; мотор (аналогично русскому слову)
+468	zvuk	NOUN	ok			звук [2]
+469	sloboda	NOUN	ok			свобода
+470	sir	NOUN	ok			гастрон. сыр
+473	program	NOUN	ok			программа
+475	cilj	NOUN	ok			цель
+476	pukovnik	NOUN	ok			полковник
+477	kurva	NOUN	ok			вульг., бран. курва (аналогично русскому слову); сука, стерва
+478	drvo	NOUN	ok			дерево (растение)
+479	nož	NOUN	ok			нож (аналогично русскому слову)
+480	park	NOUN	ok			парк
+481	nos	NOUN	ok			нос (аналогично русскому слову)
+485	sudija	NOUN	ok			судья
+486	čaj	NOUN	ok			чай
+487	ptica	NOUN	ok			птица (аналогично русск. слову в знач. [1.])
+488	mučiti	VERB	ok			истязать, пытать
+489	zasluživati	VERB	ok			заслуживать
+490	torba	NOUN	ok			сумка
+491	sudbina	NOUN	ok			судьба
+492	vikend	NOUN	ok			уик-энд
+493	more	NOUN	ok			море (аналогично русскому слову)
+495	istorija	NOUN	ok			история
+497	energija	NOUN	ok			энергия
+501	normalan	ADJ	gloss	обычный, нормальный	перпендикулярный — неверное значение	перпендикулярный
+504	dozvola	NOUN	ok			разрешение
+505	adresa	NOUN	ok			адрес
+511	zlato	NOUN	ok			хим. золото
+514	kontakt	NOUN	ok			контакт, соприкосновение
+518	disati	VERB	ok			дышать
+519	misija	NOUN	ok			миссия
+520	reka	NOUN	ok			река (аналогично русскому слову)
+521	jedinica	NOUN	ok			единица
+522	bolest	NOUN	ok			болезнь, заболевание
+523	meso	NOUN	ok			мясо
+524	rođak	NOUN	gloss	родственник	кузен — слишком узко	кузен
+525	umeti	VERB	ok			уметь; перен. знать
+528	zabavljati	VERB	ok			забавлять, развлекать
+529	kuhinja	NOUN	ok			кухня
+530	koža	NOUN	ok			кожа (аналогично русскому слову)
+531	ujutru	ADV	ok			утром
+532	baza	NOUN	ok			база; основа
+533	ostrvo	NOUN	ok			остров
+534	apsolutno	ADV	ok			абсолютно, совершенно
+536	deliti	VERB	ok			делить
+540	otkud	ADV	ok			откуда, откудова
+541	koštati	VERB	ok			стоить
+542	zelen	ADJ	ok			зелёный
+544	ležati	VERB	ok			лежать
+545	služba	NOUN	gloss	служба	толкование запутано религиозным смыслом	служба; религ. служба то же, что богослужение; совершение церковного обряда
+546	signal	NOUN	ok			сигнал
+547	vera	NOUN	ok			вера
+548	fotografija	NOUN	ok			фотография
+551	dužnost	NOUN	ok			должность; обязанность
+552	krug	NOUN	ok			круг (аналогично русскому слову)
+553	polje	NOUN	ok			поле
+557	plesati	VERB	ok			танцевать, плясать
+558	loviti	VERB	ok			ловить
+559	kamen	NOUN	ok			камень
+561	akcija	NOUN	ok			акция, действие, мероприятие; акция (ценная бумага)
+562	ples	NOUN	ok			танец, пляс
+564	led	NOUN	ok			лёд
+566	anđeo	NOUN	ok			ангел
+568	niz	NOUN	gloss	ряд, серия	вниз по — неверное значение	вниз по
+570	pušiti	VERB	ok			курить
+571	tišina	NOUN	ok			тишина (аналогично русскому слову)
+574	grešiti	VERB	ok			грешить
+578	pobeda	NOUN	ok			победа
+581	kupovati	VERB	ok			покупать
+583	rana	NOUN	ok			рана (аналогично русскому слову)
+585	kratak	ADJ	ok			краткий, короткий
+586	direktor	NOUN	ok			директор
+588	govor	NOUN	ok			речь, разговор, говор
+591	teorija	NOUN	ok			теория
+594	kiša	NOUN	ok			дождь
+595	kost	NOUN	ok			кость
+596	posetiti	VERB	ok			посетить, навести
+598	rasti	VERB	ok			расти
+599	automobil	NOUN	ok			автомобиль
+600	most	NOUN	ok			мост (аналогично русскому слову) (сооружение для перехода или переезда через препятствие)
+602	dokument	NOUN	ok			документ (аналогично русскому слову)
+604	udar	NOUN	ok			удар
+606	karijera	NOUN	ok			карьера
+607	tačka	NOUN	ok			точка (во всех значениях)
+608	strašan	ADJ	ok			страшный
+609	sedeti	VERB	ok			сидеть
+610	suditi	ADV	drop_grammar	судить	помечено как ADV, но это VERB	судить
+614	vetar	NOUN	ok			ветер
+618	zlatan	ADJ	drop_name	Zlatан	это прилагательное от имени, но в словаре только фамилия	Златан
+619	firma	NOUN	ok			экон. фирма (деловая компания)
+620	poslušati	VERB	ok			послушать
+622	stotina	NOUN	ok			сто, сотня
+627	autobus	NOUN	ok			автобус
+628	raj	NOUN	ok			рай
+630	svinja	NOUN	ok			зоол. свинья
+632	desni	ADJ	ok			правый
+633	vek	NOUN	ok			век (аналогично русскому слову)
+635	tona	NOUN	ok			тонна
+636	prodavati	VERB	ok			продавать
+638	plaža	NOUN	ok			пляж
+640	vozač	NOUN	ok			водитель
+642	drug	NOUN	gloss	друг	толкование неполное, основное значение — друг	компаньон, одноклассник
+644	petak	NOUN	ok			пятница — пятый день недели
+647	princeza	NOUN	ok			принцесса
+648	gubitak	NOUN	ok			убыток; ущерб
+649	krov	NOUN	gloss	крыша	кров — архаичное, крыша — основное значение	кров (аналогично русскому слову); крыша
+652	vrat	NOUN	ok			анат. шея
+655	čaša	NOUN	ok			стакан; чаша, кубок
+656	bacati	VERB	ok			бросать
+660	gas	NOUN	ok			хим. газ
+662	mleko	NOUN	ok			молоко
+664	ubojstvo	NOUN	ok			убийство
+665	muka	NOUN	gloss	мука (страдание)	толкование путает два значения; в контексте обычно страдание	мука [1], страдание
+666	kompjuter	NOUN	ok			компьютер
+669	mrak	NOUN	ok			мрак, тьма
+672	magija	NOUN	ok			магия
+674	mač	NOUN	ok			меч
+676	kolega	NOUN	ok			коллега
+677	struja	NOUN	gloss	ток	струя — неточно, в электричестве ток	струя
+678	luk	NOUN	gloss	лук (оружие)	толкование неполное, основное — лук как оружие	лук [I]
+681	los	NOUN	gloss	лось	в черногорском лос — олень, не лось	лось
+683	mladić	NOUN	ok			юноша, парень
+690	jezero	NOUN	ok			озеро
+691	demon	NOUN	ok			религ., мифол. (также перен.) демон (аналогично русскому демон I)
+692	učitelj	NOUN	ok			учитель
+694	zaslužiti	VERB	ok			заслужить
+697	trava	NOUN	ok			трава
+703	zdrav	ADJ	ok			здоровый
+705	kćerka	NOUN	ok			дочь
+707	major	NOUN	drop_name	майор	это воинское звание, но в списке помечено как имя собственное в Викисловаре	воен. майор
+708	dosije	NOUN	ok			досье
+709	prodavnica	NOUN	ok			магазин
+710	stomak	NOUN	ok			живот, желудок
+713	rak	NOUN	ok			зоол. рак (аналогично русскому слову) I
+715	subota	NOUN	ok			суббота — шестой день недели
+717	cigareta	NOUN	ok			сигарета
+718	laboratorija	NOUN	ok			лаборатория
+719	epizoda	NOUN	ok			случай, эпизод
+720	kolač	NOUN	gloss	рак (животное)	толкование правильное, но неполное — есть и болезнь	калач
+722	noću	ADV	ok			ночью
+724	mart	NOUN	ok			март (аналогично русскому слову)
+727	ustajati	VERB	ok			вставать
+728	kilometar	NOUN	ok			километр
+731	internet	NOUN	ok			интернет
+732	igrač	NOUN	gloss	игрок	танцор — редкое значение, основное игрок	игрок; танцор, плясун
+735	delo	NOUN	ok			дело (аналогично русскому слову)
+736	aerodrom	NOUN	ok			аэродром, аэропорт
+737	uslov	NOUN	ok			условие
+743	odavno	ADV	ok			давно
+744	pantalone	NOUN	ok			штаны
+748	model	NOUN	ok			модель
+749	rešenje	NOUN	ok			решение
+751	razred	NOUN	gloss	класс	категория — неточно, разред — класс в школе	категория
+752	vlast	NOUN	ok			власть
+753	lekar	NOUN	ok			врач, лекарь
+755	levi	ADJ	ok			левый
+760	bitka	NOUN	ok			битва, бой, сражение
+761	bob	NOUN	drop_rare	бобслей	узкоспециальный спортивный термин	зимний вид спорта, скоростной спуск на санках специальной аэродинамической конструкции
+762	plata	NOUN	ok			плата
+763	maska	NOUN	ok			маска (аналог. русск. слову в разн. знач.)
+764	požar	NOUN	ok			пожар [1] (аналог русск. слову)
+767	starac	NOUN	ok			старик, старец
+769	pica	NOUN	ok			пицца
+770	politika	NOUN	ok			политика (аналогично русскому слову)
+773	vampir	NOUN	ok			вампир
+774	vežbati	VERB	gloss	тренироваться	муштровать — архаичное, вежбати — тренироваться	муштровать
+776	pauza	NOUN	ok			пауза
+782	preneti	VERB	ok			передать; перенести
+783	student	NOUN	ok			студент
+785	spaliti	VERB	ok			спалить
+787	kombi	NOUN	drop_rare	комби	узкоспециальный термин, микроавтобус	комби
+788	luka	NOUN	drop_name	Лука	имя собственное, нарицательного значения нет	Лука
+790	topao	ADJ	ok			тёплый
+791	marka	NOUN	ok			марка (аналог. русск. марка I.1)
+794	seksualan	ADJ	ok			сексуальный
+795	četvrti	ADJ	ok			четвёртый
+798	ruski	ADJ	ok			русский
+800	lokacija	NOUN	ok			локация, местоположение, местонахождение
+803	slep	ADJ	ok			слепой
+805	temperatura	NOUN	ok			температура
+806	morski	ADJ	ok			морской
+808	sekund	NOUN	ok			секунда
+810	budući	ADJ	ok			будущий
+814	zmaj	NOUN	gloss	дракон; воздушный змей	толкование перечисляет значения, но первое неполное	дракон, змей; воздушный змей
+815	sok	NOUN	ok			биол. сок (биологическая жидкость); сок (напиток, пищевой продукт)
+820	bas	NOUN	drop_transparent	бас	русский поймёт без обучения	бас (аналогично русскому слову)
+821	sever	NOUN	drop_transparent	север	русский поймёт без обучения	север (аналогично русскому слову)
+823	kanal	NOUN	drop_transparent	канал	русский поймёт без обучения	канал (аналогично русскому слову)
+824	kostim	NOUN	drop_transparent	костюм	русский поймёт без обучения	костюм
+825	alkohol	NOUN	drop_transparent	алкоголь	русский поймёт без обучения	алкоголь
+828	tehnologija	NOUN	drop_transparent	технология	русский поймёт без обучения	технология
+829	sposobnost	NOUN	drop_transparent	способность	русский поймёт без обучения	способность, возможность
+830	šećer	NOUN	drop_transparent	сахар	русский поймёт без обучения	сахар
+832	nauka	NOUN	drop_transparent	наука	русский поймёт без обучения	наука (аналогично русскому слову)
+833	gradonačelnik	NOUN	ok			бургомистр, градоначальник, мэр
+834	torta	NOUN	drop_transparent	торт	русский поймёт без обучения	торт
+837	telefonski	ADJ	drop_transparent	телефонный	русский поймёт без обучения	телефонный
+839	rob	NOUN	ok			раб
+843	nasilje	NOUN	ok			насилие
+845	ponedeljak	NOUN	ok			понедельник — первый день недели
+846	oblast	NOUN	drop_transparent	область	русский поймёт без обучения	область
+850	majica	NOUN	ok			майка, футболка
+853	greh	NOUN	drop_transparent	грех	русский поймёт без обучения	религ. грех (аналогично русскому слову) [1]
+857	dolazak	NOUN	ok			прибытие
+859	medved	NOUN	drop_transparent	медведь	русский поймёт без обучения	зоол. медведь
+864	sendvič	NOUN	drop_transparent	сэндвич	русский поймёт без обучения	сэндвич, бутерброд
+869	virus	NOUN	drop_transparent	вирус	русский поймёт без обучения	биол. вирус (аналогично русскому слову)
+871	stranica	NOUN	drop_transparent	страница	русский поймёт без обучения	страница (аналогично русскому слову)
+875	otrov	NOUN	drop_transparent	яд	русский поймёт без обучения	яд, отрава
+876	krava	NOUN	drop_transparent	корова	русский поймёт без обучения	корова
+877	šou	NOUN	drop_transparent	шоу	русский поймёт без обучения	шоу
+878	opasan	ADJ	drop_transparent	опасный	русский поймёт без обучения	опасный
+880	sneg	NOUN	drop_transparent	снег	русский поймёт без обучения	метеорол. снег [1]
+881	upravljati	VERB	ok			управлять; направлять
+882	serija	NOUN	drop_transparent	сериал	русский поймёт без обучения	сериал, телесериал
+887	bogatstvo	NOUN	drop_transparent	богатство	русский поймёт без обучения	богатство
+888	igračka	NOUN	drop_transparent	игрушка	русский поймёт без обучения	игрушка
+889	zapad	NOUN	drop_transparent	запад	русский поймёт без обучения	запад
+890	učenik	NOUN	drop_transparent	ученик	русский поймёт без обучения	ученик, школьник
+891	kopija	NOUN	drop_transparent	копия	русский поймёт без обучения	копия
+892	tama	NOUN	drop_transparent	тьма	русский поймёт без обучения	тьма
+894	terapija	NOUN	drop_transparent	терапия	русский поймёт без обучения	мед. терапия
+898	samoubistvo	NOUN	drop_transparent	самоубийство	русский поймёт без обучения	самоубийство, суицид
+899	pisac	NOUN	drop_transparent	писатель	русский поймёт без обучения	писатель
+903	proces	NOUN	drop_transparent	процесс	русский поймёт без обучения	процесс
+904	fabrika	NOUN	drop_transparent	фабрика	русский поймёт без обучения	фабрика (аналогично русскому слову)
+905	okean	NOUN	drop_transparent	океан	русский поймёт без обучения	океан (аналогично русскому слову)
+910	tunel	NOUN	drop_transparent	тоннель	русский поймёт без обучения	тоннель
+914	razni	ADJ	drop_transparent	разный	русский поймёт без обучения	разный
+916	jug	NOUN	drop_transparent	юг	русский поймёт без обучения	юг
+917	jakna	NOUN	drop_transparent	куртка	русский поймёт без обучения	куртка
+921	interesovati	VERB	ok			интересовать, занимать
+925	nizak	ADJ	ok			низкий
+927	domaći	ADJ	gloss	домашний	толкование неточно: domaći — домашний, не домовой	домовой
+931	pustinja	NOUN	drop_transparent	пустыня	русский поймёт без обучения	пустыня
+932	oblak	NOUN	drop_transparent	облако	русский поймёт без обучения	облако
+933	zima	NOUN	drop_transparent	зима	русский поймёт без обучения	зима (аналогично русскому слову)
+934	miš	NOUN	ok			мышь
+937	krađa	NOUN	ok			кража
+938	garaža	NOUN	drop_transparent	гараж	русский поймёт без обучения	гараж
+943	građanin	NOUN	drop_transparent	гражданин	русский поймёт без обучения	гражданин
+944	reklama	NOUN	drop_transparent	реклама	русский поймёт без обучения	реклама (аналогично русскому слову)
+946	zapadni	ADJ	drop_transparent	западный	русский поймёт без обучения	западный
+949	zvučati	VERB	ok			звучать
+950	leto	NOUN	drop_transparent	лето	русский поймёт без обучения	лето (аналогично русскому слову)
+952	dim	NOUN	drop_transparent	дым	русский поймёт без обучения	дым
+955	haos	NOUN	drop_transparent	хаос	русский поймёт без обучения	хаос
+956	istok	NOUN	drop_transparent	восток	русский поймёт без обучения	восток
+958	projekt	NOUN	drop_transparent	проект	русский поймёт без обучения	проект
+959	lav	NOUN	ok			зоол. лев (Panthera leo)
+960	eksperiment	NOUN	drop_transparent	эксперимент	русский поймёт без обучения	эксперимент
+961	hleb	NOUN	ok			хлеб (аналогично русскому слову)
+962	helikopter	NOUN	drop_transparent	вертолёт	русский поймёт без обучения	вертолёт, геликоптер
+963	obećanje	NOUN	drop_transparent	обещание	русский поймёт без обучения	обещание
+964	legenda	NOUN	drop_transparent	легенда	русский поймёт без обучения	легенда (аналогично русскому слову)
+965	talenat	NOUN	drop_transparent	талант	русский поймёт без обучения	талант
+968	faza	NOUN	drop_transparent	фаза	русский поймёт без обучения	фаза
+970	organizacija	NOUN	drop_transparent	организация	русский поймёт без обучения	организация
+971	list	NOUN	ok			ботан. лист (дерева); лист (бумаги, железа и т. п.)
+972	reakcija	NOUN	drop_transparent		тот же корень и значение, что в русском	реакция
+975	ponoć	NOUN	drop_transparent		тот же корень и значение, что в русском	полночь
+976	učestvovati	VERB	drop_transparent		тот же корень и значение, что в русском	участвовать
+977	izgovor	NOUN	ok			выговор, произношение; отговорка, предлог
+978	car	NOUN	drop_transparent		тот же корень и значение, что в русском	царь
+980	sluga	NOUN	drop_transparent		тот же корень и значение, что в русском	слуга (аналогично русскому слову)
+982	grlo	NOUN	drop_transparent		тот же корень и значение, что в русском	анат. горло
+983	terorist	NOUN	drop_transparent		тот же корень и значение, что в русском	террорист
+984	liti	VERB	drop_transparent		тот же корень и значение, что в русском	лить
+986	trening	NOUN	drop_transparent		тот же корень и значение, что в русском	тренировка
+987	molitva	NOUN	drop_transparent		тот же корень и значение, что в русском	молитва (аналогично русскому слову)
+988	aktivnost	NOUN	drop_transparent		тот же корень и значение, что в русском	активность
+989	utorak	NOUN	ok			вторник
+990	datum	NOUN	drop_transparent		тот же корень и значение, что в русском	дата
+992	koncert	NOUN	drop_transparent		тот же корень и значение, что в русском	концерт аналог. русск. слову)
+994	slučajnost	NOUN	drop_transparent		тот же корень и значение, что в русском	случайность
+995	brada	NOUN	drop_transparent		тот же корень и значение, что в русском	борода
+997	toplo	ADV	ok			тепло; жарко, горячо
+998	roman	NOUN	drop_transparent		тот же корень и значение, что в русском	филол. роман (литературное произведение)
+999	partija	NOUN	drop_transparent		тот же корень и значение, что в русском	партия
+1000	komanda	NOUN	drop_transparent		тот же корень и значение, что в русском	команда; командование
+1003	tisuća	NOUN	drop_transparent		тот же корень и значение, что в русском	тысяча
+1005	pesak	NOUN	drop_transparent		тот же корень и значение, что в русском	песок
+1007	period	NOUN	drop_transparent		тот же корень и значение, что в русском	период
+1009	podne	NOUN	drop_transparent		тот же корень и значение, что в русском	полдень
+1011	ulje	NOUN	drop_transparent		тот же корень и значение, что в русском	масло (жидкое растительное или минеральное)
+1015	jabuka	NOUN	drop_transparent		тот же корень и значение, что в русском	яблоко
+1016	strast	NOUN	drop_transparent		тот же корень и значение, что в русском	страсть
+1017	analiza	NOUN	drop_transparent		тот же корень и значение, что в русском	анализ
+1018	kapa	NOUN	drop_name		название греческой буквы, имя собственное	каппа (название десятой буквы греческого алфавита)
+1019	intervju	NOUN	drop_transparent		тот же корень и значение, что в русском	интервью
+1020	lift	NOUN	drop_transparent		тот же корень и значение, что в русском	лифт
+1022	postupak	NOUN	ok			процедура; действие, поступок
+1025	otvoren	ADJ	ok			откровенный
+1026	čokolada	NOUN	drop_transparent		тот же корень и значение, что в русском	шоколад
+1031	muzej	NOUN	drop_transparent		тот же корень и значение, что в русском	музей
+1032	besplatan	ADJ	drop_transparent		тот же корень и значение, что в русском	бесплатный
+1033	staklo	NOUN	drop_transparent		тот же корень и значение, что в русском	стекло
+1034	dolina	NOUN	drop_transparent		тот же корень и значение, что в русском	долина
+1038	motiv	NOUN	drop_transparent		тот же корень и значение, что в русском	мотив
+1039	rosa	NOUN	drop_transparent		тот же корень и значение, что в русском	роса (аналог. русск. роса [1]
+1040	verzija	NOUN	drop_transparent		тот же корень и значение, что в русском	версия
+1041	kriza	NOUN	drop_transparent		тот же корень и значение, что в русском	кризис
+1043	sreda	NOUN	ok			среда (день недели); середина
+1046	pristojan	ADJ	ok			добропорядочный, пристойный
+1047	katastrofa	NOUN	drop_transparent		тот же корень и значение, что в русском	катастрофа
+1049	biblija	NOUN	drop_transparent		тот же корень и значение, что в русском	библия
+1051	novost	NOUN	drop_transparent		тот же корень и значение, что в русском	новость
+1054	uspevati	VERB	ok			успевать (делать вовремя)
+1058	armija	NOUN	drop_transparent		тот же корень и значение, что в русском	армия
+1059	robot	NOUN	drop_transparent		тот же корень и значение, что в русском	робот (аналогично русскому слову)
+1060	kopati	VERB	ok			копать
+1061	ruža	NOUN	drop_transparent		тот же корень и значение, что в русском	ботан. роза
+1062	maj	NOUN	drop_transparent		тот же корень и значение, что в русском	май
+1063	rima	NOUN	drop_transparent		тот же корень и значение, что в русском	филол. рифма
+1064	praznik	NOUN	drop_transparent		тот же корень и значение, что в русском	праздник
+1070	kit	NOUN	drop_transparent		тот же корень и значение, что в русском	зоол. кит (аналогично русскому слову)
+1071	aparat	NOUN	drop_transparent		тот же корень и значение, что в русском	аппарат
+1072	šok	NOUN	drop_transparent		тот же корень и значение, что в русском	мед. шок
+1074	mudo	NOUN	ok			мудо (аналогично русскому слову) (с разницей в ударном слоге); мошонка
+1076	raketa	NOUN	drop_transparent		тот же корень и значение, что в русском	ракета (аналогично русскому слову)
+1078	sport	NOUN	drop_transparent		тот же корень и значение, что в русском	спорт
+1082	porez	NOUN	drop_transparent		тот же корень и значение, что в русском	налог
+1084	univerzitet	NOUN	drop_transparent		тот же корень и значение, что в русском	университет
+1085	biblioteka	NOUN	drop_transparent		тот же корень и значение, что в русском	библиотека
+1086	kultura	NOUN	drop_transparent		тот же корень и значение, что в русском	культура
+1088	prisustvo	NOUN	drop_transparent		тот же корень и значение, что в русском	присутствие
+1090	glupan	NOUN	ok			глупец, дурак
+1091	potpis	NOUN	drop_transparent		тот же корень и значение, что в русском	подпись
+1093	hram	NOUN	drop_transparent		тот же корень и значение, что в русском	религ. (также перен.) храм (аналогично русскому слову)
+1094	trupa	NOUN	drop_transparent		тот же корень и значение, что в русском	труппа
+1095	četvrtak	NOUN	ok			четверг — четвёртый день недели
+1098	retko	ADV	ok			редко
+1100	napadati	VERB	ok			атаковать, нападать
+1101	momenat	NOUN	drop_transparent		тот же корень и значение, что в русском	момент
+1102	rep	NOUN	gloss	рэп или хвост	толкование неполное, два разных значения слова	рэп, хвост
+1104	šampion	NOUN	drop_transparent		тот же корень и значение, что в русском	чемпион
+1106	komandant	NOUN	drop_transparent		тот же корень и значение, что в русском	командир; комендант
+1108	psihijatar	NOUN	drop_transparent		тот же корень и значение, что в русском	психиатр
+1113	teritorija	NOUN	drop_transparent		тот же корень и значение, что в русском	территория
+1115	razvesti	VERB	ok			развести (доставить в разные стороны); развести (расторгнуть брак)
+1120	ukazivati	VERB	gloss	показывать, указывать	порядок слов в толковании неудачен	указывать, показывать; оказывать
+1121	odreći	VERB	ok			отречься, отказаться (от своих слов, веры, престола); отвергнуть, отклонить (предложение, помощь)
+1123	ličnost	NOUN	ok			личность
+1124	ministarstvo	NOUN	ok			министерство
+1129	sitan	ADJ	ok			маленький, малый
+1130	igla	NOUN	ok			игла, иголка
+1131	rođenje	NOUN	ok			рождение
+1135	revolucija	NOUN	ok			революция
+1136	povest	NOUN	ok			повесть
+1137	nacija	NOUN	ok			национальность, нация
+1142	tradicija	NOUN	ok			традиция
+1143	rudnik	NOUN	ok			рудник, копь
+1144	fudbal	NOUN	ok			спорт. футбол
+1146	avantura	NOUN	ok			авантюра
+1148	francuz	NOUN	drop_name	Францу́з — национальность, но в словаре может быть только как фамилия	нужна проверка контекста	француз
+1150	emocija	NOUN	ok			эмоция
+1152	tekst	NOUN	ok			текст [1]
+1159	ograda	NOUN	ok			забор, ограда
+1160	tigar	NOUN	ok			зоол. тигр
+1162	supa	NOUN	ok			суп
+1163	sused	NOUN	ok			сосед
+1164	ivan	NOUN	drop_name	Иван	имя собственное	Иван
+1166	mišić	NOUN	ok			анат. мускул; мышца
+1169	smeh	NOUN	ok			смех
+1170	klinika	NOUN	ok			мед. клиника
+1175	penis	NOUN	ok			анат. пенис (аналогично русскому слову)
+1176	konferencija	NOUN	ok			конференция
+1180	frižider	NOUN	ok			холодильник
+1184	kandidat	NOUN	ok			кандидат
+1185	organ	NOUN	ok			орган (аналог. русск. о́рган)
+1187	atmosfera	NOUN	ok			астрон. атмосфера
+1188	običaj	NOUN	ok			обычай
+1191	bejzbol	NOUN	ok			бейсбол
+1192	blizanac	NOUN	ok			близнец
+1194	med	NOUN	ok			мёд
+1195	profesionalac	NOUN	ok			профессионал
+1198	flota	NOUN	ok			флот
+1204	radio	NOUN	ok			радио, радиостанция
+1207	gen	NOUN	ok			ген
+1208	dubina	NOUN	ok			глубина
+1211	trgovac	NOUN	ok			торговец
+1212	tragedija	NOUN	ok			трагедия
+1213	afera	NOUN	ok			афера
+1214	medicina	NOUN	ok			медицина
+1215	predak	NOUN	ok			предок
+1218	panika	NOUN	ok			паника
+1219	ovca	NOUN	ok			овца (аналогично русскому слову)
+1220	matematika	NOUN	ok			математика (аналогично русскому слову)
+1222	reputacija	NOUN	ok			репутация
+1223	salo	NOUN	ok			сало (аналогично русскому слову)
+1225	crv	NOUN	ok			зоол. червь, червяк
+1226	grub	ADJ	ok			грубый
+1227	upisati	VERB	ok			регистрировать
+1228	odnositi	VERB	ok			относить, уносить (что-л. куда-л.); уносить, сносить (о ветре, воде)
+1229	zombi	NOUN	ok			зомби (аналогично русскому слову)
+1230	pleme	NOUN	ok			племя
+1232	princip	NOUN	ok			принцип (аналогично русскому слову)
+1233	kokain	NOUN	ok			биохим. кокаин
+1234	sveća	NOUN	ok			свеча (осветительное приспособление)
+1235	album	NOUN	ok			альбом
+1236	nevidljiv	ADJ	ok			невидимый; незримый
+1239	čelo	NOUN	ok			анат. лоб, чело
+1240	penzija	NOUN	ok			пенсия
+1241	slon	NOUN	ok			слон (аналог. русск. слон [1])
+1246	džungla	NOUN	ok			джунгли
+1252	ton	NOUN	ok			тон
+1255	doza	NOUN	ok			доза
+1257	simptom	NOUN	ok			мед. симптом
+1259	protivnik	NOUN	ok			противник
+1260	tajno	ADV	ok			тайно, тайком, скрытно, секретно
+1261	alfa	NOUN	ok			альфа
+1262	voće	NOUN	gloss	фрукты, плоды	voće — множественное число, толкование неполно	плод
+1264	alibi	NOUN	ok			юр. алиби (аналогично русскому слову)
+1267	prijava	NOUN	gloss	заявление, регистрация	prijava шире, чем просто декларация	декларация
+1269	grof	NOUN	ok			истор. граф (дворянский титул)
+1270	sos	NOUN	ok			соус
+1271	bik	NOUN	ok			бык
+1273	učenje	NOUN	ok			учение
+1274	april	NOUN	ok			апрель
+1275	mokar	ADJ	ok			мокрый
+1276	zvezdan	ADJ	ok			звёздный
+1277	pepeo	NOUN	ok			пепел, зола
+1278	gotovina	NOUN	gloss	готовина (готівка)	толкования нет	?
+1279	pozitivan	ADJ	ok			позитивный
+1280	civilizacija	NOUN	ok			цивилизация
+1281	kruna	NOUN	ok			корона, венец; крона (денежная единица)
+1282	moda	NOUN	ok			мода [1]
+1283	religija	NOUN	ok			религия; вероисповедание
+1284	oštar	ADJ	ok			острый
+1288	metal	NOUN	ok			металл
+1290	pasoš	NOUN	ok			паспорт
+1294	tresti	VERB	ok			трясти
+1295	tanjir	NOUN	ok			тарелка
+1296	industrija	NOUN	ok			промышленность, индустрия
+1298	gitara	NOUN	ok			муз. гитара
+1299	jun	NOUN	gloss	јун	июнь — это июнь, но в черногорском јун	июнь
+1300	kriva	NOUN	ok			геометр. кривая
+1306	procedura	NOUN	ok			процедура
+1307	rog	NOUN	drop_transparent	рог	тот же корень и значение, что в русском	рог (аналогично русскому слову)
+1308	krst	NOUN	ok			крест
+1310	naučan	ADJ	ok			научный
+1313	šesti	ADJ	ok			шестой
+1316	cirkus	NOUN	ok			цирк
+1321	akademija	NOUN	ok			академия; училище
+1322	galaksija	NOUN	ok			астрон. галактика
+1325	kinez	NOUN	ok			китаец
+1326	kolekcija	NOUN	ok			коллекция
+1328	španski	ADJ	ok			испанский
+1331	strategija	NOUN	ok			стратегия
+1334	instinkt	NOUN	drop_transparent	инстинкт	тот же корень и значение, что в русском	инстинкт (аналогично русскому слову)
+1338	unuka	NOUN	ok			внучка
+1341	mudar	ADJ	ok			мудрый
+1346	sektor	NOUN	drop_transparent	сектор	тот же корень и значение, что в русском	сектор (аналогично русскому слову)
+1347	tajan	ADJ	ok			тайный, секретный
+1353	beta	NOUN	drop_transparent	бета	тот же корень и значение, что в русском	бета (аналогично русскому слову)
+1356	federalan	ADJ	ok			федеральный
+1358	ritam	NOUN	ok			ритм
+1361	maca	NOUN	drop_transparent	маца	тот же корень и значение, что в русском	этногр., религ. маца (аналогично русскому слову)
+1366	kristal	NOUN	ok			хим. кристалл
+1368	ajkula	NOUN	ok			акула
+1372	političar	NOUN	ok			политик
+1374	pauk	NOUN	ok			паук
+1375	tinejdžer	NOUN	ok			подросток, тинейджер
+1377	nezgoda	NOUN	ok			неудобство
+1381	međunarodni	ADJ	ok			международный
+1383	status	NOUN	ok			статус
+1384	tenk	NOUN	ok			воен. танк
+1385	ceremonija	NOUN	ok			церемония
+1388	mit	NOUN	ok			миф
+1391	širok	ADJ	ok			широкий
+1396	festival	NOUN	ok			фестиваль
+1399	kolika	NOUN	ok			мед. колика
+1402	boravak	NOUN	ok			пребывание; жительство
+1403	crtež	NOUN	ok			чертёж
+1404	scenario	NOUN	ok			сценарий
+1407	sedmi	ADJ	ok			седьмой
+1410	poker	NOUN	drop_transparent	покер	тот же корень и значение, что в русском	карт. покер (аналогично русскому слову)
+1411	službenik	NOUN	ok			чиновник
+1412	klima	NOUN	ok			климат
+1414	mladost	NOUN	ok			юность, молодость
+1417	kita	NOUN	drop_transparent	кита	тот же корень и значение, что в русском	кита (аналогично русскому слову)
+1418	protokol	NOUN	ok			протокол
+1420	jul	NOUN	ok			июль
+1421	gravitacija	NOUN	ok			гравитация; тяготение
+1424	admiral	NOUN	ok			воен. адмирал
+1425	bal	NOUN	drop_transparent	бал	тот же корень и значение, что в русском	бал (аналогично русскому слову)
+1429	asistent	NOUN	ok			ассистент
+1431	ekran	NOUN	ok			экран
+1432	tablica	NOUN	ok			таблица
+1433	mudrost	NOUN	ok			мудрость
+1442	strela	NOUN	ok			стрела
+1443	petlja	NOUN	ok			петля
+1444	heroin	NOUN	ok			героин
+1445	senzor	NOUN	ok			техн. сенсор
+1446	struktura	NOUN	drop_transparent	структура	тот же корень и значение, что в русском	структура (аналогично русскому слову)
+1450	infekcija	NOUN	ok			мед. инфекция
+1451	kolonija	NOUN	ok			колония
+1452	disanje	NOUN	ok			дыхание
+1453	medalja	NOUN	ok			медаль
+1457	boginja	NOUN	ok			богиня
+1458	banana	NOUN	ok			банан
+1460	funkcija	NOUN	ok			функция
+1461	mafija	NOUN	ok			мафия
+1464	svadba	NOUN	ok			свадьба
+1468	jelen	NOUN	ok			олень
+1469	kongres	NOUN	ok			конгресс
+1470	titula	NOUN	ok			титул; сан; звание
+1471	hirurg	NOUN	ok			хирург
+1472	hrabro	ADV	ok			храбро, смело
+1473	spor	NOUN	gloss	спор (ссора)	толкование даёт прилагательное вместо существительного	неспешный
+1474	sovjetski	ADJ	ok			советский
+1475	kompliment	NOUN	ok			комплимент
+1476	poezija	NOUN	ok			поэзия
+1480	mrtvac	NOUN	ok			мертвец, покойник, труп
+1482	komisija	NOUN	ok			комиссия
+1487	hamburger	NOUN	ok			гамбургер
+1497	palac	NOUN	ok			анат. большой палец (руки)
+1498	šum	NOUN	ok			шум (аналогично русскому слову)
+1499	večnost	NOUN	ok			вечность
+1500	orbita	NOUN	ok			астрон. орбита (аналогично русскому слову)
+1501	materija	NOUN	ok			материя
+1502	iluzija	NOUN	ok			иллюзия
+1511	aleksandar	NOUN	drop_name	Александр	имя собственное	Александр
+1516	lan	NOUN	ok			лён
+1517	učiteljica	NOUN	ok			учительница
+1518	ženiti	VERB	ok			женить
+1520	koordinata	NOUN	ok			матем. координата (аналогично русскому слову)
+1523	bič	NOUN	ok			бич (аналогично русск. слову в знач. I)
+1525	ekonomija	NOUN	ok			экономия (наука); экономика
+1527	klan	NOUN	ok			клан (аналогично русскому слову)
+1528	pčela	NOUN	ok			энтомол. пчела (аналогично русскому слову)
+1529	večno	ADV	ok			вечно (аналогично русскому слову)
+1532	turist	NOUN	ok			турист (аналогично русскому слову)
+1537	žaba	NOUN	ok			зоол. жаба
+1538	som	NOUN	gloss	сом (рыба)	толкование смешивает рыбу с оскорблением	ихтиол. сом; дурак, болван
+1540	parada	NOUN	ok			парад
+1541	krivina	NOUN	ok			кривизна
+1544	lažno	ADV	ok			ложно
+1545	strelac	NOUN	ok			лучник, стрелок из лука
+1547	aktivan	ADJ	ok			активный; действительный
+1548	figura	NOUN	ok			фигура
+1549	šah	NOUN	ok			истор. шах (аналогично русск. шах I)
+1550	republika	NOUN	ok			республика
+1551	zubar	NOUN	ok			зубной врач, стоматолог, дантист
+1554	kilogram	NOUN	ok			килограмм
+1558	manijak	NOUN	ok			мед. маньяк
+1561	inženjer	NOUN	ok			инженер
+1562	suma	NOUN	ok			сумма
+1566	konkurencija	NOUN	ok			конкуренция
+1569	fotograf	NOUN	ok			фотограф (аналогично русскому слову)
+1575	radar	NOUN	ok			радар
+1576	unuk	NOUN	ok			внук
+1578	sindikat	NOUN	ok			синдикат
+1579	dizajn	NOUN	ok			дизайн
+1580	sperma	NOUN	ok			физиол. сперма
+1584	hol	NOUN	ok			холл
+1589	avgust	NOUN	ok			август (аналогично русскому слову)
+1590	mudro	ADV	ok			мудро
+1591	zapoved	NOUN	ok			заповедь
+1597	masaža	NOUN	ok			массаж
+1599	keks	NOUN	ok			кекс
+1601	mentalan	ADJ	ok			ментальный, умственный
+1603	lišće	NOUN	ok			листва
+1605	televizor	NOUN	ok			телевизор (аналогично русскому слову)
+1607	slanina	NOUN	ok			солонина; бекон
+1608	zet	NOUN	ok			зять
+1610	bedan	ADJ	ok			бедный, неимущий
+1612	oktobar	NOUN	ok			октябрь
+1613	realnost	NOUN	ok			реальность, действительность
+1614	pizda	NOUN	drop_rare	пизда	обсценная лексика, начинающему не нужна	обсц. пизда; женский половой орган
+1615	starica	NOUN	ok			старая (пожилая) женщина, старушка, старуха, бабушка
+1616	mahati	VERB	ok			махать
+1617	logika	NOUN	ok			логика
+1619	golub	NOUN	ok			голубь
+1620	psihopat	NOUN	ok			психопат
+1622	autopsija	NOUN	ok			аутопсия
+1624	rebro	NOUN	ok			ребро (аналогично русскому слову)
+1625	ar	NOUN	ok			ар
+1627	koren	NOUN	ok			ботан. корень
+1628	jesen	NOUN	ok			осень
+1629	potencijal	NOUN	ok			потенциал
+1632	idealan	ADJ	ok			идеальный
+1633	važnost	NOUN	ok			важность
+1639	mikrofon	NOUN	ok			микрофон (аналогично русскому слову)
+1641	aukcija	NOUN	ok			аукцион
+1642	dobrota	NOUN	drop_name	dobrota — dobrota znači dobrotu (dobroćudnost), nije samo prezime		Доброта (сербская фамилия)
+1646	baron	NOUN	ok			барон (аналогично русскому слову)
+1647	orah	NOUN	ok			орех
+1648	ekspert	NOUN	ok			эксперт
+1651	karat	NOUN	ok			карат
+1652	vulkan	NOUN	ok			вулкан (аналогично русскому слову)
+1654	kontejner	NOUN	ok			контейнер
+1657	atom	NOUN	ok			физ. атом
+1658	toplota	NOUN	ok			теплота, тепло
+1659	švajcarski	ADJ	ok			швейцарский
+1662	popravka	NOUN	ok			ремонт
+1667	kvar	NOUN	ok			сбой, неисправность
+1668	votka	NOUN	ok			водка
+1669	kupanje	NOUN	ok			купание
+1670	stipendija	NOUN	ok			стипендия
+1672	hobi	NOUN	ok			хобби, увлечение
+1676	resurs	NOUN	ok			ресурс (аналогично русскому слову), средство
+1681	vaza	NOUN	ok			ваза (аналогично русскому слову)
+1684	metro	NOUN	ok			метро (аналогично русскому слову)
+1685	indijski	ADJ	ok			индийский
+1688	napitak	NOUN	ok			напиток
+1692	perika	NOUN	ok			парик
+1693	komitet	NOUN	ok			комитет
+1694	papirologija	NOUN	drop_rare	papirologija — previše specijalizirano za početnike		папирология
+1697	tenis	NOUN	ok			теннис
+1698	popust	NOUN	ok			скидка
+1699	rezerva	NOUN	ok			резерв
+1704	manastir	NOUN	ok			религ. монастырь
+1708	filozofija	NOUN	ok			философия
+1709	senat	NOUN	ok			сенат
+1711	delfin	NOUN	ok			зоол. ихтиол. дельфин
+1713	zvon	NOUN	ok			звон
+1715	pero	NOUN	ok			перо (аналогично русскому слову); ручка (для письма)
+1717	želudac	NOUN	ok			анат. желудок
+1718	kum	NOUN	ok			кум (аналог русскому слову в знач. I)
+1721	kupati	VERB	ok			купать
+1722	telegram	NOUN	ok			телеграмма
+1723	rezervoar	NOUN	ok			водохранилище
+1725	prorok	NOUN	ok			религ. (также перен.) пророк (аналогично русскому слову)
+1726	ambicija	NOUN	ok			амбиция, самолюбие
+1727	vagon	NOUN	ok			вагон (аналогично русскому слову)
+1730	disciplina	NOUN	ok			дисциплина, дисциплинированность
+1731	anoniman	ADJ	ok			анонимный
+1734	pirat	NOUN	ok			пират (аналогично русскому слову)
+1735	kategorija	NOUN	ok			категория
+1739	zaseda	NOUN	ok			засада
+1741	mesečno	ADV	ok			ежемесячно
+1742	ruda	NOUN	ok			руда (аналогично русскому слову) (с иным ударением)
+1744	pat	NOUN	gloss	pat (šahovski termin)	толкование неполное, нужен контекст шахмат	пат
+1747	rukav	NOUN	ok			рукав [1]
+1750	autoritet	NOUN	ok			авторитет
+1751	srebro	NOUN	ok			хим. серебро
+1752	gora	NOUN	ok			гора (аналогично русскому слову); лес
+1754	apetit	NOUN	ok			аппетит
+1755	glasan	ADJ	gloss	звучный, громкий	толкование неточно передаёт основное значение	шумный, звучный
+1756	demokratija	NOUN	ok			демократия
+1757	dobrovoljac	NOUN	ok			доброволец
+1759	kontinent	NOUN	ok			континент, материк
+1760	starost	NOUN	ok			старость
+1761	trezan	ADJ	ok			трезвый
+1763	hrišćanin	NOUN	ok			христианин
+1764	pingvin	NOUN	ok			орнитол. пингвин (Spheniscidae)
+1766	dijeta	NOUN	ok			диета
+1768	orkestar	NOUN	ok			муз. оркестр
+1769	pidžama	NOUN	ok			пижама
+1776	kružiti	VERB	ok			кружить, обращаться
+1778	garancija	NOUN	ok			гарантия
+1785	januar	NOUN	ok			январь
+1788	nervni	ADJ	ok			нервный
+1789	dijagnoza	NOUN	ok			диагноз
+1790	oltar	NOUN	ok			алтарь
+1791	šal	NOUN	ok			шаль; шарф
+1792	era	NOUN	ok			эра (начало летоисчисления); геол. эра (в истории земли)
+1793	grom	NOUN	ok			метеорол. гром (аналогично русскому слову)
+1794	porno	ADV	drop_grammar	—	наречие	порно
+1795	grofica	NOUN	drop_name	—	графиня как фамилия, нарицательное значение есть, но в словаре только фамилия	графиня
+1799	evolucija	NOUN	ok			эволюция
+1801	potok	NOUN	ok			поток (аналогично русскому слову); ручей
+1802	blokada	NOUN	ok			блокада
+1804	plod	NOUN	ok			ботан. плод (репродуктивный о́рган растения); плод (съедобная часть растения)
+1805	siroče	NOUN	ok			сирота
+1808	komedija	NOUN	ok			комедия
+1811	realan	ADJ	ok			реальный
+1812	oštrica	NOUN	ok			остриё
+1814	govedina	NOUN	ok			говядина
+1815	arterija	NOUN	ok			анат. артерия
+1816	veseo	ADJ	gloss	весёлый, радостный	veseo — правильно, но толкование неполное	весёлый
+1817	piramida	NOUN	ok			пирамида (аналогично русскому слову)
+1819	moral	NOUN	ok			мораль
+1821	marihuana	NOUN	drop_rare	—	узкоспециальный термин наркотика	марихуана
+1822	peške	ADV	ok			пешком
+1824	cista	NOUN	ok			биол. циста
+1826	hipoteka	NOUN	ok			ипотека
+1827	molba	NOUN	gloss	просьба, мольба	правильно, но порядок слов в толковании странный	мольба, просьба, прошение
+1829	bakterija	NOUN	ok			биол. бактерия
+1830	uporno	ADV	ok			упорно, усиленно
+1836	vagina	NOUN	ok			анат. вагина (аналогично русскому слову), влагалище
+1837	kalendar	NOUN	ok			календарь
+1838	jahta	NOUN	ok			яхта
+1840	hokej	NOUN	ok			хоккей
+1842	železnica	NOUN	ok			железная дорога
+1844	muzičar	NOUN	ok			музыкант
+1847	imenovati	VERB	ok			именовать
+1848	vilica	NOUN	gloss	челюсть; вилка	оба значения верны, толкование правильное	анат. челюсть; вилка
+1852	ris	NOUN	ok			зоол. рысь (Lynx (lynx) L.)
+1855	globalan	ADJ	ok			мировой, глобальный
+1857	as	NOUN	gloss	ас, туз	в карточных играх туз, в общем смысле ас	разг. кол, единица; ас
+1858	pečat	NOUN	ok			печать
+1862	večernji	ADJ	ok			вечерний
+1867	autogram	NOUN	ok			автограф
+1868	besmislica	NOUN	ok			абракадабра, абсурд, бессмыслица
+1869	kanjon	NOUN	ok			каньон
+1870	investicija	NOUN	ok			инвестиция
+1872	piknik	NOUN	ok			пикник
+1873	gangster	NOUN	ok			бандит, гангстер
+1874	autor	NOUN	ok			автор
+1875	februar	NOUN	ok			февраль
+1878	proročanstvo	NOUN	ok			пророчество
+1881	bankar	NOUN	ok			банкир
+1882	zavisnost	NOUN	ok			зависимость
+1884	hemija	NOUN	ok			химия
+1889	psihologija	NOUN	ok			психология
+1890	fraza	NOUN	ok			фраза
+1891	imperija	NOUN	ok			истор. империя
+1893	perspektiva	NOUN	ok			перспектива
+1900	norma	NOUN	ok			норма (аналогично русскому слову)
+1901	organizam	NOUN	ok			организм
+1903	alternativa	NOUN	ok			альтернатива
+1904	cifra	NOUN	ok			цифра
+1905	telohranitelj	NOUN	ok			телохранитель
+1907	fenomenalno	ADV	ok			феноменально
+1912	portret	NOUN	ok			портрет (аналогично русскому слову)
+1913	kalibar	NOUN	ok			калибр
+1915	balkon	NOUN	ok			балкон
+1916	balet	NOUN	ok			балет
+1917	potomak	NOUN	ok			потомок
+1919	vlakno	NOUN	ok			волокно
+1920	monitor	NOUN	ok			монитор (аналогично русскому слову)
+1921	platno	ADV	ok			полотно (ткань)
+1922	vidljiv	ADJ	ok			видимый
+1923	psiholog	NOUN	ok			психолог
+1924	profesija	NOUN	ok			профессия
+1926	dostojan	ADJ	ok			достойный
+1927	židov	NOUN	gloss	еврей	жид — устаревший и оскорбительный термин, правильнее еврей	жид
+1928	lizati	VERB	ok			лизать
+1929	koncept	NOUN	gloss	концепция, идея	концепт — философский термин, но в общем смысле идея, замысел	концепция
+1930	gram	NOUN	ok			грамм
+1931	argument	NOUN	ok			аргумент
+1933	truba	NOUN	ok			труба
+1936	motati	VERB	ok			мотать
+1939	katolik	NOUN	ok			католик
+1940	ranac	NOUN	ok			ранец
+1944	samoubojstvo	NOUN	ok			самоубийство
+1946	prognoza	NOUN	ok			прогноз
+1950	administracija	NOUN	ok			администрация
+1951	aut	NOUN	gloss	выход (в спорте)	в спорте — момент, когда мяч выходит за пределы площадки	аут
+1953	sponzor	NOUN	ok			фин. спонсор
+1954	melodija	NOUN	ok			муз. мелодия
+1955	džez	NOUN	ok			муз. джаз
+1956	parazit	NOUN	ok			биол. паразит
+1957	muva	NOUN	ok			зоол. муха
+1960	lojalnost	NOUN	ok			лояльность
+1963	režiser	NOUN	ok			режиссёр
+1966	apoteka	NOUN	ok			аптека
+1969	šeri	NOUN	trap	шерри	путается с испанским напитком, а не французским	херес
+1970	vitamin	NOUN	ok			витамин (аналогично русскому слову)
+1971	sastav	NOUN	gloss	состав; смесь	толкование неполное, не отражает основное значение	состав; соединение, стык
+1973	špageti	NOUN	ok			кулин. спагетти
+1975	arena	NOUN	ok			арена
+1978	delta	NOUN	ok			дельта
+1979	laser	NOUN	ok			лазер
+1981	kompromis	NOUN	ok			компромисс
+1982	rehabilitacija	NOUN	ok			реабилитация
+1987	vodopad	NOUN	ok			водопад (аналогично русскому слову)
+1988	dinamit	NOUN	ok			динамит
+1990	nezavisnost	NOUN	ok			независимость
+1994	asteroid	NOUN	ok			астрон. астероид
+1996	predrasuda	NOUN	ok			предрассудок
+1998	razbojnik	NOUN	gloss	разбойник; грабитель	толкование верно, но можно короче	разбойник, грабитель
+2000	krokodil	NOUN	ok			зоол. крокодил (Crocodylus; аналог. русск. крокодил [1])
+2001	nota	NOUN	ok			нота (аналогично русскому слову)
+2002	vod	NOUN	gloss	взвод	военный термин, верно, но можно без пометы	воен. взвод
+2006	biologija	NOUN	ok			биология
+2011	konjica	NOUN	ok			воен. кавалерия, конница
+2014	kud	ADV	drop_grammar	куда	вопросительное наречие, служебное слово	куда
+2015	soda	NOUN	ok			хим. сода (аналогично русскому слову)
+2016	sedlo	NOUN	ok			седло
+2017	sova	NOUN	ok			сова
+2018	hor	NOUN	ok			муз. хор (аналогично русскому слову)
+2022	terorizam	NOUN	ok			терроризм
+2028	fontana	NOUN	ok			фонтан
+2030	bluza	NOUN	ok			блузка
+2032	pešice	ADV	drop_grammar	пешком	наречие образа действия, служебное слово	пешком
+2033	investitor	NOUN	ok			экон. инвестор
+2035	maslac	NOUN	gloss	масло	толкование неполное, слово значит просто масло	сливочное масло
+2037	korupcija	NOUN	ok			коррупция
+2039	deveti	ADJ	ok			девятый
+2041	suvenir	NOUN	ok			сувенир
+2042	lider	NOUN	ok			лидер
+2044	hormon	NOUN	ok			биол. гормон
+2047	pasta	NOUN	gloss	макаронные изделия	толкование неточно, паста — макаронные изделия в целом	паста (аналог. русск. паста 1)
+2048	imunitet	NOUN	ok			биол. иммунитет
+2049	monah	NOUN	ok			монах (аналогично русскому слову)
+2050	komarac	NOUN	ok			зоол. комар
+2056	fenomen	NOUN	ok			феномен (аналогично русскому слову)
+2060	kamin	NOUN	ok			камин
+2063	tron	NOUN	ok			трон
+2065	anomalija	NOUN	ok			аномалия
+2068	sušiti	VERB	ok			сушить
+2069	atomski	ADJ	ok			атомный
+2070	bura	NOUN	ok			буря
+2076	losos	NOUN	ok			зоол. лосось (salmo)
+2077	pohvala	NOUN	ok			похвала (аналогично русскому слову)
+2078	adrenalin	NOUN	ok			биохим. адреналин (аналогично русскому слову)
+2079	kašalj	NOUN	ok			физиол. кашель
+2082	arhiva	NOUN	ok			архив (собрание документов)
+2086	koncentracija	NOUN	ok			концентрация, сосредоточение
+2087	firer	NOUN	gloss	фюрер	толкование верно, но это исторический термин	фюрер
+2088	grijeh	NOUN	ok			религ. грех
+2089	pijanica	NOUN	ok			пьяница
+2090	ugalj	NOUN	ok			уголь
+2092	alergija	NOUN	ok			мед. аллергия
+2093	samuraj	NOUN	ok			самурай
+2094	sluh	NOUN	ok			слух (способность слышать)
+2098	poredak	NOUN	ok			порядок
+2099	identičan	ADJ	ok			идентичный
+2102	mat	NOUN	drop_grammar	мать	местоимение или служебное слово в контексте	мать
+2104	ribar	NOUN	ok			рыбак
+2105	norveški	ADJ	ok			норвежский
+2110	dekan	NOUN	ok			декан (руководитель факультета)
+2111	šapa	NOUN	ok			лапа
+2112	ragbi	NOUN	ok			спорт. регби
+2113	knjižara	NOUN	ok			книжный магазин
+2116	elektronski	ADJ	ok			электронный
+2118	bezopasan	ADJ	drop_transparent		безопасный — тот же корень и значение	безопасный
+2131	bara	NOUN	gloss	водоём, лужа	bara может быть и болотом, и лужей	лужа
+2133	sedalo	NOUN	drop_transparent		седло — тот же корень и значение	седло
+2134	intiman	ADJ	drop_transparent		интимный — тот же корень и значение	интимный
+2135	kaša	NOUN	drop_transparent		каша — тот же корень и значение	кулин., гастрон. каша (кушанье); перен. каша (месиво, полужидкая масса)
+2138	ara	NOUN	ok			орнитол. ара (аналогично русскому слову)
+2140	šav	NOUN	drop_transparent		шов — тот же корень и значение	шов
+2141	jogurt	NOUN	drop_transparent		йогурт — тот же корень и значение	йогурт
+2142	rasprodaja	NOUN	drop_transparent		распродажа — тот же корень и значение	распродажа
+2143	karate	NOUN	drop_transparent		каратэ — тот же корень и значение	каратэ
+2144	protest	NOUN	drop_transparent		протест — тот же корень и значение	протест (аналогично русскому слову)
+2150	nerv	NOUN	drop_transparent		нерв — тот же корень и значение	нерв (аналогично русскому слову)
+2151	šiti	VERB	drop_transparent		шить — тот же корень и значение	шить
+2152	lavirint	NOUN	drop_transparent		лабиринт — тот же корень и значение	лабиринт
+2153	reaktor	NOUN	drop_transparent		реактор — тот же корень и значение	реактор
+2154	jasmin	NOUN	drop_transparent		жасмин — тот же корень и значение	ботан. жасмин
+2157	ambiciozan	ADJ	drop_transparent		амбициозный — тот же корень и значение	амбициозный
+2158	epidemija	NOUN	drop_transparent		эпидемия — тот же корень и значение	мед. эпидемия
+2160	orgazam	NOUN	drop_transparent		оргазм — тот же корень и значение	оргазм
+2161	viljuška	NOUN	ok			вилка
+2162	antena	NOUN	drop_transparent		антенна — тот же корень и значение	техн. антенна
+2163	diskretan	ADJ	drop_transparent		дискретный — тот же корень и значение	матем. дискретный
+2165	slama	NOUN	drop_transparent		солома — тот же корень и значение	солома
+2167	loza	NOUN	drop_transparent		лоза — тот же корень и значение	лоза (аналогично русскому слову)
+2170	milioner	NOUN	drop_transparent		миллионер — тот же корень и значение	миллионер
+2171	izdavač	NOUN	drop_transparent		издатель — тот же корень и значение	издатель
+2172	triput	ADV	ok			троекратно, трижды
+2173	horizont	NOUN	drop_transparent		горизонт — тот же корень и значение	горизонт
+2177	deseti	ADJ	drop_transparent		десятый — тот же корень и значение	десятый
+2179	obred	NOUN	drop_transparent		обряд — тот же корень и значение	обряд
+2180	mehanizam	NOUN	drop_transparent		механизм — тот же корень и значение	механизм
+2182	ambar	NOUN	drop_transparent		амбар — тот же корень и значение	амбар (аналогично русскому слову)
+2183	neznanje	NOUN	drop_transparent		незнание — тот же корень и значение	незнание
+2185	plazma	NOUN	drop_transparent		плазма — тот же корень и значение	физ. плазма
+2186	otpasti	VERB	ok			отпасть
+2187	citat	NOUN	drop_transparent		цитата — тот же корень и значение	цитата
+2188	kupola	NOUN	drop_transparent		купол — тот же корень и значение	архит. купол
+2190	specijalnost	NOUN	drop_transparent		специальность — тот же корень и значение	специальность
+2192	karavan	NOUN	drop_transparent		караван — тот же корень и значение	караван
+2193	tango	NOUN	drop_transparent		танго — тот же корень и значение	танго
+2194	postelja	NOUN	drop_transparent		постель — тот же корень и значение	постель, кровать
+2196	agonija	NOUN	drop_transparent		агония — тот же корень и значение	агония
+2200	puniti	VERB	ok			наполнять
+2205	hodanje	NOUN	ok			ходьба
+2206	server	NOUN	ok			техн. сервер (аналогично русскому слову)
+2207	biografija	NOUN	drop_transparent		биография — тот же корень и значение	биография
+2208	sitno	ADV	ok			чуть-чуть
+2209	arhitekta	NOUN	drop_transparent		архитектор — тот же корень и значение	архитектор
+2213	teleskop	NOUN	drop_transparent		телескоп — тот же корень и значение	телескоп
+2214	pornografija	NOUN	drop_transparent		порнография — тот же корень и значение	порнография
+2216	barmen	NOUN	drop_transparent		бармен — тот же корень и значение	бармен
+2217	bokser	NOUN	drop_transparent		боксёр — тот же корень и значение	боксёр
+2218	feniks	NOUN	drop_transparent		феникс — тот же корень и значение	мифол. феникс (аналогично русскому слову)
+2219	osip	NOUN	ok			сыпь
+2221	pristojnost	NOUN	drop_transparent		порядочность — тот же корень и значение	порядочность, пристойность
+2222	metla	NOUN	drop_transparent		метла — тот же корень и значение	метла (аналогично русскому слову)
+2223	legija	NOUN	drop_transparent		легион — тот же корень и значение	истор. легион
+2228	muza	NOUN	drop_transparent		муза — тот же корень и значение	мифол. муза (аналогично русскому слову)
+2231	elegantan	ADJ	drop_transparent		элегантный — тот же корень и значение	элегантный
+2235	formalnost	NOUN	drop_transparent		формальность — тот же корень и значение	формальность
+2237	fizičar	NOUN	drop_transparent		физик — тот же корень и значение	физик
+2240	šnicla	NOUN	drop_transparent		шницель — тот же корень и значение	шницель
+2248	autobuski	ADJ	drop_transparent		автобусный — тот же корень и значение	автобусный
+2252	surov	ADJ	gloss	сырой	суров — в основном сырой, суровый — редко	сырой; суровый
+2254	kompas	NOUN	drop_transparent		компас — тот же корень и значение	компас (аналогично русскому слову)
+2257	metafora	NOUN	drop_transparent		метафора — тот же корень и значение	лингв. метафора
+2260	skulptura	NOUN	drop_transparent		скульптура — тот же корень и значение	скульптура (вид искусства)
+2263	kult	NOUN	drop_transparent		культ — тот же корень и значение	культ
+2265	svinjetina	NOUN	drop_transparent		свинина — тот же корень и значение	свинина
+2266	unija	NOUN	drop_transparent		уния — тот же корень и значение	уния, союз
+2268	geto	NOUN	drop_transparent		гетто — тот же корень и значение	гетто
+2270	imperator	NOUN	drop_transparent		император — тот же корень и значение	император (аналогично русскому слову)
+2271	bataljon	NOUN	drop_transparent		батальон — тот же корень и значение	батальон
+2273	harmonija	NOUN	drop_transparent		гармония — тот же корень и значение	гармония
+2276	link	NOUN	trap	ссылка	link в английском — гиперссылка, в черногорском — то же	линк
+2278	krčma	NOUN	drop_transparent		корчма — тот же корень и значение	корчма
+2279	revolver	NOUN	drop_transparent		револьвер — тот же корень и значение	револьвер
+2281	pena	NOUN	drop_transparent		пена — тот же корень и значение	пена (аналогично русскому слову)
+2283	jon	NOUN	drop_transparent		ион — тот же корень и значение	хим. ион
+2284	psiha	NOUN	drop_transparent		психика — тот же корень и значение	психика
+2285	federacija	NOUN	ok			федерация
+2288	kofein	NOUN	ok			кофеин
+2290	svetao	ADJ	ok			светлый
+2291	beton	NOUN	ok			бетон
+2295	hod	NOUN	ok			ход (аналогично русскому слову)
+2296	osa	NOUN	ok			оса
+2298	ropstvo	NOUN	ok			рабство
+2299	kiseo	ADJ	ok			кислый
+2300	eho	NOUN	ok			эхо
+2302	rasist	NOUN	ok			расист
+2303	zakonski	ADV	drop_grammar	наречие образа действия	zakonski — наречие, не прилагательное	законный
+2304	abortus	NOUN	ok			аборт
+2306	meteor	NOUN	ok			астрон. метеор (аналогично русскому слову)
+2308	teror	NOUN	ok			террор
+2309	hirurgija	NOUN	ok			мед. хирургия
+2310	karneval	NOUN	ok			карнавал
+2312	antibiotik	NOUN	ok			биохим. антибиотик
+2313	izmena	NOUN	gloss	измена, предательство	толкование неполное, основное значение — предательство	обмен, размен; смена, перемена
+2314	kosmos	NOUN	ok			космос (аналогично русскому слову)
+2317	režim	NOUN	ok			режим (аналогично русскому слову)
+2321	savršenstvo	NOUN	ok			совершенство
+2324	faraon	NOUN	ok			истор. фараон (аналогично русскому слову)
+2325	jaguar	NOUN	ok			ягуар
+2328	gust	ADJ	ok			густой; частый; плотный
+2329	anketa	NOUN	ok			анкета
+2330	karantin	NOUN	ok			мед. карантин
+2332	provincija	NOUN	ok			провинция
+2343	kojot	NOUN	ok			койот
+2344	kontekst	NOUN	ok			контекст
+2345	kvadrat	NOUN	ok			геометр. квадрат (аналогично русскому слову); матем. квадрат (аналогично русскому слову)
+2348	pekara	NOUN	ok			пекарня
+2351	kola	NOUN	ok			автомобиль, машина
+2353	bor	NOUN	drop_name	топоним или имя	Бор — собственное имя (химический элемент назывался бы иначе)	Бор
+2366	tragičan	ADJ	ok			трагический, трагичный
+2367	iskra	NOUN	ok			искра
+2374	bikini	NOUN	ok			бикини
+2378	entuzijazam	NOUN	ok			энтузиазм
+2380	akcenat	NOUN	ok			ударение, акцент
+2382	katalog	NOUN	ok			каталог
+2383	titan	NOUN	drop_transparent	титан	химический элемент, корень тот же, значение идентично	хим. титан
+2384	izrasti	VERB	ok			вырасти
+2387	artiljerija	NOUN	ok			артиллерия
+2388	lava	NOUN	ok			лава
+2391	prostitucija	NOUN	ok			проституция
+2392	satana	NOUN	drop_name	собственное имя	Сатана — имя собственное, не нарицательное слово	сатана
+2396	automat	NOUN	ok			автомат
+2398	kečap	NOUN	ok			кетчуп
+2400	mak	NOUN	ok			ботан. мак (аналогично русскому слову)
+2403	vosak	NOUN	ok			воск
+2409	burger	NOUN	ok			бургер
+2410	rupija	NOUN	gloss	индийская валюта	рупия — денежная единица, толкование неточно	рупия
+2414	diktator	NOUN	ok			истор. диктатор (аналогично русскому слову)
+2415	vlaga	NOUN	ok			влага
+2416	trans	NOUN	ok			транс
+2417	koral	NOUN	ok			коралл
+2418	gimnazija	NOUN	ok			гимназия
+2419	papagaj	NOUN	ok			зоол. орнитол. попугай
+2421	paranoja	NOUN	ok			психиатр. паранойя
+2422	pastir	NOUN	ok			пастух
+2428	otkuda	ADV	drop_transparent	откуда	наречие места, тот же корень и значение	откуда (аналогично русскому слову)
+2429	etika	NOUN	ok			этика
+2433	kristalan	ADJ	ok			кристаллический; кристальный, прозрачный
+2434	magnet	NOUN	ok			физ. магнит
+2435	minimum	NOUN	ok			минимум
+2447	ideal	NOUN	ok			идеал (аналогично русскому слову)
+2448	neizbežan	ADJ	ok			неизбежный, неминуемый
+2449	kalorija	NOUN	ok			физ. калория
+2453	detaljan	ADJ	ok			детальный, подробный
+2456	stabilnost	NOUN	ok			стабильность
+2462	sfera	NOUN	ok			сфера
+2463	slavina	NOUN	gloss	водопроводный кран	славина — кран, но толкование слишком узко	кран
+2464	gvozden	ADJ	drop_name	имя собственное	Гвозден — имя, не прилагательное	Гвозден
+2467	arheolog	NOUN	ok			археолог (аналогично русскому слову)
+2469	kvadratni	ADJ	ok			квадратный
+2470	dilema	NOUN	ok			филос., матем. дилемма
+2473	diverzija	NOUN	ok			воен. диверсия
+2475	milosrđe	NOUN	ok			милосердие
+2477	potajno	ADV	ok			тайно, скрыто, втайне
+2481	izdaleka	ADV	ok			издалека
+2484	prodavač	NOUN	ok			продавец
+2486	mesti	VERB	gloss	мести, подметать	толкование неполное	мести
+2489	aligator	NOUN	ok			аллигатор
+2491	šampionat	NOUN	ok			чемпионат
+2493	proliti	VERB	ok			пролить
+2495	mumija	NOUN	ok			мумия
+2497	dokumentacija	NOUN	ok			документация
+2500	arapski	ADJ	gloss	арабский	"арапский" — устаревший вариант	арабский, арапский
+2501	opština	NOUN	ok			община
+2502	repa	NOUN	gloss	репа	свёкла — другое растение, не репа	ботан. репа (аналогично русскому слову); ботан. свёкла
+2504	dramatično	ADV	ok			драматично
+2505	mandat	NOUN	ok			мандат
+2507	intuicija	NOUN	ok			интуиция
+2508	popularnost	NOUN	ok			популярность
+2509	arhitektura	NOUN	ok			архитектура
+2510	anestezija	NOUN	ok			анестезия
+2513	dinastija	NOUN	ok			истор. династия
+2514	sauna	NOUN	ok			сауна
+2518	transformacija	NOUN	ok			трансформация, преобразование; матем. преобразование
+2519	opijum	NOUN	ok			опиум
+2520	maksimalan	ADJ	ok			максимальный, наибольший
+2522	peć	NOUN	ok			печь
+2524	manevar	NOUN	ok			манёвр
+2525	hibrid	NOUN	ok			биол. гибрид
+2526	kupon	NOUN	ok			купон
+2528	kulturan	ADJ	ok			культурный, относящийся к культуре
+2532	superheroj	NOUN	ok			супергерой
+2537	akt	NOUN	ok			акт, протокол; акт, действие
+2540	kritikovati	VERB	ok			критиковать
+2544	ribolov	NOUN	ok			рыбалка
+2547	maraton	NOUN	ok			марафон
+2548	adaptacija	NOUN	ok			адаптация, приспособление
+2551	žarko	ADV	gloss	жарко	с заглавной буквы написано неправильно	Жарко
+2557	šampon	NOUN	ok			шампунь
+2561	konflikt	NOUN	ok			конфликт
+2562	škorpion	NOUN	ok			зоол. скорпион
+2564	vodonik	NOUN	ok			хим. водород
+2566	lasica	NOUN	ok			ласка
+2568	flora	NOUN	ok			флора (аналогично русскому слову)
+2569	propoved	NOUN	ok			проповедь
+2571	arija	NOUN	ok			ария
+2575	širina	NOUN	ok			ширина (аналогично русскому слову)
+2581	kliše	NOUN	ok			клише
+2582	šljiva	NOUN	ok			слива
+2584	sito	NOUN	ok			сито (аналогично русскому слову)
+2586	amnezija	NOUN	ok			мед. амнезия
+2587	paša	NOUN	drop_name	паша	историческое титульное имя, но в черногорском может быть нарицательным; проверить контекст	паша
+2591	korpus	NOUN	ok			корпус (аналог. русск. корпус [4])
+2594	nesposobnost	NOUN	ok			неспособность
+2597	seksualnost	NOUN	ok			сексуальность
+2598	rubin	NOUN	ok			рубин
+2599	jedinstvo	NOUN	ok			единство
+2600	orhideja	NOUN	ok			ботан. орхидея
+2602	mehanika	NOUN	ok			физ. механика
+2603	akcent	NOUN	ok			лингв. акцент (аналог. русск. акцент [1])
+2610	nosorog	NOUN	ok			носорог (аналогично русскому слову)
+2611	nedostupan	ADJ	ok			недоступный, недосягаемый
+2615	ultrazvuk	NOUN	ok			физ. ультразвук
+2616	ananas	NOUN	ok			ботан. ананас (растение) (Ananas); ананас (плод)
+2617	fejsbuk	NOUN	drop_name	Фейсбук	название компании, собственное имя	Фейсбук
+2619	biftek	NOUN	ok			бифштекс
+2620	mučenik	NOUN	ok			мученик
+2621	glina	NOUN	ok			# глина (аналогично русскому слову)
+2622	kros	NOUN	ok			кросс
+2627	kodeks	NOUN	ok			кодекс
+2630	motivacija	NOUN	ok			мотивация
+2631	mladež	NOUN	ok			молодёжь
+2632	olimpijski	ADJ	ok			олимпийский
+2635	psihijatrija	NOUN	ok			психиатрия
+2636	mjuzikl	NOUN	ok			мюзикл
+2637	mutacija	NOUN	ok			генет. мутация
+2639	meduza	NOUN	ok			медуза (аналогично русскому слову)
+2640	milijarder	NOUN	ok			миллиардер (обладатель миллиардного состояния)
+2641	gorak	ADJ	ok			горький
+2644	juta	NOUN	drop_name	Юта	штат США, топоним	юта
+2647	orden	NOUN	ok			орден (знак отличия)
+2648	hektar	NOUN	ok			гектар
+2649	astma	NOUN	ok			мед. астма
+2654	mutant	NOUN	ok			мутант (аналогично русскому слову)
+2655	dobrica	NOUN	drop_name	Добрица	личное имя, фамилия	Добрица
+2656	tradicionalno	ADV	ok			традиционно
+2657	komunizam	NOUN	ok			полит. коммунизм
+2658	jednorog	NOUN	ok			единорог
+2660	vrana	NOUN	ok			зоол. ворона (Corvus)
+2661	manga	NOUN	ok			манга
+2666	studentkinja	NOUN	ok			студентка
+2667	silan	ADJ	ok			сильный
+2670	mikroskop	NOUN	ok			микроскоп
+2671	starenje	NOUN	ok			старение
+2674	komičar	NOUN	ok			комик
+2676	slina	NOUN	ok			физиол. слюна
+2681	slogan	NOUN	ok			слоган, лозунг, девиз
+2682	paralizovati	ADJ	gloss	paralizovati (глагол)	часть речи неверна: это глагол, не прилагательное	парализовать
+2683	intimnost	NOUN	ok			интимность
+2684	ginekolog	NOUN	ok			мед. гинеколог (аналогично русскому слову)
+2686	bluz	NOUN	ok			муз. блюз
+2688	orgija	NOUN	ok			оргия
+2689	biopsija	NOUN	ok			мед. биопсия
+2691	arhiv	NOUN	ok			архив
+2694	srbija	NOUN	ok			Сербия
+2695	cvijet	NOUN	ok			цветок
+2696	milimetar	NOUN	ok			миллиметр
+2697	salama	NOUN	ok			салями
+2699	akumulator	NOUN	ok			аккумулятор
+2701	traktor	NOUN	ok			трактор
+2702	os	NOUN	ok			ось
+2703	sarkazam	NOUN	ok			сарказм
+2704	molekul	NOUN	ok			хим. молекула
+2706	skelet	NOUN	ok			скелет (аналогично русскому слову)
+2707	hrišćanstvo	NOUN	ok			христианство
+2708	skromnost	NOUN	ok			непритязательность, скромность
+2709	sekta	NOUN	ok			секта (аналогично русскому слову)
+2713	maćeha	NOUN	ok			мачеха, приёмная мать
+2716	šimpanza	NOUN	ok			зоол. шимпанзе
+2718	egipatski	ADJ	ok			египетский
+2722	ekstaza	NOUN	ok			экстаз
+2723	deva	NOUN	ok			дева (аналогично русскому слову)
+2724	cement	NOUN	ok			цемент
+2726	anatomija	NOUN	ok			анатомия
+2733	očevidac	NOUN	ok			очевидец
+2735	jevanđelje	NOUN	ok			евангелие
+2738	zebra	NOUN	ok			зебра (аналогично русскому слову)
+2740	opozvati	VERB	ok			отозваться (на зов); отозвать, отменить (приказ, решение)
+2741	ikona	NOUN	ok			религ., церк. икона
+2745	pšenica	NOUN	ok			ботан. пшеница (аналогично русскому слову)
+2747	litar	NOUN	ok			литр
+2748	vanila	NOUN	ok			ваниль
+2749	ugljenik	NOUN	ok			хим. углерод
+2751	šablon	NOUN	ok			шаблон (аналогично русскому слову)
+2752	modul	NOUN	ok			модуль
+2755	kura	NOUN	gloss	курица	толкование неполное, нужен перевод	кура
+2756	metan	NOUN	ok			хим. метан
+2757	agresija	NOUN	ok			агрессия
+2760	kapljica	NOUN	ok			капля
+2761	savetovanje	NOUN	ok			советование, консультирование, дача советов; совещание, обсуждение, консультация, симпозиум
+2763	čar	NOUN	ok			очарование, шарм; чары
+2764	klasik	NOUN	ok			классик
+2765	kvota	NOUN	ok			квота
+2767	malina	NOUN	ok			малина (аналогично русскому слову) в знач. растение
+2769	arsenal	NOUN	ok			арсенал
+2770	pokojnik	NOUN	ok			покойник; мертвец
+2771	gladijator	NOUN	ok			гладиатор
+2773	algoritam	NOUN	ok			алгоритм
+2774	dijalog	NOUN	ok			диалог
+2775	kapitalizam	NOUN	ok			капитализм
+2776	aura	NOUN	ok			аура
+2783	idiotski	ADJ	ok			идиотский
+2784	vegetarijanac	NOUN	ok			вегетарианец
+2785	geolog	NOUN	ok			геолог
+2788	tampon	NOUN	ok			тампон
+2792	gel	NOUN	ok			хим. гель
+2794	glupak	NOUN	ok			глупец, дурак
+2797	literatura	NOUN	ok			литература
+2802	korito	NOUN	ok			корыто; русло реки
+2804	licenca	NOUN	ok			лицензия
+2806	mula	NOUN	gloss	мулла	толкование неверно: мулла — исламский священнослужитель, не мулла	мулла
+2807	mah	NOUN	ok			мох
+2811	alternativan	ADJ	ok			альтернативный
+2812	nerazuman	ADJ	ok			неразумный
+2813	avijacija	NOUN	ok			авиация, воздухоплавание; авиация, воздушный флот
+2816	teleportacija	NOUN	ok			телепортация
+2819	brijač	NOUN	gloss	brijač — brijač je onaj koji brije, a brijač može biti i nož za brijanje	толкование описывает инструмент, а слово означает человека	бритва
+2821	spora	NOUN	ok			биол. спора
+2823	smrtnost	NOUN	ok			смертность (количество случаев смерти)
+2824	paradoks	NOUN	ok			парадокс
+2826	optimist	NOUN	ok			оптимист
+2832	minimalan	ADJ	ok			минимальный; наименьший
+2835	konzul	NOUN	ok			консул
+2838	uzda	NOUN	ok			узда, вожжа, повод
+2842	broš	NOUN	ok			брошь, брошка
+2843	kobra	NOUN	ok			кобра (аналогично русскому слову)
+2847	kubanski	ADJ	ok			кубинский
+2848	izliv	NOUN	ok			излияние; разлив (реки)
+2851	jod	NOUN	gloss	йод	толкование даёт русское название химического элемента, а не черногорское слово	хим. иод (йод)
+2852	bambus	NOUN	ok			ботан. бамбук
+2854	herojski	ADJ	ok			героический, геройский
+2857	flauta	NOUN	ok			флейта
+2858	imigrant	NOUN	ok			иммигрант
+2860	avans	NOUN	ok			фин. аванс; задаток
+2861	singl	NOUN	ok			сингл
+2863	solidarnost	NOUN	ok			солидарность
+2868	migrena	NOUN	ok			мед. мигрень, гемикрания
+2870	vepar	NOUN	ok			кабан, вепрь, дикая свинья
+2871	varijacija	NOUN	ok			вариация
+2873	pedofil	NOUN	ok			педофил
+2877	izobilje	NOUN	ok			изобилие, обилие
+2878	kolekcionar	NOUN	ok			коллекционер
+2887	balerina	NOUN	ok			балерина
+2890	hoditi	VERB	ok			ходить
+2894	manipulacija	NOUN	ok			манипуляция
+2895	revolucionar	NOUN	ok			революционер
+2899	liker	NOUN	gloss	ликёр	толкование неверно: liker — это напиток, а не ликёр в смысле того, кто ставит лайки	ликёр
+2900	kljun	NOUN	ok			анат. клюв
+2904	palma	NOUN	ok			пальма
+2906	meditacija	NOUN	ok			медитация
+2907	čitalac	NOUN	ok			читатель
+2908	menstruacija	NOUN	ok			физиол. менструация
+2910	nezavisno	ADV	ok			независимо
+2912	savana	NOUN	ok			геогр. саванна
+2919	kupnja	NOUN	ok			покупка, купля
+2921	talk	NOUN	ok			минер. тальк
+2924	radikalan	ADJ	ok			радикальный
+2925	misionar	NOUN	ok			миссионер
+2926	stolar	NOUN	ok			столяр
+2929	ultimatum	NOUN	ok			ультиматум
+2931	svinjac	NOUN	ok			свинарник, хлев, свинарня
+2936	surogat	NOUN	ok			суррогат
+2937	advokatski	ADJ	ok			адвокатский
+2938	temperament	NOUN	ok			темперамент (аналогично русскому слову)
+2940	simfonija	NOUN	ok			симфония
+2941	barikada	NOUN	ok			баррикада
+2943	čakra	NOUN	ok			чакра
+2946	frakcija	NOUN	ok			полит. фракция
+2947	imitacija	NOUN	ok			имитация
+2950	kube	NOUN	gloss	купол	толкование неверно: kube — это архитектурный термин, но толкование даёт неправильный перевод	архит. купол
+2952	analitičar	NOUN	ok			аналитик
+2953	rasizam	NOUN	ok			расизм
+2954	opozicija	NOUN	ok			оппозиция
+2955	tuba	NOUN	ok			туба, тюбик
+2956	biljan	ADJ	drop_name	Билян — это имя собственное, а не нарицательное прилагательное	это личное имя или фамилия	Билян
+2957	malarija	NOUN	ok			мед. малярия
+2959	sifilis	NOUN	ok			мед. сифилис
+2960	obruč	NOUN	ok			обруч
+2961	kateter	NOUN	ok			катетер
+2962	lokomotiva	NOUN	ok			локомотив
+2972	plivač	NOUN	ok			пловец
+2973	vidljivost	NOUN	ok			видимость
+2974	podvig	NOUN	ok			подвиг (аналог русск. слову)
+2979	metabolizam	NOUN	ok			биол. метаболизм
+2981	optimizam	NOUN	ok			оптимизм
+2986	marioneta	NOUN	ok			марионетка
+2987	pijanist	NOUN	ok			пианист
+2992	skeč	NOUN	ok			театр. скетч
+2994	cijanid	NOUN	ok			хим. цианид
+2996	puma	NOUN	ok			зоол. пума (аналогично русскому слову)
+2997	pupak	NOUN	ok			анат. пуп, пупок
+2998	gluh	ADJ	ok			глухой
+3000	poslovica	NOUN	ok			пословица (аналогично русскому слову)
+3003	prodavačica	NOUN	ok			продавщица
+3004	galon	NOUN	ok			галлон
+3005	kotao	NOUN	ok			котёл
+3006	konstantin	ADJ	drop_name	Konstantin je ime, ne pridev	Konstantin je muško ime, ne pridev	Константин
+3007	cilindar	NOUN	ok			геометр. цилиндр
+3009	okno	NOUN	ok			архит. окно; горн. шахта
+3012	obilje	NOUN	ok			изобилие, обилие
+3013	gramofon	NOUN	ok			граммофон
+3015	genocid	NOUN	ok			геноцид (аналогично русскому слову)
+3018	manikir	NOUN	ok			маникюр
+3019	činovnik	NOUN	ok			чиновник
+3020	sabotaža	NOUN	ok			саботаж
+3022	obim	NOUN	ok			матем. объём; размах, объём, диапазон, охват
+3024	bedro	NOUN	ok			анат. бедро (аналогично русскому слову)
+3029	tofu	NOUN	ok			тофу
+3030	rastvor	NOUN	ok			раствор
+3032	gong	NOUN	ok			гонг
+3035	kruška	NOUN	ok			груша (плод); груша (растение)
+3038	gord	ADJ	ok			гордый
+3039	šaman	NOUN	ok			этногр. шаман (аналогично русскому слову)
+3040	bratić	NOUN	gloss	bratić	cousin (mali brat, rodbina)	?
+3043	jajce	NOUN	drop_name	Jajce je grad u Bosni	Jajce je toponim, ne obično ime	Яйце
+3045	zarez	NOUN	ok			запятая
+3047	matematičar	NOUN	ok			математик
+3048	egzorcizam	NOUN	ok			экзорцизм
+3051	đumbir	NOUN	ok			имбирь
+3053	struna	NOUN	ok			струна
+3054	mineral	NOUN	ok			минерал
+3055	šuškati	VERB	ok			шуршать, шелестеть; болтать, шушукаться
+3056	biolog	NOUN	ok			биолог (аналогично русскому слову)
+3057	menadžment	NOUN	ok			менеджмент
+3059	manifest	NOUN	ok			манифест
+3061	tiranija	NOUN	ok			тирания
+3062	kaktus	NOUN	ok			ботан. кактус (аналогично русскому слову)
+3065	kobila	NOUN	ok			зоол. кобыла
+3067	kolaps	NOUN	ok			коллапс
+3068	bliskost	NOUN	ok			близость
+3069	reforma	NOUN	ok			реформа (аналогично русскому слову)
+3072	kopito	NOUN	ok			копыто
+3073	bibliotekar	NOUN	ok			библиотекарь
+3074	učtiv	ADJ	ok			вежливый, учтивый
+3076	holesterol	NOUN	ok			холестерин
+3077	bag	NOUN	ok			комп. баг, ошибка в программе; жучок, устройство для прослушки
+3078	radioaktivan	ADJ	ok			физ. радиоактивный
+3080	konfederacija	NOUN	ok			конфедерация
+3081	nostalgija	NOUN	ok			ностальгия
+3083	paragraf	NOUN	ok			параграф (аналогично русскому слову)
+3085	mistik	NOUN	ok			книжн. мистик
+3086	veto	NOUN	ok			вето (аналогично русскому слову)
+3088	dispečer	NOUN	ok			диспетчер
+3092	nokaut	NOUN	ok			нокаут
+3095	cunami	NOUN	ok			цунами (аналогично русскому слову)
+3100	sarkastičan	ADJ	ok			саркастический, саркастичный
+3102	derbi	NOUN	ok			дерби
+3104	horda	NOUN	ok			орда
+3108	insulin	NOUN	ok			биохим. инсулин
+3109	eksperimentalan	ADJ	ok			экспериментальный
+3110	luster	NOUN	ok			люстра
+3111	pseudonim	NOUN	ok			псевдоним
+3113	zubni	ADJ	ok			зубной
+3114	privrženost	NOUN	ok			приверженность
+3117	arhitekt	NOUN	ok			архитектор
+3120	patriot	NOUN	ok			патриот
+3121	odin	ADJ	drop_grammar	jedan	odin je broj, službena reč	один
+3124	cirkulacija	NOUN	ok			циркуляция
+3125	budilnik	NOUN	ok			будильник
+3126	najlon	NOUN	ok			нейлон
+3128	žirafa	NOUN	ok			жираф
+3129	valuta	NOUN	ok			валюта
+3130	dinja	NOUN	ok			ботан. дыня (Cucumis melo)
+3133	anarhija	NOUN	ok			анархия
+3134	božica	NOUN	ok			богиня
+3136	vandalizam	NOUN	ok			вандализм
+3141	okupacija	NOUN	ok			оккупация
+3144	bojler	NOUN	ok			бойлер, водонагреватель
+3145	pedijatar	NOUN	ok			педиатр
+3146	penicilin	NOUN	ok			пенициллин
+3150	buldog	NOUN	ok			бульдог
+3153	atlas	NOUN	ok			а́тлас
+3154	karburator	NOUN	ok			техн. карбюратор
+3155	slonovača	NOUN	ok			слоновая кость
+3159	obradovati	VERB	ok			обрадовать
+3160	albino	NOUN	ok			альбинос
+3161	saksofon	NOUN	ok			муз. саксофон (аналогично русскому слову)
+3164	ateist	NOUN	ok			атеист (аналогично русскому слову)
+3170	periskop	NOUN	ok			перископ
+3172	reinkarnacija	NOUN	ok			религ. реинкарнация, перевоплощение
+3174	jastreb	NOUN	ok			орнитол. ястреб
+3177	objektiv	NOUN	ok			объектив
+3179	gnjev	NOUN	ok			гнев
+3180	verojatnost	NOUN	ok			вероятность
+3183	biblijski	ADJ	ok			библейский
+3185	finalan	ADJ	ok			финальный
+3186	legitimacija	NOUN	ok			легитимация
+3187	krut	ADJ	ok			крутой, резкий
+3189	natrijum	NOUN	ok			хим. натрий
+3190	višnja	NOUN	ok			вишня
+3194	pljeskavica	NOUN	gloss	плескавица (мясное блюдо)	толкование неполное, не объясняет, что это блюдо	плескавица
+3196	adekvatno	ADV	ok			адекватно
+3197	hematom	NOUN	ok			гематома
+3199	hašiš	NOUN	ok			гашиш
+3203	kimono	NOUN	ok			кимоно
+3204	veranda	NOUN	ok			веранда (аналогично русскому слову)
+3207	homoseksualnost	NOUN	ok			гомосексуальность, гомосексуализм
+3208	šarlatan	NOUN	ok			шарлатан
+3209	sirotica	NOUN	gloss	сирота	толкование неполное, не указывает род (м/ж)	сирота
+3210	drvoseča	NOUN	gloss	дровосек	основной вариант перевода	лесоруб, дровосек
+3211	pravilan	ADJ	ok			правильный
+3212	diplomat	NOUN	ok			дипломат
+3214	vakuum	NOUN	ok			вакуум (аналогично русскому слову)
+3217	hipoteza	NOUN	ok			гипотеза
+3218	procesor	NOUN	ok			комп. процессор
+3221	avokado	NOUN	ok			авокадо
+3222	azot	NOUN	ok			азот (аналогично русскому слову)
+3225	trust	NOUN	ok			трест
+3226	antitelo	NOUN	ok			биохим. антитело
+3231	monolog	NOUN	ok			монолог
+3235	hipnoza	NOUN	ok			гипноз
+3236	globus	NOUN	ok			глобус
+3237	srbin	NOUN	ok			серб
+3245	kašljati	VERB	ok			кашлять
+3247	gusenica	NOUN	ok			гусеница
+3249	kondukter	NOUN	gloss	кондуктор	в черногорском контексте скорее проводник (на транспорте)	кондуктор, проводник
+3250	veslo	NOUN	ok			весло
+3252	mikser	NOUN	ok			миксер
+3254	incest	NOUN	ok			инцест (аналогично русскому слову), кровосмешение
+3255	inkvizicija	NOUN	ok			инквизиция
+3257	kleveta	NOUN	ok			клевета (аналогично русскому слову)
+3260	parametar	NOUN	ok			параметр
+3263	optimističan	ADJ	ok			оптимистичный, оптимистический
+3264	njuh	NOUN	gloss	нюх	обоняние — вторичное значение	нюх, обоняние
+3269	objektivan	ADJ	ok			объективный
+3270	protestant	NOUN	ok			религ. протестант
+3275	zaveštanje	NOUN	ok			юр. завещание
+3276	dukat	NOUN	ok			дукат (аналогично русскому слову)
+3278	opal	NOUN	ok			минер. опал (аналогично русскому слову)
+3284	elektron	NOUN	ok			физ. электрон
+3285	vidra	NOUN	ok			зоол. выдра (Lutra)
+3286	harem	NOUN	ok			гарем
+3287	produkt	NOUN	ok			продукт
+3288	zloba	NOUN	ok			злоба (аналогично русскому слову)
+3294	testosteron	NOUN	ok			физиол. тестостерон
+3296	džihad	NOUN	ok			религ. джихад
+3297	aperitiv	NOUN	ok			гастрон. аперитив (аналогично русскому слову)
+3299	administrator	NOUN	ok			администратор (аналогично русскому слову)
+3301	atelje	NOUN	ok			ателье
+3302	škripati	VERB	ok			скрипеть
+3309	šakal	NOUN	ok			зоол. шакал (аналогично русскому слову) (Canis aureus)
+3310	laguna	NOUN	ok			геогр. лагуна
+3311	kameleon	NOUN	ok			зоол. хамелеон
+3313	smokva	NOUN	gloss	инжир	основной современный вариант	инжир, смоква, фига
+3314	klitoris	NOUN	ok			анат. клитор
+3315	ravnodušan	ADJ	ok			равнодушный, безразличный, безучастный
+3316	elektroda	NOUN	ok			эл.-техн. электрод
+3318	kašmir	NOUN	gloss	кашемир	правильно, но можно кашмир	текст. кашемир
+3322	prostata	NOUN	ok			анат. предстательная железа, простата
+3323	obmanuti	VERB	ok			обмануть
+3326	adresar	NOUN	gloss	адресник	адресная книга — устаревший перевод	адресная книга
+3328	mentalitet	NOUN	ok			менталитет, ментальность
+3330	dirigent	NOUN	ok			дирижёр
+3332	kontrast	NOUN	ok			контраст
+3333	nepravilno	ADV	ok			неправильно
+3335	koridor	NOUN	ok			коридор (аналогично русскому слову)
+3336	gaza	NOUN	gloss	марля, газ	толкование неполное	марля
+3338	anarhist	NOUN	ok			анархист (аналогично русскому слову)
+3343	anus	NOUN	ok			анус (аналог русск. слову)
+3344	čistilište	NOUN	ok			чистилище
+3345	klarinet	NOUN	ok			муз. кларнет
+3346	parket	NOUN	ok			паркет
+3348	šurak	NOUN	gloss	деверь	шурин — брат жены, деверь — брат мужа	шурин
+3350	šrapnel	NOUN	ok			воен. шрапнель
+3351	aroma	NOUN	ok			аромат
+3353	vektor	NOUN	ok			матем. вектор
+3356	proton	NOUN	ok			физ. протон (аналогично русскому слову)
+3360	meteorit	NOUN	ok			астрон. метеорит (аналогично русскому слову)
+3361	performans	NOUN	ok			перформанс
+3363	antilopa	NOUN	ok			зоол. антилопа (аналогично русскому слову)
+3365	genetika	NOUN	ok			генетика
+3366	belgijski	ADJ	ok			бельгийский
+3367	polet	NOUN	drop_transparent	взлёт, подъём; вдохновение		взлёт, подъём; вдохновение, восторг, воодушевление
+3370	vijetnamski	ADJ	ok			вьетнамский
+3372	geografija	NOUN	ok			география
+3373	termometar	NOUN	ok			термометр
+3375	manija	NOUN	ok			мания
+3376	varijanta	NOUN	ok			вариант
+3377	sinonim	NOUN	ok			лингв. синоним
+3378	embrion	NOUN	ok			биол. зародыш, эмбрион
+3379	antropolog	NOUN	ok			антрополог (аналогично русскому слову)
+3382	alva	NOUN	gloss	халва	алва — халва	халва
+3384	pelikan	NOUN	ok			орнитол. пеликан
+3387	partizan	NOUN	ok			партизан (аналогично русскому слову)
+3388	stereotip	NOUN	ok			клише, стереотип
+3390	gorila	NOUN	ok			зоол. горилла (Gorilla)
+3392	kalijum	NOUN	ok			хим. калий
+3404	albatros	NOUN	ok			альбатрос
+3406	samouvereno	ADV	drop_grammar	самоуверенно	наречие образа действия	самоуверенно
+3407	antički	ADJ	ok			античный
+3409	improvizacija	NOUN	ok			импровизация
+3414	flamingo	NOUN	ok			фламинго
+3415	musketar	NOUN	ok			истор. мушкетёр
+3416	diskriminacija	NOUN	ok			дискриминация
+3417	asfalt	NOUN	ok			асфальт
+3420	meningitis	NOUN	ok			мед. менингит
+3422	turizam	NOUN	ok			туризм
+3429	anonimnost	NOUN	ok			анонимность
+3431	nozdrva	NOUN	ok			ноздря
+3432	beskonačnost	NOUN	ok			бесконечность
+3433	delirijum	NOUN	ok			делирий
+3434	pesimist	NOUN	ok			пессимист
+3435	imam	NOUN	ok			религ. имам
+3441	enciklopedija	NOUN	ok			энциклопедия
+3443	druželjubiv	ADJ	ok			дружелюбный
+3447	parobrod	NOUN	ok			пароход
+3449	blažen	ADJ	drop_name	Блажен	имя собственное	Блажен
+3452	ataše	NOUN	ok			атташе
+3453	sporan	ADJ	ok			спорный
+3455	sleng	NOUN	ok			сленг
+3456	socijalizam	NOUN	ok			полит. социализм
+3457	lavanda	NOUN	ok			лаванда (аналог. русск. слову; лат. Lavandula)
+3458	provokacija	NOUN	ok			провокация
+3459	spin	NOUN	ok			физ. спин
+3460	varvarski	ADJ	ok			варварский
+3461	pentagram	NOUN	ok			пентаграмма
+3462	markov	ADJ	drop_name	Марков	фамилия	Марков (аналогично русскому слову)
+3463	antimaterija	NOUN	ok			физ. антивещество, антиматерия
+3464	manifestacija	NOUN	ok			манифестация
+3465	apotekar	NOUN	ok			аптекарь
+3466	nacionalnost	NOUN	ok			национальность
+3468	aga	NOUN	ok			истор., ага, начальник; господин; придворный офицер (в старой Турции)
+3470	leukemija	NOUN	ok			мед. лейкемия, лейкоз
+3472	hrišćanka	NOUN	ok			христианка
+3474	goran	NOUN	drop_name	Горан	имя собственное	Горан
+3476	ekvator	NOUN	ok			геогр. экватор
+3477	aerobik	NOUN	ok			аэробика
+3479	tajfun	NOUN	ok			тайфун
+3481	smola	NOUN	ok			смола
+3484	finalist	NOUN	ok			финалист (аналогично русскому слову)
+3488	dijagnostika	NOUN	ok			диагностика
+3490	oganj	NOUN	gloss	огонь	огань — архаичная форма	огонь
+3492	akord	NOUN	ok			аккорд; аккордная работа
+3495	harfa	NOUN	ok			арфа
+3496	šalter	NOUN	gloss	окошко, кассовое окно	шалтер — окошко в кассе, билетной кассе	окошко (в кассе)
+3497	enzim	NOUN	ok			биохим. энзим
+3500	fasada	NOUN	ok			фасад
