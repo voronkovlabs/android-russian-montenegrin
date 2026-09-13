@@ -312,11 +312,43 @@ fun VocabFile.exerciseFor(
  */
 private fun VocabFile.synonyms(word: VocabWord): List<String> {
     val key = LocalCheck.glossVariants(word.gloss).firstOrNull() ?: return emptyList()
-    return words.asSequence()
-        .filter { it.id != word.id }
-        .filter { LocalCheck.glossVariants(it.gloss).firstOrNull() == key }
-        .map { it.id }
-        .toList()
+    return synonymIndex()[key].orEmpty().filter { it != word.id }
+}
+
+/**
+ * Указатель «первое слово толкования → все слова с ним».
+ *
+ * Считается один раз на словарь, и это не преждевременная оптимизация, а
+ * починка по диагностике с телефона (отчёты 63 и 70, 13.09.2026). До неё
+ * [synonyms] перебирал **все 1152 слова на каждую построенную карточку**, а на
+ * каждом слове звал [LocalCheck.glossVariants] — четыре регулярки, разбиение и
+ * нормализация. Пока словарь был тощим, это терялось в шуме; когда 1.75
+ * пустила новые слова вперёд долга и карточек стало вдесятеро больше, сборка
+ * ежедневного задания выросла с четырёх секунд до **шестнадцати-девятнадцати**.
+ * Квадрат от числа карточек — он и был.
+ *
+ * Урок на будущее стоит записать: починка, снявшая ограничение с роста, вскрыла
+ * место, которое этого роста не выдерживало. Второе следует за первым, и
+ * искать такое надо сразу после того, как что-то в приложении начало расти.
+ *
+ * Хранится по **ссылке на файл**, а не по равенству: у `VocabFile` равенство
+ * сравнивает все 1152 слова, и проверка кэша стоила бы дороже самого кэша.
+ * Файл живёт один на запуск (`VocabRepository.load` его кэширует), поэтому
+ * индекс строится ровно однажды.
+ */
+private val indexLock = Any()
+private var indexedFile: VocabFile? = null
+private var indexedGlosses: Map<String, List<String>> = emptyMap()
+
+private fun VocabFile.synonymIndex(): Map<String, List<String>> = synchronized(indexLock) {
+    if (indexedFile !== this) {
+        indexedGlosses = words
+            .groupBy { LocalCheck.glossVariants(it.gloss).firstOrNull().orEmpty() }
+            .filterKeys { it.isNotBlank() }
+            .mapValues { (_, same) -> same.map { it.id } }
+        indexedFile = this
+    }
+    indexedGlosses
 }
 
 /**

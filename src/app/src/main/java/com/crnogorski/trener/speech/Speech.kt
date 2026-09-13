@@ -65,6 +65,12 @@ private val LOW_PITCH: Float get() = Config.current.speech.lowPitch.toFloat()
  */
 private val SLOW_RATE: Float get() = Config.current.speech.slowRate.toFloat()
 
+/** Пауза между словами в медленном чтении. Ноль — читать слитно, как раньше. */
+private val SLOW_GAP_MS: Long get() = Config.current.speech.slowGapMs.toLong()
+
+/** Разделитель слов для медленного чтения. */
+private val SPACES = Regex("\\s+")
+
 class Speaker(context: Context) {
 
     private var ready = false
@@ -166,8 +172,46 @@ class Speaker(context: Context) {
         whenDone = onDone
         engine.setSpeechRate(if (slow) SLOW_RATE else NORMAL_RATE)
         engine.setPitch(if (low) LOW_PITCH else NORMAL_PITCH)
+
+        val words = if (slow && SLOW_GAP_MS > 0) text.trim().split(SPACES) else emptyList()
+        if (words.size > 1) {
+            byWords(engine, words, id)
+            return
+        }
+
         if (engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, id) != TextToSpeech.SUCCESS) {
             finish(id)
+        }
+    }
+
+    /**
+     * Медленное чтение — по словам, с паузой между ними.
+     *
+     * По жалобе (issue 72): «медленнее должно читать ещё медленнее, идеально
+     * если при этом возможно отделять слова друг от друга». Второе важнее
+     * первого и одним темпом не достигается: движок на низком темпе растягивает
+     * **звуки**, а промежутки между словами оставляет прежними, и фраза
+     * по-прежнему слышится одним комом. Разделить её можно только очередью —
+     * слово, тишина, слово.
+     *
+     * Идентификатор вешается **только на последнее** слово: конец фразы должен
+     * случиться один раз, а не после каждого слова. Промежуточные куски идут
+     * без него и колбэков не порождают вовсе — [finish] их и так отсёк бы по
+     * несовпадению, но лишних сообщений в главный поток лучше не слать.
+     *
+     * Первое слово идёт с `QUEUE_FLUSH`, остальное дописывается: иначе
+     * предыдущая фраза не оборвалась бы, а новая встала бы за ней в очередь.
+     */
+    private fun byWords(engine: TextToSpeech, words: List<String>, id: String) {
+        words.forEachIndexed { i, word ->
+            val last = i == words.lastIndex
+            val mode = if (i == 0) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD
+            val ok = engine.speak(word, mode, null, if (last) id else null)
+            if (ok != TextToSpeech.SUCCESS) {
+                finish(id)
+                return
+            }
+            if (!last) engine.playSilentUtterance(SLOW_GAP_MS, TextToSpeech.QUEUE_ADD, null)
         }
     }
 

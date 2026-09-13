@@ -155,7 +155,15 @@ data class Tuning(
     @Serializable
     data class Speech(
         /** Темп кнопки «Медленнее». Ниже 0,3 движок рвёт слова на слоги. */
-        val slowRate: Double = 0.40,
+        val slowRate: Double = 0.35,
+        /**
+         * Пауза между словами в медленном чтении, мс.
+         *
+         * Ноль возвращает прежнее поведение — фраза читается слитно, только
+         * медленно. Само по себе замедление темпа слова друг от друга не
+         * отделяет: движок растягивает звуки, а промежутки оставляет теми же.
+         */
+        val slowGapMs: Int = 250,
         val normalRate: Double = 0.95,
         /** Высота голоса собеседника в диалоге. */
         val lowPitch: Double = 0.78,
@@ -254,7 +262,9 @@ data class Tuning(
             muteTailMs = speech.muteTailMs.coerceIn(0, 5000),
             retryDelayMs = speech.retryDelayMs,
             spokenPass = speech.spokenPass.coerceIn(0.1, 1.0),
-            spokenSlack = speech.spokenSlack.coerceIn(0, 3).coerceIn(0, 5000)
+            spokenSlack = speech.spokenSlack.coerceIn(0, 3),
+            // Секунда паузы между словами — это уже не «медленно», а «сломалось».
+            slowGapMs = speech.slowGapMs.coerceIn(0, 1000).coerceIn(0, 5000)
         ),
         diag = diag.copy(
             slowMs = diag.slowMs.coerceIn(1, 60_000),

@@ -47,7 +47,8 @@
     "maxRecords": 600
   },
   "speech": {
-    "slowRate": 0.4,
+    "slowRate": 0.35,
+    "slowGapMs": 250,
     "normalRate": 0.9,
     "lowPitch": 0.78,
     "watchdogSeconds": 20,

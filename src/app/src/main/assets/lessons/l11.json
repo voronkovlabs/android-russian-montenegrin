@@ -10,7 +10,7 @@
     {"type": "form", "id": "l11e05", "prompt": "Doktor mi je ___ recept. (dati)", "answer": "dao", "explanation": "Dati → dao, dala, dali."},
     {"type": "choice", "id": "l11e06", "prompt": "Как сказать «у меня болит голова»?", "options": ["Boli me glava", "Bolim glavu", "Ja boli glava", "Glava sam boli"], "answer": "Boli me glava", "explanation": "Боль безлична: болит голова, а человек в винительном — me."},
     {"type": "word_bank", "id": "l11e07", "prompt": "У меня болит зуб.", "answer": "Boli me zub", "bank": ["Boli", "me", "zub", "glava", "bolim", "je"], "explanation": "Порядок такой же, как в «Boli me glava»: глагол, me, часть тела."},
-    {"type": "ru_to_me", "id": "l11e08", "prompt": "Вчера я был у врача.", "reference": "Juče sam bio kod ljekara.", "hint": "kod требует родительного: ljekar → ljekara."},
+    {"type": "ru_to_me", "id": "l11e08", "prompt": "Вчера я был у врача.", "reference": "Juče sam bio kod ljekara.", "hint": "kod требует родительного: ljekar → ljekara. «Doktor» здесь тоже верно: kod doktora."},
     {"type": "me_to_ru", "id": "l11e09", "prompt": "Boli me stomak od juče.", "reference": "У меня со вчерашнего дня болит живот."},
     {"type": "listening", "id": "l11e10", "audioText": "Treba mi lijek", "translation": "Мне нужно лекарство"},
     {"type": "reading", "id": "l11e11", "text": "Juče sam bio bolestan. Boljela me glava. Danas sam bio kod ljekara.", "translation": "Вчера я был болен. У меня болела голова. Сегодня я был у врача."}
