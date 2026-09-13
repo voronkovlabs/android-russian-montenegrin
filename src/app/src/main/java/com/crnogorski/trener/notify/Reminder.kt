@@ -13,6 +13,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.crnogorski.trener.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import com.crnogorski.trener.R
 import com.crnogorski.trener.data.Pace
 import java.time.LocalDateTime
@@ -156,8 +160,37 @@ object Reminder {
  */
 class ReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Reminder.ACTION) Reminder.show(context)
+        if (intent.action == Reminder.ACTION) {
+            Reminder.show(context)
+            answers(context)
+        }
         // И после показа, и после перезагрузки — назначить следующее.
         Reminder.schedule(context)
+    }
+
+    /**
+     * Заодно посмотреть, не ответили ли на жалобы.
+     *
+     * На том же будильнике, а не своим: ещё один будильник ради одного
+     * запроса в сутки — это лишняя строка в манифесте и лишний повод для
+     * системы разбудить телефон. А главное, проверка при запуске приложения
+     * показывает ответ только тому, кто и так его открыл, — то есть тому, кому
+     * ничего напоминать не надо.
+     *
+     * Приёмник живёт считанные секунды, поэтому [goAsync] и свой срок:
+     * не уложились — значит не уложились, проверка повторится при следующем
+     * запуске. Тянуть приёмник до последнего хуже, чем не узнать сегодня.
+     */
+    private fun answers(context: Context) {
+        val app = context.applicationContext
+        val done = goAsync()
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching { withTimeout(TIMEOUT_MS) { Replies.check(app) } }
+            done.finish()
+        }
+    }
+
+    private companion object {
+        const val TIMEOUT_MS = 8_000L
     }
 }

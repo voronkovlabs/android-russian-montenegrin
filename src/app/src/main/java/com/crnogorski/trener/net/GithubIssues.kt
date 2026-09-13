@@ -119,6 +119,98 @@ class GithubIssues(
         }
 
     /**
+     * Закрытая issue: что с ней стало и как она называлась.
+     *
+     * [completed] — закрыта **как выполненная**, а не «не буду чинить». Это
+     * единственное, по чему машина отличает «починили» от «посмотрели и
+     * решили не трогать», и на этом держится всё уведомление (см. [Replies]).
+     */
+    data class Closed(
+        val number: Int,
+        val title: String,
+        val completed: Boolean,
+        val idea: Boolean
+    )
+
+    /**
+     * Какие из **наших** issue уже закрыты.
+     *
+     * Одним запросом на всё: берём последние закрытые issue репозитория и
+     * оставляем те, чьи номера телефон помнит за собой. Спрашивать про каждую
+     * свою по отдельности значило бы слать десяток запросов ради ответа
+     * «ничего не изменилось», а он такой почти всегда.
+     *
+     * Плата за экономию честная: если закрытых чужих issue набежит больше
+     * [PAGE] раньше, чем телефон заглянет сюда, свою он в этой странице не
+     * найдёт. Для репозитория, куда пишут три телефона, это не случается.
+     *
+     * Пустая причина закрытия считается **не** выполнением: соврать «починили»
+     * хуже, чем промолчать.
+     */
+    suspend fun closedAmong(mine: Set<Int>): Result<List<Closed>> = withContext(Dispatchers.IO) {
+        if (!configured || mine.isEmpty()) return@withContext Result.success(emptyList())
+        val url = "https://api.github.com/repos/$repo/issues" +
+            "?state=closed&sort=updated&direction=desc&per_page=$PAGE"
+        runCatching {
+            client.newCall(read(url)).execute().use { response ->
+                val text = response.body?.string().orEmpty()
+                if (!response.isSuccessful) error("GitHub ${response.code}: ${short(text)}")
+                val list = JSONArray(text)
+                buildList {
+                    for (i in 0 until list.length()) {
+                        val item = list.optJSONObject(i) ?: continue
+                        val number = item.optInt("number", 0)
+                        if (number !in mine) continue
+                        val labels = item.optJSONArray("labels") ?: JSONArray()
+                        add(
+                            Closed(
+                                number = number,
+                                title = item.optString("title"),
+                                completed = item.optString("state_reason") == "completed",
+                                idea = (0 until labels.length()).any {
+                                    labels.optJSONObject(it)?.optString("name") == "идея"
+                                }
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Последний комментарий к issue — то есть тот, которым её закрывали.
+     *
+     * Он и объясняет человеку, что сделали. Берётся первая непустая строка:
+     * комментарий писан для разбора и бывает на экран, а в уведомлении места
+     * на абзац. Разметка снимается грубо — в шторке она бы просто мозолила
+     * глаза звёздочками.
+     */
+    suspend fun lastComment(number: Int): String? = withContext(Dispatchers.IO) {
+        if (!configured) return@withContext null
+        val url = "https://api.github.com/repos/$repo/issues/$number/comments?per_page=100"
+        runCatching {
+            client.newCall(read(url)).execute().use { response ->
+                if (!response.isSuccessful) return@use null
+                val list = JSONArray(response.body?.string().orEmpty())
+                val body = list.optJSONObject(list.length() - 1)?.optString("body").orEmpty()
+                body.lineSequence()
+                    .map { it.replace("**", "").replace("`", "").trim() }
+                    .firstOrNull { it.isNotBlank() }
+                    ?.take(200)
+            }
+        }.getOrNull()
+    }
+
+    private fun read(url: String): Request = Request.Builder()
+        .url(url)
+        .addHeader("Authorization", "Bearer $token")
+        .addHeader("Accept", "application/vnd.github+json")
+        .addHeader("X-GitHub-Api-Version", "2022-11-28")
+        .get()
+        .build()
+
+    /**
      * Заголовок: по нему issue узнают в списке, не открывая.
      *
      * Впереди идентификатор задания — по нему сразу находится строка в файле
@@ -249,5 +341,8 @@ class GithubIssues(
 
     private companion object {
         val JSON_TYPE = "application/json; charset=utf-8".toMediaType()
+
+        /** Сколько последних закрытых issue просматриваем за один запрос. */
+        const val PAGE = 50
     }
 }

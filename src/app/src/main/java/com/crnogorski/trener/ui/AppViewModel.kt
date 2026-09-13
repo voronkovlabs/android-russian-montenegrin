@@ -38,6 +38,7 @@ import com.crnogorski.trener.data.VerdictCache
 import com.crnogorski.trener.data.VocabFile
 import com.crnogorski.trener.data.VocabKind
 import com.crnogorski.trener.data.VocabRepository
+import com.crnogorski.trener.notify.Replies
 import com.crnogorski.trener.data.VocabWord
 import com.crnogorski.trener.data.exerciseFor
 import com.crnogorski.trener.data.matchExercise
@@ -732,6 +733,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Отчёт диагностики за прошлые запуски — если он созрел. Пятым делом и
         // фоном: он про запуск, а не участник запуска.
         sendDiagnostics(auto = true)
+        // Ответы на свои жалобы. Без этого починка приезжает молча: issue
+        // человек не видит вовсе — репозиторий приватный, — и обратной связи
+        // у него нет никакой. Запрос уходит, только если телефон помнит за
+        // собой хоть одну незакрытую issue.
+        viewModelScope.launch {
+            Trace.span("сеть: ответы на жалобы") { Replies.check(ctx, issues) }
+        }
     }
 
     /**
@@ -2049,7 +2057,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             val result = Trace.span("сеть: отправка жалоб") {
                 complaints.flush { complaint, raw ->
+                    // Номер заведённой issue до сих пор выбрасывался, а он и
+                    // есть всё, что нужно, чтобы потом сказать «твою жалобу
+                    // разобрали»: телефон помнит только свои.
                     issues.create(complaint, raw, device, person)
+                        .onSuccess { Replies.remember(ctx, it) }
                 }
             }
             _settings.value = _settings.value?.copy(
