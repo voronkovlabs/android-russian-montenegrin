@@ -534,6 +534,7 @@ private val REVIEW_LIMIT: Int get() = Config.current.srs.reviewLimit
  */
 private val VOCAB_LIMIT: Int get() = Config.current.vocab.sessionLimit
 private val NEW_WORDS_PER_DAY: Int get() = Config.current.vocab.newPerDay
+private val POOL_TARGET: Int get() = Config.current.vocab.poolTarget
 
 /**
  * Со скольких удачных повторений карточка считается усвоенной.
@@ -1862,11 +1863,29 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     .sortedBy { it.correct - it.lapses * 2 }
                     .forEach { add(vocabExercise(file, words, it.exerciseId, it.repetitions)) }
             } else {
-                // 1. Просроченное, самое старое первым.
+                // **Половина захода — новые слова, пока пул не набран.**
+                //
+                // Заведено по жалобе владельца: «всё выглядит так, что
+                // повторяются одни и те же слова». Так и было: просроченное
+                // шло первым и занимало заход целиком, новым слотов не
+                // доставалось, и словарь крутился на тех же трёх десятках.
+                //
+                // Половина, а не всё: заход только из новых слов перестал бы
+                // быть повторением вовсе, и выученного в словаре не завелось
+                // бы никогда. Половина, а не треть, — потому что пул в
+                // триста слов иначе набирается месяц.
+                val fresh = mutableListOf<SessionItem>()
+                addFreshVocab(file, byId, fresh, back, pool = true)
+
+                val due = mutableListOf<SessionItem>()
                 cards.filter { it.dueAt <= now }.sortedBy { it.dueAt }.forEach { card ->
-                    add(vocabExercise(file, words, card.exerciseId, card.repetitions))
+                    vocabExercise(file, words, card.exerciseId, card.repetitions)?.let {
+                        due += SessionItem(VocabRepository.LESSON_ID, it)
+                    }
                 }
-                addFreshVocab(file, byId, items, back)
+
+                val half = VOCAB_LIMIT / 2
+                items += (fresh.take(half) + due + fresh.drop(half)).take(VOCAB_LIMIT)
             }
 
             // Пары идут первыми: знакомство раньше проверки. Слово, впервые
@@ -1922,7 +1941,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         file: VocabFile,
         byId: Map<String, CardEntity>,
         items: MutableList<SessionItem>,
-        back: Boolean
+        back: Boolean,
+        /**
+         * Считать новые слова по **пулу**, а не по дневной норме.
+         *
+         * Так работает словарная вкладка: там счёт идёт на слова, и норма в
+         * десять штук не дала бы набрать пул в триста. Ежедневное задание
+         * оставлено на норме — там счёт идёт на минуты, и пул перекосил бы
+         * занятие в сторону словаря.
+         */
+        pool: Boolean = false
     ) {
         fun add(ex: Exercise?) {
             if (ex != null && items.size < VOCAB_LIMIT) {
@@ -1965,9 +1993,19 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             add(file.exerciseFor(word, VocabKind.Odd, form))
         }
 
-        // Новые слова — сколько осталось на сегодня.
+        // Новые слова: по пулу или по дневной норме.
+        //
+        // Пул считается по **незаученным словам в обороте**, а не по всем
+        // заведённым: выученное из расписания уходит и место в пуле
+        // освобождает, иначе пул однажды забился бы намертво и новые слова
+        // прекратились бы навсегда.
         var taken = 0
-        val budget = (NEW_WORDS_PER_DAY - vocabRepo.introducedToday()).coerceAtLeast(0)
+        val rotation = byId.values.count {
+            isMeaning(it.exerciseId) && it.correct < VocabRepository.LEARNED
+        }
+        val budget =
+            if (pool) (POOL_TARGET - rotation).coerceAtLeast(0)
+            else (NEW_WORDS_PER_DAY - vocabRepo.introducedToday()).coerceAtLeast(0)
         for (word in file.words) {
             if (taken >= budget || items.size >= VOCAB_LIMIT) break
             if (byId.containsKey(VocabRepository.cardId(word.id, VocabKind.Meaning))) continue

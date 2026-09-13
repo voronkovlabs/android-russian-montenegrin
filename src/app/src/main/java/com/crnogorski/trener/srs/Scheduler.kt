@@ -194,12 +194,21 @@ object Scheduler {
         easy: Boolean = false
     ): CardEntity {
         if (!correct) {
+            // Словарная карточка возвращается **завтра**, а не через десять
+            // минут. Десятиминутный возврат — ступень переучивания, и она
+            // хороша, когда материала мало: промахнулся, увидел снова, поправил.
+            // В словаре из трёхсот слов та же ступень превращает занятие в
+            // толчение одного и того же, и владелец пожаловался именно на это.
+            // У заданий урока правило прежнее: там заход короткий и связный.
+            val back =
+                if (card.lessonId == VOCAB_LESSON) cfg.vocabLapseDays * DAY_MS
+                else LAPSE_DELAY_MS
             return card.copy(
                 repetitions = 0,
                 intervalDays = 0,
                 lapses = card.lapses + 1,
                 ease = (card.ease - cfg.easeStep * 4).coerceAtLeast(cfg.easeMin),
-                dueAt = now + LAPSE_DELAY_MS
+                dueAt = now + back
             )
         }
 

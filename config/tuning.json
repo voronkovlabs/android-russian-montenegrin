@@ -9,6 +9,7 @@
     "easeMin": 1.3,
     "easeMax": 3.0,
     "lapseMinutes": 10,
+    "vocabLapseDays": 1,
     "skipHours": 4,
     "reviewLimit": 25,
     "snoozeDays": 14,
@@ -29,6 +30,7 @@
     "freshLead": 3
   },
   "vocab": {
+    "poolTarget": 200,
     "newPerDay": 10,
     "sessionLimit": 25,
     "learned": 10,
