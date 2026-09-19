@@ -73,6 +73,9 @@ private val SPACES = Regex("\\s+")
 
 class Speaker(context: Context) {
 
+    /** Нужен, чтобы снять заглушку гудков перед своей фразой — см. [speak]. */
+    private val audio = context.getSystemService(AudioManager::class.java)
+
     private var ready = false
     private var missingVoice = false
 
@@ -167,6 +170,16 @@ class Speaker(context: Context) {
             return
         }
         val engine = tts ?: return
+        // Снимаем заглушку гудков до того, как начнём говорить.
+        //
+        // По жалобе владельца (issue 75): «можно ли сделать произношение
+        // громче, я плохо слышу даже на максимальной громкости». Громкость
+        // была ни при чём. Заглушка, которой глушатся гудки распознавания,
+        // держится ещё `MUTE_TAIL_MS` после конца захода, а в историях цикл
+        // плотный — «сказал, послушал, сказал», — и следующая фраза начинала
+        // звучать в приглушённый поток. Человек слышал не тихий синтезатор, а
+        // собственную заглушку.
+        audio?.let { Listener.releaseBeepMute(it) }
         val id = (++utterance).toString()
         currentId = id
         whenDone = onDone
@@ -259,11 +272,6 @@ class Listener(private val context: Context) {
      */
     private var session = 0
 
-    /**
-     * Потоки, которые мы заглушили. Снять надо ровно их: до каких дотянулись,
-     * заранее неизвестно.
-     */
-    private val mutedStreams = mutableListOf<Int>()
 
     private val prefs: SharedPreferences =
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
@@ -500,7 +508,7 @@ class Listener(private val context: Context) {
      * процессом систему снимает сама, когда процесс умирает.
      */
     private fun mute() {
-        if (mutedStreams.isNotEmpty()) return
+        if (muted.isNotEmpty()) return
         // Каким потоком движок играет гудки, не сказано нигде, и на разных
         // прошивках он разный: одной музыки на HyperOS не хватило. Поэтому
         // глушим всё, до чего дотягиваемся, и запоминаем что именно — снять
@@ -511,18 +519,45 @@ class Listener(private val context: Context) {
             val ok = runCatching {
                 audio.adjustStreamVolume(stream, AudioManager.ADJUST_MUTE, 0)
             }.isSuccess
-            if (ok) mutedStreams += stream
+            if (ok) muted += stream
         }
     }
 
-    private fun unmute() {
-        mutedStreams.forEach { stream ->
-            runCatching { audio.adjustStreamVolume(stream, AudioManager.ADJUST_UNMUTE, 0) }
-        }
-        mutedStreams.clear()
-    }
+    private fun unmute() = releaseBeepMute(audio)
 
     companion object {
+        /**
+         * Потоки, которые заглушены сейчас. Снять надо ровно их: до каких
+         * дотянулись, заранее неизвестно.
+         *
+         * Хранилище **общее на процесс, а не на экземпляр**, и это не
+         * вольность: громкость у телефона одна, и две копии заглушки спорили
+         * бы за неё — вторая сняла бы поставленное первой, или наоборот.
+         * Заодно снять её может тот, кто заглушку не ставил, — синтезатор.
+         */
+        private val muted = mutableListOf<Int>()
+
+        /**
+         * Снять заглушку немедленно, не дожидаясь хвоста.
+         *
+         * Зовёт [Speaker] перед тем, как начать говорить. По жалобе владельца
+         * (issue 75): «плохо слышу даже на максимальной громкости». Громкость
+         * была ни при чём — заглушка держится ещё `MUTE_TAIL_MS` после конца
+         * захода, чтобы съесть гудок конца записи, а в историях цикл плотный,
+         * и следующая фраза начинала звучать в приглушённый поток. Человек
+         * слышал не тихий синтезатор, а собственную заглушку.
+         *
+         * Гудок при этом не возвращается: он приходит сразу за результатом,
+         * а синтезатор заговаривает заметно позже — свой заход уже кончился.
+         */
+        fun releaseBeepMute(audio: AudioManager) {
+            if (muted.isEmpty()) return
+            muted.forEach { stream ->
+                runCatching { audio.adjustStreamVolume(stream, AudioManager.ADJUST_UNMUTE, 0) }
+            }
+            muted.clear()
+        }
+
         /** Ошибки, которые лечатся повтором, а не сообщением. */
         val TRANSIENT = setOf(
             SpeechRecognizer.ERROR_SERVER_DISCONNECTED,

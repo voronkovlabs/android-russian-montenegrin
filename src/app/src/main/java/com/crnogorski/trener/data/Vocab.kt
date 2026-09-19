@@ -105,7 +105,7 @@ class VocabRepository(private val context: Context) {
 
     /** Отсутствие файла — не ошибка: раздел просто окажется пустым. */
     suspend fun load(): VocabFile = withContext(Dispatchers.IO) {
-        cached ?: Trace.span("assets: словарь (407 КБ)") {
+        cached ?: Trace.span("assets: словарь") {
             runCatching {
                 json.decodeFromString<VocabFile>(
                     context.assets.open(PATH).bufferedReader().use { it.readText() }
@@ -236,7 +236,10 @@ fun VocabFile.exerciseFor(
     VocabKind.Recall -> Exercise.Word(
         id = VocabRepository.cardId(word.id, kind),
         label = "Что это значит?",
-        prompt = word.id,
+        // Показываем иекавское написание, а ключ карточки остаётся прежним:
+        // словарь собран из сербского источника, а курс черногорский. См.
+        // [Ijekavica] — там же, почему нельзя просто переименовать лемму.
+        prompt = Ijekavica.show(word.id),
         answer = word.gloss,
         explanation = "",
         native = true
@@ -246,11 +249,22 @@ fun VocabFile.exerciseFor(
         id = VocabRepository.cardId(word.id, kind),
         label = "Как это по-черногорски?",
         prompt = word.gloss,
-        answer = word.id,
+        // Эталоном показывается черногорская форма. Экавскую при этом
+        // засчитает свёртка (`LocalCheck.reflex` сводит `ovdje` и `ovde` к
+        // одному виду), так что цена ошибки тут нулевая, а польза прямая:
+        // до этого приложение выдавало сербскую форму за черногорскую.
+        answer = Ijekavica.show(word.id),
         // Слова с тем же толкованием засчитываются наравне с эталоном: по
         // словарю таких пар 55, и «дочь» — это и ćerka, и kći. Ключ тот же,
         // что у экрана пар: первый вариант статьи после разбора помет.
-        also = synonyms(word),
+        //
+        // Плюс **определённая форма прилагательного**: по жалобам владельца
+        // (74 и 91, оба раза `nov` против `novi`). В словаре лемма стоит в
+        // неопределённой форме, а человек пишет определённую — и это не
+        // ошибка перевода, а выбор одной из двух законных форм. Различает их
+        // определённость («новый дом вообще» против «тот самый новый дом»),
+        // и спрашивать её карточкой значения никто не собирался.
+        also = synonyms(word) + definite(word),
         explanation = "",
         // Картинка рядом с русским условием ответа не выдаёт: она значит ровно
         // то же, что написанное слово, а спрашивают черногорское.
@@ -273,7 +287,7 @@ fun VocabFile.exerciseFor(
                 id = VocabRepository.cardId(word.id, kind),
                 label = slots[it.s]?.let { name -> "Поставь в нужную форму: $name" }
                     ?: "Поставь в нужную форму",
-                prompt = "$prompt  (${word.id})",
+                prompt = "$prompt  (${Ijekavica.show(word.id)})",
                 answer = it.f,
                 explanation = sample?.ru.orEmpty(),
                 // Слово тут и так написано в скобках — картинка ничего не
@@ -290,11 +304,11 @@ fun VocabFile.exerciseFor(
             id = VocabRepository.cardId(word.id, kind, form),
             label = slot?.s?.let { slots[it] }?.let { "Особая форма: $it" }
                 ?: "Особая форма",
-            prompt = "${pattern ?: "___"}  (${word.id})",
+            prompt = "${pattern ?: "___"}  (${Ijekavica.show(word.id)})",
             answer = form,
             // Основа тут меняется, и сказать об этом стоит прямо: иначе
             // выглядит как опечатка в задании.
-            explanation = "Основа меняется: ${word.id} → $form",
+            explanation = "Основа меняется: ${Ijekavica.show(word.id)} → $form",
             icon = WordEmoji.of(word.id).orEmpty()
         )
     }
@@ -310,6 +324,19 @@ fun VocabFile.exerciseFor(
  * толкование «быть, существовать», у соседа может быть просто «быть», и по
  * целой строке они не совпали бы никогда.
  */
+/**
+ * Определённая форма прилагательного: `nov` → `novi`.
+ *
+ * Только прибавлением `-i` и только у прилагательных. Настоящая парадигма
+ * богаче (`dobar` → `dobri` с выпадением беглого «а»), но там форма и так
+ * лежит в `forms`, а здесь нужен дешёвый случай, на который жалуются: лемма
+ * плюс одна буква.
+ */
+private fun definite(word: VocabWord): List<String> =
+    if (word.pos == "ADJ" && !word.id.endsWith("i")) listOf(word.id + "i")
+    else emptyList()
+
+
 private fun VocabFile.synonyms(word: VocabWord): List<String> {
     val key = LocalCheck.glossVariants(word.gloss).firstOrNull() ?: return emptyList()
     return synonymIndex()[key].orEmpty().filter { it != word.id }
@@ -363,7 +390,7 @@ private fun VocabFile.synonymIndex(): Map<String, List<String>> = synchronized(i
 fun matchPairFor(cardId: String, word: VocabWord): MatchPair? =
     LocalCheck.glossVariants(word.gloss)
         .firstOrNull { it.isNotBlank() }
-        ?.let { MatchPair(cardId = cardId, ru = it, me = word.id) }
+        ?.let { MatchPair(cardId = cardId, ru = it, me = Ijekavica.show(word.id)) }
 
 /**
  * Экран пар из готовых пар.

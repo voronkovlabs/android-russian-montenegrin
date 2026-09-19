@@ -12,7 +12,7 @@
     { "type": "ru_to_me", "id": "l01e07", "prompt": "Меня зовут Иван.", "reference": "Zovem se Ivan." },
     { "type": "form", "id": "l01e08", "prompt": "Ja ___ dobro. (глагол biti, форма для «я»)", "answer": "sam", "explanation": "biti: ja sam, ti si, on je, mi smo, vi ste, oni su." },
     { "type": "speaking", "id": "l01e09", "phrase": "Drago mi je", "translation": "Приятно познакомиться" },
-    { "type": "me_to_ru", "id": "l01e10", "prompt": "Doviđenja, vidimo se!", "reference": "До свидания, увидимся!" },
+    { "type": "me_to_ru", "id": "l01e10", "prompt": "Doviđenja, vidimo se!", "reference": "До свидания, ещё увидимся!" },
     { "type": "repeat", "id": "l01e11", "phrase": "Dobro jutro, kako si?", "translation": "Доброе утро, как дела?" }
   ]
 }
