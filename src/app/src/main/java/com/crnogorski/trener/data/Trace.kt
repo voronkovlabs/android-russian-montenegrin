@@ -1,5 +1,7 @@
 package com.crnogorski.trener.data
 
+import android.app.ActivityManager
+import android.app.ApplicationExitInfo
 import android.content.Context
 import com.crnogorski.trener.BuildConfig
 import android.os.Handler
@@ -9,7 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap
@@ -73,6 +77,7 @@ object Trace {
     private const val PREFS = "crnogorski"
     private const val KEY_ON = "diag_on"
     private const val KEY_WINDOW = "diag_window_start"
+    private const val KEY_EXIT_SEEN = "diag_exit_seen"
     private const val FILE = "diag.jsonl"
 
     /**
@@ -189,6 +194,131 @@ object Trace {
         }
     }
 
+    // ------------------------------------------------- как умер прошлый раз
+
+    /**
+     * Спросить систему, почему прошлый процесс умер, и записать в отчёт.
+     *
+     * Наши замеры видят только то, что успели записать живыми. Сторож главного
+     * потока ловит замирание, но чем оно кончилось — пережил телефон паузу или
+     * прибил приложение, — не знает никто: зависшее приложение не даёт написать
+     * жалобу, а «оно само закрылось» никто не пишет, просто открывают заново.
+     * В отчётах 50 и 60 главный поток стоял 41 и 23 секунды при системном пороге
+     * неотвечающего приложения около пяти, и чем это кончилось у Кати с Володей,
+     * мы не знаем до сих пор.
+     *
+     * Android ведёт этот журнал сам, и спросить его — один запрос без
+     * разрешений. Отсюда три решения:
+     *
+     * * **это не ловушка падений.** Своего обработчика в умирающем процессе мы
+     *   не ставим: за всю жизнь проекта не пришло ни одной жалобы на падение
+     *   (96 issue), а код в уже сломанном процессе — самое дорогое место, где
+     *   можно ошибиться. Здесь же запрос выполняется в здоровом приложении и
+     *   только читает;
+     * * **видно то, чего наш обработчик не увидел бы вовсе** — ANR, убийство по
+     *   памяти, падение в нативном коде;
+     * * **скучное не записывается.** Сам вышел, смахнули из недавних, обновили
+     *   пакет — это не события, а обычная жизнь процесса, и в отчёте они были бы
+     *   шумом.
+     *
+     * Каждая запись попадает в отчёт **один раз**: система хранит журнал долго
+     * и отдавала бы одно и то же при каждом запуске. Отметка — время последней
+     * показанной записи.
+     *
+     * У ANR и падений система хранит ещё и трассу; берём от неё начало, потому
+     * что там стек главного потока — то есть ровно ответ на «на чём стояли».
+     */
+    fun noteExits(context: Context) {
+        if (!enabled) return
+        runCatching {
+            val am = context.getSystemService(ActivityManager::class.java) ?: return
+            val p = prefs(context)
+            val first = !p.contains(KEY_EXIT_SEEN)
+            val seen = p.getLong(KEY_EXIT_SEEN, 0L)
+            val all = am.getHistoricalProcessExitReasons(context.packageName, 0, 20)
+            val fresh = all
+                .filter { it.timestamp > seen && it.reason in TELLING }
+                .sortedBy { it.timestamp }
+            // Первый раз отмечаемся в отчёте, даже когда сообщать нечего.
+            //
+            // Проверить это на машине разработчика нечем: журнал ведёт система, и
+            // пока ничего не умерло, молчащий код и сломанный код выглядят одинаково.
+            // Отметка ставится один раз за установку и дальше молчит навсегда.
+            if (fresh.isEmpty() && !first) return
+            val marker = if (!first) emptyList() else listOf(
+                JSONObject()
+                    .put("t", "x")
+                    .put("at", now())
+                    .put("mark", true)
+                    .put("why", "журнал смертей прочитан, система помнит записей: ${all.size}")
+                    .put("fg", false)
+                    .put("note", "")
+                    .put("trace", "")
+                    .toString()
+            )
+            val lines = marker + fresh.map { info ->
+                JSONObject()
+                    .put("t", "x")
+                    .put("at", stamp(info.timestamp))
+                    .put("why", reasonName(info.reason))
+                    // Был ли человек в это время в приложении. Убийство по
+                    // памяти в фоне — обычное дело, на экране — беда.
+                    .put("fg", info.importance <= IMPORTANCE_FOREGROUND)
+                    .put("note", info.description.orEmpty())
+                    .put("trace", trace(info))
+                    .toString()
+            }
+            file(context).appendText(lines.joinToString("\n", postfix = "\n"))
+            // При пустом списке отмечаем текущее время: иначе ключ остался бы
+            // незаданным и отметка повторялась бы каждый запуск.
+            p.edit()
+                .putLong(KEY_EXIT_SEEN, fresh.lastOrNull()?.timestamp ?: System.currentTimeMillis())
+                .apply()
+        }
+    }
+
+    /** Причины, о которых стоит знать. Остальное — обычная жизнь процесса. */
+    private val TELLING = setOf(
+        ApplicationExitInfo.REASON_CRASH,
+        ApplicationExitInfo.REASON_CRASH_NATIVE,
+        ApplicationExitInfo.REASON_ANR,
+        ApplicationExitInfo.REASON_LOW_MEMORY,
+        ApplicationExitInfo.REASON_EXCESSIVE_RESOURCE_USAGE,
+        ApplicationExitInfo.REASON_INITIALIZATION_FAILURE,
+        ApplicationExitInfo.REASON_SIGNALED,
+        ApplicationExitInfo.REASON_DEPENDENCY_DIED,
+        ApplicationExitInfo.REASON_FREEZER,
+    )
+
+    private fun reasonName(reason: Int): String = when (reason) {
+        ApplicationExitInfo.REASON_CRASH -> "упало с исключением"
+        ApplicationExitInfo.REASON_CRASH_NATIVE -> "упало в нативном коде"
+        ApplicationExitInfo.REASON_ANR -> "не отвечало, система закрыла"
+        ApplicationExitInfo.REASON_LOW_MEMORY -> "убито из-за нехватки памяти"
+        ApplicationExitInfo.REASON_EXCESSIVE_RESOURCE_USAGE -> "убито за прожорливость"
+        ApplicationExitInfo.REASON_INITIALIZATION_FAILURE -> "не смогло запуститься"
+        ApplicationExitInfo.REASON_SIGNALED -> "убито сигналом"
+        ApplicationExitInfo.REASON_DEPENDENCY_DIED -> "умерло вместе с чужим процессом"
+        ApplicationExitInfo.REASON_FREEZER -> "заморожено системой"
+        else -> "причина $reason"
+    }
+
+    /**
+     * Начало системной трассы, если она есть.
+     *
+     * Только начало: у ANR это несколько сотен килобайт со стеками всех
+     * потоков, а нужен первый — главный. Тело issue ограничено по длине, и
+     * целая трасса вытеснила бы из отчёта всё остальное.
+     */
+    private fun trace(info: ApplicationExitInfo): String =
+        runCatching {
+            info.traceInputStream?.bufferedReader()?.use { reader ->
+                val buf = CharArray(TRACE_HEAD)
+                val read = reader.read(buf)
+                if (read > 0) String(buf, 0, read) else ""
+            }.orEmpty()
+        }.getOrDefault("")
+
     // --------------------------------------------------------------- файл
 
     /**
@@ -303,6 +433,9 @@ object Trace {
         val agg = linkedMapOf<String, LongArray>()
         val events = mutableListOf<String>()
         val runs = mutableListOf<String>()
+        val deaths = mutableListOf<String>()
+        val traces = mutableListOf<Pair<String, String>>()
+        val marks = mutableListOf<String>()
         lines.forEach { line ->
             val o = runCatching { JSONObject(line) }.getOrNull() ?: return@forEach
             when (o.optString("t")) {
@@ -319,12 +452,32 @@ object Trace {
                     v[2] = maxOf(v[2], o.optLong("m"))
                 }
 
+                "x" -> if (o.optBoolean("mark")) {
+                    marks += "%s · %s".format(o.optString("at"), o.optString("why"))
+                } else {
+                    val at = o.optString("at")
+                    deaths += buildString {
+                        append(at)
+                        append(" · ")
+                        append(o.optString("why"))
+                        append(if (o.optBoolean("fg")) " · был на экране" else " · в фоне")
+                        val note = o.optString("note")
+                        if (note.isNotBlank()) append(" · ").append(note)
+                    }
+                    // Трасса идёт не в пункт списка, а отдельным блоком: блок
+                    // кода внутри пункта Markdown рендерит криво.
+                    val tr = o.optString("trace")
+                    if (tr.isNotBlank()) traces += at to tr.trimEnd()
+                }
+
                 "s" -> events += "%7s  %-34s %s".format(
                     human(o.optLong("ms")), o.optString("n"), o.optString("note")
                 ).trimEnd()
             }
         }
-        if (agg.isEmpty() && events.isEmpty()) return null
+        if (agg.isEmpty() && events.isEmpty() && deaths.isEmpty() && marks.isEmpty()) {
+            return null
+        }
 
         val table = agg.entries
             .sortedByDescending { it.value[1] }
@@ -339,6 +492,26 @@ object Trace {
             appendLine("Запусков в отчёте: ${runs.size}")
             runs.takeLast(10).forEach { appendLine("* $it") }
             appendLine()
+            // Смерти процесса — выше сводки времён: секунды показывают, где
+            // медленно, а это показывает, что приложение закрылось не само.
+            marks.forEach { appendLine("_$it._") }
+            if (marks.isNotEmpty()) appendLine()
+            if (deaths.isNotEmpty()) {
+                appendLine("**Процесс умирал не по-хорошему (${deaths.size}):**")
+                appendLine()
+                deaths.forEach { appendLine("* $it") }
+                appendLine()
+                traces.forEach { (at, tr) ->
+                    appendLine("<details><summary>Трасса системы: $at</summary>")
+                    appendLine()
+                    appendLine("```")
+                    appendLine(tr)
+                    appendLine("```")
+                    appendLine()
+                    appendLine("</details>")
+                    appendLine()
+                }
+            }
             appendLine("| что | раз | всего | среднее | худший |")
             appendLine("|---|--:|--:|--:|--:|")
             appendLine(table)
@@ -357,7 +530,12 @@ object Trace {
             appendLine()
             appendLine("</details>")
         }
-        val title = "[диагностика] ${now()} · худшее ${human(worst)} · $device"
+        val title = if (deaths.isEmpty()) {
+            "[диагностика] ${now()} · худшее ${human(worst)} · $device"
+        } else {
+            // В списке issue видно, не открывая: этот отчёт не про секунды.
+            "[диагностика] ${now()} · процесс умирал (${deaths.size}) · $device"
+        }
         return Report(title.take(120), head + tail)
     }
 
@@ -369,6 +547,11 @@ object Trace {
 
     private fun now(): String =
         LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm"))
+
+    /** То же в человеческом виде, но для чужой отметки времени — смерти процесса. */
+    private fun stamp(millis: Long): String =
+        LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
+            .format(DateTimeFormatter.ofPattern("dd.MM HH:mm"))
 
     private fun prefs(context: Context) =
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
@@ -388,4 +571,21 @@ object Trace {
 
     /** Сколько сырых событий влезает в issue: тело ограничено 64 КБ. */
     private const val MAX_EVENTS = 400
+
+    /**
+     * Сколько знаков системной трассы берём.
+     *
+     * У ANR это сотни килобайт со стеками всех потоков; нужен первый, главный,
+     * и он идёт в начале. Больше не влезло бы в issue вместе с остальным.
+     */
+    private const val TRACE_HEAD = 2000
+
+    /**
+     * Порог «человек был в приложении» в шкале важности процесса.
+     *
+     * Меньше — значит важнее: у переднего плана 100. Константа своя, потому что
+     * `RunningAppProcessInfo.IMPORTANCE_FOREGROUND` тянул бы сюда ещё один
+     * импорт ради одного числа, которое не менялось никогда.
+     */
+    private const val IMPORTANCE_FOREGROUND = 100
 }
