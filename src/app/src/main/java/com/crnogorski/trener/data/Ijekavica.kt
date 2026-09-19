@@ -25,9 +25,17 @@ package com.crnogorski.trener.data
  * Правило «e → je» вывести нельзя: голое «je» сидит в `pitanje`, `rođendan`,
  * `putovanje`, где ятя нет вовсе, и обратная замена переписала бы восемьдесят
  * слов словаря в бессмыслицу. Поэтому здесь только те леммы, которые сверены
- * поимённо, — тридцать семь из 3501.
+ * поимённо, — шестьдесят две из 3501.
  *
- * Пополняется **от жалоб**: заметили экавскую форму в карточке — строчка сюда.
+ * Пополняется **от жалоб**, а раз — сплошным проходом. По жалобе 79 (Катя про
+ * `ala`) разбирался верх словаря, и заодно нашлись двадцать шесть экавских
+ * лемм в первых шестистах — `čovjek`, `riječ`, `uvijek`, `pjesma`. Машина их
+ * только предлагает: кандидаты ищутся подстановкой «e» → «je»/«ije» с
+ * проверкой по частотному списку, а решает человек. Из двадцати восьми
+ * машинных кандидатов трое оказались браком: `lošije` — сравнительная степень
+ * («хуже»), а не иекавская форма; `djeda` — родительный, а черногорская лемма
+ * `đed` со свёрткой не сходится; у «света» правильная форма `svjetlo`, а
+ * предложенное `svijetlo` — прилагательное «светло».
  *
  * **Каждая пара обязана сводиться свёрткой** (`LocalCheck.reflex`): иначе
  * человек, написавший привычную сербскую форму, получит незаслуженное
@@ -48,39 +56,65 @@ object Ijekavica {
     private val MAP: Map<String, String> = mapOf(
         "bezbednost" to "bezbjednost",
         "cena" to "cijena",
+        "deliti" to "dijeliti",
         "deo" to "dio",
         "devojka" to "djevojka",
+        "dečak" to "dječak",
+        "dole" to "dolje",
         "gde" to "gdje",
         "greh" to "grijeh",
         "hleb" to "hljeb",
+        "izveštaj" to "izvještaj",
+        "lek" to "lijek",
         "lekar" to "ljekar",
         "lep" to "lijep",
         "leto" to "ljeto",
+        "menjati" to "mijenjati",
         "mesec" to "mjesec",
         "mesto" to "mjesto",
         "mleko" to "mlijeko",
+        "napred" to "naprijed",
         "naslediti" to "naslijediti",
+        "naterati" to "natjerati",
         "nedelja" to "nedjelja",
         "negde" to "negdje",
+        "odavde" to "odavdje",
+        "oduvek" to "oduvijek",
+        "osećaj" to "osjećaj",
         "ovde" to "ovdje",
+        "pesma" to "pjesma",
+        "pevati" to "pjevati",
+        "pobeda" to "pobjeda",
+        "posetiti" to "posjetiti",
+        "poslednji" to "posljednji",
+        "predsednik" to "predsjednik",
+        "preći" to "prijeći",
         "primer" to "primjer",
+        "promena" to "promjena",
         "razumeti" to "razumjeti",
         "reka" to "rijeka",
+        "reč" to "riječ",
         "sedeti" to "sjedjeti",
         "sever" to "sjever",
         "smeh" to "smijeh",
+        "smešan" to "smiješan",
         "sneg" to "snijeg",
         "strela" to "strijela",
         "sutra" to "sjutra",
+        "svetlo" to "svjetlo",
         "telo" to "tijelo",
         "umeti" to "umjeti",
+        "umreti" to "umrijeti",
+        "uvek" to "uvijek",
         "vera" to "vjera",
         "verovati" to "vjerovati",
         "vetar" to "vjetar",
+        "veštica" to "vještica",
         "videti" to "vidjeti",
         "voleti" to "voljeti",
         "vreme" to "vrijeme",
         "zvezda" to "zvijezda",
+        "čovek" to "čovjek",
         "živeti" to "živjeti",
     )
 }

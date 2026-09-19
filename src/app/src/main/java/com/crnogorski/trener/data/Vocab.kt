@@ -103,13 +103,24 @@ class VocabRepository(private val context: Context) {
 
     private var cached: VocabFile? = null
 
-    /** Отсутствие файла — не ошибка: раздел просто окажется пустым. */
+    /**
+     * Отсутствие файла — не ошибка: раздел просто окажется пустым.
+     *
+     * Выброшенные леммы (`Excluded`) отсеиваются **здесь, а не у мест
+     * использования**, и это принципиально: по `file.words` ходят с десяток
+     * разных мест — отбор на сегодня, экран пар, подмена отложенного, «Срез»,
+     * счётчики в отчёте. Фильтр в каждом из них означал бы десять мест, где
+     * его забудут, и слово вылезло бы ровно там, куда не посмотрели. Ровно
+     * такая дыра была у «отложить на потом» в 1.86.
+     */
     suspend fun load(): VocabFile = withContext(Dispatchers.IO) {
         cached ?: Trace.span("assets: словарь") {
             runCatching {
                 json.decodeFromString<VocabFile>(
                     context.assets.open(PATH).bufferedReader().use { it.readText() }
-                )
+                ).let { file ->
+                    file.copy(words = file.words.filter { Excluded.allows(it.id) })
+                }
             }.getOrDefault(VocabFile())
         }.also { cached = it }
     }

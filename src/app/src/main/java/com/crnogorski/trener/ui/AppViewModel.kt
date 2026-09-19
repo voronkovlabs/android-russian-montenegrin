@@ -18,6 +18,7 @@ import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.data.Stress
 import com.crnogorski.trener.data.Trace
 import com.crnogorski.trener.data.DayStatEntity
+import com.crnogorski.trener.data.Excluded
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.Glossary
 import com.crnogorski.trener.data.LessonProgressEntity
@@ -405,6 +406,18 @@ data class StoryState(
     val revealed: Boolean = false,
     /** Ответ ушёл к модели и мы ждём вердикт. */
     val checking: Boolean = false,
+    /**
+     * Отрезок сдан, но следующий не начат: ждём кнопку «Продолжить».
+     *
+     * Бывает только на слух (1.91). До этого сданный отрезок сдвигал историю
+     * сразу, и текст с переводом проявлялись ровно в те полсекунды, когда уже
+     * звучала следующая фраза. Володя (issue 83): «мозг занят одновременно
+     * прослушиванием новой фразы и чтением оригинала и перевода предыдущей…
+     * это больше похоже на развитие многозадачности». Перевод у нас — награда
+     * за сданный отрезок, и выдавать её в единственный момент, когда её нельзя
+     * прочитать, значит не выдавать вовсе.
+     */
+    val passed: Boolean = false,
     /** Как зовут собеседника в диалоге. У обычной истории пусто. */
     val speaker: String = "",
     val glossaryMe: Map<String, String> = emptyMap()
@@ -832,6 +845,30 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             Trace.span("сеть: ответы на жалобы") { Replies.check(ctx, issues) }
         }
+        dropExcluded()
+    }
+
+    /**
+     * Убрать карточки слов, выброшенных из курса (`Excluded`).
+     *
+     * Слово перестаёт существовать для приложения в `VocabRepository.load`, но
+     * карточка, заведённая до этого, остаётся в базе: задания по ней больше не
+     * построить, а в «просрочено» она считается — и счётчик на словарной
+     * вкладке показывал бы долг, который нечем разобрать.
+     *
+     * Проход разовый по смыслу и дешёвый по делу: без выброшенных слов первый
+     * же запрос вернёт пустой список, и дальше не происходит ничего. Своего
+     * флага «уже чистили» поэтому нет — он был бы дороже самой проверки и
+     * умел бы рассинхронизироваться с пополнением списка.
+     */
+    private fun dropExcluded() = viewModelScope.launch(Dispatchers.Default) {
+        val doomed = dao.vocabCards(VocabRepository.LESSON_ID)
+            .filter {
+                VocabRepository.lemmaOf(it.exerciseId)
+                    ?.let { lemma -> !Excluded.allows(lemma) } == true
+            }
+            .map { it.exerciseId }
+        if (doomed.isNotEmpty()) dao.deleteCards(doomed)
     }
 
     /**
@@ -2451,6 +2488,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private fun gradeReading(state: StoryState, text: String, heard: String) {
         val score = LocalCheck.readingScore(heard, text)
         if (score.passed) {
+            // На слух отрезок сдан — но дальше идём по кнопке, а не сами.
+            // Чтения вслух это не касается: там следующий шаг — микрофон, а не
+            // чужая речь, и темп задаёт сам человек.
+            if (state.mode == StoryMode.Listen && !state.revealed) {
+                countChunk()
+                _story.value = state.copy(
+                    passed = true, revealed = true, heard = heard, note = ""
+                )
+                return
+            }
             advance(state)
             return
         }
@@ -2545,12 +2592,23 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         advance(_story.value ?: return, passed = false)
     }
 
+    /** Сданный отрезок уже сдан — кнопка «Продолжить» ждёт человека, а не зачёта. */
+    fun continueChunk() {
+        val state = _story.value ?: return
+        if (!state.passed) return
+        advance(state)
+    }
+
+    private fun countChunk() = viewModelScope.launch { bump(chunks = 1) }
+
     private fun advance(state: StoryState, passed: Boolean = true) {
-        if (passed) viewModelScope.launch { bump(chunks = 1) }
+        // Отрезок, дожидавшийся кнопки, посчитан в момент сдачи: засчитывать
+        // его второй раз по нажатию значило бы удваивать статистику дня.
+        if (passed && !state.passed) countChunk()
         val next = state.index + 1
         _story.value = state.copy(
             index = next, attempts = 0, heard = "", note = "",
-            revealed = false, checking = false
+            revealed = false, checking = false, passed = false
         )
         saveStory(state.id, state.mode, next, next >= state.chunks.size)
     }

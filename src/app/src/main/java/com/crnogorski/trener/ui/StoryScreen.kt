@@ -159,6 +159,7 @@ fun StoryScreen(
     speaker: Speaker,
     onSubmit: (String) -> Unit,
     onSkipChunk: () -> Unit,
+    onContinue: () -> Unit,
     onReveal: () -> Unit,
     onRestart: () -> Unit,
     onNote: (String) -> Unit,
@@ -325,8 +326,12 @@ fun StoryScreen(
     val done = state.index >= state.chunks.size
     // Само идёт, только пока всё гладко, и не при переводе: его надо сперва
     // придумать, и отсчёт тишины начался бы раньше первого слова.
+    // `passed` гасит автозапуск целиком: отрезок сдан, на экране текст и
+    // перевод, и человек читает их столько, сколько хочет. Без этой оговорки
+    // экран посчитал бы происходящее обычным чтением вслух (текст-то открыт) и
+    // немедленно включил бы микрофон.
     val auto = (reading || hearing) && !theirTurn && granted && !paused && !stalled &&
-        state.attempts == 0 && !done
+        state.attempts == 0 && !done && !state.passed
 
     // Ключи без paused и stalled: их снимает нажатие кнопки, которое и так зовёт
     // start(). Будь они ключами, эффект запустил бы распознавание вторым.
@@ -537,6 +542,27 @@ fun StoryScreen(
                                     onReplay = ::sample,
                                     onRecord = ::record
                                 )
+                            }
+
+                            // Сдано на слух: текст, перевод и кнопка. Ветка
+                            // стоит раньше общей, потому что после сдачи текст
+                            // тоже открыт, и иначе отрезок читался бы как
+                            // «не вышло на слух — прочитай».
+                            state.passed -> {
+                                Bubble(dialog, chunk.mine) {
+                                    GlossedText(
+                                        chunk.sr, state.glossaryMe,
+                                        MaterialTheme.typography.headlineSmall, Paper
+                                    )
+                                }
+                                Spacer(Modifier.height(10.dp))
+                                Text(
+                                    chunk.ru,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = Muted
+                                )
+                                Spacer(Modifier.height(20.dp))
+                                PrimaryButton("Продолжить", onClick = onContinue)
                             }
 
                             else -> {
