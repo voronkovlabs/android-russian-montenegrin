@@ -335,6 +335,23 @@ fun StoryScreen(
     }
 
     /**
+     * Произнести одно нажатое слово.
+     *
+     * Работает как [sample], только короче, и по той же причине **сначала
+     * глушит распознавание**: слушать и говорить одновременно нельзя, иначе
+     * микрофон примет синтезатор за чтение. Без этого нажатие на слово посреди
+     * чтения портило бы собственную попытку.
+     *
+     * После слова экран ждёт нажатия «Читать вслух» — как и после образца.
+     */
+    fun speakWord(word: String) {
+        listener.cancel()
+        listening = false
+        paused = true
+        speaker.speak(word, low = state.current?.theirs == true)
+    }
+
+    /**
      * Проиграть чужую реплику.
      *
      * Отдельно от [sample], потому что тут нечего прерывать и незачем ставить
@@ -512,7 +529,8 @@ fun StoryScreen(
                             } else {
                                 GlossedText(
                                     chunk.sr, state.glossaryMe,
-                                    MaterialTheme.typography.bodyLarge, Jade
+                                    MaterialTheme.typography.bodyLarge, Jade,
+                                    onWord = ::speakWord
                                 )
                                 Spacer(Modifier.height(2.dp))
                                 Text(
@@ -641,7 +659,8 @@ fun StoryScreen(
                                 Bubble(dialog, chunk.mine) {
                                     GlossedText(
                                         chunk.sr, state.glossaryMe,
-                                        MaterialTheme.typography.headlineSmall, Paper
+                                        MaterialTheme.typography.headlineSmall, Paper,
+                                        onWord = ::speakWord
                                     )
                                 }
                                 Spacer(Modifier.height(10.dp))
@@ -669,7 +688,8 @@ fun StoryScreen(
                                 Bubble(dialog, chunk.mine) {
                                     GlossedText(
                                         chunk.sr, state.glossaryMe,
-                                        MaterialTheme.typography.headlineSmall, Paper
+                                        MaterialTheme.typography.headlineSmall, Paper,
+                                        onWord = ::speakWord
                                     )
                                 }
                                 Spacer(Modifier.height(16.dp))

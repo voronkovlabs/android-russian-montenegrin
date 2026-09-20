@@ -35,10 +35,19 @@ fun GlossedText(
     text: String,
     gloss: Map<String, String>,
     style: TextStyle,
-    color: Color
+    color: Color,
+    /**
+     * Произнести нажатое слово.
+     *
+     * По просьбе владельца (20.09.2026): «надо учиться произносить
+     * это с правильными ударениями». Жирная буква говорит, где ударение,
+     * но не говорит, как оно звучит, а у половины слов метки нет вовсе:
+     * где мы не уверены, там молчим. Голос закрывает и то, и другое.
+     */
+    onWord: ((String) -> Unit)? = null
 ) {
     val mark = markStyle()
-    if (gloss.isEmpty()) {
+    if (gloss.isEmpty() && onWord == null) {
         Text(stressedPhrase(text), style = style, color = color)
         return
     }
@@ -57,16 +66,31 @@ fun GlossedText(
             val meaning = gloss[word.lowercase()]
             val at = Stress.inPhrase(word, previous)
             previous = word
-            if (meaning == null) {
+            // Нажимается **любое** слово, а не только знакомое словарю.
+            //
+            // До 2.1 было наоборот, и довод был честный: сразу видно, на что
+            // нажимать бесполезно. Он перестал работать, когда у нажатия
+            // появился второй смысл — услышать слово: произношение нужно и там,
+            // где перевода нет, а в сказках таких слов большинство.
+            //
+            // Подчёркивание при этом осталось знаком перевода, а не нажимаемости:
+            // иначе подчёркнутым стал бы весь текст и перестал что-либо значить.
+            if (meaning == null && onWord == null) {
+                // Ни перевода, ни голоса — нажимать не на что. Так остаётся в
+                // уроках: там слово без подсказки отвечало бы «перевода нет», и
+                // это шум, а не помощь.
                 if (at == null) append(word) else appendMarked(word, at, mark)
             } else {
                 withLink(
                     LinkAnnotation.Clickable(
                         tag = word,
-                        styles = TextLinkStyles(
+                        styles = if (meaning == null) null else TextLinkStyles(
                             style = SpanStyle(textDecoration = TextDecoration.Underline)
                         )
-                    ) { picked = word to meaning }
+                    ) {
+                        picked = word to meaning.orEmpty()
+                        onWord?.invoke(word)
+                    }
                 ) {
                     if (at == null) append(word) else appendMarked(word, at, mark)
                 }
@@ -81,7 +105,10 @@ fun GlossedText(
     if (shown != null) {
         Spacer(Modifier.height(8.dp))
         Text(
-            "${shown.first} — ${shown.second}",
+            // У слова без перевода строка всё равно появляется: молчание в
+            // ответ на нажатие читается как поломка, а не как «перевода нет».
+            if (shown.second.isBlank()) "${shown.first} — перевода нет"
+            else "${shown.first} — ${shown.second}",
             style = MaterialTheme.typography.bodyMedium,
             color = Accent
         )
