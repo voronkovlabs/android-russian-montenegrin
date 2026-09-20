@@ -4,17 +4,18 @@
   "note": "Открыть счёт. Урок 14.",
   "speaker": "Službenik",
   "chunks": [
-    { "who": "them", "sr": "Dobar dan, kako mogu da pomognem?", "ru": "Добрый день, чем я могу помочь?" },
-    { "who": "you", "sr": "Hoću da otvorim račun.", "ru": "Я хочу открыть счёт." },
-    { "who": "them", "sr": "Imate li boravišnu dozvolu?", "ru": "У вас есть вид на жительство?" },
-    { "who": "you", "sr": "Imam, evo je. I pasoš.", "ru": "Есть, вот он. И паспорт." },
-    { "who": "them", "sr": "Treba mi i potvrda o adresi.", "ru": "Мне нужна ещё справка об адресе." },
-    { "who": "you", "sr": "Nemam je sa sobom. Mogu li sjutra?", "ru": "У меня её с собой нет. Можно завтра?" },
-    { "who": "them", "sr": "Možete. Radimo do dva popodne.", "ru": "Можно. Мы работаем до двух дня." },
-    { "who": "you", "sr": "Koliko košta održavanje računa?", "ru": "Сколько стоит обслуживание счёта?" },
-    { "who": "them", "sr": "Dva evra mjesečno, kartica je besplatna.", "ru": "Два евро в месяц, карта бесплатная." },
-    { "who": "you", "sr": "A kada dobijam karticu?", "ru": "А когда я получу карту?" },
-    { "who": "them", "sr": "Za sedam dana, javićemo vam se.", "ru": "Через семь дней, мы вам сообщим." },
-    { "who": "you", "sr": "Hvala, vidimo se sjutra.", "ru": "Спасибо, увидимся завтра." }
+    { "sr": "Dobar dan, kako mogu da pomognem?", "ru": "Добрый день, чем я могу помочь?", "who": "them" },
+    { "sr": "Hoću da otvorim račun.", "ru": "Я хочу открыть счёт.", "who": "you" },
+    { "sr": "Imate li boravišnu dozvolu?", "ru": "У вас есть вид на жительство?", "who": "them" },
+    { "sr": "Imam, evo je. I pasoš.", "ru": "Есть, вот он. И паспорт.", "who": "you" },
+    { "sr": "Treba mi i potvrda o adresi.", "ru": "Мне нужна ещё справка об адресе.", "who": "them" },
+    { "sr": "Nemam je sa sobom.", "ru": "У меня её с собой нет.", "who": "you" },
+    { "sr": "Mogu li sjutra?", "ru": "Можно завтра?", "who": "you" },
+    { "sr": "Možete. Radimo do dva popodne.", "ru": "Можно. Мы работаем до двух дня.", "who": "them" },
+    { "sr": "Koliko košta održavanje računa?", "ru": "Сколько стоит обслуживание счёта?", "who": "you" },
+    { "sr": "Dva evra mjesečno, kartica je besplatna.", "ru": "Два евро в месяц, карта бесплатная.", "who": "them" },
+    { "sr": "A kada dobijam karticu?", "ru": "А когда я получу карту?", "who": "you" },
+    { "sr": "Za sedam dana, javićemo vam se.", "ru": "Через семь дней, мы вам сообщим.", "who": "them" },
+    { "sr": "Hvala, vidimo se sjutra.", "ru": "Спасибо, увидимся завтра.", "who": "you" }
   ]
 }

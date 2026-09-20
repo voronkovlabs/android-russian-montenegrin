@@ -4,17 +4,18 @@
   "note": "Соседу нужна помощь. Уроки 21 и 22.",
   "speaker": "Komšija",
   "chunks": [
-    { "who": "them", "sr": "Izvini što smetam, jesi li kod kuće?", "ru": "Извини, что беспокою, ты дома?" },
-    { "who": "you", "sr": "Jesam, uđi. Šta se desilo?", "ru": "Дома, заходи. Что случилось?" },
-    { "who": "them", "sr": "Kod mene curi voda, a majstor se ne javlja.", "ru": "У меня течёт вода, а мастер не отвечает." },
-    { "who": "you", "sr": "Imaš li broj drugog majstora?", "ru": "У тебя есть телефон другого мастера?" },
-    { "who": "them", "sr": "Nemam. Mislio sam da ti imaš.", "ru": "Нет. Я думал, что у тебя есть." },
-    { "who": "you", "sr": "Imam jedan, zvao sam ga prošle godine.", "ru": "Есть один, я звонил ему в прошлом году." },
-    { "who": "them", "sr": "Možeš li da ga pozoveš odmah?", "ru": "Можешь позвонить ему прямо сейчас?" },
-    { "who": "you", "sr": "Naravno, sada ću.", "ru": "Конечно, сейчас позвоню." },
-    { "who": "them", "sr": "Hvala ti puno, spasio si me.", "ru": "Большое тебе спасибо, ты меня спас." },
-    { "who": "you", "sr": "Nema na čemu, to je normalno.", "ru": "Не за что, это нормально." },
-    { "who": "them", "sr": "Ako ti nešto zatreba, samo pozovi.", "ru": "Если тебе что-то понадобится, просто позвони." },
-    { "who": "you", "sr": "Hoću. Sretno sa vodom!", "ru": "Позвоню. Удачи с водой!" }
+    { "sr": "Izvini što smetam, jesi li kod kuće?", "ru": "Извини, что беспокою, ты дома?", "who": "them" },
+    { "sr": "Jesam, uđi. Šta se desilo?", "ru": "Дома, заходи. Что случилось?", "who": "you" },
+    { "sr": "Kod mene curi voda, a majstor se ne javlja.", "ru": "У меня течёт вода, а мастер не отвечает.", "who": "them" },
+    { "sr": "Imaš li broj drugog majstora?", "ru": "У тебя есть телефон другого мастера?", "who": "you" },
+    { "sr": "Nemam.", "ru": "Нет.", "who": "them" },
+    { "sr": "Mislio sam da ti imaš.", "ru": "Я думал, что у тебя есть.", "who": "them" },
+    { "sr": "Imam jedan, zvao sam ga prošle godine.", "ru": "Есть один, я звонил ему в прошлом году.", "who": "you" },
+    { "sr": "Možeš li da ga pozoveš odmah?", "ru": "Можешь позвонить ему прямо сейчас?", "who": "them" },
+    { "sr": "Naravno, sada ću.", "ru": "Конечно, сейчас позвоню.", "who": "you" },
+    { "sr": "Hvala ti puno, spasio si me.", "ru": "Большое тебе спасибо, ты меня спас.", "who": "them" },
+    { "sr": "Nema na čemu, to je normalno.", "ru": "Не за что, это нормально.", "who": "you" },
+    { "sr": "Ako ti nešto zatreba, samo pozovi.", "ru": "Если тебе что-то понадобится, просто позвони.", "who": "them" },
+    { "sr": "Hoću. Sretno sa vodom!", "ru": "Позвоню. Удачи с водой!", "who": "you" }
   ]
 }

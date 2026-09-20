@@ -4,17 +4,18 @@
   "note": "Автосервис: машина не заводится. Урок 19.",
   "speaker": "Majstor",
   "chunks": [
-    { "who": "them", "sr": "Dobar dan, šta je problem?", "ru": "Добрый день, в чём проблема?" },
-    { "who": "you", "sr": "Auto ne pali ujutru.", "ru": "Машина не заводится по утрам." },
-    { "who": "them", "sr": "Koliko je star akumulator?", "ru": "Сколько лет аккумулятору?" },
-    { "who": "you", "sr": "Ne znam tačno, kupio sam auto polovan.", "ru": "Не знаю точно, я купил машину подержанной." },
-    { "who": "them", "sr": "Provjeriću ga. Ostavite ključeve.", "ru": "Я его проверю. Оставьте ключи." },
-    { "who": "you", "sr": "Koliko će trajati?", "ru": "Сколько это займёт?" },
-    { "who": "them", "sr": "Sat vremena, možda dva.", "ru": "Час, может быть, два." },
-    { "who": "you", "sr": "Možete li i gume da provjerite?", "ru": "Можете ещё и шины проверить?" },
-    { "who": "them", "sr": "Mogu. Jedna je slaba, vidim odavde.", "ru": "Могу. Одна спущена, я отсюда вижу." },
-    { "who": "you", "sr": "Koliko bi to sve koštalo?", "ru": "Сколько всё это будет стоить?" },
-    { "who": "them", "sr": "Zvaću vas kad vidim šta treba.", "ru": "Я позвоню вам, когда посмотрю, что нужно." },
-    { "who": "you", "sr": "U redu, evo moj broj.", "ru": "Хорошо, вот мой номер." }
+    { "sr": "Dobar dan, šta je problem?", "ru": "Добрый день, в чём проблема?", "who": "them" },
+    { "sr": "Auto ne pali ujutru.", "ru": "Машина не заводится по утрам.", "who": "you" },
+    { "sr": "Koliko je star akumulator?", "ru": "Сколько лет аккумулятору?", "who": "them" },
+    { "sr": "Ne znam tačno, kupio sam auto polovan.", "ru": "Не знаю точно, я купил машину подержанной.", "who": "you" },
+    { "sr": "Provjeriću ga. Ostavite ključeve.", "ru": "Я его проверю. Оставьте ключи.", "who": "them" },
+    { "sr": "Koliko će trajati?", "ru": "Сколько это займёт?", "who": "you" },
+    { "sr": "Sat vremena, možda dva.", "ru": "Час, может быть, два.", "who": "them" },
+    { "sr": "Možete li i gume da provjerite?", "ru": "Можете ещё и шины проверить?", "who": "you" },
+    { "sr": "Mogu.", "ru": "Могу.", "who": "them" },
+    { "sr": "Jedna je slaba, vidim odavde.", "ru": "Одна спущена, я отсюда вижу.", "who": "them" },
+    { "sr": "Koliko bi to sve koštalo?", "ru": "Сколько всё это будет стоить?", "who": "you" },
+    { "sr": "Zvaću vas kad vidim šta treba.", "ru": "Я позвоню вам, когда посмотрю, что нужно.", "who": "them" },
+    { "sr": "U redu, evo moj broj.", "ru": "Хорошо, вот мой номер.", "who": "you" }
   ]
 }
