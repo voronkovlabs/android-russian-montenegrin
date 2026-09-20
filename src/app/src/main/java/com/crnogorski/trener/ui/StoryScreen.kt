@@ -56,6 +56,9 @@ import com.crnogorski.trener.data.StoryMode
 import com.crnogorski.trener.speech.Listener
 import kotlinx.coroutines.delay
 import com.crnogorski.trener.speech.Speaker
+import com.crnogorski.trener.data.VoiceRecorder
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 /** После скольких неудач подряд даём пройти дальше, не взяв отрезок. */
 private const val ATTEMPTS_BEFORE_SKIP = 3
@@ -160,6 +163,7 @@ fun StoryScreen(
     onSubmit: (String) -> Unit,
     onSkipChunk: () -> Unit,
     onContinue: () -> Unit,
+    onNativeNext: () -> Unit,
     onReveal: () -> Unit,
     onRestart: () -> Unit,
     onNote: (String) -> Unit,
@@ -169,6 +173,21 @@ fun StoryScreen(
     val context = LocalContext.current
     val listener = remember { Listener(context) }
     var listening by remember(state.id) { mutableStateOf(false) }
+
+    // Режим носителя. Записыватель живёт столько же, сколько экран, — как и
+    // распознаватель строкой выше, и по той же причине: он держит системный
+    // ресурс, и отпускать его надо ровно при уходе.
+    val recorder = remember { VoiceRecorder(context) }
+    var recording by remember(state.id) { mutableStateOf(false) }
+    var recorded by remember(state.id, state.index) { mutableStateOf(false) }
+    var saveFailed by remember(state.id, state.index) { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+
+    // Заход начинается со входом в историю, а не с первой записи: имя папки —
+    // это время, когда человек сел читать.
+    LaunchedEffect(state.id, state.run, state.native) {
+        if (state.native) recorder.startPass(state.id)
+    }
     var status by remember(state.id, state.index) { mutableStateOf("") }
 
     // Человек прервал слушание сам — послушал образец. Пока не нажмёт «Читать
@@ -191,6 +210,9 @@ fun StoryScreen(
 
     DisposableEffect(Unit) {
         onDispose {
+            // Начатую и не остановленную запись бросаем: обрывок фразы,
+            // записанный по дороге с экрана, архиву не нужен.
+            recorder.cancel()
             listener.stop()
             // Замолчать обязательно: иначе назначенное на конец фразы включит
             // микрофон уже на другом экране.
@@ -330,13 +352,21 @@ fun StoryScreen(
     // перевод, и человек читает их столько, сколько хочет. Без этой оговорки
     // экран посчитал бы происходящее обычным чтением вслух (текст-то открыт) и
     // немедленно включил бы микрофон.
+    // В режиме носителя не запускается ничего: ни распознавание, ни
+    // синтезатор. Проверять нечего, а робот, читающий ту же фразу вслед за
+    // человеком, — просто помеха.
     val auto = (reading || hearing) && !theirTurn && granted && !paused && !stalled &&
-        state.attempts == 0 && !done && !state.passed
+        state.attempts == 0 && !done && !state.passed && !state.native
 
     // Ключи без paused и stalled: их снимает нажатие кнопки, которое и так зовёт
     // start(). Будь они ключами, эффект запустил бы распознавание вторым.
     LaunchedEffect(state.id, state.index, granted) {
         if (done) return@LaunchedEffect
+        // Режим носителя сам не делает ничего. Одного `auto` здесь
+        // мало: ветка `reading` ниже смотрит на режим истории, а он у нас
+        // по-прежнему «чтение вслух», и распознавание запустилось бы
+        // прямо поверх записи.
+        if (state.native) return@LaunchedEffect
         // Чужая реплика звучит сама и без разрешения на микрофон: слушать её
         // можно и не отвечая.
         if (theirTurn) {
@@ -541,6 +571,51 @@ fun StoryScreen(
                                     note = state.note,
                                     onReplay = ::sample,
                                     onRecord = ::record
+                                )
+                            }
+
+                            // Режим носителя. Стоит первой из всех веток: он отменяет
+                            // и проверку, и подсказки, и всю остальную механику занятия.
+                            state.native -> {
+                                Bubble(dialog, chunk.mine) {
+                                    // Без подсказок по словам и без ударений: носителю
+                                    // они ни к чему, а разметка по сербской норме его
+                                    // ещё и сбила бы.
+                                    Text(
+                                        chunk.sr,
+                                        style = MaterialTheme.typography.headlineSmall,
+                                        color = Paper
+                                    )
+                                }
+                                Spacer(Modifier.height(20.dp))
+                                NativeControls(
+                                    recording = recording,
+                                    recorded = recorded,
+                                    failed = saveFailed,
+                                    last = state.index + 1 >= state.chunks.size,
+                                    onRecord = {
+                                        if (!granted) {
+                                            // Спрашиваем по нажатию, а не при входе:
+                                            // системный диалог, выскочивший перед гостем
+                                            // сам по себе, читается как подвох.
+                                            permission.launch(Manifest.permission.RECORD_AUDIO)
+                                        } else if (recording) {
+                                            recording = false
+                                            val at = state.index
+                                            scope.launch {
+                                                val ok = recorder.stop(at, chunk)
+                                                recorded = ok
+                                                saveFailed = !ok
+                                                if (ok) recorder.writeManifest(state.id, state.title)
+                                            }
+                                        } else {
+                                            recorder.start()
+                                            recording = recorder.recording
+                                            // Движок не взялся — говорим сразу, а не молчим.
+                                            saveFailed = !recording
+                                        }
+                                    },
+                                    onNext = onNativeNext
                                 )
                             }
 
@@ -856,6 +931,62 @@ private fun MaskedText(
  * В гладком случае кнопки нет вовсе — только строка «Слушаю»: нажимать нечего,
  * просто читай. Кнопка появляется, когда слушание сорвалось или его прервали.
  */
+/**
+ * Кнопки режима носителя: запись, перезапись, дальше.
+ *
+ * За экраном тут посторонний человек, который нашей механики не знает и не
+ * должен узнавать. Отсюда три правила.
+ *
+ * **Запись начинается по нажатию, а не сама.** Во всём остальном приложении
+ * микрофон включается сам — там человек знает, что делать. Здесь автозапуск
+ * записал бы возню, вопрос «а что нажимать?» и полминуты тишины.
+ *
+ * **«Ещё раз» доступна сразу**, а не после чьего-то вердикта: носитель сам
+ * слышит, что оговорился, и должен перечитать фразу одним нажатием.
+ * Новая запись замещает прежнюю файлом, а не ложится рядом.
+ *
+ * **«Продолжить» нажимают явно.** Само ничего не едет: человек может
+ * прочитать фразу глазами, перевести дух и начать когда готов.
+ */
+@Composable
+private fun NativeControls(
+    recording: Boolean,
+    recorded: Boolean,
+    failed: Boolean,
+    last: Boolean,
+    onRecord: () -> Unit,
+    onNext: () -> Unit
+) {
+    PrimaryButton(
+        when {
+            recording -> "Стоп"
+            recorded -> "Ещё раз"
+            else -> "Записать"
+        },
+        onClick = onRecord
+    )
+    Spacer(Modifier.height(10.dp))
+    Text(
+        when {
+            recording -> "Идёт запись…"
+            failed -> "Записать не вышло. Попробуй ещё раз."
+            recorded -> "Записано. Можно перечитать — прежняя запись заменится."
+            else -> "Прочитайте фразу вслух."
+        },
+        style = MaterialTheme.typography.bodyMedium,
+        color = if (failed) Crimson else Muted
+    )
+    if (!recording) {
+        Spacer(Modifier.height(14.dp))
+        TextButton(onClick = onNext) {
+            Text(
+                if (last) "Закончить" else "Продолжить",
+                color = if (recorded) Accent else Muted
+            )
+        }
+    }
+}
+
 @Composable
 private fun ReadingControls(
     listening: Boolean,

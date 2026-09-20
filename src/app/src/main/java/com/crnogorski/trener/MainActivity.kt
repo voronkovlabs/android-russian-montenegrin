@@ -146,6 +146,7 @@ class MainActivity : ComponentActivity() {
                                     onSubmit = vm::submitChunk,
                                     onSkipChunk = vm::skipChunk,
                                     onContinue = vm::continueChunk,
+                                    onNativeNext = vm::nextChunkNative,
                                     onReveal = vm::revealChunk,
                                     onRestart = vm::restartStory,
                                     onNote = vm::addNote,

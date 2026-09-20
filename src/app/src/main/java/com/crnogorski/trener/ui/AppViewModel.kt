@@ -42,6 +42,7 @@ import com.crnogorski.trener.data.VocabKind
 import com.crnogorski.trener.data.VocabRepository
 import com.crnogorski.trener.notify.Replies
 import com.crnogorski.trener.data.VocabWord
+import com.crnogorski.trener.data.VoiceRecorder
 import com.crnogorski.trener.data.exerciseFor
 import com.crnogorski.trener.data.matchExercise
 import com.crnogorski.trener.data.matchPairFor
@@ -420,6 +421,26 @@ data class StoryState(
     val passed: Boolean = false,
     /** Как зовут собеседника в диалоге. У обычной истории пусто. */
     val speaker: String = "",
+    /**
+     * Режим носителя: телефон в руках у приглашённого человека, он читает
+     * историю вслух, а мы пишем голос (идея 99).
+     *
+     * Включается галочкой в настройках и действует только на чтение вслух.
+     * Всё, что в этом режиме меняется, — следствие одного: **занимается не
+     * ученик.** Проверять нечего (разбирать записи будем потом своими ушами),
+     * засчитывать нечего (ни минуты, ни отрезки, ни серия дней), торопить
+     * некого — следующая фраза ждёт нажатия.
+     */
+    val native: Boolean = false,
+    /**
+     * Номер захода по истории — меняется при «Пройти заново».
+     *
+     * Нужен режиму носителя: папка заводится на каждое прохождение, а
+     * идентификатор истории при перечитывании не меняется — второй заход
+     * лёг бы поверх первого. А перечитывать носитель будет: первый раз
+     * всегда разминка.
+     */
+    val run: Int = 0,
     val glossaryMe: Map<String, String> = emptyMap()
 ) {
     val current: StoryChunk? get() = chunks.getOrNull(index)
@@ -2444,6 +2465,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 chunks = story.chunks,
                 speaker = story.speaker,
                 mode = mode,
+                // Режим носителя — только для чтения вслух: на слух и в
+                // переводе записывать нечего, там говорит приложение или
+                // думает ученик.
+                native = mode == StoryMode.Read && VoiceRecorder.isOn(ctx),
                 index = if (done >= story.chunks.size) 0 else done,
                 glossaryMe = runCatching { repo.glossary().me }.getOrDefault(emptyMap())
             )
@@ -2458,9 +2483,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun restartStory() {
-        _story.value = _story.value?.copy(
+        val state = _story.value ?: return
+        _story.value = state.copy(
             index = 0, attempts = 0, heard = "", note = "",
-            revealed = false, checking = false
+            revealed = false, checking = false, passed = false,
+            run = state.run + 1
         )
     }
 
@@ -2595,6 +2622,22 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun skipChunk() {
         // Оставленный отрезок в счёт прочитанного не идёт: его не прочли.
         advance(_story.value ?: return, passed = false)
+    }
+
+    /**
+     * Дальше по истории в режиме носителя.
+     *
+     * Отдельный путь, а не `advance(passed = false)`, и это важнее, чем
+     * кажется: тот всё же трогает `saveStory`, то есть двигал бы прогресс
+     * ученика по истории, которую читал посторонний человек. Здесь не
+     * записывается **ничего** — ни день, ни отрезок, ни то, докуда дошли.
+     */
+    fun nextChunkNative() {
+        val state = _story.value ?: return
+        _story.value = state.copy(
+            index = state.index + 1, attempts = 0, heard = "", note = "",
+            revealed = false, checking = false, passed = false
+        )
     }
 
     /** Сданный отрезок уже сдан — кнопка «Продолжить» ждёт человека, а не зачёта. */

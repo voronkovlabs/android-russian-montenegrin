@@ -53,6 +53,7 @@ import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.data.ProgressStore
 import com.crnogorski.trener.speech.Speaker
 import kotlinx.coroutines.launch
+import com.crnogorski.trener.data.VoiceRecorder
 
 /** Фраза для проверки голоса: короткая, со всеми характерными звуками. */
 private const val VOICE_PROBE = "Dobar dan, kako si?"
@@ -406,6 +407,9 @@ fun SettingsScreen(
             SplashRow(onShowSplash)
 
             Spacer(Modifier.height(20.dp))
+            NativeModeRow()
+
+            Spacer(Modifier.height(20.dp))
             DiagnosticsRow(state, onDiagnostics, onSendDiagnostics)
 
             Spacer(Modifier.height(28.dp))
@@ -681,6 +685,84 @@ private fun SplashRow(onShow: () -> Unit) {
 
     Spacer(Modifier.height(14.dp))
     SecondaryAction(text = "Показать заставку", onClick = onShow)
+}
+
+/**
+ * Режим носителя: галочка и путь к папке с записями.
+ *
+ * Включённым он меняет чтение вслух в историях на запись голоса и гасит
+ * всю остальную механику занятия. Галочка живёт в настройках телефона, а не в
+ * `config/tuning.json`: те едут на все три телефона разом, а носитель приходит
+ * к одному человеку и на один вечер.
+ *
+ * **Путь написан прямо здесь** — отдельная просьба владельца: папку надо
+ * добавить в OneDrive, а искать её по телефону вслепую — занятие на четверть
+ * часа. Пишем в «Документы», а не в каталог приложения, именно поэтому: в
+ * `Android/data` с Android 11 посторонним приложениям ходу нет, и облако там
+ * ничего не увидело бы.
+ */
+@Composable
+private fun NativeModeRow() {
+    val context = LocalContext.current
+    var on by remember { mutableStateOf(VoiceRecorder.isOn(context)) }
+
+    fun set(value: Boolean) {
+        on = value
+        VoiceRecorder.setOn(context, value)
+    }
+
+    Text("РЕЖИМ НОСИТЕЛЯ", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(12.dp))
+
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .clickable { set(!on) }
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = on,
+            onCheckedChange = { set(it) },
+            colors = CheckboxDefaults.colors(
+                checkedColor = Accent, checkmarkColor = Ink, uncheckedColor = Muted
+            )
+        )
+        Spacer(Modifier.width(8.dp))
+        Text(
+            "Режим носителя",
+            style = MaterialTheme.typography.titleMedium,
+            color = Paper,
+            modifier = Modifier.weight(1f)
+        )
+    }
+    Spacer(Modifier.height(6.dp))
+    Text(
+        if (on) {
+            "Чтение вслух в историях записывает голос по фразам. Проверки нет, " +
+                "время и отрезки никуда не засчитываются — читает не ученик. " +
+                "Каждое прохождение ложится в свою папку, рядом со звуком — " +
+                "список фраз с текстом."
+        } else {
+            "Выключено. Включи, когда телефон берёт носитель языка: он читает " +
+                "историю вслух, а приложение пишет голос."
+        },
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+    Spacer(Modifier.height(10.dp))
+    Text(
+        "Записи: ${VoiceRecorder.HUMAN_PATH}",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Paper
+    )
+    Spacer(Modifier.height(4.dp))
+    Text(
+        "Эту папку и надо добавить в OneDrive — дальше он заберёт записи сам.",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
 }
 
 /**
