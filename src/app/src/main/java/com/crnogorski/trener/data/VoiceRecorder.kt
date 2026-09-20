@@ -239,6 +239,47 @@ class VoiceRecorder(private val context: Context) {
         private const val MANIFEST = "zapis.json"
 
         /**
+         * Все записи, что лежат в общем хранилище, — для отправки в облако.
+         *
+         * Нужно потому, что **OneDrive не синхронизирует произвольную папку**.
+         * Замысел владельца («добавлю папку в OneDrive, дальше он сам») не
+         * работает: в приложении OneDrive для Android автоматическая выгрузка
+         * есть только у камеры и берёт она лишь изображения и видео, а его
+         * провайдер в системном выборе файлов умеет открывать, но не создавать.
+         * Значит дописать файл в облако мы не можем ни сами, ни через систему.
+         *
+         * Остаётся отдать файлы системной шторке и дать человеку выбрать
+         * OneDrive — одно нажатие вместо ручного похода в два приложения.
+         *
+         * Спрашиваем у `MediaStore`, а не помним список у себя: файлы переживают
+         * и перезапуск, и переустановку приложения, и складывал их, может быть,
+         * прошлый месяц. Хранилище и есть единственная правда о том, что есть.
+         */
+        fun recordings(context: Context): List<Uri> {
+            val collection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+            val path = "${android.os.Environment.DIRECTORY_DOCUMENTS}/$ROOT"
+            val found = mutableListOf<Uri>()
+            runCatching {
+                context.contentResolver.query(
+                    collection,
+                    arrayOf(MediaStore.MediaColumns._ID),
+                    "${MediaStore.MediaColumns.RELATIVE_PATH} LIKE ?",
+                    arrayOf("$path%"),
+                    "${MediaStore.MediaColumns.RELATIVE_PATH} ASC, " +
+                        "${MediaStore.MediaColumns.DISPLAY_NAME} ASC"
+                )?.use { c ->
+                    val col = c.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
+                    while (c.moveToNext()) {
+                        found += android.content.ContentUris.withAppendedId(
+                            collection, c.getLong(col)
+                        )
+                    }
+                }
+            }
+            return found
+        }
+
+        /**
          * Моно, 44,1 кГц, 128 кбит/с.
          *
          * Речь одного человека в помещении; стерео тут нечего писать, а

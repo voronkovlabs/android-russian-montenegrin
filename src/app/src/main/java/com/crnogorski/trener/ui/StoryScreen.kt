@@ -740,9 +740,14 @@ fun StoryScreen(
                         color = Muted
                     )
                     Spacer(Modifier.height(16.dp))
-                    PrimaryButton("Пройти заново", onClick = onRestart)
+                    // Крупной кнопкой — выход к списку, а не повторное чтение
+                    // (идея 87, Катя). До 1.95 было наоборот, и это была
+                    // ошибка акцента: историю только что дочитали, и обычное
+                    // желание здесь — взять следующую, а не начать ту же с начала.
+                    // Перечитывание не убрано, только перестало быть главным.
+                    PrimaryButton("К списку историй", onClick = onClose)
                     Spacer(Modifier.height(4.dp))
-                    TextButton(onClick = onClose) { Text("К списку историй", color = Muted) }
+                    TextButton(onClick = onRestart) { Text("Пройти заново", color = Muted) }
                 } else {
                     // Не fillMaxHeight: внутри списка высота не ограничена, и он
                     // молча схлопнулся бы в ноль. Нужен размер окна, а не родителя.

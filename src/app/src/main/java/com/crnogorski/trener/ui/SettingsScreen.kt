@@ -54,6 +54,10 @@ import com.crnogorski.trener.data.ProgressStore
 import com.crnogorski.trener.speech.Speaker
 import kotlinx.coroutines.launch
 import com.crnogorski.trener.data.VoiceRecorder
+import android.content.Intent
+import androidx.compose.runtime.produceState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /** Фраза для проверки голоса: короткая, со всеми характерными звуками. */
 private const val VOICE_PROBE = "Dobar dan, kako si?"
@@ -759,10 +763,40 @@ private fun NativeModeRow() {
     )
     Spacer(Modifier.height(4.dp))
     Text(
-        "Эту папку и надо добавить в OneDrive — дальше он заберёт записи сам.",
+        "Папка обычная, её видит любой файловый менеджер. Но OneDrive сам её не " +
+            "заберёт: у него автовыгрузка есть только для камеры и только для " +
+            "снимков и видео. Зато записи можно отдать ему отсюда.",
         style = MaterialTheme.typography.bodyMedium,
         color = Muted
     )
+
+    Spacer(Modifier.height(14.dp))
+    // Спрашиваем хранилище в фоне, а не прямо в композиции: это запрос через
+    // системного посредника, и на главном потоке ему не место — сторож
+    // диагностики ловит такие вещи не зря.
+    val files by produceState(initialValue = emptyList<Uri>(), on) {
+        value = withContext(Dispatchers.IO) { VoiceRecorder.recordings(context) }
+    }
+    SecondaryAction(
+        text = if (files.isEmpty()) "Записей пока нет"
+        else "Отправить записи (${files.size})",
+        enabled = files.isNotEmpty()
+    ) {
+        // Отдаём всё, что накопилось, системной шторке: куда именно —
+        // выбирает человек. Своего счёта «что уже отправлено» не ведём: облако
+        // само разберётся с повторами, а наш список однажды разошёлся бы с тем,
+        // что там на самом деле лежит.
+        val send = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+            type = "*/*"
+            putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(files))
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        runCatching {
+            context.startActivity(
+                Intent.createChooser(send, "Куда отправить записи")
+            )
+        }
+    }
 }
 
 /**
