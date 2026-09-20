@@ -114,6 +114,29 @@ class Pace(context: Context) {
     /** Сколько секунд дневного бюджета ещё не потрачено. */
     fun leftToday(): Int = (minutes * 60 - spentToday()).coerceAtLeast(0)
 
+    /**
+     * Выполнена ли дневная норма времени.
+     *
+     * Время идёт в неё **с любого занятия** — и с ежедневного задания, и с
+     * урока, открытого руками, и с истории, выбранной самому. Так было с самого
+     * начала: требовать пятнадцать минут сверх получаса, потраченного на язык,
+     * было бы враньём.
+     */
+    fun budgetDone(): Boolean = leftToday() == 0
+
+    /**
+     * Хвалили ли сегодня за выполненную норму.
+     *
+     * Норма выполняется один раз, а занятий после этого может быть ещё три:
+     * без отметки костёр загорался бы на каждом.
+     */
+    fun celebratedToday(): Boolean =
+        prefs.getString(KEY_CHEERED, "") == today()
+
+    fun noteCelebrated() {
+        prefs.edit().putString(KEY_CHEERED, today()).apply()
+    }
+
     private fun today(): String = LocalDate.now().toString()
 
     private fun countKey(type: String) = "pace_n_" + type
@@ -126,6 +149,7 @@ class Pace(context: Context) {
         private const val KEY_MINUTES = "daily_minutes"
         private const val KEY_DAY = "daily_day"
         private const val KEY_SPENT = "daily_spent"
+        private const val KEY_CHEERED = "daily_cheered"
 
         /**
          * Пятнадцать минут в день.
