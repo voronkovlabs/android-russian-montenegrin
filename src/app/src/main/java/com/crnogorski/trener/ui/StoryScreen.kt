@@ -476,7 +476,9 @@ fun StoryScreen(
         ) {
             item {
                 Text(
-                    state.mode.title.uppercase(),
+                    // В режиме носителя всё, что видит человек, — по-черногорски
+                    // (идея 101). Он пришёл читать, а не разбирать чужой язык.
+                    if (state.native) "ČITANJE NAGLAS" else state.mode.title.uppercase(),
                     style = MaterialTheme.typography.labelSmall,
                     color = Accent
                 )
@@ -496,17 +498,29 @@ fun StoryScreen(
                 when {
                     i < state.index -> {
                         // Пройденное: текст приглушён, перевод под ним — он и есть награда.
+                        //
+                        // В режиме носителя награждать некого: русская строка ему шум,
+                        // да и подчёркивание слов с подсказками тоже: они ведут в тот же
+                        // русский перевод.
                         Bubble(dialog, chunk.mine) {
-                            GlossedText(
-                                chunk.sr, state.glossaryMe,
-                                MaterialTheme.typography.bodyLarge, Jade
-                            )
-                            Spacer(Modifier.height(2.dp))
-                            Text(
-                                chunk.ru,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Muted
-                            )
+                            if (state.native) {
+                                Text(
+                                    chunk.sr,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = Jade
+                                )
+                            } else {
+                                GlossedText(
+                                    chunk.sr, state.glossaryMe,
+                                    MaterialTheme.typography.bodyLarge, Jade
+                                )
+                                Spacer(Modifier.height(2.dp))
+                                Text(
+                                    chunk.ru,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Muted
+                                )
+                            }
                         }
                         Spacer(Modifier.height(14.dp))
                     }
@@ -728,14 +742,22 @@ fun StoryScreen(
                 if (done) {
                     Spacer(Modifier.height(10.dp))
                     Text(
-                        if (reading) "ПРОЧИТАНО" else "ПЕРЕВЕДЕНО",
+                        when {
+                            state.native -> "PROČITANO"
+                            reading -> "ПРОЧИТАНО"
+                            else -> "ПЕРЕВЕДЕНО"
+                        },
                         style = MaterialTheme.typography.labelSmall,
                         color = Jade
                     )
                     Spacer(Modifier.height(12.dp))
                     Text(
-                        "История пройдена до конца. К ней можно вернуться в любой момент — " +
-                            "на повторение она не встаёт.",
+                        if (state.native) {
+                            "Hvala vam! Priča je pročitana do kraja."
+                        } else {
+                            "История пройдена до конца. К ней можно вернуться в любой момент — " +
+                                "на повторение она не встаёт."
+                        },
                         style = MaterialTheme.typography.bodyMedium,
                         color = Muted
                     )
@@ -745,9 +767,17 @@ fun StoryScreen(
                     // ошибка акцента: историю только что дочитали, и обычное
                     // желание здесь — взять следующую, а не начать ту же с начала.
                     // Перечитывание не убрано, только перестало быть главным.
-                    PrimaryButton("К списку историй", onClick = onClose)
+                    PrimaryButton(
+                        if (state.native) "Na spisak priča" else "К списку историй",
+                        onClick = onClose
+                    )
                     Spacer(Modifier.height(4.dp))
-                    TextButton(onClick = onRestart) { Text("Пройти заново", color = Muted) }
+                    TextButton(onClick = onRestart) {
+                        Text(
+                            if (state.native) "Pročitaj ponovo" else "Пройти заново",
+                            color = Muted
+                        )
+                    }
                 } else {
                     // Не fillMaxHeight: внутри списка высота не ограничена, и он
                     // молча схлопнулся бы в ноль. Нужен размер окна, а не родителя.
@@ -940,17 +970,23 @@ private fun MaskedText(
  * Кнопки режима носителя: запись, перезапись, дальше.
  *
  * За экраном тут посторонний человек, который нашей механики не знает и не
- * должен узнавать. Отсюда три правила.
+ * должен узнавать. Отсюда четыре правила.
+ *
+ * **Все подписи по-черногорски** (идея 101). Человек пришёл прочитать текст, а
+ * не разбирать чужой язык на кнопках, и русское «Записать» для него ровно такая
+ * же загадка, какой было бы «Snimi» для нас. По той же причине у пройденных
+ * отрезков в этом режиме не показывается русский перевод и не подчёркиваются
+ * слова с подсказками: подсказки ведут в тот же русский.
  *
  * **Запись начинается по нажатию, а не сама.** Во всём остальном приложении
  * микрофон включается сам — там человек знает, что делать. Здесь автозапуск
  * записал бы возню, вопрос «а что нажимать?» и полминуты тишины.
  *
- * **«Ещё раз» доступна сразу**, а не после чьего-то вердикта: носитель сам
+ * **«Snimi ponovo» доступна сразу**, а не после чьего-то вердикта: носитель сам
  * слышит, что оговорился, и должен перечитать фразу одним нажатием.
  * Новая запись замещает прежнюю файлом, а не ложится рядом.
  *
- * **«Продолжить» нажимают явно.** Само ничего не едет: человек может
+ * **«Nastavi» нажимают явно.** Само ничего не едет: человек может
  * прочитать фразу глазами, перевести дух и начать когда готов.
  */
 @Composable
@@ -964,19 +1000,20 @@ private fun NativeControls(
 ) {
     PrimaryButton(
         when {
-            recording -> "Стоп"
-            recorded -> "Ещё раз"
-            else -> "Записать"
+            recording -> "Zaustavi"
+            recorded -> "Snimi ponovo"
+            else -> "Snimi"
         },
         onClick = onRecord
     )
     Spacer(Modifier.height(10.dp))
     Text(
         when {
-            recording -> "Идёт запись…"
-            failed -> "Записать не вышло. Попробуй ещё раз."
-            recorded -> "Записано. Можно перечитать — прежняя запись заменится."
-            else -> "Прочитайте фразу вслух."
+            recording -> "Snima se…"
+            failed -> "Snimanje nije uspjelo. Pokušajte ponovo."
+            recorded -> "Snimljeno. Ako želite, pročitajte ponovo — " +
+                "prethodni snimak se zamjenjuje."
+            else -> "Pročitajte rečenicu naglas."
         },
         style = MaterialTheme.typography.bodyMedium,
         color = if (failed) Crimson else Muted
@@ -985,7 +1022,7 @@ private fun NativeControls(
         Spacer(Modifier.height(14.dp))
         TextButton(onClick = onNext) {
             Text(
-                if (last) "Закончить" else "Продолжить",
+                if (last) "Završi" else "Nastavi",
                 color = if (recorded) Accent else Muted
             )
         }
