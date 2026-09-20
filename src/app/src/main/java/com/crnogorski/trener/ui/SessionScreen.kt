@@ -402,17 +402,6 @@ private fun Prompt(
     }
 }
 
-/**
- * Текст на предложения. Читать вслух целым куском не выходит (см. ReadingAnswer),
- * поэтому граница предложения — это граница одного захода распознавания.
- */
-private fun splitSentences(text: String): List<String> =
-    Regex("[^.!?]+[.!?]*")
-        .findAll(text)
-        .map { it.value.trim() }
-        .filter { it.isNotBlank() }
-        .toList()
-
 @Composable
 private fun TextAnswer(
     key: String,
@@ -1133,7 +1122,7 @@ private fun ReadingAnswer(
 ) {
     val context = LocalContext.current
     val listener = remember { Listener(context) }
-    val sentences = remember(ex.id) { splitSentences(ex.text) }
+    val sentences = remember(ex.id) { LocalCheck.sentences(ex.text) }
     var heard by remember(ex.id) { mutableStateOf(listOf<String>()) }
     var status by remember(ex.id) { mutableStateOf("") }
     var listening by remember(ex.id) { mutableStateOf(false) }

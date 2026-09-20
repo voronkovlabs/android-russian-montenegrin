@@ -17,6 +17,7 @@ import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.Stress
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
@@ -51,7 +52,7 @@ fun GlossedText(
      *
      * Счёт «совпало 5 из 7» говорит, сколько, но не говорит, **какие**, а
      * перечитывать вслепую бесполезно. Считает их `LocalCheck.matchedWords`
-     * по тому же выражению [WORD], так что номера сходятся.
+     * по тому же выражению [LocalCheck.SHOWN_WORD], так что номера сходятся.
      */
     green: Set<Int> = emptySet()
 ) {
@@ -68,7 +69,7 @@ fun GlossedText(
         // Предыдущее слово нужно ударению: после проклитики оно уезжает на неё.
         var previous = ""
         var index = -1
-        WORD.findAll(text).forEach { match ->
+        LocalCheck.SHOWN_WORD.findAll(text).forEach { match ->
             index++
             append(text.substring(cursor, match.range.first))
             cursor = match.range.last + 1
@@ -158,5 +159,3 @@ fun GlossedText(
     }
 }
 
-/** Слово для подсказки: буквы и дефис, цифры и знаки не в счёт. */
-private val WORD = Regex("[\\p{L}-]+")

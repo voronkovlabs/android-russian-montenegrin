@@ -819,6 +819,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val _stats = MutableStateFlow<StatsState?>(null)
     val stats: StateFlow<StatsState?> = _stats.asStateFlow()
 
+    /**
+      * Открыт ли прогон корпуса.
+      *
+      * Флаг, а не состояние: сам прогон живёт в своём экране и переживать
+      * уходы с него не должен — уйдя, его обрывают намеренно.
+      */
+    private val _corpus = MutableStateFlow(false)
+    val corpus: StateFlow<Boolean> = _corpus.asStateFlow()
+
     private val _splash = MutableStateFlow<SplashState?>(null)
     val splash: StateFlow<SplashState?> = _splash.asStateFlow()
 
@@ -1768,6 +1777,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun closeStats() {
         _stats.value = null
+    }
+
+    fun openCorpus() {
+        _corpus.value = true
+    }
+
+    fun closeCorpus() {
+        _corpus.value = false
     }
 
     /**

@@ -89,6 +89,20 @@ object Trace {
     var enabled: Boolean = false
         private set
 
+    /**
+     * Не записывать ничего, не выключая диагностику.
+     *
+     * Нужно прогону корпуса: полтысячи заходов распознавания дают полторы
+     * тысячи событий, то есть несколько issue подряд, набитых строкой «речь:
+     * заход начат», — и настоящие замеры утонули бы в них. Час, когда телефон
+     * говорит сам с собой, про поведение приложения не рассказывает ничего.
+     *
+     * Гасить для этого [enabled] нельзя: вместе с ним останавливается сторож
+     * главного потока, а обратно он сам не заводится.
+     */
+    @Volatile
+    var muted: Boolean = false
+
     /** Сводка: имя → [сколько раз, сумма мс, худший мс]. */
     private val totals = ConcurrentHashMap<String, LongArray>()
 
@@ -138,7 +152,7 @@ object Trace {
      * вызов тоже занял время, и знать об этом надо.
      */
     inline fun <T> span(name: String, note: String = "", block: () -> T): T {
-        if (!enabled) return block()
+        if (!enabled || muted) return block()
         val t0 = SystemClock.uptimeMillis()
         try {
             return block()
@@ -149,7 +163,7 @@ object Trace {
 
     /** Записать готовый замер — для сторожа и для событий без своего куска кода. */
     fun event(name: String, ms: Long, note: String = "") {
-        if (!enabled) return
+        if (!enabled || muted) return
         totals.compute(name) { _, old ->
             if (old == null) longArrayOf(1, ms, ms)
             else longArrayOf(old[0] + 1, old[1] + ms, maxOf(old[2], ms))

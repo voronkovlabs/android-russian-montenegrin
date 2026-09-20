@@ -32,6 +32,7 @@ import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.speech.Speaker
 import com.crnogorski.trener.ui.AppViewModel
 import com.crnogorski.trener.ui.Backdrop
+import com.crnogorski.trener.ui.CorpusScreen
 import com.crnogorski.trener.ui.CrnogorskiTheme
 import com.crnogorski.trener.ui.DailySplash
 import com.crnogorski.trener.ui.HomeScreen
@@ -103,6 +104,7 @@ class MainActivity : ComponentActivity() {
                 val settings by vm.settings.collectAsStateWithLifecycle()
                 val story by vm.story.collectAsStateWithLifecycle()
                 val stats by vm.stats.collectAsStateWithLifecycle()
+                val corpus by vm.corpus.collectAsStateWithLifecycle()
                 val splash by vm.splash.collectAsStateWithLifecycle()
                 val notice by vm.notice.collectAsStateWithLifecycle()
                 val download by vm.download.collectAsStateWithLifecycle()
@@ -161,6 +163,8 @@ class MainActivity : ComponentActivity() {
                                         onCheckup = vm::startCheckup
                                     )
                                 }
+                            } else if (corpus) {
+                                CorpusScreen(speaker = speaker, onClose = vm::closeCorpus)
                             } else if (openSettings != null) {
                                 SettingsScreen(
                                     state = openSettings,
@@ -176,6 +180,7 @@ class MainActivity : ComponentActivity() {
                                     onClearCache = vm::clearVerdictCache,
                                     onDailyMinutes = vm::setDailyMinutes,
                                     onShowSplash = vm::previewSplash,
+                                    onCorpus = vm::openCorpus,
                                     onRefreshTuning = vm::refreshTuning,
                                     onCheckUpdate = vm::checkUpdate,
                                     onDiagnostics = vm::setDiagnostics,

@@ -15,6 +15,9 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.media.AudioFormat
+import android.os.ParcelFileDescriptor
+import java.io.File
 import java.util.Locale
 
 /**
@@ -198,6 +201,37 @@ class Speaker(context: Context) {
     }
 
     /**
+     * Записать фразу в файл тем же голосом, каким она звучала бы вслух.
+     *
+     * Нужно прогону корпуса: распознаватель умеет принимать звук файлом, и
+     * тогда проверка не зависит ни от громкости, ни от тишины в комнате, ни от
+     * подавления эха — а по воздуху зависит от всего сразу.
+     *
+     * **Удалось или нет, говорит сам файл, а не колбэк.** У `synthesizeToFile`
+     * неудача приходит в тот же `onDone`, что и удача, и различить их в общем
+     * слушателе нечем; пустой файл — это и есть неудача, проверяет её
+     * вызывающий.
+     *
+     * Темп и тон здесь всегда обычные: прогон меряет текст, а не чтение с
+     * замедлением.
+     */
+    fun toFile(text: String, file: File, onDone: () -> Unit) {
+        val engine = tts
+        if (!ready || engine == null) {
+            main.post(onDone)
+            return
+        }
+        val id = (++utterance).toString()
+        currentId = id
+        whenDone = onDone
+        engine.setSpeechRate(NORMAL_RATE)
+        engine.setPitch(NORMAL_PITCH)
+        if (engine.synthesizeToFile(text, Bundle(), file, id) != TextToSpeech.SUCCESS) {
+            finish(id)
+        }
+    }
+
+    /**
      * Медленное чтение — по словам, с паузой между ними.
      *
      * По жалобе (issue 72): «медленнее должно читать ещё медленнее, идеально
@@ -252,6 +286,14 @@ class Speaker(context: Context) {
     }
 }
 
+/**
+ * Звук файлом вместо микрофона: сырой PCM и его формат.
+ *
+ * Именно сырой, без заголовка WAV: движку отдаётся поток отсчётов, а частоту
+ * и число каналов он берёт из отдельных полей и разбирать заголовок не станет.
+ */
+class AudioSource(val file: File, val rate: Int, val channels: Int)
+
 class Listener(private val context: Context) {
 
     /**
@@ -271,6 +313,15 @@ class Listener(private val context: Context) {
      * закрытых: движок иногда присылает и результат, и ошибку.
      */
     private var session = 0
+
+    /**
+     * Дескриптор файла, отданный движку вместо микрофона.
+     *
+     * Держим его до конца захода и закрываем сами: движок получает свою копию,
+     * а наша иначе висела бы открытой до сборки мусора — по пятьсот штук за
+     * прогон корпуса.
+     */
+    private var source: ParcelFileDescriptor? = null
 
 
     private val prefs: SharedPreferences =
@@ -314,14 +365,19 @@ class Listener(private val context: Context) {
      */
     fun listen(
         language: String = TAG_TARGET,
+        from: AudioSource? = null,
         onResult: (String) -> Unit,
         onError: (String) -> Unit,
-        onSilence: (() -> Unit)? = null
+        onSilence: (() -> Unit)? = null,
+        onReady: (() -> Unit)? = null
     ) {
         val id = ++session
         val started = SystemClock.uptimeMillis()
         Trace.event("речь: заход начат", 0, language)
-        mute()
+        // Заглушка нужна только микрофону: она глушит гудки записи. Когда звук
+        // приходит файлом, гудков нет вовсе, а глушить поток музыки вредно —
+        // именно в него говорит синтезатор.
+        if (from == null) mute()
         // Сторож: движок распознавания умеет не ответить вовсе — ни результатом,
         // ни ошибкой. Тогда экран навсегда оставался в «Слушаю…», и выйти из
         // него можно было только из истории целиком. Своего таймаута у
@@ -332,7 +388,7 @@ class Listener(private val context: Context) {
                 onError("Распознавание не ответило. Нажми ещё раз.")
             }
         }, WATCHDOG_MS)
-        begin(id, started, language, onResult, onError, onSilence, mayRetry = true)
+        begin(id, started, language, from, onResult, onError, onSilence, onReady, mayRetry = true)
     }
 
     /**
@@ -347,6 +403,8 @@ class Listener(private val context: Context) {
         if (id != session) return false
         session++
         main.removeCallbacksAndMessages(null)
+        source?.let { runCatching { it.close() } }
+        source = null
         // Заглушку снимаем с задержкой: гудок конца записи движок играет уже
         // после того, как отдал результат, и снятая сразу заглушка попадала бы
         // ровно на него. Если за это время начался новый заход, не снимаем
@@ -373,9 +431,11 @@ class Listener(private val context: Context) {
         id: Int,
         started: Long,
         language: String,
+        from: AudioSource?,
         onText: (String) -> Unit,
         onFail: (String) -> Unit,
         onSilence: (() -> Unit)?,
+        onReady: (() -> Unit)?,
         mayRetry: Boolean
     ) {
         val sr = recognizer ?: newRecognizer().also { recognizer = it }
@@ -387,6 +447,30 @@ class Listener(private val context: Context) {
             )
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, language)
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
+        }
+        // Звук файлом вместо микрофона. Поддержку движок объявлять не обязан —
+        // просьбу можно молча не заметить, и тогда он станет слушать микрофон,
+        // то есть тишину. Отличить это от неудачи можно только по ответу,
+        // поэтому прогон корпуса сперва пробует путь на заведомо простой фразе.
+        if (from != null) {
+            runCatching {
+                val pfd = ParcelFileDescriptor.open(
+                    from.file, ParcelFileDescriptor.MODE_READ_ONLY
+                )
+                source?.let { old -> runCatching { old.close() } }
+                source = pfd
+                intent.putExtra(RecognizerIntent.EXTRA_AUDIO_SOURCE, pfd)
+                intent.putExtra(
+                    RecognizerIntent.EXTRA_AUDIO_SOURCE_ENCODING,
+                    AudioFormat.ENCODING_PCM_16BIT
+                )
+                intent.putExtra(
+                    RecognizerIntent.EXTRA_AUDIO_SOURCE_SAMPLING_RATE, from.rate
+                )
+                intent.putExtra(
+                    RecognizerIntent.EXTRA_AUDIO_SOURCE_CHANNEL_COUNT, from.channels
+                )
+            }
         }
 
         sr.setRecognitionListener(object : RecognitionListener {
@@ -420,7 +504,10 @@ class Listener(private val context: Context) {
                     main.postDelayed(
                         {
                             if (id == session) {
-                                begin(id, started, language, onText, onFail, onSilence, mayRetry = false)
+                                begin(
+                                    id, started, language, from,
+                                    onText, onFail, onSilence, onReady, mayRetry = false
+                                )
                             }
                         },
                         RETRY_DELAY_MS
@@ -437,7 +524,12 @@ class Listener(private val context: Context) {
                 onFail(describe(error))
             }
 
-            override fun onReadyForSpeech(params: Bundle?) {}
+            // Прогону корпуса это единственная честная отметка «движок
+            // слушает»: по воздуху говорить надо после неё, иначе начало фразы
+            // уйдёт в пустоту.
+            override fun onReadyForSpeech(params: Bundle?) {
+                if (id == session) onReady?.invoke()
+            }
             override fun onBeginningOfSpeech() {}
             override fun onRmsChanged(rmsdB: Float) {}
             override fun onBufferReceived(buffer: ByteArray?) {}

@@ -80,6 +80,7 @@ fun SettingsScreen(
     onClearCache: () -> Unit,
     onDailyMinutes: (Int) -> Unit,
     onShowSplash: () -> Unit,
+    onCorpus: () -> Unit,
     onRefreshTuning: () -> Unit,
     onCheckUpdate: () -> Unit,
     onInstallUpdate: () -> Unit,
@@ -418,6 +419,9 @@ fun SettingsScreen(
 
             Spacer(Modifier.height(20.dp))
             DiagnosticsRow(state, onDiagnostics, onSendDiagnostics)
+
+            Spacer(Modifier.height(20.dp))
+            CorpusRow(onCorpus)
 
             Spacer(Modifier.height(28.dp))
             SourcesRow()
@@ -924,6 +928,28 @@ private fun DiagnosticsRow(
         Spacer(Modifier.height(14.dp))
         SecondaryAction(text = "Отправить отчёт сейчас", onClick = onSend)
     }
+}
+
+/**
+ * Прогон корпуса: телефон читает весь наш текст сам себе и слушает себя же.
+ *
+ * Стоит рядом с диагностикой и по той же причине: это не занятие языком, а
+ * прибор. Открывается отдельным экраном, потому что идёт полтысячи заходов и
+ * требует, чтобы экран не гас.
+ */
+@Composable
+private fun CorpusRow(onOpen: () -> Unit) {
+    Text("ПРОГОН КОРПУСА", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(12.dp))
+    Text(
+        "Синтезатор читает все истории и речевые задания, распознаватель слушает, " +
+            "расслышанное сверяется с оригиналом. Так находятся отрезки, которые " +
+            "нельзя пройти в принципе, — до того, как в них упрётся человек.",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+    Spacer(Modifier.height(14.dp))
+    SecondaryAction(text = "Открыть прогон", onClick = onOpen)
 }
 
 /**
