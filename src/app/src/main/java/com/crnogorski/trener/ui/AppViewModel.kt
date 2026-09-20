@@ -37,6 +37,7 @@ import com.crnogorski.trener.data.StoryMode
 import com.crnogorski.trener.data.StoryProgressEntity
 import com.crnogorski.trener.data.StoryRef
 import com.crnogorski.trener.data.VerdictCache
+import com.crnogorski.trener.data.VocabForm
 import com.crnogorski.trener.data.VocabFile
 import com.crnogorski.trener.data.VocabKind
 import com.crnogorski.trener.data.VocabRepository
@@ -1223,8 +1224,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val words = file.words.associateBy { it.id }
 
         val due = mutableListOf<SessionItem>()
-        all.filter { it.dueAt <= now }.sortedBy { it.dueAt }.forEach { card ->
-            vocabExercise(file, words, card.exerciseId, card.repetitions)?.let {
+        val ripe = all.filter { it.dueAt <= now }.sortedBy { it.dueAt }
+        val forms = formsFor(ripe, words)
+        ripe.forEach { card ->
+            vocabExercise(file, words, forms, card.exerciseId, card.repetitions)?.let {
                 due += SessionItem(VocabRepository.LESSON_ID, it)
             }
         }
@@ -1910,6 +1913,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val cards = all.filter { isBackCard(it.exerciseId) == back }
             val byId = all.associateBy { it.exerciseId }
             val words = file.words.associateBy { it.id }
+            val forms = formsFor(cards, words)
             val items = mutableListOf<SessionItem>()
 
             fun add(ex: Exercise?) {
@@ -1924,7 +1928,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 // тренировать его незачем, оно вернётся по расписанию.
                 cards.filter { it.correct < VocabRepository.LEARNED }
                     .sortedBy { it.correct - it.lapses * 2 }
-                    .forEach { add(vocabExercise(file, words, it.exerciseId, it.repetitions)) }
+                    .forEach {
+                        add(vocabExercise(file, words, forms, it.exerciseId, it.repetitions))
+                    }
             } else {
                 // **Половина захода — новые слова, пока пул не набран.**
                 //
@@ -1942,7 +1948,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
                 val due = mutableListOf<SessionItem>()
                 cards.filter { it.dueAt <= now }.sortedBy { it.dueAt }.forEach { card ->
-                    vocabExercise(file, words, card.exerciseId, card.repetitions)?.let {
+                    vocabExercise(file, words, forms, card.exerciseId, card.repetitions)?.let {
                         due += SessionItem(VocabRepository.LESSON_ID, it)
                     }
                 }
@@ -2045,15 +2051,17 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             if (!vocabLearned(byId, VocabRepository.cardId(word.id, VocabKind.Meaning))) continue
 
             val declId = VocabRepository.cardId(word.id, VocabKind.Pattern)
-            if (word.forms.isNotEmpty() && !byId.containsKey(declId)) {
-                add(file.exerciseFor(word, VocabKind.Pattern))
+            // `hasForms` — это число из самого слова, а не парадигма:
+            // проход по всем словам не должен читать формы вообще.
+            if (word.hasForms && !byId.containsKey(declId)) {
+                add(file.exerciseFor(vocabRepo.withForms(word), VocabKind.Pattern))
                 continue
             }
             if (!vocabLearned(byId, declId)) continue
             val form = word.odd.firstOrNull {
                 !byId.containsKey(VocabRepository.cardId(word.id, VocabKind.Odd, it))
             } ?: continue
-            add(file.exerciseFor(word, VocabKind.Odd, form))
+            add(file.exerciseFor(vocabRepo.withForms(word), VocabKind.Odd, form))
         }
 
         // Новые слова: по пулу или по дневной норме.
@@ -2174,6 +2182,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private fun vocabExercise(
         file: VocabFile,
         words: Map<String, VocabWord>,
+        forms: Map<String, List<VocabForm>>,
         id: String,
         repetitions: Int
     ): Exercise? {
@@ -2183,13 +2192,32 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 file.exerciseFor(word, VocabKind.Recall)
             id.endsWith("-" + VocabKind.Meaning.key) ->
                 file.exerciseFor(word, VocabKind.Meaning)
+            // Только эти два вида карточек спрашивают парадигму, и только
+            // ради них приходится читать полосу форм.
             id.endsWith("-" + VocabKind.Pattern.key) ->
-                file.exerciseFor(word, VocabKind.Pattern, repetitions = repetitions)
+                file.exerciseFor(
+                    vocabRepo.hydrate(word, forms),
+                    VocabKind.Pattern,
+                    repetitions = repetitions
+                )
             else -> id.substringAfter("-" + VocabKind.Odd.key + "-", "")
                 .takeIf { it.isNotBlank() }
-                ?.let { file.exerciseFor(word, VocabKind.Odd, it) }
+                ?.let { file.exerciseFor(vocabRepo.hydrate(word, forms), VocabKind.Odd, it) }
         }
     }
+
+    /**
+     * Парадигмы для карточек, которые сейчас будут построены.
+     *
+     * Спрашиваем не по всему словарю, а по этим карточкам: полоса читается
+     * только та, в которую попали их слова, — обычно одна.
+     */
+    private suspend fun formsFor(
+        cards: Collection<CardEntity>,
+        words: Map<String, VocabWord>
+    ): Map<String, List<VocabForm>> = vocabRepo.formsOf(
+        cards.mapNotNull { words[VocabRepository.lemmaOf(it.exerciseId)] }
+    )
 
     /**
      * Срез: одна и та же проверка, повторяемая время от времени.
@@ -3184,7 +3212,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         buildList {
             add(VocabRepository.cardId(lemma, VocabKind.Meaning))
             add(VocabRepository.cardId(lemma, VocabKind.Recall))
-            if (word != null && word.forms.isNotEmpty()) {
+            if (word != null && word.hasForms) {
                 add(VocabRepository.cardId(lemma, VocabKind.Pattern))
             }
             word?.odd?.forEach { add(VocabRepository.cardId(lemma, VocabKind.Odd, it)) }

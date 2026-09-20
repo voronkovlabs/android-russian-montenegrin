@@ -24,6 +24,7 @@ from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import vocab
+import split_forms
 
 ROOT = vocab.ROOT
 DATA = vocab.DATA
@@ -387,8 +388,24 @@ def main(lexpath):
     if not os.path.isdir(OUT_DIR):
         os.makedirs(OUT_DIR)
     path = os.path.join(OUT_DIR, 'words.json')
+
+    # Парадигмы уходят отдельными полосами, и звать раскладку надо прямо здесь.
+    #
+    # Формы — 73% веса словаря, а нужны они одному слову за раз. Держать их в
+    # общем файле значит платить четыре секунды разбора на каждом холодном
+    # старте, а холодным теперь оказывается почти каждый запуск: телефон
+    # выгружает приложение из памяти по нескольку раз в неделю (диагностика
+    # 20.09.2026).
+    #
+    # Если этот вызов однажды потеряется, беда будет тихой: пересборка вернёт
+    # толстый файл, у слов не станет `nf`, и приложение перестанет заводить
+    # карточки склонения — молча, без единой ошибки.
+    slim, bands = split_forms.split(out['words'])
+    out['words'] = slim
     with io.open(path, 'w', encoding='utf-8', newline='\n') as f:
         json.dump(out, f, ensure_ascii=False, separators=(',', ':'))
+    split_forms.write(slim, bands, OUT_DIR)
+    print('полос парадигм: %d' % len(bands))
 
     # --- сводка ---
     with_forms = [r for r in rows if r['forms']]

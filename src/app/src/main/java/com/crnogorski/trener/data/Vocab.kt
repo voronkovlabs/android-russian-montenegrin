@@ -37,11 +37,36 @@ data class VocabWord(
     val n: Int = 0,
     val pos: String = "",
     val gloss: String = "",
+    /**
+     * Парадигма — **не из этого файла**, а из полосы `forms-N.json`, и лежит
+     * здесь только после подстановки (`VocabRepository.hydrate`).
+     */
     val forms: List<VocabForm> = emptyList(),
+    /**
+     * Сколько у слова форм. Число, оставшееся в `words.json` вместо самих форм.
+     *
+     * Ради него всё и затевалось: отбору нужно знать не парадигму, а лишь то,
+     * можно ли завести карточку склонения, — и ради этого знания приходилось
+     * держать в памяти 889 КБ форм.
+     */
+    val nf: Int = 0,
     val odd: List<String> = emptyList(),
     val ex: List<VocabExample> = emptyList(),
     val doubt: String = ""
-)
+) {
+    /**
+     * Есть ли у слова парадигма — без чтения парадигм.
+     *
+     * Смотрит и на `forms`: если однажды соберут словарь толстым файлом, как
+     * было до 1.97, приложение не должно молча перестать заводить карточки
+     * склонения. Тихая потеря функции хуже лишней проверки.
+     */
+    val hasForms: Boolean get() = nf > 0 || forms.isNotEmpty()
+}
+
+/** Полоса парадигм: файл `forms-N.json`. */
+@Serializable
+data class VocabForms(val forms: Map<String, List<VocabForm>> = emptyMap())
 
 /**
  * Словарь целиком.
@@ -103,6 +128,9 @@ class VocabRepository(private val context: Context) {
 
     private var cached: VocabFile? = null
 
+    /** Прочитанные полосы парадигм: номер полосы → леммы с формами. */
+    private val bands = mutableMapOf<Int, Map<String, List<VocabForm>>>()
+
     /**
      * Отсутствие файла — не ошибка: раздел просто окажется пустым.
      *
@@ -124,6 +152,64 @@ class VocabRepository(private val context: Context) {
             }.getOrDefault(VocabFile())
         }.also { cached = it }
     }
+
+    /**
+     * Парадигмы форм для этих слов — читаются полосами и по требованию.
+     *
+     * ## Зачем
+     *
+     * Разбор словаря — самая дорогая работа при запуске: по десяти отчётам
+     * диагностики 1,5–7,8 секунды, в среднем около четырёх. А с 1.92 известно,
+     * что почти каждый запуск **холодный**: телефон выгружает приложение из
+     * памяти по нескольку раз в неделю, и словарь разбирается заново.
+     *
+     * Формы занимали **73% файла** (889 КБ из 1212), а нужны они только там,
+     * где строится карточка склонения или особой формы, — то есть для одного
+     * слова, а не для всех 3501. Всему остальному хватает числа [VocabWord.nf].
+     *
+     * ## Почему полосами, а не одним файлом
+     *
+     * Слова вводятся по частоте, а в обороте держится две сотни незаученных:
+     * до третьей тысячи ученик дойдёт не скоро. Полоса — 500 слов по рангу,
+     * около 120 КБ; на деле читается одна-две вместо 889 КБ.
+     *
+     * Прочитанное остаётся в памяти: полос всего восемь, и повторное чтение
+     * стоило бы ровно того, ради чего всё затевалось.
+     */
+    suspend fun formsOf(words: Collection<VocabWord>): Map<String, List<VocabForm>> =
+        withContext(Dispatchers.IO) {
+            val need = words.asSequence()
+                .filter { it.nf > 0 && it.forms.isEmpty() }
+                .map { band(it.n) }
+                .distinct()
+                .filter { it !in bands }
+                .toList()
+            need.forEach { band ->
+                bands[band] = Trace.span("assets: формы, полоса $band") {
+                    runCatching {
+                        json.decodeFromString<VocabForms>(
+                            context.assets.open("vocab/forms-$band.json")
+                                .bufferedReader().use { it.readText() }
+                        ).forms
+                    }.getOrDefault(emptyMap())
+                }
+            }
+            // Отдаём накопленное целиком: карта маленькая, а копировать её по
+            // куску на каждый вызов дороже, чем отдать как есть.
+            buildMap { bands.values.forEach { putAll(it) } }
+        }
+
+    /**
+     * Подставить слову его парадигму.
+     *
+     * Нужно ровно перед постройкой карточки склонения или особой формы —
+     * больше нигде: остальные виды карточек форм не спрашивают.
+     */
+    suspend fun withForms(word: VocabWord): VocabWord = hydrate(word, formsOf(listOf(word)))
+
+    fun hydrate(word: VocabWord, forms: Map<String, List<VocabForm>>): VocabWord =
+        if (word.forms.isNotEmpty()) word
+        else forms[word.id]?.let { word.copy(forms = it) } ?: word
 
     /**
      * Сколько новых слов уже взято сегодня.
@@ -158,6 +244,17 @@ class VocabRepository(private val context: Context) {
 
     companion object {
         private const val PATH = "vocab/words.json"
+
+        /**
+         * Сколько слов в одной полосе парадигм.
+         *
+         * Пятьсот — то же число, что у `research/tools/split_forms.py`, и
+         * разойтись они не должны: приложение искало бы форму не в том файле.
+         */
+        private const val BAND = 500
+
+        /** Полоса слова по его месту в частотном списке (`n` идёт с единицы). */
+        fun band(n: Int): Int = (maxOf(n, 1) - 1) / BAND
 
         // Те же настройки, что у копии прогресса: файл один на приложение.
         private const val PREFS = "crnogorski"
