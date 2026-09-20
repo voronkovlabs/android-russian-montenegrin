@@ -13,6 +13,20 @@ import org.json.JSONObject
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.zip.CRC32
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+
+/**
+ * Запись в хранилище: что и где лежит.
+ *
+ * [path] — путь внутри `zapisi`, то есть `s01/2026-09-20_1412/01.m4a`. Он же
+ * имя записи в архиве и он же ключ, по которому потом удаляют отправленное.
+ */
+data class Recorded(val uri: Uri, val path: String)
+
+/** Архив и то, что в него попало. */
+data class Archive(val file: File, val paths: List<String>)
 
 /**
  * Запись голоса носителя по отрезкам истории (идея 99).
@@ -239,6 +253,78 @@ class VoiceRecorder(private val context: Context) {
         private const val MANIFEST = "zapis.json"
 
         /**
+         * Собрать всё записанное в один zip с датой отправки.
+         *
+         * Сначала файлы отдавались шторке списком, и в OneDrive они легли
+         * **плоско**, без папок (найдено владельцем 20.09.2026). Это хуже,
+         * чем просто неаккуратно: у каждого прохождения файлы зовутся одинаково
+         * (`01.m4a`, `02.m4a`…), и в одной папке они сталкиваются именами.
+         * Архив же едет одним файлом, и строение папок лежит внутри него.
+         *
+         * Кладётся в `cache/share`, а не рядом с записями: архив — вещь
+         * одноразовая, и в следующий раз он уехал бы внутрь самого себя.
+         *
+         * Сжатие отключено (`STORED`): m4a уже сжат, и пропускать его через
+         * deflate значит тратить время ради процента размера. `zapis.json`
+         * маленький, его судьба ничего не решает.
+         */
+        suspend fun archive(context: Context): Archive? = withContext(Dispatchers.IO) {
+            val files = files(context)
+            if (files.isEmpty()) return@withContext null
+            val dir = File(context.cacheDir, "share").apply { mkdirs() }
+            // Старые архивы убираем: кэш не место для истории отправок.
+            dir.listFiles()?.forEach { if (it.name.startsWith("zapisi-")) it.delete() }
+            val out = File(dir, "zapisi-${STAMP.format(LocalDateTime.now())}.zip")
+            val packed = mutableListOf<String>()
+            runCatching {
+                ZipOutputStream(out.outputStream().buffered()).use { zip ->
+                    zip.setMethod(ZipOutputStream.STORED)
+                    files.forEach { rec ->
+                        val bytes = context.contentResolver.openInputStream(rec.uri)
+                            ?.use { it.readBytes() } ?: return@forEach
+                        val entry = ZipEntry(rec.path).apply {
+                            size = bytes.size.toLong()
+                            compressedSize = bytes.size.toLong()
+                            crc = CRC32().apply { update(bytes) }.value
+                        }
+                        zip.putNextEntry(entry)
+                        zip.write(bytes)
+                        zip.closeEntry()
+                        packed += rec.path
+                    }
+                }
+            }.onFailure {
+                out.delete()
+                return@withContext null
+            }
+            if (packed.isEmpty()) {
+                out.delete()
+                return@withContext null
+            }
+            Archive(out, packed)
+        }
+
+        /**
+         * Удалить записи по их путям внутри `zapisi`.
+         *
+         * Удаляется ровно то, что попало в архивы, и ничего сверх того:
+         * если после отправки носитель прочёл ещё одну историю, её записи
+         * останутся. Голос человека, который пришёл в гости и читал полчаса,
+         * второй раз не запишешь.
+         */
+        fun forget(context: Context, paths: Set<String>): Int {
+            if (paths.isEmpty()) return 0
+            var gone = 0
+            files(context).forEach { rec ->
+                if (rec.path in paths) {
+                    runCatching { context.contentResolver.delete(rec.uri, null, null) }
+                        .onSuccess { gone += it }
+                }
+            }
+            return gone
+        }
+
+        /**
          * Все записи, что лежат в общем хранилище, — для отправки в облако.
          *
          * Нужно потому, что **OneDrive не синхронизирует произвольную папку**.
@@ -255,23 +341,35 @@ class VoiceRecorder(private val context: Context) {
          * и перезапуск, и переустановку приложения, и складывал их, может быть,
          * прошлый месяц. Хранилище и есть единственная правда о том, что есть.
          */
-        fun recordings(context: Context): List<Uri> {
+        fun files(context: Context): List<Recorded> {
             val collection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-            val path = "${android.os.Environment.DIRECTORY_DOCUMENTS}/$ROOT"
-            val found = mutableListOf<Uri>()
+            val root = "${android.os.Environment.DIRECTORY_DOCUMENTS}/$ROOT"
+            val found = mutableListOf<Recorded>()
             runCatching {
                 context.contentResolver.query(
                     collection,
-                    arrayOf(MediaStore.MediaColumns._ID),
+                    arrayOf(
+                        MediaStore.MediaColumns._ID,
+                        MediaStore.MediaColumns.RELATIVE_PATH,
+                        MediaStore.MediaColumns.DISPLAY_NAME
+                    ),
                     "${MediaStore.MediaColumns.RELATIVE_PATH} LIKE ?",
-                    arrayOf("$path%"),
+                    arrayOf("$root%"),
                     "${MediaStore.MediaColumns.RELATIVE_PATH} ASC, " +
                         "${MediaStore.MediaColumns.DISPLAY_NAME} ASC"
                 )?.use { c ->
-                    val col = c.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
+                    val idCol = c.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
+                    val pathCol = c.getColumnIndexOrThrow(MediaStore.MediaColumns.RELATIVE_PATH)
+                    val nameCol = c.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME)
                     while (c.moveToNext()) {
-                        found += android.content.ContentUris.withAppendedId(
-                            collection, c.getLong(col)
+                        val rel = (c.getString(pathCol) ?: "").trim('/')
+                        val inside = rel.removePrefix(root).trim('/')
+                        val name = c.getString(nameCol) ?: continue
+                        found += Recorded(
+                            uri = android.content.ContentUris.withAppendedId(
+                                collection, c.getLong(idCol)
+                            ),
+                            path = if (inside.isBlank()) name else "$inside/$name"
                         )
                     }
                 }
@@ -298,6 +396,30 @@ class VoiceRecorder(private val context: Context) {
 
         private const val PREFS = "crnogorski"
         private const val KEY_ON = "native_mode"
+        private const val KEY_SENT = "voice_sent"
+
+        /**
+         * Что уже уехало в архиве.
+         *
+         * Помним пути, а не факт «отправляли»: между отправкой и удалением
+         * носитель может прочитать ещё историю, и свежие записи стирать нельзя.
+         * Кнопка удаления поэтому говорит не «очистить», а «удалить
+         * отправленное», и удаляет ровно перечисленное.
+         */
+        fun sent(context: Context): Set<String> =
+            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+                .getStringSet(KEY_SENT, emptySet()).orEmpty()
+
+        fun noteSent(context: Context, paths: Collection<String>) {
+            val all = sent(context) + paths
+            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+                .edit().putStringSet(KEY_SENT, all).apply()
+        }
+
+        fun clearSent(context: Context) {
+            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+                .edit().remove(KEY_SENT).apply()
+        }
 
         /**
          * Включён ли режим носителя.

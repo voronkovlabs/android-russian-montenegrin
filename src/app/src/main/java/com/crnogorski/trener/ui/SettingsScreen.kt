@@ -58,6 +58,9 @@ import android.content.Intent
 import androidx.compose.runtime.produceState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import androidx.core.content.FileProvider
+import androidx.compose.runtime.rememberCoroutineScope
+import com.crnogorski.trener.data.Recorded
 
 /** Фраза для проверки голоса: короткая, со всеми характерными звуками. */
 private const val VOICE_PROBE = "Dobar dan, kako si?"
@@ -774,28 +777,89 @@ private fun NativeModeRow() {
     // Спрашиваем хранилище в фоне, а не прямо в композиции: это запрос через
     // системного посредника, и на главном потоке ему не место — сторож
     // диагностики ловит такие вещи не зря.
-    val files by produceState(initialValue = emptyList<Uri>(), on) {
-        value = withContext(Dispatchers.IO) { VoiceRecorder.recordings(context) }
+    var round by remember { mutableIntStateOf(0) }
+    val files by produceState(initialValue = emptyList<Recorded>(), on, round) {
+        value = withContext(Dispatchers.IO) { VoiceRecorder.files(context) }
     }
+    val sent = remember(round) { VoiceRecorder.sent(context) }
+    val onPhone = remember(files, sent) { files.count { it.path in sent } }
+    var packing by remember { mutableStateOf(false) }
+    var confirmWipe by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+
     SecondaryAction(
-        text = if (files.isEmpty()) "Записей пока нет"
-        else "Отправить записи (${files.size})",
-        enabled = files.isNotEmpty()
+        text = when {
+            packing -> "Собираю архив…"
+            files.isEmpty() -> "Записей пока нет"
+            else -> "Отправить записи (${files.size})"
+        },
+        enabled = files.isNotEmpty() && !packing
     ) {
-        // Отдаём всё, что накопилось, системной шторке: куда именно —
-        // выбирает человек. Своего счёта «что уже отправлено» не ведём: облако
-        // само разберётся с повторами, а наш список однажды разошёлся бы с тем,
-        // что там на самом деле лежит.
-        val send = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
-            type = "*/*"
-            putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(files))
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
-        runCatching {
-            context.startActivity(
-                Intent.createChooser(send, "Куда отправить записи")
+        // Отправляем **одним архивом**, а не списком файлов.
+        //
+        // Списком они приехали в OneDrive плоско, без папок (найдено
+        // владельцем 20.09.2026), а у каждого прохождения файлы зовутся
+        // одинаково — в одной папке они сталкиваются именами.
+        packing = true
+        scope.launch {
+            val archive = VoiceRecorder.archive(context)
+            packing = false
+            if (archive == null) return@launch
+            VoiceRecorder.noteSent(context, archive.paths)
+            round++
+            val uri = FileProvider.getUriForFile(
+                context, "${context.packageName}.files", archive.file
             )
+            val send = Intent(Intent.ACTION_SEND).apply {
+                type = "application/zip"
+                putExtra(Intent.EXTRA_STREAM, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            runCatching {
+                context.startActivity(
+                    Intent.createChooser(send, "Куда отправить архив")
+                )
+            }
         }
+    }
+
+    if (onPhone > 0) {
+        Spacer(Modifier.height(8.dp))
+        SecondaryAction(text = "Удалить отправленное ($onPhone)") {
+            confirmWipe = true
+        }
+    }
+
+    if (confirmWipe) {
+        AlertDialog(
+            onDismissRequest = { confirmWipe = false },
+            containerColor = Surface1,
+            title = { Text("Удалить с телефона?", color = Paper) },
+            text = {
+                Text(
+                    "Уйдёт $onPhone файлов — ровно те, что уже уехали в архиве. " +
+                        "Записи, сделанные после отправки, останутся. " +
+                        "Проверь сначала, что архив открывается в облаке: голос человека, " +
+                        "который пришёл и читал полчаса, второй раз не запишешь.",
+                    color = Muted
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    confirmWipe = false
+                    scope.launch {
+                        withContext(Dispatchers.IO) { VoiceRecorder.forget(context, sent) }
+                        VoiceRecorder.clearSent(context)
+                        round++
+                    }
+                }) { Text("Удалить", color = Crimson) }
+            },
+            dismissButton = {
+                TextButton(onClick = { confirmWipe = false }) {
+                    Text("Отмена", color = Muted)
+                }
+            }
+        )
     }
 }
 
