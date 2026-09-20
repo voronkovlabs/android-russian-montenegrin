@@ -251,6 +251,19 @@ private fun ExerciseBody(
     onSkip: () -> Unit,
     onMatch: (Set<String>) -> Unit
 ) {
+    // Что движок расслышал в последний заход. По нему подсвечиваются слова
+    // прямо в задании: строка «Услышано:» говорит, ЧТО он разобрал, но какие
+    // именно слова фразы совпали, приходилось сверять глазами.
+    //
+    // Двух источников не избежать: до последней попытки вердикта нет и
+    // расслышанное лежит в Retry, а на последней оно становится ответом, на
+    // который вынесен вердикт. Для остальных заданий это набранный текст, но
+    // получают его только речевые блоки.
+    val heard = when (val phase = state.phase) {
+        is Phase.Retry -> phase.heard
+        is Phase.Result -> phase.answer
+        else -> ""
+    }
     when (val ex = state.current) {
         is Exercise.TranslateToTarget -> TextAnswer(
             key = ex.id,
@@ -325,6 +338,7 @@ private fun ExerciseBody(
             text = ex.phrase,
             translation = ex.translation,
             byEar = false,
+            heard = heard,
             gloss = state.glossary.me,
             translationGloss = state.glossary.ru,
             speaker = speaker,
@@ -339,6 +353,7 @@ private fun ExerciseBody(
             text = ex.phrase,
             translation = ex.translation,
             byEar = true,
+            heard = heard,
             gloss = state.glossary.me,
             translationGloss = state.glossary.ru,
             speaker = speaker,
@@ -370,7 +385,9 @@ private fun Prompt(
     text: String,
     gloss: Map<String, String> = emptyMap(),
     /** Условие — одно черногорское слово: показать в нём ударение. */
-    stress: Boolean = false
+    stress: Boolean = false,
+    /** Номера слов, которые движок расслышал, — их показываем зелёным. */
+    green: Set<Int> = emptySet()
 ) {
     // Ударение теперь ставит сам GlossedText — и в отдельном слове, и во фразе.
     // Флаг остался ради обратного перевода: там условие это черногорское слово,
@@ -378,7 +395,10 @@ private fun Prompt(
     if (stress) {
         Text(stressed(text), style = MaterialTheme.typography.headlineSmall, color = Paper)
     } else {
-        GlossedText(text, gloss, MaterialTheme.typography.headlineSmall, Paper)
+        GlossedText(
+            text, gloss, MaterialTheme.typography.headlineSmall, Paper,
+            green = green
+        )
     }
 }
 
@@ -913,6 +933,8 @@ private fun SpokenAnswer(
     text: String,
     translation: String,
     byEar: Boolean,
+    /** Расслышанное движком в последний заход — пусто, пока не отвечали. */
+    heard: String,
     gloss: Map<String, String>,
     translationGloss: Map<String, String>,
     speaker: Speaker,
@@ -932,6 +954,12 @@ private fun SpokenAnswer(
 
     // После ответа текст открывается сам: иначе не с чем сверить услышанное.
     val showText = !byEar || revealed || !enabled
+
+    // Расслышанные слова — зелёными прямо во фразе. Считаются заново на каждый
+    // заход, поэтому вторая попытка сама сбрасывает подсветку первой.
+    val green = remember(key, heard) {
+        if (heard.isBlank()) emptySet() else LocalCheck.matchedWords(heard, text)
+    }
 
     if (byEar) {
         LaunchedEffect(key) { if (enabled) speaker.speak(text) }
@@ -961,7 +989,7 @@ private fun SpokenAnswer(
 
     Label(label)
     if (showText) {
-        Prompt(text, gloss)
+        Prompt(text, gloss, green = green)
     } else {
         Text(
             "Текст закрыт — слушай и повторяй.",
@@ -1115,6 +1143,17 @@ private fun ReadingAnswer(
     val index = heard.size.coerceAtMost(sentences.size - 1)
     val current = sentences.getOrElse(index) { ex.text }
 
+    // Прочитанное предложение до сих пор красилось зелёным целиком — а это
+    // неправда: порог чтения 75%, то есть текст сдаётся, теряя каждое
+    // четвёртое слово, и какое именно потеряно, видно не было. Теперь зелёные
+    // ровно те слова, которые движок разобрал.
+    val green = remember(ex.id, heard) {
+        sentences.indices.map { i ->
+            val said = heard.getOrNull(i)
+            if (said == null) emptySet() else LocalCheck.matchedWords(said, sentences[i])
+        }
+    }
+
     fun start() {
         listening = true
         status = ""
@@ -1150,10 +1189,10 @@ private fun ReadingAnswer(
                 style = MaterialTheme.typography.headlineSmall,
                 color = when {
                     !enabled -> Paper
-                    i < heard.size -> Jade
-                    i == index -> Paper
+                    i == index || i < heard.size -> Paper
                     else -> Muted
-                }
+                },
+                green = green.getOrElse(i) { emptySet() }
             )
         }
     }

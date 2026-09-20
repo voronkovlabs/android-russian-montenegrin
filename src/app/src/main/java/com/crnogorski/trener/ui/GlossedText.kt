@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import com.crnogorski.trener.data.Stress
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.withStyle
 
 /**
  * Текст задания, где знакомые слова подчёркнуты и по нажатию показывают перевод
@@ -44,10 +45,18 @@ fun GlossedText(
      * но не говорит, как оно звучит, а у половины слов метки нет вовсе:
      * где мы не уверены, там молчим. Голос закрывает и то, и другое.
      */
-    onWord: ((String) -> Unit)? = null
+    onWord: ((String) -> Unit)? = null,
+    /**
+     * Номера слов, которые движок расслышал, — их показываем зелёным.
+     *
+     * Счёт «совпало 5 из 7» говорит, сколько, но не говорит, **какие**, а
+     * перечитывать вслепую бесполезно. Считает их `LocalCheck.matchedWords`
+     * по тому же выражению [WORD], так что номера сходятся.
+     */
+    green: Set<Int> = emptySet()
 ) {
     val mark = markStyle()
-    if (gloss.isEmpty() && onWord == null) {
+    if (gloss.isEmpty() && onWord == null && green.isEmpty()) {
         Text(stressedPhrase(text), style = style, color = color)
         return
     }
@@ -58,7 +67,9 @@ fun GlossedText(
         var cursor = 0
         // Предыдущее слово нужно ударению: после проклитики оно уезжает на неё.
         var previous = ""
+        var index = -1
         WORD.findAll(text).forEach { match ->
+            index++
             append(text.substring(cursor, match.range.first))
             cursor = match.range.last + 1
 
@@ -66,6 +77,11 @@ fun GlossedText(
             val meaning = gloss[word.lowercase()]
             val at = Stress.inPhrase(word, previous)
             previous = word
+            // Расслышанное слово зелёное целиком, вместе с ударной буквой:
+            // два цвета в одном слове спорили бы за внимание, а ударение
+            // остаётся видным по жирной букве.
+            val heardIt = index in green
+            val wordMark = if (heardIt) mark.copy(color = Jade) else mark
             // Нажимается **любое** слово, а не только знакомое словарю.
             //
             // До 2.1 было наоборот, и довод был честный: сразу видно, на что
@@ -79,7 +95,13 @@ fun GlossedText(
                 // Ни перевода, ни голоса — нажимать не на что. Так остаётся в
                 // уроках: там слово без подсказки отвечало бы «перевода нет», и
                 // это шум, а не помощь.
-                if (at == null) append(word) else appendMarked(word, at, mark)
+                if (heardIt) {
+                    withStyle(SpanStyle(color = Jade)) {
+                        if (at == null) append(word) else appendMarked(word, at, wordMark)
+                    }
+                } else {
+                    if (at == null) append(word) else appendMarked(word, at, mark)
+                }
             } else {
                 withLink(
                     LinkAnnotation.Clickable(
@@ -107,7 +129,13 @@ fun GlossedText(
                         onWord?.invoke(word)
                     }
                 ) {
-                    if (at == null) append(word) else appendMarked(word, at, mark)
+                    if (heardIt) {
+                        withStyle(SpanStyle(color = Jade)) {
+                            if (at == null) append(word) else appendMarked(word, at, wordMark)
+                        }
+                    } else {
+                        if (at == null) append(word) else appendMarked(word, at, mark)
+                    }
                 }
             }
         }

@@ -59,6 +59,7 @@ import com.crnogorski.trener.speech.Speaker
 import com.crnogorski.trener.data.VoiceRecorder
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
+import com.crnogorski.trener.data.LocalCheck
 
 /** После скольких неудач подряд даём пройти дальше, не взяв отрезок. */
 private const val ATTEMPTS_BEFORE_SKIP = 3
@@ -222,6 +223,17 @@ fun StoryScreen(
 
     // Отрезок звучит прямо сейчас — микрофон ждёт последнего слова.
     var speaking by remember(state.id, state.index) { mutableStateOf(false) }
+
+    // Что движок расслышал из этого отрезка — по последней попытке.
+    //
+    // Пересчитывается при каждой смене `heard`, то есть при каждом заходе: новая
+    // попытка сама сбрасывает прежнюю подсветку, отдельного сброса не нужно. На
+    // новом отрезке `heard` пуст, и зелёного нет вовсе.
+    val greenWords = remember(state.id, state.index, state.heard) {
+        val target = state.current?.sr
+        if (state.heard.isBlank() || target.isNullOrBlank()) emptySet()
+        else LocalCheck.matchedWords(state.heard, target)
+    }
 
     val reading = state.mode == StoryMode.Read
 
@@ -660,7 +672,8 @@ fun StoryScreen(
                                     GlossedText(
                                         chunk.sr, state.glossaryMe,
                                         MaterialTheme.typography.headlineSmall, Paper,
-                                        onWord = ::speakWord
+                                        onWord = ::speakWord,
+                                        green = greenWords
                                     )
                                 }
                                 Spacer(Modifier.height(10.dp))
@@ -689,7 +702,8 @@ fun StoryScreen(
                                     GlossedText(
                                         chunk.sr, state.glossaryMe,
                                         MaterialTheme.typography.headlineSmall, Paper,
-                                        onWord = ::speakWord
+                                        onWord = ::speakWord,
+                                        green = greenWords
                                     )
                                 }
                                 Spacer(Modifier.height(16.dp))
