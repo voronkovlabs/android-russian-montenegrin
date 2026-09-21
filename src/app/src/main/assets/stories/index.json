@@ -21,7 +21,7 @@
     {"id": "s19", "title": "Međed, svinja i lisica", "file": "s19.json", "level": 5, "chunks": 53},
     {"id": "s20", "title": "Djevojka brža od konja", "file": "s20.json", "level": 5, "chunks": 44},
     {"id": "s21", "title": "Jež i lisica", "file": "s21.json", "level": 3, "chunks": 38},
-    {"id": "s22", "title": "Djevojčica i pas", "file": "s22.json", "level": 4, "chunks": 23},
+    {"id": "s22", "title": "Djevojčica i pas", "file": "s22.json", "level": 4, "chunks": 27},
     {"id": "d01", "title": "Na pošti", "file": "d01.json", "level": 4, "chunks": 14, "dialog": true},
     {"id": "d02", "title": "U ordinaciji", "file": "d02.json", "level": 3, "chunks": 12, "dialog": true},
     {"id": "d03", "title": "U kafiću", "file": "d03.json", "level": 2, "chunks": 12, "dialog": true},
