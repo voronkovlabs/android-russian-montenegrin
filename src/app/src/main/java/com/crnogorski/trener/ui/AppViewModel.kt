@@ -1611,6 +1611,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 }
             }
 
+            // Доля курса меряет программу A1–A2, а не всё оглавление:
+            // тематических уроков может стать сколько угодно (см. LessonRef.extra).
+            val course = lessons.filter { !it.extra }
+            val courseIds = course.mapTo(mutableSetOf()) { it.id }
+
             val doneLessons = dao.lessonProgress().sortedBy { it.completedAt }
             val cards = dao.allCards()
             val vocab = cards.filter { it.lessonId == VocabRepository.LESSON_ID }
@@ -1632,12 +1637,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     words = all.sumOf { it.words }
                 ),
                 days = days,
-                lessonsDone = doneLessons.size,
-                lessonsTotal = lessons.size,
+                lessonsDone = doneLessons.count { it.lessonId in courseIds },
+                lessonsTotal = course.size,
                 // Заведённая карточка и значит «задание проходили»: до первого
-                // ответа её не существует.
-                exercisesDone = cards.count { it.lessonId != VocabRepository.LESSON_ID },
-                exercisesTotal = lessons.sumOf { repo.lesson(it.id).exercises.size },
+                // ответа её не существует. Считаем по тем же урокам, что и
+                // потолок, иначе сделанного оказалось бы больше, чем всего.
+                exercisesDone = cards.count { it.lessonId in courseIds },
+                exercisesTotal = course.sumOf { repo.lesson(it.id).exercises.size },
                 wordsIntroduced = meanings.size,
                 wordsLearned = meanings.count { it.correct >= VocabRepository.LEARNED },
                 wordsTotal = vocabRepo.load().words.size,

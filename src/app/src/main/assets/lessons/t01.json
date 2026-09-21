@@ -1,0 +1,98 @@
+{
+  "id": "t01",
+  "title": "Море, погода, рынок",
+  "note": "Язык истории «Kraj septembra na moru». Mirno more — спокойное море, pijaca — рынок, smokve — инжир, grožđe — виноград, luka — порт, gužva — толчея. Слова отобраны так, чтобы оставаться правдой каждый год, а не только этой осенью.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "t01e01",
+      "prompt": "Ujutru je more ___ kao ogledalo. (спокойное)",
+      "answer": "mirno",
+      "explanation": "More среднего рода, поэтому mirno, а не mirna."
+    },
+    {
+      "type": "form",
+      "id": "t01e02",
+      "prompt": "Na pijaci ima ___ i grožđa. (инжира)",
+      "answer": "smokava",
+      "explanation": "После ima — родительный падеж: smokva → smokava (мн. ч.)."
+    },
+    {
+      "type": "form",
+      "id": "t01e03",
+      "prompt": "Ribari se vraćaju u ___. (порт)",
+      "answer": "luku",
+      "explanation": "U + винительный при движении: luka → luku."
+    },
+    {
+      "type": "form",
+      "id": "t01e04",
+      "prompt": "Danju je oko trideset ___. (градусов)",
+      "answer": "stepeni",
+      "explanation": "После числительного от пяти — родительный множественного: stepeni."
+    },
+    {
+      "type": "form",
+      "id": "t01e05",
+      "prompt": "Na ___ ima manje ljudi nego u avgustu. (пляже)",
+      "answer": "plaži",
+      "explanation": "Na + местный падеж: plaža → plaži, к меняется на ž."
+    },
+    {
+      "type": "choice",
+      "id": "t01e06",
+      "prompt": "Как сказать «дождь быстро проходит»?",
+      "options": [
+        "Kiša brzo prođe.",
+        "Kiša brzo proći.",
+        "Kišu brzo prođe.",
+        "Kiša brzo prolazim."
+      ],
+      "answer": "Kiša brzo prođe.",
+      "explanation": "Prođe — он/она пройдёт; kiša здесь подлежащее, именительный."
+    },
+    {
+      "type": "word_bank",
+      "id": "t01e07",
+      "prompt": "Море тёплое, и люди ещё купаются.",
+      "answer": "More je toplo i ljudi se još kupaju",
+      "bank": [
+        "More",
+        "je",
+        "toplo",
+        "i",
+        "ljudi",
+        "se",
+        "još",
+        "kupaju",
+        "topla",
+        "kupati"
+      ]
+    },
+    {
+      "type": "ru_to_me",
+      "id": "t01e08",
+      "prompt": "Утром море спокойное, как зеркало.",
+      "reference": "Ujutru je more mirno kao ogledalo.",
+      "hint": "Kao — «как» при сравнении."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "t01e09",
+      "prompt": "Ljeto je prošlo, a sezona se polako završava.",
+      "reference": "Лето прошло, а сезон потихоньку заканчивается."
+    },
+    {
+      "type": "listening",
+      "id": "t01e10",
+      "audioText": "Na pijaci sada ima smokava i grožđa",
+      "translation": "На рынке сейчас есть инжир и виноград"
+    },
+    {
+      "type": "speaking",
+      "id": "t01e11",
+      "phrase": "Ponekad kratko padne kiša.",
+      "translation": "Иногда ненадолго идёт дождь."
+    }
+  ]
+}
