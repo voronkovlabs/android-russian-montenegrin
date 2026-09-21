@@ -1,0 +1,23 @@
+{
+  "id": "s23",
+  "title": "Kraj septembra na moru",
+  "note": "Написано по прогнозу погоды на конец сентября 2026-го. Ничего не скопировано: факты чужие, слова свои. Лексика про море, погоду и рынок.",
+  "chunks": [
+    { "sr": "Krajem septembra u Crnoj Gori je još uvijek toplo.", "ru": "В конце сентября в Черногории всё ещё тепло." },
+    { "sr": "Danju je oko trideset stepeni.", "ru": "Днём около тридцати градусов." },
+    { "sr": "Noći su svježije, ali nije hladno.", "ru": "Ночи прохладнее, но не холодно." },
+    { "sr": "More je toplo i ljudi se još kupaju.", "ru": "Море тёплое, и люди ещё купаются." },
+    { "sr": "Na plaži ima mnogo manje ljudi nego u avgustu.", "ru": "На пляже намного меньше людей, чем в августе." },
+    { "sr": "Ljeto je prošlo, a sezona se polako završava.", "ru": "Лето прошло, а сезон потихоньку заканчивается." },
+    { "sr": "U Budvi konobari sjede i razgovaraju.", "ru": "В Будве официанты сидят и разговаривают." },
+    { "sr": "Kafići su otvoreni, ali stolovi su prazni.", "ru": "Кафе открыты, но столы пустые." },
+    { "sr": "Ujutru je more mirno kao ogledalo.", "ru": "Утром море спокойное, как зеркало." },
+    { "sr": "Ribari se vraćaju u luku sa ribom.", "ru": "Рыбаки возвращаются в порт с рыбой." },
+    { "sr": "Na pijaci sada ima smokava i grožđa.", "ru": "На рынке сейчас есть инжир и виноград." },
+    { "sr": "Prodavci kažu da je grožđe ove godine slatko.", "ru": "Продавцы говорят, что виноград в этом году сладкий." },
+    { "sr": "Ponekad kratko padne kiša.", "ru": "Иногда ненадолго идёт дождь." },
+    { "sr": "Kiša brzo prođe i opet izađe sunce.", "ru": "Дождь быстро проходит, и снова выходит солнце." },
+    { "sr": "Ovo je najljepše doba godine na moru.", "ru": "Это самое красивое время года на море." },
+    { "sr": "Nema gužve, more je toplo, a večeri su mirne.", "ru": "Нет толчеи, море тёплое, а вечера спокойные." }
+  ]
+}
