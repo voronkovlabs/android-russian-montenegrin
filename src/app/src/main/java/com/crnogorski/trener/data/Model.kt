@@ -170,6 +170,23 @@ data class Glossary(
 @Serializable
 data class MatchPair(val cardId: String, val ru: String, val me: String)
 
+/**
+ * Ячейка парадигмы: от какого слова, что за форма и какая она.
+ *
+ * [lemma] отдельно у каждой ячейки, потому что в серии по образцу их
+ * несколько: система живёт не в слове, а в типе, и видно её только когда
+ * `kuća`, `godina` и `plaža` стоят рядом.
+ */
+@Serializable
+data class ParadigmCell(
+    val lemma: String,
+    /** Подпись ячейки: «вин. ед.», «ты». */
+    val label: String,
+    /** Рамка-пример из словаря: «Vidim ___.» — падеж задан предлогом. */
+    val frame: String,
+    val form: String
+)
+
 @Serializable
 data class Lesson(
     val id: String,
@@ -311,6 +328,38 @@ sealed class Exercise {
     ) : Exercise()
 
     /** Аудирование: TTS произносит [audioText], надо записать услышанное. */
+    /**
+     * Парадигма целиком, одним экраном.
+     *
+     * Заведено 21.09.2026 по словам владельца: «когда какое-то слово надо
+     * поставить в правильную форму один раз, а потом оно возвращается через
+     * несколько уроков, то заметить систему сложно».
+     *
+     * Он прав, и это та же ошибка, которую проект уже однажды чинил экраном
+     * пар: до 1.38 первой встречей со словом было требование его напечатать,
+     * то есть спросить то, чего человек ни разу не видел. С формами было ровно
+     * так же — а **правило нельзя вывести из ячеек, которые не показывали
+     * рядом**.
+     *
+     * [ask] разводит две половины одного механизма: `false` — таблица показана
+     * заполненной и ничего не спрашивает (первая встреча), `true` — те же
+     * ячейки спрашиваются. Сперва увидеть систему, потом отвечать.
+     *
+     * В файлах уроков этого типа нет: задание собирается на лету из словаря,
+     * как `word` и `match`. Карточка у него **та же самая `decl`**, что раньше
+     * спрашивала по ячейке за раз, — значит долг повторений не вырос ни на
+     * одну карточку, а вопрос стал другим.
+     */
+    @Serializable
+    @SerialName("paradigm")
+    data class Table(
+        override val id: String,
+        val title: String,
+        val note: String = "",
+        val cells: List<ParadigmCell>,
+        val ask: Boolean = true
+    ) : Exercise()
+
     @Serializable
     @SerialName("listening")
     data class Listening(
@@ -373,6 +422,10 @@ val Exercise.typeName: String
         is Exercise.Form -> "form"
         is Exercise.Word -> "word"
         is Exercise.Match -> "match"
+        // Показ и спрос считаются разными типами намеренно: у Pace это
+        // прикидка времени, а посмотреть таблицу и заполнить её — разное
+        // время в разы.
+        is Exercise.Table -> if (ask) "paradigm" else "paradigm_show"
         is Exercise.Listening -> "listening"
         is Exercise.Speaking -> "speaking"
         is Exercise.Repeat -> "repeat"
@@ -396,6 +449,7 @@ val Exercise.referenceAnswer: String
         // раскрывает по ходу. Строка нужна жалобе — по ней видно, какая
         // пятёрка слов оказалась вместе.
         is Exercise.Match -> pairs.joinToString("; ") { "${it.me} — ${it.ru}" }
+        is Exercise.Table -> cells.joinToString("; ") { "${it.label}: ${it.form}" }
         is Exercise.Listening -> audioText
         is Exercise.Speaking -> phrase
         is Exercise.Repeat -> phrase

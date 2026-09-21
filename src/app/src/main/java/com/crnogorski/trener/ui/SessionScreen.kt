@@ -61,7 +61,10 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.intl.LocaleList
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
@@ -72,6 +75,7 @@ import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.MatchPair
+import com.crnogorski.trener.data.ParadigmCell
 import com.crnogorski.trener.speech.AnswerLanguage
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.speech.Speaker
@@ -87,6 +91,7 @@ fun SessionScreen(
     onSnooze: () -> Unit,
     /** Экран пар отвечает не строкой, а списком слов, где ошиблись. */
     onMatch: (Set<String>) -> Unit,
+    onParadigm: (List<String>) -> Unit,
     onNext: () -> Unit,
     onRetryBlock: () -> Unit,
     onComplain: (ComplaintReason, String) -> Unit,
@@ -143,7 +148,8 @@ fun SessionScreen(
                 enabled = live,
                 onSubmit = onSubmit,
                 onSkip = onSkip,
-                onMatch = onMatch
+                onMatch = onMatch,
+                onParadigm = onParadigm
             )
 
             // «Отложить» — одной кнопкой на все виды заданий, под телом, а не
@@ -249,7 +255,8 @@ private fun ExerciseBody(
     enabled: Boolean,
     onSubmit: (String) -> Unit,
     onSkip: () -> Unit,
-    onMatch: (Set<String>) -> Unit
+    onMatch: (Set<String>) -> Unit,
+    onParadigm: (List<String>) -> Unit
 ) {
     // Что движок расслышал в последний заход. По нему подсвечиваются слова
     // прямо в задании: строка «Услышано:» говорит, ЧТО он разобрал, но какие
@@ -325,6 +332,8 @@ private fun ExerciseBody(
         )
 
         is Exercise.Match -> MatchAnswer(ex, speaker, enabled, onMatch)
+
+        is Exercise.Table -> ParadigmAnswer(ex, enabled, onParadigm)
 
         is Exercise.Choice -> ChoiceAnswer(ex, speaker, enabled, onSubmit)
 
@@ -915,6 +924,125 @@ private fun ListeningAnswer(
  * должно быть не на что, кроме услышанного. Длинный текст читается не здесь,
  * а в ReadingAnswer: один заход распознавания — одна короткая фраза.
  */
+/**
+ * Парадигма одним экраном: либо показана, либо спрошена.
+ *
+ * Два состояния одного блока, а не два блока: таблица та же самая, меняется
+ * только, вписывает человек формы или читает их. Разводить это на два экрана
+ * значило бы дважды написать одну разметку и однажды поправить её в одном
+ * месте из двух.
+ *
+ * **Окончание выделено цветом, а основа нет** — ради этого всё и затевалось.
+ * Список форм без выделения читается как список слов; система становится
+ * видна ровно тогда, когда видно, что у `kuću`, `kuće`, `kući`, `kućom` общее
+ * начало и разные хвосты.
+ */
+@Composable
+private fun ParadigmAnswer(
+    ex: Exercise.Table,
+    enabled: Boolean,
+    onSubmit: (List<String>) -> Unit
+) {
+    var answers by remember(ex.id) { mutableStateOf(List(ex.cells.size) { "" }) }
+
+    Label(if (ex.ask) "Заполни таблицу" else "Посмотри, как это устроено")
+    Text(ex.title, style = MaterialTheme.typography.headlineSmall, color = Paper)
+    if (ex.note.isNotBlank()) {
+        Spacer(Modifier.height(6.dp))
+        Text(ex.note, style = MaterialTheme.typography.bodyMedium, color = Muted)
+    }
+    Spacer(Modifier.height(18.dp))
+
+    var lemma = ""
+    ex.cells.forEachIndexed { i, cell ->
+        // Заголовок слова — только когда слово сменилось: в серии по образцу
+        // их несколько, в обычной таблице одно.
+        if (cell.lemma != lemma) {
+            if (i > 0) Spacer(Modifier.height(16.dp))
+            lemma = cell.lemma
+            Text(lemma, style = MaterialTheme.typography.titleMedium, color = Accent)
+            Spacer(Modifier.height(8.dp))
+        }
+        CellRow(
+            cell = cell,
+            ask = ex.ask,
+            enabled = enabled,
+            value = answers.getOrElse(i) { "" },
+            onValue = { text -> answers = answers.toMutableList().also { it[i] = text } }
+        )
+        Spacer(Modifier.height(8.dp))
+    }
+
+    Spacer(Modifier.height(20.dp))
+    PrimaryButton(
+        if (ex.ask) "Проверить" else "Понятно",
+        // У показа нажимать нечего, кроме «Понятно»: пустых полей там нет.
+        enabled = enabled && (!ex.ask || answers.any { it.isNotBlank() })
+    ) { onSubmit(answers) }
+}
+
+@Composable
+private fun CellRow(
+    cell: ParadigmCell,
+    ask: Boolean,
+    enabled: Boolean,
+    value: String,
+    onValue: (String) -> Unit
+) {
+    Column(Modifier.fillMaxWidth()) {
+        Text(
+            // Подпись и рамка вместе: название падежа говорит, как форма
+            // зовётся, а рамка — ради чего она нужна.
+            if (cell.frame.isBlank()) cell.label else "${cell.label}  ·  ${cell.frame}",
+            style = MaterialTheme.typography.labelSmall,
+            color = Muted
+        )
+        Spacer(Modifier.height(4.dp))
+        if (ask) {
+            OutlinedTextField(
+                value = value,
+                onValueChange = onValue,
+                enabled = enabled,
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                textStyle = MaterialTheme.typography.bodyLarge,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.None,
+                    imeAction = ImeAction.Next,
+                    hintLocales = LocaleList(AnswerLanguage.Target.keyboard)
+                ),
+                shape = RoundedCornerShape(12.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Accent,
+                    unfocusedBorderColor = Surface2,
+                    focusedTextColor = Paper,
+                    unfocusedTextColor = Paper,
+                    disabledTextColor = Muted,
+                    cursorColor = Accent
+                )
+            )
+        } else {
+            Text(
+                // Цвет читается только из @Composable-кода — правило
+                // проекта, поэтому акцент передаётся внутрь параметром.
+                endingMarked(cell.lemma, cell.form, Accent),
+                style = MaterialTheme.typography.headlineSmall,
+                color = Paper
+            )
+        }
+    }
+}
+
+/** Основа обычная, окончание акцентом: без этого таблица — просто список слов. */
+private fun endingMarked(lemma: String, form: String, accent: Color) = buildAnnotatedString {
+    var i = 0
+    while (i < minOf(lemma.length, form.length) && lemma[i] == form[i]) i++
+    append(form.substring(0, i))
+    withStyle(SpanStyle(color = accent, fontWeight = FontWeight.Bold)) {
+        append(form.substring(i))
+    }
+}
+
 @Composable
 private fun SpokenAnswer(
     key: String,

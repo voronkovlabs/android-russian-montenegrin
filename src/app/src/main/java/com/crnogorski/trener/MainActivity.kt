@@ -225,6 +225,7 @@ class MainActivity : ComponentActivity() {
                                 onSkip = vm::skipCurrent,
                                 onSnooze = vm::snoozeCurrent,
                                 onMatch = vm::submitMatch,
+                                onParadigm = vm::submitParadigm,
                                 onNext = vm::next,
                                 onRetryBlock = vm::retryAfterBlock,
                                 onComplain = vm::complain,

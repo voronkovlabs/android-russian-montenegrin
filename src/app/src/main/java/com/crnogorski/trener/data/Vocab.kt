@@ -207,6 +207,72 @@ class VocabRepository(private val context: Context) {
      */
     suspend fun withForms(word: VocabWord): VocabWord = hydrate(word, formsOf(listOf(word)))
 
+    /**
+     * Слова того же образца склонения — чтобы система была видна.
+     *
+     * Система живёт не в слове, а в типе: `kuća`, `godina` и `plaža` ведут
+     * себя одинаково, `grad` и `stan` иначе, `mjesto` третьим способом. По
+     * словарю таких образцов 85, и четыре первых покрывают около 80% слов, а
+     * дальше идут занятные редкости — отдельный образец с чередованием
+     * (`djevojka` → `djevojci`) и женский род на согласный (`budućnost` →
+     * `budućnošću`).
+     *
+     * Соседи берутся **из той же полосы частот**, и это не лень, а выбор:
+     * полоса уже прочитана и лежит в памяти (лишнего чтения с диска нет), а
+     * слова в ней близкой частоты — то есть скорее знакомые, чем нет.
+     * Показывать образец на словах, которых человек в глаза не видел, значит
+     * объяснять неизвестное через неизвестное.
+     */
+    suspend fun mates(word: VocabWord, limit: Int = 2): List<VocabWord> {
+        val full = withForms(word)
+        val band = bands[band(full.n)] ?: return emptyList()
+        return matesOf(full, load().words.associateBy { it.id }, band, limit)
+    }
+
+    /**
+     * То же самое по уже прочитанным формам, без похода на диск.
+     *
+     * Нужно там, где формы полосы уже на руках (сборка задания по карточке):
+     * делать эту функцию `suspend` ради них значило бы протащить корутину
+     * через всю цепочку вызовов ради данных, которые уже лежат рядом.
+     */
+    fun matesOf(
+        word: VocabWord,
+        words: Map<String, VocabWord>,
+        forms: Map<String, List<VocabForm>>,
+        limit: Int = 2
+    ): List<VocabWord> {
+        val sign = signature(word.id, word.forms) ?: return emptyList()
+        return forms.asSequence()
+            .filter { it.key != word.id }
+            .filter { signature(it.key, it.value) == sign }
+            .mapNotNull { words[it.key]?.copy(forms = it.value) }
+            .take(limit)
+            .toList()
+    }
+
+    /**
+     * Набор окончаний слова — по нему слова и собираются в образец.
+     *
+     * Окончание считается отбрасыванием общего с леммой начала, а не
+     * разбором морфологии: нам нужно не назвать основу правильно, а лишь
+     * отличить один образец от другого, и для этого общего префикса хватает.
+     */
+    private fun signature(lemma: String, forms: List<VocabForm>): String? {
+        val have = forms.associateBy({ it.s }, { it.f })
+        val cells = if (have.keys.any { it.startsWith("Vm") }) VERB_CELLS else CASE_CELLS
+        val parts = mutableListOf<String>()
+        for (slot in cells) {
+            // Нет хоть одной ячейки — образца нет: неполную таблицу сравнивать
+            // не с чем, и в серию такое слово не годится.
+            val f = have[slot] ?: return null
+            var i = 0
+            while (i < minOf(f.length, lemma.length) && f[i] == lemma[i]) i++
+            parts += f.substring(i).ifEmpty { "=" }
+        }
+        return parts.joinToString("|")
+    }
+
     fun hydrate(word: VocabWord, forms: Map<String, List<VocabForm>>): VocabWord =
         if (word.forms.isNotEmpty()) word
         else forms[word.id]?.let { word.copy(forms = it) } ?: word
@@ -255,6 +321,23 @@ class VocabRepository(private val context: Context) {
 
         /** Полоса слова по его месту в частотном списке (`n` идёт с единицы). */
         fun band(n: Int): Int = (maxOf(n, 1) - 1) / BAND
+
+        /**
+         * Какие ячейки показываем, и почему не все.
+         *
+         * Падежей шесть, а написаний меньше: во множественном числе дательный,
+         * местный и творительный у существительных совпадают (`kućama`), а
+         * звательный в курсе не спрашивают вовсе. Остаются четыре, которые
+         * действительно различаются и действительно нужны каждый день —
+         * винительный (что вижу), родительный (чего нет), местный (о чём) и
+         * творительный (с чем). Именительный не спрашиваем: он и есть заголовок
+         * таблицы.
+         *
+         * У глаголов та же четвёрка по смыслу: три лица единственного и
+         * третье множественного — по ним видно и основу, и чередование.
+         */
+        val CASE_CELLS = listOf("a-s", "g-s", "l-s", "i-s")
+        val VERB_CELLS = listOf("Vmr1s", "Vmr2s", "Vmr3s", "Vmr3p")
 
         // Те же настройки, что у копии прогресса: файл один на приложение.
         private const val PREFS = "crnogorski"
@@ -330,11 +413,35 @@ class VocabRepository(private val context: Context) {
  * склонения выбирается ячейка. Не случайно, а по счётчику — иначе одно и то же
  * повторение показывало бы разное при каждой перерисовке экрана.
  */
+/**
+ * Ячейки парадигмы одного слова: подпись, рамка-пример и ответ.
+ *
+ * Рамка («Vidim ___.») лежит в самом словаре и задаёт падеж предлогом, а не
+ * подписью: так видно, ради чего форма нужна, а не только как она называется.
+ */
+private fun VocabFile.paradigmCells(word: VocabWord): List<ParadigmCell> {
+    val have = word.forms.associateBy({ it.s }, { it.f })
+    val order =
+        if (have.keys.any { it.startsWith("Vm") }) VocabRepository.VERB_CELLS
+        else VocabRepository.CASE_CELLS
+    return order.mapNotNull { slot ->
+        val f = have[slot] ?: return@mapNotNull null
+        ParadigmCell(
+            lemma = Ijekavica.show(word.id),
+            label = slots[slot] ?: slot,
+            frame = frames[slot].orEmpty(),
+            form = f
+        )
+    }
+}
+
 fun VocabFile.exerciseFor(
     word: VocabWord,
     kind: VocabKind,
     form: String = "",
-    repetitions: Int = 0
+    repetitions: Int = 0,
+    /** Слова того же образца — только для первой встречи, см. [VocabKind.Pattern]. */
+    mates: List<VocabWord> = emptyList()
 ): Exercise? = when (kind) {
     // Картинки тут нет намеренно: спрашивают, что значит слово, и картинка
     // была бы ответом. Показать её после ответа было бы можно, но тело задания
@@ -380,27 +487,30 @@ fun VocabFile.exerciseFor(
     )
 
     VocabKind.Pattern -> {
-        val slot = word.forms.getOrNull(
-            if (word.forms.isEmpty()) 0 else repetitions % word.forms.size
-        )
-        slot?.let {
-            // Живое предложение лучше рамки, но оно есть меньше чем у трети
-            // слов: пул — 5987 фраз. Рамка добирает остальных, и в ней падеж
-            // задан предлогом, а не подписью.
-            val sample = word.ex.firstOrNull { ex -> ex.f == it.f }
-            val prompt = sample?.let { s -> blank(s.sr, s.f) }
-                ?: frames[it.s]
-                ?: return null
-            Exercise.Word(
+        val cells = paradigmCells(word)
+        if (cells.isEmpty()) {
+            null
+        } else {
+            // Первая встреча — показ, дальше спрос.
+            //
+            // Признак «первой» — ноль повторений, и он чуть шире, чем кажется:
+            // после ошибки счётчик сбрасывается, и таблица покажется снова. Это
+            // не недосмотр, а то, чего и хочется: промахнулся по системе —
+            // посмотри на неё целиком ещё раз.
+            val first = repetitions == 0
+            val series = if (first) mates.flatMap { paradigmCells(it) } else emptyList()
+            Exercise.Table(
                 id = VocabRepository.cardId(word.id, kind),
-                label = slots[it.s]?.let { name -> "Поставь в нужную форму: $name" }
-                    ?: "Поставь в нужную форму",
-                prompt = "$prompt  (${Ijekavica.show(word.id)})",
-                answer = it.f,
-                explanation = sample?.ru.orEmpty(),
-                // Слово тут и так написано в скобках — картинка ничего не
-                // открывает, зато держит перед глазами, о чём идёт речь.
-                icon = WordEmoji.of(word.id).orEmpty()
+                title = Ijekavica.show(word.id),
+                note = if (first && series.isNotEmpty()) {
+                    "Эти слова склоняются одинаково — посмотри на окончания."
+                } else if (first) {
+                    "Посмотри, как слово меняется по падежам."
+                } else {
+                    ""
+                },
+                cells = cells + series,
+                ask = !first
             )
         }
     }

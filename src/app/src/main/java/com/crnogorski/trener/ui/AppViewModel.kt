@@ -2115,7 +2115,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // `hasForms` — это число из самого слова, а не парадигма:
             // проход по всем словам не должен читать формы вообще.
             if (word.hasForms && !byId.containsKey(declId)) {
-                add(file.exerciseFor(vocabRepo.withForms(word), VocabKind.Pattern))
+                // Карточки ещё нет — значит это первая встреча с парадигмой, и
+                // показывать её надо образцом: соседи по типу склонения делают
+                // видимым правило, а не таблицу одного слова.
+                add(
+                    file.exerciseFor(
+                        vocabRepo.withForms(word),
+                        VocabKind.Pattern,
+                        mates = vocabRepo.mates(word)
+                    )
+                )
                 continue
             }
             if (!vocabLearned(byId, declId)) continue
@@ -2259,7 +2268,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 file.exerciseFor(
                     vocabRepo.hydrate(word, forms),
                     VocabKind.Pattern,
-                    repetitions = repetitions
+                    repetitions = repetitions,
+                    // Соседи нужны только показу, а он бывает при нуле
+                    // повторений: в остальных случаях за ними не ходим.
+                    mates = if (repetitions == 0) {
+                        vocabRepo.matesOf(vocabRepo.hydrate(word, forms), words, forms)
+                    } else {
+                        emptyList()
+                    }
                 )
             else -> id.substringAfter("-" + VocabKind.Odd.key + "-", "")
                 .takeIf { it.isNotBlank() }
@@ -3090,6 +3106,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // Ветка нужна компилятору, а её пустота — напоминание, что второго
             // способа ответить у этого задания нет.
             is Exercise.Match -> Unit
+            // У таблицы свой путь: ответов несколько, и приходят они списком.
+            is Exercise.Table -> Unit
             is Exercise.Reading -> {
                 val score = LocalCheck.readingScore(answer, ex.text)
                 localResult(
@@ -3126,6 +3144,47 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * жалоба не сообщает. Поле обнуляется, чтобы жалоба на экран пар не
      * откатила заодно предыдущее задание.
      */
+    /**
+     * Заполненная парадигма: ответов несколько, карточка одна.
+     *
+     * Одна намеренно. Раньше карточка `decl` спрашивала по ячейке за раз, и
+     * знание «как склоняется это слово» было размазано по месяцу; теперь тот
+     * же вопрос задаётся целиком. Долг повторений от этого не вырос ни на
+     * одну карточку — поменялся вопрос, а не их число.
+     *
+     * Показ (`ask = false`) ответом не является: «Понятно» — это знакомство,
+     * как экран пар для слов. Засчитывается верным всегда, потому что
+     * ошибиться там нечем, и следующая встреча будет уже спросом.
+     */
+    fun submitParadigm(answers: List<String>) {
+        val state = _session.value ?: return
+        val ex = state.current as? Exercise.Table ?: return
+        if (state.phase != Phase.Input) return
+
+        val missed = if (!ex.ask) emptyList() else ex.cells.filterIndexed { i, cell ->
+            !LocalCheck.matchesTyped(answers.getOrElse(i) { "" }, cell.form)
+        }
+        // У показа ответа нет вовсе, и класть туда «, , , » нельзя: строка
+        // уходит в жалобу как «что человек написал».
+        lastAnswer = if (ex.ask) answers.joinToString(", ").trim() else ""
+        localResult(
+            correct = missed.isEmpty(),
+            note = when {
+                !ex.ask -> ""
+                missed.isEmpty() -> "Вся таблица верно."
+                else -> missed.joinToString(", ", prefix = "Не сошлось: ") { it.label }
+            },
+            // Эталон показываем только при промахе и только целиком: система
+            // и есть таблица, а одна строчка про одну ячейку её не покажет.
+            expected = if (ex.ask && missed.isNotEmpty()) {
+                ex.cells.joinToString("\n") { "${it.label} — ${it.form}" }
+            } else {
+                ""
+            },
+            answer = if (ex.ask) lastAnswer else ""
+        )
+    }
+
     fun submitMatch(wrong: Set<String>) {
         val state = _session.value ?: return
         val ex = state.current as? Exercise.Match ?: return
