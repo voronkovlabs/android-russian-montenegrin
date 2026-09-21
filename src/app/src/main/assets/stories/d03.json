@@ -14,7 +14,7 @@
     { "who": "you", "sr": "Ne, hvala. Samo piće.", "ru": "Нет, спасибо. Только напитки." },
     { "who": "them", "sr": "Odmah donosim.", "ru": "Сейчас принесу." },
     { "who": "you", "sr": "Račun, molim vas.", "ru": "Счёт, пожалуйста." },
-    { "who": "them", "sr": "Tri i po evra.", "ru": "Три с половиной евро." },
+    { "who": "them", "sr": "Tri evra.", "ru": "Три евро." },
     { "who": "you", "sr": "Izvolite. Hvala i doviđenja.", "ru": "Вот, пожалуйста. Спасибо и до свидания." }
   ]
 }
