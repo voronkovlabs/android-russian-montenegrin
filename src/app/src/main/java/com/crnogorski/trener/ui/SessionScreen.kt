@@ -44,6 +44,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -75,6 +76,7 @@ import com.crnogorski.trener.data.ComplaintReason
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.MatchPair
+import com.crnogorski.trener.data.Touch
 import com.crnogorski.trener.data.ParadigmCell
 import com.crnogorski.trener.speech.AnswerLanguage
 import com.crnogorski.trener.speech.Listener
@@ -465,7 +467,7 @@ private fun TextAnswer(
 
     OutlinedTextField(
         value = value,
-        onValueChange = { value = it },
+        onValueChange = { value = it; Touch.note() },
         enabled = enabled,
         modifier = Modifier.fillMaxWidth(),
         placeholder = { Text("Ответ", color = Muted) },
@@ -887,7 +889,7 @@ private fun ListeningAnswer(
     Spacer(Modifier.height(20.dp))
     OutlinedTextField(
         value = value,
-        onValueChange = { value = it },
+        onValueChange = { value = it; Touch.note() },
         enabled = enabled,
         modifier = Modifier.fillMaxWidth(),
         placeholder = { Text("Что ты услышал", color = Muted) },
@@ -945,6 +947,21 @@ private fun ParadigmAnswer(
 ) {
     var answers by remember(ex.id) { mutableStateOf(List(ex.cells.size) { "" }) }
 
+    // Слова таблицы по порядку: в обычной парадигме одно, в серии по образцу
+    // три. По ним же идёт показ — по слову за нажатие.
+    val lemmas = remember(ex.id) { ex.cells.map { it.lemma }.distinct() }
+
+    // Сколько слов открыто. Показ выдаёт их по одному (жалоба 122): «прочитал
+    // первое, появилась кнопка Продолжить и надо читать следующее». Читать по
+    // одной **ячейке** было бы двенадцать нажатий на серию и заодно убило бы
+    // всю затею: система видна ровно тогда, когда четыре формы стоят рядом.
+    //
+    // Заодно это чинит учёт времени на показе (жалоба 121): экран перестал
+    // быть страницей, на которую можно смотреть неизвестно сколько.
+    var open by remember(ex.id) { mutableIntStateOf(if (ex.ask) lemmas.size else 1) }
+    val shown = if (ex.ask) lemmas else lemmas.take(open)
+    val last = open >= lemmas.size
+
     Label(if (ex.ask) "Заполни таблицу" else "Посмотри, как это устроено")
     Text(ex.title, style = MaterialTheme.typography.headlineSmall, color = Paper)
     if (ex.note.isNotBlank()) {
@@ -955,12 +972,13 @@ private fun ParadigmAnswer(
 
     var lemma = ""
     ex.cells.forEachIndexed { i, cell ->
+        if (cell.lemma !in shown) return@forEachIndexed
         // Заголовок слова — только когда слово сменилось: в серии по образцу
         // их несколько, в обычной таблице одно.
         if (cell.lemma != lemma) {
             if (i > 0) Spacer(Modifier.height(16.dp))
             lemma = cell.lemma
-            Text(lemma, style = MaterialTheme.typography.titleMedium, color = Accent)
+            WordHead(cell)
             Spacer(Modifier.height(8.dp))
         }
         CellRow(
@@ -975,10 +993,35 @@ private fun ParadigmAnswer(
 
     Spacer(Modifier.height(20.dp))
     PrimaryButton(
-        if (ex.ask) "Проверить" else "Понятно",
+        when {
+            ex.ask -> "Проверить"
+            last -> "Понятно"
+            else -> "Продолжить"
+        },
         // У показа нажимать нечего, кроме «Понятно»: пустых полей там нет.
         enabled = enabled && (!ex.ask || answers.any { it.isNotBlank() })
-    ) { onSubmit(answers) }
+    ) {
+        if (!ex.ask && !last) open++ else onSubmit(answers)
+    }
+}
+
+/**
+ * Заголовок слова в таблице — нажимается и переводится (жалоба 120).
+ *
+ * Идёт через [GlossedText] нарочно: тот сам подчёркивает знакомое слово, сам
+ * показывает перевод строкой ниже и сам ставит ударение. Правило «подчёркнуто
+ * — значит нажимается» тем самым держится без единой новой строки, а вторая
+ * своя реализация подсказки однажды разошлась бы с общей.
+ */
+@Composable
+private fun WordHead(cell: ParadigmCell) {
+    GlossedText(
+        text = cell.lemma,
+        gloss = if (cell.gloss.isBlank()) emptyMap()
+        else mapOf(cell.lemma.lowercase() to cell.gloss),
+        style = MaterialTheme.typography.titleMedium,
+        color = Accent
+    )
 }
 
 @Composable
@@ -989,19 +1032,32 @@ private fun CellRow(
     value: String,
     onValue: (String) -> Unit
 ) {
+    // Разобранная ячейка красится сама: зелёным верная, красным нет
+    // (жалобы 117 и 118). Ничего протаскивать для этого не надо — ячейка
+    // знает и свой ответ, и свою верную форму, а `enabled` гаснет ровно
+    // тогда, когда вердикт вынесен.
+    //
+    // Довод тот же, что у зелёных слов в читаемом тексте (2.4): счёт говорит
+    // сколько, но не говорит какие, — а тут поля прямо на экране.
+    val verdict: Color? = when {
+        !ask || enabled -> null
+        LocalCheck.matchesTyped(value, cell.form) -> Jade
+        else -> Crimson
+    }
+
     Column(Modifier.fillMaxWidth()) {
         Text(
             // Подпись и рамка вместе: название падежа говорит, как форма
             // зовётся, а рамка — ради чего она нужна.
             if (cell.frame.isBlank()) cell.label else "${cell.label}  ·  ${cell.frame}",
             style = MaterialTheme.typography.labelSmall,
-            color = Muted
+            color = verdict ?: Muted
         )
         Spacer(Modifier.height(4.dp))
         if (ask) {
             OutlinedTextField(
                 value = value,
-                onValueChange = onValue,
+                onValueChange = { Touch.note(); onValue(it) },
                 enabled = enabled,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
@@ -1017,7 +1073,11 @@ private fun CellRow(
                     unfocusedBorderColor = Surface2,
                     focusedTextColor = Paper,
                     unfocusedTextColor = Paper,
-                    disabledTextColor = Muted,
+                    // Разобранная ячейка: и рамка, и сам ответ цветом вердикта.
+                    // Гаснуть до `Muted`, как у остальных полей, ей нельзя —
+                    // именно её и пришли посмотреть.
+                    disabledBorderColor = verdict ?: Surface2,
+                    disabledTextColor = verdict ?: Muted,
                     cursorColor = Accent
                 )
             )

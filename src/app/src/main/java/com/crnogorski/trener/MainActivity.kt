@@ -18,6 +18,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -27,6 +29,7 @@ import androidx.core.content.ContextCompat
 import android.os.Process
 import android.os.SystemClock
 import com.crnogorski.trener.data.Config
+import com.crnogorski.trener.data.Touch
 import com.crnogorski.trener.data.Trace
 import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.speech.Speaker
@@ -119,7 +122,23 @@ class MainActivity : ComponentActivity() {
                 }
 
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+                    // Одно место на всё приложение, где замечается, что человек
+                    // жив: нажатия, прокрутка, перетаскивание. Перехват идёт
+                    // **первым проходом** и ничего не потребляет — экраны под
+                    // ним не замечают, что их слушают.
+                    //
+                    // Набор текста сюда не приходит: клавиатура живёт своим
+                    // окном. Поэтому поля ввода отмечаются сами, см. Touch.
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .pointerInput(Unit) {
+                            awaitPointerEventScope {
+                                while (true) {
+                                    awaitPointerEvent(PointerEventPass.Initial)
+                                    Touch.note()
+                                }
+                            }
+                        },
                     containerColor = Ink,
                     snackbarHost = {
                         SnackbarHost(snackbar) { data ->

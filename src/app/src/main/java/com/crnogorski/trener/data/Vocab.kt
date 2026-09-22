@@ -428,6 +428,7 @@ private fun VocabFile.paradigmCells(word: VocabWord): List<ParadigmCell> {
         val f = have[slot] ?: return@mapNotNull null
         ParadigmCell(
             lemma = Ijekavica.show(word.id),
+            gloss = word.gloss,
             label = slots[slot] ?: slot,
             frame = frames[slot].orEmpty(),
             form = f

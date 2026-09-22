@@ -27,7 +27,8 @@
     "wordShare": 0.22,
     "storyShare": 0.12,
     "spokenAttempts": 3,
-    "freshLead": 3
+    "freshLead": 3,
+    "idleSeconds": 10
   },
   "vocab": {
     "poolTarget": 200,

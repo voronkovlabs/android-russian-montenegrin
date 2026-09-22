@@ -180,6 +180,14 @@ data class MatchPair(val cardId: String, val ru: String, val me: String)
 @Serializable
 data class ParadigmCell(
     val lemma: String,
+    /**
+     * Толкование слова — по жалобе 120.
+     *
+     * Без него человек смотрит на `način` в шести падежах и может не знать,
+     * что это вообще такое. Лежит у каждой ячейки, потому что в серии по
+     * образцу слов несколько и толкования у них разные.
+     */
+    val gloss: String = "",
     /** Подпись ячейки: «вин. ед.», «ты». */
     val label: String,
     /** Рамка-пример из словаря: «Vidim ___.» — падеж задан предлогом. */

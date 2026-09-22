@@ -16,6 +16,7 @@ import com.crnogorski.trener.data.ComplaintStore
 import com.crnogorski.trener.data.ComplaintVerdict
 import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.data.Stress
+import com.crnogorski.trener.data.Touch
 import com.crnogorski.trener.data.Trace
 import com.crnogorski.trener.data.DayStatEntity
 import com.crnogorski.trener.data.Excluded
@@ -2615,7 +2616,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val state = _story.value ?: return
         val chunk = state.chunks.getOrNull(state.index) ?: return
         if (storyClock > 0L) {
-            val seconds = pace.spend((System.currentTimeMillis() - storyClock) / 1000.0)
+            // Простой вычитается и тут: жалоба 116 была про урок **и историю**
+            // разом — «если урок или стория просто открыты и ничего не
+            // происходит секунд 10». У историй свой отсчёт, значит и вычитать
+            // надо отдельно.
+            val spent = (System.currentTimeMillis() - storyClock) / 1000.0 -
+                Touch.idleSince(storyClock)
+            val seconds = pace.spend(spent.coerceAtLeast(0.0))
             if (seconds > 0) viewModelScope.launch { bump(storySeconds = seconds) }
         }
         storyClock = System.currentTimeMillis()
@@ -3589,7 +3596,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     private fun noteTime(state: SessionState, ex: Exercise, measure: Boolean = true): Int {
         if (state.shownAt <= 0L) return 0
-        val seconds = (System.currentTimeMillis() - state.shownAt) / 1000.0
+        // Время, когда человека не было, не идёт ни в темп, ни в отчёт, ни в
+        // дневную норму — см. [Touch]. Вычитается до всего остального, иначе
+        // простой попал бы в замер типа задания и раздул бы его навсегда.
+        val idle = Touch.idleSince(state.shownAt)
+        val seconds =
+            ((System.currentTimeMillis() - state.shownAt) / 1000.0 - idle).coerceAtLeast(0.0)
         if (measure) pace.record(ex.typeName, seconds)
         // Возвращаем то, что реально списано: в отчёт должно уйти ровно то же
         // время, каким ежедневное задание меряет свои пятнадцать минут.
@@ -3607,8 +3619,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Сырые секунды снимаются **до** noteTime: тот отдаёт уже списанное,
         // а списанное у ответа быстрее полутора секунд равно нулю — то есть
         // ровно самый уверенный ответ выглядел бы как «времени не было».
-        val elapsed =
-            if (state.shownAt > 0) (System.currentTimeMillis() - state.shownAt) / 1000.0 else 0.0
+        val elapsed = if (state.shownAt > 0) {
+            ((System.currentTimeMillis() - state.shownAt) / 1000.0 -
+                Touch.idleSince(state.shownAt)).coerceAtLeast(0.0)
+        } else {
+            0.0
+        }
         val seconds = noteTime(state, item.exercise)
         val easy = correct && confident(item.exercise.typeName, elapsed)
         viewModelScope.launch {
