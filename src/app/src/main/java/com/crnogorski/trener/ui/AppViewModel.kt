@@ -43,6 +43,7 @@ import com.crnogorski.trener.data.VocabForm
 import com.crnogorski.trener.data.VocabFile
 import com.crnogorski.trener.data.VocabKind
 import com.crnogorski.trener.data.VocabRepository
+import com.crnogorski.trener.notify.News
 import com.crnogorski.trener.notify.Replies
 import com.crnogorski.trener.data.VocabWord
 import com.crnogorski.trener.data.VoiceRecorder
@@ -1724,6 +1725,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private fun lookForUpdate() {
         viewModelScope.launch {
             Trace.span("сеть: проверка обновления") { updater.check() }.getOrNull()?.let { release ->
+                // Один запрос отвечает на два вопроса. Пришёл ответ про
+                // **нашу** версию — значит человек уже обновился, и про новости
+                // можно рассказать уведомлением. Про чужую, ещё не
+                // поставленную, говорит строка на главном: уведомление там было
+                // бы обещанием того, чего у него нет.
+                News.tell(ctx, release.version, release.news)
                 if (!release.newer) return@let
                 freshRelease = release
                 _home.value = _home.value.copy(update = release)

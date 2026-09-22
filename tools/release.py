@@ -182,10 +182,17 @@ def coverage(prev_tag):
         print('всё тронутое кто-то уже прогнал')
 
 
+NEWS_MARK = '<!--news-->'
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--keep', type=int, default=KEEP)
     ap.add_argument('--notes', default='')
+    ap.add_argument(
+        '--news', default='',
+        help='текст для телефона: строка на главном и уведомление после '
+             'установки. Нет ключа — нет и уведомления')
     args = ap.parse_args()
 
     if not os.path.exists(APK):
@@ -199,9 +206,16 @@ def main():
     tmp = os.path.join(tempfile.gettempdir(), 'crnogorski-%s.apk' % name)
     shutil.copyfile(APK, tmp)
 
-    notes = args.notes or subprocess.run(
-        ['git', 'log', '-1', '--pretty=%s'], capture_output=True, text=True,
-        encoding='utf-8').stdout.strip()
+    # Раньше здесь по умолчанию бралась строка последнего коммита — и это
+    # врало: скрипт запускается **до** коммита версии, так что в тело релиза
+    # попадал заголовок предыдущего выпуска. Пока тело никто не читал, это была
+    # мелочь; с уведомлениями о новостях оно стало бы неправдой на телефоне.
+    notes = args.notes
+
+    # Новости отделены меткой, невидимой на странице релиза: приложение берёт
+    # ровно то, что между ней и концом, а человек видит обычный текст.
+    if args.news:
+        notes = (notes + '\n\n' + NEWS_MARK + '\n' + args.news).strip()
 
     # Сверка журнала прохождений — до выпуска, пока метка прошлого релиза
     # ещё последняя. Печатает подсказку и ничего не запрещает.

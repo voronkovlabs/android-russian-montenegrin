@@ -135,7 +135,7 @@ fun HomeScreen(
             val fresh = state.update
             if (fresh != null) {
                 Spacer(Modifier.height(8.dp))
-                UpdateStrip(fresh.version, fresh.sizeMb, download, onUpdate)
+                UpdateStrip(fresh.version, fresh.sizeMb, fresh.news, download, onUpdate)
             }
             Spacer(Modifier.height(20.dp))
         }
@@ -322,7 +322,14 @@ private fun StatsStrip(stats: StatsBrief, onOpen: () -> Unit) {
  * после.
  */
 @Composable
-private fun UpdateStrip(version: String, sizeMb: Int, progress: Float?, onUpdate: () -> Unit) {
+private fun UpdateStrip(
+    version: String,
+    sizeMb: Int,
+    /** Что нового — второй строкой. Пусто у выпусков, где новостей не отмечали. */
+    news: String,
+    progress: Float?,
+    onUpdate: () -> Unit
+) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -365,6 +372,20 @@ private fun UpdateStrip(version: String, sizeMb: Int, progress: Float?, onUpdate
                     color = Accent
                 )
             }
+        }
+        // Что нового — строкой ниже, без уведомления.
+        //
+        // Подгонять человека уведомлением с обновлением невежливо: он сам
+        // решает, качать ли шестьдесят мегабайт. А вот **ради чего** качать,
+        // сказать надо — иначе у Кати с Володей это просто просьба потратить
+        // трафик неизвестно на что.
+        if (progress == null && news.isNotBlank()) {
+            Spacer(Modifier.height(4.dp))
+            Text(
+                news,
+                style = MaterialTheme.typography.bodyMedium,
+                color = Muted
+            )
         }
         if (progress != null) {
             Spacer(Modifier.height(8.dp))

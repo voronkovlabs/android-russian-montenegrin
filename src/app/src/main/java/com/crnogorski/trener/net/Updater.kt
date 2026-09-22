@@ -19,6 +19,17 @@ import java.util.concurrent.TimeUnit
  * [newer] — есть ли смысл обновляться; сравниваются номера версий, а не строки:
  * «1.9» и «1.50» как текст сравниваются неправильно.
  */
+/**
+ * Метка, за которой в теле релиза лежат новости для телефона.
+ *
+ * HTML-комментарий: на странице релиза его не видно, а разобрать по нему
+ * надёжнее, чем по заголовку, который однажды перепишут.
+ *
+ * Двойник в `tools/release.py` — и разойтись им нельзя: приложение просто
+ * перестанет находить новости, молча.
+ */
+private const val NEWS_MARK = "<!--news-->"
+
 data class Release(
     val version: String,
     val assetId: Long,
@@ -34,6 +45,14 @@ data class Release(
      */
     val sizeBytes: Long,
     val notes: String,
+    /**
+     * Что нового — текст для человека, а не для списка изменений.
+     *
+     * Пусто у выпусков, где новостей не отмечали: их по три в день, и
+     * уведомлять о каждом значило бы приучить к тому, что уведомления можно не
+     * читать. Отмечается руками при выпуске — `release.py --news`.
+     */
+    val news: String,
     val newer: Boolean
 )
 
@@ -102,6 +121,7 @@ class Updater(private val context: Context) {
                     sizeMb = (asset.optLong("size") / 1_048_576).toInt(),
                     sizeBytes = asset.optLong("size"),
                     notes = json.optString("body").lineSequence().firstOrNull().orEmpty(),
+                    news = json.optString("body").substringAfter(NEWS_MARK, "").trim(),
                     newer = isNewer(version, BuildConfig.VERSION_NAME)
                 )
             }
