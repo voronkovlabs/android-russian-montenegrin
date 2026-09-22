@@ -253,7 +253,24 @@ data class Tuning(
         /** Сколько копить, прежде чем отправить отчёт. */
         val windowMinutes: Int = 60,
         /** Потолок записей: набралось больше — отправляем не дожидаясь срока. */
-        val maxRecords: Int = 600
+        val maxRecords: Int = 600,
+
+        /**
+         * Сколько записей копит журнал прохождений, прежде чем уехать.
+         *
+         * Занятие — полсотни строк в день, так что пятьсот это примерно
+         * неделя-полторы у того, кто занимается каждый день.
+         */
+        val journalRecords: Int = 500,
+
+        /**
+         * И сколько часов, если объём так и не набрался.
+         *
+         * Нужно ради телефона, на котором занимаются редко: по одному объёму
+         * его отчёт не ушёл бы месяц, а свежесть журнала — это и есть весь
+         * его смысл перед выпуском.
+         */
+        val journalHours: Int = 48
     )
 
     /**
@@ -331,7 +348,9 @@ data class Tuning(
             slowMs = diag.slowMs.coerceIn(1, 60_000),
             freezeMs = diag.freezeMs.coerceIn(50, 60_000),
             windowMinutes = diag.windowMinutes.coerceIn(1, 7 * 24 * 60),
-            maxRecords = diag.maxRecords.coerceIn(10, 10_000)
+            maxRecords = diag.maxRecords.coerceIn(10, 10_000),
+            journalRecords = diag.journalRecords.coerceIn(10, 5000),
+            journalHours = diag.journalHours.coerceIn(1, 720)
         ),
         // Ключ приводится к нижнему регистру: хвост хеша печатается
         // строчными, а в файл его перенесут копированием из issue — где он

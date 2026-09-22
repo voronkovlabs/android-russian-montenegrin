@@ -28,6 +28,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -94,6 +96,7 @@ fun SessionScreen(
     /** Экран пар отвечает не строкой, а списком слов, где ошиблись. */
     onMatch: (Set<String>) -> Unit,
     onParadigm: (List<String>) -> Unit,
+    onRate: (Int) -> Unit,
     onNext: () -> Unit,
     onRetryBlock: () -> Unit,
     onComplain: (ComplaintReason, String) -> Unit,
@@ -153,6 +156,13 @@ fun SessionScreen(
                 onMatch = onMatch,
                 onParadigm = onParadigm
             )
+
+            // Оценка — под телом задания, рядом с «Отложить», и по тому же
+            // доводу: одно место на все виды заданий.
+            //
+            // Показывается **всегда**, а не только пока задание живое: мнение
+            // о задании чаще складывается после вердикта, чем до него.
+            RateRow(key = state.current.id, onRate = onRate)
 
             // «Отложить» — одной кнопкой на все виды заданий, под телом, а не
             // внутри каждого блока ответа. Блоков семь, и своя кнопка в каждом
@@ -939,6 +949,47 @@ private fun ListeningAnswer(
  * видна ровно тогда, когда видно, что у `kuću`, `kuće`, `kući`, `kućom` общее
  * начало и разные хвосты.
  */
+/**
+ * Лайк и дизлайк, как у видео: выбран один, второй его снимает, повторное
+ * нажатие на тот же снимает выбор вовсе.
+ *
+ * Состояние живёт по ключу задания, поэтому переход «ввод → результат» его не
+ * теряет: тело задания рисуется один раз, до развилки по фазам.
+ *
+ * Нажатие уходит в журнал прохождений сразу, а не копится до конца задания:
+ * задание можно и бросить, а мнение уже высказано.
+ */
+@Composable
+private fun RateRow(key: String, onRate: (Int) -> Unit) {
+    var rate by remember(key) { mutableIntStateOf(0) }
+
+    fun tap(value: Int) {
+        rate = if (rate == value) 0 else value
+        onRate(rate)
+    }
+
+    Row(
+        Modifier.fillMaxWidth().padding(top = 6.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = { tap(1) }) {
+            Icon(
+                Icons.Default.ThumbUp,
+                contentDescription = "Хорошее задание",
+                tint = if (rate == 1) Jade else Muted
+            )
+        }
+        IconButton(onClick = { tap(-1) }) {
+            Icon(
+                Icons.Default.ThumbDown,
+                contentDescription = "Так себе задание",
+                tint = if (rate == -1) Crimson else Muted
+            )
+        }
+    }
+}
+
 @Composable
 private fun ParadigmAnswer(
     ex: Exercise.Table,

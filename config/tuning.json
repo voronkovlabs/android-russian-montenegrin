@@ -48,7 +48,9 @@
     "slowMs": 300,
     "freezeMs": 700,
     "windowMinutes": 60,
-    "maxRecords": 600
+    "maxRecords": 600,
+    "journalRecords": 500,
+    "journalHours": 48
   },
   "speech": {
     "slowRate": 0.35,

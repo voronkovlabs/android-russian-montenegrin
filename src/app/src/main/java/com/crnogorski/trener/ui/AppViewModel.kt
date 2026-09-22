@@ -16,6 +16,7 @@ import com.crnogorski.trener.data.ComplaintStore
 import com.crnogorski.trener.data.ComplaintVerdict
 import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.data.Stress
+import com.crnogorski.trener.data.Journal
 import com.crnogorski.trener.data.Touch
 import com.crnogorski.trener.data.Trace
 import com.crnogorski.trener.data.DayStatEntity
@@ -751,6 +752,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     private val person: String? get() = complaints.person()
 
+    /** Хвост хеша устройства — уходит в каждую строку журнала прохождений. */
+    private val who: String by lazy { complaints.deviceId() }
+
     /**
      * Сколько скачано обновления, от нуля до единицы. `null` — не качаем.
      *
@@ -870,6 +874,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Отчёт диагностики за прошлые запуски — если он созрел. Пятым делом и
         // фоном: он про запуск, а не участник запуска.
         sendDiagnostics(auto = true)
+        // Журнал прохождений — туда же и по тому же правилу: созрел, значит
+        // уехал. Молчит, если писать нечего или токена нет.
+        sendJournal()
         // Почему умер прошлый процесс. Спрашиваем систему, а не себя: своего
         // обработчика в умирающем процессе у нас нет и заводить его незачем.
         // Запрос идёт в фоне — это обращение к системной службе, и на пути к
@@ -1463,6 +1470,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     ) {
         val vocab = item.lessonId == VocabRepository.LESSON_ID
         val fresh = existing == null
+        // Журнал прохождений: что запускали, на какой сборке и чем кончилось.
+        // Пишется здесь же, где статистика дня, — это ровно та точка, где
+        // задание считается пройденным, и второй такой не будет.
+        Journal.note(
+            ctx,
+            unit = if (vocab) Journal.VOCAB else item.lessonId,
+            kind = item.exercise.typeName,
+            ok = correct,
+            who = who
+        )
         bump(
             lessonSeconds = if (!vocab && fresh) seconds else 0,
             reviewSeconds = if (!vocab && !fresh) seconds else 0,
@@ -2943,6 +2960,51 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * — наоборот, нельзя: нынешний запуск ещё не кончился, и в отчёт попала бы
      * половина трассы ровно того, что мы ловим.
      */
+    /**
+     * Отправить журнал прохождений, когда созреет.
+     *
+     * Галочки у него нет намеренно (см. [Journal]): выключенный журнал молчал
+     * бы неотличимо от «никто не открывал», а это худший вид ошибки в приборе.
+     */
+    /**
+     * Оценка задания: `1` лайк, `-1` дизлайк, `0` — выбор сняли.
+     *
+     * **Ничего не делает, только пишет** — решение владельца. Ни откладывания,
+     * ни жалобы, ни правки расписания: выводы делаются потом, при разборе
+     * журнала.
+     *
+     * Зачем это, если жалоба уже есть: жалоба стоит усилия — открыть диалог,
+     * выбрать категорию, написать текст, — и поэтому её пишут, только когда
+     * достало. Оценка стоит одного касания и ловит то раздражение, которое до
+     * жалобы никогда бы не доросло. И наоборот: **положительного сигнала у
+     * нас не было вовсе**, единственным было отсутствие жалобы, а оно тихое.
+     *
+     * Читать дизлайк надо как «посмотри сюда», а не как приговор: что именно
+     * чинить, он не говорит — для этого у жалобы есть категория.
+     */
+    fun rateCurrent(rate: Int) {
+        val state = _session.value ?: return
+        val item = state.items.getOrNull(state.index) ?: return
+        val vocab = item.lessonId == VocabRepository.LESSON_ID
+        Journal.rate(
+            ctx,
+            unit = if (vocab) Journal.VOCAB else item.lessonId,
+            kind = item.exercise.typeName,
+            rate = rate,
+            who = who
+        )
+    }
+
+    fun sendJournal() {
+        viewModelScope.launch {
+            if (!Journal.due(ctx)) return@launch
+            val report = Journal.report(ctx, device) ?: return@launch
+            if (!issues.configured) return@launch
+            issues.journal(report.title, report.body, person)
+                .onSuccess { Journal.clear(ctx) }
+        }
+    }
+
     fun sendDiagnostics(auto: Boolean = false) {
         if (!Trace.enabled && auto) return
         viewModelScope.launch {

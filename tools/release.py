@@ -86,6 +86,102 @@ def prune(keep):
     return len(releases[keep:])
 
 
+def latest_tag():
+    """Метка последнего выпуска — от неё и считаем, что тронуто."""
+    r = subprocess.run(
+        ['gh', 'release', 'list', '--repo', REPO, '--limit', '1',
+         '--json', 'tagName'],
+        capture_output=True, text=True, encoding='utf-8')
+    if r.returncode != 0:
+        return ''
+    items = json.loads(r.stdout or '[]')
+    return items[0]['tagName'] if items else ''
+
+
+def journal():
+    """
+    Записи журнала прохождений со всех телефонов.
+
+    Телефон знает, **что запускали**; что при этом менялось в коде, знает git,
+    и он здесь. Поэтому вывод «обкатано» делается на этой стороне, а не в
+    приложении — см. `data/Journal.kt`.
+    """
+    r = subprocess.run(
+        ['gh', 'issue', 'list', '--repo', REPO, '--label', 'журнал',
+         '--state', 'all', '--limit', '40', '--json', 'body'],
+        capture_output=True, text=True, encoding='utf-8')
+    if r.returncode != 0:
+        return []
+    rows = []
+    for issue in json.loads(r.stdout or '[]'):
+        for block in re.findall(r'```json\n(.*?)\n```', issue.get('body', ''), re.S):
+            for line in block.splitlines():
+                line = line.strip()
+                if not line.startswith('{'):
+                    continue
+                try:
+                    rows.append(json.loads(line))
+                except ValueError:
+                    pass
+    return rows
+
+
+def touched(tag):
+    """Какие единицы курса менялись с метки [tag]."""
+    # Метки заводит `gh release create` **на сервере**, и локально их нет.
+    # Без этого `git diff` не находил ревизию, тихо возвращал пустоту — и
+    # сверка вечно сообщала бы «всё тронутое кто-то прогнал». Ровно тот род
+    # поломки, ради которого сверка и затевалась.
+    subprocess.run(['git', 'fetch', '--tags', '--quiet'], capture_output=True)
+    r = subprocess.run(['git', 'diff', '--name-only', tag + '..HEAD'],
+                       capture_output=True, text=True, encoding='utf-8')
+    if r.returncode != 0:
+        print('журнал: метка %s не нашлась, сверять не с чем' % tag)
+        return set()
+    units = set()
+    for path in r.stdout.splitlines():
+        m = re.search(r'assets/lessons/([a-z0-9]+)\.json$', path)
+        if m and m.group(1) != 'index':
+            units.add(m.group(1))
+        m = re.search(r'assets/stories/([a-z0-9]+)\.json$', path)
+        if m and m.group(1) != 'index':
+            units.add(m.group(1))
+    return units
+
+
+def coverage(prev_tag):
+    """
+    Что тронуто с прошлого выпуска и кем из троих с тех пор не запускалось.
+
+    Печатает и молчит про остальное: это подсказка перед выпуском, а не
+    проверка, которая что-то запрещает. Запрещать тут нечего — выпуск всё
+    равно уйдёт, просто будет видно, что прогнать руками.
+    """
+    units = touched(prev_tag)
+    if not units:
+        return
+    rows = journal()
+    if not rows:
+        print('журнал: записей ещё нет, сверять не с чем')
+        return
+
+    # Последняя сборка, на которой единицу хоть кто-то запускал.
+    last = {}
+    for row in rows:
+        unit, code = row.get('u'), row.get('v')
+        if row.get('t') == 'run' and unit and isinstance(code, int):
+            if code > last.get(unit, 0):
+                last[unit] = code
+
+    _, code = version()
+    cold = sorted(u for u in units if last.get(u, 0) < int(code))
+    print('тронуто с %s: %s' % (prev_tag, ', '.join(sorted(units))))
+    if cold:
+        print('НИКТО НЕ ЗАПУСКАЛ после правки: ' + ', '.join(cold))
+    else:
+        print('всё тронутое кто-то уже прогнал')
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--keep', type=int, default=KEEP)
@@ -106,6 +202,12 @@ def main():
     notes = args.notes or subprocess.run(
         ['git', 'log', '-1', '--pretty=%s'], capture_output=True, text=True,
         encoding='utf-8').stdout.strip()
+
+    # Сверка журнала прохождений — до выпуска, пока метка прошлого релиза
+    # ещё последняя. Печатает подсказку и ничего не запрещает.
+    prev = latest_tag()
+    if prev:
+        coverage(prev)
 
     url = publish(tag, name, notes, tmp)
     os.remove(tmp)
