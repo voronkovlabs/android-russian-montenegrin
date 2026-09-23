@@ -21,16 +21,16 @@ android {
         applicationId = "com.montelearn"
         minSdk = 34
         targetSdk = 35
-        versionCode = 117
-        versionName = "3.4"
-        buildConfigField(
-            "String",
-            "ANTHROPIC_API_KEY",
-            "\"${localProps.getProperty("ANTHROPIC_API_KEY") ?: ""}\""
-        )
-        // Токен для issue с жалобами. Мелкий (fine-grained), выданный на один
-        // этот репозиторий с правом Issues: write — из APK он достаётся так же
-        // легко, как ключ Anthropic, и шире права давать нельзя.
+        versionCode = 118
+        versionName = "3.5"
+        // Ключа Anthropic здесь нет и больше не будет: репозиторий открытый, а
+        // APK лежит в релизах вложением — зашитый ключ означал бы, что чужие
+        // люди тратят деньги владельца. Его вводят на телефоне (data/Secrets).
+        //
+        // Токен GitHub, наоборот, остаётся **намеренно открытым**: цель —
+        // «жалобы от кого угодно», а без токена в сборке посторонний написать
+        // не сможет. Мелкий (fine-grained), на один этот репозиторий с правом
+        // Issues: write; чем за это плачено — в CLAUDE.md.
         buildConfigField(
             "String",
             "GITHUB_TOKEN",

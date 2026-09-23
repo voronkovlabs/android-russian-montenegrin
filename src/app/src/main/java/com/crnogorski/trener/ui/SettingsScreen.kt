@@ -47,6 +47,15 @@ import androidx.compose.ui.unit.dp
 import android.app.TimePickerDialog
 import android.app.NotificationManager
 import android.provider.Settings
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.crnogorski.trener.data.Secrets
+import com.crnogorski.trener.net.HaikuChecker
 import com.crnogorski.trener.data.Pace
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.notify.Reminder
@@ -136,8 +145,13 @@ fun SettingsScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp)
         ) {
-            // Обновление — первым: за ним приходят чаще, чем за длиной занятия,
-            // а искать его в конце длинного экрана каждый раз утомительно.
+            // Ключ — первым, и это сместило обновление со второго места на
+            // третье. Раньше первым стояло обновление, «за ним приходят чаще»;
+            // с 3.5 это перестало быть верным: без ключа обновляться некуда,
+            // потому что приложение не работает вовсе.
+            KeyRow()
+
+            Spacer(Modifier.height(36.dp))
             UpdateRow(state, download, onCheckUpdate, onInstallUpdate)
 
             Spacer(Modifier.height(36.dp))
@@ -712,6 +726,111 @@ private fun SplashRow(onShow: () -> Unit) {
  * `Android/data` с Android 11 посторонним приложениям ходу нет, и облако там
  * ничего не увидело бы.
  */
+/**
+ * Ключ Anthropic — единственный секрет, который вводят руками.
+ *
+ * Стоит первым на экране: без него приложение не открывается вовсе
+ * (`ui/KeyGate.kt`), и всё остальное в настройках имеет смысл только после
+ * него.
+ *
+ * Токена GitHub рядом нет намеренно — он зашит в сборку и открыт сознательно,
+ * см. `data/Secrets.kt` и CLAUDE.md.
+ */
+@Composable
+private fun KeyRow() {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val saved by Secrets.key.collectAsStateWithLifecycle()
+
+    // Черновик начинается с сохранённого: обычно сюда заходят посмотреть, а не
+    // менять, и пустое поле читалось бы как «ключ потерялся».
+    var typed by remember(saved) { mutableStateOf(saved) }
+    var shown by remember { mutableStateOf(false) }
+    var note by remember { mutableStateOf("") }
+    var busy by remember { mutableStateOf(false) }
+
+    Text("КЛЮЧ", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(6.dp))
+    Text("Ключ Anthropic", style = MaterialTheme.typography.displaySmall, color = Paper)
+    Spacer(Modifier.height(16.dp))
+
+    OutlinedTextField(
+        value = typed,
+        onValueChange = { typed = it; note = "" },
+        singleLine = true,
+        placeholder = { Text("sk-ant-…", color = Muted) },
+        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None),
+        // Закрыт по умолчанию: экран настроек открывают при людях, а ключ —
+        // это деньги. Показать можно нажатием, и это осознанное действие.
+        visualTransformation =
+            if (shown) VisualTransformation.None else PasswordVisualTransformation(),
+        trailingIcon = {
+            TextButton(onClick = { shown = !shown }) {
+                Text(
+                    if (shown) "скрыть" else "показать",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Accent
+                )
+            }
+        },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Paper,
+            unfocusedTextColor = Paper,
+            focusedBorderColor = Accent,
+            unfocusedBorderColor = Muted,
+            cursorColor = Accent
+        ),
+        modifier = Modifier.fillMaxWidth()
+    )
+
+    Spacer(Modifier.height(8.dp))
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        TextButton(
+            onClick = { Secrets.save(context, typed); note = "Ключ сохранён." },
+            enabled = typed.trim() != saved && Secrets.looksReal(typed)
+        ) { Text("Сохранить", color = Accent) }
+
+        TextButton(
+            onClick = {
+                busy = true
+                note = "Спрашиваю…"
+                scope.launch {
+                    val trouble = HaikuChecker().ping(saved)
+                    note = trouble?.let { "Не вышло: $it" } ?: "Ключ рабочий."
+                    busy = false
+                }
+            },
+            enabled = !busy && saved.isNotBlank()
+        ) { Text("Проверить", color = Accent) }
+    }
+
+    if (note.isNotBlank()) {
+        Spacer(Modifier.height(4.dp))
+        Text(
+            note,
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (note.startsWith("Не вышло")) Crimson else Paper
+        )
+    }
+
+    Spacer(Modifier.height(8.dp))
+    Text(
+        "Ключ нужен свободным переводам: их проверяет Claude, и ходит он по " +
+            "твоему ключу — в приложение он не зашит и в копию прогресса не " +
+            "попадает. Заводится на console.anthropic.com, раздел API Keys.",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+    Spacer(Modifier.height(6.dp))
+    Text(
+        "«Проверить» шлёт один короткий запрос и стоит примерно цент за тысячу " +
+            "нажатий. Сам по себе ключ не проверяется никогда — ни при вводе, " +
+            "ни при запуске.",
+        style = MaterialTheme.typography.bodySmall,
+        color = Muted
+    )
+}
+
 @Composable
 private fun NativeModeRow() {
     val context = LocalContext.current
@@ -955,10 +1074,21 @@ private fun CorpusRow(onOpen: () -> Unit) {
 /**
  * Чужой материал, уехавший в APK, и его лицензии.
  *
- * Не украшение и не вежливость: ударения взяты из английского Викисловаря под
- * CC BY-SA, а она требует называть источник везде, где данные разошлись. Риф
- * под CC0 указания автора не требует вовсе — он здесь потому, что в одном
- * месте перечислить всё чужое дешевле, чем каждый раз вспоминать, что откуда.
+ * Не украшение и не вежливость: почти всё здесь под CC BY-SA, а она требует
+ * называть источник везде, где данные разошлись. Риф под CC0 указания автора
+ * не требует вовсе — он здесь потому, что в одном месте перечислить всё чужое
+ * дешевле, чем каждый раз вспоминать, что откуда.
+ *
+ * **Список был неполон до 3.5, и это стоит помнить.** Он называл одни
+ * ударения — и это была правда ровно до пересборки словаря в 1.84–1.85, когда
+ * в APK приехали толкования Викисловаря, парадигмы srLex и дословные примеры
+ * Tatoeba. Нашлось при подготовке репозитория к открытию: закрытый репозиторий
+ * позволял не замечать, что условие ShareAlike не выполняется, открытый
+ * выполняет его сам собой.
+ *
+ * Отсюда правило: **пополнил `assets/vocab` из внешнего источника — допиши
+ * строку сюда и в `research/data/LICENSES.md`.** Двойник, и разойтись им
+ * нельзя.
  *
  * Мелким шрифтом внизу: читают это раз в жизни, а место занимать оно не должно.
  */
@@ -967,7 +1097,12 @@ private fun SourcesRow() {
     Text("ИСТОЧНИКИ", style = MaterialTheme.typography.labelSmall, color = Accent)
     Spacer(Modifier.height(8.dp))
     Text(
-        "Ударения в словах — English Wiktionary (CC BY-SA 4.0). " +
+        "Толкования слов — русский Викисловарь (CC BY-SA 4.0 / GFDL). " +
+            "Падежные и глагольные формы — srLex 1.3, CLARIN.SI (CC BY-SA 4.0). " +
+            "Примеры в карточках — Tatoeba (CC BY 2.0 FR). " +
+            "Ударения в словах — English Wiktionary (CC BY-SA 4.0). " +
+            "Народные сказки — Вук Караджич, «Српске народне приповијетке» (1870), " +
+            "общественное достояние. " +
             "Гитарный риф на заставке — Freesound (CC0).",
         style = MaterialTheme.typography.bodyMedium,
         color = Muted

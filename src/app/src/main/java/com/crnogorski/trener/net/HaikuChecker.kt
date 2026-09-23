@@ -1,6 +1,6 @@
 package com.crnogorski.trener.net
 
-import com.crnogorski.trener.BuildConfig
+import com.crnogorski.trener.data.Secrets
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -30,7 +30,16 @@ sealed class CheckResult {
  * ошибкой и допустимым синонимом, чего строковое сравнение не умеет.
  */
 class HaikuChecker(
-    private val apiKey: String = BuildConfig.ANTHROPIC_API_KEY
+    /**
+     * Ключ читается **при каждом вызове**, а не один раз при создании.
+     *
+     * До 3.5 он был константой сборки и меняться не мог в принципе. Теперь его
+     * вводят в настройках, а `HaikuChecker` живёт столько же, сколько модель
+     * (`AppViewModel.checker`), — то есть значение, снятое в конструкторе,
+     * осталось бы прежним до перезапуска приложения. Человек поменял бы ключ и
+     * продолжал видеть «Сервер ответил 401».
+     */
+    private val apiKey: () -> String = Secrets::current
 ) {
     private val client = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
@@ -217,6 +226,56 @@ class HaikuChecker(
     suspend fun checkSpoken(task: String, reference: String, heard: String): CheckResult =
         ask(spokenPrompt, task, reference, heard)
 
+    /**
+     * Живая проба ключа для кнопки «Проверить» в настройках.
+     *
+     * Возвращает `null`, если ключ рабочий, иначе — что с ним не так.
+     *
+     * **Это трата денег владельца**, пусть и ничтожная: один запрос к Haiku с
+     * `max_tokens = 1` стоит около одной стотысячной доллара, то есть цент за
+     * тысячу нажатий. Поэтому она и оставлена кнопкой: сам по себе ключ не
+     * проверяется никогда, ни при вводе, ни при запуске.
+     *
+     * Замок на входе обходится проверкой по виду (`Secrets.looksReal`) как раз
+     * поэтому — и ещё потому, что закрываться он обязан и без интернета.
+     */
+    suspend fun ping(key: String): String? = withContext(Dispatchers.IO) {
+        if (key.isBlank()) return@withContext "ключ не задан"
+        val body = JSONObject().apply {
+            put("model", MODEL)
+            put("max_tokens", 1)
+            put(
+                "messages",
+                org.json.JSONArray().put(
+                    JSONObject().apply {
+                        put("role", "user")
+                        put("content", "ok")
+                    }
+                )
+            )
+        }.toString()
+        val request = Request.Builder()
+            .url("https://api.anthropic.com/v1/messages")
+            .addHeader("x-api-key", key.trim())
+            .addHeader("anthropic-version", "2023-06-01")
+            .addHeader("content-type", "application/json")
+            .post(body.toRequestBody("application/json".toMediaType()))
+            .build()
+        try {
+            client.newCall(request).execute().use { response ->
+                when {
+                    response.isSuccessful -> null
+                    // 401 стоит назвать отдельно: это единственный ответ,
+                    // который значит «ключ не тот», а не «что-то со связью».
+                    response.code == 401 -> "ключ не принят — проверь, не потерялся ли знак"
+                    else -> "сервер ответил ${response.code}"
+                }
+            }
+        } catch (e: Exception) {
+            e.message ?: "нет связи с сервером"
+        }
+    }
+
     private suspend fun ask(
         system: String,
         task: String,
@@ -224,9 +283,10 @@ class HaikuChecker(
         userAnswer: String
     ): CheckResult =
         withContext(Dispatchers.IO) {
-            if (apiKey.isBlank()) {
+            val key = apiKey()
+            if (key.isBlank()) {
                 return@withContext CheckResult.Failed(
-                    "Ключ API не задан. Добавь ANTHROPIC_API_KEY в local.properties и пересобери приложение."
+                    "Ключ Anthropic не задан. Введи его в настройках, первым полем."
                 )
             }
 
@@ -257,7 +317,7 @@ class HaikuChecker(
 
             val request = Request.Builder()
                 .url("https://api.anthropic.com/v1/messages")
-                .addHeader("x-api-key", apiKey)
+                .addHeader("x-api-key", key)
                 .addHeader("anthropic-version", "2023-06-01")
                 .addHeader("content-type", "application/json")
                 .post(body.toRequestBody("application/json".toMediaType()))

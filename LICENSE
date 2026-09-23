@@ -1,0 +1,71 @@
+# Лицензии
+
+В этом репозитории две разные вещи под двумя разными лицензиями, и смешивать их
+нельзя: код написан с нуля, а словарные данные — производное от чужого
+материала под `ShareAlike`.
+
+## Код и тексты курса — MIT
+
+Сюда входит всё, кроме перечисленного ниже: исходники приложения (`src/`),
+скрипты (`tools/`, `research/tools/`), документация, уроки
+(`src/app/src/main/assets/lessons/`), истории и диалоги
+(`src/app/src/main/assets/stories/`, кроме `s19` и `s20`), словарь подсказок
+(`glossary.json`), изображения и звук.
+
+```
+MIT License
+
+Copyright (c) 2026 Sergey Voronkov
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## Словарь — CC BY-SA 4.0
+
+`src/app/src/main/assets/vocab/` и `research/data/` — производное от источников
+под `CC BY-SA`, а она заразна: производное обязано лежать под той же лицензией.
+Поэтому эти каталоги распространяются под
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+| что | откуда | лицензия источника |
+|---|---|---|
+| толкования в `words.json` | русский Викисловарь | CC BY-SA 4.0 / GFDL |
+| формы в `forms-0..7.json` | srLex 1.3, CLARIN.SI | CC BY-SA 4.0 |
+| примеры в `words.json` | Tatoeba | CC BY 2.0 FR |
+| `stress.json` | English Wiktionary | CC BY-SA 4.0 |
+
+Примеры Tatoeba под `CC BY 2.0 FR` требуют только ссылки, без `ShareAlike`;
+они лежат здесь же, потому что разделять один файл на два режима бессмысленно.
+Идентификаторы исходных предложений сохранены в поле `id` — по ним отслеживается
+происхождение каждой строки.
+
+## Общественное достояние
+
+`assets/stories/s19.json` и `s20.json` — народные сказки из сборника Вука
+Караджича «Српске народне приповијетке» (1870). Текст в общественном достоянии;
+правки, внесённые нами, перечислены в `CLAUDE.md`.
+
+Подробный разбор каждого источника — `research/data/LICENSES.md`.
+
+## Чего в репозитории нет
+
+Ключ Anthropic. Он не зашит в приложение и не лежит здесь: его вводит каждый у
+себя, при первом запуске. Токен GitHub в сборке есть и открыт **намеренно** —
+чтобы жалобу из приложения мог написать кто угодно; прав у него ровно на issues
+этого репозитория.

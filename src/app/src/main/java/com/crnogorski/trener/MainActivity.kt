@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat
 import android.os.Process
 import android.os.SystemClock
 import com.crnogorski.trener.data.Config
+import com.crnogorski.trener.data.Secrets
 import com.crnogorski.trener.data.Touch
 import com.crnogorski.trener.data.Trace
 import com.crnogorski.trener.notify.Reminder
@@ -40,6 +41,7 @@ import com.crnogorski.trener.ui.CrnogorskiTheme
 import com.crnogorski.trener.ui.DailySplash
 import com.crnogorski.trener.ui.HomeScreen
 import com.crnogorski.trener.ui.Ink
+import com.crnogorski.trener.ui.KeyGate
 import com.crnogorski.trener.ui.Paper
 import com.crnogorski.trener.ui.SessionScreen
 import com.crnogorski.trener.ui.SettingsScreen
@@ -77,6 +79,12 @@ class MainActivity : ComponentActivity() {
         Trace.span("запуск: напоминание") { Reminder.schedule(this) }
         askForNotifications()
 
+        // Ключ Anthropic поднимается с диска **до** первого кадра: замок решает,
+        // показываться ли, по прочитанному значению. Читай мы его асинхронно,
+        // человек с давно введённым ключом видел бы, как стена мигает и
+        // пропадает, — а это выглядит как поломка, а не как забота.
+        Secrets.load(this)
+
         // Конец видимого запуска: до этого мига человек смотрит на пустоту.
         // Меряем от onCreate, потому что «процесс → onCreate» уже записан
         // отдельно, и складывать их в одно число значило бы прятать, где ждали.
@@ -109,6 +117,7 @@ class MainActivity : ComponentActivity() {
                 val stats by vm.stats.collectAsStateWithLifecycle()
                 val corpus by vm.corpus.collectAsStateWithLifecycle()
                 val splash by vm.splash.collectAsStateWithLifecycle()
+                val apiKey by Secrets.key.collectAsStateWithLifecycle()
                 val notice by vm.notice.collectAsStateWithLifecycle()
                 val download by vm.download.collectAsStateWithLifecycle()
 
@@ -147,6 +156,23 @@ class MainActivity : ComponentActivity() {
                     }
                 ) { inner ->
                     val content = Modifier.fillMaxSize().padding(inner)
+
+                    // Замок стоит раньше всего, даже раньше заставки: без ключа
+                    // приложение не работает вовсе, а хвалить за сделанный день
+                    // того, кто ещё не начал, тем более не за что.
+                    //
+                    // Почему замок закрывает больше, чем ломается без ключа, —
+                    // в KDoc у KeyGate: решение владельца, а не следствие
+                    // устройства.
+                    if (apiKey.isBlank()) {
+                        KeyGate(
+                            context = this@MainActivity,
+                            onNote = vm::addNote,
+                            modifier = content
+                        )
+                        return@Scaffold
+                    }
+
                     // Заставка идёт поверх всего и без отступов Scaffold: она
                     // во весь экран, и полоса под шторкой резала бы постер.
                     val done = splash
