@@ -21,8 +21,8 @@ android {
         applicationId = "com.montelearn"
         minSdk = 34
         targetSdk = 35
-        versionCode = 118
-        versionName = "3.5"
+        versionCode = 119
+        versionName = "3.6"
         // Ключа Anthropic здесь нет и больше не будет: репозиторий открытый, а
         // APK лежит в релизах вложением — зашитый ключ означал бы, что чужие
         // люди тратят деньги владельца. Его вводят на телефоне (data/Secrets).
@@ -36,6 +36,13 @@ android {
             "GITHUB_TOKEN",
             "\"${localProps.getProperty("GITHUB_TOKEN") ?: ""}\""
         )
+        // Публичный идентификатор приложения на GitHub для входа через
+        // device flow. **Не секрет**: его видит каждый, кто открывает страницу
+        // входа, и client_secret этому потоку не нужен вовсе.
+        //
+        // Пусто — вход просто не предлагается, и это рабочее состояние: жалобы
+        // уезжают общим токеном, как и раньше.
+        buildConfigField("String", "GITHUB_CLIENT_ID", "\"\"")
         buildConfigField("String", "GITHUB_REPO", "\"voronkovlabs/android-russian-montenegrin\"")
     }
 

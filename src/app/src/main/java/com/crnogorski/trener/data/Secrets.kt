@@ -25,16 +25,24 @@ import kotlinx.coroutines.flow.StateFlow
  * сборка «и себе, и всем» не нужна, и пароль защищал бы то, чем всё равно никто
  * не должен пользоваться.
  *
- * ## Токен GitHub сюда не переехал, и это решение
+ * ## Токенов GitHub два, и это не путаница
  *
- * Он остался в `BuildConfig` **намеренно открытым**: цель владельца —
+ * **Общий** остался в `BuildConfig` намеренно открытым: цель владельца —
  * «сохранить возможность делать жалобы кому угодно», а без токена в сборке
  * посторонний написать не сможет вовсе. Чем за это плачено, перечислено в
  * CLAUDE.md; отзывается он одним нажатием.
  *
- * Авторизация через GitHub (device flow — работает без `client_secret`,
- * проверено) эту цель как раз не решает: она требует аккаунта, то есть «кто
- * угодно» превращается в «у кого есть аккаунт». Записана идеей.
+ * **Свой** появляется здесь, когда человек вошёл через GitHub
+ * (`net/GithubAuth.kt`, device flow): тогда его жалобы заводятся от его имени,
+ * а не от имени владельца с именной меткой.
+ *
+ * Вход **необязателен и с фоллбэком**, и это снимает ровно то возражение,
+ * из-за которого авторизацию сперва отложили: сама по себе она требует
+ * аккаунта GitHub, то есть «кто угодно» превратилось бы в «у кого есть
+ * аккаунт». Не вошёл — работает общий токен, как и раньше; вошёл — свой.
+ *
+ * Сюда же кладётся **имя** (`githubUser`): в настройках надо показать не
+ * «вы вошли», а **кем** — аккаунтов у людей больше одного.
  *
  * ## Где лежит
  *
@@ -60,6 +68,9 @@ object Secrets {
 
     private const val PREFS = "crnogorski"
     private const val KEY = "anthropic_key"
+    private const val GH_TOKEN = "github_token"
+    private const val GH_REFRESH = "github_refresh"
+    private const val GH_USER = "github_user"
 
     /**
      * По чему узнаётся ключ.
@@ -77,13 +88,75 @@ object Secrets {
     /** Нынешний ключ; пустая строка значит «не задан». */
     val key: StateFlow<String> = _key
 
+    private val _ghUser = MutableStateFlow("")
+
+    /** Под каким именем вошли через GitHub; пусто — не входили. */
+    val githubUser: StateFlow<String> = _ghUser
+
+    private var ghToken = ""
+    private var ghRefresh = ""
+
     /**
-     * Поднять ключ с диска. Зовётся один раз при создании `MainActivity`, до
+     * Контекст приложения — нужен там, где вход приходится забывать в ответ на
+     * отказ GitHub, а под рукой одна сетевая обёртка (`net/GithubIssues.kt`).
+     *
+     * Именно `applicationContext`, а не тот, что передали: сюда доходит
+     * Activity, и держать ссылку на неё в объекте, живущем весь процесс,
+     * значит держать мёртвый экран в памяти до конца работы приложения.
+     */
+    private var app: Context? = null
+
+    /**
+     * Поднять с диска. Зовётся один раз при создании `MainActivity`, до
      * первого кадра: замок решает, показываться ли, по уже прочитанному
      * значению, а не по пустоте, которая потом окажется ключом.
      */
     fun load(context: Context) {
-        _key.value = prefs(context).getString(KEY, "").orEmpty()
+        app = context.applicationContext
+        val p = prefs(context)
+        _key.value = p.getString(KEY, "").orEmpty()
+        ghToken = p.getString(GH_TOKEN, "").orEmpty()
+        ghRefresh = p.getString(GH_REFRESH, "").orEmpty()
+        _ghUser.value = p.getString(GH_USER, "").orEmpty()
+    }
+
+    /** Свой токен GitHub; пусто — жалобы пойдут общим. */
+    fun githubToken(): String = ghToken
+
+    /** Чем обновлять свой токен, если он окажется временным. */
+    fun githubRefresh(): String = ghRefresh
+
+    fun saveGithub(context: Context, token: String, refresh: String, user: String) {
+        ghToken = token
+        ghRefresh = refresh
+        _ghUser.value = user
+        prefs(context).edit()
+            .putString(GH_TOKEN, token)
+            .putString(GH_REFRESH, refresh)
+            .putString(GH_USER, user)
+            .apply()
+    }
+
+    /**
+     * Забыть вход — по кнопке «Выйти» и **сам, когда токен перестал приниматься**.
+     *
+     * Второе важнее первого: устаревший токен иначе ронял бы каждую жалобу, а
+     * так она уезжает общим токеном, и в настройках видно, что вход слетел.
+     * На стороне GitHub разрешение при этом остаётся — отзывают его там же, в
+     * списке приложений аккаунта; мы лишь перестаём им пользоваться.
+     */
+    fun forgetGithub(context: Context) {
+        saveGithub(context, "", "", "")
+    }
+
+    /** То же, но из места, где Context взять неоткуда. */
+    fun forgetGithub() {
+        app?.let { forgetGithub(it) }
+    }
+
+    /** Сохранить обновлённый токен оттуда же. */
+    fun saveGithub(token: String, refresh: String, user: String) {
+        app?.let { saveGithub(it, token, refresh, user) }
     }
 
     /**

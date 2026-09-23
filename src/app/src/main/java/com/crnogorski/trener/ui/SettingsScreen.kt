@@ -55,7 +55,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crnogorski.trener.data.Secrets
+import com.crnogorski.trener.net.GithubAuth
 import com.crnogorski.trener.net.HaikuChecker
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import com.crnogorski.trener.data.Pace
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.notify.Reminder
@@ -150,6 +153,18 @@ fun SettingsScreen(
             // с 3.5 это перестало быть верным: без ключа обновляться некуда,
             // потому что приложение не работает вовсе.
             KeyRow()
+
+            // Вход через GitHub — сразу под ключом: оба про то, «чьим именем
+            // приложение ходит наружу», и разносить их по экрану значило бы
+            // заставить искать второе, найдя первое.
+            //
+            // Появляется, только если приложению есть куда входить: без
+            // client_id входа нет, а пустая кнопка «Войти», которая ничего не
+            // делает, хуже её отсутствия.
+            if (GithubAuth.possible) {
+                Spacer(Modifier.height(28.dp))
+                GithubRow()
+            }
 
             Spacer(Modifier.height(36.dp))
             UpdateRow(state, download, onCheckUpdate, onInstallUpdate)
@@ -829,6 +844,132 @@ private fun KeyRow() {
         style = MaterialTheme.typography.bodySmall,
         color = Muted
     )
+}
+
+/**
+ * Вход через GitHub — необязательный, с отступлением на общий токен.
+ *
+ * Вошёл — жалобы заводятся от твоего имени; не вошёл — общим токеном из
+ * сборки, ровно как раньше. Решение владельца: «надо сделать авторизацию
+ * опциональной с фоллбэком на вшитый ключ», — и оно снимает возражение, из-за
+ * которого авторизацию сперва отложили вовсе: сама по себе она требует
+ * аккаунта GitHub, то есть «жалобы от кого угодно» превратились бы в «жалобы
+ * от тех, у кого есть аккаунт».
+ *
+ * ## Код на экране, а не окно браузера
+ *
+ * Device flow не возвращает человека обратно в приложение: он вводит короткий
+ * код в браузере — хоть на этом телефоне, хоть на ноутбуке, — а приложение тем
+ * временем спрашивает GitHub, не подтвердили ли уже. Поэтому код **написан
+ * крупно и кладётся в буфер по кнопке**: его либо вставляют, либо диктуют
+ * вслух тому, кто сидит за компьютером.
+ *
+ * Ожидание живёт в корутине экрана: уйти с настроек посреди входа — значит
+ * отказаться от него, и это честно. Вернулся — начал заново, код всё равно
+ * живёт минут пятнадцать.
+ */
+@Composable
+private fun GithubRow() {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val clipboard = LocalClipboardManager.current
+    val user by Secrets.githubUser.collectAsStateWithLifecycle()
+
+    var code by remember { mutableStateOf<GithubAuth.Code?>(null) }
+    var note by remember { mutableStateOf("") }
+    var waiting by remember { mutableStateOf(false) }
+
+    Text("ВХОД", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(6.dp))
+    Text("Жалобы от своего имени", style = MaterialTheme.typography.displaySmall, color = Paper)
+    Spacer(Modifier.height(16.dp))
+
+    if (user.isNotBlank()) {
+        Text(
+            "Вошли как $user. Жалобы и идеи заводятся от этого имени.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Paper
+        )
+        Spacer(Modifier.height(8.dp))
+        TextButton(onClick = { Secrets.forgetGithub(context); note = "" }) {
+            Text("Выйти", color = Accent)
+        }
+        Spacer(Modifier.height(6.dp))
+        Text(
+            "После выхода жалобы снова уходят общим именем — они не пропадут. " +
+                "Само разрешение остаётся у GitHub, в списке приложений аккаунта.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+        return
+    }
+
+    val pending = code
+    if (pending != null) {
+        Text(pending.userCode, style = MaterialTheme.typography.displaySmall, color = Accent)
+        Spacer(Modifier.height(8.dp))
+        Text(
+            "Открой github.com/login/device и введи этот код. Можно с любого " +
+                "устройства — приложение ждёт и подхватит само.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+        Spacer(Modifier.height(8.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TextButton(onClick = { clipboard.setText(AnnotatedString(pending.userCode)) }) {
+                Text("Скопировать код", color = Accent)
+            }
+            TextButton(onClick = {
+                runCatching {
+                    context.startActivity(
+                        Intent(Intent.ACTION_VIEW, Uri.parse(GithubAuth.VERIFY_URL))
+                    )
+                }
+            }) { Text("Открыть GitHub", color = Accent) }
+        }
+    } else {
+        Text(
+            "Сейчас жалобы уходят общим именем. Войдёшь — будут от твоего: " +
+                "видно, кто написал, и ответ придёт тебе. Заводить ничего не " +
+                "надо, если аккаунт GitHub уже есть.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
+        Spacer(Modifier.height(10.dp))
+        SecondaryAction(
+            text = if (waiting) "Спрашиваю GitHub…" else "Войти через GitHub",
+            enabled = !waiting,
+            onClick = {
+                waiting = true
+                note = ""
+                scope.launch {
+                    val started = GithubAuth.start()
+                    val fresh = started.getOrNull()
+                    if (fresh == null) {
+                        note = "Не вышло начать вход: " +
+                            (started.exceptionOrNull()?.message ?: "нет связи с GitHub")
+                        waiting = false
+                        return@launch
+                    }
+                    code = fresh
+                    when (val done = GithubAuth.await(fresh)) {
+                        is GithubAuth.Outcome.Ok -> {
+                            Secrets.saveGithub(context, done.token, done.refresh, done.user)
+                            note = ""
+                        }
+                        is GithubAuth.Outcome.Failed -> note = "Вход не завершён: ${done.message}"
+                    }
+                    code = null
+                    waiting = false
+                }
+            }
+        )
+    }
+
+    if (note.isNotBlank()) {
+        Spacer(Modifier.height(8.dp))
+        Text(note, style = MaterialTheme.typography.bodyMedium, color = Crimson)
+    }
 }
 
 @Composable

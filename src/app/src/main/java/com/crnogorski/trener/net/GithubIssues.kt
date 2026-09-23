@@ -1,6 +1,7 @@
 package com.crnogorski.trener.net
 
 import com.crnogorski.trener.BuildConfig
+import com.crnogorski.trener.data.Secrets
 import com.crnogorski.trener.data.Complaint
 import com.crnogorski.trener.data.IDEA_REASON
 import com.crnogorski.trener.data.NOTE_REASON
@@ -29,14 +30,30 @@ import java.util.concurrent.TimeUnit
  * дважды: так видно, когда именно жаловались, а склеивать их — работа разбора,
  * а не отправки.
  *
- * Токен — мелкий (fine-grained), выданный на один этот репозиторий с правом
- * `Issues: write` и ничем больше. Он лежит в `local.properties` и в git не
- * попадает, но **из APK извлекается так же легко, как ключ Anthropic**: имея
- * файл приложения, можно писать issue в этот репозиторий. Ущерб ограничен
- * ровно этим — ни кода, ни других репозиториев такой токен не открывает.
+ * ## Токенов два, и порядок между ними — весь смысл
+ *
+ * **Свой**, если человек вошёл через GitHub (`net/GithubAuth.kt`), и **общий**
+ * из сборки, если нет. Вход необязателен, и это решение владельца: авторизация
+ * требует аккаунта GitHub, а цель — «жалобы от кого угодно». Вошёл — issue
+ * заводится от его имени; не вошёл — от общего, ровно как раньше.
+ *
+ * Общий токен — мелкий (fine-grained), на один этот репозиторий с правом
+ * `Issues: write` и ничем больше, и **из APK он извлекается свободно**: так
+ * задумано, иначе посторонний не написал бы вовсе. Чем за это плачено —
+ * в CLAUDE.md.
+ *
+ * ## Отказ своему токену не теряет жалобу
+ *
+ * Это главное свойство здесь. Свой токен может протухнуть — у GitHub App он
+ * живёт восемь часов, — а человек об этом не узнает никак. Поэтому на 401 мы
+ * сперва пробуем обновить его, а если не вышло — **забываем вход и уезжаем
+ * общим токеном**. Жалоба уходит всегда; настройки потом покажут, что вход
+ * слетел.
+ *
+ * Молча ронять жалобу нельзя: её пишут ровно тогда, когда что-то сломалось, и
+ * второй раз тот же человек писать не станет.
  */
 class GithubIssues(
-    private val token: String = BuildConfig.GITHUB_TOKEN,
     private val repo: String = BuildConfig.GITHUB_REPO
 ) {
     private val client = OkHttpClient.Builder()
@@ -44,8 +61,15 @@ class GithubIssues(
         .readTimeout(20, TimeUnit.SECONDS)
         .build()
 
+    /** Каким токеном ходим сейчас: своим, если вошли, иначе общим. */
+    private fun token(): String =
+        Secrets.githubToken().ifBlank { BuildConfig.GITHUB_TOKEN }
+
+    /** Свой ли это токен — от этого зависит, есть ли куда отступать. */
+    private fun own(): Boolean = Secrets.githubToken().isNotBlank()
+
     /** Без токена отправлять нечем: жалобы просто копятся в файле. */
-    val configured: Boolean get() = token.isNotBlank() && repo.isNotBlank()
+    val configured: Boolean get() = token().isNotBlank() && repo.isNotBlank()
 
     /**
      * Завести issue. Возвращает её номер или ошибку — по ошибке решают,
@@ -106,25 +130,53 @@ class GithubIssues(
                 .put("body", body.take(60_000))
                 .put("labels", JSONArray(labels))
 
-            val request = Request.Builder()
+            fun request(bearer: String) = Request.Builder()
                 .url("https://api.github.com/repos/$repo/issues")
-                .addHeader("Authorization", "Bearer $token")
+                .addHeader("Authorization", "Bearer $bearer")
                 .addHeader("Accept", "application/vnd.github+json")
                 .addHeader("X-GitHub-Api-Version", "2022-11-28")
                 .post(payload.toString().toRequestBody(JSON_TYPE))
                 .build()
 
-            runCatching {
-                client.newCall(request).execute().use { response ->
-                    val text = response.body?.string().orEmpty()
-                    if (!response.isSuccessful) {
-                        // Текст ответа GitHub говорит по делу («Bad credentials»,
-                        // «Not Found»), и без него причину не понять.
-                        error("GitHub ${response.code}: ${short(text)}")
+            var bearer = token()
+            var mine = own()
+            repeat(2) { pass ->
+                val outcome = runCatching {
+                    client.newCall(request(bearer)).execute().use { response ->
+                        val text = response.body?.string().orEmpty()
+                        if (!response.isSuccessful) {
+                            // Текст ответа GitHub говорит по делу («Bad
+                            // credentials», «Not Found»), и без него причину
+                            // не понять.
+                            error("GitHub ${response.code}: ${short(text)}")
+                        }
+                        JSONObject(text).optInt("number", 0)
                     }
-                    JSONObject(text).optInt("number", 0)
+                }
+                val value = outcome.getOrNull()
+                if (value != null) return@withContext Result.success(value)
+
+                val trouble = outcome.exceptionOrNull()!!
+                val refused = trouble.message?.contains("GitHub 401") == true
+                // Отступать есть куда только один раз и только со своего
+                // токена: общий — последний рубеж, и его отказ настоящий.
+                if (!refused || !mine || pass == 1) {
+                    return@withContext Result.failure(trouble)
+                }
+
+                // Сперва обновить — у GitHub App токен живёт восемь часов, и
+                // гонять человека за новым входом каждое утро незачем.
+                val fresh = GithubAuth.refresh(Secrets.githubRefresh())
+                if (fresh is GithubAuth.Outcome.Ok && fresh.token.isNotBlank()) {
+                    Secrets.saveGithub(fresh.token, fresh.refresh, fresh.user)
+                    bearer = fresh.token
+                } else {
+                    Secrets.forgetGithub()
+                    bearer = BuildConfig.GITHUB_TOKEN
+                    mine = false
                 }
             }
+            Result.failure(IllegalStateException("GitHub не принял ни один токен"))
         }
 
     /**
@@ -213,7 +265,7 @@ class GithubIssues(
 
     private fun read(url: String): Request = Request.Builder()
         .url(url)
-        .addHeader("Authorization", "Bearer $token")
+        .addHeader("Authorization", "Bearer ${token()}")
         .addHeader("Accept", "application/vnd.github+json")
         .addHeader("X-GitHub-Api-Version", "2022-11-28")
         .get()
