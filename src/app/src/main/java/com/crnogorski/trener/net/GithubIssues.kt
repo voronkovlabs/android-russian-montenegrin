@@ -157,23 +157,41 @@ class GithubIssues(
                 if (value != null) return@withContext Result.success(value)
 
                 val trouble = outcome.exceptionOrNull()!!
-                val refused = trouble.message?.contains("GitHub 401") == true
+                val said = trouble.message.orEmpty()
+                // Токен умер: сам по себе непригоден, и его надо обновить или
+                // забыть.
+                val dead = said.contains("GitHub 401")
+                // Токен жив, но здесь бессилен. Ровно этот случай дал 404 при
+                // первом живом входе: OAuth-разрешение `public_repo` **не
+                // открывает приватные репозитории**, а GitHub про них отвечает
+                // не «нельзя», а «нет такого» — существование чужого закрытого
+                // репозитория он не подтверждает даже отказом.
+                //
+                // Забывать вход тут нельзя: он не сломан, и станет рабочим,
+                // как только репозиторий откроют. Молча уезжаем общим токеном.
+                val powerless = said.contains("GitHub 404") || said.contains("GitHub 403")
+
                 // Отступать есть куда только один раз и только со своего
                 // токена: общий — последний рубеж, и его отказ настоящий.
-                if (!refused || !mine || pass == 1) {
+                if ((!dead && !powerless) || !mine || pass == 1) {
                     return@withContext Result.failure(trouble)
                 }
 
-                // Сперва обновить — у GitHub App токен живёт восемь часов, и
-                // гонять человека за новым входом каждое утро незачем.
-                val fresh = GithubAuth.refresh(Secrets.githubRefresh())
-                if (fresh is GithubAuth.Outcome.Ok && fresh.token.isNotBlank()) {
-                    Secrets.saveGithub(fresh.token, fresh.refresh, fresh.user)
-                    bearer = fresh.token
-                } else {
-                    Secrets.forgetGithub()
+                if (powerless) {
                     bearer = BuildConfig.GITHUB_TOKEN
                     mine = false
+                } else {
+                    // Сперва обновить — у GitHub App токен живёт восемь часов,
+                    // и гонять человека за новым входом каждое утро незачем.
+                    val fresh = GithubAuth.refresh(Secrets.githubRefresh())
+                    if (fresh is GithubAuth.Outcome.Ok && fresh.token.isNotBlank()) {
+                        Secrets.saveGithub(fresh.token, fresh.refresh, fresh.user)
+                        bearer = fresh.token
+                    } else {
+                        Secrets.forgetGithub()
+                        bearer = BuildConfig.GITHUB_TOKEN
+                        mine = false
+                    }
                 }
             }
             Result.failure(IllegalStateException("GitHub не принял ни один токен"))
@@ -263,9 +281,24 @@ class GithubIssues(
         }.getOrNull()
     }
 
+    /**
+     * Чтение ходит **общим** токеном, а не своим, и это не небрежность.
+     *
+     * Читаем мы чужие закрытые issue, чтобы сказать человеку «твою жалобу
+     * разобрали»; авторство тут ни при чём, а вот доступ — очень даже. Свой
+     * токен с разрешением `public_repo` приватный репозиторий не видит вовсе,
+     * и уведомления молча перестали бы приходить — беда куда тише, чем
+     * непрошедшая жалоба, и заметить её было бы нечем.
+     *
+     * Общий токен для этого годится всегда: он выдан ровно на этот
+     * репозиторий. Свой берётся, только если общего нет вовсе.
+     */
     private fun read(url: String): Request = Request.Builder()
         .url(url)
-        .addHeader("Authorization", "Bearer ${token()}")
+        .addHeader(
+            "Authorization",
+            "Bearer ${BuildConfig.GITHUB_TOKEN.ifBlank { Secrets.githubToken() }}"
+        )
         .addHeader("Accept", "application/vnd.github+json")
         .addHeader("X-GitHub-Api-Version", "2022-11-28")
         .get()
