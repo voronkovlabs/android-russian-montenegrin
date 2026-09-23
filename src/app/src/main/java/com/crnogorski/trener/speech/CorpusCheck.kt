@@ -105,16 +105,41 @@ class CorpusCheck(
 
     /** Чем кончилось: пусто — дошли до конца или остановили рукой. */
     private var broke = ""
+
+    /** Пропускать ли зачтённое прошлым отчётом. */
+    private var skipping = false
+
+    /** Сколько отрезков пропущено и по какому отчёту. */
+    private var skipped = 0
+    private var basis = ""
     private var route = CorpusRoute.File
     private var guard = 0
 
     private val wav: File by lazy { File(context.cacheDir, "korpus.wav") }
     private val pcm: File by lazy { File(context.cacheDir, "korpus.pcm") }
 
-    fun start() {
+    /**
+     * [skipPassed] — не гонять то, что уже зачтено прошлым отчётом.
+     *
+     * Корпус растёт понемногу: к 23.09.2026 в нём 594 отрезка, из которых 511
+     * проверены ещё в сентябре. Гонять их заново — час на подтверждение того,
+     * что и так известно, а по нашему же правилу **зачёт не значит ничего**:
+     * второй зачёт не значит ничего дважды.
+     *
+     * Разница не в сэкономленном часе, а в том, что становится возможным:
+     * десятиминутную проверку делают перед каждым выпуском, часовую — когда
+     * вспомнят. Новые истории до сих пор уезжали на телефоны непрочитанными
+     * машиной ни разу.
+     */
+    fun start(skipPassed: Boolean = false) {
         if (_state.value.running) return
         results.clear()
         at = 0
+        deaf = 0
+        broke = ""
+        skipped = 0
+        basis = ""
+        skipping = skipPassed
         if (speaker.voiceUnavailable) {
             _state.value = CorpusState(
                 note = "Сербского голоса на телефоне нет — читать нечем."
@@ -125,10 +150,24 @@ class CorpusCheck(
         Trace.muted = true
         _state.value = CorpusState(running = true, note = "Собираю тексты…")
         scope.launch {
-            val list = collect()
+            var list = collect()
+            if (skipping) {
+                val done = passedEarlier()
+                if (done.isNotEmpty()) {
+                    val before = list.size
+                    list = list.filterNot { it.id in done }
+                    skipped = before - list.size
+                }
+            }
             if (list.isEmpty()) {
                 Trace.muted = false
-                _state.value = CorpusState(note = "Читать нечего — корпус пуст.")
+                _state.value = CorpusState(
+                    note = if (skipped > 0) {
+                        "Всё уже зачтено прошлым отчётом — гонять нечего."
+                    } else {
+                        "Читать нечего — корпус пуст."
+                    }
+                )
                 return@launch
             }
             items = list
@@ -434,6 +473,9 @@ class CorpusCheck(
                 CorpusRoute.Air -> "по воздуху (динамик → микрофон)"
             }
         )
+        if (skipped > 0) {
+            appendLine("Пропущено $skipped — зачтено отчётом $basis.")
+        }
         if (stopped) appendLine("Прогон остановлен вручную.")
         if (broke.isNotBlank()) {
             appendLine()
@@ -478,6 +520,80 @@ class CorpusCheck(
     }
 
     /**
+     * Что уже зачтено самым свежим отчётом.
+     *
+     * Читаем **свой же текстовый отчёт**, а не заводим рядом машинный файл, и
+     * это осознанно: отчёт и так лежит на телефоне, его формат не менялся с
+     * первого дня, а главное — человек видит глазами ровно то, на что
+     * опирается пропуск. Отдельный служебный файл однажды разошёлся бы с
+     * отчётом, и разойтись он мог бы молча.
+     *
+     * Берётся только «зачтено»: провалы гоняются заново всегда — ради них
+     * прогон и существует.
+     */
+    private fun passedEarlier(): Set<String> = runCatching {
+        val reports = reportsNewestFirst()
+        if (reports.isEmpty()) return emptySet()
+        basis = reports.first().first
+        val verdict = HashMap<String, Boolean>()
+        var read = 0
+        for ((name, uri) in reports) {
+            val text = context.contentResolver.openInputStream(uri)?.use {
+                it.readBytes().toString(Charsets.UTF_8)
+            } ?: continue
+            read++
+            PASSED.findAll(text.substringAfterLast(ALL_MARK)).forEach { m ->
+                val id = m.groupValues[1]
+                // Первым встреченным считается самый свежий: отчёты идут по
+                // убыванию даты, и переписывать вердикт старым нельзя.
+                if (id !in verdict) {
+                    val matched = m.groupValues[2].toIntOrNull()
+                    val total = m.groupValues[3].toIntOrNull()
+                    if (matched != null && total != null && total > 0) {
+                        verdict[id] = matched.toFloat() / total >= ReadingScore.PASS
+                    }
+                }
+            }
+        }
+        if (read > 1) basis = "$basis и ещё ${read - 1}"
+        verdict.filterValues { it }.keys
+    }.getOrDefault(emptySet())
+
+    /**
+     * Все отчёты прогона, свежие впереди.
+     *
+     * Имя отчёта — дата со временем (`korpus-2026-09-23_2258.txt`), поэтому
+     * порядок по алфавиту и есть порядок по времени, задом наперёд.
+     */
+    private fun reportsNewestFirst(): List<Pair<String, Uri>> {
+        val collection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+        val where = "${android.os.Environment.DIRECTORY_DOCUMENTS}/$ROOT/"
+        val found = mutableListOf<Pair<String, Uri>>()
+        context.contentResolver.query(
+            collection,
+            arrayOf(
+                MediaStore.MediaColumns._ID,
+                MediaStore.MediaColumns.DISPLAY_NAME,
+                MediaStore.MediaColumns.RELATIVE_PATH
+            ),
+            null, null, null
+        )?.use { c ->
+            val idAt = c.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
+            val nameAt = c.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME)
+            val pathAt = c.getColumnIndexOrThrow(MediaStore.MediaColumns.RELATIVE_PATH)
+            while (c.moveToNext()) {
+                val name = c.getString(nameAt) ?: continue
+                val path = c.getString(pathAt) ?: continue
+                if (!path.startsWith(where) || !name.startsWith("korpus-")) continue
+                found += name to android.content.ContentUris.withAppendedId(
+                    collection, c.getLong(idAt)
+                )
+            }
+        }
+        return found.sortedByDescending { it.first }
+    }
+
+    /**
      * Отчёт кладётся в «Документы», а не в каталог приложения: туда с Android 11
      * файловому менеджеру ходу нет, и забрать файл можно было бы только кабелем.
      */
@@ -516,7 +632,13 @@ class CorpusCheck(
  * оборвать зря — потерять час, не оборвать — получить пятьсот ложных
  * обвинений и поверить им.
  */
-private const val DEAF_LIMIT = 5
+        /** Заголовок, после которого в отчёте идут все строки подряд. */
+        private const val ALL_MARK = "=== ВСЁ ПОДРЯД ==="
+
+        /** Строка отчёта: `s01#3  8/9  Prvi dan`. */
+        private val PASSED = Regex("""^(\S+)\s+(\d+)/(\d+)\s""", RegexOption.MULTILINE)
+
+        private const val DEAF_LIMIT = 5
 
         private const val GAP_MS = 400L
 

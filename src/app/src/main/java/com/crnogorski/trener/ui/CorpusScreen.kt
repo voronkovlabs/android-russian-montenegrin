@@ -1,5 +1,12 @@
 package com.crnogorski.trener.ui
 
+import androidx.compose.foundation.clickable
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.width
 import android.Manifest
 import android.content.pm.PackageManager
 import android.view.WindowManager
@@ -79,15 +86,24 @@ fun CorpusScreen(speaker: Speaker, onClose: () -> Unit) {
         }
     }
 
+    // Пропускать зачтённое — по умолчанию да: корпус растёт понемногу, и
+    // почти всегда проверить надо ровно прибавку. Полный прогон нужен редко,
+    // когда меняется сам прибор — например, обновился синтезатор.
+    var onlyNew by rememberSaveable { mutableStateOf(true) }
+
     val permission = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { granted -> if (granted) check.start() }
+    ) { granted -> if (granted) check.start(onlyNew) }
 
     fun launch() {
         val granted = ContextCompat.checkSelfPermission(
             context, Manifest.permission.RECORD_AUDIO
         ) == PackageManager.PERMISSION_GRANTED
-        if (granted) check.start() else permission.launch(Manifest.permission.RECORD_AUDIO)
+        if (granted) {
+            check.start(onlyNew)
+        } else {
+            permission.launch(Manifest.permission.RECORD_AUDIO)
+        }
     }
 
     BackHandler { onClose() }
@@ -199,6 +215,42 @@ fun CorpusScreen(speaker: Speaker, onClose: () -> Unit) {
                     color = Muted
                 )
             } else {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable { onlyNew = !onlyNew }
+                        .padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        checked = onlyNew,
+                        onCheckedChange = { onlyNew = it },
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = Accent, checkmarkColor = Ink, uncheckedColor = Muted
+                        )
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        "Только непроверенное",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Paper,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    if (onlyNew) {
+                        "Зачтённое прошлым отчётом пропускается — обычно это " +
+                            "минуты вместо часа. Провалы гоняются заново всегда."
+                    } else {
+                        "Весь корпус целиком, около часа. Нужно, когда сменился " +
+                            "сам прибор: обновился синтезатор или распознаватель."
+                    },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Muted
+                )
+                Spacer(Modifier.height(14.dp))
                 PrimaryButton("Прогнать корпус") { launch() }
             }
             Spacer(Modifier.height(40.dp))
