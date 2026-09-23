@@ -1911,7 +1911,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 val fresh = today?.words ?: 0
                 if (fresh > 0) add("+$fresh новых слов")
                 if (learned > 0) add("$learned выучено")
-                add("курс: $lessons из ${repo.index().lessons.size}")
+                // Знаменатель тот же, что в отчёте: **лестница без
+                // тематических уроков** (см. LessonRef.extra). Здесь стояло
+                // `lessons.size` по всему оглавлению, и заставка спорила с
+                // отчётом на том же телефоне: «0 из 62» против «0 из 60».
+                //
+                // Видно это только глазами и только рядом — поймано первым
+                // живым прогоном на запасном телефоне 23.09.2026.
+                add("курс: $lessons из ${repo.index().lessons.count { !it.extra }}")
             }.joinToString("  ·  ")
         )
     }
