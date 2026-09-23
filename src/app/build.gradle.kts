@@ -21,8 +21,8 @@ android {
         applicationId = "com.montelearn"
         minSdk = 34
         targetSdk = 35
-        versionCode = 120
-        versionName = "3.7"
+        versionCode = 121
+        versionName = "3.8"
         // Ключа Anthropic здесь нет и больше не будет: репозиторий открытый, а
         // APK лежит в релизах вложением — зашитый ключ означал бы, что чужие
         // люди тратят деньги владельца. Его вводят на телефоне (data/Secrets).

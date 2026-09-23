@@ -1,0 +1,99 @@
+{
+  "id": "t02",
+  "title": "Очередь, дождь, просьба",
+  "note": "Собран из фраз, которые понадобились по-настоящему: их записали в приложении с метками «живая фраза» и «мои фразы». Два оборота тут главные. Biti na redu — «быть на очереди»: na с местным падежом, потому что это положение, а не движение. Ako bude — будущее после «если»: не će, а bude. Заодно две ловушки ятя, на которых уже спотыкались: mjesto (не mesto) и djecu (не decu). Čistač — дворник, уборщик улиц; domar — это завхоз в доме, не путать.",
+  "exercises": [
+    {
+      "type": "form",
+      "id": "t02e01",
+      "prompt": "Ko je sad na ___? (очередь)",
+      "answer": "redu",
+      "explanation": "Na + местный падеж: red → redu. Biti na redu — «быть на очереди»; u redu значит другое — «в порядке, ладно»."
+    },
+    {
+      "type": "form",
+      "id": "t02e02",
+      "prompt": "Ja sam ___ vas. (после)",
+      "answer": "poslije",
+      "explanation": "Poslije требует родительного: poslije vas. В очереди это и есть весь ответ."
+    },
+    {
+      "type": "form",
+      "id": "t02e03",
+      "prompt": "Ako sjutra ___ padala kiša, ponesi kišobran. (будет)",
+      "answer": "bude",
+      "explanation": "После ako о будущем говорят через bude, а не će: ako bude padala kiša. То же в «ako budeš imao vremena, javi se»."
+    },
+    {
+      "type": "form",
+      "id": "t02e04",
+      "prompt": "Potrebno nam je mirno ___. (место)",
+      "answer": "mjesto",
+      "explanation": "Черногорская форма — mjesto, сербская mesto: тот же ять, что в mlijeko и vrijeme."
+    },
+    {
+      "type": "form",
+      "id": "t02e05",
+      "prompt": "Ovo je normalno za našu ___. (детей)",
+      "answer": "djecu",
+      "explanation": "Djeca — собирательное, склоняется как женское единственное: našu djecu. И тоже с ятем: не decu."
+    },
+    {
+      "type": "choice",
+      "id": "t02e06",
+      "prompt": "Как спросить, чья сейчас очередь?",
+      "options": [
+        "Ko je sad na redu?",
+        "Ko je sad na red?",
+        "Ko je sad o redu?",
+        "Ko je sad za red?"
+      ],
+      "answer": "Ko je sad na redu?",
+      "explanation": "Na + местный падеж (redu), потому что это положение, а не движение: na red был бы винительный, то есть «на очередь»."
+    },
+    {
+      "type": "word_bank",
+      "id": "t02e07",
+      "prompt": "Если завтра будет дождь, возьми зонт.",
+      "answer": "Ako sjutra bude padala kiša ponesi kišobran",
+      "bank": [
+        "Ako",
+        "sjutra",
+        "bude",
+        "padala",
+        "kiša",
+        "ponesi",
+        "kišobran",
+        "će",
+        "pada",
+        "ponijeti"
+      ]
+    },
+    {
+      "type": "ru_to_me",
+      "id": "t02e08",
+      "prompt": "Нам нужно тихое место.",
+      "reference": "Potrebno nam je mirno mjesto.",
+      "hint": "Potrebno nam je — «нам нужно»; дальше именительный падеж."
+    },
+    {
+      "type": "me_to_ru",
+      "id": "t02e09",
+      "prompt": "Čistač mete ulicu.",
+      "reference": "Дворник подметает улицу.",
+      "hint": "Mesti — подметать, он подметает — mete."
+    },
+    {
+      "type": "listening",
+      "id": "t02e10",
+      "audioText": "Ko je sad na redu",
+      "translation": "Кто сейчас на очереди"
+    },
+    {
+      "type": "speaking",
+      "id": "t02e11",
+      "phrase": "Ja sam poslije vas.",
+      "translation": "Я после вас."
+    }
+  ]
+}

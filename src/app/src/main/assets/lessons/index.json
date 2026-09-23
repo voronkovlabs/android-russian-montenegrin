@@ -366,6 +366,13 @@
       "file": "t01.json",
       "section": "Живой язык",
       "extra": true
+    },
+    {
+      "id": "t02",
+      "title": "Очередь, дождь, просьба",
+      "file": "t02.json",
+      "section": "Живой язык",
+      "extra": true
     }
   ]
 }
