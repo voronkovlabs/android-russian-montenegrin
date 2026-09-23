@@ -42,7 +42,7 @@ android {
         //
         // Пусто — вход просто не предлагается, и это рабочее состояние: жалобы
         // уезжают общим токеном, как и раньше.
-        buildConfigField("String", "GITHUB_CLIENT_ID", "\"\"")
+        buildConfigField("String", "GITHUB_CLIENT_ID", "\"Ov23liuLpIwySX71TXWY\"")
         buildConfigField("String", "GITHUB_REPO", "\"voronkovlabs/android-russian-montenegrin\"")
     }
 
