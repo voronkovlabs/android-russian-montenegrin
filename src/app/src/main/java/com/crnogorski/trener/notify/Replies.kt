@@ -1,5 +1,6 @@
 package com.crnogorski.trener.notify
 
+import android.annotation.SuppressLint
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -115,11 +116,12 @@ object Replies {
         prefs(context).edit().putString(KEY, left.joinToString(",")).apply()
     }
 
+    // Разрешение проверено в notificationsAllowed() первой же строкой.
+    // Lint за границу функции не ходит и считает вызов незащищённым —
+    // а вносить проверку сюда значило бы завести её четвёртую копию.
+    @SuppressLint("MissingPermission")
     private suspend fun show(context: Context, issue: GithubIssues.Closed, issues: GithubIssues) {
-        val granted = ContextCompat.checkSelfPermission(
-            context, Manifest.permission.POST_NOTIFICATIONS
-        ) == PackageManager.PERMISSION_GRANTED
-        if (!granted) return
+        if (!notificationsAllowed(context)) return
 
         val manager = context.getSystemService(NotificationManager::class.java) ?: return
         manager.createNotificationChannel(

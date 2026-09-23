@@ -19,7 +19,11 @@ android {
 
     defaultConfig {
         applicationId = "com.montelearn"
-        minSdk = 34
+        // Опущен с 34 до 30 (23.09.2026): у владельца появился запасной
+        // телефон на Android 11, и без него всё, что выпускается, уходит
+        // непроверенным ни разу. Цена посчитана lint-ом: два вызова API 31 и
+        // одно разрешение API 33 на весь проект.
+        minSdk = 30
         targetSdk = 35
         versionCode = 121
         versionName = "3.8"

@@ -1,4 +1,6 @@
 package com.crnogorski.trener
+import android.os.Build
+import com.crnogorski.trener.notify.notificationsAllowed
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -297,10 +299,10 @@ class MainActivity : ComponentActivity() {
      */
     private fun askForNotifications() {
         if (!Reminder.enabled(this)) return
-        val granted = ContextCompat.checkSelfPermission(
-            this, Manifest.permission.POST_NOTIFICATIONS
-        ) == PackageManager.PERMISSION_GRANTED
-        if (granted) return
+        // До Android 13 спрашивать нечего: разрешения не существует, и
+        // notificationsAllowed уже ответил «да».
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        if (notificationsAllowed(this)) return
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
             .launch(Manifest.permission.POST_NOTIFICATIONS)
     }

@@ -2,6 +2,7 @@ package com.crnogorski.trener.speech
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.data.Trace
 import android.media.AudioManager
@@ -329,8 +330,16 @@ class Listener(private val context: Context) {
 
     fun isAvailable(): Boolean = SpeechRecognizer.isRecognitionAvailable(context)
 
-    /** Есть ли на телефоне распознавание, работающее без сети. */
-    fun onDeviceAvailable(): Boolean = SpeechRecognizer.isOnDeviceRecognitionAvailable(context)
+    /**
+     * Есть ли на телефоне распознавание, работающее без сети.
+     *
+     * До Android 12 такого API нет вовсе — не «нет модели», а нет самого
+     * способа спросить. Отвечаем «нет», и галочка в настройках пропадает
+     * сама: обещать то, чего система не умеет, хуже, чем не предлагать.
+     */
+    fun onDeviceAvailable(): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+            SpeechRecognizer.isOnDeviceRecognitionAvailable(context)
 
     /**
      * Просить ли распознавание на устройстве.
@@ -421,7 +430,11 @@ class Listener(private val context: Context) {
      * но и работает, только если языковая модель скачана.
      */
     private fun newRecognizer(): SpeechRecognizer =
-        if (onDevice && onDeviceAvailable()) {
+        // Проверка версии тут вторая после onDeviceAvailable() и выглядит
+        // лишней — но без неё не обойтись: компилятор про связь между ними не
+        // знает, а прятать вызов API 31 за чужим булевым значением значит
+        // полагаться на то, что его никто не поменяет.
+        if (onDevice && onDeviceAvailable() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             SpeechRecognizer.createOnDeviceSpeechRecognizer(context)
         } else {
             SpeechRecognizer.createSpeechRecognizer(context)
