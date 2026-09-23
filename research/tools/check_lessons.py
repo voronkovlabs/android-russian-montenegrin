@@ -13,6 +13,7 @@
 Запуск из корня репозитория:
 
     python research/tools/check_lessons.py --from 35 --to 60 --yes
+    python research/tools/check_lessons.py --id t02 --yes
 """
 import argparse
 import io
@@ -85,13 +86,25 @@ def ask(api_key, lesson_json):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('--from', dest='first', type=int, required=True)
-    p.add_argument('--to', dest='last', type=int, required=True)
+    p.add_argument('--from', dest='first', type=int)
+    p.add_argument('--to', dest='last', type=int)
+    # Тематические уроки зовутся t01, t02 — не номером, и диапазоном их не
+    # выбрать вовсе. Это была дыра: вычитка их просто не видела, а пишутся они
+    # руками из живых фраз, то есть как раз там, где сербская форма и заводится.
+    p.add_argument('--id', dest='ids', action='append', default=[],
+                   help='урок по имени: --id t02 (можно несколько раз)')
     p.add_argument('--yes', action='store_true', help='согласие на расход')
     args = p.parse_args()
 
-    files = ['%sl%d.json' % (LESSONS, i) for i in range(args.first, args.last + 1)]
-    files = [f for f in files if os.path.exists(f)]
+    if args.ids:
+        files = ['%s%s.json' % (LESSONS, i) for i in args.ids]
+    elif args.first is not None and args.last is not None:
+        files = ['%sl%d.json' % (LESSONS, i) for i in range(args.first, args.last + 1)]
+    else:
+        sys.exit('нужен либо --from и --to, либо --id')
+    missing = [f for f in files if not os.path.exists(f)]
+    if missing:
+        sys.exit('нет такого урока: ' + ', '.join(missing))
     cents = len(files) * 0.27
     print('уроков: %d · оценка расхода: около %.0f центов' % (len(files), cents))
     if not args.yes:
