@@ -77,6 +77,15 @@ private val SPACES = Regex("\\s+")
 
 class Speaker(context: Context) {
 
+    /**
+     * Контекст приложения — нужен не только при создании: движок синтеза
+     * приходится собирать заново, когда он умирает (см. [revive]).
+     *
+     * Именно `applicationContext`: объект живёт столько же, сколько экран, и
+     * держать ссылку на Activity значило бы держать её после закрытия.
+     */
+    private val app = context.applicationContext
+
     /** Нужен, чтобы снять заглушку гудков перед своей фразой — см. [speak]. */
     private val audio = context.getSystemService(AudioManager::class.java)
 
@@ -94,6 +103,9 @@ class Speaker(context: Context) {
      * молчало бы.
      */
     private var pending: Pending? = null
+
+    /** Идёт ли пересборка движка: второй заход подряд запрещён. */
+    private var reviving = false
 
     private class Pending(
         val text: String,
@@ -133,7 +145,15 @@ class Speaker(context: Context) {
     }
 
     init {
-        tts = TextToSpeech(context.applicationContext) { status ->
+        build()
+    }
+
+    /**
+     * Поднять движок синтеза. Зовётся при создании и **заново, когда движок
+     * умер**, — см. [revive].
+     */
+    private fun build() {
+        tts = TextToSpeech(app) { status ->
             if (status == TextToSpeech.SUCCESS) {
                 val engine = tts ?: return@TextToSpeech
                 val result = engine.setLanguage(SERBIAN)
@@ -146,6 +166,51 @@ class Speaker(context: Context) {
             }
             pending = null
         }
+    }
+
+    /**
+     * Движок отказался говорить — собрать его заново и повторить фразу один раз.
+     *
+     * **Найдено прогоном корпуса на запасном телефоне 23.09.2026.** Посреди
+     * прогона Play обновил `com.google.android.tts` (`PACKAGE_REPLACED`), а
+     * следом MIUI и убийца по нехватке памяти прикончили его ещё дважды. Наш
+     * `TextToSpeech` был привязан к умершей службе — и `speak()` с тех пор не
+     * делал **ничего**, молча, до перезапуска приложения.
+     *
+     * В прогоне это стоило десяти ложных провалов подряд: синтезатор молчал,
+     * распознаватель честно не слышал ничего, а в отчёт попадало «ничего не
+     * расслышал» — то есть обвинение хорошему тексту. Живому человеку в
+     * истории досталось бы то же самое: приложение немеет и не чинится, пока
+     * его не закроют.
+     *
+     * Почему именно пересборка, а не ожидание: система сама связь не
+     * восстанавливает — `TextToSpeech` держит соединение со службой, и умершая
+     * служба означает мёртвый объект, а не временный сбой.
+     *
+     * Повтор **один**: если и новый движок не заговорил, дело не в связи, и
+     * второй заход дал бы бесконечный круг. Тогда фраза объявляется
+     * договорённой, чтобы экран не замер в ожидании конца того, чего не было.
+     */
+    private fun revive(text: String, slow: Boolean, low: Boolean, onDone: (() -> Unit)?) {
+        if (reviving) {
+            main.post { finishNow(onDone) }
+            return
+        }
+        reviving = true
+        ready = false
+        pending = Pending(text, slow, low) {
+            reviving = false
+            onDone?.invoke()
+        }
+        runCatching { tts?.shutdown() }
+        tts = null
+        build()
+    }
+
+    /** Объявить фразу договорённой, когда сказать её не вышло. */
+    private fun finishNow(onDone: (() -> Unit)?) {
+        reviving = false
+        onDone?.invoke()
     }
 
     /** true, если голос сербского не установлен — стоит показать подсказку. */
@@ -197,7 +262,12 @@ class Speaker(context: Context) {
         }
 
         if (engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, id) != TextToSpeech.SUCCESS) {
-            finish(id)
+            // Раньше здесь стояло только finish(id) — то есть отказ движка
+            // объявлялся успешно сказанной фразой, и приложение немело
+            // навсегда. См. revive().
+            currentId = null
+            whenDone = null
+            revive(text, slow, low, onDone)
         }
     }
 

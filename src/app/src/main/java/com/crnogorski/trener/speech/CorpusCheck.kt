@@ -94,6 +94,17 @@ class CorpusCheck(
     private var items: List<CorpusItem> = emptyList()
     private val results = mutableListOf<CorpusResult>()
     private var at = 0
+
+    /**
+     * Сколько отрезков подряд кончились полным молчанием.
+     *
+     * Один такой — бывает. Подряд — **не бывает никогда**: это значит, что
+     * сломался прибор, а не текст. См. [DEAF_LIMIT].
+     */
+    private var deaf = 0
+
+    /** Чем кончилось: пусто — дошли до конца или остановили рукой. */
+    private var broke = ""
     private var route = CorpusRoute.File
     private var guard = 0
 
@@ -295,11 +306,33 @@ class CorpusCheck(
         val result = CorpusResult(item, heard, score.matched, score.total, error)
         results += result
         at++
+        deaf = if (heard.isBlank()) deaf + 1 else 0
         _state.value = _state.value.copy(
             done = at,
             failed = results.count { !it.passed },
             last = "${item.id}  ${result.mark}  ${item.text.take(40)}"
         )
+        // Подряд не расслышанное — улика против прибора, а не против текста,
+        // и молчать о ней нельзя: отчёт иначе обвиняет хорошие отрезки.
+        //
+        // Найдено на запасном телефоне 23.09.2026. Посреди прогона Play обновил
+        // Google TTS, следом его дважды прикончила нехватка памяти — и
+        // синтезатор замолчал насовсем. Распознаватель честно не слышал ничего,
+        // а в отчёт легло десять «ничего не расслышал» подряд: десять ложных
+        // обвинений хорошему тексту. Прогон при этом собирался идти ещё час.
+        if (deaf >= DEAF_LIMIT) {
+            broke = "Подряд $deaf отрезков не дали ни звука — это отказ прибора, " +
+                "а не беда текста.\n" +
+                "Обычно так выглядит умерший синтезатор: его обновили или убили " +
+                "по нехватке памяти.\n" +
+                "Отрезки после последнего расслышанного считать провалами нельзя."
+            guard++
+            listener.cancel()
+            speaker.silence()
+            finish(stopped = false)
+            return
+        }
+
         // Небольшая пауза между строками: движку надо отпустить прошлый заход.
         main.postDelayed(::step, GAP_MS)
     }
@@ -402,6 +435,12 @@ class CorpusCheck(
             }
         )
         if (stopped) appendLine("Прогон остановлен вручную.")
+        if (broke.isNotBlank()) {
+            appendLine()
+            appendLine("!!! ПРОГОН ОБОРВАН: ПРИБОР МОЛЧИТ")
+            appendLine(broke)
+            appendLine()
+        }
         appendLine("Проверено ${results.size} из ${items.size}, не прошло ${bad.size}")
         appendLine()
         appendLine("Провал — улика про текст. Зачёт про живой голос не говорит")
@@ -468,6 +507,17 @@ class CorpusCheck(
         private const val ITEM_LIMIT_MS = 40_000L
 
         /** Пауза между строками: движку надо отпустить прошлый заход. */
+/**
+ * Сколько молчаливых отрезков подряд считать отказом прибора.
+ *
+ * Пять, а не два: два молчаливых подряд бывают и при живом движке —
+ * сосед хлопнул дверью, заход не успел начаться. Пять подряд — уже
+ * нет: такого совпадения не бывает, и цена ошибки тут несимметрична:
+ * оборвать зря — потерять час, не оборвать — получить пятьсот ложных
+ * обвинений и поверить им.
+ */
+private const val DEAF_LIMIT = 5
+
         private const val GAP_MS = 400L
 
         private const val ROOT = "Crnogorski"
