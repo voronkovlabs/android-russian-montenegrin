@@ -416,6 +416,23 @@ private fun days(n: Int): String = when {
     else -> "дней"
 }
 
+/**
+ * Склонение слова «задание».
+ *
+ * Заведено 23.09.2026, когда приложение впервые запустили на запасном
+ * телефоне и увидели глазами: на главном экране стояло «23 заданий».
+ *
+ * Соседние числа на том же экране склонялись верно четырьмя разными
+ * помощниками — а самое крупное число, ради которого всё и открывают, было
+ * зашито строкой. Проверкой по коду такое не ловится — только взглядом.
+ */
+private fun tasks(n: Int): String = when {
+    n % 100 in 11..14 -> "заданий"
+    n % 10 == 1 -> "задание"
+    n % 10 in 2..4 -> "задания"
+    else -> "заданий"
+}
+
 private fun sessions(n: Int): String = when {
     n % 100 in 11..14 -> "занятий"
     n % 10 == 1 -> "занятие"
@@ -454,7 +471,7 @@ private fun DailyTile(plan: DailyPlan, onStart: (Boolean) -> Unit) {
         Spacer(Modifier.height(8.dp))
         Text(
             when {
-                ready -> "${plan.estimate} мин · ${plan.items.size} заданий"
+                ready -> "${plan.estimate} мин · ${plan.items.size} ${tasks(plan.items.size)}"
                 plan.nothingLeft -> "Сегодня брать нечего"
                 else -> "На сегодня всё"
             },
@@ -694,7 +711,7 @@ private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
                     StoryMode.Translate -> "переведено"
                 }
                 started -> "${card.done} / ${card.ref.chunks}"
-                else -> "${card.ref.chunks} отрезков"
+                else -> "${card.ref.chunks} ${chunkWord(card.ref.chunks)}"
             },
             style = MaterialTheme.typography.labelSmall,
             color = if (card.finished) Jade else Muted,

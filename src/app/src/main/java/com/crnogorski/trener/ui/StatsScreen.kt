@@ -783,7 +783,7 @@ private fun DaysChart(days: List<DayStatEntity>) {
         Spacer(Modifier.height(6.dp))
         Row {
             Text(
-                "${days.size} дней назад",
+                "${days.size} ${dayWord(days.size)} назад",
                 style = MaterialTheme.typography.labelSmall,
                 color = Muted
             )
@@ -853,6 +853,20 @@ private fun RowScope.Share(color: Color, share: Float) {
 private fun Section(title: String) {
     Text(title.uppercase(), style = MaterialTheme.typography.labelSmall, color = Accent)
     Spacer(Modifier.height(12.dp))
+}
+
+/**
+ * Склонение слова «день» для подписи под графиком.
+ *
+ * Окно графика тридцать дней, и при полном окне «дней» верно — поэтому
+ * ошибка и жила долго. Видна она только у того, кто занимается меньше
+ * месяца: «22 дней назад» вместо «22 дня».
+ */
+private fun dayWord(n: Int): String = when {
+    n % 100 in 11..14 -> "дней"
+    n % 10 == 1 -> "день"
+    n % 10 in 2..4 -> "дня"
+    else -> "дней"
 }
 
 @Composable
