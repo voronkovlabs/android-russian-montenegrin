@@ -134,7 +134,11 @@ fun StatsScreen(state: StatsState, onClose: () -> Unit, onCheckup: () -> Unit) {
             Spacer(Modifier.height(28.dp))
             Section("Курс и словарь")
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Line("Уроков закрыто", "${state.lessonsDone} из ${state.lessonsTotal}")
+                // «Курса» тут не для красоты: в блоке «Всего» выше стоит число
+                // закрытых уроков **со всеми тематическими** (LessonRef.extra), и
+                // на одном экране получалось «2 урока» против «1 из 60». Оба верны
+                // по своему определению, но одним словом назывались разные вещи.
+                Line("Уроков курса закрыто", "${state.lessonsDone} из ${state.lessonsTotal}")
                 Line("Заданий пройдено", "${state.exercisesDone} из ${state.exercisesTotal}")
                 Line(
                     "Слов заведено",
