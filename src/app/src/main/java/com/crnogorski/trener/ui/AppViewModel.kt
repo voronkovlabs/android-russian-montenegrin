@@ -1257,7 +1257,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Экраны пар — первыми кандидатами: дележ бюджета берёт список по
         // порядку, и знакомство должно попадать в занятие раньше, чем набор
         // тех же слов.
-        val matches = matchScreens(words, byId, fresh + due, all)
+        val matches = matchScreens(words, byId, fresh + due, all, now)
             .map { SessionItem(VocabRepository.LESSON_ID, it) }
 
         // **Несколько новых слов идут вперёд долга**, и это не вкусовщина, а
@@ -1386,13 +1386,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val back = isBackCard(card.exerciseId)
             val due = card.dueAt <= now
             val learned = card.correct >= VocabRepository.LEARNED
+            // Отложенное рукой не идёт в счёт кнопки «Тренировать»: сам заход
+            // его не берёт, и число на кнопке обещало бы больше, чем даёт.
+            val hidden = Scheduler.snoozed(card, now)
             if (back) {
                 backTotal++
                 if (due) backDue++
-                if (learned) backLearned++ else backReady++
+                if (learned) backLearned++ else if (!hidden) backReady++
             } else {
                 if (due) frontDue++
-                if (learned) frontLearned++ else frontReady++
+                if (learned) frontLearned++ else if (!hidden) frontReady++
                 if (isMeaning(card.exerciseId)) started++
             }
         }
@@ -1401,7 +1404,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             due = if (back) backDue else frontDue,
             fresh = fresh,
             // Тренировать можно всё, что заведено и ещё не выучено, —
-            // расписание тут не указ, на то она и тренировка.
+            // расписание тут не указ, на то она и тренировка. Кроме
+            // отложенного рукой: «не нужно сейчас» сильнее расписания.
             ready = if (back) backReady else frontReady,
             learned = if (back) backLearned else frontLearned,
             started = if (back) backTotal else started,
@@ -2025,7 +2029,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 // Самое шаткое вперёд: сколько раз ответили верно за вычетом
                 // двойного веса ошибок. Выученное (десять верных) не берём —
                 // тренировать его незачем, оно вернётся по расписанию.
-                cards.filter { it.correct < VocabRepository.LEARNED }
+                // Отложенное не берём. Тренировка нарочно не смотрит на срок —
+                // в том и смысл, — но «Отложить на потом» это не расписание, а
+                // прямое «мне это сейчас не нужно», и обходить его тренировкой
+                // нельзя: проверено на телефоне, отложенное слово возвращалось
+                // в тот же день и набирало верные ответы.
+                cards.filter {
+                    it.correct < VocabRepository.LEARNED && !Scheduler.snoozed(it, now)
+                }
                     .sortedBy { it.correct - it.lapses * 2 }
                     .forEach {
                         add(vocabExercise(file, words, forms, it.exerciseId, it.repetitions))
@@ -2063,7 +2074,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // ни разу не видел.
             items.addAll(
                 0,
-                matchScreens(words, byId, items, all)
+                matchScreens(words, byId, items, all, now)
                     .map { SessionItem(VocabRepository.LESSON_ID, it) }
             )
 
@@ -2224,7 +2235,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         words: Map<String, VocabWord>,
         byId: Map<String, CardEntity>,
         pool: List<SessionItem>,
-        spare: List<CardEntity>
+        spare: List<CardEntity>,
+        now: Long
     ): List<Exercise.Match> {
         fun pairable(id: String) = isMeaning(id) || isBackCard(id)
         fun shaky(card: CardEntity) = card.correct - card.lapses * 2
@@ -2232,8 +2244,21 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val mine = pool.map { it.exercise.id }.filter(::pairable)
         val fresh = mine.filter { it !in byId }
         val known = mine.filter { it in byId }.sortedBy { shaky(byId.getValue(it)) }
+        // Добор со стороны не берёт то, чей срок ещё не пришёл, — и это про
+        // «Отложить на потом». Отложенное слово отличается от прочих только
+        // далёкой датой (`Scheduler.snooze` сдвигает `dueAt` на две недели),
+        // и без этой проверки оно возвращалось сюда в тот же день: добор
+        // смотрел на «незаученное», но не на срок. Проверено на телефоне —
+        // отложенное `dobro` пришло в парах через двадцать минут и успело
+        // набрать два верных ответа.
+        //
+        // Своих слов сессии это не касается: они уже отобраны по сроку.
         val extra = spare
-            .filter { pairable(it.exerciseId) && it.correct < VocabRepository.LEARNED }
+            .filter {
+                pairable(it.exerciseId) &&
+                    it.correct < VocabRepository.LEARNED &&
+                    !Scheduler.snoozed(it, now)
+            }
             .sortedBy(::shaky)
             .map { it.exerciseId }
 
