@@ -37,6 +37,7 @@ ADB = os.environ.get('ADB', 'adb')
 PHONE_DIR = '/sdcard/Android/data/com.montelearn/files/korpus-audio'
 LIST_NAME = 'spisok.tsv'
 PASS = 0.75          # story.readingPass — тот же порог, что в приложении
+GLUED_PASS = 0.85    # посимвольное сходство: им и выносится вердикт
 SLACK = 2            # speech.spokenSlack
 
 SPECIAL = [
@@ -124,6 +125,28 @@ def table(want, got):
             else:
                 dp[i + 1][j + 1] = max(dp[i][j + 1], dp[i + 1][j])
     return dp
+
+
+def glued(heard, expected):
+    """Сходство без пробелов: границы слов ставит слушатель, а не говорящий.
+
+    Главная мера этого стенда, и вот почему. Whisper расставляет пробелы
+    по-своему: «Moja majka je iz Bara» он отдаёт как «Mojamajka je izbara», а
+    «Danas idem u grad» — как «Danas i demograd». Звуки при этом расслышаны
+    верно, но сверка по словам обнуляет два слова разом и объявляет провал.
+
+    Это улика против расшифровки, а не против произношения: склеенные строки
+    различаются одной буквой. Спрашиваем мы «внятно ли сказано», а границы слов
+    к внятности отношения не имеют.
+
+    Счёт по словам при этом остаётся в отчёте: он сравним с телефоном, и по
+    нему видно, где разошлись именно границы.
+    """
+    a = reflex(flatten(expected)).replace(' ', '')
+    b = reflex(flatten(heard)).replace(' ', '')
+    if not a:
+        return 0.0
+    return 1.0 - distance(a, b) / float(max(len(a), len(b)))
 
 
 def score(heard, expected):
@@ -215,15 +238,16 @@ def main():
         segs, _ = model.transcribe(path, language='sr', beam_size=5)
         heard = ' '.join(s.text for s in segs).strip()
         ok, total = score(heard, row['text'])
-        results.append(dict(row, heard=heard, ok=ok, total=total,
-                            passed=total > 0 and ok / total >= PASS,
+        sim = glued(heard, row['text'])
+        results.append(dict(row, heard=heard, ok=ok, total=total, sim=sim,
+                            passed=sim >= GLUED_PASS,
                             digits=bool(re.search(r'\d', heard + row['text']))))
         if n % 10 == 0 or n == len(rows):
             print('  %d из %d, не прошло %d'
                   % (n, len(rows), sum(1 for r in results if not r['passed'])))
 
     bad = [r for r in results if not r['passed']]
-    bad.sort(key=lambda r: (r['ok'] / r['total']) if r['total'] else 0)
+    bad.sort(key=lambda r: r['sim'])
 
     out = args.out or os.path.join(
         os.path.dirname(os.path.abspath(__file__)), '..', 'data',
@@ -249,6 +273,12 @@ def main():
         f.write('=== ВСЁ ПОДРЯД ===\n\n')
         for r in results:
             f.write('%-10s %d/%d  %s\n' % (r['id'], r['ok'], r['total'], r['text']))
+    # Расшифровки рядом с отчётом: слушать шесть минут ради смены порога
+    # незачем, а менять его придётся.
+    import json
+    with open(out + '.json', 'w', encoding='utf-8') as f:
+        json.dump([{k: r[k] for k in ('id', 'source', 'text', 'heard')} for r in results],
+                  f, ensure_ascii=False, indent=1)
     print('отчёт:', os.path.normpath(out))
     print('не прошло %d из %d' % (len(bad), len(results)))
 
