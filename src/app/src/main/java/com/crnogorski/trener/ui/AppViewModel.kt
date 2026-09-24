@@ -1893,7 +1893,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val learned = vocab.count {
             isMeaning(it.exerciseId) && it.correct >= VocabRepository.LEARNED
         }
-        val lessons = dao.lessonProgress().size
+        // Лестница без тематических уроков — **оба** числа разом.
+        // Раньше знаменатель фильтровался, а числитель нет, и
+        // заставка показывала «2 из 60» там, где отчёт говорил
+        // «1/60»: закрытый t02 попадал в числитель, но не в
+        // потолок. Пока закрытых уроков было ноль, это не было
+        // видно; с ростом тематических дошло бы до «65 из 60».
+        val courseIds = repo.index().lessons.filter { !it.extra }.map { it.id }.toSet()
+        val lessons = dao.lessonProgress().count { it.lessonId in courseIds }
         val (phrase, gloss) = splashPhrase(
             streak = streak,
             accuracy = accuracy,
@@ -1911,14 +1918,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 val fresh = today?.words ?: 0
                 if (fresh > 0) add("+$fresh новых слов")
                 if (learned > 0) add("$learned выучено")
-                // Знаменатель тот же, что в отчёте: **лестница без
-                // тематических уроков** (см. LessonRef.extra). Здесь стояло
-                // `lessons.size` по всему оглавлению, и заставка спорила с
-                // отчётом на том же телефоне: «0 из 62» против «0 из 60».
-                //
-                // Видно это только глазами и только рядом — поймано первым
-                // живым прогоном на запасном телефоне 23.09.2026.
-                add("курс: $lessons из ${repo.index().lessons.count { !it.extra }}")
+                // Оба числа — по лестнице без тематических уроков
+                // (см. LessonRef.extra). Расходились дважды и по-разному:
+                // сперва знаменатель шёл по всему оглавлению («0 из 62»
+                // против «0 из 60»), потом числитель считал и тематические
+                // («2 из 60» против «1/60»). Видно это только глазами и
+                // только рядом с отчётом.
+                add("курс: $lessons из ${courseIds.size}")
             }.joinToString("  ·  ")
         )
     }
