@@ -64,7 +64,9 @@ disappears into a void stops being written.
 
 ## Build
 
-Requires Android Studio, JDK 21 and an Android 14 device (`minSdk 34`).
+Requires Android Studio, JDK 21 and an Android 11 device or newer
+(`minSdk 30`). Speech recognition without a network connection needs Android 12;
+below that the option simply is not offered.
 
 ```bash
 cd src

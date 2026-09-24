@@ -94,16 +94,52 @@ class CorpusCheck(
     private var items: List<CorpusItem> = emptyList()
     private val results = mutableListOf<CorpusResult>()
     private var at = 0
+
+    /**
+     * Сколько отрезков подряд кончились полным молчанием.
+     *
+     * Один такой — бывает. Подряд — **не бывает никогда**: это значит, что
+     * сломался прибор, а не текст. См. [DEAF_LIMIT].
+     */
+    private var deaf = 0
+
+    /** Чем кончилось: пусто — дошли до конца или остановили рукой. */
+    private var broke = ""
+
+    /** Пропускать ли зачтённое прошлым отчётом. */
+    private var skipping = false
+
+    /** Сколько отрезков пропущено и по какому отчёту. */
+    private var skipped = 0
+    private var basis = ""
     private var route = CorpusRoute.File
     private var guard = 0
 
     private val wav: File by lazy { File(context.cacheDir, "korpus.wav") }
     private val pcm: File by lazy { File(context.cacheDir, "korpus.pcm") }
 
-    fun start() {
+    /**
+     * [skipPassed] — не гонять то, что уже зачтено прошлым отчётом.
+     *
+     * Корпус растёт понемногу: к 23.09.2026 в нём 594 отрезка, из которых 511
+     * проверены ещё в сентябре. Гонять их заново — час на подтверждение того,
+     * что и так известно, а по нашему же правилу **зачёт не значит ничего**:
+     * второй зачёт не значит ничего дважды.
+     *
+     * Разница не в сэкономленном часе, а в том, что становится возможным:
+     * десятиминутную проверку делают перед каждым выпуском, часовую — когда
+     * вспомнят. Новые истории до сих пор уезжали на телефоны непрочитанными
+     * машиной ни разу.
+     */
+    fun start(skipPassed: Boolean = false) {
         if (_state.value.running) return
         results.clear()
         at = 0
+        deaf = 0
+        broke = ""
+        skipped = 0
+        basis = ""
+        skipping = skipPassed
         if (speaker.voiceUnavailable) {
             _state.value = CorpusState(
                 note = "Сербского голоса на телефоне нет — читать нечем."
@@ -114,10 +150,24 @@ class CorpusCheck(
         Trace.muted = true
         _state.value = CorpusState(running = true, note = "Собираю тексты…")
         scope.launch {
-            val list = collect()
+            var list = collect()
+            if (skipping) {
+                val done = passedEarlier()
+                if (done.isNotEmpty()) {
+                    val before = list.size
+                    list = list.filterNot { it.id in done }
+                    skipped = before - list.size
+                }
+            }
             if (list.isEmpty()) {
                 Trace.muted = false
-                _state.value = CorpusState(note = "Читать нечего — корпус пуст.")
+                _state.value = CorpusState(
+                    note = if (skipped > 0) {
+                        "Всё уже зачтено прошлым отчётом — гонять нечего."
+                    } else {
+                        "Читать нечего — корпус пуст."
+                    }
+                )
                 return@launch
             }
             items = list
@@ -295,11 +345,33 @@ class CorpusCheck(
         val result = CorpusResult(item, heard, score.matched, score.total, error)
         results += result
         at++
+        deaf = if (heard.isBlank()) deaf + 1 else 0
         _state.value = _state.value.copy(
             done = at,
             failed = results.count { !it.passed },
             last = "${item.id}  ${result.mark}  ${item.text.take(40)}"
         )
+        // Подряд не расслышанное — улика против прибора, а не против текста,
+        // и молчать о ней нельзя: отчёт иначе обвиняет хорошие отрезки.
+        //
+        // Найдено на запасном телефоне 23.09.2026. Посреди прогона Play обновил
+        // Google TTS, следом его дважды прикончила нехватка памяти — и
+        // синтезатор замолчал насовсем. Распознаватель честно не слышал ничего,
+        // а в отчёт легло десять «ничего не расслышал» подряд: десять ложных
+        // обвинений хорошему тексту. Прогон при этом собирался идти ещё час.
+        if (deaf >= DEAF_LIMIT) {
+            broke = "Подряд $deaf отрезков не дали ни звука — это отказ прибора, " +
+                "а не беда текста.\n" +
+                "Обычно так выглядит умерший синтезатор: его обновили или убили " +
+                "по нехватке памяти.\n" +
+                "Отрезки после последнего расслышанного считать провалами нельзя."
+            guard++
+            listener.cancel()
+            speaker.silence()
+            finish(stopped = false)
+            return
+        }
+
         // Небольшая пауза между строками: движку надо отпустить прошлый заход.
         main.postDelayed(::step, GAP_MS)
     }
@@ -401,7 +473,16 @@ class CorpusCheck(
                 CorpusRoute.Air -> "по воздуху (динамик → микрофон)"
             }
         )
+        if (skipped > 0) {
+            appendLine("Пропущено $skipped — зачтено отчётом $basis.")
+        }
         if (stopped) appendLine("Прогон остановлен вручную.")
+        if (broke.isNotBlank()) {
+            appendLine()
+            appendLine("!!! ПРОГОН ОБОРВАН: ПРИБОР МОЛЧИТ")
+            appendLine(broke)
+            appendLine()
+        }
         appendLine("Проверено ${results.size} из ${items.size}, не прошло ${bad.size}")
         appendLine()
         appendLine("Провал — улика про текст. Зачёт про живой голос не говорит")
@@ -439,6 +520,80 @@ class CorpusCheck(
     }
 
     /**
+     * Что уже зачтено самым свежим отчётом.
+     *
+     * Читаем **свой же текстовый отчёт**, а не заводим рядом машинный файл, и
+     * это осознанно: отчёт и так лежит на телефоне, его формат не менялся с
+     * первого дня, а главное — человек видит глазами ровно то, на что
+     * опирается пропуск. Отдельный служебный файл однажды разошёлся бы с
+     * отчётом, и разойтись он мог бы молча.
+     *
+     * Берётся только «зачтено»: провалы гоняются заново всегда — ради них
+     * прогон и существует.
+     */
+    private fun passedEarlier(): Set<String> = runCatching {
+        val reports = reportsNewestFirst()
+        if (reports.isEmpty()) return emptySet()
+        basis = reports.first().first
+        val verdict = HashMap<String, Boolean>()
+        var read = 0
+        for ((name, uri) in reports) {
+            val text = context.contentResolver.openInputStream(uri)?.use {
+                it.readBytes().toString(Charsets.UTF_8)
+            } ?: continue
+            read++
+            PASSED.findAll(text.substringAfterLast(ALL_MARK)).forEach { m ->
+                val id = m.groupValues[1]
+                // Первым встреченным считается самый свежий: отчёты идут по
+                // убыванию даты, и переписывать вердикт старым нельзя.
+                if (id !in verdict) {
+                    val matched = m.groupValues[2].toIntOrNull()
+                    val total = m.groupValues[3].toIntOrNull()
+                    if (matched != null && total != null && total > 0) {
+                        verdict[id] = matched.toFloat() / total >= ReadingScore.PASS
+                    }
+                }
+            }
+        }
+        if (read > 1) basis = "$basis и ещё ${read - 1}"
+        verdict.filterValues { it }.keys
+    }.getOrDefault(emptySet())
+
+    /**
+     * Все отчёты прогона, свежие впереди.
+     *
+     * Имя отчёта — дата со временем (`korpus-2026-09-23_2258.txt`), поэтому
+     * порядок по алфавиту и есть порядок по времени, задом наперёд.
+     */
+    private fun reportsNewestFirst(): List<Pair<String, Uri>> {
+        val collection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+        val where = "${android.os.Environment.DIRECTORY_DOCUMENTS}/$ROOT/"
+        val found = mutableListOf<Pair<String, Uri>>()
+        context.contentResolver.query(
+            collection,
+            arrayOf(
+                MediaStore.MediaColumns._ID,
+                MediaStore.MediaColumns.DISPLAY_NAME,
+                MediaStore.MediaColumns.RELATIVE_PATH
+            ),
+            null, null, null
+        )?.use { c ->
+            val idAt = c.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
+            val nameAt = c.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME)
+            val pathAt = c.getColumnIndexOrThrow(MediaStore.MediaColumns.RELATIVE_PATH)
+            while (c.moveToNext()) {
+                val name = c.getString(nameAt) ?: continue
+                val path = c.getString(pathAt) ?: continue
+                if (!path.startsWith(where) || !name.startsWith("korpus-")) continue
+                found += name to android.content.ContentUris.withAppendedId(
+                    collection, c.getLong(idAt)
+                )
+            }
+        }
+        return found.sortedByDescending { it.first }
+    }
+
+    /**
      * Отчёт кладётся в «Документы», а не в каталог приложения: туда с Android 11
      * файловому менеджеру ходу нет, и забрать файл можно было бы только кабелем.
      */
@@ -468,6 +623,23 @@ class CorpusCheck(
         private const val ITEM_LIMIT_MS = 40_000L
 
         /** Пауза между строками: движку надо отпустить прошлый заход. */
+/**
+ * Сколько молчаливых отрезков подряд считать отказом прибора.
+ *
+ * Пять, а не два: два молчаливых подряд бывают и при живом движке —
+ * сосед хлопнул дверью, заход не успел начаться. Пять подряд — уже
+ * нет: такого совпадения не бывает, и цена ошибки тут несимметрична:
+ * оборвать зря — потерять час, не оборвать — получить пятьсот ложных
+ * обвинений и поверить им.
+ */
+        /** Заголовок, после которого в отчёте идут все строки подряд. */
+        private const val ALL_MARK = "=== ВСЁ ПОДРЯД ==="
+
+        /** Строка отчёта: `s01#3  8/9  Prvi dan`. */
+        private val PASSED = Regex("""^(\S+)\s+(\d+)/(\d+)\s""", RegexOption.MULTILINE)
+
+        private const val DEAF_LIMIT = 5
+
         private const val GAP_MS = 400L
 
         private const val ROOT = "Crnogorski"

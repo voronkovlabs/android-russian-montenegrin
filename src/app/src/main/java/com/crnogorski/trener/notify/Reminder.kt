@@ -1,5 +1,6 @@
 package com.crnogorski.trener.notify
 
+import android.annotation.SuppressLint
 import android.Manifest
 import android.app.AlarmManager
 import android.app.NotificationChannel
@@ -92,12 +93,13 @@ object Reminder {
      * Без разрешения молча ничего не делаем: просить его отсюда некому, а
      * падать из-за напоминания тем более незачем.
      */
+    // Разрешение проверено в notificationsAllowed() первой же строкой.
+    // Lint за границу функции не ходит и считает вызов незащищённым —
+    // а вносить проверку сюда значило бы завести её четвёртую копию.
+    @SuppressLint("MissingPermission")
     fun show(context: Context) {
         if (Pace(context).leftToday() <= 0) return
-        val granted = ContextCompat.checkSelfPermission(
-            context, Manifest.permission.POST_NOTIFICATIONS
-        ) == PackageManager.PERMISSION_GRANTED
-        if (!granted) return
+        if (!notificationsAllowed(context)) return
 
         val manager = context.getSystemService(NotificationManager::class.java) ?: return
         manager.createNotificationChannel(

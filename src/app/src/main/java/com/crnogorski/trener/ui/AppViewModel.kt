@@ -1257,7 +1257,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Экраны пар — первыми кандидатами: дележ бюджета берёт список по
         // порядку, и знакомство должно попадать в занятие раньше, чем набор
         // тех же слов.
-        val matches = matchScreens(words, byId, fresh + due, all)
+        val matches = matchScreens(words, byId, fresh + due, all, now)
             .map { SessionItem(VocabRepository.LESSON_ID, it) }
 
         // **Несколько новых слов идут вперёд долга**, и это не вкусовщина, а
@@ -1386,13 +1386,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val back = isBackCard(card.exerciseId)
             val due = card.dueAt <= now
             val learned = card.correct >= VocabRepository.LEARNED
+            // Отложенное рукой не идёт в счёт кнопки «Тренировать»: сам заход
+            // его не берёт, и число на кнопке обещало бы больше, чем даёт.
+            val hidden = Scheduler.snoozed(card, now)
             if (back) {
                 backTotal++
                 if (due) backDue++
-                if (learned) backLearned++ else backReady++
+                if (learned) backLearned++ else if (!hidden) backReady++
             } else {
                 if (due) frontDue++
-                if (learned) frontLearned++ else frontReady++
+                if (learned) frontLearned++ else if (!hidden) frontReady++
                 if (isMeaning(card.exerciseId)) started++
             }
         }
@@ -1401,7 +1404,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             due = if (back) backDue else frontDue,
             fresh = fresh,
             // Тренировать можно всё, что заведено и ещё не выучено, —
-            // расписание тут не указ, на то она и тренировка.
+            // расписание тут не указ, на то она и тренировка. Кроме
+            // отложенного рукой: «не нужно сейчас» сильнее расписания.
             ready = if (back) backReady else frontReady,
             learned = if (back) backLearned else frontLearned,
             started = if (back) backTotal else started,
@@ -1893,7 +1897,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val learned = vocab.count {
             isMeaning(it.exerciseId) && it.correct >= VocabRepository.LEARNED
         }
-        val lessons = dao.lessonProgress().size
+        // Лестница без тематических уроков — **оба** числа разом.
+        // Раньше знаменатель фильтровался, а числитель нет, и
+        // заставка показывала «2 из 60» там, где отчёт говорил
+        // «1/60»: закрытый t02 попадал в числитель, но не в
+        // потолок. Пока закрытых уроков было ноль, это не было
+        // видно; с ростом тематических дошло бы до «65 из 60».
+        val courseIds = repo.index().lessons.filter { !it.extra }.map { it.id }.toSet()
+        val lessons = dao.lessonProgress().count { it.lessonId in courseIds }
         val (phrase, gloss) = splashPhrase(
             streak = streak,
             accuracy = accuracy,
@@ -1911,7 +1922,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 val fresh = today?.words ?: 0
                 if (fresh > 0) add("+$fresh новых слов")
                 if (learned > 0) add("$learned выучено")
-                add("курс: $lessons из ${repo.index().lessons.size}")
+                // Оба числа — по лестнице без тематических уроков
+                // (см. LessonRef.extra). Расходились дважды и по-разному:
+                // сперва знаменатель шёл по всему оглавлению («0 из 62»
+                // против «0 из 60»), потом числитель считал и тематические
+                // («2 из 60» против «1/60»). Видно это только глазами и
+                // только рядом с отчётом.
+                add("курс: $lessons из ${courseIds.size}")
             }.joinToString("  ·  ")
         )
     }
@@ -2012,7 +2029,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 // Самое шаткое вперёд: сколько раз ответили верно за вычетом
                 // двойного веса ошибок. Выученное (десять верных) не берём —
                 // тренировать его незачем, оно вернётся по расписанию.
-                cards.filter { it.correct < VocabRepository.LEARNED }
+                // Отложенное не берём. Тренировка нарочно не смотрит на срок —
+                // в том и смысл, — но «Отложить на потом» это не расписание, а
+                // прямое «мне это сейчас не нужно», и обходить его тренировкой
+                // нельзя: проверено на телефоне, отложенное слово возвращалось
+                // в тот же день и набирало верные ответы.
+                cards.filter {
+                    it.correct < VocabRepository.LEARNED && !Scheduler.snoozed(it, now)
+                }
                     .sortedBy { it.correct - it.lapses * 2 }
                     .forEach {
                         add(vocabExercise(file, words, forms, it.exerciseId, it.repetitions))
@@ -2050,7 +2074,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // ни разу не видел.
             items.addAll(
                 0,
-                matchScreens(words, byId, items, all)
+                matchScreens(words, byId, items, all, now)
                     .map { SessionItem(VocabRepository.LESSON_ID, it) }
             )
 
@@ -2211,7 +2235,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         words: Map<String, VocabWord>,
         byId: Map<String, CardEntity>,
         pool: List<SessionItem>,
-        spare: List<CardEntity>
+        spare: List<CardEntity>,
+        now: Long
     ): List<Exercise.Match> {
         fun pairable(id: String) = isMeaning(id) || isBackCard(id)
         fun shaky(card: CardEntity) = card.correct - card.lapses * 2
@@ -2219,8 +2244,21 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val mine = pool.map { it.exercise.id }.filter(::pairable)
         val fresh = mine.filter { it !in byId }
         val known = mine.filter { it in byId }.sortedBy { shaky(byId.getValue(it)) }
+        // Добор со стороны не берёт то, чей срок ещё не пришёл, — и это про
+        // «Отложить на потом». Отложенное слово отличается от прочих только
+        // далёкой датой (`Scheduler.snooze` сдвигает `dueAt` на две недели),
+        // и без этой проверки оно возвращалось сюда в тот же день: добор
+        // смотрел на «незаученное», но не на срок. Проверено на телефоне —
+        // отложенное `dobro` пришло в парах через двадцать минут и успело
+        // набрать два верных ответа.
+        //
+        // Своих слов сессии это не касается: они уже отобраны по сроку.
         val extra = spare
-            .filter { pairable(it.exerciseId) && it.correct < VocabRepository.LEARNED }
+            .filter {
+                pairable(it.exerciseId) &&
+                    it.correct < VocabRepository.LEARNED &&
+                    !Scheduler.snoozed(it, now)
+            }
             .sortedBy(::shaky)
             .map { it.exerciseId }
 
@@ -3361,19 +3399,34 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val state = _session.value ?: return
         val item = state.items[state.index]
         val lemma = VocabRepository.lemmaOf(item.exercise.id)
-        val seconds = noteTime(state, item.exercise, measure = false)
+        // Срез не двигает ничего — то же правило, что в record: ни дневного
+        // бюджета, ни счёта дня. Слово при этом всё равно прячется: «отложить»
+        // значит «мне это не нужно», и решить так человек вправе где угодно.
+        val seconds = if (state.checkup) 0 else noteTime(state, item.exercise, measure = false)
         lastAnswer = ""
 
         viewModelScope.launch {
             val now = System.currentTimeMillis()
             // Время потрачено — в отчёт идёт; ответа не было — в счёт заданий
-            // не идёт, как и у пропуска.
-            noteAnswer(item, dao.card(item.exercise.id), seconds, correct = null)
+            // не идёт, как и у пропуска. В срезе не идёт никуда: см. выше.
+            if (!state.checkup) {
+                noteAnswer(item, dao.card(item.exercise.id), seconds, correct = null)
+            }
             cardBeforeAnswer = null
 
             if (lemma != null) hideLemma(lemma, now) else hideExercise(item, now)
 
-            val fresh = if (lemma != null) untouchedWord() else untouchedExercise(state, item)
+            // В срезе подмены нет вовсе, и это не упрощение. Выборка там
+            // ровно тридцать слов, отобранных по полосам частоты, — тридцать
+            // первое исказило бы замер. А главное, подменять было нечем:
+            // срез карточек не заводит, `untouchedWord` берёт первое слово без
+            // карточки, и на каждое нажатие приходило **одно и то же** слово.
+            // Семнадцать «мочь» подряд вместо семнадцати разных вопросов.
+            val fresh = when {
+                state.checkup -> null
+                lemma != null -> untouchedWord()
+                else -> untouchedExercise(state, item)
+            }
             _notice.value = when {
                 lemma != null -> "«$lemma» отложено на ${Config.current.srs.snoozeDays} дн."
                 else -> "Задание отложено на ${Config.current.srs.snoozeDays} дн."
@@ -3696,12 +3749,24 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
         val seconds = noteTime(state, item.exercise)
         val easy = correct && confident(item.exercise.typeName, elapsed)
+        // Показ парадигмы — знакомство, а не ответ: таблица показана целиком и
+        // ошибиться в ней нечем. В счёт ответов дня он идёт как пропуск —
+        // время стоит, ответом не считается; иначе доля верных росла бы от
+        // экрана, на котором нельзя ошибиться. См. Scheduler.shown.
+        val shown = (item.exercise as? Exercise.Table)?.ask == false
         viewModelScope.launch {
             val now = System.currentTimeMillis()
             val existing = dao.card(item.exercise.id)
-            noteAnswer(item, existing, seconds, correct)
+            noteAnswer(item, existing, seconds, if (shown) null else correct)
             cardBeforeAnswer = item.exercise.id to existing
             val updated: CardEntity = when {
+                shown -> when {
+                    existing == null -> Scheduler.shownCard(item.exercise.id, item.lessonId, now)
+                    // Тренировка расписания не двигает — значит показу в ней
+                    // делать нечего вовсе.
+                    state.practice -> existing
+                    else -> Scheduler.shown(existing, now)
+                }
                 existing == null ->
                     Scheduler.newCard(item.exercise.id, item.lessonId, correct, now, easy)
                 // Тренировка вне расписания интервал не двигает: см. Scheduler.

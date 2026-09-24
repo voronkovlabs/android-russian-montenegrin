@@ -134,7 +134,11 @@ fun StatsScreen(state: StatsState, onClose: () -> Unit, onCheckup: () -> Unit) {
             Spacer(Modifier.height(28.dp))
             Section("Курс и словарь")
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Line("Уроков закрыто", "${state.lessonsDone} из ${state.lessonsTotal}")
+                // «Курса» тут не для красоты: в блоке «Всего» выше стоит число
+                // закрытых уроков **со всеми тематическими** (LessonRef.extra), и
+                // на одном экране получалось «2 урока» против «1 из 60». Оба верны
+                // по своему определению, но одним словом назывались разные вещи.
+                Line("Уроков курса закрыто", "${state.lessonsDone} из ${state.lessonsTotal}")
                 Line("Заданий пройдено", "${state.exercisesDone} из ${state.exercisesTotal}")
                 Line(
                     "Слов заведено",
@@ -783,7 +787,7 @@ private fun DaysChart(days: List<DayStatEntity>) {
         Spacer(Modifier.height(6.dp))
         Row {
             Text(
-                "${days.size} дней назад",
+                "${days.size} ${dayWord(days.size)} назад",
                 style = MaterialTheme.typography.labelSmall,
                 color = Muted
             )
@@ -853,6 +857,20 @@ private fun RowScope.Share(color: Color, share: Float) {
 private fun Section(title: String) {
     Text(title.uppercase(), style = MaterialTheme.typography.labelSmall, color = Accent)
     Spacer(Modifier.height(12.dp))
+}
+
+/**
+ * Склонение слова «день» для подписи под графиком.
+ *
+ * Окно графика тридцать дней, и при полном окне «дней» верно — поэтому
+ * ошибка и жила долго. Видна она только у того, кто занимается меньше
+ * месяца: «22 дней назад» вместо «22 дня».
+ */
+private fun dayWord(n: Int): String = when {
+    n % 100 in 11..14 -> "дней"
+    n % 10 == 1 -> "день"
+    n % 10 in 2..4 -> "дня"
+    else -> "дней"
 }
 
 @Composable

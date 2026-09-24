@@ -1,5 +1,6 @@
 package com.crnogorski.trener.notify
 
+import android.annotation.SuppressLint
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -65,15 +66,17 @@ object News {
      * которой человек ещё не обновился, — про неё говорит строка на главном, а
      * уведомление было бы обещанием того, чего у него нет.
      */
+    // Разрешение проверено в notificationsAllowed() первой же строкой.
+    // Lint за границу функции не ходит и считает вызов незащищённым —
+    // а вносить проверку сюда значило бы завести её четвёртую копию.
+    @SuppressLint("MissingPermission")
     fun tell(context: Context, version: String, news: String) {
         if (news.isBlank()) return
         if (version != BuildConfig.VERSION_NAME) return
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         if (prefs.getString(KEY, "") == version) return
 
-        val granted = ContextCompat.checkSelfPermission(
-            context, Manifest.permission.POST_NOTIFICATIONS
-        ) == PackageManager.PERMISSION_GRANTED
+        val granted = notificationsAllowed(context)
         // Отметку ставим и без разрешения: показать всё равно не выйдет, а
         // копить долг из неспрошенных версий незачем — при трёх выпусках в
         // день он вылился бы пачкой, как только разрешение дадут.
