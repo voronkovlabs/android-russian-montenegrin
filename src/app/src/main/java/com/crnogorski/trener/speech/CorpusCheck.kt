@@ -109,6 +109,9 @@ class CorpusCheck(
     /** Пропускать ли зачтённое прошлым отчётом. */
     private var skipping = false
 
+    /** Выгрузка в файлы вместо прогона: телефон говорит, слушают снаружи. */
+    private var dumping = false
+
     /** Сколько отрезков пропущено и по какому отчёту. */
     private var skipped = 0
     private var basis = ""
@@ -177,6 +180,63 @@ class CorpusCheck(
     }
 
     /**
+     * Выписать корпус звуковыми файлами и ничего не слушать.
+     *
+     * Прогон целиком живёт на телефоне: наш синтезатор говорит, наш
+     * распознаватель слушает. Оба от Google, на одной языковой модели, — и
+     * потому в правилах прогона прямо сказано, что **зачёт не значит ничего**:
+     * сойтись между собой они могут так, как не сойдутся с человеком.
+     *
+     * Особенно это бьёт по заданиям «на слух»: там источник звука — **наш
+     * синтезатор**, и если он коверкает слово, задание учит неверному
+     * произношению. Заметить это внутри телефона нечем.
+     *
+     * Выгрузка разрывает круг: телефон только пишет файлы, а слушает их
+     * посторонний — Whisper на машине разработчика. Совпало — значит фразу
+     * понял тот, кто её не произносил.
+     *
+     * Файлы ложатся в каталог приложения на внешней памяти: туда `adb` ходит
+     * без разрешений, а в общее хранилище пришлось бы просить их зря.
+     */
+    fun dump() {
+        if (_state.value.running) return
+        results.clear()
+        at = 0
+        deaf = 0
+        broke = ""
+        skipped = 0
+        basis = ""
+        skipping = false
+        if (speaker.voiceUnavailable) {
+            _state.value = CorpusState(
+                note = "Сербского голоса на телефоне нет — читать нечем."
+            )
+            return
+        }
+        dumping = true
+        Trace.muted = true
+        _state.value = CorpusState(running = true, dumping = true, note = "Собираю тексты…")
+        scope.launch {
+            val list = collect()
+            if (list.isEmpty()) {
+                dumping = false
+                Trace.muted = false
+                _state.value = CorpusState(note = "Читать нечего — корпус пуст.")
+                return@launch
+            }
+            items = list
+            val dir = audioDir()
+            dir.deleteRecursively()
+            dir.mkdirs()
+            runCatching {
+                File(dir, LIST_NAME).writeText("файл\tid\tисточник\tтекст\n")
+            }
+            _state.value = _state.value.copy(total = list.size, note = "Пишу файлы…")
+            main.post { step() }
+        }
+    }
+
+    /**
      * Остановить прогон и сохранить то, что успели.
      *
      * Полтысячи заходов — это час с лишним, и бросить на середине надо уметь:
@@ -188,6 +248,11 @@ class CorpusCheck(
         main.removeCallbacksAndMessages(null)
         listener.cancel()
         speaker.silence()
+        // У выгрузки отчёта нет вовсе: вердикт выносит тот, кто слушает файлы.
+        if (dumping) {
+            dumpFinish()
+            return
+        }
         finish(stopped = true)
     }
 
@@ -304,6 +369,10 @@ class CorpusCheck(
         }
         val item = items[at]
         val mine = ++guard
+        if (dumping) {
+            dumpStep(item, mine)
+            return
+        }
         // Сторож на всю строку: у синтеза своего нет, и молчащий движок
         // остановил бы прогон навсегда.
         main.postDelayed({
@@ -375,6 +444,70 @@ class CorpusCheck(
         // Небольшая пауза между строками: движку надо отпустить прошлый заход.
         main.postDelayed(::step, GAP_MS)
     }
+
+    // --- выгрузка в файлы ----------------------------------------------------
+
+    private fun dumpStep(item: CorpusItem, mine: Int) {
+        val file = File(audioDir(), FILE_FMT.format(at + 1))
+        file.delete()
+        // Сторож свой: у синтеза своего нет, а молчащий движок остановил бы
+        // выгрузку навсегда.
+        main.postDelayed({
+            if (mine == guard && _state.value.running) {
+                guard++
+                speaker.silence()
+                dumpNext(item, file, ok = false)
+            }
+        }, ITEM_LIMIT_MS)
+        speaker.toFile(item.text, file) {
+            if (mine == guard) dumpNext(item, file, ok = file.length() > WAV_HEADER)
+        }
+    }
+
+    /**
+     * Записали один — к следующему.
+     *
+     * Удалось или нет, говорит **сам файл**: у `synthesizeToFile` неудача
+     * приходит тем же колбэком, что и удача, и различить их нечем, кроме
+     * размера. Пустой файл удаляем — иначе он ляжет в опись как звук.
+     */
+    private fun dumpNext(item: CorpusItem, file: File, ok: Boolean) {
+        main.removeCallbacksAndMessages(null)
+        at++
+        if (!ok) file.delete()
+        // Опись дописывается после каждого файла, а не в конце: выгрузку
+        // бросят на середине, а опись обязана описывать то, что уже лежит
+        // рядом. Тот же довод, что у записей носителя.
+        if (ok) runCatching {
+            File(audioDir(), LIST_NAME)
+                .appendText("${file.name}\t${item.id}\t${item.source}\t${item.text}\n")
+        }
+        _state.value = _state.value.copy(
+            done = at,
+            failed = _state.value.failed + if (ok) 0 else 1,
+            last = "${item.id}  ${if (ok) "записан" else "нет звука"}  ${item.text.take(40)}"
+        )
+        if (at >= items.size) {
+            dumpFinish()
+            return
+        }
+        main.postDelayed(::step, GAP_MS)
+    }
+
+    private fun dumpFinish() {
+        dumping = false
+        guard++
+        main.removeCallbacksAndMessages(null)
+        Trace.muted = false
+        val bad = _state.value.failed
+        _state.value = _state.value.copy(
+            running = false,
+            note = "Готово: ${at - bad} файлов в $AUDIO_PATH" +
+                if (bad > 0) ", без звука $bad" else ""
+        )
+    }
+
+    private fun audioDir(): File = File(context.getExternalFilesDir(null), AUDIO_DIR)
 
     // --- кирпичи ------------------------------------------------------------
 
@@ -642,6 +775,15 @@ class CorpusCheck(
 
         private const val GAP_MS = 400L
 
+        /** Куда ложится выгрузка: каталог приложения на внешней памяти. */
+        private const val AUDIO_DIR = "korpus-audio"
+        private const val LIST_NAME = "spisok.tsv"
+        private const val FILE_FMT = "%04d.wav"
+
+        /** Заголовок WAV: файл короче — это не звук, а неудача синтеза. */
+        private const val WAV_HEADER = 44L
+        const val AUDIO_PATH = "Android/data/…/files/korpus-audio"
+
         private const val ROOT = "Crnogorski"
         const val HUMAN_PATH = "Документы/Crnogorski"
 
@@ -681,6 +823,8 @@ enum class CorpusRoute { File, Air }
 
 data class CorpusState(
     val running: Boolean = false,
+    /** Идёт выгрузка в файлы, а не прогон: отчёта в конце не будет. */
+    val dumping: Boolean = false,
     val done: Int = 0,
     val total: Int = 0,
     val failed: Int = 0,
