@@ -3724,12 +3724,24 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
         val seconds = noteTime(state, item.exercise)
         val easy = correct && confident(item.exercise.typeName, elapsed)
+        // Показ парадигмы — знакомство, а не ответ: таблица показана целиком и
+        // ошибиться в ней нечем. В счёт ответов дня он идёт как пропуск —
+        // время стоит, ответом не считается; иначе доля верных росла бы от
+        // экрана, на котором нельзя ошибиться. См. Scheduler.shown.
+        val shown = (item.exercise as? Exercise.Table)?.ask == false
         viewModelScope.launch {
             val now = System.currentTimeMillis()
             val existing = dao.card(item.exercise.id)
-            noteAnswer(item, existing, seconds, correct)
+            noteAnswer(item, existing, seconds, if (shown) null else correct)
             cardBeforeAnswer = item.exercise.id to existing
             val updated: CardEntity = when {
+                shown -> when {
+                    existing == null -> Scheduler.shownCard(item.exercise.id, item.lessonId, now)
+                    // Тренировка расписания не двигает — значит показу в ней
+                    // делать нечего вовсе.
+                    state.practice -> existing
+                    else -> Scheduler.shown(existing, now)
+                }
                 existing == null ->
                     Scheduler.newCard(item.exercise.id, item.lessonId, correct, now, easy)
                 // Тренировка вне расписания интервал не двигает: см. Scheduler.
