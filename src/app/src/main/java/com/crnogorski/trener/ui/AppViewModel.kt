@@ -3368,19 +3368,34 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val state = _session.value ?: return
         val item = state.items[state.index]
         val lemma = VocabRepository.lemmaOf(item.exercise.id)
-        val seconds = noteTime(state, item.exercise, measure = false)
+        // Срез не двигает ничего — то же правило, что в record: ни дневного
+        // бюджета, ни счёта дня. Слово при этом всё равно прячется: «отложить»
+        // значит «мне это не нужно», и решить так человек вправе где угодно.
+        val seconds = if (state.checkup) 0 else noteTime(state, item.exercise, measure = false)
         lastAnswer = ""
 
         viewModelScope.launch {
             val now = System.currentTimeMillis()
             // Время потрачено — в отчёт идёт; ответа не было — в счёт заданий
-            // не идёт, как и у пропуска.
-            noteAnswer(item, dao.card(item.exercise.id), seconds, correct = null)
+            // не идёт, как и у пропуска. В срезе не идёт никуда: см. выше.
+            if (!state.checkup) {
+                noteAnswer(item, dao.card(item.exercise.id), seconds, correct = null)
+            }
             cardBeforeAnswer = null
 
             if (lemma != null) hideLemma(lemma, now) else hideExercise(item, now)
 
-            val fresh = if (lemma != null) untouchedWord() else untouchedExercise(state, item)
+            // В срезе подмены нет вовсе, и это не упрощение. Выборка там
+            // ровно тридцать слов, отобранных по полосам частоты, — тридцать
+            // первое исказило бы замер. А главное, подменять было нечем:
+            // срез карточек не заводит, `untouchedWord` берёт первое слово без
+            // карточки, и на каждое нажатие приходило **одно и то же** слово.
+            // Семнадцать «мочь» подряд вместо семнадцати разных вопросов.
+            val fresh = when {
+                state.checkup -> null
+                lemma != null -> untouchedWord()
+                else -> untouchedExercise(state, item)
+            }
             _notice.value = when {
                 lemma != null -> "«$lemma» отложено на ${Config.current.srs.snoozeDays} дн."
                 else -> "Задание отложено на ${Config.current.srs.snoozeDays} дн."
