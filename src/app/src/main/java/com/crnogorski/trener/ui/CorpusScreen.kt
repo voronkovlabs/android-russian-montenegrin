@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crnogorski.trener.data.LessonRepository
+import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.speech.CorpusCheck
 import com.crnogorski.trener.speech.CorpusRoute
 import com.crnogorski.trener.speech.Speaker
@@ -275,6 +276,24 @@ fun CorpusScreen(speaker: Speaker, onClose: () -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = Muted
                 )
+
+                // Проба выговора. Кнопки нет, пока в настройках не задан список
+                // написаний: она нужна не занятию, а подбору замены для
+                // Vygovor, и висеть на экране просто так ей незачем.
+                if (Config.current.speech.probe.isNotEmpty()) {
+                    Spacer(Modifier.height(18.dp))
+                    PrimaryButton(
+                        "Проба выговора (${Config.current.speech.probe.size})"
+                    ) { check.sayProbes() }
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        "Произносит в файлы написания из настроек — чтобы " +
+                            "услышать со стороны, как движок их прочтёт, и " +
+                            "выбрать, что подсовывать ему вместо слова.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Muted
+                    )
+                }
             }
             Spacer(Modifier.height(40.dp))
         }

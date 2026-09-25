@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.data.Trace
+import com.crnogorski.trener.data.Vygovor
 import android.media.AudioManager
 import android.content.Intent
 import android.os.Bundle
@@ -239,6 +240,9 @@ class Speaker(context: Context) {
             return
         }
         val engine = tts ?: return
+        // Что уйдёт в движок: написанное, если для слова не задано другое
+        // произношение. Экран при этом не меняется вовсе — см. Vygovor.
+        val said = Vygovor.say(text)
         // Снимаем заглушку гудков до того, как начнём говорить.
         //
         // По жалобе владельца (issue 75): «можно ли сделать произношение
@@ -255,13 +259,13 @@ class Speaker(context: Context) {
         engine.setSpeechRate(if (slow) SLOW_RATE else NORMAL_RATE)
         engine.setPitch(if (low) LOW_PITCH else NORMAL_PITCH)
 
-        val words = if (slow && SLOW_GAP_MS > 0) text.trim().split(SPACES) else emptyList()
+        val words = if (slow && SLOW_GAP_MS > 0) said.trim().split(SPACES) else emptyList()
         if (words.size > 1) {
             byWords(engine, words, id)
             return
         }
 
-        if (engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, id) != TextToSpeech.SUCCESS) {
+        if (engine.speak(said, TextToSpeech.QUEUE_FLUSH, null, id) != TextToSpeech.SUCCESS) {
             // Раньше здесь стояло только finish(id) — то есть отказ движка
             // объявлялся успешно сказанной фразой, и приложение немело
             // навсегда. См. revive().
@@ -297,7 +301,10 @@ class Speaker(context: Context) {
         whenDone = onDone
         engine.setSpeechRate(NORMAL_RATE)
         engine.setPitch(NORMAL_PITCH)
-        if (engine.synthesizeToFile(text, Bundle(), file, id) != TextToSpeech.SUCCESS) {
+        if (engine.synthesizeToFile(
+                Vygovor.say(text), Bundle(), file, id
+            ) != TextToSpeech.SUCCESS
+        ) {
             finish(id)
         }
     }

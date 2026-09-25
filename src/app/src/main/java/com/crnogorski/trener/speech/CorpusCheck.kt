@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import com.crnogorski.trener.BuildConfig
+import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.LessonRepository
 import com.crnogorski.trener.data.LocalCheck
@@ -198,7 +199,7 @@ class CorpusCheck(
      * Файлы ложатся в каталог приложения на внешней памяти: туда `adb` ходит
      * без разрешений, а в общее хранилище пришлось бы просить их зря.
      */
-    fun dump() {
+    fun dump(ready: List<CorpusItem>? = null) {
         if (_state.value.running) return
         results.clear()
         at = 0
@@ -217,7 +218,7 @@ class CorpusCheck(
         Trace.muted = true
         _state.value = CorpusState(running = true, dumping = true, note = "Собираю тексты…")
         scope.launch {
-            val list = collect()
+            val list = ready ?: collect()
             if (list.isEmpty()) {
                 dumping = false
                 Trace.muted = false
@@ -234,6 +235,31 @@ class CorpusCheck(
             _state.value = _state.value.copy(total = list.size, note = "Пишу файлы…")
             main.post { step() }
         }
+    }
+
+    /**
+     * Проба выговора: произнести в файлы написания из настроек.
+     *
+     * Нужна, чтобы подобрать замену для [Vygovor]. Как движок прочтёт `šutra`
+     * или `s jutra`, из документации не узнать — только услышать со стороны, а
+     * слушать умеет `research/tools/hear_corpus.py`.
+     *
+     * Список написаний лежит в `config/tuning.json` (`speech.probe`), поэтому
+     * перебирать их можно **без пересборки**: один APK, сколько угодно опытов.
+     * Пусто — кнопки на экране нет вовсе.
+     *
+     * Идёт тем же путём, что выгрузка корпуса, и это обязательно: проба должна
+     * мерить ровно то, что услышит человек, включая саму карту произношения.
+     * Поэтому пробуемое написание в карту попадать не должно — иначе она
+     * подменит его на себя, и проба измерит замену вместо кандидата.
+     */
+    fun sayProbes() {
+        val list = Config.current.speech.probe
+        if (list.isEmpty()) {
+            _state.value = CorpusState(note = "Пробовать нечего: speech.probe пуст.")
+            return
+        }
+        dump(list.mapIndexed { i, text -> CorpusItem("проба-${i + 1}", "проба", text) })
     }
 
     /**
