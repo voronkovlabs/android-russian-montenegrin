@@ -201,7 +201,7 @@ fun SessionScreen(
                 }
                 is Phase.Result -> {
                     Spacer(Modifier.height(20.dp))
-                    ResultView(phase, state.current)
+                    ResultView(phase, state.current, speaker, state.glossary.me)
                     AnswerTail(state, onNext, onComplain)
                 }
                 is Phase.Skipped -> {
@@ -283,6 +283,19 @@ private fun ExerciseBody(
         is Phase.Result -> phase.answer
         else -> ""
     }
+    // Нажатое слово произносится — как в историях: жирная буква говорит, где
+    // ударение, но не говорит, как оно звучит (заметка 133).
+    //
+    // Рук две, потому что условие в уроке бывает русским, а голос у нас
+    // sr-RS и русскую строку прочтёт кашей. Тогда произносится черногорское
+    // слово из подсказки (см. [sayable]), и нажимаются только слова, у
+    // которых подсказка есть: подчёркнутое слово, молчащее в ответ,
+    // читалось бы как поломка.
+    val sayWord: (String) -> Unit = { speaker.speak(it) }
+    val sayHint: (String) -> Unit = { word ->
+        sayable(state.glossary.ru[word.lowercase()])?.let { speaker.speak(it) }
+    }
+
     when (val ex = state.current) {
         is Exercise.TranslateToTarget -> TextAnswer(
             key = ex.id,
@@ -293,6 +306,10 @@ private fun ExerciseBody(
             language = AnswerLanguage.Target,
             // Задание по-русски: подсказка ведёт в черногорский.
             promptGloss = state.glossary.ru,
+            // Условие русское: по нажатию звучит черногорское слово из
+            // подсказки, и нажимается только то, у чего подсказка есть.
+            onPromptWord = sayHint,
+            promptTapUnknown = false,
             onSubmit = onSubmit
         )
 
@@ -304,6 +321,7 @@ private fun ExerciseBody(
             enabled = enabled,
             language = AnswerLanguage.Native,
             promptGloss = state.glossary.me,
+            onPromptWord = sayWord,
             speakable = ex.prompt,
             speaker = speaker,
             onSubmit = onSubmit
@@ -317,6 +335,7 @@ private fun ExerciseBody(
             enabled = enabled,
             language = AnswerLanguage.Target,
             promptGloss = state.glossary.me,
+            onPromptWord = sayWord,
             onSubmit = onSubmit
         )
 
@@ -333,6 +352,13 @@ private fun ExerciseBody(
             // по-русски, и распознавание с клавиатурой должны быть русскими.
             language = if (ex.native) AnswerLanguage.Native else AnswerLanguage.Target,
             promptGloss = if (ex.native) emptyMap() else state.glossary.me,
+            // Обратный перевод показывает одно черногорское слово — оно и
+            // нажимается целиком: слышно, как звучит, а значения звук не
+            // выдаёт. В остальных карточках условие русское или это рамка
+            // с пропуском, и нажимаются только знакомые словарю
+            // черногорские слова: русских ключей в .me не бывает вовсе.
+            onPromptWord = sayWord,
+            promptTapUnknown = ex.native,
             // Обратный перевод показывает черногорское слово — там ударение и
             // нужно. В остальных карточках условие русское или это рамка с
             // пропуском, то есть фраза: во фразе ударение уезжает на предлог.
@@ -345,11 +371,12 @@ private fun ExerciseBody(
 
         is Exercise.Match -> MatchAnswer(ex, speaker, enabled, onMatch)
 
-        is Exercise.Table -> ParadigmAnswer(ex, enabled, onParadigm)
+        is Exercise.Table -> ParadigmAnswer(ex, speaker, enabled, onParadigm)
 
         is Exercise.Choice -> ChoiceAnswer(ex, speaker, enabled, onSubmit)
 
-        is Exercise.WordBank -> WordBankAnswer(ex, state.glossary.ru, enabled, onSubmit)
+        is Exercise.WordBank ->
+            WordBankAnswer(ex, state.glossary.ru, sayHint, enabled, onSubmit)
 
         is Exercise.Listening -> ListeningAnswer(ex, speaker, enabled, onSubmit)
 
@@ -408,19 +435,51 @@ private fun Prompt(
     /** Условие — одно черногорское слово: показать в нём ударение. */
     stress: Boolean = false,
     /** Номера слов, которые движок расслышал, — их показываем зелёным. */
-    green: Set<Int> = emptySet()
+    green: Set<Int> = emptySet(),
+    /** Что делать с нажатым словом: см. [ExerciseBody]. */
+    onWord: ((String) -> Unit)? = null,
+    /** Нажимать ли слово без подсказки: см. [GlossedText]. */
+    tapUnknown: Boolean = true
 ) {
-    // Ударение теперь ставит сам GlossedText — и в отдельном слове, и во фразе.
-    // Флаг остался ради обратного перевода: там условие это черногорское слово,
-    // подсказок к нему нет, и таблица подсказок пустая.
-    if (stress) {
+    // Ударение ставит сам GlossedText — и в отдельном слове, и во фразе. Флаг
+    // остался ради обратного перевода: там условие это черногорское слово, и
+    // таблица подсказок к нему пустая. Но как только у нажатия появляется
+    // дело, рисовать надо всё равно GlossedText: он и подчёркивает, и
+    // ударение ставит, и звук по нажатию у него один на всё приложение.
+    if (stress && onWord == null) {
         Text(stressed(text), style = MaterialTheme.typography.headlineSmall, color = Paper)
     } else {
         GlossedText(
             text, gloss, MaterialTheme.typography.headlineSmall, Paper,
-            green = green
+            onWord = onWord,
+            green = green,
+            tapUnknown = tapUnknown
         )
     }
+}
+
+/**
+ * Что произнести, когда нажали **русское** слово условия.
+ *
+ * Произносить само нажатое нельзя: голос у нас `sr-RS`, и русская строка
+ * выйдет кашей. Произносится черногорское слово из подсказки, а пояснение к
+ * форме отбрасывается: подсказки выглядят как «nema (nemam — у меня нет)» и
+ * «imam — у меня есть; imate — у вас есть», и прочитанные целиком они дали бы
+ * вслух русский хвост.
+ *
+ * Берётся голова строки до первой скобки, тире, запятой или точки с запятой,
+ * и из неё только латиница. Проверено на всех 163 русских подсказках: строк,
+ * из которых нечего произнести, не осталось ни одной.
+ */
+private fun sayable(hint: String?): String? {
+    if (hint.isNullOrBlank()) return null
+    val head = hint.split('(', ';', ',', '\u2014', '-')[0]
+    // Латиница — это буквы ниже кириллического блока: так отсеиваются и
+    // русские слова подсказки, и знаки, и цифры.
+    val latin = head.split(' ').filter { word ->
+        word.isNotBlank() && word.all { it.isLetter() && it.code < 0x400 }
+    }
+    return latin.joinToString(" ").ifBlank { null }
 }
 
 @Composable
@@ -440,6 +499,10 @@ private fun TextAnswer(
     speaker: Speaker? = null,
     /** Начинать слушать сразу, не дожидаясь нажатия на микрофон. */
     autoListen: Boolean = false,
+    /** Что делать с нажатым словом условия: см. [ExerciseBody]. */
+    onPromptWord: ((String) -> Unit)? = null,
+    /** Нажимать ли слово условия без подсказки: см. [GlossedText]. */
+    promptTapUnknown: Boolean = true,
     onSubmit: (String) -> Unit
 ) {
     var value by remember(key) { mutableStateOf("") }
@@ -461,7 +524,13 @@ private fun TextAnswer(
         Text(icon, fontSize = 40.sp, lineHeight = 46.sp)
         Spacer(Modifier.height(4.dp))
     }
-    Prompt(prompt, promptGloss, stress = stressPrompt)
+    Prompt(
+        prompt,
+        promptGloss,
+        stress = stressPrompt,
+        onWord = onPromptWord,
+        tapUnknown = promptTapUnknown
+    )
     if (speakable != null && speaker != null) {
         Spacer(Modifier.height(10.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -805,6 +874,8 @@ private const val FLASH_MS = 700L
 private fun WordBankAnswer(
     ex: Exercise.WordBank,
     gloss: Map<String, String>,
+    /** Условие русское: по нажатию звучит слово из подсказки. */
+    onWord: (String) -> Unit,
     enabled: Boolean,
     onSubmit: (String) -> Unit
 ) {
@@ -824,7 +895,7 @@ private fun WordBankAnswer(
     }
 
     Label("Собери фразу")
-    Prompt(ex.prompt, gloss)
+    Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = false)
     Spacer(Modifier.height(20.dp))
 
     Box(
@@ -993,6 +1064,7 @@ private fun RateRow(key: String, onRate: (Int) -> Unit) {
 @Composable
 private fun ParadigmAnswer(
     ex: Exercise.Table,
+    speaker: Speaker,
     enabled: Boolean,
     onSubmit: (List<String>) -> Unit
 ) {
@@ -1029,7 +1101,7 @@ private fun ParadigmAnswer(
         if (cell.lemma != lemma) {
             if (i > 0) Spacer(Modifier.height(16.dp))
             lemma = cell.lemma
-            WordHead(cell)
+            WordHead(cell, speaker)
             Spacer(Modifier.height(8.dp))
         }
         CellRow(
@@ -1065,13 +1137,17 @@ private fun ParadigmAnswer(
  * своя реализация подсказки однажды разошлась бы с общей.
  */
 @Composable
-private fun WordHead(cell: ParadigmCell) {
+private fun WordHead(cell: ParadigmCell, speaker: Speaker) {
     GlossedText(
         text = cell.lemma,
         gloss = if (cell.gloss.isBlank()) emptyMap()
         else mapOf(cell.lemma.lowercase() to cell.gloss),
         style = MaterialTheme.typography.titleMedium,
-        color = Accent
+        color = Accent,
+        // Слово таблицы ещё и произносится: смотреть на «način» в шести
+        // падежах полезнее, когда слышно, как он звучит. Микрофона тут нет
+        // вовсе, глушить нечего.
+        onWord = { speaker.speak(it) }
     )
 }
 
@@ -1217,7 +1293,18 @@ private fun SpokenAnswer(
 
     Label(label)
     if (showText) {
-        Prompt(text, gloss, green = green)
+        Prompt(
+            text, gloss, green = green,
+            // Слушать и говорить одновременно нельзя: микрофон подхватил бы
+            // собственный голос и засчитал его за ответ. Тот же порядок, что
+            // у кнопки «Прослушать» ниже.
+            onWord = { word ->
+                listener.cancel()
+                listening = false
+                status = ""
+                speaker.speak(word)
+            }
+        )
     } else {
         Text(
             "Текст закрыт — слушай и повторяй.",
@@ -1266,8 +1353,49 @@ private fun SpokenAnswer(
     }
 }
 
+/**
+ * Эталон в карточке результата.
+ *
+ * Черногорский эталон **нажимается**: по нажатию видно перевод слова и
+ * слышно, как оно звучит (заметка 133). После ответа это ровно то место,
+ * куда смотрят, — а до правки оно было единственным черногорским текстом в
+ * уроке, с которым нельзя было сделать ничего.
+ *
+ * Подпись стоит своей строкой, а не «Правильно: » перед фразой: нажимаемая
+ * фраза в одной строке с подписью переносилась бы по живому.
+ *
+ * Русский эталон остаётся обычным текстом — голос у нас `sr-RS`, и
+ * произносить там нечего. Ударение в обоих случаях ставит сам
+ * [GlossedText], поэтому `stressedPhrase` тут больше не нужен.
+ */
 @Composable
-private fun ResultView(phase: Phase.Result, exercise: Exercise) {
+private fun Reference(
+    label: String,
+    text: String,
+    target: Boolean,
+    gloss: Map<String, String>,
+    speaker: Speaker,
+    dim: Boolean
+) {
+    val color = if (dim) Muted else Paper
+    val style =
+        if (dim) MaterialTheme.typography.bodyMedium else MaterialTheme.typography.bodyLarge
+    if (!target) {
+        Text("$label: $text", style = style, color = color)
+        return
+    }
+    Text(label, style = MaterialTheme.typography.labelSmall, color = Muted)
+    Spacer(Modifier.height(4.dp))
+    GlossedText(text, gloss, style, color, onWord = { speaker.speak(it) })
+}
+
+@Composable
+private fun ResultView(
+    phase: Phase.Result,
+    exercise: Exercise,
+    speaker: Speaker,
+    gloss: Map<String, String>
+) {
     val accent = if (phase.correct) Jade else Crimson
 
     // Точное совпадение с эталоном показывать незачем — строка дублировала бы «Правильно».
@@ -1278,21 +1406,13 @@ private fun ResultView(phase: Phase.Result, exercise: Exercise) {
         exercise is Exercise.Repeat ||
         exercise is Exercise.Reading
     val answerLabel = if (spoken) "Услышано" else "Твой ответ"
-    // Ударение — только у черногорского ответа: размечать русское слово по
-    // сербской норме значило бы врать. Фразы отсеет сам Stress.of — во фразе
-    // ударение уходит на проклитику, и словное там неверно.
+    // Черногорский ли эталон. Решает две вещи: ставить ли ударение (размечать
+    // русское слово по сербской норме значило бы врать) и нажимается ли
+    // эталон — произносить русскую строку голосом sr-RS нечего.
     val target = when (exercise) {
         is Exercise.TranslateToNative -> false
         is Exercise.Word -> !exercise.native
         else -> true
-    }
-
-    val expected = if (target) stressedPhrase(phase.expected)
-    else AnnotatedString(phase.expected)
-
-    fun reference(prefix: String) = buildAnnotatedString {
-        append(prefix)
-        append(expected)
     }
 
     Column(
@@ -1320,11 +1440,11 @@ private fun ResultView(phase: Phase.Result, exercise: Exercise) {
         // Эталон бывает пустым — у экрана пар его нет вовсе: он раскрыл себя
         // сам, пока его собирали.
         if (!phase.correct && phase.expected.isNotBlank()) {
-            Text(reference("Правильно: "), style = MaterialTheme.typography.bodyLarge, color = Paper)
+            Reference("Правильно", phase.expected, target, gloss, speaker, dim = false)
             Spacer(Modifier.height(8.dp))
         } else if (showAnswer) {
             // Ответ засчитан, но не совпал с эталоном: «Правильно» тут вводило бы в заблуждение.
-            Text(reference("Эталон: "), style = MaterialTheme.typography.bodyMedium, color = Muted)
+            Reference("Эталон", phase.expected, target, gloss, speaker, dim = true)
             Spacer(Modifier.height(8.dp))
         }
         if (phase.feedback.isNotBlank()) {
@@ -1420,7 +1540,16 @@ private fun ReadingAnswer(
                     i == index || i < heard.size -> Paper
                     else -> Muted
                 },
-                green = green.getOrElse(i) { emptySet() }
+                green = green.getOrElse(i) { emptySet() },
+                // Слушать и говорить одновременно нельзя: микрофон подхватил бы
+                // собственный голос и засчитал его за ответ. Тот же порядок,
+                // что у кнопки «Прослушать» ниже.
+                onWord = { word ->
+                    listener.cancel()
+                    listening = false
+                    status = ""
+                    speaker.speak(word)
+                }
             )
         }
     }

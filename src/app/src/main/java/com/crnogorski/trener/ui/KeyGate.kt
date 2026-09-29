@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -76,6 +77,14 @@ fun KeyGate(context: Context, onNote: (String) -> Unit, modifier: Modifier = Mod
     Column(
         modifier
             .fillMaxSize()
+            // Отступ под клавиатуру ставим сами, и без него экран
+            // непроходим: `adjustResize` в манифесте есть, но с
+            // `enableEdgeToEdge` система окно больше не подгоняет —
+            // мы сами просили её не вмешиваться. Клавиатура ложилась
+            // поверх поля, а прокручивать было нечего: колонка ровно
+            // в высоту экрана, диапазон прокрутки ноль. Жалоба 131,
+            // и место худшее из возможных — без ключа дальше некуда.
+            .imePadding()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp, vertical = 32.dp),
         verticalArrangement = Arrangement.Center

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -128,7 +129,11 @@ fun SettingsScreen(
     // Системная «назад» должна возвращать к списку уроков, а не закрывать приложение.
     BackHandler { onClose() }
 
-    Column(Modifier.fillMaxSize()) {
+    // imePadding — по той же причине, что у замка с ключом (жалоба 131):
+    // с enableEdgeToEdge отступ под клавиатуру ставит приложение, а не
+    // система. Здесь пока не кусало только потому, что поле ключа стоит
+    // первым и клавиатура до него не дотягивается.
+    Column(Modifier.fillMaxSize().imePadding()) {
         Row(
             Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically

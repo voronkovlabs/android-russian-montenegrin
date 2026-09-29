@@ -3169,7 +3169,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
         when (ex) {
             is Exercise.TranslateToTarget -> checkWithModel(ex.prompt, ex.reference, answer)
-            is Exercise.TranslateToNative -> checkWithModel(ex.prompt, ex.reference, answer)
+            is Exercise.TranslateToNative ->
+                checkWithModel(ex.prompt, ex.reference, answer, toNative = true)
             is Exercise.Form -> localResult(
                 LocalCheck.matchesTyped(answer, ex.answer),
                 withReflexNote(answer, ex.answer, ex.explanation),
@@ -3617,7 +3618,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * [Phase.Checking] выставляется только после промаха: на попадании ждать
      * нечего, и «Проверяю…» мелькнуло бы зря.
      */
-    private fun checkWithModel(task: String, reference: String, answer: String) {
+    private fun checkWithModel(
+        task: String,
+        reference: String,
+        answer: String,
+        toNative: Boolean = false
+    ) {
         val exerciseId = _session.value?.current?.id.orEmpty()
         checking = true
 
@@ -3650,7 +3656,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
         viewModelScope.launch {
             try {
-                val key = checker.key(task, reference, answer)
+                val key = checker.key(task, reference, answer, toNative)
                 val known = Trace.span("база: память вердиктов") { cache.find(key) }
                 if (known != null) {
                     cache.countHit()
@@ -3661,7 +3667,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
                 _session.value = _session.value?.copy(phase = Phase.Checking)
                 when (val result = Trace.span("сеть: проверка у Haiku") {
-                    checker.check(task, reference, answer)
+                    checker.check(task, reference, answer, toNative)
                 }) {
                     is CheckResult.Ok -> {
                         val v = result.verdict
@@ -3762,9 +3768,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val updated: CardEntity = when {
                 shown -> when {
                     existing == null -> Scheduler.shownCard(item.exercise.id, item.lessonId, now)
-                    // Тренировка расписания не двигает — значит показу в ней
-                    // делать нечего вовсе.
-                    state.practice -> existing
+                    // Тренировка расписания не двигает, но счётчик повторений
+                    // показ обязан сдвинуть с нуля: иначе таблица в ней
+                    // навсегда остаётся знакомством и возвращается первым же
+                    // заданием. См. Scheduler.shownInPractice — там и цена.
+                    state.practice -> Scheduler.shownInPractice(existing)
                     else -> Scheduler.shown(existing, now)
                 }
                 existing == null ->
