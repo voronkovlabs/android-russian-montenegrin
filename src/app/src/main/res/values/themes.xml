@@ -11,4 +11,18 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
     </style>
+
+
+    <!--
+        Окно для «Поделиться» (ShareActivity): прозрачное, поверх чужого
+        приложения. Своё затемнение рисует диалог Compose, системное
+        поэтому выключено — иначе экран темнел бы дважды.
+    -->
+    <style name="Theme.Crnogorski.Share" parent="Theme.Crnogorski">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

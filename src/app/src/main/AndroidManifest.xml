@@ -45,6 +45,35 @@
             </intent-filter>
         </activity>
 
+        <!--
+            Приём текста извне: кнопка «Поделиться» (SEND) и пункт в меню
+            выделенного текста (PROCESS_TEXT). Своя Activity, а не главная:
+            поделиться можно посреди урока, и главный экран пересоздался бы
+            поверх задания, а после переустановки упёрся бы в замок ключа.
+
+            taskAffinity="" и excludeFromRecents: окно живёт своей жизнью и
+            не подмешивается к приложению в списке недавних.
+        -->
+        <activity
+            android:name=".ui.ShareActivity"
+            android:exported="true"
+            android:label="@string/share_label"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Crnogorski.Share">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
         <receiver
             android:name=".notify.ReminderReceiver"
             android:exported="false">
