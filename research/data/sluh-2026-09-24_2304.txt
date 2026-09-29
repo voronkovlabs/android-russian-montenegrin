@@ -1,0 +1,704 @@
+Наш синтезатор чужим ухом · 24.09.2026 23:04
+пересчёт по sluh-2026-09-24_2259.txt.json, язык sr. Вердикт по сходству без пробелов, порог 85%.
+Счёт по словам оставлен рядом — он сравним с телефоном.
+Прослушано 594, не прошло 19
+
+Провал — улика против синтезатора. Зачёт про живой голос не
+говорит ничего: Whisper слушает чисто и без комнаты.
+
+=== НЕ ПРОШЛО ===
+
+d08#5  1/4  —  Kod prodavca voća
+  текст:    Evro i po kilogram.
+  услышано: 1,5 kg
+  потеряно: eur, i, po
+  (в строке цифры — таблицы числительных в переносе нет)
+
+d09#5  2/4  —  Kupujem kartu
+  текст:    To je jedanaest evra.
+  услышано: To je jedana estebra.
+  потеряно: 11, eur
+
+d08#2  2/4  —  Kod prodavca voća
+  текст:    Kilogram jabuka, molim vas.
+  услышано: Килограми ябука, молим вас!
+  потеряно: kg, jabuka
+
+s14#6  3/4  —  Auto i benzin
+  текст:    Sipao sam trideset litara.
+  услышано: Sipao sam 30 litera.
+  потеряно: l
+  (в строке цифры — таблицы числительных в переносе нет)
+
+s19#39  1/2  —  Međed, svinja i lisica
+  текст:    „Zlo, svinjo!“
+  услышано: Zlok, sviniu
+  потеряно: svinjo
+
+s11#7  2/3  —  Puno ljudi
+  текст:    Dva evra kilogram.
+  услышано: 2 ebra kilogram
+  потеряно: eur
+  (в строке цифры — таблицы числительных в переносе нет)
+
+d01#4  1/3  —  Na pošti
+  текст:    Šta je unutra?
+  услышано: Steja unutra.
+  потеряно: sta, e
+
+s21#8  0/2  —  Jež i lisica
+  текст:    A ti?
+  услышано: Alti
+  потеряно: a, ti
+
+s19#21  3/5  —  Međed, svinja i lisica
+  текст:    Svinja reče: „Ja ću ovijati.“
+  услышано: Svinje reče, ja ću ovijeti.
+  потеряно: svinja, ovijati
+
+d06#6  4/5  —  Komšija zvoni
+  текст:    Mislio sam da ti imaš.
+  услышано: Misli osam da ti imaš.
+  потеряно: sam
+
+s21#31  2/3  —  Jež i lisica
+  текст:    Jež se nasmiješio.
+  услышано: је јер се насмјешјо.
+  потеряно: ez
+
+s19#10  1/2  —  Međed, svinja i lisica
+  текст:    Dođe žetva.
+  услышано: Dođi žetva.
+  потеряно: dode
+
+d09#9  4/6  —  Kupujem kartu
+  текст:    Jedan evro po koferu, kod vozača.
+  услышано: 1 evropu koferu, kod bozača
+  потеряно: eur, po
+  (в строке цифры — таблицы числительных в переносе нет)
+
+s19#6  6/6  —  Međed, svinja i lisica
+  текст:    „I ja ću mojom surlom uzorati.“
+  услышано: i ja ću majom surlam uzareti.
+
+s08#8  2/4  —  Kod ljekara
+  текст:    Dao mi je recept.
+  услышано: Dam je recept
+  потеряно: dao, mi
+
+l11e11.1  3/4  —  Здоровье: что болит
+  текст:    Juče sam bio bolestan.
+  услышано: Uči sam bio-bolistan.
+  потеряно: juce
+
+s20#37  4/7  —  Djevojka brža od konja
+  текст:    Te on na konju te za njom.
+  услышано: Те он на коньу теза ням.
+  потеряно: te, za, njom
+
+d07#11  2/4  —  U banci
+  текст:    A kada dobijam karticu?
+  услышано: Akada dobijem karticu.
+  потеряно: a, dobijam
+
+l23e11  2/3  —  Больше, меньше, лучше
+  текст:    Koji je najbolji?
+  услышано: Ko je najbolji?
+  потеряно: koji
+
+=== ВСЁ ПОДРЯД ===
+
+s01#1      2/2  Dobro jutro!
+s01#2      3/3  Zovem se Ivan.
+s01#3      9/9  Ja sam iz Rusije, a sada živim u Podgorici.
+s01#4      5/5  Još uvijek slabo govorim crnogorski.
+s01#5      1/4  Danas idem u grad.
+s01#6      4/4  Autobuska stanica je blizu.
+s01#7      4/4  Idem pravo, pa lijevo.
+s01#8      3/4  U centru je kafe.
+s01#9      4/4  Molim vas, jednu kafu.
+s01#10     2/2  Koliko košta?
+s01#11     2/2  Hvala lijepo!
+s01#12     4/4  Doviđenja, vidimo se sjutra.
+s02#1      4/4  Ovo je moja porodica.
+s02#2      6/6  Imam dvije sestre i jednog brata.
+s02#3      5/5  Moj otac je iz Nikšića.
+s02#4      1/5  Moja majka je iz Bara.
+s02#5      9/9  Moj brat živi u Crnoj Gori već pet godina.
+s02#6      4/4  On radi u Budvi.
+s02#7      4/4  Moje sestre su studenti.
+s02#8      2/2  Nemam djecu.
+s02#9      4/4  U nedjelju ne radim.
+s02#10     4/4  Sjutra idemo na plažu.
+s02#11     7/7  Plaža je blizu, a more je toplo.
+s03#1      3/3  Danas je subota.
+s03#2      3/3  Idem na pijacu.
+s03#3      5/5  Hoću jednu jabuku i hljeb.
+s03#4      3/3  Imate li mlijeko?
+s03#5      4/4  Nemamo mlijeko danas, izvinite.
+s03#6      4/4  Koliko košta ovaj sir?
+s03#7      4/4  Hoću vodu bez gasa.
+s03#8      4/4  Molim vas, dva hljeba.
+s03#9      3/3  Nemam sitno, izvinite.
+s03#10     3/3  Račun, molim vas.
+s03#11     4/4  Vidim ženu na pijaci.
+s03#12     3/3  Sada idem kući.
+s04#1      4/4  Ustajem u sedam sati.
+s04#2      5/5  Pijem kafu i jedem hljeb.
+s04#3      4/4  Moja žena još spava.
+s04#4      5/5  U osam idem na posao.
+s04#5      5/5  Radim u kancelariji u centru.
+s04#6      4/4  Danas imam puno posla.
+s04#7      5/5  U podne jedem u restoranu.
+s04#8      6/6  Kolega govori brzo, ne razumijem sve.
+s04#9      5/5  Poslije posla idem u prodavnicu.
+s04#10     3/3  Uveče gledamo film.
+s04#11     3/3  Volim ovaj grad.
+s04#12     4/4  Sada idem da spavam.
+s05#1      4/4  Izvinite, gdje je pošta?
+s05#2      4/4  Idite pravo, pa desno.
+s05#3      4/4  Pošta je pored banke.
+s05#4      5/5  Hvala, a gdje je apoteka?
+s05#5      4/4  Apoteka je na uglu.
+s05#6      1/4  Da li je daleko?
+s05#7      5/5  Nije daleko, pet minuta pješke.
+s05#8      7/7  Ovdje je trg, a tamo je crkva.
+s05#9      4/4  Tražim hotel pored mora.
+s05#10     3/3  Možete ići autobusom.
+s05#11     4/4  Autobus staje na trgu.
+s05#12     3/3  Hvala vam puno!
+s06#1      5/5  Juče sam bio kod prijatelja.
+s06#2      5/5  Došao sam u pet sati.
+s06#3      5/5  Njegova žena je kuvala večeru.
+s06#4      3/5  Jeli smo ribu i salatu.
+s06#5      5/5  Pili smo vino i pričali.
+s06#6      7/7  Pričali smo o poslu i o djeci.
+s06#7      4/4  Poslije smo gledali utakmicu.
+s06#8      4/4  Naš tim je izgubio.
+s06#9      6/6  Vratio sam se kući u jedanaest.
+s06#10     5/5  Bio je to lijep dan.
+s06#11     3/3  Danas sam umoran.
+s07#1      6/6  Naš stan je na trećem spratu.
+s07#2      6/6  Ima dvije sobe, kuhinju i kupatilo.
+s07#3      4/4  Juče je nestala struja.
+s07#4      3/5  Nije radio frižider ni televizor.
+s07#5      3/3  Zvao sam komšiju.
+s07#6      7/7  Rekao je da je to cijela zgrada.
+s07#7      6/6  Poslije sat vremena struja se vratila.
+s07#8      6/6  Onda je počela da curi voda.
+s07#9      3/3  Zvao sam majstora.
+s07#10     6/6  Došao je ujutru i popravio slavinu.
+s07#11     5/5  Sada je sve u redu.
+s08#1      3/5  Jutros me je boljela glava.
+s08#2      4/4  Nisam mogao da radim.
+s08#3      4/4  Otišao sam kod ljekara.
+s08#4      6/6  Ljekar je pitao šta me boli.
+s08#5      8/8  Rekao sam da me boli glava i grlo.
+s08#6      1/3  Imao sam temperaturu.
+s08#7      7/7  Ljekar je rekao da je to grip.
+s08#8      2/4  Dao mi je recept.
+s08#9      4/5  Kupio sam lijek u apoteci.
+s08#10     6/6  Moram da pijem tablete tri dana.
+s08#11     4/4  Sjutra će biti bolje.
+s09#1      3/3  Danas nemam vremena.
+s09#2      4/4  U frižideru nema ničega.
+s09#3      6/6  Nema mlijeka, nema sira, nema hljeba.
+s09#4      3/3  Moram u prodavnicu.
+s09#5      5/5  Prodavnica je blizu, kod parka.
+s09#6      4/4  Nemaju svježeg mesa danas.
+s09#7      5/5  Uzeo sam pola kilograma sira.
+s09#8      3/3  Nemam sitnog novca.
+s09#9      3/3  Platio sam karticom.
+s09#10     4/4  Kod kuće nema nikoga.
+s09#11     5/5  Žena je otišla kod sestre.
+s09#12     1/2  Večeraću sam.
+s10#1      5/5  Treba mi nova lična karta.
+s10#2      4/4  Otišao sam u opštinu.
+s10#3      5/5  Uzeo sam broj i čekao.
+s10#4      4/5  Čekao sam skoro sat vremena.
+s10#5      4/4  Službenica je tražila pasoš.
+s10#6      6/6  Dao sam joj pasoš i potvrdu.
+s10#7      6/6  Rekla je da nemam sve papire.
+s10#8      5/5  Fali mi potvrda o adresi.
+s10#9      5/5  Poslije sam otišao u poštu.
+s10#10     3/5  Poslao sam pismo u Rusiju.
+s10#11     6/6  Pismo će stići za dvije nedjelje.
+s11#1      6/6  Subotom na pijaci ima puno ljudi.
+s11#2      5/5  Prodavci viču i nude voće.
+s11#3      5/5  Kupio sam dva kilograma jabuka.
+s11#4      5/5  Uzeo sam i tri paradajza.
+s11#5      7/7  Krompir je jeftin, a paprike su skupe.
+s11#6      4/4  Koliko koštaju ove kruške?
+s11#7      2/3  Dva evra kilogram.
+s11#8      3/3  Uzeću pola kilograma.
+s11#9      6/6  Kupio sam i cvijeće za ženu.
+s11#10     4/4  Torbe su bile teške.
+s11#11     5/5  Vratio sam se kući taksijem.
+s12#1      4/4  Sjutra putujem na more.
+s12#2      5/5  Ustaću rano, u šest sati.
+s12#3      3/3  Spakovaću stvari večeras.
+s12#4      3/4  Ponijeću peškir i naočare.
+s12#5      4/4  Vozićemo se dva sata.
+s12#6      6/6  Kad stignemo, ići ćemo na plažu.
+s12#7      3/4  Kupaćemo se cijeli dan.
+s12#8      4/4  Uveče ćemo jesti ribu.
+s12#9      3/3  Ostaćemo tri dana.
+s12#10     6/6  Nadam se da će biti sunčano.
+s12#11     2/2  Biće lijepo.
+s13#1      7/7  Na stanici sam kupio kartu za Budvu.
+s13#2      7/7  Karta u jednom pravcu košta šest evra.
+s13#3      5/5  Pitao sam kad polazi autobus.
+s13#4      5/5  Polazi u deset i petnaest.
+s13#5      5/5  Autobus je kasnio dvadeset minuta.
+s13#6      3/4  Sjeo sam pored prozora.
+s13#7      3/4  Vozač je vozio brzo.
+s13#8      2/4  Put ide pored mora.
+s13#9      7/7  Stali smo u Petrovcu na deset minuta.
+s13#10     4/4  Stigli smo u dvanaest.
+s13#11     7/7  Od stanice do hotela sam išao pješke.
+s14#1      7/7  Moj auto je star, ali dobro radi.
+s14#2      4/5  Jutros nije htio da upali.
+s14#3      4/4  Baterija je bila prazna.
+s14#4      4/4  Komšija mi je pomogao.
+s14#5      6/6  Poslije sam otišao na benzinsku pumpu.
+s14#6      3/4  Sipao sam trideset litara.
+s14#7      4/4  Provjerio sam i gume.
+s14#8      5/5  Jedna guma je bila slaba.
+s14#9      7/7  U servisu su rekli da treba nova.
+s14#10     5/5  Nova guma košta osamdeset evra.
+s14#11     5/5  Skupo je, ali nema druge.
+s15#1      3/5  Mom prijatelju je sjutra rođendan.
+s15#2      5/5  Moram da mu kupim poklon.
+s15#3      7/7  Pitao sam ženu šta da mu kupim.
+s15#4      6/6  Rekla mi je da voli knjige.
+s15#5      5/5  Otišli smo u knjižaru kolima.
+s15#6      6/6  Kupio sam mu knjigu o istoriji.
+s15#7      5/5  Prodavačica ju je lijepo upakovala.
+s15#8      4/4  Sestri sam poslao poruku.
+s15#9      7/7  Ona će doći sa mužem i djecom.
+s15#10     4/5  Slavićemo kod njega u stanu.
+s15#11     3/3  Biće nas deset.
+s16#1      5/5  Komšija je pozvonio na vrata.
+s16#2      6/6  Rekao je: izvini, imaš li ključ?
+s16#3      8/8  Zaključao je vrata, a ključ je ostao unutra.
+s16#4      6/6  Rekao sam mu: sjedi, popij kafu.
+s16#5      5/5  Pozovi majstora, on će otvoriti.
+s16#6      6/6  Daj mi njegov broj, molim te.
+s16#7      6/6  Majstor je došao za pola sata.
+s16#8      6/6  Otvorio je vrata za dva minuta.
+s16#9      6/6  Komšija je rekao: hvala ti puno.
+s16#10     8/8  Rekao sam: nema na čemu, dođi kad hoćeš.
+s16#11     6/6  Dobar komšija je bolji od rođaka.
+s17#1      5/6  Jutros je bilo hladnije nego juče.
+s17#2      5/5  Padala je kiša cijelo jutro.
+s17#3      4/4  Obukao sam topliju jaknu.
+s17#4      3/4  Uzeo sam i kišobran.
+s17#5      7/7  Zima je ovdje kraća nego u Rusiji.
+s17#6      4/4  Ali vjetar je jači.
+s17#7      5/5  Poslije podne je bilo sunčanije.
+s17#8      3/3  Skinuo sam jaknu.
+s17#9      4/4  Sjutra će biti toplije.
+s17#10     5/5  Najbolje vrijeme je u maju.
+s17#11     5/6  Tada nije ni prevruće ni prehladno.
+s18#1      5/5  Radim ovdje već tri godine.
+s18#2      6/6  Plata nije velika, ali je dovoljna.
+s18#3      7/7  Ako budem radio i subotom, zaradiću više.
+s18#4      6/7  Ali onda neću imati vremena za porodicu.
+s18#5      7/7  Šef je rekao da će biti povišica.
+s18#6      7/7  Nisam siguran, jer to govori svake godine.
+s18#7      7/7  Ako ne bude povišice, tražiću drugi posao.
+s18#8      7/7  Žena kaže da treba da budem strpljiv.
+s18#9      2/4  Možda je u pravu.
+s18#10     3/3  Novac nije najvažniji.
+s18#11     5/5  Ali bez njega je teško.
+s19#1      6/6  Udruže se međed, svinja i lisica.
+s19#2      12/13  Pa se dogovore da oru zemlju i da siju pšenicu, da se rane.
+s19#3      7/7  Zapitaju jedno drugoga šta će koje raditi.
+s19#4      5/5  I kako će sjeme naći.
+s19#5      9/9  Svinja reče: „Ja ću provaliti koš i ukrašću sjeme.“
+s19#6      6/6  „I ja ću mojom surlom uzorati.“
+s19#7      4/5  Međed reče: „Ja ću posijati.“
+s19#8      7/8  A lisica reče: „Ja ću mojim repom podrljati.“
+s19#9      2/2  Uzoraše, posijaše.
+s19#10     1/2  Dođe žetva.
+s19#11     6/6  Staše se razgovarati kako će požeti.
+s19#12     4/5  Svinja reče: „Ja ću žeti.“
+s19#13     6/6  Međed reče: „Ja ću snoplje vezati.“
+s19#14     6/6  Lisica reče: „Ja ću klasje kupiti.“
+s19#15     4/4  Požeše i snoplje povezaše.
+s19#16     8/8  Sad se staše dogovarati kako će da vršu.
+s19#17     5/6  Svinja reče: „Ja ću guvno načiniti.“
+s19#18     10/10  Međed reče: „Ja ću snoplje snijeti i ja ću vrijeći.“
+s19#19     10/10  Svinja reče: „Ja ću pretresati i rastaviću slamu od pšenice.“
+s19#20     10/10  Lisica reče: „Ja ću mojim repom trniti pljevu sa pšenice.“
+s19#21     3/5  Svinja reče: „Ja ću ovijati.“
+s19#22     7/7  A međed reče: „Ja ću žito razdijeliti.“
+s19#23     1/1  Ovrgoše.
+s19#24     6/8  Međed žito podijeli, ali ga ne podijeli pravo.
+s19#25     8/8  Svinja ga zamoli, te joj dade samo slamu.
+s19#26     9/9  A pšenicu svu uze sam, lisici ne dade ništa.
+s19#27     7/7  Rasrdi se lisica, pa otide na tužbu.
+s19#28     8/10  I kaza im da će im dovesti jednoga carskog čovjeka.
+s19#29     5/5  Koji će žito pravo razdijeliti.
+s19#30     5/5  Uplaši se svinja i međed.
+s19#31     10/10  Pa reče međed svinji: „Zakopaj se ti, svinjo, u slamu.“
+s19#32     8/8  „A ja ću se popeti na ovu krušku.“
+s19#33     11/11  Zakopa se svinja u slamu, a međed se pope na krušku.
+s19#34     6/10  Lisica otide te nađe mačku, pa je pozva u društvo.
+s19#35     7/7  Da idu na guvno da hvataju miše.
+s19#36     10/10  Znajući mačka da na guvnu ima dosta miša, pođe rado.
+s19#37     10/10  Pa sad iznad puta, sad ispod puta, trči za pticama.
+s19#38     6/9  Opazi je međed s kruške izdaleka, pa kaže svinji:
+s19#39     1/2  „Zlo, svinjo!“
+s19#40     5/6  „Eto lisice, đe vodi strašnoga bumbašira.“
+s19#41     7/11  „Ogrnuo ćurak od kune, pa i krilate tice hvata oko puta.“
+s19#42     8/8  U tom se mačka ukrade međedu iz očiju.
+s19#43     6/6  Pa kroz travu dođe na guvno.
+s19#44     7/7  I tražeći miša stane šuškati po slami.
+s19#45     7/7  Svinja podigne glavu da vidi šta je.
+s19#46     9/9  A mačka pomisli od njezine surle da je miš.
+s19#47     6/7  Pa skoči te svinju šapama za nos.
+s19#48     9/11  Svinja se uplaši, pa rukne i skoči, te nada u potok.
+s19#49     9/10  A mačka se prepadne od svinje, pa nada uz krušku.
+s19#50     9/9  A međed pomisli da je ona već svinju udavila.
+s19#51     5/5  Pa ide sad na njega.
+s19#52     12/13  Pa od straha padne s kruške na zemlju, te se razbije i crkne.
+s19#53     3/7  A lisici ostane sve žito i slama.
+s20#1      10/10  Bila nekaka djevojka koja nije rođena od oca i majke.
+s20#2      9/10  Nego je načinile vile, od snijega izvađena iz jame bezdanje.
+s20#3      6/6  Vjetar je oživio, rosa je podojila.
+s20#4      5/8  A gora lišćem obukla i livada cvijećem nakitila.
+s20#5      12/12  Ona je bila bjelja od snijega, rumenija od ružice, sjajnija od sunca.
+s20#6      11/11  Da se take na svijetu rađalo nije niti će se rađati.
+s20#7      14/14  Ona pusti glas po svijetu da će u taj i taj dan biti trkija.
+s20#8      11/11  Pa koji je mladić na konju preteče, da će biti njegova.
+s20#9      9/9  Ovo se u malo dana razglasi po svemu svijetu.
+s20#10     7/7  Te se prosaca skupi hiljade na konjma.
+s20#11     8/8  Da ne znaš koji je od kojega bolji.
+s20#12     7/7  I sam carev sin dođe na trkiju.
+s20#13     11/11  Djevojka stane na biljegu i svi prosci narede se na konjima.
+s20#14     10/10  A ona između njih bez konja, nego na svojim nogama.
+s20#15     10/10  Pa im onda reče: „Ja sam onamo postavila zlatnu jabuku.“
+s20#16     11/12  „Koji najprije do nje dođe i uzme je, ja ću biti njegova.“
+s20#17     11/12  „A ako ja prva k njoj dođem i uzmem je prije vas.“
+s20#18     10/10  „Znajte da ćete vi svi mrtvi na ono mjesto ostati.“
+s20#19     5/5  „Nego pazite dobro šta činite.“
+s20#20     10/10  Konjanici se svi pogledaju i svaki se u sebe uzdaše.
+s20#21     7/8  Da će zadobiti djevojku, pa rekoše između sebe:
+s20#22     10/11  „Znamo odista da neće ona nijednome od nas na nogama odbjeći.“
+s20#23     11/12  „Nego neko od nas, a koga će Bog i sreća danas pomoći.“
+s20#24     12/13  Te tako, kad djevojka rukom o ruku pljasnu, svi potekoše u jedan tren.
+s20#25     8/10  Kad je bilo na po puta, bogme djevojka odvojila bješe.
+s20#26     7/7  Jer pusti nekaka mala krila ispod pazuha.
+s20#27     10/10  U to ukori jedan drugoga, te prionuše i obodoše konje.
+s20#28     3/3  I pristigoše djevojku.
+s20#29     11/11  Kad ona vidje, izvadi jednu dlaku iz glave, te je baci.
+s20#30     5/7  I oni isti čas uzraste strašna gora.
+s20#31     4/9  Da ne znadoše prosci đe će ni kuda će.
+s20#32     4/6  No tamo-amo te za njom.
+s20#33     14/14  A ona opet daleko im odvojila, a oni obodi konje i opet je stigoše.
+s20#34     9/9  A kad djevojka vidje zlu goru, pusti jednu suzu.
+s20#35     7/10  Dok buknuše strašne rijeke, te se zamalo svi ne potopiše.
+s20#36     10/10  Za djevojkom niko više ne pristajaše do samoga careva sina.
+s20#37     4/7  Te on na konju te za njom.
+s20#38     8/8  Ali pošto vidje da mu je djevojka odmakla.
+s20#39     7/8  Zakle je tri puta imenom Božjim da stane.
+s20#40     10/10  I ona stade na onome mjestu na kojem se nađe.
+s20#41     7/10  Onda je on uhvati te za se na konja vrže.
+s20#42     10/10  I prepliva na suho, pa se uputi jednom planinom doma.
+s20#43     8/8  Ali kada dođe u najvišu planinu, obazre se —
+s20#44     5/5  kad li mu djevojke nema.
+s21#1      5/7  Jednog dana je jež išao kroz šumu.
+s21#2      7/7  Nosio je malu korpu i tražio pečurke.
+s21#3      5/5  Na putu je sreo lisicu.
+s21#4      3/3  — Dobar dan, ježu!
+s21#5      1/2  Kuda ideš?
+s21#6      2/3  — pitala je lisica.
+s21#7      4/4  — Idem da tražim pečurke.
+s21#8      0/2  A ti?
+s21#9      2/3  — odgovorio je jež.
+s21#10     4/4  — Ja idem do rijeke.
+s21#11     4/4  Tamo ima mnogo ribe.
+s21#12     6/6  Jež je pogledao lisicu i rekao:
+s21#13     6/6  — Ako želiš, možemo zajedno do rijeke.
+s21#14     1/1  — Može!
+s21#15     3/3  — odgovorila je lisica.
+s21#16     5/5  Išli su zajedno kroz šumu.
+s21#17     7/7  Poslije nekog vremena stigli su do rijeke.
+s21#18     14/14  Lisica je odmah počela da traži ribu, a jež je sjeo ispod jednog drveta.
+s21#19     5/5  Odjednom je lisica ugledala ribara.
+s21#20     2/2  — Brzo, bježi!
+s21#21     3/3  — viknula je lisica.
+s21#22     4/4  Ali jež nije pobjegao.
+s21#23     8/8  Samo se sklupčao i sakrio lice među bodlje.
+s21#24     6/6  Ribar je prišao i pogledao ježa.
+s21#25     4/4  — Oh, kakav mali jež!
+s21#26     6/6  — rekao je i nastavio svojim putem.
+s21#27     5/5  Lisica se sakrila iza drveta.
+s21#28     8/8  Kada je ribar otišao, izašla je iz skrovišta.
+s21#29     5/5  — Ježu, kako si se spasio?
+s21#30     2/3  — pitala je lisica.
+s21#31     2/3  Jež se nasmiješio.
+s21#32     7/7  — Svako ima nešto što mu može pomoći.
+s21#33     7/7  Lisica je pogledala njegove bodlje i rekla:
+s21#34     1/1  — Istina.
+s21#35     5/5  Tvoje bodlje su veoma korisne!
+s21#36     12/12  Od tog dana lisica i jež su često išli zajedno kroz šumu.
+s21#37     8/10  Lisica je bila brza, a jež je uvijek bio oprezan.
+s21#38     9/10  Pouka: Svako ima svoje sposobnosti i ne treba potcjenjivati druge.
+s22#1      4/4  Živjela jednom jedna djevojčica.
+s22#2      6/6  Ona je već bila baš odrasla.
+s22#3      11/11  I živjela je sa mužem i dvoje djece u tuđoj zemlji.
+s22#4      8/8  U novoj zemlji zakoni su se stalno mijenjali.
+s22#5      12/12  Život je postajao sve teži i strašniji, pa se djevojčica mnogo rastužila.
+s22#6      13/13  Počele su da joj se javljaju nametljive i uznemirujuće misli i napadi panike.
+s22#7      10/11  Svakog dana joj je bilo sve teže da čeka loše vijesti.
+s22#8      7/7  A onda se dogodilo nešto veoma čudno.
+s22#9      10/10  Vjerovatno se Bog sažalio na djevojčicu i poslao joj čudo.
+s22#10     17/17  Djevojčica je na internetu vidjela oglas u kojem su za jednu čudesnu bradatu kucu tražili nove vlasnike.
+s22#11     5/5  Djevojčica je pogledala fotografiju kuce.
+s22#12     15/15  I shvatila da to nije bila tek neka obična kuca, već kuca baš za nju.
+s22#13     10/10  Kao da bez nje više nikako nije mogla da živi.
+s22#14     13/13  I kao da je morala hitno da ubijedi sve ostale da je uzmu.
+s22#15     4/4  Tako je i bilo.
+s22#16     9/9  Cijela njena porodica je pogledala fotografiju i složila se.
+s22#17     10/10  Samo je sin bio protiv, jer uopšte nije volio pse.
+s22#18     9/11  Ubrzo su se djevojčica, njen muž i djeca upoznali sa kucicom.
+s22#19     7/7  Kuca se strašno obradovala svojoj novoj porodici.
+s22#20     9/9  Sve ih je izlizala i odmah ih je zavoljela.
+s22#21     10/10  Djevojčica je tako prestala da misli samo na strašne vijesti.
+s22#22     8/8  I uspjela je da izdrži težak period čekanja.
+s22#23     15/15  A njen muž, iako nikada ranije nije živio sa psima, prihvatio je kucu kao svoju.
+s22#24     5/5  Kćerka je bila potpuno oduševljena.
+s22#25     14/14  Čak se i sin vremenom navikao i polako je počeo da komunicira sa kucicom.
+s22#26     11/11  Svi su postali veseliji, a čak su postali i malo srećniji.
+s22#27     7/7  I tako su počeli lijepo da žive!
+s23#1      9/9  Krajem septembra u Crnoj Gori je još uvijek toplo.
+s23#2      5/5  Danju je oko trideset stepeni.
+s23#3      6/6  Noći su svježije, ali nije hladno.
+s23#4      8/8  More je toplo i ljudi se još kupaju.
+s23#5      9/9  Na plaži ima mnogo manje ljudi nego u avgustu.
+s23#6      8/8  Ljeto je prošlo, a sezona se polako završava.
+s23#7      6/6  U Budvi konobari sjede i razgovaraju.
+s23#8      7/7  Kafići su otvoreni, ali stolovi su prazni.
+s23#9      6/6  Ujutru je more mirno kao ogledalo.
+s23#10     7/7  Ribari se vraćaju u luku sa ribom.
+s23#11     7/7  Na pijaci sada ima smokava i grožđa.
+s23#12     8/8  Prodavci kažu da je grožđe ove godine slatko.
+s23#13     4/4  Ponekad kratko padne kiša.
+s23#14     7/7  Kiša brzo prođe i opet izađe sunce.
+s23#15     7/7  Ovo je najljepše doba godine na moru.
+s23#16     9/9  Nema gužve, more je toplo, a večeri su mirne.
+d01#1      3/3  Dobar dan, izvolite.
+d01#2      2/2  Dobar dan.
+d01#3      6/6  Hoću da pošaljem paket u Rusiju.
+d01#4      1/3  Šta je unutra?
+d01#5      3/3  Knjige i odjeća.
+d01#6      6/6  Stavite paket na vagu, molim vas.
+d01#7      2/2  Koliko košta?
+d01#8      6/6  Dva kilograma, to je dvadeset dva evra.
+d01#9      4/4  Za koliko dana stiže?
+d01#10     6/6  Obično za dvije nedjelje, ponekad duže.
+d01#11     3/3  Dobro, uzeću to.
+d01#12     1/3  Mogu li karticom?
+d01#13     4/4  Naravno. Evo vam potvrda.
+d01#14     4/4  Hvala vam puno. Doviđenja.
+d02#1      5/5  Izvolite, sjedite. Šta vas muči?
+d02#2      6/6  Boli me grlo već tri dana.
+d02#3      2/3  Imate li temperaturu?
+d02#4      4/4  Juče sam imao trideset osam.
+d02#5      4/4  Otvorite usta, molim vas.
+d02#6      1/4  Da li je ozbiljno?
+d02#7      5/5  Nije, ali morate uzimati antibiotik.
+d02#8      2/2  Koliko dana?
+d02#9      5/5  Sedam dana, dva puta dnevno.
+d02#10     4/4  Mogu li da radim?
+d02#11     6/6  Bolje ostanite kod kuće dva dana.
+d02#12     3/3  Razumijem. Hvala, doktore.
+d03#1      3/3  Dobar dan, izvolite.
+d03#2      4/4  Jednu kafu, molim vas.
+d03#3      3/4  Espreso ili sa mlijekom?
+d03#4      5/5  Sa mlijekom, i jednu vodu.
+d03#5      4/5  Vodu sa gasom ili bez?
+d03#6      3/3  Bez gasa, molim.
+d03#7      5/5  Želite li nešto da pojedete?
+d03#8      4/4  Ne, hvala. Samo piće.
+d03#9      0/2  Odmah donosim.
+d03#10     3/3  Račun, molim vas.
+d03#11     2/2  Tri evra.
+d03#12     4/4  Izvolite. Hvala i doviđenja.
+d04#1      7/7  Dobar dan, vi ste zvali za stan?
+d04#2      6/6  Da, htio bih da ga vidim.
+d04#3      8/8  Stan je na drugom spratu, ima dvije sobe.
+d04#4      3/3  Koliko košta mjesečno?
+d04#5      6/6  Četiristo evra, plus struja i voda.
+d04#6      2/4  Da li je namješten?
+d04#7      7/7  Jeste, sve je unutra: frižider, mašina, krevet.
+d04#8      5/5  Kada mogu da se uselim?
+d04#9      4/4  Od prvog sljedećeg mjeseca.
+d04#10     3/3  Treba li depozit?
+d04#11     4/4  Da, jedna mjesečna kirija.
+d04#12     6/6  Dobro, razmisliću i javiću vam se.
+d05#1      5/5  Dobar dan, šta je problem?
+d05#2      1/4  Auto ne pali ujutru.
+d05#3      4/4  Koliko je star akumulator?
+d05#4      7/7  Ne znam tačno, kupio sam auto polovan.
+d05#5      4/4  Provjeriću ga. Ostavite ključeve.
+d05#6      3/3  Koliko će trajati?
+d05#7      3/4  Sat vremena, možda dva.
+d05#8      6/6  Možete li i gume da provjerite?
+d05#9      1/1  Mogu.
+d05#10     5/5  Jedna je slaba, vidim odavde.
+d05#11     5/5  Koliko bi to sve koštalo?
+d05#12     6/6  Zvaću vas kad vidim šta treba.
+d05#13     5/5  U redu, evo moj broj.
+d06#1      5/7  Izvini što smetam, jesi li kod kuće?
+d06#2      5/5  Jesam, uđi. Šta se desilo?
+d06#3      9/9  Kod mene curi voda, a majstor se ne javlja.
+d06#4      5/5  Imaš li broj drugog majstora?
+d06#5      1/1  Nemam.
+d06#6      4/5  Mislio sam da ti imaš.
+d06#7      7/7  Imam jedan, zvao sam ga prošle godine.
+d06#8      6/6  Možeš li da ga pozoveš odmah?
+d06#9      3/3  Naravno, sada ću.
+d06#10     6/6  Hvala ti puno, spasio si me.
+d06#11     6/6  Nema na čemu, to je normalno.
+d06#12     6/6  Ako ti nešto zatreba, samo pozovi.
+d06#13     4/4  Hoću. Sretno sa vodom!
+d07#1      6/6  Dobar dan, kako mogu da pomognem?
+d07#2      4/4  Hoću da otvorim račun.
+d07#3      4/4  Imate li boravišnu dozvolu?
+d07#4      5/5  Imam, evo je. I pasoš.
+d07#5      6/6  Treba mi i potvrda o adresi.
+d07#6      3/4  Nemam je sa sobom.
+d07#7      3/3  Mogu li sjutra?
+d07#8      5/5  Možete. Radimo do dva popodne.
+d07#9      4/4  Koliko košta održavanje računa?
+d07#10     6/6  Dva evra mjesečno, kartica je besplatna.
+d07#11     2/4  A kada dobijam karticu?
+d07#12     5/6  Za sedam dana, javićemo vam se.
+d07#13     4/4  Hvala, vidimo se sjutra.
+d08#1      5/5  Izvolite, šta će vam biti?
+d08#2      2/4  Kilogram jabuka, molim vas.
+d08#3      6/6  Ove su slatke, a ove kiselije.
+d08#4      4/4  Uzeću slatke. Koliko koštaju?
+d08#5      1/4  Evro i po kilogram.
+d08#6      3/3  Imate li kruške?
+d08#7      4/4  Danas nemam, dođite sjutra.
+d08#8      5/5  Onda još pola kilograma paradajza.
+d08#9      5/5  Evo. Sve zajedno tri evra.
+d08#10     5/5  Nemam sitno, imam samo dvadeset.
+d08#11     4/4  Nema problema, evo kusur.
+d08#12     3/3  Hvala, prijatan dan!
+d09#1      4/4  Dobar dan, gdje putujete?
+d09#2      2/4  U Budvu, molim vas.
+d09#3      5/5  U jednom pravcu ili povratnu?
+d09#4      4/4  Povratnu, vraćam se sjutra.
+d09#5      2/4  To je jedanaest evra.
+d09#6      4/4  Kada polazi sljedeći autobus?
+d09#7      6/6  Za dvadeset minuta, peron broj tri.
+d09#8      5/5  Da li treba platiti prtljag?
+d09#9      4/6  Jedan evro po koferu, kod vozača.
+d09#10     3/3  Razumijem. Hvala vam.
+d09#11     2/2  Srećan put!
+d09#12     2/2  Hvala, doviđenja.
+l01e09     3/3  Drago mi je
+l01e11     4/4  Dobro jutro, kako si?
+l02e10     0/2  Odakle si?
+l02e11.1   2/2  Dobar dan!
+l02e11.2   3/3  Zovem se Ivan.
+l02e11.3   8/8  Ja sam iz Rusije, a živim u Podgorici.
+l02e11.4   5/5  Još uvijek slabo govorim crnogorski.
+l03e09     4/4  Molim vas, jednu kafu
+l03e11     4/4  Hoću vodu bez gasa.
+l04e09     4/4  Ovo je moja porodica
+l04e11.1   4/4  Ovo je moja porodica.
+l04e11.2   6/6  Imam dvije sestre i jednog brata.
+l04e11.3   11/11  Moj otac je iz Nikšića, a moja majka je iz Bara.
+l05e09     2/2  Koliko košta?
+l05e11     3/3  Imate li mlijeko?
+l06e09     3/3  Vidimo se sjutra
+l06e11.1   7/7  Danas je ponedjeljak, a sjutra je utorak.
+l06e11.2   7/7  U petak uveče vidimo se u Baru.
+l06e11.3   4/4  U nedjelju ne radim.
+l07e09     3/3  Molim vas, ponovite
+l07e11     3/3  Šta radiš večeras?
+l08e09     3/3  Gdje je plaža?
+l08e11.1   5/5  Izvinite, gdje je autobuska stanica?
+l08e11.2   2/4  Idite pravo, pa lijevo.
+l08e11.3   7/8  Plaža je blizu, a pijaca je u centru.
+l09e11     4/4  Gdje si bio juče?
+l10e11     3/3  Slavina ne radi
+l11e11.1   3/4  Juče sam bio bolestan.
+l11e11.2   3/3  Boljela me glava.
+l11e11.3   5/5  Danas sam bio kod ljekara.
+l12e11     3/3  Nemam vremena danas
+l13e11     5/5  Molim vas, pola kilograma sira
+l14e11     5/5  Gdje je šalter za boravak?
+l15e11     3/3  Koliko ima stanova?
+l16e11     4/4  Koliko košta sve zajedno?
+l17e11     4/4  Kada ćemo se vidjeti?
+l18e11     5/5  Jednu kartu do Budve, molim
+l19e11.1   4/4  Juče se pokvario auto.
+l19e11.2   5/5  Sjutra ću ići u servis.
+l19e11.3   4/5  Popravka će koštati sto eura.
+l20e11     2/2  Platiću karticom
+l21e11     3/3  Ponovite, molim vas
+l22e11.1   5/5  Komšije su sinoć pravile buku.
+l22e11.2   3/3  Nisam mogao spavati.
+l22e11.3   5/5  Sjutra ću razgovarati sa gazdom.
+l23e11     2/3  Koji je najbolji?
+l24e11     3/3  Napolju je hladno
+l25e11     4/4  Reci mi kada dođeš
+l26e11     4/4  Kada počinje radno vrijeme?
+l27e11     3/5  Da li biste mi pomogli?
+l28e11     3/4  Jesi li pročitao pismo?
+l29e11     2/4  Kada ti je rođendan?
+l30e11.1   4/4  Otišao sam kod ljekara.
+l30e11.2   7/7  Dao mi je uput za analizu krvi.
+l30e11.3   7/7  Nalaz će biti gotov za tri dana.
+l31e11     3/3  Kada dolazi majstor?
+l32e11.1   4/4  Krenuli smo rano ujutru.
+l32e11.2   5/5  Na granici nije bilo gužve.
+l32e11.3   4/4  Stigli smo prije podne.
+l33e11     4/4  Možemo li dobiti jelovnik?
+l34e11     5/5  Šta ti misliš o tome?
+l35e11     4/4  Gdje se ovdje plaća?
+l36e11     3/3  Hvala na čekanju.
+l37e11     4/4  Kad se vraćaš kući?
+l38e11     5/5  Izvini, kasnim jer pada kiša.
+l39e11     6/6  Kako se to kaže na crnogorskom?
+l40e11.1   5/5  Juče sam cijeli dan radio.
+l40e11.2   7/7  Napisao sam dva pisma i pročitao ugovor.
+l40e11.3   7/7  Posao još nisam završio, ali sjutra nastavljam.
+l41e11     5/5  Ja bih to uradio drugačije.
+l42e11     4/4  Izvinite, šta ste rekli?
+l43e11     7/7  Gdje je autobus koji ide na more?
+l44e11     4/4  Što prije, to bolje.
+l45e11.1   5/5  Tek sam stigao u Podgoricu.
+l45e11.2   14/14  Već znam gdje je pijaca, ali još ne znam kako se ide do mora.
+l45e11.3   6/6  Uskoro ću kupiti kartu i probati.
+l46e11     5/5  Kako se ide do centra?
+l47e11     4/4  Koliko košta pola kile?
+l48e11     5/5  Radim od devet do pet.
+l49e11     5/5  Htio bih da otvorim račun.
+l50e11.1   6/6  Bio sam na razgovoru za posao.
+l50e11.2   11/11  Pitali su me koliko imam iskustva i kada mogu da počnem.
+l50e11.3   9/9  Rekli su da će mi javiti za nedjelju dana.
+l51e11     6/6  Gdje mogu da upišem kurs jezika?
+l52e11     5/5  Nemam signala, zovem te kasnije.
+l53e11     4/4  Koliko će koštati popravka?
+l54e11     5/5  Moj sin ima šest godina.
+l55e11.1   6/6  U subotu smo bili kod komšija.
+l55e11.2   7/7  Bilo je puno gostiju i dosta hrane.
+l55e11.3   10/10  Domaćin je rekao živjeli, a mi smo ostali do ponoći.
+l56e11     6/6  Boli me glava, treba mi odmor.
+l57e11     5/5  Imam rezervaciju na svoje ime.
+l58e11     5/5  Molim vas, pozovite hitnu pomoć.
+l59e11     5/5  Razumijem, ali se ne slažem.
+l60e11.1   7/7  Prošle godine sam se doselio u Podgoricu.
+l60e11.2   10/14  U početku nisam znao ni gdje se kupuju karte, ni kako se traži majstor.
+l60e11.3   17/17  Sad već razumijem komšije, pitam u banci šta me zanima i mogu da kažem ono što mislim.
+l60e11.4   6/6  Još griješim, ali me ljudi razumiju.
+t01e11     4/4  Ponekad kratko padne kiša.
+t02e11     4/4  Ja sam poslije vas.

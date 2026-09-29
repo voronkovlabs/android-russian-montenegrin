@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crnogorski.trener.data.LessonRepository
+import com.crnogorski.trener.data.Config
 import com.crnogorski.trener.speech.CorpusCheck
 import com.crnogorski.trener.speech.CorpusRoute
 import com.crnogorski.trener.speech.Speaker
@@ -210,7 +211,12 @@ fun CorpusScreen(speaker: Speaker, onClose: () -> Unit) {
                 PrimaryButton("Остановить") { check.stop() }
                 Spacer(Modifier.height(10.dp))
                 Text(
-                    "Остановленный прогон всё равно сохранит отчёт по пройденному.",
+                    if (state.dumping) {
+                        "Остановленная выгрузка оставит уже записанные файлы " +
+                            "и опись к ним."
+                    } else {
+                        "Остановленный прогон всё равно сохранит отчёт по пройденному."
+                    },
                     style = MaterialTheme.typography.bodySmall,
                     color = Muted
                 )
@@ -252,6 +258,42 @@ fun CorpusScreen(speaker: Speaker, onClose: () -> Unit) {
                 )
                 Spacer(Modifier.height(14.dp))
                 PrimaryButton("Прогнать корпус") { launch() }
+
+                // Выгрузка — вторая кнопка, а не галочка у первой: это другое
+                // дело. Прогон выносит вердикт сам, выгрузка не выносит
+                // никакого — её слушают снаружи, и «только непроверенное» к
+                // ней не относится вовсе.
+                //
+                // Микрофон ей не нужен: телефон здесь только говорит, — поэтому
+                // и разрешения не спрашиваем.
+                Spacer(Modifier.height(18.dp))
+                PrimaryButton("Записать корпус в файлы") { check.dump() }
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    "Телефон читает весь корпус в звуковые файлы и никого не " +
+                        "слушает. Слушает их потом посторонний — так видно, " +
+                        "внятен ли наш синтезатор чужому уху.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Muted
+                )
+
+                // Проба выговора. Кнопки нет, пока в настройках не задан список
+                // написаний: она нужна не занятию, а подбору замены для
+                // Vygovor, и висеть на экране просто так ей незачем.
+                if (Config.current.speech.probe.isNotEmpty()) {
+                    Spacer(Modifier.height(18.dp))
+                    PrimaryButton(
+                        "Проба выговора (${Config.current.speech.probe.size})"
+                    ) { check.sayProbes() }
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        "Произносит в файлы написания из настроек — чтобы " +
+                            "услышать со стороны, как движок их прочтёт, и " +
+                            "выбрать, что подсовывать ему вместо слова.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Muted
+                    )
+                }
             }
             Spacer(Modifier.height(40.dp))
         }

@@ -237,7 +237,31 @@ data class Tuning(
          * На сколько знаков слово может разойтись с эталоном и всё же считаться
          * тем же словом. Для коротких слов допуск меньше — см. `LocalCheck.close`.
          */
-        val spokenSlack: Int = 2
+        val spokenSlack: Int = 2,
+        /**
+         * Что сказать движку вместо написанного: слово → произносимое.
+         *
+         * Голос телефона коверкает `sjutra` и `nedjelju` (см. [Vygovor]), а
+         * тексты курса менять из-за этого незачем. Написание подбирается
+         * опытом, значит правится чаще, чем собирается APK, — поэтому лежит
+         * здесь.
+         *
+         * **Пустая карта выключает приём целиком** (`"vygovor": {}`), и это
+         * штатный путь отката: ни сборки, ни установки на три телефона.
+         */
+        val vygovor: Map<String, String> = emptyMap(),
+        /**
+         * Написания, которые надо просто произнести и послушать со стороны.
+         *
+         * Кнопка «Проба выговора» на экране прогона пишет каждое из них
+         * отдельным файлом, дальше их слушает Whisper. Нужно это ровно затем,
+         * чтобы подобрать замену для `vygovor`: как движок прочтёт `šutra` или
+         * `s jutra`, из документации не узнать — только услышать.
+         *
+         * Список здесь, а не в коде, чтобы перебирать написания **без
+         * пересборки**: один APK, сколько угодно опытов. Пусто — кнопки нет.
+         */
+        val probe: List<String> = emptyList()
     )
 
     /**
@@ -338,6 +362,15 @@ data class Tuning(
             lowPitch = speech.lowPitch.coerceIn(0.5, 1.5),
             watchdogSeconds = speech.watchdogSeconds.coerceIn(5, 120),
             muteTailMs = speech.muteTailMs.coerceIn(0, 5000),
+            // Карта произношения правится руками с телефона, и пустой ключ
+            // заменял бы всякое слово. Потолок — чтобы битый файл не заставил
+            // перебирать сотни замен на каждой фразе.
+            vygovor = speech.vygovor
+                .filterKeys { it.isNotBlank() }
+                .mapKeys { it.key.trim().lowercase() }
+                .mapValues { it.value.trim() }
+                .entries.take(50).associate { it.key to it.value },
+            probe = speech.probe.filter { it.isNotBlank() }.take(50),
             retryDelayMs = speech.retryDelayMs,
             spokenPass = speech.spokenPass.coerceIn(0.1, 1.0),
             spokenSlack = speech.spokenSlack.coerceIn(0, 3),

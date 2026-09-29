@@ -1,0 +1,3566 @@
+[
+ {
+  "id": "s01#1",
+  "source": "Prvi dan",
+  "text": "Dobro jutro!",
+  "heard": "Dobro jutro!"
+ },
+ {
+  "id": "s01#2",
+  "source": "Prvi dan",
+  "text": "Zovem se Ivan.",
+  "heard": "Zovem se Ivan."
+ },
+ {
+  "id": "s01#3",
+  "source": "Prvi dan",
+  "text": "Ja sam iz Rusije, a sada živim u Podgorici.",
+  "heard": "Ja sam iz Rusije, a sada živim u Podgorici."
+ },
+ {
+  "id": "s01#4",
+  "source": "Prvi dan",
+  "text": "Još uvijek slabo govorim crnogorski.",
+  "heard": "Još uvijek slabo govorim crnogorski."
+ },
+ {
+  "id": "s01#5",
+  "source": "Prvi dan",
+  "text": "Danas idem u grad.",
+  "heard": "Danas i demograd."
+ },
+ {
+  "id": "s01#6",
+  "source": "Prvi dan",
+  "text": "Autobuska stanica je blizu.",
+  "heard": "a utobuska stanica je blizu."
+ },
+ {
+  "id": "s01#7",
+  "source": "Prvi dan",
+  "text": "Idem pravo, pa lijevo.",
+  "heard": "idem pravo pa lijevo"
+ },
+ {
+  "id": "s01#8",
+  "source": "Prvi dan",
+  "text": "U centru je kafe.",
+  "heard": "o centru e kafe"
+ },
+ {
+  "id": "s01#9",
+  "source": "Prvi dan",
+  "text": "Molim vas, jednu kafu.",
+  "heard": "Molim vas i jednu kafu."
+ },
+ {
+  "id": "s01#10",
+  "source": "Prvi dan",
+  "text": "Koliko košta?",
+  "heard": "Koliko kosta?"
+ },
+ {
+  "id": "s01#11",
+  "source": "Prvi dan",
+  "text": "Hvala lijepo!",
+  "heard": "Hvala lijepo!"
+ },
+ {
+  "id": "s01#12",
+  "source": "Prvi dan",
+  "text": "Doviđenja, vidimo se sjutra.",
+  "heard": "Do viđenja, vidimo se sjutra."
+ },
+ {
+  "id": "s02#1",
+  "source": "Moja porodica",
+  "text": "Ovo je moja porodica.",
+  "heard": "Ovo je moja porodica."
+ },
+ {
+  "id": "s02#2",
+  "source": "Moja porodica",
+  "text": "Imam dvije sestre i jednog brata.",
+  "heard": "Imam dvije sestre i jednog brata."
+ },
+ {
+  "id": "s02#3",
+  "source": "Moja porodica",
+  "text": "Moj otac je iz Nikšića.",
+  "heard": "Мој отец је из Никшића."
+ },
+ {
+  "id": "s02#4",
+  "source": "Moja porodica",
+  "text": "Moja majka je iz Bara.",
+  "heard": "Mojamajka je izbara."
+ },
+ {
+  "id": "s02#5",
+  "source": "Moja porodica",
+  "text": "Moj brat živi u Crnoj Gori već pet godina.",
+  "heard": "Moj brat živi u Crnoj Gori već pet godina."
+ },
+ {
+  "id": "s02#6",
+  "source": "Moja porodica",
+  "text": "On radi u Budvi.",
+  "heard": "On radi u budvi."
+ },
+ {
+  "id": "s02#7",
+  "source": "Moja porodica",
+  "text": "Moje sestre su studenti.",
+  "heard": "Moje sestre su studenti."
+ },
+ {
+  "id": "s02#8",
+  "source": "Moja porodica",
+  "text": "Nemam djecu.",
+  "heard": "Nemam djecu"
+ },
+ {
+  "id": "s02#9",
+  "source": "Moja porodica",
+  "text": "U nedjelju ne radim.",
+  "heard": "U nedelju ne radim."
+ },
+ {
+  "id": "s02#10",
+  "source": "Moja porodica",
+  "text": "Sjutra idemo na plažu.",
+  "heard": "Sjutra idemo na plažu."
+ },
+ {
+  "id": "s02#11",
+  "source": "Moja porodica",
+  "text": "Plaža je blizu, a more je toplo.",
+  "heard": "Plaže je blizu, a more je toplo."
+ },
+ {
+  "id": "s03#1",
+  "source": "Na pijaci",
+  "text": "Danas je subota.",
+  "heard": "Danas je subota."
+ },
+ {
+  "id": "s03#2",
+  "source": "Na pijaci",
+  "text": "Idem na pijacu.",
+  "heard": "idem na pijacu"
+ },
+ {
+  "id": "s03#3",
+  "source": "Na pijaci",
+  "text": "Hoću jednu jabuku i hljeb.",
+  "heard": "Hoću jednu jabuku i hljeb."
+ },
+ {
+  "id": "s03#4",
+  "source": "Na pijaci",
+  "text": "Imate li mlijeko?",
+  "heard": "Imate li mlijeko?"
+ },
+ {
+  "id": "s03#5",
+  "source": "Na pijaci",
+  "text": "Nemamo mlijeko danas, izvinite.",
+  "heard": "Nemamo mlijeko danas, izvinite."
+ },
+ {
+  "id": "s03#6",
+  "source": "Na pijaci",
+  "text": "Koliko košta ovaj sir?",
+  "heard": "Koliko košta ovaj sir?"
+ },
+ {
+  "id": "s03#7",
+  "source": "Na pijaci",
+  "text": "Hoću vodu bez gasa.",
+  "heard": "Hoću vodu bez gasa."
+ },
+ {
+  "id": "s03#8",
+  "source": "Na pijaci",
+  "text": "Molim vas, dva hljeba.",
+  "heard": "Molim vas, dva hljeba."
+ },
+ {
+  "id": "s03#9",
+  "source": "Na pijaci",
+  "text": "Nemam sitno, izvinite.",
+  "heard": "Nemam sitno, izvinite."
+ },
+ {
+  "id": "s03#10",
+  "source": "Na pijaci",
+  "text": "Račun, molim vas.",
+  "heard": "Račun, molim vas."
+ },
+ {
+  "id": "s03#11",
+  "source": "Na pijaci",
+  "text": "Vidim ženu na pijaci.",
+  "heard": "Vidim ženu na pijaci."
+ },
+ {
+  "id": "s03#12",
+  "source": "Na pijaci",
+  "text": "Sada idem kući.",
+  "heard": "Sada idem kući."
+ },
+ {
+  "id": "s04#1",
+  "source": "Radni dan",
+  "text": "Ustajem u sedam sati.",
+  "heard": "Ustajem u 7 sati."
+ },
+ {
+  "id": "s04#2",
+  "source": "Radni dan",
+  "text": "Pijem kafu i jedem hljeb.",
+  "heard": "pijem kafu i jedem hljeb"
+ },
+ {
+  "id": "s04#3",
+  "source": "Radni dan",
+  "text": "Moja žena još spava.",
+  "heard": "Moja žena još spava."
+ },
+ {
+  "id": "s04#4",
+  "source": "Radni dan",
+  "text": "U osam idem na posao.",
+  "heard": "U osam idem na poso."
+ },
+ {
+  "id": "s04#5",
+  "source": "Radni dan",
+  "text": "Radim u kancelariji u centru.",
+  "heard": "Radim u kancelariji u centru."
+ },
+ {
+  "id": "s04#6",
+  "source": "Radni dan",
+  "text": "Danas imam puno posla.",
+  "heard": "Danas imam puno posla."
+ },
+ {
+  "id": "s04#7",
+  "source": "Radni dan",
+  "text": "U podne jedem u restoranu.",
+  "heard": "U podne jedem u restoranu."
+ },
+ {
+  "id": "s04#8",
+  "source": "Radni dan",
+  "text": "Kolega govori brzo, ne razumijem sve.",
+  "heard": "Kolega govori brzo, ne razumijem sve."
+ },
+ {
+  "id": "s04#9",
+  "source": "Radni dan",
+  "text": "Poslije posla idem u prodavnicu.",
+  "heard": "Poslije posla idem u prodavnicu."
+ },
+ {
+  "id": "s04#10",
+  "source": "Radni dan",
+  "text": "Uveče gledamo film.",
+  "heard": "Uveče gledamo film."
+ },
+ {
+  "id": "s04#11",
+  "source": "Radni dan",
+  "text": "Volim ovaj grad.",
+  "heard": "Volimo ovaj grad!"
+ },
+ {
+  "id": "s04#12",
+  "source": "Radni dan",
+  "text": "Sada idem da spavam.",
+  "heard": "Sada idem da spavam."
+ },
+ {
+  "id": "s05#1",
+  "source": "U gradu",
+  "text": "Izvinite, gdje je pošta?",
+  "heard": "Izvinite, gdje je pošta?"
+ },
+ {
+  "id": "s05#2",
+  "source": "U gradu",
+  "text": "Idite pravo, pa desno.",
+  "heard": "idite pravo, pa desno"
+ },
+ {
+  "id": "s05#3",
+  "source": "U gradu",
+  "text": "Pošta je pored banke.",
+  "heard": "Pošta je pored banke."
+ },
+ {
+  "id": "s05#4",
+  "source": "U gradu",
+  "text": "Hvala, a gdje je apoteka?",
+  "heard": "Hvala, a gdje je apoteka?"
+ },
+ {
+  "id": "s05#5",
+  "source": "U gradu",
+  "text": "Apoteka je na uglu.",
+  "heard": "Apoteka je na uglu."
+ },
+ {
+  "id": "s05#6",
+  "source": "U gradu",
+  "text": "Da li je daleko?",
+  "heard": "Dalje daleko?"
+ },
+ {
+  "id": "s05#7",
+  "source": "U gradu",
+  "text": "Nije daleko, pet minuta pješke.",
+  "heard": "Nije daleko 5 minuta pješke."
+ },
+ {
+  "id": "s05#8",
+  "source": "U gradu",
+  "text": "Ovdje je trg, a tamo je crkva.",
+  "heard": "Ovdje je trg, a tamo je crkva."
+ },
+ {
+  "id": "s05#9",
+  "source": "U gradu",
+  "text": "Tražim hotel pored mora.",
+  "heard": "tražim hotel pored mora"
+ },
+ {
+  "id": "s05#10",
+  "source": "U gradu",
+  "text": "Možete ići autobusom.",
+  "heard": "Možete ići autobusom."
+ },
+ {
+  "id": "s05#11",
+  "source": "U gradu",
+  "text": "Autobus staje na trgu.",
+  "heard": "аутогу стаје на тргу."
+ },
+ {
+  "id": "s05#12",
+  "source": "U gradu",
+  "text": "Hvala vam puno!",
+  "heard": "Hvala vam puno."
+ },
+ {
+  "id": "s06#1",
+  "source": "Šta je bilo juče",
+  "text": "Juče sam bio kod prijatelja.",
+  "heard": "i uče sam bio kod prijatelja."
+ },
+ {
+  "id": "s06#2",
+  "source": "Šta je bilo juče",
+  "text": "Došao sam u pet sati.",
+  "heard": "Došao sam u 5 sati."
+ },
+ {
+  "id": "s06#3",
+  "source": "Šta je bilo juče",
+  "text": "Njegova žena je kuvala večeru.",
+  "heard": "Njegova žena je kuvala večeru."
+ },
+ {
+  "id": "s06#4",
+  "source": "Šta je bilo juče",
+  "text": "Jeli smo ribu i salatu.",
+  "heard": "Jelismo ribu i salatu."
+ },
+ {
+  "id": "s06#5",
+  "source": "Šta je bilo juče",
+  "text": "Pili smo vino i pričali.",
+  "heard": "Pili smo vino i pričali."
+ },
+ {
+  "id": "s06#6",
+  "source": "Šta je bilo juče",
+  "text": "Pričali smo o poslu i o djeci.",
+  "heard": "Pričali smo o poslu i o djeci."
+ },
+ {
+  "id": "s06#7",
+  "source": "Šta je bilo juče",
+  "text": "Poslije smo gledali utakmicu.",
+  "heard": "Poslije smo gledali utakmicu."
+ },
+ {
+  "id": "s06#8",
+  "source": "Šta je bilo juče",
+  "text": "Naš tim je izgubio.",
+  "heard": "Naš tim je izgubio."
+ },
+ {
+  "id": "s06#9",
+  "source": "Šta je bilo juče",
+  "text": "Vratio sam se kući u jedanaest.",
+  "heard": "Vratio sam se kući u 11."
+ },
+ {
+  "id": "s06#10",
+  "source": "Šta je bilo juče",
+  "text": "Bio je to lijep dan.",
+  "heard": "Bio je to lijep dan."
+ },
+ {
+  "id": "s06#11",
+  "source": "Šta je bilo juče",
+  "text": "Danas sam umoran.",
+  "heard": "Danas sam umoran."
+ },
+ {
+  "id": "s07#1",
+  "source": "Kod kuće",
+  "text": "Naš stan je na trećem spratu.",
+  "heard": "Naš stan je na trećem spratu."
+ },
+ {
+  "id": "s07#2",
+  "source": "Kod kuće",
+  "text": "Ima dvije sobe, kuhinju i kupatilo.",
+  "heard": "Ima dvije sobe, kuhinju i kupatilo."
+ },
+ {
+  "id": "s07#3",
+  "source": "Kod kuće",
+  "text": "Juče je nestala struja.",
+  "heard": "i uče je nestala struja."
+ },
+ {
+  "id": "s07#4",
+  "source": "Kod kuće",
+  "text": "Nije radio frižider ni televizor.",
+  "heard": "Nije radiofrižider ni televizor."
+ },
+ {
+  "id": "s07#5",
+  "source": "Kod kuće",
+  "text": "Zvao sam komšiju.",
+  "heard": "Zvao sam komšju."
+ },
+ {
+  "id": "s07#6",
+  "source": "Kod kuće",
+  "text": "Rekao je da je to cijela zgrada.",
+  "heard": "rekao je da je to cijela zgrada"
+ },
+ {
+  "id": "s07#7",
+  "source": "Kod kuće",
+  "text": "Poslije sat vremena struja se vratila.",
+  "heard": "Poslije sat vremena struja se vratila."
+ },
+ {
+  "id": "s07#8",
+  "source": "Kod kuće",
+  "text": "Onda je počela da curi voda.",
+  "heard": "onda je počela da curi voda."
+ },
+ {
+  "id": "s07#9",
+  "source": "Kod kuće",
+  "text": "Zvao sam majstora.",
+  "heard": "Zvao sam majstora."
+ },
+ {
+  "id": "s07#10",
+  "source": "Kod kuće",
+  "text": "Došao je ujutru i popravio slavinu.",
+  "heard": "Došao je u jutru i poprevio slavinu."
+ },
+ {
+  "id": "s07#11",
+  "source": "Kod kuće",
+  "text": "Sada je sve u redu.",
+  "heard": "Sada je sve u redu."
+ },
+ {
+  "id": "s08#1",
+  "source": "Kod ljekara",
+  "text": "Jutros me je boljela glava.",
+  "heard": "i utro smo je boljela glava."
+ },
+ {
+  "id": "s08#2",
+  "source": "Kod ljekara",
+  "text": "Nisam mogao da radim.",
+  "heard": "Nisam mogao da radim."
+ },
+ {
+  "id": "s08#3",
+  "source": "Kod ljekara",
+  "text": "Otišao sam kod ljekara.",
+  "heard": "Otišao sam kod ljekara."
+ },
+ {
+  "id": "s08#4",
+  "source": "Kod ljekara",
+  "text": "Ljekar je pitao šta me boli.",
+  "heard": "Ljekar je pitao šta me boli."
+ },
+ {
+  "id": "s08#5",
+  "source": "Kod ljekara",
+  "text": "Rekao sam da me boli glava i grlo.",
+  "heard": "rekao sam da me boli glava i grlo"
+ },
+ {
+  "id": "s08#6",
+  "source": "Kod ljekara",
+  "text": "Imao sam temperaturu.",
+  "heard": "i mousam temperaturu."
+ },
+ {
+  "id": "s08#7",
+  "source": "Kod ljekara",
+  "text": "Ljekar je rekao da je to grip.",
+  "heard": "Ljekari je rekao da je to grip."
+ },
+ {
+  "id": "s08#8",
+  "source": "Kod ljekara",
+  "text": "Dao mi je recept.",
+  "heard": "Dam je recept"
+ },
+ {
+  "id": "s08#9",
+  "source": "Kod ljekara",
+  "text": "Kupio sam lijek u apoteci.",
+  "heard": "Kupio sam lijeku a poteci."
+ },
+ {
+  "id": "s08#10",
+  "source": "Kod ljekara",
+  "text": "Moram da pijem tablete tri dana.",
+  "heard": "Moram da pijem tablete tri dana."
+ },
+ {
+  "id": "s08#11",
+  "source": "Kod ljekara",
+  "text": "Sjutra će biti bolje.",
+  "heard": "Siutra će biti bolje."
+ },
+ {
+  "id": "s09#1",
+  "source": "Nema ničega",
+  "text": "Danas nemam vremena.",
+  "heard": "Danas nemam vremena."
+ },
+ {
+  "id": "s09#2",
+  "source": "Nema ničega",
+  "text": "U frižideru nema ničega.",
+  "heard": "U frižideru nema ničega."
+ },
+ {
+  "id": "s09#3",
+  "source": "Nema ničega",
+  "text": "Nema mlijeka, nema sira, nema hljeba.",
+  "heard": "Nema mlijeka, nema sira, nema hljeba."
+ },
+ {
+  "id": "s09#4",
+  "source": "Nema ničega",
+  "text": "Moram u prodavnicu.",
+  "heard": "Moram u prodavnicu."
+ },
+ {
+  "id": "s09#5",
+  "source": "Nema ničega",
+  "text": "Prodavnica je blizu, kod parka.",
+  "heard": "Prodavnica je blizu, kod parka."
+ },
+ {
+  "id": "s09#6",
+  "source": "Nema ničega",
+  "text": "Nemaju svježeg mesa danas.",
+  "heard": "Nemaju svježeg mesa danas."
+ },
+ {
+  "id": "s09#7",
+  "source": "Nema ničega",
+  "text": "Uzeo sam pola kilograma sira.",
+  "heard": "Uzeo sam pola kilograma sira."
+ },
+ {
+  "id": "s09#8",
+  "source": "Nema ničega",
+  "text": "Nemam sitnog novca.",
+  "heard": "Nemam sitnog novca."
+ },
+ {
+  "id": "s09#9",
+  "source": "Nema ničega",
+  "text": "Platio sam karticom.",
+  "heard": "Platio sam karticom."
+ },
+ {
+  "id": "s09#10",
+  "source": "Nema ničega",
+  "text": "Kod kuće nema nikoga.",
+  "heard": "Kod kuće nema nikoga."
+ },
+ {
+  "id": "s09#11",
+  "source": "Nema ničega",
+  "text": "Žena je otišla kod sestre.",
+  "heard": "Žena je otišla kod sestre."
+ },
+ {
+  "id": "s09#12",
+  "source": "Nema ničega",
+  "text": "Večeraću sam.",
+  "heard": "Večera čusam!"
+ },
+ {
+  "id": "s10#1",
+  "source": "Papiri",
+  "text": "Treba mi nova lična karta.",
+  "heard": "Treba mi nova lična karta."
+ },
+ {
+  "id": "s10#2",
+  "source": "Papiri",
+  "text": "Otišao sam u opštinu.",
+  "heard": "Otišao sam u opštinu."
+ },
+ {
+  "id": "s10#3",
+  "source": "Papiri",
+  "text": "Uzeo sam broj i čekao.",
+  "heard": "Uzeo sam broj i čekao."
+ },
+ {
+  "id": "s10#4",
+  "source": "Papiri",
+  "text": "Čekao sam skoro sat vremena.",
+  "heard": "Čekao sam skoro sad vremena."
+ },
+ {
+  "id": "s10#5",
+  "source": "Papiri",
+  "text": "Službenica je tražila pasoš.",
+  "heard": "Službenica je tražila pasoš."
+ },
+ {
+  "id": "s10#6",
+  "source": "Papiri",
+  "text": "Dao sam joj pasoš i potvrdu.",
+  "heard": "Dao sam joj pasoš i potvrdu."
+ },
+ {
+  "id": "s10#7",
+  "source": "Papiri",
+  "text": "Rekla je da nemam sve papire.",
+  "heard": "Rekla je da nemam sve papire."
+ },
+ {
+  "id": "s10#8",
+  "source": "Papiri",
+  "text": "Fali mi potvrda o adresi.",
+  "heard": "Fali mi potvrda o adresi."
+ },
+ {
+  "id": "s10#9",
+  "source": "Papiri",
+  "text": "Poslije sam otišao u poštu.",
+  "heard": "Poslije sam otišao u poštu."
+ },
+ {
+  "id": "s10#10",
+  "source": "Papiri",
+  "text": "Poslao sam pismo u Rusiju.",
+  "heard": "Пославцам письмо у Русију"
+ },
+ {
+  "id": "s10#11",
+  "source": "Papiri",
+  "text": "Pismo će stići za dvije nedjelje.",
+  "heard": "Pismo će stići za dvije nedjelje."
+ },
+ {
+  "id": "s11#1",
+  "source": "Puno ljudi",
+  "text": "Subotom na pijaci ima puno ljudi.",
+  "heard": "Subotom na pijaci ima puno ljudi."
+ },
+ {
+  "id": "s11#2",
+  "source": "Puno ljudi",
+  "text": "Prodavci viču i nude voće.",
+  "heard": "prodavci viču i nude voće."
+ },
+ {
+  "id": "s11#3",
+  "source": "Puno ljudi",
+  "text": "Kupio sam dva kilograma jabuka.",
+  "heard": "Kupio sam 2 kg jabuka."
+ },
+ {
+  "id": "s11#4",
+  "source": "Puno ljudi",
+  "text": "Uzeo sam i tri paradajza.",
+  "heard": "Uzeo sam i tri paradajza."
+ },
+ {
+  "id": "s11#5",
+  "source": "Puno ljudi",
+  "text": "Krompir je jeftin, a paprike su skupe.",
+  "heard": "Krompir je jeftin, a paprike su skupe."
+ },
+ {
+  "id": "s11#6",
+  "source": "Puno ljudi",
+  "text": "Koliko koštaju ove kruške?",
+  "heard": "Koliko koštaju ove kruške?"
+ },
+ {
+  "id": "s11#7",
+  "source": "Puno ljudi",
+  "text": "Dva evra kilogram.",
+  "heard": "2 ebra kilogram"
+ },
+ {
+  "id": "s11#8",
+  "source": "Puno ljudi",
+  "text": "Uzeću pola kilograma.",
+  "heard": "Uzeću pola kilograma."
+ },
+ {
+  "id": "s11#9",
+  "source": "Puno ljudi",
+  "text": "Kupio sam i cvijeće za ženu.",
+  "heard": "Kupio sam i cvijeće za ženu."
+ },
+ {
+  "id": "s11#10",
+  "source": "Puno ljudi",
+  "text": "Torbe su bile teške.",
+  "heard": "Torbe su bile teške."
+ },
+ {
+  "id": "s11#11",
+  "source": "Puno ljudi",
+  "text": "Vratio sam se kući taksijem.",
+  "heard": "Vratio sam se kući taksijem."
+ },
+ {
+  "id": "s12#1",
+  "source": "Sjutra putujem",
+  "text": "Sjutra putujem na more.",
+  "heard": "Siutra putujem na more."
+ },
+ {
+  "id": "s12#2",
+  "source": "Sjutra putujem",
+  "text": "Ustaću rano, u šest sati.",
+  "heard": "Ustaću rano, u 6 sati."
+ },
+ {
+  "id": "s12#3",
+  "source": "Sjutra putujem",
+  "text": "Spakovaću stvari večeras.",
+  "heard": "Spakova ću stvari večeras."
+ },
+ {
+  "id": "s12#4",
+  "source": "Sjutra putujem",
+  "text": "Ponijeću peškir i naočare.",
+  "heard": "ponijeću peškiri na očare."
+ },
+ {
+  "id": "s12#5",
+  "source": "Sjutra putujem",
+  "text": "Vozićemo se dva sata.",
+  "heard": "Vozićemo se 2 sata."
+ },
+ {
+  "id": "s12#6",
+  "source": "Sjutra putujem",
+  "text": "Kad stignemo, ići ćemo na plažu.",
+  "heard": "Kada stignemo, ići ćemo na plažu."
+ },
+ {
+  "id": "s12#7",
+  "source": "Sjutra putujem",
+  "text": "Kupaćemo se cijeli dan.",
+  "heard": "Kupa ćemo se cijeli dan."
+ },
+ {
+  "id": "s12#8",
+  "source": "Sjutra putujem",
+  "text": "Uveče ćemo jesti ribu.",
+  "heard": "Uveče ćemo jesti ribu."
+ },
+ {
+  "id": "s12#9",
+  "source": "Sjutra putujem",
+  "text": "Ostaćemo tri dana.",
+  "heard": "Ostaćemo tri dana."
+ },
+ {
+  "id": "s12#10",
+  "source": "Sjutra putujem",
+  "text": "Nadam se da će biti sunčano.",
+  "heard": "Nadam se da će biti sunčano."
+ },
+ {
+  "id": "s12#11",
+  "source": "Sjutra putujem",
+  "text": "Biće lijepo.",
+  "heard": "biće liepo"
+ },
+ {
+  "id": "s13#1",
+  "source": "Autobus za Budvu",
+  "text": "Na stanici sam kupio kartu za Budvu.",
+  "heard": "Na stanici sam kupio kartu za budvu."
+ },
+ {
+  "id": "s13#2",
+  "source": "Autobus za Budvu",
+  "text": "Karta u jednom pravcu košta šest evra.",
+  "heard": "Karta u jednom pravcu košta 6 evra."
+ },
+ {
+  "id": "s13#3",
+  "source": "Autobus za Budvu",
+  "text": "Pitao sam kad polazi autobus.",
+  "heard": "Pitao sam kad polezi autobus."
+ },
+ {
+  "id": "s13#4",
+  "source": "Autobus za Budvu",
+  "text": "Polazi u deset i petnaest.",
+  "heard": "Polazi u 10. i 15."
+ },
+ {
+  "id": "s13#5",
+  "source": "Autobus za Budvu",
+  "text": "Autobus je kasnio dvadeset minuta.",
+  "heard": "A autobus je kasnio 20 minuta."
+ },
+ {
+  "id": "s13#6",
+  "source": "Autobus za Budvu",
+  "text": "Sjeo sam pored prozora.",
+  "heard": "Sijel sam pored prozora."
+ },
+ {
+  "id": "s13#7",
+  "source": "Autobus za Budvu",
+  "text": "Vozač je vozio brzo.",
+  "heard": "Vozač je vozi obrezo."
+ },
+ {
+  "id": "s13#8",
+  "source": "Autobus za Budvu",
+  "text": "Put ide pored mora.",
+  "heard": "Putide pored mora."
+ },
+ {
+  "id": "s13#9",
+  "source": "Autobus za Budvu",
+  "text": "Stali smo u Petrovcu na deset minuta.",
+  "heard": "Stali smo u Petrovcu na 10 minuta."
+ },
+ {
+  "id": "s13#10",
+  "source": "Autobus za Budvu",
+  "text": "Stigli smo u dvanaest.",
+  "heard": "Stigli smo u 12."
+ },
+ {
+  "id": "s13#11",
+  "source": "Autobus za Budvu",
+  "text": "Od stanice do hotela sam išao pješke.",
+  "heard": "Od stanice do hotela sam išao pješke."
+ },
+ {
+  "id": "s14#1",
+  "source": "Auto i benzin",
+  "text": "Moj auto je star, ali dobro radi.",
+  "heard": "Moj auto je star, ali dobro radi."
+ },
+ {
+  "id": "s14#2",
+  "source": "Auto i benzin",
+  "text": "Jutros nije htio da upali.",
+  "heard": "i utro s nije htio da upali."
+ },
+ {
+  "id": "s14#3",
+  "source": "Auto i benzin",
+  "text": "Baterija je bila prazna.",
+  "heard": "Baterija je bila prazna."
+ },
+ {
+  "id": "s14#4",
+  "source": "Auto i benzin",
+  "text": "Komšija mi je pomogao.",
+  "heard": "Komšija mi je pomogao."
+ },
+ {
+  "id": "s14#5",
+  "source": "Auto i benzin",
+  "text": "Poslije sam otišao na benzinsku pumpu.",
+  "heard": "Poslije sam otišao na benzinsku pumpu."
+ },
+ {
+  "id": "s14#6",
+  "source": "Auto i benzin",
+  "text": "Sipao sam trideset litara.",
+  "heard": "Sipao sam 30 litera."
+ },
+ {
+  "id": "s14#7",
+  "source": "Auto i benzin",
+  "text": "Provjerio sam i gume.",
+  "heard": "Provjerio sam i gume."
+ },
+ {
+  "id": "s14#8",
+  "source": "Auto i benzin",
+  "text": "Jedna guma je bila slaba.",
+  "heard": "Jedna guma je bila slaba."
+ },
+ {
+  "id": "s14#9",
+  "source": "Auto i benzin",
+  "text": "U servisu su rekli da treba nova.",
+  "heard": "U servisu su rekli da treba nova."
+ },
+ {
+  "id": "s14#10",
+  "source": "Auto i benzin",
+  "text": "Nova guma košta osamdeset evra.",
+  "heard": "Nova guma košta 80 evra."
+ },
+ {
+  "id": "s14#11",
+  "source": "Auto i benzin",
+  "text": "Skupo je, ali nema druge.",
+  "heard": "Skupo je, ali nema druge."
+ },
+ {
+  "id": "s15#1",
+  "source": "Poklon za prijatelja",
+  "text": "Mom prijatelju je sjutra rođendan.",
+  "heard": "Mon prijatelju esi utra rođendan."
+ },
+ {
+  "id": "s15#2",
+  "source": "Poklon za prijatelja",
+  "text": "Moram da mu kupim poklon.",
+  "heard": "Moram da mu kupim poklon."
+ },
+ {
+  "id": "s15#3",
+  "source": "Poklon za prijatelja",
+  "text": "Pitao sam ženu šta da mu kupim.",
+  "heard": "Piteo sam ženu šta da mu kupim."
+ },
+ {
+  "id": "s15#4",
+  "source": "Poklon za prijatelja",
+  "text": "Rekla mi je da voli knjige.",
+  "heard": "Rekla mi je da voli knjige."
+ },
+ {
+  "id": "s15#5",
+  "source": "Poklon za prijatelja",
+  "text": "Otišli smo u knjižaru kolima.",
+  "heard": "Otišli smo u knjižeru kolima."
+ },
+ {
+  "id": "s15#6",
+  "source": "Poklon za prijatelja",
+  "text": "Kupio sam mu knjigu o istoriji.",
+  "heard": "Kupio sam mu knjigu o istoriji."
+ },
+ {
+  "id": "s15#7",
+  "source": "Poklon za prijatelja",
+  "text": "Prodavačica ju je lijepo upakovala.",
+  "heard": "Prodavačica ju je lijepo upakovala."
+ },
+ {
+  "id": "s15#8",
+  "source": "Poklon za prijatelja",
+  "text": "Sestri sam poslao poruku.",
+  "heard": "Sestri sam poslao poruku."
+ },
+ {
+  "id": "s15#9",
+  "source": "Poklon za prijatelja",
+  "text": "Ona će doći sa mužem i djecom.",
+  "heard": "Ona će doći sa mužem i djecom."
+ },
+ {
+  "id": "s15#10",
+  "source": "Poklon za prijatelja",
+  "text": "Slavićemo kod njega u stanu.",
+  "heard": "Slavi ćemo kod njega u stanu."
+ },
+ {
+  "id": "s15#11",
+  "source": "Poklon za prijatelja",
+  "text": "Biće nas deset.",
+  "heard": "Biće nas 10"
+ },
+ {
+  "id": "s16#1",
+  "source": "Molim te, pomozi",
+  "text": "Komšija je pozvonio na vrata.",
+  "heard": "Komšija je pozvonio na vrata."
+ },
+ {
+  "id": "s16#2",
+  "source": "Molim te, pomozi",
+  "text": "Rekao je: izvini, imaš li ključ?",
+  "heard": "rekao je, izvini, imaš li ključ?"
+ },
+ {
+  "id": "s16#3",
+  "source": "Molim te, pomozi",
+  "text": "Zaključao je vrata, a ključ je ostao unutra.",
+  "heard": "Zaključao je vrata, a ključ je ostao unutra."
+ },
+ {
+  "id": "s16#4",
+  "source": "Molim te, pomozi",
+  "text": "Rekao sam mu: sjedi, popij kafu.",
+  "heard": "rekao sam mu, sjedi, popi kafu"
+ },
+ {
+  "id": "s16#5",
+  "source": "Molim te, pomozi",
+  "text": "Pozovi majstora, on će otvoriti.",
+  "heard": "Pozovi maistora, on će otvoriti."
+ },
+ {
+  "id": "s16#6",
+  "source": "Molim te, pomozi",
+  "text": "Daj mi njegov broj, molim te.",
+  "heard": "Daj mi njegov broj, molim te."
+ },
+ {
+  "id": "s16#7",
+  "source": "Molim te, pomozi",
+  "text": "Majstor je došao za pola sata.",
+  "heard": "Maistor je došao za pola sata."
+ },
+ {
+  "id": "s16#8",
+  "source": "Molim te, pomozi",
+  "text": "Otvorio je vrata za dva minuta.",
+  "heard": "Otvorio je vrata za 2 minuta."
+ },
+ {
+  "id": "s16#9",
+  "source": "Molim te, pomozi",
+  "text": "Komšija je rekao: hvala ti puno.",
+  "heard": "Komšija je rekao, hvala ti puno!"
+ },
+ {
+  "id": "s16#10",
+  "source": "Molim te, pomozi",
+  "text": "Rekao sam: nema na čemu, dođi kad hoćeš.",
+  "heard": "Rekao sam, nema na čemu, dođi kad hoćeš."
+ },
+ {
+  "id": "s16#11",
+  "source": "Molim te, pomozi",
+  "text": "Dobar komšija je bolji od rođaka.",
+  "heard": "Dobar komšija je bolji od rođaka."
+ },
+ {
+  "id": "s17#1",
+  "source": "Vrijeme i odjeća",
+  "text": "Jutros je bilo hladnije nego juče.",
+  "heard": "i utroc je bilo hladnije nego uče."
+ },
+ {
+  "id": "s17#2",
+  "source": "Vrijeme i odjeća",
+  "text": "Padala je kiša cijelo jutro.",
+  "heard": "Padala je kiša cijelo jutro."
+ },
+ {
+  "id": "s17#3",
+  "source": "Vrijeme i odjeća",
+  "text": "Obukao sam topliju jaknu.",
+  "heard": "Obukao sam topliju jaknu."
+ },
+ {
+  "id": "s17#4",
+  "source": "Vrijeme i odjeća",
+  "text": "Uzeo sam i kišobran.",
+  "heard": "Uzeo sami ki šobran."
+ },
+ {
+  "id": "s17#5",
+  "source": "Vrijeme i odjeća",
+  "text": "Zima je ovdje kraća nego u Rusiji.",
+  "heard": "Zima je ovdje krača nego u Rusiji."
+ },
+ {
+  "id": "s17#6",
+  "source": "Vrijeme i odjeća",
+  "text": "Ali vjetar je jači.",
+  "heard": "ali vjeter je jači."
+ },
+ {
+  "id": "s17#7",
+  "source": "Vrijeme i odjeća",
+  "text": "Poslije podne je bilo sunčanije.",
+  "heard": "Poslije podne je bilo sunčanije."
+ },
+ {
+  "id": "s17#8",
+  "source": "Vrijeme i odjeća",
+  "text": "Skinuo sam jaknu.",
+  "heard": "Skinuo sam je aknu."
+ },
+ {
+  "id": "s17#9",
+  "source": "Vrijeme i odjeća",
+  "text": "Sjutra će biti toplije.",
+  "heard": "Sjutra će biti toplije."
+ },
+ {
+  "id": "s17#10",
+  "source": "Vrijeme i odjeća",
+  "text": "Najbolje vrijeme je u maju.",
+  "heard": "Najbolje vrijeme je u maju."
+ },
+ {
+  "id": "s17#11",
+  "source": "Vrijeme i odjeća",
+  "text": "Tada nije ni prevruće ni prehladno.",
+  "heard": "tada nije ni prevručen i prehladno."
+ },
+ {
+  "id": "s18#1",
+  "source": "Posao i novac",
+  "text": "Radim ovdje već tri godine.",
+  "heard": "Radimo ovdje već tri godine."
+ },
+ {
+  "id": "s18#2",
+  "source": "Posao i novac",
+  "text": "Plata nije velika, ali je dovoljna.",
+  "heard": "Plata nije velika, ali je dovoljna."
+ },
+ {
+  "id": "s18#3",
+  "source": "Posao i novac",
+  "text": "Ako budem radio i subotom, zaradiću više.",
+  "heard": "Ako budem radio i subotom, zaradiću više."
+ },
+ {
+  "id": "s18#4",
+  "source": "Posao i novac",
+  "text": "Ali onda neću imati vremena za porodicu.",
+  "heard": "ali onda neću imati vreme na zaporodicu."
+ },
+ {
+  "id": "s18#5",
+  "source": "Posao i novac",
+  "text": "Šef je rekao da će biti povišica.",
+  "heard": "Šef je rekao da će biti povišica."
+ },
+ {
+  "id": "s18#6",
+  "source": "Posao i novac",
+  "text": "Nisam siguran, jer to govori svake godine.",
+  "heard": "Nisam siguran, jer to govori svake godine."
+ },
+ {
+  "id": "s18#7",
+  "source": "Posao i novac",
+  "text": "Ako ne bude povišice, tražiću drugi posao.",
+  "heard": "Ako ne bude povišice, tražiću drugi posao."
+ },
+ {
+  "id": "s18#8",
+  "source": "Posao i novac",
+  "text": "Žena kaže da treba da budem strpljiv.",
+  "heard": "Žena kaže da treba da budem strpljiv."
+ },
+ {
+  "id": "s18#9",
+  "source": "Posao i novac",
+  "text": "Možda je u pravu.",
+  "heard": "Možda je upravo."
+ },
+ {
+  "id": "s18#10",
+  "source": "Posao i novac",
+  "text": "Novac nije najvažniji.",
+  "heard": "Novac nije najvažniji."
+ },
+ {
+  "id": "s18#11",
+  "source": "Posao i novac",
+  "text": "Ali bez njega je teško.",
+  "heard": "Ali bez njega je teško."
+ },
+ {
+  "id": "s19#1",
+  "source": "Međed, svinja i lisica",
+  "text": "Udruže se međed, svinja i lisica.",
+  "heard": "Uduže se međet, svinja i lisica."
+ },
+ {
+  "id": "s19#2",
+  "source": "Međed, svinja i lisica",
+  "text": "Pa se dogovore da oru zemlju i da siju pšenicu, da se rane.",
+  "heard": "pa se dogovore da oru u zemlju, i da si u pšenicu, da se rane."
+ },
+ {
+  "id": "s19#3",
+  "source": "Međed, svinja i lisica",
+  "text": "Zapitaju jedno drugoga šta će koje raditi.",
+  "heard": "Запitaju jedno drugoga šta će koje raditi."
+ },
+ {
+  "id": "s19#4",
+  "source": "Međed, svinja i lisica",
+  "text": "I kako će sjeme naći.",
+  "heard": "i kako će sjeme naći."
+ },
+ {
+  "id": "s19#5",
+  "source": "Međed, svinja i lisica",
+  "text": "Svinja reče: „Ja ću provaliti koš i ukrašću sjeme.“",
+  "heard": "Svinja reče, ja ću provaliti koši i ukrašću sjeme."
+ },
+ {
+  "id": "s19#6",
+  "source": "Međed, svinja i lisica",
+  "text": "„I ja ću mojom surlom uzorati.“",
+  "heard": "i ja ću majom surlam uzareti."
+ },
+ {
+  "id": "s19#7",
+  "source": "Međed, svinja i lisica",
+  "text": "Međed reče: „Ja ću posijati.“",
+  "heard": "Međed reče, ja ću posijeti."
+ },
+ {
+  "id": "s19#8",
+  "source": "Međed, svinja i lisica",
+  "text": "A lisica reče: „Ja ću mojim repom podrljati.“",
+  "heard": "Алисице рече, ја ћу мојим репом подрљати."
+ },
+ {
+  "id": "s19#9",
+  "source": "Međed, svinja i lisica",
+  "text": "Uzoraše, posijaše.",
+  "heard": "uzoraše, posijaše."
+ },
+ {
+  "id": "s19#10",
+  "source": "Međed, svinja i lisica",
+  "text": "Dođe žetva.",
+  "heard": "Dođi žetva."
+ },
+ {
+  "id": "s19#11",
+  "source": "Međed, svinja i lisica",
+  "text": "Staše se razgovarati kako će požeti.",
+  "heard": "Staši se razgovarati kako će požeti."
+ },
+ {
+  "id": "s19#12",
+  "source": "Međed, svinja i lisica",
+  "text": "Svinja reče: „Ja ću žeti.“",
+  "heard": "Svinje reče, ja ću žeti."
+ },
+ {
+  "id": "s19#13",
+  "source": "Međed, svinja i lisica",
+  "text": "Međed reče: „Ja ću snoplje vezati.“",
+  "heard": "Međed reče, ja ću snoplje vezati."
+ },
+ {
+  "id": "s19#14",
+  "source": "Međed, svinja i lisica",
+  "text": "Lisica reče: „Ja ću klasje kupiti.“",
+  "heard": "Lisica reče, ja ću klasije kupiti."
+ },
+ {
+  "id": "s19#15",
+  "source": "Međed, svinja i lisica",
+  "text": "Požeše i snoplje povezaše.",
+  "heard": "Požeše i snopje poovezaše."
+ },
+ {
+  "id": "s19#16",
+  "source": "Međed, svinja i lisica",
+  "text": "Sad se staše dogovarati kako će da vršu.",
+  "heard": "Sad se staše dogovarati kako će da vršu."
+ },
+ {
+  "id": "s19#17",
+  "source": "Međed, svinja i lisica",
+  "text": "Svinja reče: „Ja ću guvno načiniti.“",
+  "heard": "Svinje reče, ja ću gubno načiniti."
+ },
+ {
+  "id": "s19#18",
+  "source": "Međed, svinja i lisica",
+  "text": "Međed reče: „Ja ću snoplje snijeti i ja ću vrijeći.“",
+  "heard": "Međed reče, ja ću snoplje snijeti i ja ću vrijeći."
+ },
+ {
+  "id": "s19#19",
+  "source": "Međed, svinja i lisica",
+  "text": "Svinja reče: „Ja ću pretresati i rastaviću slamu od pšenice.“",
+  "heard": "Svinja reče, ja ću pretresati i rastaviću slam od pšenice."
+ },
+ {
+  "id": "s19#20",
+  "source": "Međed, svinja i lisica",
+  "text": "Lisica reče: „Ja ću mojim repom trniti pljevu sa pšenice.“",
+  "heard": "Lisica reče, ja ću mojim repom trniti pljevu sa pšenice."
+ },
+ {
+  "id": "s19#21",
+  "source": "Međed, svinja i lisica",
+  "text": "Svinja reče: „Ja ću ovijati.“",
+  "heard": "Svinje reče, ja ću ovijeti."
+ },
+ {
+  "id": "s19#22",
+  "source": "Međed, svinja i lisica",
+  "text": "A međed reče: „Ja ću žito razdijeliti.“",
+  "heard": "A međed reče, ja ću žito razdijeliti."
+ },
+ {
+  "id": "s19#23",
+  "source": "Međed, svinja i lisica",
+  "text": "Ovrgoše.",
+  "heard": "Ovrgoše"
+ },
+ {
+  "id": "s19#24",
+  "source": "Međed, svinja i lisica",
+  "text": "Međed žito podijeli, ali ga ne podijeli pravo.",
+  "heard": "Međedžito podijeli, ali ga ne podijeli pravo."
+ },
+ {
+  "id": "s19#25",
+  "source": "Međed, svinja i lisica",
+  "text": "Svinja ga zamoli, te joj dade samo slamu.",
+  "heard": "Svinja ga zamoli, te joj dade samo slamu."
+ },
+ {
+  "id": "s19#26",
+  "source": "Međed, svinja i lisica",
+  "text": "A pšenicu svu uze sam, lisici ne dade ništa.",
+  "heard": "А пшеницу сву узет сам, лисици не даде ништа."
+ },
+ {
+  "id": "s19#27",
+  "source": "Međed, svinja i lisica",
+  "text": "Rasrdi se lisica, pa otide na tužbu.",
+  "heard": "Rasrdi se Lisica, pa otide na tužbu."
+ },
+ {
+  "id": "s19#28",
+  "source": "Međed, svinja i lisica",
+  "text": "I kaza im da će im dovesti jednoga carskog čovjeka.",
+  "heard": "i kazajem da će im dovesti jednoga carskog čovjeka."
+ },
+ {
+  "id": "s19#29",
+  "source": "Međed, svinja i lisica",
+  "text": "Koji će žito pravo razdijeliti.",
+  "heard": "koji će Žito pravo razdijeliti."
+ },
+ {
+  "id": "s19#30",
+  "source": "Međed, svinja i lisica",
+  "text": "Uplaši se svinja i međed.",
+  "heard": "Uplaši se svinja i međet."
+ },
+ {
+  "id": "s19#31",
+  "source": "Međed, svinja i lisica",
+  "text": "Pa reče međed svinji: „Zakopaj se ti, svinjo, u slamu.“",
+  "heard": "Pa reče međed svinji, zakopaj se ti, svinjo, u slamu!"
+ },
+ {
+  "id": "s19#32",
+  "source": "Međed, svinja i lisica",
+  "text": "„A ja ću se popeti na ovu krušku.“",
+  "heard": "A ja ću se popeti na ovu krušku."
+ },
+ {
+  "id": "s19#33",
+  "source": "Međed, svinja i lisica",
+  "text": "Zakopa se svinja u slamu, a međed se pope na krušku.",
+  "heard": "Zakopa se svinja u slamu, a međe se pope na krušku."
+ },
+ {
+  "id": "s19#34",
+  "source": "Međed, svinja i lisica",
+  "text": "Lisica otide te nađe mačku, pa je pozva u društvo.",
+  "heard": "Lisica otidete na džemačku, pa je pozvao društvo."
+ },
+ {
+  "id": "s19#35",
+  "source": "Međed, svinja i lisica",
+  "text": "Da idu na guvno da hvataju miše.",
+  "heard": "Da idu na gubno da hvataju miše."
+ },
+ {
+  "id": "s19#36",
+  "source": "Međed, svinja i lisica",
+  "text": "Znajući mačka da na guvnu ima dosta miša, pođe rado.",
+  "heard": "Znajući mačka da na guvnu ima dosta miša, pođe rado."
+ },
+ {
+  "id": "s19#37",
+  "source": "Međed, svinja i lisica",
+  "text": "Pa sad iznad puta, sad ispod puta, trči za pticama.",
+  "heard": "pa sada iznad puta, sada ispod puta, trči za pticama."
+ },
+ {
+  "id": "s19#38",
+  "source": "Međed, svinja i lisica",
+  "text": "Opazi je međed s kruške izdaleka, pa kaže svinji:",
+  "heard": "Опази је медђеца кружка издалека, па каже свињи."
+ },
+ {
+  "id": "s19#39",
+  "source": "Međed, svinja i lisica",
+  "text": "„Zlo, svinjo!“",
+  "heard": "Zlok, sviniu"
+ },
+ {
+  "id": "s19#40",
+  "source": "Međed, svinja i lisica",
+  "text": "„Eto lisice, đe vodi strašnoga bumbašira.“",
+  "heard": "Eto Lisice, gdje je vodi strašnoga bumbašira."
+ },
+ {
+  "id": "s19#41",
+  "source": "Međed, svinja i lisica",
+  "text": "„Ogrnuo ćurak od kune, pa i krilate tice hvata oko puta.“",
+  "heard": "Ogljnuo čura kod kune, pa ikrila tetice hvata oko puta."
+ },
+ {
+  "id": "s19#42",
+  "source": "Međed, svinja i lisica",
+  "text": "U tom se mačka ukrade međedu iz očiju.",
+  "heard": "U tom se mačka ukrade medjedu iz očiju."
+ },
+ {
+  "id": "s19#43",
+  "source": "Međed, svinja i lisica",
+  "text": "Pa kroz travu dođe na guvno.",
+  "heard": "Pa kroz travu dođe na guvno."
+ },
+ {
+  "id": "s19#44",
+  "source": "Međed, svinja i lisica",
+  "text": "I tražeći miša stane šuškati po slami.",
+  "heard": "i tražeći miša stane šuškati po slami."
+ },
+ {
+  "id": "s19#45",
+  "source": "Međed, svinja i lisica",
+  "text": "Svinja podigne glavu da vidi šta je.",
+  "heard": "Svinja podigne glavu da vidi šta je."
+ },
+ {
+  "id": "s19#46",
+  "source": "Međed, svinja i lisica",
+  "text": "A mačka pomisli od njezine surle da je miš.",
+  "heard": "A mačka pomisli od njezine surle da je miš."
+ },
+ {
+  "id": "s19#47",
+  "source": "Međed, svinja i lisica",
+  "text": "Pa skoči te svinju šapama za nos.",
+  "heard": "pa skočite svinju šapama za nos."
+ },
+ {
+  "id": "s19#48",
+  "source": "Međed, svinja i lisica",
+  "text": "Svinja se uplaši, pa rukne i skoči, te nada u potok.",
+  "heard": "Svinja se uplaši, pa ruk ne iskoči, te nada u potok."
+ },
+ {
+  "id": "s19#49",
+  "source": "Međed, svinja i lisica",
+  "text": "A mačka se prepadne od svinje, pa nada uz krušku.",
+  "heard": "A mačka se prepadne od svinje, pa nada u skrušku."
+ },
+ {
+  "id": "s19#50",
+  "source": "Međed, svinja i lisica",
+  "text": "A međed pomisli da je ona već svinju udavila.",
+  "heard": "a Međet pomisli da je ona već svinju udavila."
+ },
+ {
+  "id": "s19#51",
+  "source": "Međed, svinja i lisica",
+  "text": "Pa ide sad na njega.",
+  "heard": "Pa ide sad na njega."
+ },
+ {
+  "id": "s19#52",
+  "source": "Međed, svinja i lisica",
+  "text": "Pa od straha padne s kruške na zemlju, te se razbije i crkne.",
+  "heard": "Pa od straha padne skruške na zemlju, te se razbije i crkne."
+ },
+ {
+  "id": "s19#53",
+  "source": "Međed, svinja i lisica",
+  "text": "A lisici ostane sve žito i slama.",
+  "heard": "Алисици остане свежито ислама."
+ },
+ {
+  "id": "s20#1",
+  "source": "Djevojka brža od konja",
+  "text": "Bila nekaka djevojka koja nije rođena od oca i majke.",
+  "heard": "Bila nekakva djevojka koja nije rođena od oca i majke."
+ },
+ {
+  "id": "s20#2",
+  "source": "Djevojka brža od konja",
+  "text": "Nego je načinile vile, od snijega izvađena iz jame bezdanje.",
+  "heard": "nego je načinile vile, od snije ga izvađena iz jame bezdanje."
+ },
+ {
+  "id": "s20#3",
+  "source": "Djevojka brža od konja",
+  "text": "Vjetar je oživio, rosa je podojila.",
+  "heard": "Vjetar je oživio, rosa je podojila."
+ },
+ {
+  "id": "s20#4",
+  "source": "Djevojka brža od konja",
+  "text": "A gora lišćem obukla i livada cvijećem nakitila.",
+  "heard": "Агора лищем обукла и лива да цвjeћем накитила"
+ },
+ {
+  "id": "s20#5",
+  "source": "Djevojka brža od konja",
+  "text": "Ona je bila bjelja od snijega, rumenija od ružice, sjajnija od sunca.",
+  "heard": "Ona je bila bijelja od snijega, rumenija od ružice, sjajnija od sunca."
+ },
+ {
+  "id": "s20#6",
+  "source": "Djevojka brža od konja",
+  "text": "Da se take na svijetu rađalo nije niti će se rađati.",
+  "heard": "Da se tak' je na svijetu rađalo nije, niti će se rađati."
+ },
+ {
+  "id": "s20#7",
+  "source": "Djevojka brža od konja",
+  "text": "Ona pusti glas po svijetu da će u taj i taj dan biti trkija.",
+  "heard": "Ona pusti glas po svijetu da će u taj i taj dan biti Trkija."
+ },
+ {
+  "id": "s20#8",
+  "source": "Djevojka brža od konja",
+  "text": "Pa koji je mladić na konju preteče, da će biti njegova.",
+  "heard": "pa koji je mladić na konju preteče, da će biti njegova."
+ },
+ {
+  "id": "s20#9",
+  "source": "Djevojka brža od konja",
+  "text": "Ovo se u malo dana razglasi po svemu svijetu.",
+  "heard": "Ovo se u malo dana razglasi po svemu svijetu."
+ },
+ {
+  "id": "s20#10",
+  "source": "Djevojka brža od konja",
+  "text": "Te se prosaca skupi hiljade na konjma.",
+  "heard": "te se prosaca skupi hiljade na konaima."
+ },
+ {
+  "id": "s20#11",
+  "source": "Djevojka brža od konja",
+  "text": "Da ne znaš koji je od kojega bolji.",
+  "heard": "da ne znaš koji je od kojega bolji."
+ },
+ {
+  "id": "s20#12",
+  "source": "Djevojka brža od konja",
+  "text": "I sam carev sin dođe na trkiju.",
+  "heard": "i sam carev sin dođe na trkiu."
+ },
+ {
+  "id": "s20#13",
+  "source": "Djevojka brža od konja",
+  "text": "Djevojka stane na biljegu i svi prosci narede se na konjima.",
+  "heard": "Djevojka stane na biljegu i svi prosci narede se na konjima."
+ },
+ {
+  "id": "s20#14",
+  "source": "Djevojka brža od konja",
+  "text": "A ona između njih bez konja, nego na svojim nogama.",
+  "heard": "a ona između njih bez konja, nego na svojim nogama."
+ },
+ {
+  "id": "s20#15",
+  "source": "Djevojka brža od konja",
+  "text": "Pa im onda reče: „Ja sam onamo postavila zlatnu jabuku.“",
+  "heard": "Pa im onda reče, i ja sam onamo postavila zlatnu jabuku."
+ },
+ {
+  "id": "s20#16",
+  "source": "Djevojka brža od konja",
+  "text": "„Koji najprije do nje dođe i uzme je, ja ću biti njegova.“",
+  "heard": "који најприје до ње дође и узмеје, ја ћу бити његова."
+ },
+ {
+  "id": "s20#17",
+  "source": "Djevojka brža od konja",
+  "text": "„A ako ja prva k njoj dođem i uzmem je prije vas.“",
+  "heard": "А ако ја прва ки њој дођем и узмем је прије вас."
+ },
+ {
+  "id": "s20#18",
+  "source": "Djevojka brža od konja",
+  "text": "„Znajte da ćete vi svi mrtvi na ono mjesto ostati.“",
+  "heard": "Znajte da ćete vi svi mrtvi na onom mjestu ostati."
+ },
+ {
+  "id": "s20#19",
+  "source": "Djevojka brža od konja",
+  "text": "„Nego pazite dobro šta činite.“",
+  "heard": "nego pazite dobro šta činite."
+ },
+ {
+  "id": "s20#20",
+  "source": "Djevojka brža od konja",
+  "text": "Konjanici se svi pogledaju i svaki se u sebe uzdaše.",
+  "heard": "Konjanici se svi pogledaju i svaki se u sebe uzdaše."
+ },
+ {
+  "id": "s20#21",
+  "source": "Djevojka brža od konja",
+  "text": "Da će zadobiti djevojku, pa rekoše između sebe:",
+  "heard": "da će zadobiti djevojku, pa reko še između sebe."
+ },
+ {
+  "id": "s20#22",
+  "source": "Djevojka brža od konja",
+  "text": "„Znamo odista da neće ona nijednome od nas na nogama odbjeći.“",
+  "heard": "Znamo odista da neće ona ni jedno me od nas na nogama odbjeći."
+ },
+ {
+  "id": "s20#23",
+  "source": "Djevojka brža od konja",
+  "text": "„Nego neko od nas, a koga će Bog i sreća danas pomoći.“",
+  "heard": "nego neko od nas, a koga će Bogi sreća danas pomoći."
+ },
+ {
+  "id": "s20#24",
+  "source": "Djevojka brža od konja",
+  "text": "Te tako, kad djevojka rukom o ruku pljasnu, svi potekoše u jedan tren.",
+  "heard": "Te tako, kad djevojka rukomo ruku pljasnu, svi poteko še u jedan tren."
+ },
+ {
+  "id": "s20#25",
+  "source": "Djevojka brža od konja",
+  "text": "Kad je bilo na po puta, bogme djevojka odvojila bješe.",
+  "heard": "Kada je bilo na poputa, Bogme djevojka odvojila bješe."
+ },
+ {
+  "id": "s20#26",
+  "source": "Djevojka brža od konja",
+  "text": "Jer pusti nekaka mala krila ispod pazuha.",
+  "heard": "jer pusti nekakva mala krila ispod pazuha."
+ },
+ {
+  "id": "s20#27",
+  "source": "Djevojka brža od konja",
+  "text": "U to ukori jedan drugoga, te prionuše i obodoše konje.",
+  "heard": "U to ukorije jedan drugoga, te prionuše i obodoše konje."
+ },
+ {
+  "id": "s20#28",
+  "source": "Djevojka brža od konja",
+  "text": "I pristigoše djevojku.",
+  "heard": "i pristigoše djevojku."
+ },
+ {
+  "id": "s20#29",
+  "source": "Djevojka brža od konja",
+  "text": "Kad ona vidje, izvadi jednu dlaku iz glave, te je baci.",
+  "heard": "Kada ona vidije, izvadi jednu dlaku iz glave, te je baci."
+ },
+ {
+  "id": "s20#30",
+  "source": "Djevojka brža od konja",
+  "text": "I oni isti čas uzraste strašna gora.",
+  "heard": "i oni ističa suzraste Strašna Gora."
+ },
+ {
+  "id": "s20#31",
+  "source": "Djevojka brža od konja",
+  "text": "Da ne znadoše prosci đe će ni kuda će.",
+  "heard": "Da ne zna doše prosiđe će niku da će"
+ },
+ {
+  "id": "s20#32",
+  "source": "Djevojka brža od konja",
+  "text": "No tamo-amo te za njom.",
+  "heard": "No tamo amo te zanjom."
+ },
+ {
+  "id": "s20#33",
+  "source": "Djevojka brža od konja",
+  "text": "A ona opet daleko im odvojila, a oni obodi konje i opet je stigoše.",
+  "heard": "A ona opet daleko im odvojila, a oni obodi konje i opet je stigoše."
+ },
+ {
+  "id": "s20#34",
+  "source": "Djevojka brža od konja",
+  "text": "A kad djevojka vidje zlu goru, pusti jednu suzu.",
+  "heard": "A kad djevojka vide zlu goru, pusti jednu suzu."
+ },
+ {
+  "id": "s20#35",
+  "source": "Djevojka brža od konja",
+  "text": "Dok buknuše strašne rijeke, te se zamalo svi ne potopiše.",
+  "heard": "dok buknuše strašne rijeke, te se za malo svine potopiše."
+ },
+ {
+  "id": "s20#36",
+  "source": "Djevojka brža od konja",
+  "text": "Za djevojkom niko više ne pristajaše do samoga careva sina.",
+  "heard": "Za djevojkom niko više ne pristajaše do samoga careva sina."
+ },
+ {
+  "id": "s20#37",
+  "source": "Djevojka brža od konja",
+  "text": "Te on na konju te za njom.",
+  "heard": "Те он на коньу теза ням."
+ },
+ {
+  "id": "s20#38",
+  "source": "Djevojka brža od konja",
+  "text": "Ali pošto vidje da mu je djevojka odmakla.",
+  "heard": "Ali pošto vidje da mu je djevojka odmakla."
+ },
+ {
+  "id": "s20#39",
+  "source": "Djevojka brža od konja",
+  "text": "Zakle je tri puta imenom Božjim da stane.",
+  "heard": "Заклеје три пута именом Божим да стане."
+ },
+ {
+  "id": "s20#40",
+  "source": "Djevojka brža od konja",
+  "text": "I ona stade na onome mjestu na kojem se nađe.",
+  "heard": "i ona stade na onome mjestu na kojem se nađe."
+ },
+ {
+  "id": "s20#41",
+  "source": "Djevojka brža od konja",
+  "text": "Onda je on uhvati te za se na konja vrže.",
+  "heard": "onda je onuhvatite za se na konja vrže."
+ },
+ {
+  "id": "s20#42",
+  "source": "Djevojka brža od konja",
+  "text": "I prepliva na suho, pa se uputi jednom planinom doma.",
+  "heard": "i prepliva na suho, pa se uputi jednom planinom doma."
+ },
+ {
+  "id": "s20#43",
+  "source": "Djevojka brža od konja",
+  "text": "Ali kada dođe u najvišu planinu, obazre se —",
+  "heard": "Ali kada dođe u najvišu planinu, obazre se."
+ },
+ {
+  "id": "s20#44",
+  "source": "Djevojka brža od konja",
+  "text": "kad li mu djevojke nema.",
+  "heard": "kad li mu djevojke nema."
+ },
+ {
+  "id": "s21#1",
+  "source": "Jež i lisica",
+  "text": "Jednog dana je jež išao kroz šumu.",
+  "heard": "Jednog dana je ježiša okroz šumu."
+ },
+ {
+  "id": "s21#2",
+  "source": "Jež i lisica",
+  "text": "Nosio je malu korpu i tražio pečurke.",
+  "heard": "Nosio je malu korpu i tražio pečurke."
+ },
+ {
+  "id": "s21#3",
+  "source": "Jež i lisica",
+  "text": "Na putu je sreo lisicu.",
+  "heard": "Na putu je sreo lisicu."
+ },
+ {
+  "id": "s21#4",
+  "source": "Jež i lisica",
+  "text": "— Dobar dan, ježu!",
+  "heard": "Dobar dan, Ježu!"
+ },
+ {
+  "id": "s21#5",
+  "source": "Jež i lisica",
+  "text": "Kuda ideš?",
+  "heard": "K'o da ideš?"
+ },
+ {
+  "id": "s21#6",
+  "source": "Jež i lisica",
+  "text": "— pitala je lisica.",
+  "heard": "Питала ја Лисица"
+ },
+ {
+  "id": "s21#7",
+  "source": "Jež i lisica",
+  "text": "— Idem da tražim pečurke.",
+  "heard": "idem da tražim pečurke."
+ },
+ {
+  "id": "s21#8",
+  "source": "Jež i lisica",
+  "text": "A ti?",
+  "heard": "Alti"
+ },
+ {
+  "id": "s21#9",
+  "source": "Jež i lisica",
+  "text": "— odgovorio je jež.",
+  "heard": "Odgovorio je Jerž."
+ },
+ {
+  "id": "s21#10",
+  "source": "Jež i lisica",
+  "text": "— Ja idem do rijeke.",
+  "heard": "Ja idem do rijeke."
+ },
+ {
+  "id": "s21#11",
+  "source": "Jež i lisica",
+  "text": "Tamo ima mnogo ribe.",
+  "heard": "Tamo ima mnogo ribe."
+ },
+ {
+  "id": "s21#12",
+  "source": "Jež i lisica",
+  "text": "Jež je pogledao lisicu i rekao:",
+  "heard": "Jež je pogledao lisicu i rekao"
+ },
+ {
+  "id": "s21#13",
+  "source": "Jež i lisica",
+  "text": "— Ako želiš, možemo zajedno do rijeke.",
+  "heard": "Ako želiš, možemo zajedno do rijeke."
+ },
+ {
+  "id": "s21#14",
+  "source": "Jež i lisica",
+  "text": "— Može!",
+  "heard": "Može."
+ },
+ {
+  "id": "s21#15",
+  "source": "Jež i lisica",
+  "text": "— odgovorila je lisica.",
+  "heard": "Odgovorila je Lisica."
+ },
+ {
+  "id": "s21#16",
+  "source": "Jež i lisica",
+  "text": "Išli su zajedno kroz šumu.",
+  "heard": "išli su zajedno kroć šumu."
+ },
+ {
+  "id": "s21#17",
+  "source": "Jež i lisica",
+  "text": "Poslije nekog vremena stigli su do rijeke.",
+  "heard": "Poslije nekog vremena stigli su do rijeke."
+ },
+ {
+  "id": "s21#18",
+  "source": "Jež i lisica",
+  "text": "Lisica je odmah počela da traži ribu, a jež je sjeo ispod jednog drveta.",
+  "heard": "Lisica je odmah počela da traži ribu, a jež je sjeo ispod jednog drveta."
+ },
+ {
+  "id": "s21#19",
+  "source": "Jež i lisica",
+  "text": "Odjednom je lisica ugledala ribara.",
+  "heard": "Odjednom je Lisica ugledala ribara."
+ },
+ {
+  "id": "s21#20",
+  "source": "Jež i lisica",
+  "text": "— Brzo, bježi!",
+  "heard": "Brzo, vježi!"
+ },
+ {
+  "id": "s21#21",
+  "source": "Jež i lisica",
+  "text": "— viknula je lisica.",
+  "heard": "Viknula je Lisica."
+ },
+ {
+  "id": "s21#22",
+  "source": "Jež i lisica",
+  "text": "Ali jež nije pobjegao.",
+  "heard": "Ali jež nije pobjegao."
+ },
+ {
+  "id": "s21#23",
+  "source": "Jež i lisica",
+  "text": "Samo se sklupčao i sakrio lice među bodlje.",
+  "heard": "samo se sklupčao i sakrio lice među bodlje."
+ },
+ {
+  "id": "s21#24",
+  "source": "Jež i lisica",
+  "text": "Ribar je prišao i pogledao ježa.",
+  "heard": "Ribar je prišao i pogledao ježa."
+ },
+ {
+  "id": "s21#25",
+  "source": "Jež i lisica",
+  "text": "— Oh, kakav mali jež!",
+  "heard": "Oh, kakav mali jež."
+ },
+ {
+  "id": "s21#26",
+  "source": "Jež i lisica",
+  "text": "— rekao je i nastavio svojim putem.",
+  "heard": "rekao je i nastavio svojim putem."
+ },
+ {
+  "id": "s21#27",
+  "source": "Jež i lisica",
+  "text": "Lisica se sakrila iza drveta.",
+  "heard": "Lisica se sakrila iza drveta."
+ },
+ {
+  "id": "s21#28",
+  "source": "Jež i lisica",
+  "text": "Kada je ribar otišao, izašla je iz skrovišta.",
+  "heard": "Kada je ribar otišao, izašla je iz krovišta."
+ },
+ {
+  "id": "s21#29",
+  "source": "Jež i lisica",
+  "text": "— Ježu, kako si se spasio?",
+  "heard": "Ježu, kako si se spasio?"
+ },
+ {
+  "id": "s21#30",
+  "source": "Jež i lisica",
+  "text": "— pitala je lisica.",
+  "heard": "Питала ја Лисица"
+ },
+ {
+  "id": "s21#31",
+  "source": "Jež i lisica",
+  "text": "Jež se nasmiješio.",
+  "heard": "је јер се насмјешјо."
+ },
+ {
+  "id": "s21#32",
+  "source": "Jež i lisica",
+  "text": "— Svako ima nešto što mu može pomoći.",
+  "heard": "Svako ima nešto što mu može pomoći."
+ },
+ {
+  "id": "s21#33",
+  "source": "Jež i lisica",
+  "text": "Lisica je pogledala njegove bodlje i rekla:",
+  "heard": "Lisice je pogledala njegove bodlje i rekla."
+ },
+ {
+  "id": "s21#34",
+  "source": "Jež i lisica",
+  "text": "— Istina.",
+  "heard": "Istina"
+ },
+ {
+  "id": "s21#35",
+  "source": "Jež i lisica",
+  "text": "Tvoje bodlje su veoma korisne!",
+  "heard": "Tvoje bodlje su veoma korisne."
+ },
+ {
+  "id": "s21#36",
+  "source": "Jež i lisica",
+  "text": "Od tog dana lisica i jež su često išli zajedno kroz šumu.",
+  "heard": "Od tog dana lisica i jež su često išli zajedno kroz šumu."
+ },
+ {
+  "id": "s21#37",
+  "source": "Jež i lisica",
+  "text": "Lisica je bila brza, a jež je uvijek bio oprezan.",
+  "heard": "Lisica je bila brza, a ježe uvijek bio oprezan."
+ },
+ {
+  "id": "s21#38",
+  "source": "Jež i lisica",
+  "text": "Pouka: Svako ima svoje sposobnosti i ne treba potcjenjivati druge.",
+  "heard": "Svako ima svoje sposobnosti i ne treba podcenjivati druge."
+ },
+ {
+  "id": "s22#1",
+  "source": "Djevojčica i pas",
+  "text": "Živjela jednom jedna djevojčica.",
+  "heard": "živjela jednom i jedna djevojčica."
+ },
+ {
+  "id": "s22#2",
+  "source": "Djevojčica i pas",
+  "text": "Ona je već bila baš odrasla.",
+  "heard": "Ona je već bila baš odrasla."
+ },
+ {
+  "id": "s22#3",
+  "source": "Djevojčica i pas",
+  "text": "I živjela je sa mužem i dvoje djece u tuđoj zemlji.",
+  "heard": "i živjela je sa mužem i dvoje djece u tuđoj zemlji."
+ },
+ {
+  "id": "s22#4",
+  "source": "Djevojčica i pas",
+  "text": "U novoj zemlji zakoni su se stalno mijenjali.",
+  "heard": "U novoj zemlji zakoni su se stalno mijenjali."
+ },
+ {
+  "id": "s22#5",
+  "source": "Djevojčica i pas",
+  "text": "Život je postajao sve teži i strašniji, pa se djevojčica mnogo rastužila.",
+  "heard": "Život je postajao sve teži i strašniji, pa se djevojčica mnogo rastužila."
+ },
+ {
+  "id": "s22#6",
+  "source": "Djevojčica i pas",
+  "text": "Počele su da joj se javljaju nametljive i uznemirujuće misli i napadi panike.",
+  "heard": "Počele su da joj se javljaju nametljive i uznemirujuće misli i napadi panike."
+ },
+ {
+  "id": "s22#7",
+  "source": "Djevojčica i pas",
+  "text": "Svakog dana joj je bilo sve teže da čeka loše vijesti.",
+  "heard": "svakog dana jo je bilo sve teže da čeka loše vijesti."
+ },
+ {
+  "id": "s22#8",
+  "source": "Djevojčica i pas",
+  "text": "A onda se dogodilo nešto veoma čudno.",
+  "heard": "a onda se dogodio nešto veoma čudno."
+ },
+ {
+  "id": "s22#9",
+  "source": "Djevojčica i pas",
+  "text": "Vjerovatno se Bog sažalio na djevojčicu i poslao joj čudo.",
+  "heard": "Vjerovatno se Bog sažalio na djevojčicu i poslao joj čudo."
+ },
+ {
+  "id": "s22#10",
+  "source": "Djevojčica i pas",
+  "text": "Djevojčica je na internetu vidjela oglas u kojem su za jednu čudesnu bradatu kucu tražili nove vlasnike.",
+  "heard": "Djevojčica je na internetu vidjela oglasu u kojem su za jednu čudesnu bradatu kucu tražili nove vlasnike."
+ },
+ {
+  "id": "s22#11",
+  "source": "Djevojčica i pas",
+  "text": "Djevojčica je pogledala fotografiju kuce.",
+  "heard": "Djevojčica je pogledala fotografiju kuce."
+ },
+ {
+  "id": "s22#12",
+  "source": "Djevojčica i pas",
+  "text": "I shvatila da to nije bila tek neka obična kuca, već kuca baš za nju.",
+  "heard": "i shvatila da to nije bila tek neka obična kuca, već kuca baš za nju."
+ },
+ {
+  "id": "s22#13",
+  "source": "Djevojčica i pas",
+  "text": "Kao da bez nje više nikako nije mogla da živi.",
+  "heard": "kao da bez nje više nikako nije mogla da živi."
+ },
+ {
+  "id": "s22#14",
+  "source": "Djevojčica i pas",
+  "text": "I kao da je morala hitno da ubijedi sve ostale da je uzmu.",
+  "heard": "i kao da je morala hitno da ubijedi sve ostale da je uzmu."
+ },
+ {
+  "id": "s22#15",
+  "source": "Djevojčica i pas",
+  "text": "Tako je i bilo.",
+  "heard": "Tako je i bilo."
+ },
+ {
+  "id": "s22#16",
+  "source": "Djevojčica i pas",
+  "text": "Cijela njena porodica je pogledala fotografiju i složila se.",
+  "heard": "Cijela njena porodica je pogledala fotografiju i složila se."
+ },
+ {
+  "id": "s22#17",
+  "source": "Djevojčica i pas",
+  "text": "Samo je sin bio protiv, jer uopšte nije volio pse.",
+  "heard": "Samo je sin bio protiv, jer uopšte nije volio pse."
+ },
+ {
+  "id": "s22#18",
+  "source": "Djevojčica i pas",
+  "text": "Ubrzo su se djevojčica, njen muž i djeca upoznali sa kucicom.",
+  "heard": "Ubrzo su se djevojčica, nje i muži djeca upoznali sa kucicom."
+ },
+ {
+  "id": "s22#19",
+  "source": "Djevojčica i pas",
+  "text": "Kuca se strašno obradovala svojoj novoj porodici.",
+  "heard": "Kuca se strašno obradovala svojoj novoj porodici."
+ },
+ {
+  "id": "s22#20",
+  "source": "Djevojčica i pas",
+  "text": "Sve ih je izlizala i odmah ih je zavoljela.",
+  "heard": "Sve ih je izlizela i odmah ih je zavoljela."
+ },
+ {
+  "id": "s22#21",
+  "source": "Djevojčica i pas",
+  "text": "Djevojčica je tako prestala da misli samo na strašne vijesti.",
+  "heard": "Djevojčica je tako prestala da misli samo na strašne vijesti."
+ },
+ {
+  "id": "s22#22",
+  "source": "Djevojčica i pas",
+  "text": "I uspjela je da izdrži težak period čekanja.",
+  "heard": "i uspjela je da izdrži težak period čekanja."
+ },
+ {
+  "id": "s22#23",
+  "source": "Djevojčica i pas",
+  "text": "A njen muž, iako nikada ranije nije živio sa psima, prihvatio je kucu kao svoju.",
+  "heard": "A njen muž, iako nikada ranije nije živio sa psima, prihvatio je kucu kao svoju."
+ },
+ {
+  "id": "s22#24",
+  "source": "Djevojčica i pas",
+  "text": "Kćerka je bila potpuno oduševljena.",
+  "heard": "Čerka je bila potpuno oduševljena."
+ },
+ {
+  "id": "s22#25",
+  "source": "Djevojčica i pas",
+  "text": "Čak se i sin vremenom navikao i polako je počeo da komunicira sa kucicom.",
+  "heard": "Čak se i sin vremenom navikao i polako je počeo da komunicira sa kucicom."
+ },
+ {
+  "id": "s22#26",
+  "source": "Djevojčica i pas",
+  "text": "Svi su postali veseliji, a čak su postali i malo srećniji.",
+  "heard": "Svi su postali veseliji, a čak su postali i malo srećniji."
+ },
+ {
+  "id": "s22#27",
+  "source": "Djevojčica i pas",
+  "text": "I tako su počeli lijepo da žive!",
+  "heard": "i tako su počeli lijepo da žive."
+ },
+ {
+  "id": "s23#1",
+  "source": "Kraj septembra na moru",
+  "text": "Krajem septembra u Crnoj Gori je još uvijek toplo.",
+  "heard": "Krajem septembra u Crnoj Gori je još uvijek toklo."
+ },
+ {
+  "id": "s23#2",
+  "source": "Kraj septembra na moru",
+  "text": "Danju je oko trideset stepeni.",
+  "heard": "Danju je oko 30 stepeni."
+ },
+ {
+  "id": "s23#3",
+  "source": "Kraj septembra na moru",
+  "text": "Noći su svježije, ali nije hladno.",
+  "heard": "Noći su svježije, ali nije hladno."
+ },
+ {
+  "id": "s23#4",
+  "source": "Kraj septembra na moru",
+  "text": "More je toplo i ljudi se još kupaju.",
+  "heard": "More je toplo i ljudi se još kupaju."
+ },
+ {
+  "id": "s23#5",
+  "source": "Kraj septembra na moru",
+  "text": "Na plaži ima mnogo manje ljudi nego u avgustu.",
+  "heard": "Na plaži ima mnogo manje ljudi nego u Avgustu."
+ },
+ {
+  "id": "s23#6",
+  "source": "Kraj septembra na moru",
+  "text": "Ljeto je prošlo, a sezona se polako završava.",
+  "heard": "Ljeto je prošlo, a sezona se polako završava."
+ },
+ {
+  "id": "s23#7",
+  "source": "Kraj septembra na moru",
+  "text": "U Budvi konobari sjede i razgovaraju.",
+  "heard": "U budvi konobari sjede i razgovaraju."
+ },
+ {
+  "id": "s23#8",
+  "source": "Kraj septembra na moru",
+  "text": "Kafići su otvoreni, ali stolovi su prazni.",
+  "heard": "Kafići su otvoreni, ali stolovi su prazni."
+ },
+ {
+  "id": "s23#9",
+  "source": "Kraj septembra na moru",
+  "text": "Ujutru je more mirno kao ogledalo.",
+  "heard": "Ujutru je more mirno kao ogledalo."
+ },
+ {
+  "id": "s23#10",
+  "source": "Kraj septembra na moru",
+  "text": "Ribari se vraćaju u luku sa ribom.",
+  "heard": "Ribari se vraćaju u luku sa ribom."
+ },
+ {
+  "id": "s23#11",
+  "source": "Kraj septembra na moru",
+  "text": "Na pijaci sada ima smokava i grožđa.",
+  "heard": "Na pijaci sada ima smokava i groždja."
+ },
+ {
+  "id": "s23#12",
+  "source": "Kraj septembra na moru",
+  "text": "Prodavci kažu da je grožđe ove godine slatko.",
+  "heard": "Prudavci kažu da je groždje ove godine slatko."
+ },
+ {
+  "id": "s23#13",
+  "source": "Kraj septembra na moru",
+  "text": "Ponekad kratko padne kiša.",
+  "heard": "Ponekad kratko padne kiša."
+ },
+ {
+  "id": "s23#14",
+  "source": "Kraj septembra na moru",
+  "text": "Kiša brzo prođe i opet izađe sunce.",
+  "heard": "Kiša brzo prođe i opet izađe sunce."
+ },
+ {
+  "id": "s23#15",
+  "source": "Kraj septembra na moru",
+  "text": "Ovo je najljepše doba godine na moru.",
+  "heard": "Ovo je najljepše doba godine na moru."
+ },
+ {
+  "id": "s23#16",
+  "source": "Kraj septembra na moru",
+  "text": "Nema gužve, more je toplo, a večeri su mirne.",
+  "heard": "Nema gužve, more je toplo, a večeri su mirne."
+ },
+ {
+  "id": "d01#1",
+  "source": "Na pošti",
+  "text": "Dobar dan, izvolite.",
+  "heard": "Dobar dan, izvolite!"
+ },
+ {
+  "id": "d01#2",
+  "source": "Na pošti",
+  "text": "Dobar dan.",
+  "heard": "Dobar dan!"
+ },
+ {
+  "id": "d01#3",
+  "source": "Na pošti",
+  "text": "Hoću da pošaljem paket u Rusiju.",
+  "heard": "Hoću da pošaljem paket u Rusiju."
+ },
+ {
+  "id": "d01#4",
+  "source": "Na pošti",
+  "text": "Šta je unutra?",
+  "heard": "Steja unutra."
+ },
+ {
+  "id": "d01#5",
+  "source": "Na pošti",
+  "text": "Knjige i odjeća.",
+  "heard": "Knjige i odječa"
+ },
+ {
+  "id": "d01#6",
+  "source": "Na pošti",
+  "text": "Stavite paket na vagu, molim vas.",
+  "heard": "Stavite paket na vagu, molim vas!"
+ },
+ {
+  "id": "d01#7",
+  "source": "Na pošti",
+  "text": "Koliko košta?",
+  "heard": "Koliko kosta?"
+ },
+ {
+  "id": "d01#8",
+  "source": "Na pošti",
+  "text": "Dva kilograma, to je dvadeset dva evra.",
+  "heard": "Dva kilograma, to je 22 evra."
+ },
+ {
+  "id": "d01#9",
+  "source": "Na pošti",
+  "text": "Za koliko dana stiže?",
+  "heard": "за колико дана стиже."
+ },
+ {
+  "id": "d01#10",
+  "source": "Na pošti",
+  "text": "Obično za dvije nedjelje, ponekad duže.",
+  "heard": "obično za dvije nedjelje, ponekad duže."
+ },
+ {
+  "id": "d01#11",
+  "source": "Na pošti",
+  "text": "Dobro, uzeću to.",
+  "heard": "Dobro, uzeću to."
+ },
+ {
+  "id": "d01#12",
+  "source": "Na pošti",
+  "text": "Mogu li karticom?",
+  "heard": "Moguli karticom"
+ },
+ {
+  "id": "d01#13",
+  "source": "Na pošti",
+  "text": "Naravno. Evo vam potvrda.",
+  "heard": "Naravno, evo vam potvrda."
+ },
+ {
+  "id": "d01#14",
+  "source": "Na pošti",
+  "text": "Hvala vam puno. Doviđenja.",
+  "heard": "Hvala vam puno. Do vidjenja."
+ },
+ {
+  "id": "d02#1",
+  "source": "U ordinaciji",
+  "text": "Izvolite, sjedite. Šta vas muči?",
+  "heard": "Izvolite, sjedite. Šta vas muči?"
+ },
+ {
+  "id": "d02#2",
+  "source": "U ordinaciji",
+  "text": "Boli me grlo već tri dana.",
+  "heard": "Boli me grlo već tri dana."
+ },
+ {
+  "id": "d02#3",
+  "source": "U ordinaciji",
+  "text": "Imate li temperaturu?",
+  "heard": "Imateli temperaturu."
+ },
+ {
+  "id": "d02#4",
+  "source": "U ordinaciji",
+  "text": "Juče sam imao trideset osam.",
+  "heard": "i uče sam imao 38."
+ },
+ {
+  "id": "d02#5",
+  "source": "U ordinaciji",
+  "text": "Otvorite usta, molim vas.",
+  "heard": "otvorite usta, molim vas"
+ },
+ {
+  "id": "d02#6",
+  "source": "U ordinaciji",
+  "text": "Da li je ozbiljno?",
+  "heard": "Dalje ozbiljno."
+ },
+ {
+  "id": "d02#7",
+  "source": "U ordinaciji",
+  "text": "Nije, ali morate uzimati antibiotik.",
+  "heard": "Nije, ali morate uzimati antibiotik."
+ },
+ {
+  "id": "d02#8",
+  "source": "U ordinaciji",
+  "text": "Koliko dana?",
+  "heard": "Koliko dana?"
+ },
+ {
+  "id": "d02#9",
+  "source": "U ordinaciji",
+  "text": "Sedam dana, dva puta dnevno.",
+  "heard": "7 dana, 2 puta dnevno"
+ },
+ {
+  "id": "d02#10",
+  "source": "U ordinaciji",
+  "text": "Mogu li da radim?",
+  "heard": "Mogu li da radim?"
+ },
+ {
+  "id": "d02#11",
+  "source": "U ordinaciji",
+  "text": "Bolje ostanite kod kuće dva dana.",
+  "heard": "Bolje ostanite kod kuće dva dana."
+ },
+ {
+  "id": "d02#12",
+  "source": "U ordinaciji",
+  "text": "Razumijem. Hvala, doktore.",
+  "heard": "Razumijem. Hvala, doktore."
+ },
+ {
+  "id": "d03#1",
+  "source": "U kafiću",
+  "text": "Dobar dan, izvolite.",
+  "heard": "Dobar dan, izvolite!"
+ },
+ {
+  "id": "d03#2",
+  "source": "U kafiću",
+  "text": "Jednu kafu, molim vas.",
+  "heard": "Jednu kafu, molim vas!"
+ },
+ {
+  "id": "d03#3",
+  "source": "U kafiću",
+  "text": "Espreso ili sa mlijekom?",
+  "heard": "e espresso ili sam lijekom."
+ },
+ {
+  "id": "d03#4",
+  "source": "U kafiću",
+  "text": "Sa mlijekom, i jednu vodu.",
+  "heard": "sa mlijekom i jednu vodu."
+ },
+ {
+  "id": "d03#5",
+  "source": "U kafiću",
+  "text": "Vodu sa gasom ili bez?",
+  "heard": "Vodu se gasom ili bez."
+ },
+ {
+  "id": "d03#6",
+  "source": "U kafiću",
+  "text": "Bez gasa, molim.",
+  "heard": "Bez gasa, molim!"
+ },
+ {
+  "id": "d03#7",
+  "source": "U kafiću",
+  "text": "Želite li nešto da pojedete?",
+  "heard": "Želite li nešto da pojedete?"
+ },
+ {
+  "id": "d03#8",
+  "source": "U kafiću",
+  "text": "Ne, hvala. Samo piće.",
+  "heard": "Ne, hvala. Samo piće."
+ },
+ {
+  "id": "d03#9",
+  "source": "U kafiću",
+  "text": "Odmah donosim.",
+  "heard": "од Макдоносим."
+ },
+ {
+  "id": "d03#10",
+  "source": "U kafiću",
+  "text": "Račun, molim vas.",
+  "heard": "Račun, molim vas."
+ },
+ {
+  "id": "d03#11",
+  "source": "U kafiću",
+  "text": "Tri evra.",
+  "heard": "3 evra"
+ },
+ {
+  "id": "d03#12",
+  "source": "U kafiću",
+  "text": "Izvolite. Hvala i doviđenja.",
+  "heard": "Izvolite! Hvala i do vidjenja!"
+ },
+ {
+  "id": "d04#1",
+  "source": "Stan na izdavanje",
+  "text": "Dobar dan, vi ste zvali za stan?",
+  "heard": "Dobar dan, vi ste zvali za stan."
+ },
+ {
+  "id": "d04#2",
+  "source": "Stan na izdavanje",
+  "text": "Da, htio bih da ga vidim.",
+  "heard": "Da, htio bih da ga vidim."
+ },
+ {
+  "id": "d04#3",
+  "source": "Stan na izdavanje",
+  "text": "Stan je na drugom spratu, ima dvije sobe.",
+  "heard": "Stan je na drugom spratu, ima dvije sobe."
+ },
+ {
+  "id": "d04#4",
+  "source": "Stan na izdavanje",
+  "text": "Koliko košta mjesečno?",
+  "heard": "Koliko košta mjesečno?"
+ },
+ {
+  "id": "d04#5",
+  "source": "Stan na izdavanje",
+  "text": "Četiristo evra, plus struja i voda.",
+  "heard": "400 evra, plus struja i voda."
+ },
+ {
+  "id": "d04#6",
+  "source": "Stan na izdavanje",
+  "text": "Da li je namješten?",
+  "heard": "Dali je namješten?"
+ },
+ {
+  "id": "d04#7",
+  "source": "Stan na izdavanje",
+  "text": "Jeste, sve je unutra: frižider, mašina, krevet.",
+  "heard": "Jeste, sve je unutra, frižider, mašina, krevet."
+ },
+ {
+  "id": "d04#8",
+  "source": "Stan na izdavanje",
+  "text": "Kada mogu da se uselim?",
+  "heard": "Kada mogu da se uselim?"
+ },
+ {
+  "id": "d04#9",
+  "source": "Stan na izdavanje",
+  "text": "Od prvog sljedećeg mjeseca.",
+  "heard": "Od prvog sljedećeg mjeseca"
+ },
+ {
+  "id": "d04#10",
+  "source": "Stan na izdavanje",
+  "text": "Treba li depozit?",
+  "heard": "Treba li depozit?"
+ },
+ {
+  "id": "d04#11",
+  "source": "Stan na izdavanje",
+  "text": "Da, jedna mjesečna kirija.",
+  "heard": "Da, jedna mjesečna kirija."
+ },
+ {
+  "id": "d04#12",
+  "source": "Stan na izdavanje",
+  "text": "Dobro, razmisliću i javiću vam se.",
+  "heard": "Dobro, razmisliću i javiću vam se."
+ },
+ {
+  "id": "d05#1",
+  "source": "U servisu",
+  "text": "Dobar dan, šta je problem?",
+  "heard": "Dobar dan, šta je problem?"
+ },
+ {
+  "id": "d05#2",
+  "source": "U servisu",
+  "text": "Auto ne pali ujutru.",
+  "heard": "A oto Nepali ujutru."
+ },
+ {
+  "id": "d05#3",
+  "source": "U servisu",
+  "text": "Koliko je star akumulator?",
+  "heard": "Koliko je stara akumulator?"
+ },
+ {
+  "id": "d05#4",
+  "source": "U servisu",
+  "text": "Ne znam tačno, kupio sam auto polovan.",
+  "heard": "Ne znam tačno, kupio sam auto polovan."
+ },
+ {
+  "id": "d05#5",
+  "source": "U servisu",
+  "text": "Provjeriću ga. Ostavite ključeve.",
+  "heard": "Provjeriću ga. Ostavite ključeve."
+ },
+ {
+  "id": "d05#6",
+  "source": "U servisu",
+  "text": "Koliko će trajati?",
+  "heard": "Koliko će trajati?"
+ },
+ {
+  "id": "d05#7",
+  "source": "U servisu",
+  "text": "Sat vremena, možda dva.",
+  "heard": "Sad vremena, možda dva."
+ },
+ {
+  "id": "d05#8",
+  "source": "U servisu",
+  "text": "Možete li i gume da provjerite?",
+  "heard": "Možete li i gume da provjerite?"
+ },
+ {
+  "id": "d05#9",
+  "source": "U servisu",
+  "text": "Mogu.",
+  "heard": "Mogu."
+ },
+ {
+  "id": "d05#10",
+  "source": "U servisu",
+  "text": "Jedna je slaba, vidim odavde.",
+  "heard": "Jedna je slaba, vidimo odavde."
+ },
+ {
+  "id": "d05#11",
+  "source": "U servisu",
+  "text": "Koliko bi to sve koštalo?",
+  "heard": "Koliko bi to sve koštalo?"
+ },
+ {
+  "id": "d05#12",
+  "source": "U servisu",
+  "text": "Zvaću vas kad vidim šta treba.",
+  "heard": "Zvaću vas kad vidim šta treba."
+ },
+ {
+  "id": "d05#13",
+  "source": "U servisu",
+  "text": "U redu, evo moj broj.",
+  "heard": "U redu, evo moj broj."
+ },
+ {
+  "id": "d06#1",
+  "source": "Komšija zvoni",
+  "text": "Izvini što smetam, jesi li kod kuće?",
+  "heard": "Izvini što smetam, jesili kod kuće."
+ },
+ {
+  "id": "d06#2",
+  "source": "Komšija zvoni",
+  "text": "Jesam, uđi. Šta se desilo?",
+  "heard": "Је сам, уђи, шта се десило?"
+ },
+ {
+  "id": "d06#3",
+  "source": "Komšija zvoni",
+  "text": "Kod mene curi voda, a majstor se ne javlja.",
+  "heard": "Kod mene curi voda, a maistor se ne javlja."
+ },
+ {
+  "id": "d06#4",
+  "source": "Komšija zvoni",
+  "text": "Imaš li broj drugog majstora?",
+  "heard": "Imaš li broj drugog maistora?"
+ },
+ {
+  "id": "d06#5",
+  "source": "Komšija zvoni",
+  "text": "Nemam.",
+  "heard": "Nemam."
+ },
+ {
+  "id": "d06#6",
+  "source": "Komšija zvoni",
+  "text": "Mislio sam da ti imaš.",
+  "heard": "Misli osam da ti imaš."
+ },
+ {
+  "id": "d06#7",
+  "source": "Komšija zvoni",
+  "text": "Imam jedan, zvao sam ga prošle godine.",
+  "heard": "Imam jedan, zval sam ga prošle godine."
+ },
+ {
+  "id": "d06#8",
+  "source": "Komšija zvoni",
+  "text": "Možeš li da ga pozoveš odmah?",
+  "heard": "Možeš li da ga pozoveš odmah?"
+ },
+ {
+  "id": "d06#9",
+  "source": "Komšija zvoni",
+  "text": "Naravno, sada ću.",
+  "heard": "Naravno, sada ću."
+ },
+ {
+  "id": "d06#10",
+  "source": "Komšija zvoni",
+  "text": "Hvala ti puno, spasio si me.",
+  "heard": "Hvala ti puno, spasio si me."
+ },
+ {
+  "id": "d06#11",
+  "source": "Komšija zvoni",
+  "text": "Nema na čemu, to je normalno.",
+  "heard": "Nema na čemu, to je normalno."
+ },
+ {
+  "id": "d06#12",
+  "source": "Komšija zvoni",
+  "text": "Ako ti nešto zatreba, samo pozovi.",
+  "heard": "Ако ти нешто затреба, само позови."
+ },
+ {
+  "id": "d06#13",
+  "source": "Komšija zvoni",
+  "text": "Hoću. Sretno sa vodom!",
+  "heard": "Hoću! Sretno sa vodom!"
+ },
+ {
+  "id": "d07#1",
+  "source": "U banci",
+  "text": "Dobar dan, kako mogu da pomognem?",
+  "heard": "Dobar dan, kako mogu da pomognem?"
+ },
+ {
+  "id": "d07#2",
+  "source": "U banci",
+  "text": "Hoću da otvorim račun.",
+  "heard": "Hoću da otvorim račun."
+ },
+ {
+  "id": "d07#3",
+  "source": "U banci",
+  "text": "Imate li boravišnu dozvolu?",
+  "heard": "Imate li boravišnu dozvolu?"
+ },
+ {
+  "id": "d07#4",
+  "source": "U banci",
+  "text": "Imam, evo je. I pasoš.",
+  "heard": "Imam, evo je i pasoš."
+ },
+ {
+  "id": "d07#5",
+  "source": "U banci",
+  "text": "Treba mi i potvrda o adresi.",
+  "heard": "Treba mi i potvrda o adresi."
+ },
+ {
+  "id": "d07#6",
+  "source": "U banci",
+  "text": "Nemam je sa sobom.",
+  "heard": "nemam je se sobom"
+ },
+ {
+  "id": "d07#7",
+  "source": "U banci",
+  "text": "Mogu li sjutra?",
+  "heard": "Mogu li si utra?"
+ },
+ {
+  "id": "d07#8",
+  "source": "U banci",
+  "text": "Možete. Radimo do dva popodne.",
+  "heard": "Možete. Radimo do dva popodne."
+ },
+ {
+  "id": "d07#9",
+  "source": "U banci",
+  "text": "Koliko košta održavanje računa?",
+  "heard": "Koliko košta održavanje računa?"
+ },
+ {
+  "id": "d07#10",
+  "source": "U banci",
+  "text": "Dva evra mjesečno, kartica je besplatna.",
+  "heard": "Dva evra mjesečno, kartica je bezplatna."
+ },
+ {
+  "id": "d07#11",
+  "source": "U banci",
+  "text": "A kada dobijam karticu?",
+  "heard": "Akada dobijem karticu."
+ },
+ {
+  "id": "d07#12",
+  "source": "U banci",
+  "text": "Za sedam dana, javićemo vam se.",
+  "heard": "Za sedam dana, javit ćemo vam se."
+ },
+ {
+  "id": "d07#13",
+  "source": "U banci",
+  "text": "Hvala, vidimo se sjutra.",
+  "heard": "Hvala, vidimo se si utra!"
+ },
+ {
+  "id": "d08#1",
+  "source": "Kod prodavca voća",
+  "text": "Izvolite, šta će vam biti?",
+  "heard": "Izvolite, šta će vam biti?"
+ },
+ {
+  "id": "d08#2",
+  "source": "Kod prodavca voća",
+  "text": "Kilogram jabuka, molim vas.",
+  "heard": "Килограми ябука, молим вас!"
+ },
+ {
+  "id": "d08#3",
+  "source": "Kod prodavca voća",
+  "text": "Ove su slatke, a ove kiselije.",
+  "heard": "Ove su slatke, a ove kiselje."
+ },
+ {
+  "id": "d08#4",
+  "source": "Kod prodavca voća",
+  "text": "Uzeću slatke. Koliko koštaju?",
+  "heard": "Uzeću slatke. Koliko koštaju?"
+ },
+ {
+  "id": "d08#5",
+  "source": "Kod prodavca voća",
+  "text": "Evro i po kilogram.",
+  "heard": "1,5 kg"
+ },
+ {
+  "id": "d08#6",
+  "source": "Kod prodavca voća",
+  "text": "Imate li kruške?",
+  "heard": "Imate li kruške?"
+ },
+ {
+  "id": "d08#7",
+  "source": "Kod prodavca voća",
+  "text": "Danas nemam, dođite sjutra.",
+  "heard": "Danas nemam, dođite si utra."
+ },
+ {
+  "id": "d08#8",
+  "source": "Kod prodavca voća",
+  "text": "Onda još pola kilograma paradajza.",
+  "heard": "onda još pola kilograma paradajza"
+ },
+ {
+  "id": "d08#9",
+  "source": "Kod prodavca voća",
+  "text": "Evo. Sve zajedno tri evra.",
+  "heard": "Evo, sve zajedno tri evra."
+ },
+ {
+  "id": "d08#10",
+  "source": "Kod prodavca voća",
+  "text": "Nemam sitno, imam samo dvadeset.",
+  "heard": "Nemam sitno, imam samo 20."
+ },
+ {
+  "id": "d08#11",
+  "source": "Kod prodavca voća",
+  "text": "Nema problema, evo kusur.",
+  "heard": "Nema problema, evo kusur."
+ },
+ {
+  "id": "d08#12",
+  "source": "Kod prodavca voća",
+  "text": "Hvala, prijatan dan!",
+  "heard": "Hvala, prijatan dan!"
+ },
+ {
+  "id": "d09#1",
+  "source": "Kupujem kartu",
+  "text": "Dobar dan, gdje putujete?",
+  "heard": "Dobar dan, gdje putujete?"
+ },
+ {
+  "id": "d09#2",
+  "source": "Kupujem kartu",
+  "text": "U Budvu, molim vas.",
+  "heard": "Угудбу, молим вас!"
+ },
+ {
+  "id": "d09#3",
+  "source": "Kupujem kartu",
+  "text": "U jednom pravcu ili povratnu?",
+  "heard": "u jednom pravcu ili povretnu."
+ },
+ {
+  "id": "d09#4",
+  "source": "Kupujem kartu",
+  "text": "Povratnu, vraćam se sjutra.",
+  "heard": "Povretnu, vracam se si utra."
+ },
+ {
+  "id": "d09#5",
+  "source": "Kupujem kartu",
+  "text": "To je jedanaest evra.",
+  "heard": "To je jedana estebra."
+ },
+ {
+  "id": "d09#6",
+  "source": "Kupujem kartu",
+  "text": "Kada polazi sljedeći autobus?",
+  "heard": "kada polazi sljedeći autobus."
+ },
+ {
+  "id": "d09#7",
+  "source": "Kupujem kartu",
+  "text": "Za dvadeset minuta, peron broj tri.",
+  "heard": "Za 20 minuta, Peron broj 3"
+ },
+ {
+  "id": "d09#8",
+  "source": "Kupujem kartu",
+  "text": "Da li treba platiti prtljag?",
+  "heard": "Da li treba platiti prcijag?"
+ },
+ {
+  "id": "d09#9",
+  "source": "Kupujem kartu",
+  "text": "Jedan evro po koferu, kod vozača.",
+  "heard": "1 evropu koferu, kod bozača"
+ },
+ {
+  "id": "d09#10",
+  "source": "Kupujem kartu",
+  "text": "Razumijem. Hvala vam.",
+  "heard": "Razumijem.  Hvala vam."
+ },
+ {
+  "id": "d09#11",
+  "source": "Kupujem kartu",
+  "text": "Srećan put!",
+  "heard": "Srećan put"
+ },
+ {
+  "id": "d09#12",
+  "source": "Kupujem kartu",
+  "text": "Hvala, doviđenja.",
+  "heard": "Hvala, do viđenja!"
+ },
+ {
+  "id": "l01e09",
+  "source": "Приветствия и знакомство",
+  "text": "Drago mi je",
+  "heard": "Drago mi je!"
+ },
+ {
+  "id": "l01e11",
+  "source": "Приветствия и знакомство",
+  "text": "Dobro jutro, kako si?",
+  "heard": "Dobro jutro, kako si?"
+ },
+ {
+  "id": "l02e10",
+  "source": "Быть, откуда ты",
+  "text": "Odakle si?",
+  "heard": "Oda klesi"
+ },
+ {
+  "id": "l02e11.1",
+  "source": "Быть, откуда ты",
+  "text": "Dobar dan!",
+  "heard": "Dobar dan!"
+ },
+ {
+  "id": "l02e11.2",
+  "source": "Быть, откуда ты",
+  "text": "Zovem se Ivan.",
+  "heard": "Zovem se Ivan."
+ },
+ {
+  "id": "l02e11.3",
+  "source": "Быть, откуда ты",
+  "text": "Ja sam iz Rusije, a živim u Podgorici.",
+  "heard": "Ja sam iz Rusije, a živim u Podgorici."
+ },
+ {
+  "id": "l02e11.4",
+  "source": "Быть, откуда ты",
+  "text": "Još uvijek slabo govorim crnogorski.",
+  "heard": "Još uvijek slabo govorim crnogorski."
+ },
+ {
+  "id": "l03e09",
+  "source": "Числа и кафе",
+  "text": "Molim vas, jednu kafu",
+  "heard": "Molim vas, i jednu kafu."
+ },
+ {
+  "id": "l03e11",
+  "source": "Числа и кафе",
+  "text": "Hoću vodu bez gasa.",
+  "heard": "Hoću vodu bez gasa."
+ },
+ {
+  "id": "l04e09",
+  "source": "Семья и притяжательные",
+  "text": "Ovo je moja porodica",
+  "heard": "Ovo je moja porodica."
+ },
+ {
+  "id": "l04e11.1",
+  "source": "Семья и притяжательные",
+  "text": "Ovo je moja porodica.",
+  "heard": "Ovo je moja porodica."
+ },
+ {
+  "id": "l04e11.2",
+  "source": "Семья и притяжательные",
+  "text": "Imam dvije sestre i jednog brata.",
+  "heard": "Imam dvije sestre i jednog brata."
+ },
+ {
+  "id": "l04e11.3",
+  "source": "Семья и притяжательные",
+  "text": "Moj otac je iz Nikšića, a moja majka je iz Bara.",
+  "heard": "Moj otac je iz Nikšića, a moja majka je iz Bara."
+ },
+ {
+  "id": "l05e09",
+  "source": "В магазине: винительный падеж",
+  "text": "Koliko košta?",
+  "heard": "Koliko kosta?"
+ },
+ {
+  "id": "l05e11",
+  "source": "В магазине: винительный падеж",
+  "text": "Imate li mlijeko?",
+  "heard": "Imate li mlijeko?"
+ },
+ {
+  "id": "l06e09",
+  "source": "Дни недели и время",
+  "text": "Vidimo se sjutra",
+  "heard": "Vidimo se si utra!"
+ },
+ {
+  "id": "l06e11.1",
+  "source": "Дни недели и время",
+  "text": "Danas je ponedjeljak, a sjutra je utorak.",
+  "heard": "Danas je ponedjeljak, a si utra je utorak."
+ },
+ {
+  "id": "l06e11.2",
+  "source": "Дни недели и время",
+  "text": "U petak uveče vidimo se u Baru.",
+  "heard": "U petaku veće vidimo se u baru."
+ },
+ {
+  "id": "l06e11.3",
+  "source": "Дни недели и время",
+  "text": "U nedjelju ne radim.",
+  "heard": "U nedelju ne radim."
+ },
+ {
+  "id": "l07e09",
+  "source": "Глаголы в настоящем времени",
+  "text": "Molim vas, ponovite",
+  "heard": "Molim vas, ponovite."
+ },
+ {
+  "id": "l07e11",
+  "source": "Глаголы в настоящем времени",
+  "text": "Šta radiš večeras?",
+  "heard": "Šta radiš večeras?"
+ },
+ {
+  "id": "l08e09",
+  "source": "Город и направления",
+  "text": "Gdje je plaža?",
+  "heard": "gdje je plaža"
+ },
+ {
+  "id": "l08e11.1",
+  "source": "Город и направления",
+  "text": "Izvinite, gdje je autobuska stanica?",
+  "heard": "Izvinite, gdje je autobuska stanica?"
+ },
+ {
+  "id": "l08e11.2",
+  "source": "Город и направления",
+  "text": "Idite pravo, pa lijevo.",
+  "heard": "idite pravo, palijevo"
+ },
+ {
+  "id": "l08e11.3",
+  "source": "Город и направления",
+  "text": "Plaža je blizu, a pijaca je u centru.",
+  "heard": "Plaža je blizu, a pjeca je u centru."
+ },
+ {
+  "id": "l09e11",
+  "source": "Прошедшее время",
+  "text": "Gdje si bio juče?",
+  "heard": "Gdje si bio i uče?"
+ },
+ {
+  "id": "l10e11",
+  "source": "Дом и быт: что случилось",
+  "text": "Slavina ne radi",
+  "heard": "Slavina ne radi."
+ },
+ {
+  "id": "l11e11.1",
+  "source": "Здоровье: что болит",
+  "text": "Juče sam bio bolestan.",
+  "heard": "Uči sam bio-bolistan."
+ },
+ {
+  "id": "l11e11.2",
+  "source": "Здоровье: что болит",
+  "text": "Boljela me glava.",
+  "heard": "Boljela me glava."
+ },
+ {
+  "id": "l11e11.3",
+  "source": "Здоровье: что болит",
+  "text": "Danas sam bio kod ljekara.",
+  "heard": "Danas sam bio kod ljekara."
+ },
+ {
+  "id": "l12e11",
+  "source": "Родительный падеж",
+  "text": "Nemam vremena danas",
+  "heard": "Nemam vremena danas."
+ },
+ {
+  "id": "l13e11",
+  "source": "Магазин и рынок",
+  "text": "Molim vas, pola kilograma sira",
+  "heard": "Molim vas, pola kilograma sira."
+ },
+ {
+  "id": "l14e11",
+  "source": "Документы и учреждения",
+  "text": "Gdje je šalter za boravak?",
+  "heard": "gdje je šalter za boravak."
+ },
+ {
+  "id": "l15e11",
+  "source": "Множественное число",
+  "text": "Koliko ima stanova?",
+  "heard": "Koliko ima Stanova?"
+ },
+ {
+  "id": "l16e11",
+  "source": "На рынке: сколько чего",
+  "text": "Koliko košta sve zajedno?",
+  "heard": "koliko košta sve zajedno."
+ },
+ {
+  "id": "l17e11",
+  "source": "Будущее время",
+  "text": "Kada ćemo se vidjeti?",
+  "heard": "Kada ćemo se vidjeti?"
+ },
+ {
+  "id": "l18e11",
+  "source": "Автобус и билеты",
+  "text": "Jednu kartu do Budve, molim",
+  "heard": "Jednu kartu do budve, molim."
+ },
+ {
+  "id": "l19e11.1",
+  "source": "Машина: заправка и сервис",
+  "text": "Juče se pokvario auto.",
+  "heard": "i uče se pokvario auto."
+ },
+ {
+  "id": "l19e11.2",
+  "source": "Машина: заправка и сервис",
+  "text": "Sjutra ću ići u servis.",
+  "heard": "Siutra ću ići u servis."
+ },
+ {
+  "id": "l19e11.3",
+  "source": "Машина: заправка и сервис",
+  "text": "Popravka će koštati sto eura.",
+  "heard": "Popravka će koštati 100 eura."
+ },
+ {
+  "id": "l20e11",
+  "source": "Дательный и творительный",
+  "text": "Platiću karticom",
+  "heard": "Platiću karticom"
+ },
+ {
+  "id": "l21e11",
+  "source": "Повелительное наклонение",
+  "text": "Ponovite, molim vas",
+  "heard": "Поновите, молим вас!"
+ },
+ {
+  "id": "l22e11.1",
+  "source": "Соседи и просьбы",
+  "text": "Komšije su sinoć pravile buku.",
+  "heard": "Komšije su sinoći pravile buku."
+ },
+ {
+  "id": "l22e11.2",
+  "source": "Соседи и просьбы",
+  "text": "Nisam mogao spavati.",
+  "heard": "Nisam mogao spavati."
+ },
+ {
+  "id": "l22e11.3",
+  "source": "Соседи и просьбы",
+  "text": "Sjutra ću razgovarati sa gazdom.",
+  "heard": "S jutra ću razgovarati sa Gazdom."
+ },
+ {
+  "id": "l23e11",
+  "source": "Больше, меньше, лучше",
+  "text": "Koji je najbolji?",
+  "heard": "Ko je najbolji?"
+ },
+ {
+  "id": "l24e11",
+  "source": "Погода и одежда",
+  "text": "Napolju je hladno",
+  "heard": "Napolju je hladno."
+ },
+ {
+  "id": "l25e11",
+  "source": "Что, если и потому что",
+  "text": "Reci mi kada dođeš",
+  "heard": "Reci mi kada dođeš."
+ },
+ {
+  "id": "l26e11",
+  "source": "Работа и деньги",
+  "text": "Kada počinje radno vrijeme?",
+  "heard": "kada počinje radno vrijeme."
+ },
+ {
+  "id": "l27e11",
+  "source": "Условное наклонение",
+  "text": "Da li biste mi pomogli?",
+  "heard": "Dali biste mi pomogli?"
+ },
+ {
+  "id": "l28e11",
+  "source": "Вид глагола",
+  "text": "Jesi li pročitao pismo?",
+  "heard": "Је си ли прочитао писмо?"
+ },
+ {
+  "id": "l29e11",
+  "source": "Порядковые числа и даты",
+  "text": "Kada ti je rođendan?",
+  "heard": "Kadati je rođandan."
+ },
+ {
+  "id": "l30e11.1",
+  "source": "У врача: анализы и направления",
+  "text": "Otišao sam kod ljekara.",
+  "heard": "Otišao sam kod ljekara."
+ },
+ {
+  "id": "l30e11.2",
+  "source": "У врача: анализы и направления",
+  "text": "Dao mi je uput za analizu krvi.",
+  "heard": "Dao mi je uput za analizu krvi."
+ },
+ {
+  "id": "l30e11.3",
+  "source": "У врача: анализы и направления",
+  "text": "Nalaz će biti gotov za tri dana.",
+  "heard": "Nalaz će biti gotov za tri dana."
+ },
+ {
+  "id": "l31e11",
+  "source": "Жильё: счета и поломки",
+  "text": "Kada dolazi majstor?",
+  "heard": "Kada dolazi maistor."
+ },
+ {
+  "id": "l32e11.1",
+  "source": "Дорога и граница",
+  "text": "Krenuli smo rano ujutru.",
+  "heard": "Krenuli smo rano u jutru."
+ },
+ {
+  "id": "l32e11.2",
+  "source": "Дорога и граница",
+  "text": "Na granici nije bilo gužve.",
+  "heard": "Na granici nije bilo gužve."
+ },
+ {
+  "id": "l32e11.3",
+  "source": "Дорога и граница",
+  "text": "Stigli smo prije podne.",
+  "heard": "Stigli smo prije podne."
+ },
+ {
+  "id": "l33e11",
+  "source": "За столом",
+  "text": "Možemo li dobiti jelovnik?",
+  "heard": "Možemo li dobiti jelovnik?"
+ },
+ {
+  "id": "l34e11",
+  "source": "Мнение и согласие",
+  "text": "Šta ti misliš o tome?",
+  "heard": "Šta ti misliš o tome?"
+ },
+ {
+  "id": "l35e11",
+  "source": "Здесь не курят: безличное se",
+  "text": "Gdje se ovdje plaća?",
+  "heard": "Gdje se ovdje plaća?"
+ },
+ {
+  "id": "l36e11",
+  "source": "Плата и ожидание: слова на -nje",
+  "text": "Hvala na čekanju.",
+  "heard": "Hvala na čekanju."
+ },
+ {
+  "id": "l37e11",
+  "source": "Когда и пока: время в придаточных",
+  "text": "Kad se vraćaš kući?",
+  "heard": "kad se vraćaš kući."
+ },
+ {
+  "id": "l38e11",
+  "source": "Потому что и чтобы",
+  "text": "Izvini, kasnim jer pada kiša.",
+  "heard": "Izvini, kasnim jer pada kiša."
+ },
+ {
+  "id": "l39e11",
+  "source": "Порядок коротких слов",
+  "text": "Kako se to kaže na crnogorskom?",
+  "heard": "Kako se to kaže na Crnogorskom?"
+ },
+ {
+  "id": "l40e11.1",
+  "source": "Сделал или делал: вид глагола",
+  "text": "Juče sam cijeli dan radio.",
+  "heard": "Juče sam cijeli dan radio."
+ },
+ {
+  "id": "l40e11.2",
+  "source": "Сделал или делал: вид глагола",
+  "text": "Napisao sam dva pisma i pročitao ugovor.",
+  "heard": "Napiseo sam dva pisma i pročitao ugovor."
+ },
+ {
+  "id": "l40e11.3",
+  "source": "Сделал или делал: вид глагола",
+  "text": "Posao još nisam završio, ali sjutra nastavljam.",
+  "heard": "Poseo još nisam završio, ali si utra nastavljam."
+ },
+ {
+  "id": "l41e11",
+  "source": "Если бы знал",
+  "text": "Ja bih to uradio drugačije.",
+  "heard": "Ja bih to uradio drugačije."
+ },
+ {
+  "id": "l42e11",
+  "source": "Он сказал, что…",
+  "text": "Izvinite, šta ste rekli?",
+  "heard": "Izvinite, šta ste rekli?"
+ },
+ {
+  "id": "l43e11",
+  "source": "Тот, который",
+  "text": "Gdje je autobus koji ide na more?",
+  "heard": "Gdje je autobus koji ide na more?"
+ },
+ {
+  "id": "l44e11",
+  "source": "Как будто и чем дальше",
+  "text": "Što prije, to bolje.",
+  "heard": "Što prije, to bolje."
+ },
+ {
+  "id": "l45e11.1",
+  "source": "Уже, ещё, только что",
+  "text": "Tek sam stigao u Podgoricu.",
+  "heard": "tek sam stigao u Podgoricu."
+ },
+ {
+  "id": "l45e11.2",
+  "source": "Уже, ещё, только что",
+  "text": "Već znam gdje je pijaca, ali još ne znam kako se ide do mora.",
+  "heard": "Već znam gdje je pijaca, ali još ne znam kako se ide do mora."
+ },
+ {
+  "id": "l45e11.3",
+  "source": "Уже, ещё, только что",
+  "text": "Uskoro ću kupiti kartu i probati.",
+  "heard": "Uskoro ću kupiti kartu i probati."
+ },
+ {
+  "id": "l46e11",
+  "source": "Куда и где: предлоги по падежам",
+  "text": "Kako se ide do centra?",
+  "heard": "Kako se ide do centra?"
+ },
+ {
+  "id": "l47e11",
+  "source": "Половина, проценты и двое",
+  "text": "Koliko košta pola kile?",
+  "heard": "Koliko košta pola kile?"
+ },
+ {
+  "id": "l48e11",
+  "source": "Три года назад и через час",
+  "text": "Radim od devet do pet.",
+  "heard": "Radimo od 9 do 5."
+ },
+ {
+  "id": "l49e11",
+  "source": "Банк: счёт и перевод",
+  "text": "Htio bih da otvorim račun.",
+  "heard": "Htio bih da otvorim račun."
+ },
+ {
+  "id": "l50e11.1",
+  "source": "Работа: собеседование и договор",
+  "text": "Bio sam na razgovoru za posao.",
+  "heard": "Bio sam na razgovoru za posao."
+ },
+ {
+  "id": "l50e11.2",
+  "source": "Работа: собеседование и договор",
+  "text": "Pitali su me koliko imam iskustva i kada mogu da počnem.",
+  "heard": "Pitali su me koliko imam iskustva i kada mogu da počnem."
+ },
+ {
+  "id": "l50e11.3",
+  "source": "Работа: собеседование и договор",
+  "text": "Rekli su da će mi javiti za nedjelju dana.",
+  "heard": "Rekli su da će mi javiti za nedelju dana."
+ },
+ {
+  "id": "l51e11",
+  "source": "Курсы и учёба",
+  "text": "Gdje mogu da upišem kurs jezika?",
+  "heard": "gdje mogu da upišem kurs jezika."
+ },
+ {
+  "id": "l52e11",
+  "source": "Интернет и телефон",
+  "text": "Nemam signala, zovem te kasnije.",
+  "heard": "Nemam signala, zovem te kasnije."
+ },
+ {
+  "id": "l53e11",
+  "source": "Мастер и ремонт",
+  "text": "Koliko će koštati popravka?",
+  "heard": "Koliko će koštati popravka?"
+ },
+ {
+  "id": "l54e11",
+  "source": "Дети и школа",
+  "text": "Moj sin ima šest godina.",
+  "heard": "Мој сињ има шест година."
+ },
+ {
+  "id": "l55e11.1",
+  "source": "Праздники и гости",
+  "text": "U subotu smo bili kod komšija.",
+  "heard": "U subutu smo bili kod komšija."
+ },
+ {
+  "id": "l55e11.2",
+  "source": "Праздники и гости",
+  "text": "Bilo je puno gostiju i dosta hrane.",
+  "heard": "Bilo je puno gostiju i dosta hrane."
+ },
+ {
+  "id": "l55e11.3",
+  "source": "Праздники и гости",
+  "text": "Domaćin je rekao živjeli, a mi smo ostali do ponoći.",
+  "heard": "Domačini je reka oživjeli, a mi smo ostali do ponoći."
+ },
+ {
+  "id": "l56e11",
+  "source": "Тело и движение",
+  "text": "Boli me glava, treba mi odmor.",
+  "heard": "Boli me glava, treba mi odmor."
+ },
+ {
+  "id": "l57e11",
+  "source": "Поездка: отель и бронь",
+  "text": "Imam rezervaciju na svoje ime.",
+  "heard": "Imam rezervaciju na svoje ime."
+ },
+ {
+  "id": "l58e11",
+  "source": "Если случилась беда",
+  "text": "Molim vas, pozovite hitnu pomoć.",
+  "heard": "Molim vas, pozovite hitnu pomoć."
+ },
+ {
+  "id": "l59e11",
+  "source": "Спорить и отказывать",
+  "text": "Razumijem, ali se ne slažem.",
+  "heard": "Razumijem, ali se ne slažem."
+ },
+ {
+  "id": "l60e11.1",
+  "source": "Всё вместе",
+  "text": "Prošle godine sam se doselio u Podgoricu.",
+  "heard": "Prošle godine sam se doselio u Podgoricu."
+ },
+ {
+  "id": "l60e11.2",
+  "source": "Всё вместе",
+  "text": "U početku nisam znao ni gdje se kupuju karte, ni kako se traži majstor.",
+  "heard": "U početku nisam znao nigdje se kupuju karte, nikako se traži maistor."
+ },
+ {
+  "id": "l60e11.3",
+  "source": "Всё вместе",
+  "text": "Sad već razumijem komšije, pitam u banci šta me zanima i mogu da kažem ono što mislim.",
+  "heard": "Sad već razumijem komšije, pitam u banci šta me zanima i mogu da kažem ono što mislim."
+ },
+ {
+  "id": "l60e11.4",
+  "source": "Всё вместе",
+  "text": "Još griješim, ali me ljudi razumiju.",
+  "heard": "Još griješim, ali me ljudi razumiju."
+ },
+ {
+  "id": "t01e11",
+  "source": "Море, погода, рынок",
+  "text": "Ponekad kratko padne kiša.",
+  "heard": "Ponekad kratko padne kiša."
+ },
+ {
+  "id": "t02e11",
+  "source": "Очередь, дождь, просьба",
+  "text": "Ja sam poslije vas.",
+  "heard": "Ja sam poslije vas!"
+ }
+]
