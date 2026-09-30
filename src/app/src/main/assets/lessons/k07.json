@@ -1,0 +1,398 @@
+{
+  "id": "k07",
+  "title": "Я ем, ты ешь. Семья и счёт",
+  "exercises": [
+    {
+      "id": "k07e01",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ja jedem.",
+      "hint": "Ja jedem. — Я ем.",
+      "options": [
+        "Я ем.",
+        "Ты ешь.",
+        "Он ест."
+      ],
+      "answer": "Я ем."
+    },
+    {
+      "id": "k07e02",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ti jedeš.",
+      "hint": "Ti jedeš. — Ты ешь.",
+      "options": [
+        "Я ем.",
+        "Он ест.",
+        "Ты ешь."
+      ],
+      "answer": "Ты ешь."
+    },
+    {
+      "id": "k07e03",
+      "type": "choice",
+      "prompt": "Ja ___ pljeskavicu.",
+      "options": [
+        "jedem",
+        "jedeš",
+        "jede"
+      ],
+      "answer": "jedem",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k07e04",
+      "type": "choice",
+      "prompt": "Ti ___ pomfrit.",
+      "options": [
+        "jedeš",
+        "jedemo",
+        "jedu"
+      ],
+      "answer": "jedeš",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k07e05",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "jedem"
+        },
+        {
+          "ru": "ti",
+          "me": "jedeš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "jede"
+        },
+        {
+          "ru": "mi",
+          "me": "jedemo"
+        },
+        {
+          "ru": "vi",
+          "me": "jedete"
+        },
+        {
+          "ru": "oni",
+          "me": "jedu"
+        }
+      ]
+    },
+    {
+      "id": "k07e06",
+      "type": "repeat",
+      "phrase": "Ja jedem jabuku.",
+      "translation": "Я ем яблоко."
+    },
+    {
+      "id": "k07e07",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "brat",
+      "hint": "brat — брат",
+      "options": [
+        "брат",
+        "сестра",
+        "отец"
+      ],
+      "answer": "брат"
+    },
+    {
+      "id": "k07e08",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "sin",
+      "hint": "sin — сын",
+      "options": [
+        "брат",
+        "сын",
+        "мальчик"
+      ],
+      "answer": "сын"
+    },
+    {
+      "id": "k07e09",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ćerka",
+      "hint": "ćerka — дочь (также kćerka)",
+      "options": [
+        "сестра",
+        "девочка",
+        "дочь"
+      ],
+      "answer": "дочь"
+    },
+    {
+      "id": "k07e10",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "брат",
+          "me": "brat"
+        },
+        {
+          "ru": "сын",
+          "me": "sin"
+        },
+        {
+          "ru": "дочь",
+          "me": "ćerka"
+        },
+        {
+          "ru": "сестра",
+          "me": "sestra"
+        }
+      ]
+    },
+    {
+      "id": "k07e11",
+      "type": "choice",
+      "prompt": "Brat jede pomfrit.",
+      "options": [
+        "Брат ест картошку фри.",
+        "Сын ест картошку фри.",
+        "Брат ест котлету."
+      ],
+      "answer": "Брат ест картошку фри.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k07e12",
+      "type": "word_bank",
+      "prompt": "Сын ест яблоко.",
+      "answer": "Sin jede jabuku.",
+      "bank": [
+        "jabuku",
+        "sin",
+        "jede"
+      ]
+    },
+    {
+      "id": "k07e13",
+      "type": "choice",
+      "prompt": "Ćerka jede.",
+      "options": [
+        "Дочь ест.",
+        "Сестра ест.",
+        "Мать ест."
+      ],
+      "answer": "Дочь ест.",
+      "byEar": true
+    },
+    {
+      "id": "k07e14",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "velik",
+      "hint": "velik — большой",
+      "options": [
+        "большой",
+        "маленький",
+        "красивый"
+      ],
+      "answer": "большой"
+    },
+    {
+      "id": "k07e15",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "mali",
+      "hint": "mali — маленький",
+      "options": [
+        "большой",
+        "умный",
+        "маленький"
+      ],
+      "answer": "маленький"
+    },
+    {
+      "id": "k07e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "большой",
+          "me": "velik"
+        },
+        {
+          "ru": "большая",
+          "me": "velika"
+        },
+        {
+          "ru": "маленький",
+          "me": "mali"
+        },
+        {
+          "ru": "маленькая",
+          "me": "mala"
+        }
+      ]
+    },
+    {
+      "id": "k07e17",
+      "type": "choice",
+      "prompt": "Ajkula je ___ .",
+      "options": [
+        "velik",
+        "velika"
+      ],
+      "answer": "velika",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k07e18",
+      "type": "choice",
+      "prompt": "Puž je ___ .",
+      "options": [
+        "mali",
+        "mala"
+      ],
+      "answer": "mali",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k07e19",
+      "type": "choice",
+      "prompt": "Sin je mali.",
+      "options": [
+        "Сын маленький.",
+        "Сын большой.",
+        "Дочь маленькая."
+      ],
+      "answer": "Сын маленький.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k07e20",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "hvala",
+      "hint": "hvala — спасибо",
+      "options": [
+        "пожалуйста",
+        "спасибо",
+        "да"
+      ],
+      "answer": "спасибо"
+    },
+    {
+      "id": "k07e21",
+      "type": "choice",
+      "prompt": "— Treba li kesa?\n— Ne, hvala.\n\nЧто ответил покупатель?",
+      "options": [
+        "Нет, спасибо.",
+        "Да, пожалуйста.",
+        "Нет, пожалуйста."
+      ],
+      "answer": "Нет, спасибо.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k07e22",
+      "type": "speaking",
+      "phrase": "Ne, hvala.",
+      "translation": "Нет, спасибо."
+    },
+    {
+      "id": "k07e23",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Račun, molim.",
+      "hint": "Račun, molim. — Счёт, пожалуйста.",
+      "options": [
+        "Счёт, пожалуйста.",
+        "Кофе, пожалуйста.",
+        "Нужен пакет?"
+      ],
+      "answer": "Счёт, пожалуйста."
+    },
+    {
+      "id": "k07e24",
+      "type": "choice",
+      "prompt": "Račun, molim.\nКогда так говорят?",
+      "options": [
+        "В кафе, когда хотите расплатиться.",
+        "Когда заказываете кофе.",
+        "Когда входите в магазин."
+      ],
+      "answer": "В кафе, когда хотите расплатиться.",
+      "label": "Выбери ситуацию"
+    },
+    {
+      "id": "k07e25",
+      "type": "word_bank",
+      "prompt": "Счёт, пожалуйста.",
+      "answer": "Račun, molim.",
+      "bank": [
+        "molim",
+        "račun"
+      ]
+    },
+    {
+      "id": "k07e26",
+      "type": "speaking",
+      "phrase": "Račun, molim.",
+      "translation": "Счёт, пожалуйста."
+    },
+    {
+      "id": "k07e27",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я ем котлету.",
+          "me": "Ja jedem pljeskavicu."
+        },
+        {
+          "ru": "Ты ешь картошку фри.",
+          "me": "Ti jedeš pomfrit."
+        },
+        {
+          "ru": "Брат большой.",
+          "me": "Brat je velik."
+        },
+        {
+          "ru": "Дочь маленькая.",
+          "me": "Ćerka je mala."
+        },
+        {
+          "ru": "Счёт, пожалуйста.",
+          "me": "Račun, molim."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "brat",
+      "ru": "брат"
+    },
+    {
+      "me": "sin",
+      "ru": "сын"
+    },
+    {
+      "me": "ćerka",
+      "ru": "дочь"
+    },
+    {
+      "me": "velik",
+      "ru": "большой"
+    },
+    {
+      "me": "mali",
+      "ru": "маленький"
+    },
+    {
+      "me": "hvala",
+      "ru": "спасибо"
+    },
+    {
+      "me": "račun",
+      "ru": "счёт"
+    }
+  ]
+}

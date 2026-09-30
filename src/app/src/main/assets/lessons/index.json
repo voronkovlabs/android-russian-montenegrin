@@ -35,6 +35,12 @@
       "title": "Мы едим: pomfrit и pljeskavica",
       "file": "k06.json",
       "section": "Первые шаги"
+    },
+    {
+      "id": "k07",
+      "title": "Я ем, ты ешь. Семья и счёт",
+      "file": "k07.json",
+      "section": "Первые шаги"
     }
   ]
 }
