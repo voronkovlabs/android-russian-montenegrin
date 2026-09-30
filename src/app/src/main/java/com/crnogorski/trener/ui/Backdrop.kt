@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.crnogorski.trener.R
@@ -46,16 +48,19 @@ import com.crnogorski.trener.R
 @Composable
 fun Backdrop(content: @Composable BoxScope.() -> Unit) {
     Box(Modifier.fillMaxSize()) {
+        // Катина сборка: вместо снимка Пераста — Катина акварель (море, остров,
+        // дрок на берегу). Файл один, светлый; для тёмной темы он притемняется
+        // здесь же, матрицей, а не вторым файлом: так ночная версия всегда
+        // совпадает с дневной, и прислать новую акварель — значит заменить
+        // одну картинку.
         Image(
-            painter = painterResource(
-                if (isDark) R.drawable.bg_kotor_dark else R.drawable.bg_kotor_light
-            ),
+            painter = painterResource(R.drawable.bg_katya),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            // Прижимаем к низу, а не к центру: небо занимает верхние две трети
-            // снимка, и при центрировании на экран попадало ровно оно. Город,
-            // колокольня и залив — внизу кадра, и они-то и нужны.
-            alignment = Alignment.BottomCenter,
+            // Акварель шире экрана телефона и обрезается по бокам; по центру
+            // остаётся остров, ради которого она и выбрана.
+            alignment = Alignment.Center,
+            colorFilter = if (isDark) DARKEN else null,
             modifier = Modifier.fillMaxSize()
         )
         // Вуаль: вверху прозрачная, книзу — сплошной фон темы.
@@ -74,3 +79,11 @@ fun Backdrop(content: @Composable BoxScope.() -> Unit) {
         content()
     }
 }
+
+/**
+ * Ночная версия акварели: яркость примерно на треть, синий чуть сильнее —
+ * чтобы тёмная тема («ночь над заливом») не стала серой.
+ */
+private val DARKEN = ColorFilter.colorMatrix(
+    ColorMatrix().apply { setToScale(0.32f, 0.34f, 0.42f, 1f) }
+)

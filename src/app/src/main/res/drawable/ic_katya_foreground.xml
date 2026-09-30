@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Передний слой иконки Катиной сборки: обычный рисунок и значок поверх. -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@mipmap/ic_launcher_foreground" />
-    <item android:drawable="@drawable/ic_katya_badge" />
-</layer-list>
+<!--
+    Передний слой иконки Катиной сборки: Катин рисунок целиком.
+
+    Квадратом 85dp по центру слоя в 108dp — как у основной иконки и по той же
+    причине: больше окна в 72dp, которое показывает лаунчер, значит любая маска
+    упирается в рисунок, а не в пустоту; меньше слоя — значит срезается немногое.
+-->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_katya_art"
+    android:inset="11.5dp" />
