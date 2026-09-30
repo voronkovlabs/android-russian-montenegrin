@@ -6,6 +6,10 @@
 
     Нажатие обслуживает корень целиком: цель в две клетки должна попадать
     пальцем с первого раза, а второго действия у виджета нет.
+
+    Размер шрифта поднят в полтора раза (4.6) по первому живому взгляду
+    владельца: 19sp и 12sp на домашнем экране читались мелко — виджет
+    смотрят мельком и на расстоянии руки, а не как текст в занятии.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
@@ -26,8 +30,8 @@
             android:id="@+id/widget_emoji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="7dp"
-            android:textSize="19sp"
+            android:layout_marginEnd="10dp"
+            android:textSize="28.5sp"
             android:includeFontPadding="false" />
 
         <TextView
@@ -37,7 +41,7 @@
             android:layout_weight="1"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textSize="19sp"
+            android:textSize="28.5sp"
             android:textColor="@color/widget_paper"
             android:includeFontPadding="false" />
     </LinearLayout>
@@ -46,9 +50,9 @@
         android:id="@+id/widget_gloss"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="4dp"
         android:maxLines="2"
         android:ellipsize="end"
-        android:textSize="12sp"
+        android:textSize="18sp"
         android:textColor="@color/widget_muted" />
 </LinearLayout>
