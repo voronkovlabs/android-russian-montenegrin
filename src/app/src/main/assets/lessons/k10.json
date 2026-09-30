@@ -1,0 +1,381 @@
+{
+  "id": "k10",
+  "title": "Три черепахи едят одну котлету",
+  "exercises": [
+    {
+      "id": "k10e01",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "jedna ajkula",
+      "hint": "jedna ajkula — одна акула",
+      "options": [
+        "одна акула",
+        "две акулы",
+        "один брат"
+      ],
+      "answer": "одна акула"
+    },
+    {
+      "id": "k10e02",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "dvije ajkule",
+      "hint": "dvije ajkule — две акулы",
+      "options": [
+        "одна акула",
+        "две акулы",
+        "три акулы"
+      ],
+      "answer": "две акулы",
+      "explanation": "Для женского рода «два» — dvije."
+    },
+    {
+      "id": "k10e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "одна акула",
+          "me": "jedna ajkula"
+        },
+        {
+          "ru": "две акулы",
+          "me": "dvije ajkule"
+        },
+        {
+          "ru": "три акулы",
+          "me": "tri ajkule"
+        },
+        {
+          "ru": "четыре акулы",
+          "me": "četiri ajkule"
+        }
+      ]
+    },
+    {
+      "id": "k10e04",
+      "type": "choice",
+      "prompt": "___ kornjače spavaju.",
+      "options": [
+        "Dva",
+        "Dvije"
+      ],
+      "answer": "Dvije",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k10e05",
+      "type": "choice",
+      "prompt": "___ brata jedu.",
+      "options": [
+        "Dva",
+        "Dvije"
+      ],
+      "answer": "Dva",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k10e06",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "два брата",
+          "me": "dva brata"
+        },
+        {
+          "ru": "две сестры",
+          "me": "dvije sestre"
+        },
+        {
+          "ru": "один сын",
+          "me": "jedan sin"
+        },
+        {
+          "ru": "одна дочь",
+          "me": "jedna ćerka"
+        }
+      ]
+    },
+    {
+      "id": "k10e07",
+      "type": "choice",
+      "prompt": "Dvije mačke spavaju.",
+      "options": [
+        "Две кошки спят.",
+        "Два пса спят.",
+        "Три кошки спят."
+      ],
+      "answer": "Две кошки спят.",
+      "byEar": true
+    },
+    {
+      "id": "k10e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moja ajkula jede četiri jabuke.",
+      "hint": "Moja ajkula jede četiri jabuke. — Моя акула ест четыре яблока.",
+      "options": [
+        "Моя акула ест четыре яблока.",
+        "Моя акула ест два яблока.",
+        "Моя черепаха ест четыре яблока."
+      ],
+      "answer": "Моя акула ест четыре яблока."
+    },
+    {
+      "id": "k10e09",
+      "type": "word_bank",
+      "prompt": "Моя акула ест четыре яблока.",
+      "answer": "Moja ajkula jede četiri jabuke.",
+      "bank": [
+        "jabuke",
+        "moja",
+        "četiri",
+        "jede",
+        "ajkula"
+      ]
+    },
+    {
+      "id": "k10e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Tri kornjače jedu jednu pljeskavicu.",
+      "hint": "Tri kornjače jedu jednu pljeskavicu. — Три черепахи едят одну котлету.",
+      "options": [
+        "Три черепахи едят одну котлету.",
+        "Четыре черепахи едят одну котлету.",
+        "Три акулы едят одну котлету."
+      ],
+      "answer": "Три черепахи едят одну котлету."
+    },
+    {
+      "id": "k10e11",
+      "type": "choice",
+      "prompt": "Tri kornjače jedu ___ pljeskavicu.",
+      "options": [
+        "jedna",
+        "jednu"
+      ],
+      "answer": "jednu",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k10e12",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kao",
+      "hint": "kao — как",
+      "options": [
+        "как",
+        "где",
+        "вот"
+      ],
+      "answer": "как"
+    },
+    {
+      "id": "k10e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moj sin je velik kao drvo.",
+      "hint": "Moj sin je velik kao drvo. — Мой сын большой, как дерево.",
+      "options": [
+        "Мой сын большой, как дерево.",
+        "Мой сын маленький, как дерево.",
+        "Мой брат большой, как дом."
+      ],
+      "answer": "Мой сын большой, как дерево."
+    },
+    {
+      "id": "k10e14",
+      "type": "word_bank",
+      "prompt": "Мой сын большой, как дерево.",
+      "answer": "Moj sin je velik kao drvo.",
+      "bank": [
+        "kao",
+        "sin",
+        "drvo",
+        "moj",
+        "velik",
+        "je"
+      ]
+    },
+    {
+      "id": "k10e15",
+      "type": "speaking",
+      "phrase": "Moj sin je velik kao drvo.",
+      "translation": "Мой сын большой, как дерево."
+    },
+    {
+      "id": "k10e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "большой, как дерево",
+          "me": "velik kao drvo"
+        },
+        {
+          "ru": "маленький, как улитка",
+          "me": "mali kao puž"
+        },
+        {
+          "ru": "зелёный, как черепаха",
+          "me": "zelen kao kornjača"
+        },
+        {
+          "ru": "белый, как акула",
+          "me": "bijel kao ajkula"
+        }
+      ]
+    },
+    {
+      "id": "k10e17",
+      "type": "choice",
+      "prompt": "Moja mačka je mala kao jabuka.",
+      "options": [
+        "Моя кошка маленькая, как яблоко.",
+        "Моя кошка большая, как яблоко.",
+        "Моя собака маленькая, как яблоко."
+      ],
+      "answer": "Моя кошка маленькая, как яблоко.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k10e18",
+      "type": "choice",
+      "prompt": "— Gdje si?\n— Evo me! Jedem četiri pljeskavice.\n\nЧто делает знакомый?",
+      "options": [
+        "Ест четыре котлеты.",
+        "Спит.",
+        "Ест одну котлету."
+      ],
+      "answer": "Ест четыре котлеты.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k10e19",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Dobro jutro!",
+      "hint": "Dobro jutro! — Доброе утро!",
+      "options": [
+        "Доброе утро!",
+        "Добрый вечер!",
+        "Добрый день!"
+      ],
+      "answer": "Доброе утро!",
+      "explanation": "Так здороваются примерно до 11 утра."
+    },
+    {
+      "id": "k10e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Dobro veče!",
+      "hint": "Dobro veče! — Добрый вечер!",
+      "options": [
+        "Доброе утро!",
+        "Добрый день!",
+        "Добрый вечер!"
+      ],
+      "answer": "Добрый вечер!",
+      "explanation": "Так здороваются, как только начинает темнеть."
+    },
+    {
+      "id": "k10e21",
+      "type": "choice",
+      "prompt": "Семь вечера, уже темно, заходишь в магазин.",
+      "options": [
+        "Dobro veče!",
+        "Dobar dan!",
+        "Dobro jutro!"
+      ],
+      "answer": "Dobro veče!",
+      "explanation": "Для черногорцев очень важно поздороваться по времени суток — куда важнее, чем для нас. Примерно до 11 утра говорят «Dobro jutro», днём — «Dobar dan», а как только начинает темнеть — только «Dobro veče».",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k10e22",
+      "type": "choice",
+      "prompt": "Девять утра, заходишь в кафе.",
+      "options": [
+        "Dobar dan!",
+        "Dobro jutro!",
+        "Dobro veče!"
+      ],
+      "answer": "Dobro jutro!",
+      "explanation": "Для черногорцев очень важно поздороваться по времени суток — куда важнее, чем для нас. Примерно до 11 утра говорят «Dobro jutro», днём — «Dobar dan», а как только начинает темнеть — только «Dobro veče».",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k10e23",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Доброе утро",
+          "me": "Dobro jutro"
+        },
+        {
+          "ru": "Добрый день",
+          "me": "Dobar dan"
+        },
+        {
+          "ru": "Добрый вечер",
+          "me": "Dobro veče"
+        },
+        {
+          "ru": "Спасибо",
+          "me": "Hvala"
+        }
+      ]
+    },
+    {
+      "id": "k10e24",
+      "type": "repeat",
+      "phrase": "Dobro veče!",
+      "translation": "Добрый вечер!"
+    },
+    {
+      "id": "k10e25",
+      "type": "speaking",
+      "phrase": "Dobro jutro!",
+      "translation": "Доброе утро!"
+    },
+    {
+      "id": "k10e26",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Моя акула ест четыре яблока.",
+          "me": "Moja ajkula jede četiri jabuke."
+        },
+        {
+          "ru": "Мой сын большой, как дерево.",
+          "me": "Moj sin je velik kao drvo."
+        },
+        {
+          "ru": "Три черепахи едят одну котлету.",
+          "me": "Tri kornjače jedu jednu pljeskavicu."
+        },
+        {
+          "ru": "Доброе утро!",
+          "me": "Dobro jutro!"
+        },
+        {
+          "ru": "Добрый вечер!",
+          "me": "Dobro veče!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "kao",
+      "ru": "как"
+    },
+    {
+      "me": "jutro",
+      "ru": "утро"
+    },
+    {
+      "me": "veče",
+      "ru": "вечер"
+    }
+  ]
+}
