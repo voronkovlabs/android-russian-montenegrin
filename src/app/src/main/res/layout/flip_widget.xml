@@ -77,7 +77,7 @@
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:paddingTop="30dp"
-                android:paddingBottom="10dp">
+                android:paddingBottom="34dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -122,6 +122,23 @@
                 Само не звучит никогда — домашний экран открывают и в
                 метро, и на совещании.
             -->
+            <!--
+                «Вспомнил» (4.11): верный ответ на слово человека. Только на
+                обороте — судить можно, лишь увидев ответ. Левый нижний угол:
+                справа 🔊, сверху флаг и 🧠, и промахнуться между ними трудно.
+            -->
+            <TextView
+                android:id="@+id/flip_recalled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:text="✅"
+                android:textSize="19sp" />
+
             <TextView
                 android:id="@+id/flip_say"
                 android:layout_width="wrap_content"
