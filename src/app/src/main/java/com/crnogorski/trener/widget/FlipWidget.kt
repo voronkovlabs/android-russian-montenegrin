@@ -12,7 +12,14 @@ import android.view.View
 import android.widget.RemoteViews
 import com.crnogorski.trener.MainActivity
 import com.crnogorski.trener.R
+import com.crnogorski.trener.data.AppDb
 import com.crnogorski.trener.data.Config
+import com.crnogorski.trener.data.Pace
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import java.time.LocalDate
 import com.crnogorski.trener.data.WidgetWord
 import com.crnogorski.trener.data.WidgetWords
 import com.crnogorski.trener.speech.Speaker
@@ -58,7 +65,10 @@ class FlipWidget : AppWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> full(context, advance = true)
-            ACTION_TAP -> tap(context)
+            ACTION_TAP -> {
+                tap(context)
+                study(context)
+            }
             ACTION_REDRAW -> full(context, advance = false)
             ACTION_SAY -> say(context, intent.getStringExtra(EXTRA_WORD).orEmpty())
             else -> super.onReceive(context, intent)
@@ -93,7 +103,83 @@ class FlipWidget : AppWidgetProvider() {
         speaker.speak(word) { main.post(finish) }
     }
 
+    /**
+     * Засчитать работу с карточкой в занятие (4.8).
+     *
+     * Владелец: «при активной работе с карточкой это время можно засчитывать в
+     * занятия». Первый виджет по-прежнему не засчитывает ничего — там слова
+     * мелькают сами, а здесь человек вспоминает и переворачивает.
+     *
+     * **Мерится время между нажатиями, но не больше порога простоя**
+     * (`daily.idleSeconds`, десять секунд) — ровно то правило, по которому
+     * `Touch` вычитает простой из заданий в приложении. Над словом думают
+     * молча, и десять секунд тишины — это раздумье; дольше отличить раздумье
+     * от телефона, отложенного на стол, нечем, и за одно молчание платим не
+     * больше порога. Иначе нажатие утром после вечернего записало бы в
+     * занятие ночь.
+     *
+     * **Копится, а не пишется каждым нажатием.** `Pace.spend` отбрасывает
+     * всё короче полутора секунд — так в занятии отсекается мгновенный
+     * пропуск, — а быстрое «перевернул — следующее» как раз короче. Поэтому
+     * набегающее лежит в настройках и уходит, когда наберётся
+     * [FLUSH_SECONDS]: счёт не теряет быстрых нажатий, а база не пишется на
+     * каждое.
+     *
+     * Время уходит туда же, куда время словаря в приложении: в дневную норму
+     * (`Pace`) и в отчёт (`day_stats.wordSeconds`). Ответов при этом не
+     * прибавляется — их не было: ни верности, ни ошибки виджет не знает.
+     * День с одной только работой в виджете продлевает серию: занятие было.
+     */
+    private fun study(context: Context) {
+        Config.load(context)
+        val prefs = prefs(context)
+        val now = System.currentTimeMillis()
+        val last = prefs.getLong(KEY_LAST_TAP, 0L)
+        val limit = Config.current.daily.idleSeconds.takeIf { it > 0 } ?: DEFAULT_IDLE
+        val gap = if (last == 0L) 0.0 else (now - last) / 1000.0
+        val pending = prefs.getFloat(KEY_PENDING, 0f) + gap.coerceIn(0.0, limit.toDouble())
+        if (pending < FLUSH_SECONDS) {
+            prefs.edit().putLong(KEY_LAST_TAP, now).putFloat(KEY_PENDING, pending.toFloat()).apply()
+            return
+        }
+        prefs.edit().putLong(KEY_LAST_TAP, now).putFloat(KEY_PENDING, 0f).apply()
+        val spent = Pace(context).spend(pending)
+        if (spent <= 0) return
+        val done = goAsync()
+        queue.launch {
+            try {
+                AppDb.get(context).dao().bumpDay(
+                    day = LocalDate.now().toString(),
+                    lessonSeconds = 0,
+                    reviewSeconds = 0,
+                    wordSeconds = spent,
+                    storySeconds = 0,
+                    answers = 0,
+                    correct = 0,
+                    lessons = 0,
+                    sessions = 0,
+                    chunks = 0,
+                    words = 0
+                )
+            } finally {
+                done.finish()
+            }
+        }
+    }
+
     companion object {
+
+        private const val KEY_LAST_TAP = "widget_flip_last_tap"
+        private const val KEY_PENDING = "widget_flip_pending"
+
+        /** С какого накопленного числа секунд писать в отчёт. */
+        private const val FLUSH_SECONDS = 5.0
+
+        /** Порог простоя, если в настройках курса он выключен нулём. */
+        private const val DEFAULT_IDLE = 10
+
+        /** Запись в базу переживает приёмник — `goAsync` держит его до конца. */
+        private val queue = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
         private const val ACTION_TAP = "com.crnogorski.trener.FLIP_TAP"
         private const val ACTION_REDRAW = "com.crnogorski.trener.FLIP_REDRAW"
