@@ -6,9 +6,9 @@
     карточка целиком, а не текст на неподвижном фоне. Флаг лежит внутри
     стороны по той же причине — он её часть.
 
-    Кнопка «уже знаю» — вне переворота, в правом верхнем углу, со своим
-    нажатием. Флаг занимает левый угол: оба угла заняты разным, и
-    промахнуться между ними трудно.
+    Кнопка «уже знаю» — вне переворота, в левом нижнем углу, со своим
+    нажатием, и видна на обеих сторонах. До 4.12 она стояла справа сверху;
+    туда по просьбе владельца переехала «вспомнил», а они поменялись местами.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/flip_root"
@@ -45,7 +45,7 @@
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:paddingTop="30dp"
-                android:paddingBottom="10dp"
+                android:paddingBottom="34dp"
                 android:gravity="center_vertical"
                 android:textColor="@color/widget_paper"
                 android:autoSizeTextType="uniform"
@@ -124,20 +124,19 @@
             -->
             <!--
                 «Вспомнил» (4.11): верный ответ на слово человека. Только на
-                обороте — судить можно, лишь увидев ответ. Левый нижний угол:
-                справа 🔊, сверху флаг и 🧠, и промахнуться между ними трудно.
+                обороте — судить можно, лишь увидев ответ. Правый верхний угол
+                (4.12, по просьбе владельца поменялся местами с 🧠): напротив
+                флага, и под большим пальцем справа.
             -->
-            <TextView
+            <ImageView
                 android:id="@+id/flip_recalled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|start"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:text="✅"
-                android:textSize="19sp" />
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:padding="6dp"
+                android:src="@drawable/ic_recalled" />
 
             <TextView
                 android:id="@+id/flip_say"
@@ -158,10 +157,10 @@
         android:id="@+id/flip_known"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
+        android:layout_gravity="bottom|start"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:paddingTop="4dp"
+        android:paddingTop="6dp"
         android:paddingBottom="6dp"
         android:textSize="19sp" />
 </FrameLayout>

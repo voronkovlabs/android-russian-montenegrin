@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    «Вспомнил» на перевёртыше (4.12). Своя картинка, а не эмодзи ✅: у того
+    квадрат ядовито-зелёный и на тёмной карточке смотрелся плохо — владелец
+    попросил круг и цвет пастельнее. Цвета одни на обе темы: пастельный круг
+    сам по себе светлый, тёмная галочка на нём читается и на ночной, и на
+    дневной карточке.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:fillColor="#FFA8DDB5"
+        android:pathData="M12,12m-10,0a10,10 0,1 0,20 0a10,10 0,1 0,-20 0" />
+
+    <path
+        android:strokeColor="#FF1F5C3A"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000"
+        android:pathData="M7.2,12.4 L10.6,15.8 L16.9,9.2" />
+</vector>
