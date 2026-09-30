@@ -1,0 +1,444 @@
+{
+  "id": "k09",
+  "title": "Мой сын плохо спит. Dobar dan!",
+  "exercises": [
+    {
+      "id": "k09e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "loše",
+      "hint": "loše — плохо",
+      "options": [
+        "плохо",
+        "хорошо",
+        "спасибо"
+      ],
+      "answer": "плохо"
+    },
+    {
+      "id": "k09e02",
+      "type": "choice",
+      "prompt": "Sin loše spava.",
+      "options": [
+        "Сын плохо спит.",
+        "Сын хорошо спит.",
+        "Сын плохо ест."
+      ],
+      "answer": "Сын плохо спит.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k09e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "плохо",
+          "me": "loše"
+        },
+        {
+          "ru": "хорошо",
+          "me": "dobro"
+        },
+        {
+          "ru": "спасибо",
+          "me": "hvala"
+        },
+        {
+          "ru": "где",
+          "me": "gdje"
+        }
+      ]
+    },
+    {
+      "id": "k09e04",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "moj",
+      "hint": "moj — мой",
+      "options": [
+        "мой",
+        "твой",
+        "его"
+      ],
+      "answer": "мой"
+    },
+    {
+      "id": "k09e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moj sin loše spava.",
+      "hint": "Moj sin loše spava. — Мой сын плохо спит.",
+      "options": [
+        "Мой сын плохо спит.",
+        "Твой сын плохо спит.",
+        "Мой сын хорошо ест."
+      ],
+      "answer": "Мой сын плохо спит."
+    },
+    {
+      "id": "k09e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "tvoj",
+      "hint": "tvoj — твой",
+      "options": [
+        "мой",
+        "твой",
+        "её"
+      ],
+      "answer": "твой"
+    },
+    {
+      "id": "k09e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "мой",
+          "me": "moj"
+        },
+        {
+          "ru": "моя",
+          "me": "moja"
+        },
+        {
+          "ru": "твой",
+          "me": "tvoj"
+        },
+        {
+          "ru": "твоя",
+          "me": "tvoja"
+        }
+      ]
+    },
+    {
+      "id": "k09e08",
+      "type": "choice",
+      "prompt": "___ sestra dobro jede.",
+      "options": [
+        "Moj",
+        "Moja"
+      ],
+      "answer": "Moja",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k09e09",
+      "type": "choice",
+      "prompt": "___ brat loše spava.",
+      "options": [
+        "Tvoj",
+        "Tvoja"
+      ],
+      "answer": "Tvoj",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k09e10",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "njegov",
+      "hint": "njegov — его",
+      "options": [
+        "его",
+        "её",
+        "мой"
+      ],
+      "answer": "его"
+    },
+    {
+      "id": "k09e11",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "njen",
+      "hint": "njen — её",
+      "options": [
+        "его",
+        "твой",
+        "её"
+      ],
+      "answer": "её"
+    },
+    {
+      "id": "k09e12",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "мой брат",
+          "me": "moj brat"
+        },
+        {
+          "ru": "твой сын",
+          "me": "tvoj sin"
+        },
+        {
+          "ru": "его отец",
+          "me": "njegov otac"
+        },
+        {
+          "ru": "её пёс",
+          "me": "njen pas"
+        }
+      ]
+    },
+    {
+      "id": "k09e13",
+      "type": "choice",
+      "prompt": "Njegov sin dobro jede.",
+      "options": [
+        "Его сын хорошо ест.",
+        "Её сын хорошо ест.",
+        "Его сын плохо ест."
+      ],
+      "answer": "Его сын хорошо ест.",
+      "byEar": true
+    },
+    {
+      "id": "k09e14",
+      "type": "word_bank",
+      "prompt": "Моя дочь хорошо спит.",
+      "answer": "Moja ćerka dobro spava.",
+      "bank": [
+        "ćerka",
+        "spava",
+        "moja",
+        "dobro"
+      ]
+    },
+    {
+      "id": "k09e15",
+      "type": "speaking",
+      "phrase": "Moj sin loše spava.",
+      "translation": "Мой сын плохо спит."
+    },
+    {
+      "id": "k09e16",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "jedan",
+      "hint": "jedan — один",
+      "options": [
+        "один",
+        "два",
+        "три"
+      ],
+      "answer": "один"
+    },
+    {
+      "id": "k09e17",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "dva",
+      "hint": "dva — два",
+      "options": [
+        "один",
+        "два",
+        "четыре"
+      ],
+      "answer": "два"
+    },
+    {
+      "id": "k09e18",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "tri",
+      "hint": "tri — три",
+      "options": [
+        "три",
+        "два",
+        "четыре"
+      ],
+      "answer": "три"
+    },
+    {
+      "id": "k09e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "četiri",
+      "hint": "četiri — четыре",
+      "options": [
+        "один",
+        "три",
+        "четыре"
+      ],
+      "answer": "четыре"
+    },
+    {
+      "id": "k09e20",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "один",
+          "me": "jedan"
+        },
+        {
+          "ru": "два",
+          "me": "dva"
+        },
+        {
+          "ru": "три",
+          "me": "tri"
+        },
+        {
+          "ru": "четыре",
+          "me": "četiri"
+        }
+      ]
+    },
+    {
+      "id": "k09e21",
+      "type": "choice",
+      "prompt": "Dva brata.",
+      "options": [
+        "Два брата.",
+        "Три брата.",
+        "Два сына."
+      ],
+      "answer": "Два брата.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k09e22",
+      "type": "choice",
+      "prompt": "Četiri ___ jedu.",
+      "options": [
+        "sin",
+        "sina"
+      ],
+      "answer": "sina",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k09e23",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "один брат",
+          "me": "jedan brat"
+        },
+        {
+          "ru": "два брата",
+          "me": "dva brata"
+        },
+        {
+          "ru": "три сына",
+          "me": "tri sina"
+        },
+        {
+          "ru": "четыре мальчика",
+          "me": "četiri dječaka"
+        }
+      ]
+    },
+    {
+      "id": "k09e24",
+      "type": "repeat",
+      "phrase": "Tri sina jedu pomfrit.",
+      "translation": "Три сына едят картошку фри."
+    },
+    {
+      "id": "k09e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Dobar dan!",
+      "hint": "Dobar dan! — Добрый день!",
+      "options": [
+        "Добрый день!",
+        "Добро пожаловать!",
+        "Спасибо!"
+      ],
+      "answer": "Добрый день!",
+      "explanation": "Для черногорцев очень важно поздороваться по времени суток — куда важнее, чем для нас. Примерно до 11 утра говорят «Dobro jutro», днём — «Dobar dan», а как только начинает темнеть — только «Dobro veče»."
+    },
+    {
+      "id": "k09e26",
+      "type": "choice",
+      "prompt": "Dobar dan!\nКогда так говорят?",
+      "options": [
+        "В два часа дня, заходя в магазин.",
+        "В девять утра.",
+        "Вечером, когда уже темно."
+      ],
+      "answer": "В два часа дня, заходя в магазин.",
+      "explanation": "Для черногорцев очень важно поздороваться по времени суток — куда важнее, чем для нас. Примерно до 11 утра говорят «Dobro jutro», днём — «Dobar dan», а как только начинает темнеть — только «Dobro veče».",
+      "label": "Выбери ситуацию"
+    },
+    {
+      "id": "k09e27",
+      "type": "speaking",
+      "phrase": "Dobar dan!",
+      "translation": "Добрый день!"
+    },
+    {
+      "id": "k09e28",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Мой сын плохо спит.",
+          "me": "Moj sin loše spava."
+        },
+        {
+          "ru": "Твой брат хорошо ест.",
+          "me": "Tvoj brat dobro jede."
+        },
+        {
+          "ru": "Два брата.",
+          "me": "Dva brata."
+        },
+        {
+          "ru": "Четыре мальчика.",
+          "me": "Četiri dječaka."
+        },
+        {
+          "ru": "Добрый день!",
+          "me": "Dobar dan!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "loše",
+      "ru": "плохо"
+    },
+    {
+      "me": "moj",
+      "ru": "мой"
+    },
+    {
+      "me": "tvoj",
+      "ru": "твой"
+    },
+    {
+      "me": "njegov",
+      "ru": "его"
+    },
+    {
+      "me": "njen",
+      "ru": "её"
+    },
+    {
+      "me": "jedan",
+      "ru": "один"
+    },
+    {
+      "me": "dva",
+      "ru": "два"
+    },
+    {
+      "me": "tri",
+      "ru": "три"
+    },
+    {
+      "me": "četiri",
+      "ru": "четыре"
+    },
+    {
+      "me": "dobar",
+      "ru": "добрый, хороший"
+    },
+    {
+      "me": "dan",
+      "ru": "день"
+    }
+  ]
+}

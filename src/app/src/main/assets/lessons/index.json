@@ -47,6 +47,12 @@
       "title": "Дерево растёт, кошка спит. Gdje si?",
       "file": "k08.json",
       "section": "Первые шаги"
+    },
+    {
+      "id": "k09",
+      "title": "Мой сын плохо спит. Dobar dan!",
+      "file": "k09.json",
+      "section": "Первые шаги"
     }
   ]
 }
