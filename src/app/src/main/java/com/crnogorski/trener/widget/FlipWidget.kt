@@ -260,22 +260,32 @@ class FlipWidget : AppWidgetProvider() {
          *
          * Слова может не оказаться (список опустел, пока карточка висела) —
          * тогда полная перерисовка покажет пустое состояние.
+         *
+         * **Меняется только скрытая сторона** (жалоба 165, 4.10). До этого
+         * переход к следующему слову заполнял обе стороны разом, пока на экране
+         * ещё стоял черногорский оборот, — и уходящая сторона успевала
+         * мелькнуть **следующим** черногорским словом, то есть ответом раньше
+         * вопроса. Теперь переход трогает только русскую сторону (она в этот
+         * момент скрыта), а оборот заполняется при перевороте на него — тоже
+         * пока он скрыт. Видимая сторона не меняется никогда.
          */
         private fun tap(context: Context) {
             val ids = ids(context)
             if (ids.isEmpty()) return
-            if (WidgetWords.current(context, WidgetWords.FLIP) == null) {
+            val current = WidgetWords.current(context, WidgetWords.FLIP)
+            if (current == null) {
                 full(context, advance = false)
                 return
             }
             val views = RemoteViews(context.packageName, R.layout.flip_widget)
             if (side(context) == 0) {
                 setSide(context, 1)
+                fillBack(context, views, current)
                 views.setDisplayedChild(R.id.flip_card, 1)
             } else {
                 val next = WidgetWords.advance(context, WidgetWords.FLIP) ?: return
                 setSide(context, 0)
-                fill(context, views, next)
+                fillFront(context, views, next)
                 views.setDisplayedChild(R.id.flip_card, 0)
             }
             AppWidgetManager.getInstance(context).partiallyUpdateAppWidget(ids, views)
@@ -283,16 +293,17 @@ class FlipWidget : AppWidgetProvider() {
 
         /** Обе стороны и кнопка «знаю» — под одно слово. */
         private fun fill(context: Context, views: RemoteViews, word: WidgetWord) {
+            fillFront(context, views, word)
+            fillBack(context, views, word)
+        }
+
+        /**
+         * Русская сторона и кнопка «знаю». Кнопка стоит вне переворота и
+         * относится к слову, а не к стороне, — поэтому меняется вместе с
+         * лицевой, когда приходит новое слово.
+         */
+        private fun fillFront(context: Context, views: RemoteViews, word: WidgetWord) {
             views.setTextViewText(R.id.flip_ru, word.gloss)
-            views.setTextViewText(R.id.flip_word, WordWidget.stressed(context, word))
-            views.setTextViewText(R.id.flip_gloss, word.gloss)
-            views.setOnClickPendingIntent(R.id.flip_say, sayIntent(context, word))
-            if (word.emoji.isEmpty()) {
-                views.setViewVisibility(R.id.flip_emoji, View.GONE)
-            } else {
-                views.setViewVisibility(R.id.flip_emoji, View.VISIBLE)
-                views.setTextViewText(R.id.flip_emoji, word.emoji)
-            }
             // Записи, сложенные до 4.7, леммы не знают — отмечать нечего, и
             // кнопка прячется до пересборки списка при открытии приложения.
             if (word.lemma.isEmpty()) {
@@ -301,6 +312,19 @@ class FlipWidget : AppWidgetProvider() {
                 views.setViewVisibility(R.id.flip_known, View.VISIBLE)
                 views.setTextViewText(R.id.flip_known, KNOWN)
                 views.setOnClickPendingIntent(R.id.flip_known, known(context, word))
+            }
+        }
+
+        /** Черногорский оборот: слово, эмодзи, перевод для сверки, 🔊. */
+        private fun fillBack(context: Context, views: RemoteViews, word: WidgetWord) {
+            views.setTextViewText(R.id.flip_word, WordWidget.stressed(context, word))
+            views.setTextViewText(R.id.flip_gloss, word.gloss)
+            views.setOnClickPendingIntent(R.id.flip_say, sayIntent(context, word))
+            if (word.emoji.isEmpty()) {
+                views.setViewVisibility(R.id.flip_emoji, View.GONE)
+            } else {
+                views.setViewVisibility(R.id.flip_emoji, View.VISIBLE)
+                views.setTextViewText(R.id.flip_emoji, word.emoji)
             }
         }
 
