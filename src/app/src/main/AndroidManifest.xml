@@ -82,6 +82,30 @@
             </intent-filter>
         </receiver>
 
+        <!--
+            Словарная карточка на домашнем экране (идея 143). Отдельный
+            приёмник, а не Activity: виджет ничего не открывает и ничего не
+            записывает, кроме номера показанного слова.
+
+            exported="true" обязателен: обновление виджета присылает система.
+
+            Своих действий (WIDGET_NEXT, WIDGET_REDRAW) в фильтре нет намеренно.
+            Оба приходят явным намерением — с указанным классом получателя, — а
+            явное намерение фильтров не спрашивает. Записанное в фильтр действие,
+            наоборот, открыло бы его кому угодно снаружи.
+        -->
+        <receiver
+            android:name=".widget.WordWidget"
+            android:label="@string/widget_label"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/word_widget_info" />
+        </receiver>
+
         <!-- Отдаёт complaints.jsonl в share как content://; file:// с Android 7 запрещён. -->
         <provider
             android:name="androidx.core.content.FileProvider"

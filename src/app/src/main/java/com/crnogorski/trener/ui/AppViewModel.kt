@@ -39,6 +39,10 @@ import com.crnogorski.trener.data.StoryMode
 import com.crnogorski.trener.data.StoryProgressEntity
 import com.crnogorski.trener.data.StoryRef
 import com.crnogorski.trener.data.VerdictCache
+import com.crnogorski.trener.data.Ijekavica
+import com.crnogorski.trener.data.WidgetWord
+import com.crnogorski.trener.data.WidgetWords
+import com.crnogorski.trener.data.WordEmoji
 import com.crnogorski.trener.data.VocabForm
 import com.crnogorski.trener.data.VocabFile
 import com.crnogorski.trener.data.VocabKind
@@ -60,6 +64,7 @@ import com.crnogorski.trener.net.Release
 import com.crnogorski.trener.net.Updater
 import com.crnogorski.trener.net.Verdict
 import com.crnogorski.trener.srs.Scheduler
+import com.crnogorski.trener.widget.WordWidget
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -1412,6 +1417,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             total = words
         )
 
+        saveWidgetWords(file, cards)
+
         val budget = (NEW_WORDS_PER_DAY - vocabRepo.introducedToday()).coerceAtLeast(0)
         return VocabTracks(
             toTarget = track(back = false, fresh = minOf(budget, words - started)),
@@ -1420,6 +1427,69 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // раньше, чем узнать.
             toNative = track(back = true, fresh = started - backTotal)
         )
+    }
+
+    /**
+     * Сложить список слов для виджета на домашнем экране (идея 143).
+     *
+     * Стоит здесь, а не в самом виджете, и это главное решение всей затеи:
+     * словарь тут уже прочитан и разобран, а в виджете его разбор стоил бы
+     * полутора-восьми секунд каждые полчаса — ровно то, от чего избавлялись в
+     * 1.97. Виджету достаётся строка из настроек, см. [WidgetWords].
+     *
+     * **Слова — те, что в обороте**: заведённые и ещё не выученные, от самого
+     * шаткого к более твёрдому (тот же счёт, что у тренировки вне расписания).
+     *
+     * **Отложенное рукой исключается.** «Уйти из глаз» значит отовсюду — это
+     * уже стоило починки в 3.9, когда отложенное слово возвращалось в
+     * тренировке и в парах через двадцать минут. Виджет самое видное место в
+     * телефоне, и мелькать там отложенному нельзя тем более.
+     *
+     * **Хвост добирается частотными словами без карточек.** На свежей
+     * установке в обороте нет ничего, и виджет остался бы пустым; а
+     * предварительное знакомство со словом до первого спроса — то самое, ради
+     * чего в 1.38 появился экран пар. Показать слово раньше, чем спросить, —
+     * не изъян, а порядок.
+     */
+    private suspend fun saveWidgetWords(file: VocabFile, cards: List<CardEntity>) {
+        val now = System.currentTimeMillis()
+        val inPlay = cards.asSequence()
+            .filter { isMeaning(it.exerciseId) && it.correct < VocabRepository.LEARNED }
+            .filter { !Scheduler.snoozed(it, now) }
+            .sortedBy { it.correct - 2 * it.lapses }
+            .mapNotNull { VocabRepository.lemmaOf(it.exerciseId) }
+            .distinct()
+            .toList()
+        val taken = inPlay.toSet()
+        val order = inPlay.asSequence() + file.words.asSequence()
+            .map { it.id }
+            .filter { it !in taken }
+        val glosses = file.words.associate { it.id to it.gloss }
+
+        // Ударения нужны прямо здесь: в записи уезжает номер ударной буквы, а
+        // не лемма, по которой его потом искать. Второй раз файл не читается.
+        Stress.load(getApplication())
+
+        WidgetWords.save(
+            getApplication<Application>(),
+            order.mapNotNull { lemma ->
+                val gloss = WidgetWords.short(glosses[lemma].orEmpty())
+                if (gloss.isEmpty()) return@mapNotNull null
+                // Показывается иекавское написание, и ударение считается по
+                // нему же: у «ovde» и «ovdje» ударная буква на разных местах.
+                val shown = Ijekavica.show(lemma)
+                WidgetWord(
+                    word = shown,
+                    gloss = gloss,
+                    stress = Stress.of(shown) ?: -1,
+                    emoji = WordEmoji.of(lemma).orEmpty()
+                )
+            }.take(WidgetWords.LIMIT).toList()
+        )
+        // Слово не сдвигаем: перелистывать карточку за человека при каждом
+        // возвращении на главный экран незачем. Перерисовка нужна ради
+        // другого — слово, только что отвеченное в занятии, из оборота ушло.
+        WordWidget.redraw(getApplication<Application>())
     }
 
     /**

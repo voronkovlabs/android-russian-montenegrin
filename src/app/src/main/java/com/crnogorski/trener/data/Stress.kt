@@ -85,8 +85,15 @@ object Stress {
     /**
      * Прочитать файл ударений. Отсутствие или порча файла — не ошибка:
      * останутся метки по правилу, а слова длиннее двух слогов будут без них.
+     *
+     * Прочитанное **второй раз не читается**. Зовут это из двух мест — при
+     * запуске приложения и перед сборкой списка для виджета, — и порядок между
+     * ними не задан: без этой оговорки список мог собраться до чтения, и слова
+     * длиннее двух слогов уехали бы в виджет без метки. А лишнее чтение пяти
+     * килобайт ничего не давало бы, кроме записи в диагностику.
      */
     suspend fun load(context: Context) = withContext(Dispatchers.IO) {
+        if (lexicon.isNotEmpty()) return@withContext
         lexicon = Trace.span("assets: ударения") { runCatching {
             json.decodeFromString<Map<String, Int>>(
                 context.assets.open(PATH).bufferedReader().use { it.readText() }

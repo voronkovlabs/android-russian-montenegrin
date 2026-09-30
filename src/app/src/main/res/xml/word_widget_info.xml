@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    updatePeriodMillis = 30 минут, и меньше система не принимает — это её
+    предел, не наш выбор. Зато такт бесплатный: телефон ради виджета не
+    будится, обновление ждёт включения экрана. Чаще меняет слово нажатие.
+
+    targetCellWidth/Height, previewLayout и description — это API 31, а у нас
+    minSdk 30: на Android 11 они молча не читаются, и там работают minWidth с
+    previewImage. Обе дороги нужны, потому что запасной телефон владельца —
+    ровно Android 11.
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="110dp"
+    android:minHeight="40dp"
+    android:minResizeWidth="110dp"
+    android:minResizeHeight="40dp"
+    android:targetCellWidth="2"
+    android:targetCellHeight="1"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="1800000"
+    android:initialLayout="@layout/word_widget"
+    android:previewLayout="@layout/word_widget"
+    android:previewImage="@mipmap/ic_launcher"
+    android:description="@string/widget_description"
+    android:widgetCategory="home_screen" />
