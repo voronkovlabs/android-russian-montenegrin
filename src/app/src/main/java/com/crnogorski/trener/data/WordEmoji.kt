@@ -28,8 +28,15 @@ package com.crnogorski.trener.data
  */
 object WordEmoji {
 
-    /** Картинка к слову или `null`, если её нет. */
-    fun of(word: String): String? = MAP[word]
+    /**
+     * Картинка к слову или `null`, если её нет.
+     *
+     * В Катиной сборке — всегда `null`: слова вводятся только текстом, без
+     * картинок и без эмодзи (решение Кати, 30.09.2026). Карта оставлена
+     * нетронутой, чтобы ветку было легко сводить с основной.
+     */
+    @Suppress("UNUSED_PARAMETER")
+    fun of(word: String): String? = null
 
     /** Сколько слов покрыто — для отчётов и проверок. */
     val size: Int get() = MAP.size

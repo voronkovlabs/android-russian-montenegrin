@@ -141,17 +141,44 @@ class VocabRepository(private val context: Context) {
      * его забудут, и слово вылезло бы ровно там, куда не посмотрели. Ровно
      * такая дыра была у «отложить на потом» в 1.86.
      */
+    /**
+     * **Катина сборка: словарь собирается из пройденных уроков**, а не из
+     * `words.json` (решение Кати, 30.09.2026). У каждого урока свой список
+     * слов (`Lesson.words`); прошёл урок — его слова появились здесь, а с ними
+     * на вкладке «Слова» и в виджетах. Порядок — порядок курса: он и служит
+     * «частотой» ([VocabWord.n]), по которой слова вводятся.
+     *
+     * Пройденность спрашивается у базы при каждом вызове: запрос к таблице в
+     * десяток строк дешевле, чем помнить, где сбрасывать кэш. Сам словарь
+     * пересобирается только когда набор пройденных уроков изменился.
+     *
+     * Форм у этих слов нет, поэтому карточки только две — значение и обратный
+     * перевод; склонения словарь Кати не спрашивает.
+     */
     suspend fun load(): VocabFile = withContext(Dispatchers.IO) {
-        cached ?: Trace.span("assets: словарь") {
+        val done = dao.lessonProgress().map { it.lessonId }.toSet()
+        cached?.takeIf { cachedFor == done } ?: Trace.span("словарь из уроков") {
             runCatching {
-                json.decodeFromString<VocabFile>(
-                    context.assets.open(PATH).bufferedReader().use { it.readText() }
-                ).let { file ->
-                    file.copy(words = file.words.filter { Excluded.allows(it.id) })
-                }
+                VocabFile(
+                    words = lessons.courseWords()
+                        .filter { (lesson, _) -> lesson in done }
+                        .map { it.second }
+                        .distinctBy { it.me }
+                        .filter { Excluded.allows(it.me) }
+                        .mapIndexed { i, w -> VocabWord(id = w.me, n = i + 1, gloss = w.ru) }
+                )
             }.getOrDefault(VocabFile())
-        }.also { cached = it }
+        }.also {
+            cached = it
+            cachedFor = done
+        }
     }
+
+    private val dao by lazy { AppDb.get(context).dao() }
+    private val lessons by lazy { LessonRepository(context) }
+
+    /** Для какого набора пройденных уроков собран [cached]. */
+    private var cachedFor: Set<String> = emptySet()
 
     /**
      * Парадигмы форм для этих слов — читаются полосами и по требованию.

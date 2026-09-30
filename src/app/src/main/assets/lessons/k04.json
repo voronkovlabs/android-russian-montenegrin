@@ -1,0 +1,400 @@
+{
+  "id": "k04",
+  "title": "Они, взрослые и животные",
+  "exercises": [
+    {
+      "id": "k04e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "odrasla osoba",
+      "hint": "odrasla osoba — взрослый человек",
+      "options": [
+        "взрослый человек",
+        "ребёнок",
+        "мужчина"
+      ],
+      "answer": "взрослый человек"
+    },
+    {
+      "id": "k04e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "odrasli",
+      "hint": "odrasli — взрослые",
+      "options": [
+        "взрослые",
+        "дети",
+        "люди"
+      ],
+      "answer": "взрослые"
+    },
+    {
+      "id": "k04e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "životinja",
+      "hint": "životinja — животное",
+      "options": [
+        "животное",
+        "собака",
+        "человек"
+      ],
+      "answer": "животное"
+    },
+    {
+      "id": "k04e04",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "životinje",
+      "hint": "životinje — животные",
+      "options": [
+        "животное",
+        "животные",
+        "люди"
+      ],
+      "answer": "животные"
+    },
+    {
+      "id": "k04e05",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "взрослый человек",
+          "me": "odrasla osoba"
+        },
+        {
+          "ru": "взрослые",
+          "me": "odrasli"
+        },
+        {
+          "ru": "животное",
+          "me": "životinja"
+        },
+        {
+          "ru": "животные",
+          "me": "životinje"
+        }
+      ]
+    },
+    {
+      "id": "k04e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "oni",
+      "hint": "oni — они",
+      "options": [
+        "мы",
+        "они",
+        "вы"
+      ],
+      "answer": "они"
+    },
+    {
+      "id": "k04e07",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Oni su ljudi.",
+      "hint": "Oni su ljudi. — Они люди.",
+      "options": [
+        "Они люди.",
+        "Мы люди.",
+        "Вы люди."
+      ],
+      "answer": "Они люди."
+    },
+    {
+      "id": "k04e08",
+      "type": "choice",
+      "prompt": "Oni ___ odrasli.",
+      "options": [
+        "je",
+        "smo",
+        "su"
+      ],
+      "answer": "su",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k04e09",
+      "type": "choice",
+      "prompt": "Oni su odrasli.",
+      "options": [
+        "Они взрослые.",
+        "Мы взрослые.",
+        "Они дети."
+      ],
+      "answer": "Они взрослые.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k04e10",
+      "type": "word_bank",
+      "prompt": "Они взрослые.",
+      "answer": "Oni su odrasli.",
+      "bank": [
+        "oni",
+        "su",
+        "odrasli"
+      ]
+    },
+    {
+      "id": "k04e11",
+      "type": "choice",
+      "prompt": "Oni su životinje.",
+      "options": [
+        "Они животные.",
+        "Они люди.",
+        "Вы животные."
+      ],
+      "answer": "Они животные.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k04e12",
+      "type": "choice",
+      "prompt": "Oni ___ životinje.",
+      "options": [
+        "si",
+        "ste",
+        "su"
+      ],
+      "answer": "su",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k04e13",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "sam"
+        },
+        {
+          "ru": "ti",
+          "me": "si"
+        },
+        {
+          "ru": "on / ona",
+          "me": "je"
+        },
+        {
+          "ru": "mi",
+          "me": "smo"
+        },
+        {
+          "ru": "vi",
+          "me": "ste"
+        },
+        {
+          "ru": "oni",
+          "me": "su"
+        }
+      ]
+    },
+    {
+      "id": "k04e14",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "lijep",
+      "hint": "lijep — красивый",
+      "options": [
+        "красивый",
+        "умный",
+        "взрослый"
+      ],
+      "answer": "красивый"
+    },
+    {
+      "id": "k04e15",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "lijepa",
+      "hint": "lijepa — красивая",
+      "options": [
+        "красивый",
+        "красивая",
+        "умная"
+      ],
+      "answer": "красивая"
+    },
+    {
+      "id": "k04e16",
+      "type": "choice",
+      "prompt": "Ona je lijepa.",
+      "options": [
+        "Она умная.",
+        "Она красивая.",
+        "Она взрослая."
+      ],
+      "answer": "Она красивая.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k04e17",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pametan",
+      "hint": "pametan — умный",
+      "options": [
+        "красивый",
+        "умный",
+        "взрослый"
+      ],
+      "answer": "умный"
+    },
+    {
+      "id": "k04e18",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pametna",
+      "hint": "pametna — умная",
+      "options": [
+        "умная",
+        "умный",
+        "красивая"
+      ],
+      "answer": "умная"
+    },
+    {
+      "id": "k04e19",
+      "type": "choice",
+      "prompt": "On je pametan.",
+      "options": [
+        "Он умный.",
+        "Он красивый.",
+        "Она умная."
+      ],
+      "answer": "Он умный.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k04e20",
+      "type": "choice",
+      "prompt": "Ona je pametna.",
+      "options": [
+        "Она красивая.",
+        "Она умная.",
+        "Он умный."
+      ],
+      "answer": "Она умная.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k04e21",
+      "type": "choice",
+      "prompt": "On je ___ .",
+      "options": [
+        "lijep",
+        "lijepa"
+      ],
+      "answer": "lijep",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k04e22",
+      "type": "choice",
+      "prompt": "Ona je ___ .",
+      "options": [
+        "pametan",
+        "pametna"
+      ],
+      "answer": "pametna",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k04e23",
+      "type": "choice",
+      "prompt": "Pas je pametan.",
+      "options": [
+        "Собака умная.",
+        "Собака красивая.",
+        "Кошка умная."
+      ],
+      "answer": "Собака умная.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k04e24",
+      "type": "choice",
+      "prompt": "Mačka je lijepa.",
+      "options": [
+        "Кошка красивая.",
+        "Кошка умная.",
+        "Собака красивая."
+      ],
+      "answer": "Кошка красивая.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k04e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Imate li kusur?",
+      "hint": "Imate li kusur? — Есть ли у вас сдача?",
+      "options": [
+        "Есть ли у вас сдача?",
+        "Нужен пакет?",
+        "Карточкой или наличными?"
+      ],
+      "answer": "Есть ли у вас сдача?"
+    },
+    {
+      "id": "k04e26",
+      "type": "choice",
+      "prompt": "— Imate li kusur?\n— Da.\n\nЧто спросили?",
+      "options": [
+        "Есть ли пакет?",
+        "Есть ли сдача?",
+        "Карточкой или наличными?"
+      ],
+      "answer": "Есть ли сдача?",
+      "label": "Мини-диалог"
+    }
+  ],
+  "words": [
+    {
+      "me": "odrasla osoba",
+      "ru": "взрослый человек"
+    },
+    {
+      "me": "odrasli",
+      "ru": "взрослые"
+    },
+    {
+      "me": "životinja",
+      "ru": "животное"
+    },
+    {
+      "me": "životinje",
+      "ru": "животные"
+    },
+    {
+      "me": "oni",
+      "ru": "они"
+    },
+    {
+      "me": "su",
+      "ru": "(они) есть"
+    },
+    {
+      "me": "lijep",
+      "ru": "красивый"
+    },
+    {
+      "me": "lijepa",
+      "ru": "красивая"
+    },
+    {
+      "me": "pametan",
+      "ru": "умный"
+    },
+    {
+      "me": "pametna",
+      "ru": "умная"
+    },
+    {
+      "me": "kusur",
+      "ru": "сдача"
+    }
+  ]
+}

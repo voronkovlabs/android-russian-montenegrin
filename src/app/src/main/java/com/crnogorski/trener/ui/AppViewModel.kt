@@ -1135,7 +1135,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // переливается тем, у кого материал ещё есть. Порядок второго прохода
         // не тот же, что первого: лишнее время лучше отдать долгу и словам,
         // чем вывалить сверх нормы ещё кусок нового урока.
-        val storyBudget = budget * STORY_SHARE * accent.story
+        // Катина сборка: истории в ежедневное задание не входят вовсе (решение
+        // Кати) — они уровня основного курса, а её ученик идёт от нуля. На
+        // своей вкладке они остаются, читать можно по желанию.
+        val storyBudget = 0.0
         val body = budget - storyBudget
         val lists = listOf(lessonCands, reviewCands, wordCands)
         val caps = listOf(
@@ -1195,8 +1198,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
         // Истории — хвостом, отдельным шагом. Если упражнений не набралось
         // вовсе, весь бюджет уходит им: занятие всё равно должно состояться.
-        val forStory = if (items.isEmpty()) budget else storyBudget
-        val story = Trace.span("подбор: история") { nextStory(forStory, online) }
+        // В Катиной сборке историй в ежедневном нет — даже когда упражнений не
+        // набралось: пустой день честнее сказки для того, кто знает десять слов.
+        val story = null
 
         return@withContext plan.copy(
             items = items,
@@ -3373,10 +3377,39 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         )
     }
 
+    /**
+     * Человек открыл подсказку к условию (`Choice.hint`).
+     *
+     * Помнится id задания, а не флаг в состоянии сессии: флаг пришлось бы
+     * сбрасывать во всех местах, где показывается следующее задание, а id
+     * сравнивается с текущим и устаревает сам.
+     */
+    fun peekCurrent() {
+        peekedId = _session.value?.current?.id
+    }
+
+    private var peekedId: String? = null
+
     fun submitMatch(wrong: Set<String>) {
         val state = _session.value ?: return
         val ex = state.current as? Exercise.Match ?: return
         if (state.phase != Phase.Input) return
+
+        // Пары из файла урока (Катина сборка) — одно задание урока со своей
+        // карточкой, как любое другое: record двигает его SRS, время и счёт.
+        // Словарный путь ниже для них не годится — он заводит карточки слов.
+        if (ex.pairs.all { it.cardId.startsWith(ex.id + ".") }) {
+            val missed = ex.pairs.filter { it.cardId in wrong }
+            lastAnswer = ""
+            localResult(
+                correct = missed.isEmpty(),
+                note = if (missed.isEmpty()) "Все пары с первой попытки."
+                else missed.joinToString(", ", prefix = "Перепутано: ") { it.me },
+                expected = "",
+                answer = ""
+            )
+            return
+        }
 
         val seconds = noteTime(state, ex)
         cardBeforeAnswer = null
@@ -3827,7 +3860,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             0.0
         }
         val seconds = noteTime(state, item.exercise)
-        val easy = correct && confident(item.exercise.typeName, elapsed)
+        // Подсмотрел подсказку — лёгким ответ не бывает, а в повторении и
+        // верным не считается (см. Exercise.Choice.hint).
+        val peeked = peekedId == item.exercise.id
+        val easy = correct && !peeked && confident(item.exercise.typeName, elapsed)
         // Показ парадигмы — знакомство, а не ответ: таблица показана целиком и
         // ошибиться в ней нечем. В счёт ответов дня он идёт как пропуск —
         // время стоит, ответом не считается; иначе доля верных росла бы от
@@ -3850,6 +3886,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 }
                 existing == null ->
                     Scheduler.newCard(item.exercise.id, item.lessonId, correct, now, easy)
+                // Карточка уже есть — значит это повторение, а не первая
+                // встреча: подсмотрел и выбрал верно — «не вспомнил». Слово
+                // вернётся через несколько часов, но ошибкой это не считается
+                // (решение Кати). Неверный ответ идёт обычным путём.
+                peeked && correct && state.practice -> existing
+                peeked && correct -> Scheduler.postpone(existing, now)
                 // Тренировка вне расписания интервал не двигает: см. Scheduler.
                 state.practice -> Scheduler.practice(existing, correct, now)
                 else -> Scheduler.update(existing, correct, now, easy)

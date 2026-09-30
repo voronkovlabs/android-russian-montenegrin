@@ -96,6 +96,8 @@ fun SessionScreen(
     /** Экран пар отвечает не строкой, а списком слов, где ошиблись. */
     onMatch: (Set<String>) -> Unit,
     onParadigm: (List<String>) -> Unit,
+    /** Открыта подсказка к условию выбора — см. `Exercise.Choice.hint`. */
+    onPeek: () -> Unit,
     onRate: (Int) -> Unit,
     onNext: () -> Unit,
     onRetryBlock: () -> Unit,
@@ -154,7 +156,8 @@ fun SessionScreen(
                 onSubmit = onSubmit,
                 onSkip = onSkip,
                 onMatch = onMatch,
-                onParadigm = onParadigm
+                onParadigm = onParadigm,
+                onPeek = onPeek
             )
 
             // Оценка — под телом задания, рядом с «Отложить», и по тому же
@@ -268,7 +271,8 @@ private fun ExerciseBody(
     onSubmit: (String) -> Unit,
     onSkip: () -> Unit,
     onMatch: (Set<String>) -> Unit,
-    onParadigm: (List<String>) -> Unit
+    onParadigm: (List<String>) -> Unit,
+    onPeek: () -> Unit
 ) {
     // Что движок расслышал в последний заход. По нему подсвечиваются слова
     // прямо в задании: строка «Услышано:» говорит, ЧТО он разобрал, но какие
@@ -373,7 +377,7 @@ private fun ExerciseBody(
 
         is Exercise.Table -> ParadigmAnswer(ex, speaker, enabled, onParadigm)
 
-        is Exercise.Choice -> ChoiceAnswer(ex, speaker, enabled, onSubmit)
+        is Exercise.Choice -> ChoiceAnswer(ex, speaker, enabled, onSubmit, onPeek)
 
         is Exercise.WordBank ->
             WordBankAnswer(ex, state.glossary.ru, sayHint, enabled, onSubmit)
@@ -670,10 +674,59 @@ private fun ChoiceAnswer(
     ex: Exercise.Choice,
     speaker: Speaker,
     enabled: Boolean,
-    onSubmit: (String) -> Unit
+    onSubmit: (String) -> Unit,
+    onPeek: () -> Unit
 ) {
-    Label("Выбери вариант")
-    Prompt(ex.prompt)
+    var peeked by remember(ex.id) { mutableStateOf(false) }
+    var revealed by remember(ex.id) { mutableStateOf(false) }
+    // На слух текст закрыт, пока его не открыли кнопкой; после ответа он
+    // открывается сам — иначе не с чем сверить услышанное.
+    val showText = !ex.byEar || revealed || !enabled
+    // Звучит только черногорское: голос у нас sr-RS, и русская строка вышла бы
+    // кашей. Условие Катиных заданий бывает и русским («собака»).
+    val sayPrompt = !hasCyrillic(ex.prompt)
+
+    if (ex.byEar) {
+        LaunchedEffect(ex.id) { if (enabled) speaker.speak(ex.prompt) }
+    }
+
+    Label(ex.label.ifBlank { if (ex.byEar) "Выбери, что прозвучало" else "Выбери вариант" })
+    when {
+        !showText -> Text(
+            "Текст закрыт — слушай.",
+            style = MaterialTheme.typography.headlineSmall,
+            color = Muted
+        )
+        // Условие с подсказкой подчёркнуто целиком и нажимается целиком: это
+        // одно новое слово или одна готовая фраза, делить её на слова незачем.
+        ex.hint.isNotBlank() -> Text(
+            stressedPhrase(ex.prompt),
+            style = MaterialTheme.typography.headlineSmall.copy(
+                textDecoration = TextDecoration.Underline
+            ),
+            color = Paper,
+            modifier = Modifier.clickable {
+                if (!peeked) {
+                    peeked = true
+                    if (enabled) onPeek()
+                }
+                if (sayPrompt) speaker.speak(ex.prompt)
+            }
+        )
+        else -> Prompt(ex.prompt)
+    }
+    if (showText && ex.hint.isNotBlank() && (peeked || !enabled)) {
+        Spacer(Modifier.height(8.dp))
+        Text(ex.hint, style = MaterialTheme.typography.bodyLarge, color = Muted)
+    }
+    if (ex.byEar) {
+        Spacer(Modifier.height(12.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            SmallAction("Прослушать") { speaker.speak(ex.prompt) }
+            SmallAction("Медленнее") { speaker.speak(ex.prompt, slow = true) }
+            if (!showText) SmallAction("Показать текст") { revealed = true }
+        }
+    }
     Spacer(Modifier.height(20.dp))
 
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -687,7 +740,9 @@ private fun ChoiceAnswer(
                     // Вариант проговаривается вслух: выбор глазами не даёт
                     // услышать, как выбранное звучит.
                     .clickable(enabled = enabled) {
-                        speaker.speak(option)
+                        // Русский вариант не зачитывается: голос sr-RS
+                        // прочёл бы его кашей.
+                        if (!hasCyrillic(option)) speaker.speak(option)
                         onSubmit(option)
                     }
                     .padding(16.dp)
@@ -697,6 +752,9 @@ private fun ChoiceAnswer(
         }
     }
 }
+
+/** Есть ли в строке кириллица — то есть русский ли это текст. */
+private fun hasCyrillic(text: String): Boolean = text.any { it in 'Ѐ'..'ӿ' }
 
 /**
  * Пары слов: слева значения, справа черногорские слова.

@@ -27,10 +27,35 @@ class LessonRepository(private val context: Context) {
         cachedLessons[id] ?: run {
             val ref = index().lessons.first { it.id == id }
             Trace.span("assets: урок", id) {
-                json.decodeFromString<Lesson>(read("lessons/${ref.file}"))
+                json.decodeFromString<Lesson>(read("lessons/${ref.file}")).withPairIds()
             }.also { cachedLessons[id] = it }
         }
     }
+
+    /**
+     * Словарь Катиного курса: слова всех уроков по порядку курса — с тем, из
+     * какого урока каждое.
+     *
+     * Отбор «урок пройден — слова видны» делает `VocabRepository`: там же
+     * живёт и остальной словарь, а здесь только чтение файлов уроков.
+     */
+    suspend fun courseWords(): List<Pair<String, LessonWord>> =
+        index().lessons.flatMap { ref -> lesson(ref.id).words.map { ref.id to it } }
+
+    /**
+     * Пары в файле урока пишутся без `cardId` — ставим его сами:
+     * `<id задания>.<номер пары>`. Экрану он нужен как ключ плашки, а
+     * `submitMatch` по этому префиксу узнаёт пары урока и засчитывает их одним
+     * заданием, а не пятью словарными карточками.
+     */
+    private fun Lesson.withPairIds(): Lesson = copy(
+        exercises = exercises.map { ex ->
+            if (ex !is Exercise.Match) ex
+            else ex.copy(pairs = ex.pairs.mapIndexed { i, p ->
+                if (p.cardId.isNotBlank()) p else p.copy(cardId = "${ex.id}.$i")
+            })
+        }
+    )
 
     /** Оглавление историй; отсутствие файла — не ошибка, просто раздел пустой. */
     suspend fun stories(): StoryIndex = withContext(Dispatchers.IO) {

@@ -1,0 +1,407 @@
+{
+  "id": "k01",
+  "title": "Я, ты и магазин",
+  "exercises": [
+    {
+      "id": "k01e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ja",
+      "hint": "ja — я",
+      "options": [
+        "я",
+        "ты",
+        "он"
+      ],
+      "answer": "я"
+    },
+    {
+      "id": "k01e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ti",
+      "hint": "ti — ты",
+      "options": [
+        "я",
+        "ты",
+        "она"
+      ],
+      "answer": "ты"
+    },
+    {
+      "id": "k01e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "žena",
+      "hint": "žena — женщина",
+      "options": [
+        "женщина",
+        "мужчина",
+        "ребёнок"
+      ],
+      "answer": "женщина"
+    },
+    {
+      "id": "k01e04",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "muškarac",
+      "hint": "muškarac — мужчина",
+      "options": [
+        "ребёнок",
+        "женщина",
+        "мужчина"
+      ],
+      "answer": "мужчина"
+    },
+    {
+      "id": "k01e05",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "dijete",
+      "hint": "dijete — ребёнок",
+      "options": [
+        "мужчина",
+        "ребёнок",
+        "женщина"
+      ],
+      "answer": "ребёнок"
+    },
+    {
+      "id": "k01e06",
+      "type": "choice",
+      "prompt": "Ja sam žena.",
+      "options": [
+        "Ты женщина.",
+        "Я женщина.",
+        "Я ребёнок."
+      ],
+      "answer": "Я женщина.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k01e07",
+      "type": "word_bank",
+      "prompt": "Я мужчина.",
+      "answer": "Ja sam muškarac.",
+      "bank": [
+        "muškarac",
+        "sam",
+        "ja"
+      ]
+    },
+    {
+      "id": "k01e08",
+      "type": "choice",
+      "prompt": "Ti si žena.",
+      "options": [
+        "Ты женщина.",
+        "Я женщина.",
+        "Ты мужчина."
+      ],
+      "answer": "Ты женщина.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k01e09",
+      "type": "choice",
+      "prompt": "Ti ___ muškarac.",
+      "options": [
+        "sam",
+        "si",
+        "ja"
+      ],
+      "answer": "si",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k01e10",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я",
+          "me": "ja"
+        },
+        {
+          "ru": "ты",
+          "me": "ti"
+        },
+        {
+          "ru": "женщина",
+          "me": "žena"
+        },
+        {
+          "ru": "ребёнок",
+          "me": "dijete"
+        }
+      ]
+    },
+    {
+      "id": "k01e11",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "dobro",
+      "hint": "dobro — хорошо",
+      "options": [
+        "хорошо",
+        "вода",
+        "да"
+      ],
+      "answer": "хорошо"
+    },
+    {
+      "id": "k01e12",
+      "type": "choice",
+      "prompt": "Dobro.",
+      "options": [
+        "Хорошо.",
+        "Нет.",
+        "Вода."
+      ],
+      "answer": "Хорошо.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k01e13",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "voda",
+      "hint": "voda — вода",
+      "options": [
+        "хлеб",
+        "вода",
+        "кофе"
+      ],
+      "answer": "вода"
+    },
+    {
+      "id": "k01e14",
+      "type": "choice",
+      "prompt": "вода",
+      "options": [
+        "voda",
+        "žena",
+        "dijete"
+      ],
+      "answer": "voda",
+      "label": "Выбери слово"
+    },
+    {
+      "id": "k01e15",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "hljeb",
+      "hint": "hljeb — хлеб",
+      "options": [
+        "хлеб",
+        "вода",
+        "хорошо"
+      ],
+      "answer": "хлеб"
+    },
+    {
+      "id": "k01e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "вода",
+          "me": "voda"
+        },
+        {
+          "ru": "хлеб",
+          "me": "hljeb"
+        },
+        {
+          "ru": "хорошо",
+          "me": "dobro"
+        }
+      ]
+    },
+    {
+      "id": "k01e17",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kafa",
+      "hint": "kafa — кофе",
+      "options": [
+        "вода",
+        "хлеб",
+        "кофе"
+      ],
+      "answer": "кофе"
+    },
+    {
+      "id": "k01e18",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Voda, molim.",
+      "hint": "Voda, molim. — Воду, пожалуйста.",
+      "options": [
+        "Воду, пожалуйста.",
+        "Кофе, пожалуйста.",
+        "Хлеб, пожалуйста."
+      ],
+      "answer": "Воду, пожалуйста."
+    },
+    {
+      "id": "k01e19",
+      "type": "word_bank",
+      "prompt": "Кофе, пожалуйста.",
+      "answer": "Kafa, molim.",
+      "bank": [
+        "molim",
+        "kafa"
+      ]
+    },
+    {
+      "id": "k01e20",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "da",
+      "hint": "da — да",
+      "options": [
+        "да",
+        "нет",
+        "хорошо"
+      ],
+      "answer": "да"
+    },
+    {
+      "id": "k01e21",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ne",
+      "hint": "ne — нет",
+      "options": [
+        "да",
+        "хорошо",
+        "нет"
+      ],
+      "answer": "нет"
+    },
+    {
+      "id": "k01e22",
+      "type": "choice",
+      "prompt": "Da.",
+      "options": [
+        "Да.",
+        "Нет.",
+        "Хорошо."
+      ],
+      "answer": "Да.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k01e23",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kesa",
+      "hint": "kesa — пакет",
+      "options": [
+        "хлеб",
+        "пакет",
+        "вода"
+      ],
+      "answer": "пакет"
+    },
+    {
+      "id": "k01e24",
+      "type": "choice",
+      "prompt": "Kesa.",
+      "options": [
+        "хлеб",
+        "пакет",
+        "вода"
+      ],
+      "answer": "пакет",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k01e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Treba li kesa?",
+      "hint": "Treba li kesa? — Нужен пакет?",
+      "options": [
+        "Нужен пакет?",
+        "Хотите кофе?",
+        "Это вода?"
+      ],
+      "answer": "Нужен пакет?"
+    },
+    {
+      "id": "k01e26",
+      "type": "choice",
+      "prompt": "— Treba li kesa?\nВыбери ответ:",
+      "options": [
+        "Da, molim.",
+        "Ja sam žena.",
+        "Voda."
+      ],
+      "answer": "Da, molim.",
+      "label": "Мини-диалог"
+    }
+  ],
+  "words": [
+    {
+      "me": "ja",
+      "ru": "я"
+    },
+    {
+      "me": "ti",
+      "ru": "ты"
+    },
+    {
+      "me": "sam",
+      "ru": "(я) есть"
+    },
+    {
+      "me": "si",
+      "ru": "(ты) есть"
+    },
+    {
+      "me": "žena",
+      "ru": "женщина"
+    },
+    {
+      "me": "muškarac",
+      "ru": "мужчина"
+    },
+    {
+      "me": "dijete",
+      "ru": "ребёнок"
+    },
+    {
+      "me": "dobro",
+      "ru": "хорошо"
+    },
+    {
+      "me": "voda",
+      "ru": "вода"
+    },
+    {
+      "me": "hljeb",
+      "ru": "хлеб"
+    },
+    {
+      "me": "kafa",
+      "ru": "кофе"
+    },
+    {
+      "me": "molim",
+      "ru": "пожалуйста"
+    },
+    {
+      "me": "da",
+      "ru": "да"
+    },
+    {
+      "me": "ne",
+      "ru": "нет"
+    },
+    {
+      "me": "kesa",
+      "ru": "пакет"
+    }
+  ]
+}

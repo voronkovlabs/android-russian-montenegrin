@@ -1,0 +1,413 @@
+{
+  "id": "k05",
+  "title": "Акула, черепаха и яблоко",
+  "exercises": [
+    {
+      "id": "k05e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ajkula",
+      "hint": "ajkula — акула",
+      "options": [
+        "акула",
+        "черепаха",
+        "кошка"
+      ],
+      "answer": "акула"
+    },
+    {
+      "id": "k05e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "jabuka",
+      "hint": "jabuka — яблоко",
+      "options": [
+        "хлеб",
+        "яблоко",
+        "вода"
+      ],
+      "answer": "яблоко"
+    },
+    {
+      "id": "k05e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kornjača",
+      "hint": "kornjača — черепаха",
+      "options": [
+        "акула",
+        "кошка",
+        "черепаха"
+      ],
+      "answer": "черепаха"
+    },
+    {
+      "id": "k05e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "акула",
+          "me": "ajkula"
+        },
+        {
+          "ru": "яблоко",
+          "me": "jabuka"
+        },
+        {
+          "ru": "черепаха",
+          "me": "kornjača"
+        },
+        {
+          "ru": "кошка",
+          "me": "mačka"
+        }
+      ]
+    },
+    {
+      "id": "k05e05",
+      "type": "choice",
+      "prompt": "kornjača",
+      "options": [
+        "акула",
+        "черепаха",
+        "яблоко"
+      ],
+      "answer": "черепаха",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k05e06",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "jede",
+      "hint": "jede — ест",
+      "options": [
+        "ест",
+        "есть (является)",
+        "хорошо"
+      ],
+      "answer": "ест"
+    },
+    {
+      "id": "k05e07",
+      "type": "choice",
+      "prompt": "Kornjača jede.",
+      "options": [
+        "Черепаха ест.",
+        "Акула ест.",
+        "Черепаха зелёная."
+      ],
+      "answer": "Черепаха ест.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k05e08",
+      "type": "word_bank",
+      "prompt": "Черепаха ест.",
+      "answer": "Kornjača jede.",
+      "bank": [
+        "jede",
+        "kornjača"
+      ]
+    },
+    {
+      "id": "k05e09",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kornjača jede jabuku.",
+      "hint": "Kornjača jede jabuku. — Черепаха ест яблоко.",
+      "options": [
+        "Черепаха ест яблоко.",
+        "Акула ест черепаху.",
+        "Кошка ест яблоко."
+      ],
+      "answer": "Черепаха ест яблоко."
+    },
+    {
+      "id": "k05e10",
+      "type": "choice",
+      "prompt": "Kornjača jede jabuku.",
+      "options": [
+        "Черепаха ест яблоко.",
+        "Акула ест черепаху.",
+        "Кошка ест яблоко."
+      ],
+      "answer": "Черепаха ест яблоко.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k05e11",
+      "type": "word_bank",
+      "prompt": "Черепаха ест яблоко.",
+      "answer": "Kornjača jede jabuku.",
+      "bank": [
+        "jabuku",
+        "jede",
+        "kornjača"
+      ]
+    },
+    {
+      "id": "k05e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ajkula jede kornjaču.",
+      "hint": "Ajkula jede kornjaču. — Акула ест черепаху.",
+      "options": [
+        "Акула ест черепаху.",
+        "Черепаха ест акулу.",
+        "Акула ест яблоко."
+      ],
+      "answer": "Акула ест черепаху."
+    },
+    {
+      "id": "k05e13",
+      "type": "choice",
+      "prompt": "Ajkula jede kornjaču.\nКто кого ест?",
+      "options": [
+        "Акула ест черепаху.",
+        "Черепаха ест акулу.",
+        "Акула ест яблоко."
+      ],
+      "answer": "Акула ест черепаху.",
+      "label": "Кто кого ест"
+    },
+    {
+      "id": "k05e14",
+      "type": "word_bank",
+      "prompt": "Акула ест черепаху.",
+      "answer": "Ajkula jede kornjaču.",
+      "bank": [
+        "ajkula",
+        "kornjaču",
+        "jede"
+      ]
+    },
+    {
+      "id": "k05e15",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "zelen",
+      "hint": "zelen — зелёный",
+      "options": [
+        "зелёный",
+        "белый",
+        "красивый"
+      ],
+      "answer": "зелёный"
+    },
+    {
+      "id": "k05e16",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "zelena",
+      "hint": "zelena — зелёная",
+      "options": [
+        "зелёный",
+        "зелёная",
+        "белая"
+      ],
+      "answer": "зелёная"
+    },
+    {
+      "id": "k05e17",
+      "type": "choice",
+      "prompt": "Kornjača je zelena.",
+      "options": [
+        "Черепаха зелёная.",
+        "Черепаха белая.",
+        "Акула зелёная."
+      ],
+      "answer": "Черепаха зелёная.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k05e18",
+      "type": "choice",
+      "prompt": "Kornjača je ___ .",
+      "options": [
+        "zelen",
+        "zelena"
+      ],
+      "answer": "zelena",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k05e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "bijel",
+      "hint": "bijel — белый",
+      "options": [
+        "белый",
+        "зелёный",
+        "умный"
+      ],
+      "answer": "белый"
+    },
+    {
+      "id": "k05e20",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "bijela",
+      "hint": "bijela — белая",
+      "options": [
+        "белый",
+        "белая",
+        "зелёная"
+      ],
+      "answer": "белая"
+    },
+    {
+      "id": "k05e21",
+      "type": "choice",
+      "prompt": "Ajkula je bijela.",
+      "options": [
+        "Акула белая.",
+        "Акула зелёная.",
+        "Черепаха белая."
+      ],
+      "answer": "Акула белая.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k05e22",
+      "type": "choice",
+      "prompt": "Pametna mačka.",
+      "options": [
+        "Умная кошка.",
+        "Красивая кошка.",
+        "Умная собака."
+      ],
+      "answer": "Умная кошка.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k05e23",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ne",
+      "hint": "ne — не; нет",
+      "options": [
+        "не; нет",
+        "да",
+        "ест"
+      ],
+      "answer": "не; нет"
+    },
+    {
+      "id": "k05e24",
+      "type": "choice",
+      "prompt": "Mačka ne jede.",
+      "options": [
+        "Кошка не ест.",
+        "Кошка ест.",
+        "Собака не ест."
+      ],
+      "answer": "Кошка не ест.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k05e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Pametna mačka ne jede jabuku.",
+      "hint": "Pametna mačka ne jede jabuku. — Умная кошка не ест яблоко.",
+      "options": [
+        "Умная кошка не ест яблоко.",
+        "Умная кошка ест яблоко.",
+        "Красивая кошка не ест яблоко."
+      ],
+      "answer": "Умная кошка не ест яблоко."
+    },
+    {
+      "id": "k05e26",
+      "type": "word_bank",
+      "prompt": "Умная кошка не ест яблоко.",
+      "answer": "Pametna mačka ne jede jabuku.",
+      "bank": [
+        "pametna",
+        "mačka",
+        "ne",
+        "jede",
+        "jabuku"
+      ]
+    },
+    {
+      "id": "k05e27",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mogu li dobiti kečap?",
+      "hint": "Mogu li dobiti kečap? — Можно мне кетчуп?",
+      "options": [
+        "Можно мне кетчуп?",
+        "Есть ли у вас сдача?",
+        "Нужен пакет?"
+      ],
+      "answer": "Можно мне кетчуп?"
+    },
+    {
+      "id": "k05e28",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Акула ест черепаху.",
+          "me": "Ajkula jede kornjaču."
+        },
+        {
+          "ru": "Черепаха ест яблоко.",
+          "me": "Kornjača jede jabuku."
+        },
+        {
+          "ru": "Умная кошка не ест яблоко.",
+          "me": "Pametna mačka ne jede jabuku."
+        },
+        {
+          "ru": "Черепаха зелёная.",
+          "me": "Kornjača je zelena."
+        },
+        {
+          "ru": "Можно мне кетчуп?",
+          "me": "Mogu li dobiti kečap?"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "ajkula",
+      "ru": "акула"
+    },
+    {
+      "me": "jabuka",
+      "ru": "яблоко"
+    },
+    {
+      "me": "kornjača",
+      "ru": "черепаха"
+    },
+    {
+      "me": "jede",
+      "ru": "ест"
+    },
+    {
+      "me": "zelen",
+      "ru": "зелёный"
+    },
+    {
+      "me": "zelena",
+      "ru": "зелёная"
+    },
+    {
+      "me": "bijel",
+      "ru": "белый"
+    },
+    {
+      "me": "bijela",
+      "ru": "белая"
+    },
+    {
+      "me": "kečap",
+      "ru": "кетчуп"
+    }
+  ]
+}

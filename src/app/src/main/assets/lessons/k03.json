@@ -1,0 +1,442 @@
+{
+  "id": "k03",
+  "title": "Мы, вы и семья",
+  "exercises": [
+    {
+      "id": "k03e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "majka",
+      "hint": "majka — мать",
+      "options": [
+        "мать",
+        "отец",
+        "девочка"
+      ],
+      "answer": "мать"
+    },
+    {
+      "id": "k03e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "otac",
+      "hint": "otac — отец",
+      "options": [
+        "мужчина",
+        "мать",
+        "отец"
+      ],
+      "answer": "отец"
+    },
+    {
+      "id": "k03e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "мать",
+          "me": "majka"
+        },
+        {
+          "ru": "отец",
+          "me": "otac"
+        },
+        {
+          "ru": "женщина",
+          "me": "žena"
+        },
+        {
+          "ru": "мужчина",
+          "me": "muškarac"
+        }
+      ]
+    },
+    {
+      "id": "k03e04",
+      "type": "choice",
+      "prompt": "majka",
+      "options": [
+        "мать",
+        "девочка",
+        "женщина"
+      ],
+      "answer": "мать",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k03e05",
+      "type": "choice",
+      "prompt": "otac",
+      "options": [
+        "мужчина",
+        "отец",
+        "мальчик"
+      ],
+      "answer": "отец",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k03e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "mi",
+      "hint": "mi — мы",
+      "options": [
+        "мы",
+        "вы",
+        "они"
+      ],
+      "answer": "мы"
+    },
+    {
+      "id": "k03e07",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ljudi",
+      "hint": "ljudi — люди",
+      "options": [
+        "люди",
+        "дети",
+        "мужчины"
+      ],
+      "answer": "люди"
+    },
+    {
+      "id": "k03e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mi smo ljudi.",
+      "hint": "Mi smo ljudi. — Мы люди.",
+      "options": [
+        "Мы люди.",
+        "Вы люди.",
+        "Я человек."
+      ],
+      "answer": "Мы люди."
+    },
+    {
+      "id": "k03e09",
+      "type": "choice",
+      "prompt": "Mi ___ ljudi.",
+      "options": [
+        "sam",
+        "smo",
+        "ste"
+      ],
+      "answer": "smo",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k03e10",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "vi",
+      "hint": "vi — вы",
+      "options": [
+        "мы",
+        "вы",
+        "ты"
+      ],
+      "answer": "вы"
+    },
+    {
+      "id": "k03e11",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "žene",
+      "hint": "žene — женщины",
+      "options": [
+        "женщина",
+        "женщины",
+        "мужчины"
+      ],
+      "answer": "женщины"
+    },
+    {
+      "id": "k03e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Vi ste žene.",
+      "hint": "Vi ste žene. — Вы женщины.",
+      "options": [
+        "Вы женщины.",
+        "Мы женщины.",
+        "Ты женщина."
+      ],
+      "answer": "Вы женщины."
+    },
+    {
+      "id": "k03e13",
+      "type": "word_bank",
+      "prompt": "Вы женщины.",
+      "answer": "Vi ste žene.",
+      "bank": [
+        "vi",
+        "ste",
+        "žene"
+      ]
+    },
+    {
+      "id": "k03e14",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "muškarci",
+      "hint": "muškarci — мужчины",
+      "options": [
+        "мужчина",
+        "женщины",
+        "мужчины"
+      ],
+      "answer": "мужчины"
+    },
+    {
+      "id": "k03e15",
+      "type": "choice",
+      "prompt": "Vi ___ muškarci.",
+      "options": [
+        "si",
+        "ste",
+        "smo"
+      ],
+      "answer": "ste",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k03e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я женщина.",
+          "me": "Ja sam žena."
+        },
+        {
+          "ru": "Ты мужчина.",
+          "me": "Ti si muškarac."
+        },
+        {
+          "ru": "Мы люди.",
+          "me": "Mi smo ljudi."
+        },
+        {
+          "ru": "Вы женщины.",
+          "me": "Vi ste žene."
+        }
+      ]
+    },
+    {
+      "id": "k03e17",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Ja ___ žena.",
+          "me": "sam"
+        },
+        {
+          "ru": "Ti ___ dječak.",
+          "me": "si"
+        },
+        {
+          "ru": "Mi ___ ljudi.",
+          "me": "smo"
+        },
+        {
+          "ru": "Vi ___ žene.",
+          "me": "ste"
+        }
+      ]
+    },
+    {
+      "id": "k03e18",
+      "type": "choice",
+      "prompt": "mačka",
+      "options": [
+        "собака",
+        "кошка",
+        "мальчик"
+      ],
+      "answer": "кошка",
+      "label": "Повторение"
+    },
+    {
+      "id": "k03e19",
+      "type": "choice",
+      "prompt": "Ti si pas.",
+      "options": [
+        "Ты собака.",
+        "Ты кошка.",
+        "Он собака."
+      ],
+      "answer": "Ты собака.",
+      "explanation": "Буквально «ты собака», но в жизни это грубость — так говорят только в ссоре.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k03e20",
+      "type": "choice",
+      "prompt": "Ona je mačka.",
+      "options": [
+        "Она кошка.",
+        "Она собака.",
+        "Ты кошка."
+      ],
+      "answer": "Она кошка.",
+      "explanation": "Буквально «она кошка», но в разговоре это значит «она красотка».",
+      "label": "Переведи"
+    },
+    {
+      "id": "k03e21",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "собака",
+          "me": "pas"
+        },
+        {
+          "ru": "собаки",
+          "me": "psi"
+        }
+      ]
+    },
+    {
+      "id": "k03e22",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "кошка",
+          "me": "mačka"
+        },
+        {
+          "ru": "кошки",
+          "me": "mačke"
+        }
+      ]
+    },
+    {
+      "id": "k03e23",
+      "type": "choice",
+      "prompt": "Mi smo psi.",
+      "options": [
+        "Мы собаки.",
+        "Вы собаки.",
+        "Мы кошки."
+      ],
+      "answer": "Мы собаки.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k03e24",
+      "type": "word_bank",
+      "prompt": "Мы собаки.",
+      "answer": "Mi smo psi.",
+      "bank": [
+        "smo",
+        "mi",
+        "psi"
+      ]
+    },
+    {
+      "id": "k03e25",
+      "type": "choice",
+      "prompt": "Vi ste mačke.",
+      "options": [
+        "Мы кошки.",
+        "Вы кошки.",
+        "Ты кошка."
+      ],
+      "answer": "Вы кошки.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k03e26",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Karticom ili gotovinom?",
+      "hint": "Karticom ili gotovinom? — Карточкой или наличными?",
+      "options": [
+        "Карточкой или наличными?",
+        "Нужен пакет?",
+        "Есть что-нибудь помельче?"
+      ],
+      "answer": "Карточкой или наличными?"
+    },
+    {
+      "id": "k03e27",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "карточка",
+          "me": "kartica"
+        },
+        {
+          "ru": "наличные",
+          "me": "gotovina"
+        }
+      ]
+    },
+    {
+      "id": "k03e28",
+      "type": "choice",
+      "prompt": "— Karticom ili gotovinom?\n— Karticom.\n\nКак платит покупатель?",
+      "options": [
+        "наличными",
+        "карточкой",
+        "не платит"
+      ],
+      "answer": "карточкой",
+      "label": "Мини-диалог на кассе"
+    }
+  ],
+  "words": [
+    {
+      "me": "majka",
+      "ru": "мать"
+    },
+    {
+      "me": "otac",
+      "ru": "отец"
+    },
+    {
+      "me": "mi",
+      "ru": "мы"
+    },
+    {
+      "me": "vi",
+      "ru": "вы"
+    },
+    {
+      "me": "smo",
+      "ru": "(мы) есть"
+    },
+    {
+      "me": "ste",
+      "ru": "(вы) есть"
+    },
+    {
+      "me": "ljudi",
+      "ru": "люди"
+    },
+    {
+      "me": "žene",
+      "ru": "женщины"
+    },
+    {
+      "me": "muškarci",
+      "ru": "мужчины"
+    },
+    {
+      "me": "psi",
+      "ru": "собаки"
+    },
+    {
+      "me": "mačke",
+      "ru": "кошки"
+    },
+    {
+      "me": "kartica",
+      "ru": "карточка"
+    },
+    {
+      "me": "gotovina",
+      "ru": "наличные"
+    }
+  ]
+}

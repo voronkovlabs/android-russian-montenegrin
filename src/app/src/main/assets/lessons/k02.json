@@ -1,0 +1,410 @@
+{
+  "id": "k02",
+  "title": "Он, она и животные",
+  "exercises": [
+    {
+      "id": "k02e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "dječak",
+      "hint": "dječak — мальчик",
+      "options": [
+        "мальчик",
+        "девочка",
+        "мужчина"
+      ],
+      "answer": "мальчик"
+    },
+    {
+      "id": "k02e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "djevojčica",
+      "hint": "djevojčica — девочка",
+      "options": [
+        "женщина",
+        "девочка",
+        "мальчик"
+      ],
+      "answer": "девочка"
+    },
+    {
+      "id": "k02e03",
+      "type": "choice",
+      "prompt": "dječak",
+      "options": [
+        "ребёнок",
+        "мальчик",
+        "мужчина"
+      ],
+      "answer": "мальчик",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k02e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "мальчик",
+          "me": "dječak"
+        },
+        {
+          "ru": "девочка",
+          "me": "djevojčica"
+        },
+        {
+          "ru": "ребёнок",
+          "me": "dijete"
+        }
+      ]
+    },
+    {
+      "id": "k02e05",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pas",
+      "hint": "pas — собака",
+      "options": [
+        "кошка",
+        "собака",
+        "мальчик"
+      ],
+      "answer": "собака"
+    },
+    {
+      "id": "k02e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "mačka",
+      "hint": "mačka — кошка / кот",
+      "options": [
+        "кошка / кот",
+        "собака",
+        "девочка"
+      ],
+      "answer": "кошка / кот"
+    },
+    {
+      "id": "k02e07",
+      "type": "choice",
+      "prompt": "собака",
+      "options": [
+        "pas",
+        "mačka",
+        "dječak"
+      ],
+      "answer": "pas",
+      "label": "Выбери слово"
+    },
+    {
+      "id": "k02e08",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "собака",
+          "me": "pas"
+        },
+        {
+          "ru": "кошка",
+          "me": "mačka"
+        },
+        {
+          "ru": "мальчик",
+          "me": "dječak"
+        },
+        {
+          "ru": "девочка",
+          "me": "djevojčica"
+        }
+      ]
+    },
+    {
+      "id": "k02e09",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "on",
+      "hint": "on — он",
+      "options": [
+        "он",
+        "она",
+        "ты"
+      ],
+      "answer": "он"
+    },
+    {
+      "id": "k02e10",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ona",
+      "hint": "ona — она",
+      "options": [
+        "он",
+        "я",
+        "она"
+      ],
+      "answer": "она"
+    },
+    {
+      "id": "k02e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "On je dječak.",
+      "hint": "On je dječak. — Он мальчик.",
+      "options": [
+        "Он мальчик.",
+        "Она девочка.",
+        "Я мальчик."
+      ],
+      "answer": "Он мальчик."
+    },
+    {
+      "id": "k02e12",
+      "type": "choice",
+      "prompt": "Ona je djevojčica.",
+      "options": [
+        "Она девочка.",
+        "Он мальчик.",
+        "Ты девочка."
+      ],
+      "answer": "Она девочка.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k02e13",
+      "type": "word_bank",
+      "prompt": "Он мальчик.",
+      "answer": "On je dječak.",
+      "bank": [
+        "dječak",
+        "je",
+        "on"
+      ]
+    },
+    {
+      "id": "k02e14",
+      "type": "choice",
+      "prompt": "Ona ___ djevojčica.",
+      "options": [
+        "sam",
+        "si",
+        "je"
+      ],
+      "answer": "je",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k02e15",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я женщина.",
+          "me": "Ja sam žena."
+        },
+        {
+          "ru": "Ты мужчина.",
+          "me": "Ti si muškarac."
+        },
+        {
+          "ru": "Он мальчик.",
+          "me": "On je dječak."
+        }
+      ]
+    },
+    {
+      "id": "k02e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Ja ___ žena.",
+          "me": "sam"
+        },
+        {
+          "ru": "Ti ___ dječak.",
+          "me": "si"
+        },
+        {
+          "ru": "On ___ muškarac.",
+          "me": "je"
+        }
+      ]
+    },
+    {
+      "id": "k02e17",
+      "type": "word_bank",
+      "prompt": "Она женщина.",
+      "answer": "Ona je žena.",
+      "bank": [
+        "ona",
+        "je",
+        "žena"
+      ]
+    },
+    {
+      "id": "k02e18",
+      "type": "choice",
+      "prompt": "On je muškarac.",
+      "options": [
+        "Он мужчина.",
+        "Он мальчик.",
+        "Она женщина."
+      ],
+      "answer": "Он мужчина.",
+      "label": "Переведи"
+    },
+    {
+      "id": "k02e19",
+      "type": "choice",
+      "prompt": "кошка",
+      "options": [
+        "pas",
+        "mačka",
+        "dječak"
+      ],
+      "answer": "mačka",
+      "label": "Выбери слово"
+    },
+    {
+      "id": "k02e20",
+      "type": "choice",
+      "prompt": "Pas.",
+      "options": [
+        "собака",
+        "кошка",
+        "мальчик"
+      ],
+      "answer": "собака",
+      "byEar": true
+    },
+    {
+      "id": "k02e21",
+      "type": "choice",
+      "prompt": "Mačka.",
+      "options": [
+        "собака",
+        "кошка",
+        "девочка"
+      ],
+      "answer": "кошка",
+      "byEar": true
+    },
+    {
+      "id": "k02e22",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "пакет",
+          "me": "kesa"
+        },
+        {
+          "ru": "хлеб",
+          "me": "hljeb"
+        },
+        {
+          "ru": "вода",
+          "me": "voda"
+        },
+        {
+          "ru": "кофе",
+          "me": "kafa"
+        }
+      ]
+    },
+    {
+      "id": "k02e23",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Imate li nešto sitnije?",
+      "hint": "Imate li nešto sitnije? — Есть ли у вас что-нибудь помельче?",
+      "options": [
+        "Есть ли у вас что-нибудь помельче?",
+        "Нужен пакет?",
+        "Можно кофе?"
+      ],
+      "answer": "Есть ли у вас что-нибудь помельче?"
+    },
+    {
+      "id": "k02e24",
+      "type": "choice",
+      "prompt": "Imate li nešto sitnije?\nКогда так говорят?",
+      "options": [
+        "Кассир спрашивает, нет ли у покупателя купюры помельче.",
+        "Вы заказываете кофе.",
+        "Вы спрашиваете, где собака."
+      ],
+      "answer": "Кассир спрашивает, нет ли у покупателя купюры помельче.",
+      "label": "Выбери ситуацию"
+    },
+    {
+      "id": "k02e25",
+      "type": "word_bank",
+      "prompt": "Есть ли у вас что-нибудь помельче?",
+      "answer": "Imate li nešto sitnije?",
+      "bank": [
+        "nešto",
+        "imate",
+        "li",
+        "sitnije"
+      ]
+    },
+    {
+      "id": "k02e26",
+      "type": "choice",
+      "prompt": "— Treba li kesa?\n— Da, molim.\n— Imate li nešto sitnije?\n— Ne.\n\nЧто значит «Ne»?",
+      "options": [
+        "Нет.",
+        "Да.",
+        "Пожалуйста."
+      ],
+      "answer": "Нет.",
+      "label": "Мини-диалог в магазине"
+    },
+    {
+      "id": "k02e27",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Ja ___ žena.",
+          "me": "sam"
+        },
+        {
+          "ru": "Ti ___ dječak.",
+          "me": "si"
+        },
+        {
+          "ru": "Ona ___ djevojčica.",
+          "me": "je"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "dječak",
+      "ru": "мальчик"
+    },
+    {
+      "me": "djevojčica",
+      "ru": "девочка"
+    },
+    {
+      "me": "pas",
+      "ru": "собака"
+    },
+    {
+      "me": "mačka",
+      "ru": "кошка"
+    },
+    {
+      "me": "on",
+      "ru": "он"
+    },
+    {
+      "me": "ona",
+      "ru": "она"
+    },
+    {
+      "me": "je",
+      "ru": "(он, она) есть"
+    }
+  ]
+}
