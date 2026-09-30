@@ -1,6 +1,6 @@
 <resources>
     <!-- Ночная «Адриатика» — двойники Theme.kt, тёмная палитра. -->
-    <color name="widget_surface">#FF121C2E</color>
+    <color name="widget_surface">#BF121C2E</color>
     <color name="widget_outline">#FF2A3C58</color>
     <color name="widget_paper">#FFE8EEF7</color>
     <color name="widget_muted">#FFA0B2CA</color>
