@@ -1,0 +1,348 @@
+# -*- coding: utf-8 -*-
+"""Пять первых Катиных уроков -> assets/lessons/k0N.json + index.json."""
+import json, os
+
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'src', 'app', 'src', 'main', 'assets', 'lessons')
+
+def new(me, ru, opts, label='Новое слово'):
+    """Новое слово: выбор перевода с подсказкой."""
+    return dict(type='choice', label=label, prompt=me, hint='%s — %s' % (me, ru),
+                options=opts, answer=ru)
+
+def phrase(me, ru, opts):
+    return new(me, ru, opts, label='Новая фраза')
+
+def pick(prompt, opts, answer, explanation='', label=''):
+    d = dict(type='choice', prompt=prompt, options=opts, answer=answer)
+    if explanation: d['explanation'] = explanation
+    if label: d['label'] = label
+    return d
+
+def ear(me, opts, answer):
+    return dict(type='choice', prompt=me, options=opts, answer=answer, byEar=True)
+
+def bank(ru, answer, tiles):
+    return dict(type='word_bank', prompt=ru, answer=answer, bank=tiles)
+
+def pairs(*ps):
+    return dict(type='match', pairs=[dict(ru=r, me=m) for r, m in ps])
+
+def say(me, ru):
+    """Произнеси вслух: фраза видна."""
+    return dict(type='speaking', phrase=me, translation=ru)
+
+def echo(me, ru):
+    """Повтори на слух: фраза звучит, текст закрыт."""
+    return dict(type='repeat', phrase=me, translation=ru)
+
+PAS = 'Буквально «ты собака», но в жизни это грубость — так говорят только в ссоре.'
+MACKA = 'Буквально «она кошка», но в разговоре это значит «она красотка».'
+
+L = []
+
+# --- Урок 1 ---
+L.append(dict(id='k01', title='Я, ты и магазин', words=[
+    ('ja', 'я'), ('ti', 'ты'), ('biti', 'быть'),
+    ('žena', 'женщина'), ('muškarac', 'мужчина'), ('dijete', 'ребёнок'),
+    ('dobro', 'хорошо'), ('voda', 'вода'), ('hljeb', 'хлеб'), ('kafa', 'кофе'),
+    ('molim', 'пожалуйста'), ('da', 'да'), ('ne', 'нет'), ('kesa', 'пакет')],
+    ex=[
+    new('ja', 'я', ['я', 'ты', 'он']),
+    new('ti', 'ты', ['я', 'ты', 'она']),
+    new('žena', 'женщина', ['женщина', 'мужчина', 'ребёнок']),
+    new('muškarac', 'мужчина', ['ребёнок', 'женщина', 'мужчина']),
+    new('dijete', 'ребёнок', ['мужчина', 'ребёнок', 'женщина']),
+    pick('Ja sam žena.', ['Ты женщина.', 'Я женщина.', 'Я ребёнок.'], 'Я женщина.',
+         label='Выбери перевод'),
+    bank('Я мужчина.', 'Ja sam muškarac.', ['muškarac', 'sam', 'ja']),
+    pick('Ti si žena.', ['Ты женщина.', 'Я женщина.', 'Ты мужчина.'], 'Ты женщина.',
+         label='Выбери перевод'),
+    pick('Ti ___ muškarac.', ['sam', 'si', 'ja'], 'si', label='Вставь слово'),
+    pairs(('я', 'ja'), ('ты', 'ti'), ('женщина', 'žena'), ('ребёнок', 'dijete')),
+    new('dobro', 'хорошо', ['хорошо', 'вода', 'да']),
+    pick('Dobro.', ['Хорошо.', 'Нет.', 'Вода.'], 'Хорошо.', label='Выбери перевод'),
+    new('voda', 'вода', ['хлеб', 'вода', 'кофе']),
+    pick('вода', ['voda', 'žena', 'dijete'], 'voda', label='Выбери слово'),
+    new('hljeb', 'хлеб', ['хлеб', 'вода', 'хорошо']),
+    pairs(('вода', 'voda'), ('хлеб', 'hljeb'), ('хорошо', 'dobro')),
+    new('kafa', 'кофе', ['вода', 'хлеб', 'кофе']),
+    phrase('Voda, molim.', 'Воду, пожалуйста.',
+           ['Воду, пожалуйста.', 'Кофе, пожалуйста.', 'Хлеб, пожалуйста.']),
+    bank('Кофе, пожалуйста.', 'Kafa, molim.', ['molim', 'kafa']),
+    new('da', 'да', ['да', 'нет', 'хорошо']),
+    new('ne', 'нет', ['да', 'хорошо', 'нет']),
+    pick('Da.', ['Да.', 'Нет.', 'Хорошо.'], 'Да.', label='Выбери перевод'),
+    new('kesa', 'пакет', ['хлеб', 'пакет', 'вода']),
+    pick('Kesa.', ['хлеб', 'пакет', 'вода'], 'пакет', label='Выбери перевод'),
+    phrase('Treba li kesa?', 'Нужен пакет?', ['Нужен пакет?', 'Хотите кофе?', 'Это вода?']),
+    pick('— Treba li kesa?\nВыбери ответ:', ['Da, molim.', 'Ja sam žena.', 'Voda.'],
+         'Da, molim.', label='Мини-диалог'),
+]))
+
+# --- Урок 2 ---
+L.append(dict(id='k02', title='Он, она и животные', words=[
+    ('dječak', 'мальчик'), ('djevojčica', 'девочка'), ('pas', 'собака'),
+    ('mačka', 'кошка'), ('on', 'он'), ('ona', 'она'), ('imati', 'иметь'),
+    ('nešto', 'что-то, что-нибудь'), ('sitno', 'мелко, мелкий')],
+    ex=[
+    new('dječak', 'мальчик', ['мальчик', 'девочка', 'мужчина']),
+    new('djevojčica', 'девочка', ['женщина', 'девочка', 'мальчик']),
+    pick('dječak', ['ребёнок', 'мальчик', 'мужчина'], 'мальчик', label='Выбери перевод'),
+    pairs(('мальчик', 'dječak'), ('девочка', 'djevojčica'), ('ребёнок', 'dijete')),
+    new('pas', 'собака', ['кошка', 'собака', 'мальчик']),
+    new('mačka', 'кошка / кот', ['кошка / кот', 'собака', 'девочка']),
+    pick('собака', ['pas', 'mačka', 'dječak'], 'pas', label='Выбери слово'),
+    pairs(('собака', 'pas'), ('кошка', 'mačka'), ('мальчик', 'dječak'), ('девочка', 'djevojčica')),
+    new('on', 'он', ['он', 'она', 'ты']),
+    new('ona', 'она', ['он', 'я', 'она']),
+    phrase('On je dječak.', 'Он мальчик.', ['Он мальчик.', 'Она девочка.', 'Я мальчик.']),
+    pick('Ona je djevojčica.', ['Она девочка.', 'Он мальчик.', 'Ты девочка.'],
+         'Она девочка.', label='Выбери перевод'),
+    bank('Он мальчик.', 'On je dječak.', ['dječak', 'je', 'on']),
+    pick('Ona ___ djevojčica.', ['sam', 'si', 'je'], 'je', label='Вставь слово'),
+    pairs(('Я женщина.', 'Ja sam žena.'), ('Ты мужчина.', 'Ti si muškarac.'),
+          ('Он мальчик.', 'On je dječak.')),
+    pairs(('Ja ___ žena.', 'sam'), ('Ti ___ dječak.', 'si'), ('On ___ muškarac.', 'je')),
+    bank('Она женщина.', 'Ona je žena.', ['ona', 'je', 'žena']),
+    pick('On je muškarac.', ['Он мужчина.', 'Он мальчик.', 'Она женщина.'],
+         'Он мужчина.', label='Переведи'),
+    pick('кошка', ['pas', 'mačka', 'dječak'], 'mačka', label='Выбери слово'),
+    ear('Pas.', ['собака', 'кошка', 'мальчик'], 'собака'),
+    ear('Mačka.', ['собака', 'кошка', 'девочка'], 'кошка'),
+    pairs(('пакет', 'kesa'), ('хлеб', 'hljeb'), ('вода', 'voda'), ('кофе', 'kafa')),
+    phrase('Imate li nešto sitnije?', 'Есть ли у вас что-нибудь помельче?',
+           ['Есть ли у вас что-нибудь помельче?', 'Нужен пакет?', 'Можно кофе?']),
+    pick('Imate li nešto sitnije?\nКогда так говорят?',
+         ['Кассир спрашивает, нет ли у покупателя купюры помельче.',
+          'Вы заказываете кофе.', 'Вы спрашиваете, где собака.'],
+         'Кассир спрашивает, нет ли у покупателя купюры помельче.',
+         label='Выбери ситуацию'),
+    bank('Есть ли у вас что-нибудь помельче?', 'Imate li nešto sitnije?',
+         ['nešto', 'imate', 'li', 'sitnije']),
+    pick('— Treba li kesa?\n— Da, molim.\n— Imate li nešto sitnije?\n— Ne.\n\nЧто значит «Ne»?',
+         ['Нет.', 'Да.', 'Пожалуйста.'], 'Нет.', label='Мини-диалог в магазине'),
+    pairs(('Ja ___ žena.', 'sam'), ('Ti ___ dječak.', 'si'), ('Ona ___ djevojčica.', 'je')),
+]))
+
+# --- Урок 3 ---
+L.append(dict(id='k03', title='Мы, вы и семья', words=[
+    ('majka', 'мать'), ('otac', 'отец'), ('mi', 'мы'), ('vi', 'вы'), ('ljudi', 'люди'),
+    ('žene', 'женщины'), ('muškarci', 'мужчины'), ('psi', 'собаки'),
+    ('mačke', 'кошки'), ('kartica', 'карточка'), ('gotovina', 'наличные')],
+    ex=[
+    new('majka', 'мать', ['мать', 'отец', 'девочка']),
+    new('otac', 'отец', ['мужчина', 'мать', 'отец']),
+    pairs(('мать', 'majka'), ('отец', 'otac'), ('женщина', 'žena'), ('мужчина', 'muškarac')),
+    pick('majka', ['мать', 'девочка', 'женщина'], 'мать', label='Выбери перевод'),
+    pick('otac', ['мужчина', 'отец', 'мальчик'], 'отец', label='Выбери перевод'),
+    new('mi', 'мы', ['мы', 'вы', 'они']),
+    new('ljudi', 'люди', ['люди', 'дети', 'мужчины']),
+    phrase('Mi smo ljudi.', 'Мы люди.', ['Мы люди.', 'Вы люди.', 'Я человек.']),
+    pick('Mi ___ ljudi.', ['sam', 'smo', 'ste'], 'smo', label='Вставь слово'),
+    new('vi', 'вы', ['мы', 'вы', 'ты']),
+    new('žene', 'женщины', ['женщина', 'женщины', 'мужчины']),
+    phrase('Vi ste žene.', 'Вы женщины.', ['Вы женщины.', 'Мы женщины.', 'Ты женщина.']),
+    bank('Вы женщины.', 'Vi ste žene.', ['vi', 'ste', 'žene']),
+    new('muškarci', 'мужчины', ['мужчина', 'женщины', 'мужчины']),
+    pick('Vi ___ muškarci.', ['si', 'ste', 'smo'], 'ste', label='Вставь слово'),
+    pairs(('Я женщина.', 'Ja sam žena.'), ('Ты мужчина.', 'Ti si muškarac.'),
+          ('Мы люди.', 'Mi smo ljudi.'), ('Вы женщины.', 'Vi ste žene.')),
+    pairs(('Ja ___ žena.', 'sam'), ('Ti ___ dječak.', 'si'),
+          ('Mi ___ ljudi.', 'smo'), ('Vi ___ žene.', 'ste')),
+    pick('mačka', ['собака', 'кошка', 'мальчик'], 'кошка', label='Повторение'),
+    pick('Ti si pas.', ['Ты собака.', 'Ты кошка.', 'Он собака.'], 'Ты собака.',
+         explanation=PAS, label='Переведи'),
+    pick('Ona je mačka.', ['Она кошка.', 'Она собака.', 'Ты кошка.'], 'Она кошка.',
+         explanation=MACKA, label='Переведи'),
+    pairs(('собака', 'pas'), ('собаки', 'psi')),
+    pairs(('кошка', 'mačka'), ('кошки', 'mačke')),
+    pick('Mi smo psi.', ['Мы собаки.', 'Вы собаки.', 'Мы кошки.'], 'Мы собаки.',
+         label='Переведи'),
+    bank('Мы собаки.', 'Mi smo psi.', ['smo', 'mi', 'psi']),
+    pick('Vi ste mačke.', ['Мы кошки.', 'Вы кошки.', 'Ты кошка.'], 'Вы кошки.',
+         label='Выбери перевод'),
+    phrase('Karticom ili gotovinom?', 'Карточкой или наличными?',
+           ['Карточкой или наличными?', 'Нужен пакет?', 'Есть что-нибудь помельче?']),
+    pairs(('карточка', 'kartica'), ('наличные', 'gotovina')),
+    pick('— Karticom ili gotovinom?\n— Karticom.\n\nКак платит покупатель?',
+         ['наличными', 'карточкой', 'не платит'], 'карточкой', label='Мини-диалог на кассе'),
+]))
+
+# --- Урок 4 ---
+L.append(dict(id='k04', title='Они, взрослые и животные', words=[
+    ('odrasla osoba', 'взрослый человек'), ('odrasli', 'взрослые'),
+    ('životinja', 'животное'), ('životinje', 'животные'), ('oni', 'они'),
+    ('lijep', 'красивый'), ('lijepa', 'красивая'),
+    ('pametan', 'умный'), ('pametna', 'умная'), ('kusur', 'сдача')],
+    ex=[
+    new('odrasla osoba', 'взрослый человек', ['взрослый человек', 'ребёнок', 'мужчина']),
+    new('odrasli', 'взрослые', ['взрослые', 'дети', 'люди']),
+    new('životinja', 'животное', ['животное', 'собака', 'человек']),
+    new('životinje', 'животные', ['животное', 'животные', 'люди']),
+    pairs(('взрослый человек', 'odrasla osoba'), ('взрослые', 'odrasli'),
+          ('животное', 'životinja'), ('животные', 'životinje')),
+    new('oni', 'они', ['мы', 'они', 'вы']),
+    phrase('Oni su ljudi.', 'Они люди.', ['Они люди.', 'Мы люди.', 'Вы люди.']),
+    pick('Oni ___ odrasli.', ['je', 'smo', 'su'], 'su', label='Вставь слово'),
+    pick('Oni su odrasli.', ['Они взрослые.', 'Мы взрослые.', 'Они дети.'], 'Они взрослые.',
+         label='Переведи'),
+    bank('Они взрослые.', 'Oni su odrasli.', ['oni', 'su', 'odrasli']),
+    pick('Oni su životinje.', ['Они животные.', 'Они люди.', 'Вы животные.'],
+         'Они животные.', label='Переведи'),
+    pick('Oni ___ životinje.', ['si', 'ste', 'su'], 'su', label='Вставь слово'),
+    pairs(('ja', 'sam'), ('ti', 'si'), ('on / ona', 'je'), ('mi', 'smo'), ('vi', 'ste'),
+          ('oni', 'su')),
+    new('lijep', 'красивый', ['красивый', 'умный', 'взрослый']),
+    new('lijepa', 'красивая', ['красивый', 'красивая', 'умная']),
+    pick('Ona je lijepa.', ['Она умная.', 'Она красивая.', 'Она взрослая.'],
+         'Она красивая.', label='Выбери перевод'),
+    new('pametan', 'умный', ['красивый', 'умный', 'взрослый']),
+    new('pametna', 'умная', ['умная', 'умный', 'красивая']),
+    pick('On je pametan.', ['Он умный.', 'Он красивый.', 'Она умная.'], 'Он умный.',
+         label='Переведи'),
+    pick('Ona je pametna.', ['Она красивая.', 'Она умная.', 'Он умный.'], 'Она умная.',
+         label='Переведи'),
+    pick('On je ___ .', ['lijep', 'lijepa'], 'lijep', label='Выбери форму'),
+    pick('Ona je ___ .', ['pametan', 'pametna'], 'pametna', label='Выбери форму'),
+    pick('Pas je pametan.', ['Собака умная.', 'Собака красивая.', 'Кошка умная.'],
+         'Собака умная.', label='Выбери перевод'),
+    pick('Mačka je lijepa.', ['Кошка красивая.', 'Кошка умная.', 'Собака красивая.'],
+         'Кошка красивая.', label='Выбери перевод'),
+    phrase('Imate li kusur?', 'Есть ли у вас сдача?',
+           ['Есть ли у вас сдача?', 'Нужен пакет?', 'Карточкой или наличными?']),
+    pick('— Imate li kusur?\n— Da.\n\nЧто спросили?',
+         ['Есть ли пакет?', 'Есть ли сдача?', 'Карточкой или наличными?'],
+         'Есть ли сдача?', label='Мини-диалог'),
+]))
+
+# --- Урок 5 (абсурдный) ---
+L.append(dict(id='k05', title='Акула, черепаха и яблоко', words=[
+    ('ajkula', 'акула'), ('jabuka', 'яблоко'), ('kornjača', 'черепаха'),
+    ('jesti', 'есть (кушать)'), ('zelen', 'зелёный'), ('zelena', 'зелёная'),
+    ('bijel', 'белый'), ('bijela', 'белая'), ('kečap', 'кетчуп')],
+    ex=[
+    new('ajkula', 'акула', ['акула', 'черепаха', 'кошка']),
+    new('jabuka', 'яблоко', ['хлеб', 'яблоко', 'вода']),
+    new('kornjača', 'черепаха', ['акула', 'кошка', 'черепаха']),
+    pairs(('акула', 'ajkula'), ('яблоко', 'jabuka'), ('черепаха', 'kornjača'), ('кошка', 'mačka')),
+    pick('kornjača', ['акула', 'черепаха', 'яблоко'], 'черепаха', label='Выбери перевод'),
+    new('jede', 'ест', ['ест', 'есть (является)', 'хорошо'], label='Новый глагол'),
+    pick('Kornjača jede.', ['Черепаха ест.', 'Акула ест.', 'Черепаха зелёная.'],
+         'Черепаха ест.', label='Переведи'),
+    bank('Черепаха ест.', 'Kornjača jede.', ['jede', 'kornjača']),
+    phrase('Kornjača jede jabuku.', 'Черепаха ест яблоко.',
+           ['Черепаха ест яблоко.', 'Акула ест черепаху.', 'Кошка ест яблоко.']),
+    pick('Kornjača jede jabuku.', ['Черепаха ест яблоко.', 'Акула ест черепаху.',
+                                   'Кошка ест яблоко.'], 'Черепаха ест яблоко.',
+         label='Выбери перевод'),
+    bank('Черепаха ест яблоко.', 'Kornjača jede jabuku.', ['jabuku', 'jede', 'kornjača']),
+    phrase('Ajkula jede kornjaču.', 'Акула ест черепаху.',
+           ['Акула ест черепаху.', 'Черепаха ест акулу.', 'Акула ест яблоко.']),
+    pick('Ajkula jede kornjaču.\nКто кого ест?',
+         ['Акула ест черепаху.', 'Черепаха ест акулу.', 'Акула ест яблоко.'],
+         'Акула ест черепаху.', label='Кто кого ест'),
+    bank('Акула ест черепаху.', 'Ajkula jede kornjaču.', ['ajkula', 'kornjaču', 'jede']),
+    new('zelen', 'зелёный', ['зелёный', 'белый', 'красивый']),
+    new('zelena', 'зелёная', ['зелёный', 'зелёная', 'белая']),
+    pick('Kornjača je zelena.', ['Черепаха зелёная.', 'Черепаха белая.', 'Акула зелёная.'],
+         'Черепаха зелёная.', label='Переведи'),
+    pick('Kornjača je ___ .', ['zelen', 'zelena'], 'zelena', label='Выбери форму'),
+    new('bijel', 'белый', ['белый', 'зелёный', 'умный']),
+    new('bijela', 'белая', ['белый', 'белая', 'зелёная']),
+    pick('Ajkula je bijela.', ['Акула белая.', 'Акула зелёная.', 'Черепаха белая.'],
+         'Акула белая.', label='Переведи'),
+    pick('Pametna mačka.', ['Умная кошка.', 'Красивая кошка.', 'Умная собака.'],
+         'Умная кошка.', label='Выбери перевод'),
+    new('ne', 'не; нет', ['не; нет', 'да', 'ест']),
+    pick('Mačka ne jede.', ['Кошка не ест.', 'Кошка ест.', 'Собака не ест.'],
+         'Кошка не ест.', label='Переведи'),
+    phrase('Pametna mačka ne jede jabuku.', 'Умная кошка не ест яблоко.',
+           ['Умная кошка не ест яблоко.', 'Умная кошка ест яблоко.',
+            'Красивая кошка не ест яблоко.']),
+    bank('Умная кошка не ест яблоко.', 'Pametna mačka ne jede jabuku.',
+         ['pametna', 'mačka', 'ne', 'jede', 'jabuku']),
+    phrase('Mogu li dobiti kečap?', 'Можно мне кетчуп?',
+           ['Можно мне кетчуп?', 'Есть ли у вас сдача?', 'Нужен пакет?']),
+    pairs(('Акула ест черепаху.', 'Ajkula jede kornjaču.'),
+          ('Черепаха ест яблоко.', 'Kornjača jede jabuku.'),
+          ('Умная кошка не ест яблоко.', 'Pametna mačka ne jede jabuku.'),
+          ('Черепаха зелёная.', 'Kornjača je zelena.'),
+          ('Можно мне кетчуп?', 'Mogu li dobiti kečap?')),
+]))
+
+# --- Урок 6 ---
+L.append(dict(id='k06', title='Мы едим: pomfrit и pljeskavica', words=[
+    ('pomfrit', 'картошка фри'), ('pljeskavica', 'котлета (плескавица)'),
+    ('puž', 'улитка'), ('sestra', 'сестра'),
+    ('Dobro došli', 'добро пожаловать'), ('Crna Gora', 'Черногория')],
+    ex=[
+    new('pomfrit', 'картошка фри', ['картошка фри', 'хлеб', 'яблоко']),
+    dict(new('pljeskavica', 'котлета', ['котлета', 'кофе', 'черепаха']),
+         explanation='Pljeskavica — плоская котлета из фарша, её жарят на гриле. А вот kotlet — это отбивная, не путай.'),
+    pairs(('картошка фри', 'pomfrit'), ('котлета', 'pljeskavica'), ('хлеб', 'hljeb'),
+          ('яблоко', 'jabuka')),
+    new('puž', 'улитка', ['улитка', 'черепаха', 'акула']),
+    new('sestra', 'сестра', ['сестра', 'мать', 'девочка']),
+    pairs(('улитка', 'puž'), ('сестра', 'sestra'), ('мать', 'majka'), ('черепаха', 'kornjača')),
+    new('Mi jedemo.', 'Мы едим.', ['Мы едим.', 'Вы едите.', 'Они едят.'], label='Новая форма'),
+    pick('Mi ___ pomfrit.', ['jedemo', 'jede', 'jesti'], 'jedemo', label='Вставь слово'),
+    new('Vi jedete.', 'Вы едите.', ['Мы едим.', 'Вы едите.', 'Они едят.'], label='Новая форма'),
+    bank('Вы едите котлету.', 'Vi jedete pljeskavicu.', ['pljeskavicu', 'jedete', 'vi']),
+    new('Oni jedu.', 'Они едят.', ['Вы едите.', 'Мы едим.', 'Они едят.'], label='Новая форма'),
+    echo('Oni jedu.', 'Они едят.'),
+    pick('Oni jedu pomfrit.', ['Они едят картошку фри.', 'Мы едим картошку фри.',
+                               'Они едят котлету.'], 'Они едят картошку фри.',
+         label='Выбери перевод'),
+    say('Mi jedemo pomfrit.', 'Мы едим картошку фри.'),
+    pairs(('mi', 'jedemo'), ('vi', 'jedete'), ('oni', 'jedu'), ('on / ona', 'jede')),
+    pick('Oni ___ pljeskavicu.', ['jedemo', 'jedete', 'jedu'], 'jedu', label='Вставь слово'),
+    pick('Vi ___ jabuku.', ['jede', 'jedete', 'jedu'], 'jedete', label='Вставь слово'),
+    ear('Mi jedemo.', ['Мы едим.', 'Вы едите.', 'Они едят.'], 'Мы едим.'),
+    ear('Sestra jede pomfrit.', ['Сестра ест картошку фри.', 'Сестра ест котлету.',
+                                 'Мать ест картошку фри.'], 'Сестра ест картошку фри.'),
+    pairs(('Мы люди.', 'Mi smo ljudi.'), ('Мы едим.', 'Mi jedemo.'),
+          ('Вы люди.', 'Vi ste ljudi.'), ('Вы едите.', 'Vi jedete.')),
+    pick('Puž jede jabuku.', ['Улитка ест яблоко.', 'Черепаха ест яблоко.',
+                              'Улитка ест котлету.'], 'Улитка ест яблоко.',
+         label='Выбери перевод'),
+    bank('Сестра ест котлету.', 'Sestra jede pljeskavicu.', ['jede', 'pljeskavicu', 'sestra']),
+    pick('— Vi jedete pljeskavicu?\n— Ne. Mi jedemo pomfrit.\n\nЧто они едят?',
+         ['картошку фри', 'котлету', 'яблоко'], 'картошку фри', label='Мини-диалог'),
+    phrase('Dobro došli u Crnu Goru!', 'Добро пожаловать в Черногорию!',
+           ['Добро пожаловать в Черногорию!', 'Нужен пакет?', 'Можно мне кетчуп?']),
+    pick('Dobro došli u Crnu Goru!\nКогда так говорят?',
+         ['Гостей встречают в аэропорту Подгорицы.', 'Кассир просит мелочь.',
+          'Вы заказываете кофе.'], 'Гостей встречают в аэропорту Подгорицы.',
+         label='Выбери ситуацию'),
+    bank('Добро пожаловать в Черногорию!', 'Dobro došli u Crnu Goru!',
+         ['došli', 'Goru', 'dobro', 'u', 'Crnu']),
+    say('Dobro došli u Crnu Goru!', 'Добро пожаловать в Черногорию!'),
+    pairs(('Мы едим картошку фри.', 'Mi jedemo pomfrit.'),
+          ('Вы едите котлету.', 'Vi jedete pljeskavicu.'), ('Они едят.', 'Oni jedu.'),
+          ('Улитка ест яблоко.', 'Puž jede jabuku.'),
+          ('Добро пожаловать в Черногорию!', 'Dobro došli u Crnu Goru!')),
+]))
+
+# Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
+# после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
+# id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
+REMOVED = {'k01e12', 'k01e14', 'k01e22', 'k01e24', 'k02e03', 'k02e07',
+           'k03e04', 'k03e05', 'k05e05', 'k05e10', 'k05e13'}
+
+index = []
+for les in L:
+    exs = []
+    for i, e in enumerate(les['ex'], 1):
+        e = dict(e); e = {'id': '%se%02d' % (les['id'], i), **e}
+        assert e['type'] != 'choice' or e['answer'] in e['options'], e
+        if e['id'] in REMOVED: continue
+        exs.append(e)
+    doc = dict(id=les['id'], title=les['title'], exercises=exs,
+               words=[dict(me=m, ru=r) for m, r in les['words']])
+    with open(os.path.join(OUT, les['id'] + '.json'), 'w', encoding='utf-8', newline='\n') as f:
+        json.dump(doc, f, ensure_ascii=False, indent=2); f.write('\n')
+    index.append(dict(id=les['id'], title=les['title'], file=les['id'] + '.json',
+                      section='Первые шаги'))
+    print(les['id'], len(exs), 'заданий,', len(les['words']), 'слов')
+with open(os.path.join(OUT, 'index.json'), 'w', encoding='utf-8', newline='\n') as f:
+    json.dump(dict(lessons=index), f, ensure_ascii=False, indent=2); f.write('\n')

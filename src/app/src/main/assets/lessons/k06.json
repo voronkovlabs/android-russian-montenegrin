@@ -1,0 +1,412 @@
+{
+  "id": "k06",
+  "title": "Мы едим: pomfrit и pljeskavica",
+  "exercises": [
+    {
+      "id": "k06e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pomfrit",
+      "hint": "pomfrit — картошка фри",
+      "options": [
+        "картошка фри",
+        "хлеб",
+        "яблоко"
+      ],
+      "answer": "картошка фри"
+    },
+    {
+      "id": "k06e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pljeskavica",
+      "hint": "pljeskavica — котлета",
+      "options": [
+        "котлета",
+        "кофе",
+        "черепаха"
+      ],
+      "answer": "котлета",
+      "explanation": "Pljeskavica — плоская котлета из фарша, её жарят на гриле. А вот kotlet — это отбивная, не путай."
+    },
+    {
+      "id": "k06e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "картошка фри",
+          "me": "pomfrit"
+        },
+        {
+          "ru": "котлета",
+          "me": "pljeskavica"
+        },
+        {
+          "ru": "хлеб",
+          "me": "hljeb"
+        },
+        {
+          "ru": "яблоко",
+          "me": "jabuka"
+        }
+      ]
+    },
+    {
+      "id": "k06e04",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "puž",
+      "hint": "puž — улитка",
+      "options": [
+        "улитка",
+        "черепаха",
+        "акула"
+      ],
+      "answer": "улитка"
+    },
+    {
+      "id": "k06e05",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "sestra",
+      "hint": "sestra — сестра",
+      "options": [
+        "сестра",
+        "мать",
+        "девочка"
+      ],
+      "answer": "сестра"
+    },
+    {
+      "id": "k06e06",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "улитка",
+          "me": "puž"
+        },
+        {
+          "ru": "сестра",
+          "me": "sestra"
+        },
+        {
+          "ru": "мать",
+          "me": "majka"
+        },
+        {
+          "ru": "черепаха",
+          "me": "kornjača"
+        }
+      ]
+    },
+    {
+      "id": "k06e07",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Mi jedemo.",
+      "hint": "Mi jedemo. — Мы едим.",
+      "options": [
+        "Мы едим.",
+        "Вы едите.",
+        "Они едят."
+      ],
+      "answer": "Мы едим."
+    },
+    {
+      "id": "k06e08",
+      "type": "choice",
+      "prompt": "Mi ___ pomfrit.",
+      "options": [
+        "jedemo",
+        "jede",
+        "jesti"
+      ],
+      "answer": "jedemo",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k06e09",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Vi jedete.",
+      "hint": "Vi jedete. — Вы едите.",
+      "options": [
+        "Мы едим.",
+        "Вы едите.",
+        "Они едят."
+      ],
+      "answer": "Вы едите."
+    },
+    {
+      "id": "k06e10",
+      "type": "word_bank",
+      "prompt": "Вы едите котлету.",
+      "answer": "Vi jedete pljeskavicu.",
+      "bank": [
+        "pljeskavicu",
+        "jedete",
+        "vi"
+      ]
+    },
+    {
+      "id": "k06e11",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Oni jedu.",
+      "hint": "Oni jedu. — Они едят.",
+      "options": [
+        "Вы едите.",
+        "Мы едим.",
+        "Они едят."
+      ],
+      "answer": "Они едят."
+    },
+    {
+      "id": "k06e12",
+      "type": "repeat",
+      "phrase": "Oni jedu.",
+      "translation": "Они едят."
+    },
+    {
+      "id": "k06e13",
+      "type": "choice",
+      "prompt": "Oni jedu pomfrit.",
+      "options": [
+        "Они едят картошку фри.",
+        "Мы едим картошку фри.",
+        "Они едят котлету."
+      ],
+      "answer": "Они едят картошку фри.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k06e14",
+      "type": "speaking",
+      "phrase": "Mi jedemo pomfrit.",
+      "translation": "Мы едим картошку фри."
+    },
+    {
+      "id": "k06e15",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "mi",
+          "me": "jedemo"
+        },
+        {
+          "ru": "vi",
+          "me": "jedete"
+        },
+        {
+          "ru": "oni",
+          "me": "jedu"
+        },
+        {
+          "ru": "on / ona",
+          "me": "jede"
+        }
+      ]
+    },
+    {
+      "id": "k06e16",
+      "type": "choice",
+      "prompt": "Oni ___ pljeskavicu.",
+      "options": [
+        "jedemo",
+        "jedete",
+        "jedu"
+      ],
+      "answer": "jedu",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k06e17",
+      "type": "choice",
+      "prompt": "Vi ___ jabuku.",
+      "options": [
+        "jede",
+        "jedete",
+        "jedu"
+      ],
+      "answer": "jedete",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k06e18",
+      "type": "choice",
+      "prompt": "Mi jedemo.",
+      "options": [
+        "Мы едим.",
+        "Вы едите.",
+        "Они едят."
+      ],
+      "answer": "Мы едим.",
+      "byEar": true
+    },
+    {
+      "id": "k06e19",
+      "type": "choice",
+      "prompt": "Sestra jede pomfrit.",
+      "options": [
+        "Сестра ест картошку фри.",
+        "Сестра ест котлету.",
+        "Мать ест картошку фри."
+      ],
+      "answer": "Сестра ест картошку фри.",
+      "byEar": true
+    },
+    {
+      "id": "k06e20",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Мы люди.",
+          "me": "Mi smo ljudi."
+        },
+        {
+          "ru": "Мы едим.",
+          "me": "Mi jedemo."
+        },
+        {
+          "ru": "Вы люди.",
+          "me": "Vi ste ljudi."
+        },
+        {
+          "ru": "Вы едите.",
+          "me": "Vi jedete."
+        }
+      ]
+    },
+    {
+      "id": "k06e21",
+      "type": "choice",
+      "prompt": "Puž jede jabuku.",
+      "options": [
+        "Улитка ест яблоко.",
+        "Черепаха ест яблоко.",
+        "Улитка ест котлету."
+      ],
+      "answer": "Улитка ест яблоко.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k06e22",
+      "type": "word_bank",
+      "prompt": "Сестра ест котлету.",
+      "answer": "Sestra jede pljeskavicu.",
+      "bank": [
+        "jede",
+        "pljeskavicu",
+        "sestra"
+      ]
+    },
+    {
+      "id": "k06e23",
+      "type": "choice",
+      "prompt": "— Vi jedete pljeskavicu?\n— Ne. Mi jedemo pomfrit.\n\nЧто они едят?",
+      "options": [
+        "картошку фри",
+        "котлету",
+        "яблоко"
+      ],
+      "answer": "картошку фри",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k06e24",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Dobro došli u Crnu Goru!",
+      "hint": "Dobro došli u Crnu Goru! — Добро пожаловать в Черногорию!",
+      "options": [
+        "Добро пожаловать в Черногорию!",
+        "Нужен пакет?",
+        "Можно мне кетчуп?"
+      ],
+      "answer": "Добро пожаловать в Черногорию!"
+    },
+    {
+      "id": "k06e25",
+      "type": "choice",
+      "prompt": "Dobro došli u Crnu Goru!\nКогда так говорят?",
+      "options": [
+        "Гостей встречают в аэропорту Подгорицы.",
+        "Кассир просит мелочь.",
+        "Вы заказываете кофе."
+      ],
+      "answer": "Гостей встречают в аэропорту Подгорицы.",
+      "label": "Выбери ситуацию"
+    },
+    {
+      "id": "k06e26",
+      "type": "word_bank",
+      "prompt": "Добро пожаловать в Черногорию!",
+      "answer": "Dobro došli u Crnu Goru!",
+      "bank": [
+        "došli",
+        "Goru",
+        "dobro",
+        "u",
+        "Crnu"
+      ]
+    },
+    {
+      "id": "k06e27",
+      "type": "speaking",
+      "phrase": "Dobro došli u Crnu Goru!",
+      "translation": "Добро пожаловать в Черногорию!"
+    },
+    {
+      "id": "k06e28",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Мы едим картошку фри.",
+          "me": "Mi jedemo pomfrit."
+        },
+        {
+          "ru": "Вы едите котлету.",
+          "me": "Vi jedete pljeskavicu."
+        },
+        {
+          "ru": "Они едят.",
+          "me": "Oni jedu."
+        },
+        {
+          "ru": "Улитка ест яблоко.",
+          "me": "Puž jede jabuku."
+        },
+        {
+          "ru": "Добро пожаловать в Черногорию!",
+          "me": "Dobro došli u Crnu Goru!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "pomfrit",
+      "ru": "картошка фри"
+    },
+    {
+      "me": "pljeskavica",
+      "ru": "котлета (плескавица)"
+    },
+    {
+      "me": "puž",
+      "ru": "улитка"
+    },
+    {
+      "me": "sestra",
+      "ru": "сестра"
+    },
+    {
+      "me": "Dobro došli",
+      "ru": "добро пожаловать"
+    },
+    {
+      "me": "Crna Gora",
+      "ru": "Черногория"
+    }
+  ]
+}

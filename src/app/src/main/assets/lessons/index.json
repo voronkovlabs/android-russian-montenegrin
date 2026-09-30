@@ -29,6 +29,12 @@
       "title": "Акула, черепаха и яблоко",
       "file": "k05.json",
       "section": "Первые шаги"
+    },
+    {
+      "id": "k06",
+      "title": "Мы едим: pomfrit и pljeskavica",
+      "file": "k06.json",
+      "section": "Первые шаги"
     }
   ]
 }
