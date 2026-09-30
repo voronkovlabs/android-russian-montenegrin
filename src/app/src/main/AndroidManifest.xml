@@ -106,6 +106,34 @@
                 android:resource="@xml/word_widget_info" />
         </receiver>
 
+        <!--
+            Карточка-перевёртыш (4.7): спереди русское, по нажатию черногорское.
+            Своих действий в фильтре нет по тому же доводу, что у WordWidget.
+        -->
+        <receiver
+            android:name=".widget.FlipWidget"
+            android:label="@string/flip_label"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/flip_widget_info" />
+        </receiver>
+
+        <!--
+            Подтверждение «уже знаю» с перевёртыша. Виджет диалогов не
+            показывает, поэтому окно поверх домашнего экрана — как у
+            «Поделиться». Не экспортируется: открывает его только наш виджет.
+        -->
+        <activity
+            android:name=".ui.KnownActivity"
+            android:exported="false"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Crnogorski.Share" />
+
         <!-- Отдаёт complaints.jsonl в share как content://; file:// с Android 7 запрещён. -->
         <provider
             android:name="androidx.core.content.FileProvider"

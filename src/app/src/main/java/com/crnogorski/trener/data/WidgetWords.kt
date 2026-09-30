@@ -15,7 +15,13 @@ data class WidgetWord(
     val word: String,
     val gloss: String,
     val stress: Int = -1,
-    val emoji: String = ""
+    val emoji: String = "",
+    /**
+     * Лемма — ключ карточки. Показывается не она, а [word], но отметить слово
+     * выученным (4.7) можно только по ней. Пусто у записей, сложенных до 4.7:
+     * тогда отмечать нечего, и кнопка не показывается до пересборки списка.
+     */
+    val lemma: String = ""
 )
 
 /**
@@ -61,6 +67,14 @@ object WidgetWords {
     private const val KEY_WORDS = "widget_words"
     private const val KEY_AT = "widget_at"
 
+    /**
+     * Курсор у каждого виджета свой: список один, но карточка-перевёртыш
+     * (4.7) и простая карточка — разные занятия, и листать одна другую не
+     * должна. Иначе нажатие на одной перелистывало бы и вторую.
+     */
+    const val PLAIN = KEY_AT
+    const val FLIP = "widget_flip_at"
+
     /** Сколько слов держим. Больше сотни виджет не обойдёт и за неделю. */
     const val LIMIT = 100
 
@@ -74,7 +88,7 @@ object WidgetWords {
      */
     fun save(context: Context, words: List<WidgetWord>) {
         val line = words.take(LIMIT).joinToString("\n") {
-            listOf(it.word, it.gloss, it.stress.toString(), it.emoji).joinToString("\t")
+            listOf(it.word, it.gloss, it.stress.toString(), it.emoji, it.lemma).joinToString("\t")
         }
         prefs(context).edit().putString(KEY_WORDS, line).apply()
     }
@@ -85,24 +99,36 @@ object WidgetWords {
             .mapNotNull { row ->
                 val f = row.split('\t')
                 if (f.size < 4 || f[0].isEmpty()) null
-                else WidgetWord(f[0], f[1], f[2].toIntOrNull() ?: -1, f[3])
+                else WidgetWord(f[0], f[1], f[2].toIntOrNull() ?: -1, f[3], f.getOrElse(4) { "" })
             }
             .toList()
 
     /** Слово, которое виджет показывает сейчас, — без сдвига. */
-    fun current(context: Context): WidgetWord? {
+    fun current(context: Context, cursor: String = PLAIN): WidgetWord? {
         val words = all(context)
         if (words.isEmpty()) return null
-        return words[prefs(context).getInt(KEY_AT, 0).mod(words.size)]
+        return words[prefs(context).getInt(cursor, 0).mod(words.size)]
     }
 
     /** Следующее слово: сдвинуть курсор и отдать. */
-    fun advance(context: Context): WidgetWord? {
+    fun advance(context: Context, cursor: String = PLAIN): WidgetWord? {
         val words = all(context)
         if (words.isEmpty()) return null
-        val at = (prefs(context).getInt(KEY_AT, 0) + 1).mod(words.size)
-        prefs(context).edit().putInt(KEY_AT, at).apply()
+        val at = (prefs(context).getInt(cursor, 0) + 1).mod(words.size)
+        prefs(context).edit().putInt(cursor, at).apply()
         return words[at]
+    }
+
+    /**
+     * Убрать слово из списка — после отметки «уже знаю».
+     *
+     * Список пересобирается приложением при каждом открытии, но до того виджет
+     * показывал бы только что отмеченное слово снова. Курсоры не трогаются:
+     * они берутся по остатку от размера, и на месте ушедшего окажется
+     * следующее слово — ровно то, что и нужно после отметки.
+     */
+    fun remove(context: Context, lemma: String) {
+        save(context, all(context).filter { it.lemma != lemma })
     }
 
     /**

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Карточка-перевёртыш: спереди русское, по нажатию черногорское.
+
+    Подложка у каждой стороны своя, а не у корня: переворачиваться должна
+    карточка целиком, а не текст на неподвижном фоне. Флаг лежит внутри
+    стороны по той же причине — он её часть.
+
+    Кнопка «уже знаю» — вне переворота, в правом верхнем углу, со своим
+    нажатием. Флаг занимает левый угол: оба угла заняты разным, и
+    промахнуться между ними трудно.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/flip_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ViewFlipper
+        android:id="@+id/flip_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateFirstView="false"
+        android:inAnimation="@anim/flip_in"
+        android:outAnimation="@anim/flip_out">
+
+        <!-- Лицевая сторона: русское значение. -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/word_widget_bg">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="15dp"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/flag_ru" />
+
+            <TextView
+                android:id="@+id/flip_ru"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/widget_paper"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="14sp"
+                android:autoSizeMaxTextSize="28.5sp"
+                android:autoSizeStepGranularity="1sp" />
+        </FrameLayout>
+
+        <!-- Оборот: черногорское слово и, мелко, перевод для сверки. -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/word_widget_bg">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="15dp"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/flag_me" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/flip_emoji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:textSize="28.5sp"
+                        android:includeFontPadding="false" />
+
+                    <TextView
+                        android:id="@+id/flip_word"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="28.5sp"
+                        android:textColor="@color/widget_paper"
+                        android:includeFontPadding="false" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/flip_gloss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="18sp"
+                    android:textColor="@color/widget_muted" />
+            </LinearLayout>
+
+            <!--
+                Озвучить черногорское слово. Только на обороте: на русской
+                стороне звук выдал бы ответ раньше, чем его вспомнили.
+                Само не звучит никогда — домашний экран открывают и в
+                метро, и на совещании.
+            -->
+            <TextView
+                android:id="@+id/flip_say"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:text="🔊"
+                android:textSize="19sp" />
+        </FrameLayout>
+    </ViewFlipper>
+
+    <!-- Текст кнопки ставит код: ей надо и появляться, и прятаться. -->
+    <TextView
+        android:id="@+id/flip_known"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="6dp"
+        android:textSize="19sp" />
+</FrameLayout>

@@ -64,6 +64,7 @@ import com.crnogorski.trener.net.Release
 import com.crnogorski.trener.net.Updater
 import com.crnogorski.trener.net.Verdict
 import com.crnogorski.trener.srs.Scheduler
+import com.crnogorski.trener.widget.FlipWidget
 import com.crnogorski.trener.widget.WordWidget
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -1482,7 +1483,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     word = shown,
                     gloss = gloss,
                     stress = Stress.of(shown) ?: -1,
-                    emoji = WordEmoji.of(lemma).orEmpty()
+                    emoji = WordEmoji.of(lemma).orEmpty(),
+                    lemma = lemma
                 )
             }.take(WidgetWords.LIMIT).toList()
         )
@@ -1490,6 +1492,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // возвращении на главный экран незачем. Перерисовка нужна ради
         // другого — слово, только что отвеченное в занятии, из оборота ушло.
         WordWidget.redraw(getApplication<Application>())
+        FlipWidget.redraw(getApplication<Application>())
     }
 
     /**

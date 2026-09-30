@@ -153,7 +153,7 @@ class WordWidget : AppWidgetProvider() {
          * стоило жалобы; там оформление делает Compose, здесь спаны, а правило
          * то же: не уверены в ударении — метки нет вовсе.
          */
-        private fun stressed(context: Context, word: WidgetWord): CharSequence {
+        internal fun stressed(context: Context, word: WidgetWord): CharSequence {
             val at = word.stress
             if (at < 0 || at >= word.word.length) return word.word
             val accent = ContextCompat.getColor(context, R.color.widget_accent)

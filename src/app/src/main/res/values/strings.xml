@@ -7,4 +7,6 @@
          что именно этот виджет показывает. -->
     <string name="widget_label">Карточка слова</string>
     <string name="widget_description">Слово из твоего словаря на домашнем экране. Нажатие — следующее.</string>
+    <string name="flip_label">Карточка-перевёртыш</string>
+    <string name="flip_description">Сначала русское, нажатие переворачивает на черногорское. 🧠 — слово уже знаю.</string>
 </resources>
