@@ -458,7 +458,7 @@ object Config {
     suspend fun refresh(context: Context): Boolean = withContext(Dispatchers.IO) {
         if (BuildConfig.GITHUB_TOKEN.isBlank()) return@withContext false
         val request = Request.Builder()
-            .url("https://api.github.com/repos/${BuildConfig.GITHUB_REPO}/contents/$PATH")
+            .url("https://api.github.com/repos/${BuildConfig.GITHUB_REPO}/contents/$PATH?ref=$BRANCH")
             .addHeader("Authorization", "Bearer ${BuildConfig.GITHUB_TOKEN}")
             .addHeader("Accept", "application/vnd.github.raw")
             .addHeader("X-GitHub-Api-Version", "2022-11-28")
@@ -483,5 +483,13 @@ object Config {
     private fun file(context: Context) = File(context.filesDir, LOCAL_NAME)
 
     private const val PATH = "config/tuning.json"
+
+    /**
+     * Катина экспериментальная сборка читает настройки **со своей ветки**:
+     * правка методики у неё не должна трогать основное приложение, и наоборот.
+     * Ветка обязана лежать на GitHub, иначе файл не найдётся и останутся
+     * последние скачанные настройки.
+     */
+    private const val BRANCH = "katya"
     private const val LOCAL_NAME = "tuning.json"
 }

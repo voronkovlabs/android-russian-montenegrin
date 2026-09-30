@@ -237,7 +237,7 @@ class FlipWidget : AppWidgetProvider() {
                 // на новой сборке, и нажатие ведёт туда, а не «дальше».
                 views.setTextViewText(
                     R.id.flip_ru,
-                    "Crnogorski: слова появятся, когда откроешь приложение"
+                    context.getString(R.string.app_name) + ": слова появятся, когда откроешь приложение"
                 )
                 views.setViewVisibility(R.id.flip_known, View.GONE)
                 views.setOnClickPendingIntent(R.id.flip_card, open(context))

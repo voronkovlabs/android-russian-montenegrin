@@ -29,6 +29,11 @@ REPO = 'voronkovlabs/android-russian-montenegrin'
 APK = 'src/app/build/outputs/apk/debug/app-debug.apk'
 GRADLE = 'src/app/build.gradle.kts'
 
+# Катина экспериментальная сборка (ветка katya). Её релизы — pre-release с
+# этой меткой: `releases/latest` их не отдаёт, и основное приложение их не
+# видит. Двойник `TAG_PREFIX` в net/Updater.kt.
+TAG_PREFIX = 'katya-v'
+
 # Сколько релизов оставлять: нынешний и два предыдущих.
 KEEP = 3
 
@@ -58,7 +63,7 @@ def publish(tag, title, notes, apk):
         print('релиз', tag, 'уже есть — обновляю вложение')
         r = run('release', 'upload', tag, apk, '--clobber', '--repo', REPO)
     else:
-        r = run('release', 'create', tag, apk,
+        r = run('release', 'create', tag, apk, '--prerelease',
                 '--repo', REPO, '--title', title, '--notes', notes)
     if r.returncode != 0:
         sys.exit((r.stderr or r.stdout).strip())
@@ -76,7 +81,10 @@ def prune(keep):
             '--json', 'tagName,createdAt')
     if r.returncode != 0:
         sys.exit((r.stderr or r.stdout).strip())
-    releases = sorted(json.loads(r.stdout), key=lambda x: x['createdAt'], reverse=True)
+    # Только свои: релизы основного приложения лежат в том же репозитории.
+    releases = sorted((x for x in json.loads(r.stdout)
+                       if x['tagName'].startswith(TAG_PREFIX)),
+                      key=lambda x: x['createdAt'], reverse=True)
     for old in releases[keep:]:
         tag = old['tagName']
         # Метку сносим вместе с релизом: без --cleanup-tag в репозитории
@@ -199,11 +207,11 @@ def main():
         sys.exit('нет собранного APK: ' + APK + '\nсперва cd src && ./gradlew assembleDebug')
 
     name, code = version()
-    tag = 'v' + name
+    tag = TAG_PREFIX + name
 
     # Имя вложения с версией: «app-debug.apk» в папке загрузок телефона не
     # говорит ничего, а по «crnogorski-1.59.apk» сразу видно, что ставишь.
-    tmp = os.path.join(tempfile.gettempdir(), 'crnogorski-%s.apk' % name)
+    tmp = os.path.join(tempfile.gettempdir(), 'crnogorski-katya-%s.apk' % name)
     shutil.copyfile(APK, tmp)
 
     # Раньше здесь по умолчанию бралась строка последнего коммита — и это
@@ -219,9 +227,8 @@ def main():
 
     # Сверка журнала прохождений — до выпуска, пока метка прошлого релиза
     # ещё последняя. Печатает подсказку и ничего не запрещает.
-    prev = latest_tag()
-    if prev:
-        coverage(prev)
+    # Сверки журнала в Катиной сборке нет: её журнал уезжает под меткой
+    # «катя-эксперимент», а не «журнал», и сверять тут не с чем.
 
     url = publish(tag, name, notes, tmp)
     os.remove(tmp)

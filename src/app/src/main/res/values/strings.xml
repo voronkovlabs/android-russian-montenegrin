@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Crnogorski</string>
+    <string name="app_name">Crnogorski Катя</string>
     <!-- Подпись в списке «Поделиться» и в меню выделенного текста: там видно
          имя приложения, а нужна цель — куда фраза попадёт. -->
-    <string name="share_label">В мои фразы</string>
+    <string name="share_label">В мои фразы (Катя)</string>
     <!-- Подпись виджета в списке выбора: там видно имя приложения, а нужно,
          что именно этот виджет показывает. -->
-    <string name="widget_label">Карточка слова</string>
+    <string name="widget_label">Карточка слова (Катя)</string>
     <string name="widget_description">Слово из твоего словаря на домашнем экране. Нажатие — следующее.</string>
-    <string name="flip_label">Карточка-перевёртыш</string>
+    <string name="flip_label">Карточка-перевёртыш (Катя)</string>
     <string name="flip_description">Сначала русское, нажатие переворачивает на черногорское. 🧠 — слово уже знаю.</string>
 </resources>

@@ -129,7 +129,7 @@ class WordWidget : AppWidgetProvider() {
                 // И нажатие тут ведёт в приложение, а не «дальше»: листать
                 // нечего, а сказано ровно то, что надо сделать.
                 views.setOnClickPendingIntent(R.id.widget_root, open(context))
-                views.setTextViewText(R.id.widget_word, "Crnogorski")
+                views.setTextViewText(R.id.widget_word, context.getString(R.string.app_name))
                 views.setTextViewText(R.id.widget_gloss, "слова появятся, когда откроешь приложение")
                 views.setViewVisibility(R.id.widget_emoji, View.GONE)
                 return views

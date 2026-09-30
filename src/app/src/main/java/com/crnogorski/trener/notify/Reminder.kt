@@ -118,7 +118,7 @@ object Reminder {
             ID,
             NotificationCompat.Builder(context, CHANNEL)
                 .setSmallIcon(R.drawable.ic_notify)
-                .setContentTitle("Crnogorski")
+                .setContentTitle(context.getString(R.string.app_name))
                 .setContentText("Занятие на $minutes минут ждёт")
                 .setContentIntent(open)
                 .setAutoCancel(true)

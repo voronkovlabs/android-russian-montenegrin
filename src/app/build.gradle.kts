@@ -18,15 +18,15 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.montelearn"
+        applicationId = "com.montelearn.katya"
         // Опущен с 34 до 30 (23.09.2026): у владельца появился запасной
         // телефон на Android 11, и без него всё, что выпускается, уходит
         // непроверенным ни разу. Цена посчитана lint-ом: два вызова API 31 и
         // одно разрешение API 33 на весь проект.
         minSdk = 30
         targetSdk = 35
-        versionCode = 131
-        versionName = "4.8"
+        versionCode = 1
+        versionName = "0.1"
         // Ключа Anthropic здесь нет и больше не будет: репозиторий открытый, а
         // APK лежит в релизах вложением — зашитый ключ означал бы, что чужие
         // люди тратят деньги владельца. Его вводят на телефоне (data/Secrets).
