@@ -71,12 +71,19 @@ def prune(keep):
 
     Порядок берём по дате создания, а не по имени тега: «1.9» и «1.10»
     сортируются как текст неправильно, и прополка выкосила бы свежее.
+
+    **Трогаем только свои релизы** — с меткой `v<число>…`. С 30.09.2026 в тех
+    же релизах живёт Катина экспериментальная сборка (`katya-v0.1`, отдельное
+    приложение), и прополка, считавшая всё подряд, в первый же раз удалила
+    вместо одного нашего релиза два, а через пару выпусков удалила бы и её.
+    Чужое здесь не наше дело: ни считать его, ни удалять.
     """
     r = run('release', 'list', '--repo', REPO, '--limit', '100',
             '--json', 'tagName,createdAt')
     if r.returncode != 0:
         sys.exit((r.stderr or r.stdout).strip())
-    releases = sorted(json.loads(r.stdout), key=lambda x: x['createdAt'], reverse=True)
+    ours = [x for x in json.loads(r.stdout) if re.match(r'^v\d', x['tagName'])]
+    releases = sorted(ours, key=lambda x: x['createdAt'], reverse=True)
     for old in releases[keep:]:
         tag = old['tagName']
         # Метку сносим вместе с релизом: без --cleanup-tag в репозитории
