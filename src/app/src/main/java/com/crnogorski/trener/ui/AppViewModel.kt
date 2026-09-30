@@ -591,6 +591,13 @@ private val POOL_TARGET: Int get() = Config.current.vocab.poolTarget
 private val LEARNED_REPS: Int get() = Config.current.vocab.stepReps
 
 /**
+ * Экранов пар за заход на вкладке «Слова» в Катиной сборке (просьба Кати):
+ * пять, разнесённых по заходу. В ежедневном задании — прежние
+ * `vocab.matchScreens` из настроек.
+ */
+private const val TAB_MATCH_SCREENS = 5
+
+/**
  * По скольку заданий вводить новый урок в ежедневном задании.
  *
  * Урок целиком — это одиннадцать заданий, то есть почти всё занятие, и это
@@ -2149,11 +2156,31 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // потом в задании на набор — до 1.38 первой встречей был сразу
             // набор, то есть требование написать слово, которого человек ещё
             // ни разу не видел.
-            items.addAll(
-                0,
-                matchScreens(words, byId, items, all, now)
-                    .map { SessionItem(VocabRepository.LESSON_ID, it) }
-            )
+            //
+            // Катина сборка: экранов пар на вкладке «Слова» пять, а не два, и
+            // идут они **не подряд, а разнесёнными по заходу** (просьба Кати):
+            // первый — знакомством в начале, остальные — через равные
+            // промежутки между карточками.
+            val screens = matchScreens(words, byId, items, all, now, TAB_MATCH_SCREENS)
+                .map { SessionItem(VocabRepository.LESSON_ID, it) }
+            if (screens.isNotEmpty()) {
+                val body = items.toList()
+                items.clear()
+                items += screens.first()
+                val rest = screens.drop(1)
+                val step = if (rest.isEmpty()) 0
+                else (body.size / (rest.size + 1)).coerceAtLeast(1)
+                var next = 0
+                body.forEachIndexed { i, item ->
+                    items += item
+                    if (next < rest.size && step > 0 && i + 1 == step * (next + 1)) {
+                        items += rest[next++]
+                    }
+                }
+                // Карточек мало — оставшиеся экраны в хвост, лишь бы не подряд
+                // с первым.
+                items += rest.drop(next)
+            }
 
             if (!practice) vocabRepo.noteIntroduced(freshWords(items, byId))
 
@@ -2313,7 +2340,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         byId: Map<String, CardEntity>,
         pool: List<SessionItem>,
         spare: List<CardEntity>,
-        now: Long
+        now: Long,
+        screens: Int = VocabRepository.MATCH_SCREENS
     ): List<Exercise.Match> {
         fun pairable(id: String) = isMeaning(id) || isBackCard(id)
         fun shaky(card: CardEntity) = card.correct - card.lapses * 2
@@ -2339,7 +2367,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             .sortedBy(::shaky)
             .map { it.exerciseId }
 
-        val cap = VocabRepository.MATCH_PAIRS * VocabRepository.MATCH_SCREENS
+        val size = VocabRepository.MATCH_PAIRS
+        val cap = size * screens
         val pairs = mutableListOf<MatchPair>()
         val lemmas = mutableSetOf<String>()
         val glosses = mutableSetOf<String>()
@@ -2353,10 +2382,24 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             lemmas += lemma
             pairs += pair
         }
+        // Слов хватает на все экраны — каждое слово на одном экране. Так же
+        // и в ежедневном задании: там экранов прежние два, и повторять слова
+        // ради них незачем.
+        if (pairs.size >= cap || screens <= VocabRepository.MATCH_SCREENS) {
+            return pairs.chunked(size)
+                .filter { it.size >= VocabRepository.MATCH_MIN }
+                .map { matchExercise(it) }
+        }
+        if (pairs.size < VocabRepository.MATCH_MIN) return emptyList()
 
-        return pairs.chunked(VocabRepository.MATCH_PAIRS)
-            .filter { it.size >= VocabRepository.MATCH_MIN }
-            .map { matchExercise(it) }
+        // Не хватает (в Катином словаре после первого урока слов пятнадцать) —
+        // слова повторяются, но **не на одном экране**: каждый следующий экран
+        // берёт очередные пары по кругу. Повтор слова через несколько заданий —
+        // это и есть та разнесённость, ради которой экраны разнесены.
+        val perScreen = minOf(size, pairs.size)
+        return (0 until screens).map { s ->
+            matchExercise(List(perScreen) { k -> pairs[(s * perScreen + k) % pairs.size] })
+        }.distinctBy { ex -> ex.pairs.map { it.cardId }.toSet() }
     }
 
     /**
