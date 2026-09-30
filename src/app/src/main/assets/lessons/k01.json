@@ -150,18 +150,6 @@
       "answer": "хорошо"
     },
     {
-      "id": "k01e12",
-      "type": "choice",
-      "prompt": "Dobro.",
-      "options": [
-        "Хорошо.",
-        "Нет.",
-        "Вода."
-      ],
-      "answer": "Хорошо.",
-      "label": "Выбери перевод"
-    },
-    {
       "id": "k01e13",
       "type": "choice",
       "label": "Новое слово",
@@ -173,18 +161,6 @@
         "кофе"
       ],
       "answer": "вода"
-    },
-    {
-      "id": "k01e14",
-      "type": "choice",
-      "prompt": "вода",
-      "options": [
-        "voda",
-        "žena",
-        "dijete"
-      ],
-      "answer": "voda",
-      "label": "Выбери слово"
     },
     {
       "id": "k01e15",
@@ -280,18 +256,6 @@
       "answer": "нет"
     },
     {
-      "id": "k01e22",
-      "type": "choice",
-      "prompt": "Da.",
-      "options": [
-        "Да.",
-        "Нет.",
-        "Хорошо."
-      ],
-      "answer": "Да.",
-      "label": "Выбери перевод"
-    },
-    {
       "id": "k01e23",
       "type": "choice",
       "label": "Новое слово",
@@ -303,18 +267,6 @@
         "вода"
       ],
       "answer": "пакет"
-    },
-    {
-      "id": "k01e24",
-      "type": "choice",
-      "prompt": "Kesa.",
-      "options": [
-        "хлеб",
-        "пакет",
-        "вода"
-      ],
-      "answer": "пакет",
-      "label": "Выбери перевод"
     },
     {
       "id": "k01e25",

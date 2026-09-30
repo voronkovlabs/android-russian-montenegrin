@@ -29,18 +29,6 @@
       "answer": "девочка"
     },
     {
-      "id": "k02e03",
-      "type": "choice",
-      "prompt": "dječak",
-      "options": [
-        "ребёнок",
-        "мальчик",
-        "мужчина"
-      ],
-      "answer": "мальчик",
-      "label": "Выбери перевод"
-    },
-    {
       "id": "k02e04",
       "type": "match",
       "pairs": [
@@ -83,18 +71,6 @@
         "девочка"
       ],
       "answer": "кошка / кот"
-    },
-    {
-      "id": "k02e07",
-      "type": "choice",
-      "prompt": "собака",
-      "options": [
-        "pas",
-        "mačka",
-        "dječak"
-      ],
-      "answer": "pas",
-      "label": "Выбери слово"
     },
     {
       "id": "k02e08",
