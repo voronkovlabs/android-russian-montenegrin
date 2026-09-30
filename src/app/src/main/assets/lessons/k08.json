@@ -1,0 +1,435 @@
+{
+  "id": "k08",
+  "title": "Дерево растёт, кошка спит. Gdje si?",
+  "exercises": [
+    {
+      "id": "k08e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "drvo",
+      "hint": "drvo — дерево",
+      "options": [
+        "дерево",
+        "солнце",
+        "дом"
+      ],
+      "answer": "дерево"
+    },
+    {
+      "id": "k08e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "sunce",
+      "hint": "sunce — солнце",
+      "options": [
+        "вода",
+        "солнце",
+        "дерево"
+      ],
+      "answer": "солнце"
+    },
+    {
+      "id": "k08e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "дерево",
+          "me": "drvo"
+        },
+        {
+          "ru": "солнце",
+          "me": "sunce"
+        },
+        {
+          "ru": "черепаха",
+          "me": "kornjača"
+        },
+        {
+          "ru": "яблоко",
+          "me": "jabuka"
+        }
+      ]
+    },
+    {
+      "id": "k08e04",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Drvo je veliko.",
+      "hint": "Drvo je veliko. — Дерево большое.",
+      "options": [
+        "Дерево большое.",
+        "Дерево маленькое.",
+        "Солнце большое."
+      ],
+      "answer": "Дерево большое.",
+      "explanation": "Drvo и sunce — среднего рода, прилагательное к ним кончается на -o: veliko, malo, zeleno."
+    },
+    {
+      "id": "k08e05",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "большое",
+          "me": "veliko"
+        },
+        {
+          "ru": "маленькое",
+          "me": "malo"
+        },
+        {
+          "ru": "зелёное",
+          "me": "zeleno"
+        },
+        {
+          "ru": "белое",
+          "me": "bijelo"
+        }
+      ]
+    },
+    {
+      "id": "k08e06",
+      "type": "choice",
+      "prompt": "Sunce je ___ .",
+      "options": [
+        "velik",
+        "velika",
+        "veliko"
+      ],
+      "answer": "veliko",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k08e07",
+      "type": "choice",
+      "prompt": "Drvo je ___ .",
+      "options": [
+        "zelen",
+        "zelena",
+        "zeleno"
+      ],
+      "answer": "zeleno",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k08e08",
+      "type": "choice",
+      "prompt": "Sunce je lijepo.",
+      "options": [
+        "Солнце красивое.",
+        "Солнце большое.",
+        "Дерево красивое."
+      ],
+      "answer": "Солнце красивое.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k08e09",
+      "type": "speaking",
+      "phrase": "Drvo je veliko.",
+      "translation": "Дерево большое."
+    },
+    {
+      "id": "k08e10",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "spavati",
+      "hint": "spavati — спать",
+      "options": [
+        "спать",
+        "есть",
+        "расти"
+      ],
+      "answer": "спать"
+    },
+    {
+      "id": "k08e11",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Mačka spava.",
+      "hint": "Mačka spava. — Кошка спит.",
+      "options": [
+        "Кошка ест.",
+        "Кошка спит.",
+        "Собака спит."
+      ],
+      "answer": "Кошка спит."
+    },
+    {
+      "id": "k08e12",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ja spavam.",
+      "hint": "Ja spavam. — Я сплю.",
+      "options": [
+        "Я сплю.",
+        "Я ем.",
+        "Ты спишь."
+      ],
+      "answer": "Я сплю."
+    },
+    {
+      "id": "k08e13",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "spavam"
+        },
+        {
+          "ru": "ti",
+          "me": "spavaš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "spava"
+        },
+        {
+          "ru": "mi",
+          "me": "spavamo"
+        },
+        {
+          "ru": "vi",
+          "me": "spavate"
+        },
+        {
+          "ru": "oni",
+          "me": "spavaju"
+        }
+      ]
+    },
+    {
+      "id": "k08e14",
+      "type": "choice",
+      "prompt": "Sin spava.",
+      "options": [
+        "Сын спит.",
+        "Сын ест.",
+        "Сестра спит."
+      ],
+      "answer": "Сын спит.",
+      "byEar": true
+    },
+    {
+      "id": "k08e15",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "rasti",
+      "hint": "rasti — расти",
+      "options": [
+        "спать",
+        "расти",
+        "есть"
+      ],
+      "answer": "расти"
+    },
+    {
+      "id": "k08e16",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Drvo raste.",
+      "hint": "Drvo raste. — Дерево растёт.",
+      "options": [
+        "Дерево растёт.",
+        "Дерево большое.",
+        "Сын растёт."
+      ],
+      "answer": "Дерево растёт."
+    },
+    {
+      "id": "k08e17",
+      "type": "choice",
+      "prompt": "Drvo ___ .",
+      "options": [
+        "raste",
+        "jedem",
+        "spavamo"
+      ],
+      "answer": "raste",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k08e18",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kuća",
+      "hint": "kuća — дом",
+      "options": [
+        "дом",
+        "стена",
+        "дерево"
+      ],
+      "answer": "дом",
+      "explanation": "Kuća — женского рода, хотя «дом» мужского: Kuća je velika. Есть и слово dom, но это скорее «родной дом» или общежитие."
+    },
+    {
+      "id": "k08e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "zid",
+      "hint": "zid — стена",
+      "options": [
+        "дом",
+        "солнце",
+        "стена"
+      ],
+      "answer": "стена"
+    },
+    {
+      "id": "k08e20",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "дом",
+          "me": "kuća"
+        },
+        {
+          "ru": "стена",
+          "me": "zid"
+        },
+        {
+          "ru": "дерево",
+          "me": "drvo"
+        },
+        {
+          "ru": "солнце",
+          "me": "sunce"
+        }
+      ]
+    },
+    {
+      "id": "k08e21",
+      "type": "choice",
+      "prompt": "Kuća je ___ .",
+      "options": [
+        "velik",
+        "velika",
+        "veliko"
+      ],
+      "answer": "velika",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k08e22",
+      "type": "word_bank",
+      "prompt": "Стена белая.",
+      "answer": "Zid je bijel.",
+      "bank": [
+        "bijel",
+        "je",
+        "zid"
+      ]
+    },
+    {
+      "id": "k08e23",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Gdje si?",
+      "hint": "Gdje si? — Привет, как ты?",
+      "options": [
+        "Привет, как ты?",
+        "Кто ты?",
+        "Спасибо."
+      ],
+      "answer": "Привет, как ты?",
+      "explanation": "Буквально «где ты?», но это неформальное приветствие, вроде нашего «Чё как?». Так здороваются со знакомыми. В речи часто звучит «Đe si?»."
+    },
+    {
+      "id": "k08e24",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Evo me!",
+      "hint": "Evo me! — Да нормально!",
+      "options": [
+        "Да нормально!",
+        "Привет, как ты?",
+        "Спасибо."
+      ],
+      "answer": "Да нормально!",
+      "explanation": "Буквально «вот я». Обычный ответ на «Gdje si?» — вроде «всё норм». Evo — «вот, здесь»."
+    },
+    {
+      "id": "k08e25",
+      "type": "repeat",
+      "phrase": "Gdje si?",
+      "translation": "Привет, как ты?"
+    },
+    {
+      "id": "k08e26",
+      "type": "choice",
+      "prompt": "Встретила знакомого на улице.\n— Gdje si?\n— Evo me!\n\nЧто ответил знакомый?",
+      "options": [
+        "Всё нормально.",
+        "Я дома.",
+        "Я сплю."
+      ],
+      "answer": "Всё нормально.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k08e27",
+      "type": "speaking",
+      "phrase": "Evo me!",
+      "translation": "Да нормально!"
+    },
+    {
+      "id": "k08e28",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Дерево большое.",
+          "me": "Drvo je veliko."
+        },
+        {
+          "ru": "Кошка спит.",
+          "me": "Mačka spava."
+        },
+        {
+          "ru": "Дерево растёт.",
+          "me": "Drvo raste."
+        },
+        {
+          "ru": "Привет, как ты?",
+          "me": "Gdje si?"
+        },
+        {
+          "ru": "Да нормально!",
+          "me": "Evo me!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "drvo",
+      "ru": "дерево"
+    },
+    {
+      "me": "sunce",
+      "ru": "солнце"
+    },
+    {
+      "me": "spavati",
+      "ru": "спать"
+    },
+    {
+      "me": "rasti",
+      "ru": "расти"
+    },
+    {
+      "me": "kuća",
+      "ru": "дом"
+    },
+    {
+      "me": "zid",
+      "ru": "стена"
+    },
+    {
+      "me": "gdje",
+      "ru": "где"
+    },
+    {
+      "me": "evo",
+      "ru": "вот (здесь)"
+    }
+  ]
+}
