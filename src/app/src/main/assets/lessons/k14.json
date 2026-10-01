@@ -1,0 +1,381 @@
+{
+  "id": "k14",
+  "title": "Nisam pas. Polako!",
+  "exercises": [
+    {
+      "id": "k14e01",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ja nisam pas.",
+      "hint": "Ja nisam pas. — Я не собака.",
+      "options": [
+        "Я не собака.",
+        "Я собака.",
+        "Ты не собака."
+      ],
+      "answer": "Я не собака.",
+      "explanation": "С «быть» отрицание — одно слово: nisam = ne + sam. «Ne sam» не говорят."
+    },
+    {
+      "id": "k14e02",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ti nisi pas.",
+      "hint": "Ti nisi pas. — Ты не собака.",
+      "options": [
+        "Ты собака.",
+        "Ты не собака.",
+        "Я не собака."
+      ],
+      "answer": "Ты не собака."
+    },
+    {
+      "id": "k14e03",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "On nije pas.",
+      "hint": "On nije pas. — Он не собака.",
+      "options": [
+        "Он не собака.",
+        "Ты не собака.",
+        "Он собака."
+      ],
+      "answer": "Он не собака."
+    },
+    {
+      "id": "k14e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я есть",
+          "me": "ja sam"
+        },
+        {
+          "ru": "я не",
+          "me": "ja nisam"
+        },
+        {
+          "ru": "ты не",
+          "me": "ti nisi"
+        },
+        {
+          "ru": "он не",
+          "me": "on nije"
+        }
+      ]
+    },
+    {
+      "id": "k14e05",
+      "type": "choice",
+      "prompt": "Я не женщина. — Ja ___ žena.",
+      "options": [
+        "nisam",
+        "nisi",
+        "nije"
+      ],
+      "answer": "nisam",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k14e06",
+      "type": "choice",
+      "prompt": "Это не мой брат. — Ovo ___ moj brat.",
+      "options": [
+        "nisam",
+        "nije",
+        "ne"
+      ],
+      "answer": "nije",
+      "label": "Вставь слово",
+      "explanation": "С «быть» отрицание — одно слово: nisam = ne + sam. «Ne sam» не говорят."
+    },
+    {
+      "id": "k14e07",
+      "type": "choice",
+      "prompt": "Мой сын не большой.",
+      "options": [
+        "Moj sin nije velik.",
+        "Moj sin ne velik.",
+        "Moj sin nisam velik."
+      ],
+      "answer": "Moj sin nije velik.",
+      "label": "Выбери верное",
+      "explanation": "С «быть» отрицание — одно слово: nisam = ne + sam. «Ne sam» не говорят."
+    },
+    {
+      "id": "k14e08",
+      "type": "choice",
+      "prompt": "Ti nisi moj otac.",
+      "options": [
+        "Ты не мой отец.",
+        "Ты мой отец.",
+        "Он не мой отец."
+      ],
+      "answer": "Ты не мой отец.",
+      "byEar": true
+    },
+    {
+      "id": "k14e09",
+      "type": "speaking",
+      "phrase": "Ja nisam prase.",
+      "translation": "Я не поросёнок."
+    },
+    {
+      "id": "k14e10",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "brz",
+      "hint": "brz — быстрый",
+      "options": [
+        "быстрый",
+        "медленный",
+        "большой"
+      ],
+      "answer": "быстрый"
+    },
+    {
+      "id": "k14e11",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "spor",
+      "hint": "spor — медленный",
+      "options": [
+        "быстрый",
+        "маленький",
+        "медленный"
+      ],
+      "answer": "медленный"
+    },
+    {
+      "id": "k14e12",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "avion",
+      "hint": "avion — самолёт",
+      "options": [
+        "самолёт",
+        "машина",
+        "дом"
+      ],
+      "answer": "самолёт"
+    },
+    {
+      "id": "k14e13",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "auto",
+      "hint": "auto — машина",
+      "options": [
+        "самолёт",
+        "машина",
+        "окно"
+      ],
+      "answer": "машина",
+      "explanation": "auto — мужского рода, хотя кончается на -o: это укороченное automobil. Auto je brz."
+    },
+    {
+      "id": "k14e14",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "быстрый",
+          "me": "brz"
+        },
+        {
+          "ru": "медленный",
+          "me": "spor"
+        },
+        {
+          "ru": "самолёт",
+          "me": "avion"
+        },
+        {
+          "ru": "улитка",
+          "me": "puž"
+        }
+      ]
+    },
+    {
+      "id": "k14e15",
+      "type": "choice",
+      "prompt": "Puž je spor.",
+      "options": [
+        "Улитка медленная.",
+        "Улитка быстрая.",
+        "Черепаха медленная."
+      ],
+      "answer": "Улитка медленная.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k14e16",
+      "type": "choice",
+      "prompt": "Avion je ___ .",
+      "options": [
+        "brz",
+        "brza",
+        "brzo"
+      ],
+      "answer": "brz",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k14e17",
+      "type": "choice",
+      "prompt": "Kornjača je ___ .",
+      "options": [
+        "spor",
+        "spora",
+        "sporo"
+      ],
+      "answer": "spora",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k14e18",
+      "type": "word_bank",
+      "prompt": "Машина не медленная.",
+      "answer": "Auto nije spor.",
+      "bank": [
+        "spor",
+        "nije",
+        "auto"
+      ]
+    },
+    {
+      "id": "k14e19",
+      "type": "choice",
+      "prompt": "Puž nije brz.",
+      "options": [
+        "Улитка не быстрая.",
+        "Улитка быстрая.",
+        "Самолёт не быстрый."
+      ],
+      "answer": "Улитка не быстрая.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k14e20",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "polako",
+      "hint": "polako — медленно, спокойно",
+      "options": [
+        "медленно, спокойно",
+        "быстро",
+        "хорошо"
+      ],
+      "answer": "медленно, спокойно",
+      "explanation": "Polako — одно из самых частых слов в Черногории. Буквально «медленно», но живёт в разных ролях: «не спеши, всё успеется» — Polako! Ne brini se; «помедленнее, пожалуйста», когда говорят слишком быстро — Polako, molim; «потихоньку» в ответ на «Kako si?» — ни хорошо, ни плохо; «осторожно», когда что-то несут или паркуются — Polako, polako!"
+    },
+    {
+      "id": "k14e21",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ne brini se, polako.",
+      "hint": "Ne brini se, polako. — Не волнуйся, спокойно.",
+      "options": [
+        "Не волнуйся, спокойно.",
+        "Спасибо, хорошо.",
+        "Иди быстрее."
+      ],
+      "answer": "Не волнуйся, спокойно.",
+      "explanation": "Ne brini se — «не волнуйся», от brinuti se — «волноваться»."
+    },
+    {
+      "id": "k14e22",
+      "type": "choice",
+      "prompt": "«Polako!»\nКогда так говорят?",
+      "options": [
+        "Друг торопится и нервничает.",
+        "Друг спит.",
+        "Друг заказывает пиво."
+      ],
+      "answer": "Друг торопится и нервничает.",
+      "explanation": "Polako — одно из самых частых слов в Черногории. Буквально «медленно», но живёт в разных ролях: «не спеши, всё успеется» — Polako! Ne brini se; «помедленнее, пожалуйста», когда говорят слишком быстро — Polako, molim; «потихоньку» в ответ на «Kako si?» — ни хорошо, ни плохо; «осторожно», когда что-то несут или паркуются — Polako, polako!",
+      "label": "Выбери ситуацию"
+    },
+    {
+      "id": "k14e23",
+      "type": "choice",
+      "prompt": "— Kako si?\n— Polako.\n\nЧто ответил знакомый?",
+      "options": [
+        "Потихоньку, нормально.",
+        "Очень плохо.",
+        "Я спешу."
+      ],
+      "answer": "Потихоньку, нормально.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k14e24",
+      "type": "repeat",
+      "phrase": "Ne brini se, polako.",
+      "translation": "Не волнуйся, спокойно."
+    },
+    {
+      "id": "k14e25",
+      "type": "word_bank",
+      "prompt": "Не волнуйся, спокойно.",
+      "answer": "Ne brini se, polako.",
+      "bank": [
+        "se",
+        "polako",
+        "ne",
+        "brini"
+      ]
+    },
+    {
+      "id": "k14e26",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я не собака.",
+          "me": "Ja nisam pas."
+        },
+        {
+          "ru": "Он не мой брат.",
+          "me": "On nije moj brat."
+        },
+        {
+          "ru": "Самолёт быстрый.",
+          "me": "Avion je brz."
+        },
+        {
+          "ru": "Улитка медленная.",
+          "me": "Puž je spor."
+        },
+        {
+          "ru": "Не волнуйся, спокойно.",
+          "me": "Ne brini se, polako."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "brz",
+      "ru": "быстрый"
+    },
+    {
+      "me": "spor",
+      "ru": "медленный"
+    },
+    {
+      "me": "avion",
+      "ru": "самолёт"
+    },
+    {
+      "me": "auto",
+      "ru": "машина"
+    },
+    {
+      "me": "polako",
+      "ru": "медленно, спокойно, потихоньку"
+    },
+    {
+      "me": "brinuti se",
+      "ru": "волноваться"
+    }
+  ]
+}

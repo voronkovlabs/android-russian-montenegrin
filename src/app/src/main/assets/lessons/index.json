@@ -84,6 +84,12 @@
       "file": "kt1.json",
       "section": "Первые шаги",
       "test": true
+    },
+    {
+      "id": "k14",
+      "title": "Nisam pas. Polako!",
+      "file": "k14.json",
+      "section": "Раздел 2"
     }
   ]
 }
