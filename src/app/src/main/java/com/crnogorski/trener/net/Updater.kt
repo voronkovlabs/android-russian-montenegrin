@@ -109,8 +109,22 @@ class Updater(private val context: Context) {
                 // только основные. Основное приложение, наоборот, Катиных
                 // не видит — ради этого они и pre-release.
                 val list = org.json.JSONArray(text)
+                // Самую свежую берём **по номеру версии**, а не первую в списке:
+                // GitHub упорядочивает по дате, а у Катиных релизов до 0.11
+                // дата одна на всех (метки стояли на одном коммите main), и
+                // первой в списке оказалась 0.9 — при выпущенной 0.10
+                // приложение уверяло, что обновлений нет.
                 val json = (0 until list.length()).map { list.getJSONObject(it) }
-                    .firstOrNull { it.optString("tag_name").startsWith(TAG_PREFIX) }
+                    .filter { it.optString("tag_name").startsWith(TAG_PREFIX) }
+                    .maxWithOrNull { a, b ->
+                        val x = a.optString("tag_name").removePrefix(TAG_PREFIX)
+                        val y = b.optString("tag_name").removePrefix(TAG_PREFIX)
+                        when {
+                            isNewer(x, y) -> 1
+                            isNewer(y, x) -> -1
+                            else -> 0
+                        }
+                    }
                     ?: error("релизов Катиной сборки ещё нет")
                 val version = json.optString("tag_name").removePrefix(TAG_PREFIX)
                 val assets = json.optJSONArray("assets")

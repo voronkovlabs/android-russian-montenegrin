@@ -63,7 +63,9 @@ def publish(tag, title, notes, apk):
         print('релиз', tag, 'уже есть — обновляю вложение')
         r = run('release', 'upload', tag, apk, '--clobber', '--repo', REPO)
     else:
-        r = run('release', 'create', tag, apk, '--prerelease',
+        # --target katya: без него метка встаёт на последний коммит main, и у
+        # всех Катиных релизов оказывалась одна дата — порядок по дате врал.
+        r = run('release', 'create', tag, apk, '--prerelease', '--target', 'katya',
                 '--repo', REPO, '--title', title, '--notes', notes)
     if r.returncode != 0:
         sys.exit((r.stderr or r.stdout).strip())
@@ -84,7 +86,7 @@ def prune(keep):
     # Только свои: релизы основного приложения лежат в том же репозитории.
     releases = sorted((x for x in json.loads(r.stdout)
                        if x['tagName'].startswith(TAG_PREFIX)),
-                      key=lambda x: x['createdAt'], reverse=True)
+                      key=lambda x: version_key(x['tagName']), reverse=True)
     for old in releases[keep:]:
         tag = old['tagName']
         # Метку сносим вместе с релизом: без --cleanup-tag в репозитории
@@ -92,6 +94,12 @@ def prune(keep):
         d = run('release', 'delete', tag, '--repo', REPO, '--yes', '--cleanup-tag')
         print(('удалён ' if d.returncode == 0 else 'не удалился ') + tag)
     return len(releases[keep:])
+
+
+def version_key(tag):
+    """Порядок Катиных релизов — по номеру версии, а не по дате: до 0.11 метки
+    стояли на одном коммите main, и даты у них совпадали."""
+    return [int(p) for p in tag[len(TAG_PREFIX):].split('.') if p.isdigit()]
 
 
 def latest_tag():
