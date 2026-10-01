@@ -692,6 +692,57 @@ L.append(dict(id='k12', title='Свинья и три поросёнка. Doviđ
           ('Сколько тебе лет?', 'Koliko imaš godina?'), ('До свидания!', 'Doviđenja!')),
 ]))
 
+# --- Урок 13 ---
+# Последний урок раздела перед тестом: вопросы, «это», njegova/njena, повтор
+# spavati и rasti.
+L.append(dict(id='k13', title='Šta je ovo? Kako si?', words=[
+    ('šta', 'что'), ('ko', 'кто'), ('kako', 'как'), ('ovo', 'это')],
+    ex=[
+    new('šta', 'что', ['что', 'кто', 'как']),
+    new('ko', 'кто', ['где', 'кто', 'что']),
+    new('kako', 'как', ['как', 'сколько', 'кто']),
+    pairs(('что', 'šta'), ('кто', 'ko'), ('как', 'kako'), ('где', 'gdje')),
+    dict(phrase('Ovo je moj brat.', 'Это мой брат.',
+                ['Это мой брат.', 'Это мой сын.', 'Где мой брат?']),
+         explanation='ovo — «это», про то, что рядом.'),
+    phrase('Šta je ovo?', 'Что это?', ['Что это?', 'Кто это?', 'Где это?']),
+    pick('— Šta je ovo?\nВыбери ответ:', ['Ovo je jabuka.', 'Ja sam žena.', 'Dobro jutro!'],
+         'Ovo je jabuka.', label='Мини-диалог'),
+    phrase('Ko je ovo?', 'Кто это?', ['Что это?', 'Кто это?', 'Как ты?']),
+    pick('— Ko je ovo?\nВыбери ответ:', ['Ovo je moja sestra.', 'Ovo je pivo.', 'Evo me!'],
+         'Ovo je moja sestra.', label='Мини-диалог'),
+    pick('___ je ovo? — Ovo je prozor.', ['Šta', 'Ko', 'Kako'], 'Šta', label='Вставь слово'),
+    pick('___ je ovo? — Ovo je moj otac.', ['Šta', 'Ko', 'Kako'], 'Ko', label='Вставь слово'),
+    dict(new('njegova sestra', 'его сестра', ['его сестра', 'её сестра', 'его брат'],
+             label='Новая форма'),
+         explanation='Как moj → moja: njegov → njegova, njen → njena.'),
+    pairs(('его брат', 'njegov brat'), ('его сестра', 'njegova sestra'),
+          ('её сын', 'njen sin'), ('её дочь', 'njena ćerka')),
+    pick('Это его дом. — Ovo je ___ kuća.', ['njegov', 'njegova'], 'njegova',
+         label='Выбери форму'),
+    ear('Ovo je njena mačka.', ['Это её кошка.', 'Это его кошка.', 'Это её собака.'],
+        'Это её кошка.'),
+    bank('Это наш дом.', 'Ovo je naša kuća.', ['kuća', 'ovo', 'naša', 'je']),
+    say('Šta je ovo?', 'Что это?'),
+    phrase('Kako si?', 'Как дела?', ['Как дела?', 'Где ты?', 'Кто ты?']),
+    pick('— Kako si?\nВыбери ответ:', ['Dobro sam, hvala.', 'Imam četiri godine.', 'Doviđenja!'],
+         'Dobro sam, hvala.',
+         explanation='Dobro sam — «у меня всё хорошо», буквально «хорошо я есть».',
+         label='Мини-диалог'),
+    echo('Dobro sam, hvala.', 'Хорошо, спасибо.'),
+    pick('Psi spavaju.', ['Собаки спят.', 'Собаки едят.', 'Кошки спят.'], 'Собаки спят.',
+         label='Выбери перевод'),
+    pick('Мы спим. — Mi ___ .', ['spavamo', 'spavaju', 'spava'], 'spavamo',
+         label='Вставь слово'),
+    pairs(('я расту', 'ja rastem'), ('ты растёшь', 'ti rasteš'), ('он растёт', 'on raste'),
+          ('они растут', 'oni rastu')),
+    pick('Ko spava?', ['Кто спит?', 'Что это?', 'Где ты?'], 'Кто спит?', label='Выбери перевод'),
+    pick('— Šta je ovo?\n— Ovo je drvo. Drvo raste.\n\nЧто растёт?',
+         ['Дерево.', 'Поросёнок.', 'Сын.'], 'Дерево.', label='Мини-диалог'),
+    pairs(('Что это?', 'Šta je ovo?'), ('Кто это?', 'Ko je ovo?'), ('Как дела?', 'Kako si?'),
+          ('Это мой брат.', 'Ovo je moj brat.'), ('Его сестра.', 'Njegova sestra.')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

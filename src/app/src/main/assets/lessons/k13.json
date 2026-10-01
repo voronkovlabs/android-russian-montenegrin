@@ -1,0 +1,378 @@
+{
+  "id": "k13",
+  "title": "Šta je ovo? Kako si?",
+  "exercises": [
+    {
+      "id": "k13e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "šta",
+      "hint": "šta — что",
+      "options": [
+        "что",
+        "кто",
+        "как"
+      ],
+      "answer": "что"
+    },
+    {
+      "id": "k13e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ko",
+      "hint": "ko — кто",
+      "options": [
+        "где",
+        "кто",
+        "что"
+      ],
+      "answer": "кто"
+    },
+    {
+      "id": "k13e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kako",
+      "hint": "kako — как",
+      "options": [
+        "как",
+        "сколько",
+        "кто"
+      ],
+      "answer": "как"
+    },
+    {
+      "id": "k13e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "что",
+          "me": "šta"
+        },
+        {
+          "ru": "кто",
+          "me": "ko"
+        },
+        {
+          "ru": "как",
+          "me": "kako"
+        },
+        {
+          "ru": "где",
+          "me": "gdje"
+        }
+      ]
+    },
+    {
+      "id": "k13e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ovo je moj brat.",
+      "hint": "Ovo je moj brat. — Это мой брат.",
+      "options": [
+        "Это мой брат.",
+        "Это мой сын.",
+        "Где мой брат?"
+      ],
+      "answer": "Это мой брат.",
+      "explanation": "ovo — «это», про то, что рядом."
+    },
+    {
+      "id": "k13e06",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šta je ovo?",
+      "hint": "Šta je ovo? — Что это?",
+      "options": [
+        "Что это?",
+        "Кто это?",
+        "Где это?"
+      ],
+      "answer": "Что это?"
+    },
+    {
+      "id": "k13e07",
+      "type": "choice",
+      "prompt": "— Šta je ovo?\nВыбери ответ:",
+      "options": [
+        "Ovo je jabuka.",
+        "Ja sam žena.",
+        "Dobro jutro!"
+      ],
+      "answer": "Ovo je jabuka.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k13e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ko je ovo?",
+      "hint": "Ko je ovo? — Кто это?",
+      "options": [
+        "Что это?",
+        "Кто это?",
+        "Как ты?"
+      ],
+      "answer": "Кто это?"
+    },
+    {
+      "id": "k13e09",
+      "type": "choice",
+      "prompt": "— Ko je ovo?\nВыбери ответ:",
+      "options": [
+        "Ovo je moja sestra.",
+        "Ovo je pivo.",
+        "Evo me!"
+      ],
+      "answer": "Ovo je moja sestra.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k13e10",
+      "type": "choice",
+      "prompt": "___ je ovo? — Ovo je prozor.",
+      "options": [
+        "Šta",
+        "Ko",
+        "Kako"
+      ],
+      "answer": "Šta",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k13e11",
+      "type": "choice",
+      "prompt": "___ je ovo? — Ovo je moj otac.",
+      "options": [
+        "Šta",
+        "Ko",
+        "Kako"
+      ],
+      "answer": "Ko",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k13e12",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "njegova sestra",
+      "hint": "njegova sestra — его сестра",
+      "options": [
+        "его сестра",
+        "её сестра",
+        "его брат"
+      ],
+      "answer": "его сестра",
+      "explanation": "Как moj → moja: njegov → njegova, njen → njena."
+    },
+    {
+      "id": "k13e13",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "его брат",
+          "me": "njegov brat"
+        },
+        {
+          "ru": "его сестра",
+          "me": "njegova sestra"
+        },
+        {
+          "ru": "её сын",
+          "me": "njen sin"
+        },
+        {
+          "ru": "её дочь",
+          "me": "njena ćerka"
+        }
+      ]
+    },
+    {
+      "id": "k13e14",
+      "type": "choice",
+      "prompt": "Это его дом. — Ovo je ___ kuća.",
+      "options": [
+        "njegov",
+        "njegova"
+      ],
+      "answer": "njegova",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k13e15",
+      "type": "choice",
+      "prompt": "Ovo je njena mačka.",
+      "options": [
+        "Это её кошка.",
+        "Это его кошка.",
+        "Это её собака."
+      ],
+      "answer": "Это её кошка.",
+      "byEar": true
+    },
+    {
+      "id": "k13e16",
+      "type": "word_bank",
+      "prompt": "Это наш дом.",
+      "answer": "Ovo je naša kuća.",
+      "bank": [
+        "kuća",
+        "ovo",
+        "naša",
+        "je"
+      ]
+    },
+    {
+      "id": "k13e17",
+      "type": "speaking",
+      "phrase": "Šta je ovo?",
+      "translation": "Что это?"
+    },
+    {
+      "id": "k13e18",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kako si?",
+      "hint": "Kako si? — Как дела?",
+      "options": [
+        "Как дела?",
+        "Где ты?",
+        "Кто ты?"
+      ],
+      "answer": "Как дела?"
+    },
+    {
+      "id": "k13e19",
+      "type": "choice",
+      "prompt": "— Kako si?\nВыбери ответ:",
+      "options": [
+        "Dobro sam, hvala.",
+        "Imam četiri godine.",
+        "Doviđenja!"
+      ],
+      "answer": "Dobro sam, hvala.",
+      "explanation": "Dobro sam — «у меня всё хорошо», буквально «хорошо я есть».",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k13e20",
+      "type": "repeat",
+      "phrase": "Dobro sam, hvala.",
+      "translation": "Хорошо, спасибо."
+    },
+    {
+      "id": "k13e21",
+      "type": "choice",
+      "prompt": "Psi spavaju.",
+      "options": [
+        "Собаки спят.",
+        "Собаки едят.",
+        "Кошки спят."
+      ],
+      "answer": "Собаки спят.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k13e22",
+      "type": "choice",
+      "prompt": "Мы спим. — Mi ___ .",
+      "options": [
+        "spavamo",
+        "spavaju",
+        "spava"
+      ],
+      "answer": "spavamo",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k13e23",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я расту",
+          "me": "ja rastem"
+        },
+        {
+          "ru": "ты растёшь",
+          "me": "ti rasteš"
+        },
+        {
+          "ru": "он растёт",
+          "me": "on raste"
+        },
+        {
+          "ru": "они растут",
+          "me": "oni rastu"
+        }
+      ]
+    },
+    {
+      "id": "k13e24",
+      "type": "choice",
+      "prompt": "Ko spava?",
+      "options": [
+        "Кто спит?",
+        "Что это?",
+        "Где ты?"
+      ],
+      "answer": "Кто спит?",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k13e25",
+      "type": "choice",
+      "prompt": "— Šta je ovo?\n— Ovo je drvo. Drvo raste.\n\nЧто растёт?",
+      "options": [
+        "Дерево.",
+        "Поросёнок.",
+        "Сын."
+      ],
+      "answer": "Дерево.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k13e26",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Что это?",
+          "me": "Šta je ovo?"
+        },
+        {
+          "ru": "Кто это?",
+          "me": "Ko je ovo?"
+        },
+        {
+          "ru": "Как дела?",
+          "me": "Kako si?"
+        },
+        {
+          "ru": "Это мой брат.",
+          "me": "Ovo je moj brat."
+        },
+        {
+          "ru": "Его сестра.",
+          "me": "Njegova sestra."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "šta",
+      "ru": "что"
+    },
+    {
+      "me": "ko",
+      "ru": "кто"
+    },
+    {
+      "me": "kako",
+      "ru": "как"
+    },
+    {
+      "me": "ovo",
+      "ru": "это"
+    }
+  ]
+}
