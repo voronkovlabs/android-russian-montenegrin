@@ -59,6 +59,12 @@
       "title": "Три черепахи едят одну котлету",
       "file": "k10.json",
       "section": "Первые шаги"
+    },
+    {
+      "id": "k11",
+      "title": "Dva piva i tri praseta. Наш, ваш, их",
+      "file": "k11.json",
+      "section": "Первые шаги"
     }
   ]
 }
