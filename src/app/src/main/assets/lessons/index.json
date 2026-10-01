@@ -65,6 +65,12 @@
       "title": "Dva piva i tri praseta. Наш, ваш, их",
       "file": "k11.json",
       "section": "Первые шаги"
+    },
+    {
+      "id": "k12",
+      "title": "Свинья и три поросёнка. Doviđenja!",
+      "file": "k12.json",
+      "section": "Первые шаги"
     }
   ]
 }

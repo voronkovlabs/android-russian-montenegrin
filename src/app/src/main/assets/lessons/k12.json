@@ -1,0 +1,435 @@
+{
+  "id": "k12",
+  "title": "Свинья и три поросёнка. Doviđenja!",
+  "exercises": [
+    {
+      "id": "k12e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "prozor",
+      "hint": "prozor — окно",
+      "options": [
+        "окно",
+        "дом",
+        "стена"
+      ],
+      "answer": "окно"
+    },
+    {
+      "id": "k12e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "godina",
+      "hint": "godina — год",
+      "options": [
+        "день",
+        "год",
+        "утро"
+      ],
+      "answer": "год"
+    },
+    {
+      "id": "k12e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "svinja",
+      "hint": "svinja — свинья",
+      "options": [
+        "поросёнок",
+        "собака",
+        "свинья"
+      ],
+      "answer": "свинья"
+    },
+    {
+      "id": "k12e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "окно",
+          "me": "prozor"
+        },
+        {
+          "ru": "год",
+          "me": "godina"
+        },
+        {
+          "ru": "свинья",
+          "me": "svinja"
+        },
+        {
+          "ru": "поросёнок",
+          "me": "prase"
+        }
+      ]
+    },
+    {
+      "id": "k12e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Prase je dijete svinje.",
+      "hint": "Prase je dijete svinje. — Поросёнок — ребёнок свиньи.",
+      "options": [
+        "Поросёнок — ребёнок свиньи.",
+        "Свинья — мать поросёнка.",
+        "Поросёнок — ребёнок собаки."
+      ],
+      "answer": "Поросёнок — ребёнок свиньи."
+    },
+    {
+      "id": "k12e06",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Svinja ima tri praseta.",
+      "hint": "Svinja ima tri praseta. — У свиньи три поросёнка.",
+      "options": [
+        "У свиньи три поросёнка.",
+        "У свиньи два поросёнка.",
+        "Свинья ест трёх поросят."
+      ],
+      "answer": "У свиньи три поросёнка.",
+      "explanation": "ima — «имеет». По-русски говорим «у свиньи есть», по-черногорски «свинья имеет»."
+    },
+    {
+      "id": "k12e07",
+      "type": "choice",
+      "prompt": "Moja sestra ima dva sina.",
+      "options": [
+        "У моей сестры два сына.",
+        "У моей сестры две дочери.",
+        "У моего брата два сына."
+      ],
+      "answer": "У моей сестры два сына.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k12e08",
+      "type": "word_bank",
+      "prompt": "У свиньи четыре поросёнка.",
+      "answer": "Svinja ima četiri praseta.",
+      "bank": [
+        "ima",
+        "četiri",
+        "svinja",
+        "praseta"
+      ]
+    },
+    {
+      "id": "k12e09",
+      "type": "speaking",
+      "phrase": "Svinja ima tri praseta.",
+      "translation": "У свиньи три поросёнка."
+    },
+    {
+      "id": "k12e10",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "veliki prozori",
+      "hint": "veliki prozori — большие окна",
+      "options": [
+        "большие окна",
+        "маленькие окна",
+        "большое окно"
+      ],
+      "answer": "большие окна",
+      "explanation": "Во множественном числе у мужского рода прилагательное кончается на -i, у женского на -e: veliki prozori, velike svinje. Так же меняются moj и naš: moji, naši; moje, naše."
+    },
+    {
+      "id": "k12e11",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "male svinje",
+      "hint": "male svinje — маленькие свиньи",
+      "options": [
+        "большие свиньи",
+        "маленькие свиньи",
+        "маленькая свинья"
+      ],
+      "answer": "маленькие свиньи"
+    },
+    {
+      "id": "k12e12",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "большие окна",
+          "me": "veliki prozori"
+        },
+        {
+          "ru": "маленькие окна",
+          "me": "mali prozori"
+        },
+        {
+          "ru": "большие свиньи",
+          "me": "velike svinje"
+        },
+        {
+          "ru": "маленькие свиньи",
+          "me": "male svinje"
+        }
+      ]
+    },
+    {
+      "id": "k12e13",
+      "type": "choice",
+      "prompt": "___ psi spavaju.",
+      "options": [
+        "Veliki",
+        "Velike"
+      ],
+      "answer": "Veliki",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k12e14",
+      "type": "choice",
+      "prompt": "Kornjače su ___ .",
+      "options": [
+        "zeleni",
+        "zelene"
+      ],
+      "answer": "zelene",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k12e15",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Moje sestre su lijepe.",
+      "hint": "Moje sestre su lijepe. — Мои сёстры красивые.",
+      "options": [
+        "Мои сёстры красивые.",
+        "Моя сестра красивая.",
+        "Наши сёстры красивые."
+      ],
+      "answer": "Мои сёстры красивые."
+    },
+    {
+      "id": "k12e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "мои сёстры",
+          "me": "moje sestre"
+        },
+        {
+          "ru": "наши окна",
+          "me": "naši prozori"
+        },
+        {
+          "ru": "ваши свиньи",
+          "me": "vaše svinje"
+        },
+        {
+          "ru": "их собаки",
+          "me": "njihovi psi"
+        }
+      ]
+    },
+    {
+      "id": "k12e17",
+      "type": "choice",
+      "prompt": "___ prozori su veliki.",
+      "options": [
+        "Naš",
+        "Naši",
+        "Naše"
+      ],
+      "answer": "Naši",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k12e18",
+      "type": "choice",
+      "prompt": "Naše svinje dobro jedu.",
+      "options": [
+        "Наши свиньи хорошо едят.",
+        "Ваши свиньи хорошо едят.",
+        "Наши свиньи плохо едят."
+      ],
+      "answer": "Наши свиньи хорошо едят.",
+      "byEar": true
+    },
+    {
+      "id": "k12e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "koliko",
+      "hint": "koliko — сколько",
+      "options": [
+        "сколько",
+        "где",
+        "как"
+      ],
+      "answer": "сколько"
+    },
+    {
+      "id": "k12e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Koliko imaš godina?",
+      "hint": "Koliko imaš godina? — Сколько тебе лет?",
+      "options": [
+        "Сколько тебе лет?",
+        "Где ты?",
+        "Как тебя зовут?"
+      ],
+      "answer": "Сколько тебе лет?",
+      "explanation": "Буквально «сколько ты имеешь лет». Отвечают так же: «Imam četiri godine» — «мне четыре года»."
+    },
+    {
+      "id": "k12e21",
+      "type": "choice",
+      "prompt": "— Koliko imaš godina?\nВыбери ответ:",
+      "options": [
+        "Imam četiri godine.",
+        "Evo me!",
+        "Dobar dan!"
+      ],
+      "answer": "Imam četiri godine.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k12e22",
+      "type": "repeat",
+      "phrase": "Koliko imaš godina?",
+      "translation": "Сколько тебе лет?"
+    },
+    {
+      "id": "k12e23",
+      "type": "choice",
+      "prompt": "— Koliko imaš godina?\n— Imam jednu godinu. Ja sam prase!\n\nКто отвечает?",
+      "options": [
+        "Поросёнок.",
+        "Свинья.",
+        "Мальчик."
+      ],
+      "answer": "Поросёнок.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k12e24",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Doviđenja!",
+      "hint": "Doviđenja! — До свидания!",
+      "options": [
+        "До свидания!",
+        "Добрый день!",
+        "Спасибо!"
+      ],
+      "answer": "До свидания!"
+    },
+    {
+      "id": "k12e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ćao!",
+      "hint": "Ćao! — Пока!",
+      "options": [
+        "Пока!",
+        "Спасибо!",
+        "Доброе утро!"
+      ],
+      "answer": "Пока!",
+      "explanation": "Ćao — и «привет», и «пока», между знакомыми. Doviđenja — вежливо, в магазине или с незнакомыми. Zdravo — «привет», тоже по-дружески."
+    },
+    {
+      "id": "k12e26",
+      "type": "choice",
+      "prompt": "Уходишь из магазина.",
+      "options": [
+        "Doviđenja!",
+        "Ćao!",
+        "Dobro jutro!"
+      ],
+      "answer": "Doviđenja!",
+      "explanation": "Ćao — и «привет», и «пока», между знакомыми. Doviđenja — вежливо, в магазине или с незнакомыми. Zdravo — «привет», тоже по-дружески.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k12e27",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "До свидания",
+          "me": "Doviđenja"
+        },
+        {
+          "ru": "Пока",
+          "me": "Ćao"
+        },
+        {
+          "ru": "Привет",
+          "me": "Zdravo"
+        },
+        {
+          "ru": "Добрый день",
+          "me": "Dobar dan"
+        }
+      ]
+    },
+    {
+      "id": "k12e28",
+      "type": "speaking",
+      "phrase": "Doviđenja!",
+      "translation": "До свидания!"
+    },
+    {
+      "id": "k12e29",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Поросёнок — ребёнок свиньи.",
+          "me": "Prase je dijete svinje."
+        },
+        {
+          "ru": "У свиньи три поросёнка.",
+          "me": "Svinja ima tri praseta."
+        },
+        {
+          "ru": "Мои сёстры красивые.",
+          "me": "Moje sestre su lijepe."
+        },
+        {
+          "ru": "Сколько тебе лет?",
+          "me": "Koliko imaš godina?"
+        },
+        {
+          "ru": "До свидания!",
+          "me": "Doviđenja!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "prozor",
+      "ru": "окно"
+    },
+    {
+      "me": "godina",
+      "ru": "год"
+    },
+    {
+      "me": "svinja",
+      "ru": "свинья"
+    },
+    {
+      "me": "koliko",
+      "ru": "сколько"
+    },
+    {
+      "me": "doviđenja",
+      "ru": "до свидания"
+    },
+    {
+      "me": "ćao",
+      "ru": "пока, привет"
+    },
+    {
+      "me": "zdravo",
+      "ru": "привет"
+    }
+  ]
+}
