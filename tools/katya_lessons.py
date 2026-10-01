@@ -1101,6 +1101,73 @@ L.append(dict(id='k17', title='Je li? — Jeste! Volim pomfrit. Prijatno!', sect
           ('Приятного аппетита!', 'Prijatno!')),
 ]))
 
+# --- Урок 18 ---
+# htjeti: hoću / neću (третье слитное отрицание); -a → -u после «хочу»;
+# krompir, pasta, suši; «Izvinite, moram da idem.»
+HTJETI = ('Формы неправильные: hoću, hoćeš, hoće, hoćemo, hoćete, hoće. «Он хочет» и '
+          '«они хотят» звучат одинаково — hoće.')
+KAFU = 'kafa → kafu: когда «хочу что», у слов на -a окончание -u. Как в русском: вода — хочу воду.'
+NECU = ('neću = ne + hoću. Это третье слитное отрицание, после nisam и nemam. У '
+        'остальных глаголов отрицание отдельно: ne volim, ne igram.')
+IDEM = ('Izvinite — вежливо, на «вы» или многим людям. Своему, на «ты» — Izvini. '
+        'Moram da idem — буквально «должен, чтобы иду»: moram — «я должен», idem — '
+        '«я иду». В Черногории говорят и «moram ići», смысл тот же.')
+L.append(dict(id='k18', title='Hoću pastu, neću suši!', section=S2, words=[
+    ('htjeti', 'хотеть'), ('krompir', 'картофель'), ('pasta', 'паста'), ('suši', 'суши'),
+    ('izviniti', 'извинить'), ('morati', 'быть должным'), ('ići', 'идти')],
+    ex=[
+    dict(new('htjeti', 'хотеть', ['хотеть', 'любить', 'иметь'], label='Новый глагол'),
+         explanation=HTJETI),
+    dict(new('Hoću kafu.', 'Я хочу кофе.', ['Я хочу кофе.', 'Я люблю кофе.', 'Я не хочу кофе.'],
+             label='Новая форма'), explanation=KAFU),
+    dict(new('Neću kafu.', 'Я не хочу кофе.', ['Я хочу кофе.', 'Я не хочу кофе.',
+                                               'У меня нет кофе.'], label='Новая форма'),
+         explanation=NECU),
+    pairs(('ja', 'hoću'), ('ti', 'hoćeš'), ('mi', 'hoćemo'), ('vi', 'hoćete')),
+    pairs(('хочу', 'hoću'), ('не хочу', 'neću'), ('у меня нет', 'nemam'), ('я не (кто-то)', 'nisam')),
+    new('krompir', 'картофель', ['картофель', 'хлеб', 'яблоко']),
+    new('pasta', 'паста', ['суп', 'паста', 'похлёбка']),
+    dict(new('suši', 'суши', ['суши', 'рыба', 'паста']),
+         explanation='suši не меняется: volim suši, hoću suši.'),
+    pairs(('картофель', 'krompir'), ('паста', 'pasta'), ('суши', 'suši'), ('картошка фри', 'pomfrit')),
+    dict(pick('Hoću ___ .', ['pasta', 'pastu'], 'pastu', label='Выбери форму'), explanation=KAFU),
+    pick('Volim ___ .', ['voda', 'vodu'], 'vodu', label='Выбери форму'),
+    pairs(('хочу воду', 'hoću vodu'), ('хочу пасту', 'hoću pastu'), ('хочу кофе', 'hoću kafu'),
+          ('хочу суши', 'hoću suši')),
+    dict(pick('Я не люблю суши.', ['Ne volim suši.', 'Nevolim suši.', 'Nisam volim suši.'],
+              'Ne volim suši.', label='Выбери верное'), explanation=NECU),
+    dict(pick('Я не хочу пасту.', ['Neću pastu.', 'Ne hoću pastu.', 'Nisam pastu.'],
+              'Neću pastu.', label='Выбери верное'), explanation=NECU),
+    pick('— Hoćeš li pivo?\nОтветь «да»:', ['Hoću!', 'Jesam!', 'Imam!'], 'Hoću!',
+         label='Мини-диалог'),
+    pick('— Hoćeš li krompir?\nОтветь «нет»:', ['Neću.', 'Nisam.', 'Nemam.'], 'Neću.',
+         label='Мини-диалог'),
+    ear('Moja ćerka neće supu.', ['Моя дочь не хочет суп.', 'Моя дочь хочет суп.',
+                                  'Мой сын не хочет суп.'], 'Моя дочь не хочет суп.'),
+    dict(pick('Oni hoće suši.', ['Они хотят суши.', 'Он хочет суши.', 'Мы хотим суши.'],
+              'Они хотят суши.', label='Выбери перевод'), explanation=HTJETI),
+    bank('Мы хотим пасту.', 'Mi hoćemo pastu.', ['pastu', 'mi', 'hoćemo']),
+    say('Neću suši, hvala.', 'Не хочу суши, спасибо.'),
+    pick('Ne volim pastu.', ['Я не люблю пасту.', 'Я люблю пасту.', 'Я не хочу пасту.'],
+         'Я не люблю пасту.', label='Выбери перевод'),
+    say('Moj pas voli jabuke.', 'Мой пёс любит яблоки.'),
+    dict(phrase('Izvinite, moram da idem.', 'Извините, мне нужно идти.',
+                ['Извините, мне нужно идти.', 'Можете принести меню?', 'Спасибо, всё вкусно.']),
+         explanation=IDEM),
+    pick('Izvinite, moram da idem.\nКогда так говорят?',
+         ['Вы в гостях, и пора уходить.', 'Вы заходите в кафе.', 'Вы благодарите за ужин.'],
+         'Вы в гостях, и пора уходить.', label='Выбери ситуацию'),
+    bank('Извините, мне нужно идти.', 'Izvinite, moram da idem.',
+         ['moram', 'da', 'Izvinite', 'idem']),
+    echo('Izvinite, moram da idem.', 'Извините, мне нужно идти.'),
+    pick('— Hoćeš li kafu?\n— Neću, hvala. Izvini, moram da idem.\n\nЧто ответил знакомый?',
+         ['Не хочет, ему пора идти.', 'Хочет кофе.', 'Хочет пиво.'],
+         'Не хочет, ему пора идти.', explanation=IDEM, label='Мини-диалог'),
+    pairs(('Я хочу кофе.', 'Hoću kafu.'), ('Я не хочу пасту.', 'Neću pastu.'),
+          ('Я люблю суши.', 'Volim suši.'), ('Они хотят картофель.', 'Oni hoće krompir.'),
+          ('Извините, мне нужно идти.', 'Izvinite, moram da idem.')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

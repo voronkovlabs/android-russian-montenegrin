@@ -108,6 +108,12 @@
       "title": "Je li? — Jeste! Volim pomfrit. Prijatno!",
       "file": "k17.json",
       "section": "Раздел 2"
+    },
+    {
+      "id": "k18",
+      "title": "Hoću pastu, neću suši!",
+      "file": "k18.json",
+      "section": "Раздел 2"
     }
   ]
 }

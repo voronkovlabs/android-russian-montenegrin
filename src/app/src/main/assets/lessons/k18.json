@@ -1,0 +1,422 @@
+{
+  "id": "k18",
+  "title": "Hoću pastu, neću suši!",
+  "exercises": [
+    {
+      "id": "k18e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "htjeti",
+      "hint": "htjeti — хотеть",
+      "options": [
+        "хотеть",
+        "любить",
+        "иметь"
+      ],
+      "answer": "хотеть",
+      "explanation": "Формы неправильные: hoću, hoćeš, hoće, hoćemo, hoćete, hoće. «Он хочет» и «они хотят» звучат одинаково — hoće."
+    },
+    {
+      "id": "k18e02",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Hoću kafu.",
+      "hint": "Hoću kafu. — Я хочу кофе.",
+      "options": [
+        "Я хочу кофе.",
+        "Я люблю кофе.",
+        "Я не хочу кофе."
+      ],
+      "answer": "Я хочу кофе.",
+      "explanation": "kafa → kafu: когда «хочу что», у слов на -a окончание -u. Как в русском: вода — хочу воду."
+    },
+    {
+      "id": "k18e03",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Neću kafu.",
+      "hint": "Neću kafu. — Я не хочу кофе.",
+      "options": [
+        "Я хочу кофе.",
+        "Я не хочу кофе.",
+        "У меня нет кофе."
+      ],
+      "answer": "Я не хочу кофе.",
+      "explanation": "neću = ne + hoću. Это третье слитное отрицание, после nisam и nemam. У остальных глаголов отрицание отдельно: ne volim, ne igram."
+    },
+    {
+      "id": "k18e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "hoću"
+        },
+        {
+          "ru": "ti",
+          "me": "hoćeš"
+        },
+        {
+          "ru": "mi",
+          "me": "hoćemo"
+        },
+        {
+          "ru": "vi",
+          "me": "hoćete"
+        }
+      ]
+    },
+    {
+      "id": "k18e05",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "хочу",
+          "me": "hoću"
+        },
+        {
+          "ru": "не хочу",
+          "me": "neću"
+        },
+        {
+          "ru": "у меня нет",
+          "me": "nemam"
+        },
+        {
+          "ru": "я не (кто-то)",
+          "me": "nisam"
+        }
+      ]
+    },
+    {
+      "id": "k18e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "krompir",
+      "hint": "krompir — картофель",
+      "options": [
+        "картофель",
+        "хлеб",
+        "яблоко"
+      ],
+      "answer": "картофель"
+    },
+    {
+      "id": "k18e07",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pasta",
+      "hint": "pasta — паста",
+      "options": [
+        "суп",
+        "паста",
+        "похлёбка"
+      ],
+      "answer": "паста"
+    },
+    {
+      "id": "k18e08",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "suši",
+      "hint": "suši — суши",
+      "options": [
+        "суши",
+        "рыба",
+        "паста"
+      ],
+      "answer": "суши",
+      "explanation": "suši не меняется: volim suši, hoću suši."
+    },
+    {
+      "id": "k18e09",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "картофель",
+          "me": "krompir"
+        },
+        {
+          "ru": "паста",
+          "me": "pasta"
+        },
+        {
+          "ru": "суши",
+          "me": "suši"
+        },
+        {
+          "ru": "картошка фри",
+          "me": "pomfrit"
+        }
+      ]
+    },
+    {
+      "id": "k18e10",
+      "type": "choice",
+      "prompt": "Hoću ___ .",
+      "options": [
+        "pasta",
+        "pastu"
+      ],
+      "answer": "pastu",
+      "label": "Выбери форму",
+      "explanation": "kafa → kafu: когда «хочу что», у слов на -a окончание -u. Как в русском: вода — хочу воду."
+    },
+    {
+      "id": "k18e11",
+      "type": "choice",
+      "prompt": "Volim ___ .",
+      "options": [
+        "voda",
+        "vodu"
+      ],
+      "answer": "vodu",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k18e12",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "хочу воду",
+          "me": "hoću vodu"
+        },
+        {
+          "ru": "хочу пасту",
+          "me": "hoću pastu"
+        },
+        {
+          "ru": "хочу кофе",
+          "me": "hoću kafu"
+        },
+        {
+          "ru": "хочу суши",
+          "me": "hoću suši"
+        }
+      ]
+    },
+    {
+      "id": "k18e13",
+      "type": "choice",
+      "prompt": "Я не люблю суши.",
+      "options": [
+        "Ne volim suši.",
+        "Nevolim suši.",
+        "Nisam volim suši."
+      ],
+      "answer": "Ne volim suši.",
+      "label": "Выбери верное",
+      "explanation": "neću = ne + hoću. Это третье слитное отрицание, после nisam и nemam. У остальных глаголов отрицание отдельно: ne volim, ne igram."
+    },
+    {
+      "id": "k18e14",
+      "type": "choice",
+      "prompt": "Я не хочу пасту.",
+      "options": [
+        "Neću pastu.",
+        "Ne hoću pastu.",
+        "Nisam pastu."
+      ],
+      "answer": "Neću pastu.",
+      "label": "Выбери верное",
+      "explanation": "neću = ne + hoću. Это третье слитное отрицание, после nisam и nemam. У остальных глаголов отрицание отдельно: ne volim, ne igram."
+    },
+    {
+      "id": "k18e15",
+      "type": "choice",
+      "prompt": "— Hoćeš li pivo?\nОтветь «да»:",
+      "options": [
+        "Hoću!",
+        "Jesam!",
+        "Imam!"
+      ],
+      "answer": "Hoću!",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k18e16",
+      "type": "choice",
+      "prompt": "— Hoćeš li krompir?\nОтветь «нет»:",
+      "options": [
+        "Neću.",
+        "Nisam.",
+        "Nemam."
+      ],
+      "answer": "Neću.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k18e17",
+      "type": "choice",
+      "prompt": "Moja ćerka neće supu.",
+      "options": [
+        "Моя дочь не хочет суп.",
+        "Моя дочь хочет суп.",
+        "Мой сын не хочет суп."
+      ],
+      "answer": "Моя дочь не хочет суп.",
+      "byEar": true
+    },
+    {
+      "id": "k18e18",
+      "type": "choice",
+      "prompt": "Oni hoće suši.",
+      "options": [
+        "Они хотят суши.",
+        "Он хочет суши.",
+        "Мы хотим суши."
+      ],
+      "answer": "Они хотят суши.",
+      "label": "Выбери перевод",
+      "explanation": "Формы неправильные: hoću, hoćeš, hoće, hoćemo, hoćete, hoće. «Он хочет» и «они хотят» звучат одинаково — hoće."
+    },
+    {
+      "id": "k18e19",
+      "type": "word_bank",
+      "prompt": "Мы хотим пасту.",
+      "answer": "Mi hoćemo pastu.",
+      "bank": [
+        "pastu",
+        "mi",
+        "hoćemo"
+      ]
+    },
+    {
+      "id": "k18e20",
+      "type": "speaking",
+      "phrase": "Neću suši, hvala.",
+      "translation": "Не хочу суши, спасибо."
+    },
+    {
+      "id": "k18e21",
+      "type": "choice",
+      "prompt": "Ne volim pastu.",
+      "options": [
+        "Я не люблю пасту.",
+        "Я люблю пасту.",
+        "Я не хочу пасту."
+      ],
+      "answer": "Я не люблю пасту.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k18e22",
+      "type": "speaking",
+      "phrase": "Moj pas voli jabuke.",
+      "translation": "Мой пёс любит яблоки."
+    },
+    {
+      "id": "k18e23",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Izvinite, moram da idem.",
+      "hint": "Izvinite, moram da idem. — Извините, мне нужно идти.",
+      "options": [
+        "Извините, мне нужно идти.",
+        "Можете принести меню?",
+        "Спасибо, всё вкусно."
+      ],
+      "answer": "Извините, мне нужно идти.",
+      "explanation": "Izvinite — вежливо, на «вы» или многим людям. Своему, на «ты» — Izvini. Moram da idem — буквально «должен, чтобы иду»: moram — «я должен», idem — «я иду». В Черногории говорят и «moram ići», смысл тот же."
+    },
+    {
+      "id": "k18e24",
+      "type": "choice",
+      "prompt": "Izvinite, moram da idem.\nКогда так говорят?",
+      "options": [
+        "Вы в гостях, и пора уходить.",
+        "Вы заходите в кафе.",
+        "Вы благодарите за ужин."
+      ],
+      "answer": "Вы в гостях, и пора уходить.",
+      "label": "Выбери ситуацию"
+    },
+    {
+      "id": "k18e25",
+      "type": "word_bank",
+      "prompt": "Извините, мне нужно идти.",
+      "answer": "Izvinite, moram da idem.",
+      "bank": [
+        "moram",
+        "da",
+        "Izvinite",
+        "idem"
+      ]
+    },
+    {
+      "id": "k18e26",
+      "type": "repeat",
+      "phrase": "Izvinite, moram da idem.",
+      "translation": "Извините, мне нужно идти."
+    },
+    {
+      "id": "k18e27",
+      "type": "choice",
+      "prompt": "— Hoćeš li kafu?\n— Neću, hvala. Izvini, moram da idem.\n\nЧто ответил знакомый?",
+      "options": [
+        "Не хочет, ему пора идти.",
+        "Хочет кофе.",
+        "Хочет пиво."
+      ],
+      "answer": "Не хочет, ему пора идти.",
+      "explanation": "Izvinite — вежливо, на «вы» или многим людям. Своему, на «ты» — Izvini. Moram da idem — буквально «должен, чтобы иду»: moram — «я должен», idem — «я иду». В Черногории говорят и «moram ići», смысл тот же.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k18e28",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я хочу кофе.",
+          "me": "Hoću kafu."
+        },
+        {
+          "ru": "Я не хочу пасту.",
+          "me": "Neću pastu."
+        },
+        {
+          "ru": "Я люблю суши.",
+          "me": "Volim suši."
+        },
+        {
+          "ru": "Они хотят картофель.",
+          "me": "Oni hoće krompir."
+        },
+        {
+          "ru": "Извините, мне нужно идти.",
+          "me": "Izvinite, moram da idem."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "htjeti",
+      "ru": "хотеть"
+    },
+    {
+      "me": "krompir",
+      "ru": "картофель"
+    },
+    {
+      "me": "pasta",
+      "ru": "паста"
+    },
+    {
+      "me": "suši",
+      "ru": "суши"
+    },
+    {
+      "me": "izviniti",
+      "ru": "извинить"
+    },
+    {
+      "me": "morati",
+      "ru": "быть должным"
+    },
+    {
+      "me": "ići",
+      "ru": "идти"
+    }
+  ]
+}
