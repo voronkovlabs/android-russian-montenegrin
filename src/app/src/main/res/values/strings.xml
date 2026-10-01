@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Crnogorski Катя</string>
+    <string name="app_name">Crnogorski od nule</string>
     <!-- Подпись в списке «Поделиться» и в меню выделенного текста: там видно
          имя приложения, а нужна цель — куда фраза попадёт. -->
     <string name="share_label">В мои фразы (Катя)</string>
