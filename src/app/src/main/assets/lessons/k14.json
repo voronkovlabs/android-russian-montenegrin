@@ -122,6 +122,34 @@
     },
     {
       "id": "k14e10",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я твой отец.",
+          "me": "Ja sam tvoj otac."
+        },
+        {
+          "ru": "Я не твой отец.",
+          "me": "Ja nisam tvoj otac."
+        },
+        {
+          "ru": "Ты моя мать.",
+          "me": "Ti si moja majka."
+        },
+        {
+          "ru": "Ты не моя мать.",
+          "me": "Ti nisi moja majka."
+        }
+      ]
+    },
+    {
+      "id": "k14e11",
+      "type": "speaking",
+      "phrase": "Luk, ja sam tvoj otac!",
+      "translation": "Люк, я твой отец!"
+    },
+    {
+      "id": "k14e12",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "brz",
@@ -134,7 +162,7 @@
       "answer": "быстрый"
     },
     {
-      "id": "k14e11",
+      "id": "k14e13",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "spor",
@@ -147,7 +175,7 @@
       "answer": "медленный"
     },
     {
-      "id": "k14e12",
+      "id": "k14e14",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "avion",
@@ -160,7 +188,7 @@
       "answer": "самолёт"
     },
     {
-      "id": "k14e13",
+      "id": "k14e15",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "auto",
@@ -174,7 +202,7 @@
       "explanation": "auto — мужского рода, хотя кончается на -o: это укороченное automobil. Auto je brz."
     },
     {
-      "id": "k14e14",
+      "id": "k14e16",
       "type": "match",
       "pairs": [
         {
@@ -196,7 +224,7 @@
       ]
     },
     {
-      "id": "k14e15",
+      "id": "k14e17",
       "type": "choice",
       "prompt": "Puž je spor.",
       "options": [
@@ -208,7 +236,7 @@
       "label": "Выбери перевод"
     },
     {
-      "id": "k14e16",
+      "id": "k14e18",
       "type": "choice",
       "prompt": "Avion je ___ .",
       "options": [
@@ -220,7 +248,7 @@
       "label": "Выбери форму"
     },
     {
-      "id": "k14e17",
+      "id": "k14e19",
       "type": "choice",
       "prompt": "Kornjača je ___ .",
       "options": [
@@ -232,7 +260,7 @@
       "label": "Выбери форму"
     },
     {
-      "id": "k14e18",
+      "id": "k14e20",
       "type": "word_bank",
       "prompt": "Машина не медленная.",
       "answer": "Auto nije spor.",
@@ -243,7 +271,7 @@
       ]
     },
     {
-      "id": "k14e19",
+      "id": "k14e21",
       "type": "choice",
       "prompt": "Puž nije brz.",
       "options": [
@@ -255,7 +283,7 @@
       "label": "Выбери перевод"
     },
     {
-      "id": "k14e20",
+      "id": "k14e22",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "polako",
@@ -269,7 +297,7 @@
       "explanation": "Polako — одно из самых частых слов в Черногории. Буквально «медленно», но живёт в разных ролях: «не спеши, всё успеется» — Polako! Ne brini se; «помедленнее, пожалуйста», когда говорят слишком быстро — Polako, molim; «потихоньку» в ответ на «Kako si?» — ни хорошо, ни плохо; «осторожно», когда что-то несут или паркуются — Polako, polako!"
     },
     {
-      "id": "k14e21",
+      "id": "k14e23",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Ne brini se, polako.",
@@ -283,7 +311,7 @@
       "explanation": "Ne brini se — «не волнуйся», от brinuti se — «волноваться»."
     },
     {
-      "id": "k14e22",
+      "id": "k14e24",
       "type": "choice",
       "prompt": "«Polako!»\nКогда так говорят?",
       "options": [
@@ -296,7 +324,7 @@
       "label": "Выбери ситуацию"
     },
     {
-      "id": "k14e23",
+      "id": "k14e25",
       "type": "choice",
       "prompt": "— Kako si?\n— Polako.\n\nЧто ответил знакомый?",
       "options": [
@@ -308,13 +336,13 @@
       "label": "Мини-диалог"
     },
     {
-      "id": "k14e24",
+      "id": "k14e26",
       "type": "repeat",
       "phrase": "Ne brini se, polako.",
       "translation": "Не волнуйся, спокойно."
     },
     {
-      "id": "k14e25",
+      "id": "k14e27",
       "type": "word_bank",
       "prompt": "Не волнуйся, спокойно.",
       "answer": "Ne brini se, polako.",
@@ -326,7 +354,7 @@
       ]
     },
     {
-      "id": "k14e26",
+      "id": "k14e28",
       "type": "match",
       "pairs": [
         {
