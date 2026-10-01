@@ -152,6 +152,22 @@
         </FrameLayout>
     </ViewFlipper>
 
+    <!--
+        Жалоба на слово (4.16). Рядом с флагом страны и вне переворота: флаг
+        стоит внутри каждой стороны, а жалоба относится к слову целиком, и
+        прятать её на лицевой было бы странно. Отступ слева рассчитан так,
+        чтобы разойтись с флагом (12dp отступа плюс 22dp ширины).
+    -->
+    <ImageView
+        android:id="@+id/flip_note"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="2dp"
+        android:padding="7dp"
+        android:src="@drawable/ic_widget_flag" />
+
     <!-- Текст кнопки ставит код: ей надо и появляться, и прятаться. -->
     <TextView
         android:id="@+id/flip_known"

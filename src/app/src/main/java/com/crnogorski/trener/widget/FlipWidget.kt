@@ -29,6 +29,7 @@ import com.crnogorski.trener.data.WidgetWord
 import com.crnogorski.trener.data.WidgetWords
 import com.crnogorski.trener.speech.Speaker
 import com.crnogorski.trener.ui.KnownActivity
+import com.crnogorski.trener.ui.NoteActivity
 
 /**
  * Карточка-перевёртыш на домашнем экране (4.7).
@@ -290,6 +291,7 @@ class FlipWidget : AppWidgetProvider() {
                     "Crnogorski: слова появятся, когда откроешь приложение"
                 )
                 views.setViewVisibility(R.id.flip_known, View.GONE)
+                views.setViewVisibility(R.id.flip_note, View.GONE)
                 views.setOnClickPendingIntent(R.id.flip_card, open(context))
             } else {
                 fill(context, views, word)
@@ -348,6 +350,8 @@ class FlipWidget : AppWidgetProvider() {
          */
         private fun fillFront(context: Context, views: RemoteViews, word: WidgetWord) {
             views.setTextViewText(R.id.flip_ru, word.gloss)
+            views.setViewVisibility(R.id.flip_note, View.VISIBLE)
+            views.setOnClickPendingIntent(R.id.flip_note, note(context, word))
             // Записи, сложенные до 4.7, леммы не знают — отмечать нечего, и
             // кнопка прячется до пересборки списка при открытии приложения.
             if (word.lemma.isEmpty()) {
@@ -398,6 +402,21 @@ class FlipWidget : AppWidgetProvider() {
                 Intent(context, FlipWidget::class.java)
                     .setAction(ACTION_SAY)
                     .putExtra(EXTRA_WORD, word.word),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+        /**
+         * Жалоба на слово — окно поверх домашнего экрана, как и «уже знаю»:
+         * текст надо набрать, а виджет полей ввода не умеет.
+         */
+        private fun note(context: Context, word: WidgetWord): PendingIntent =
+            PendingIntent.getActivity(
+                context,
+                5,
+                Intent(context, NoteActivity::class.java)
+                    .putExtra(NoteActivity.LEMMA, word.lemma)
+                    .putExtra(NoteActivity.WORD, word.word)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 

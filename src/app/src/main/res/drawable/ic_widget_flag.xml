@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Флажок жалобы на перевёртыше (4.16) — тот же контурный флаг, что в шапке
+    приложения (`Icons.Outlined.Flag`), и значит он то же самое: «тут что-то
+    не так». Второй смысл у знакомого значка был бы хуже нового значка.
+
+    Цвет приглушённый, как у перевода: жалоба — действие редкое, и спорить за
+    внимание со словом ей незачем.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="@color/widget_muted">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M14.4,6L14,4H5v17h2v-7h5.6l0.4,2h7V6H14.4zM18,13h-4l-0.4,-2H7V6h5.6l0.4,2h5V13z" />
+</vector>
