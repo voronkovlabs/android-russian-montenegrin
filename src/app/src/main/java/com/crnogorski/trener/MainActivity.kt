@@ -243,6 +243,7 @@ class MainActivity : ComponentActivity() {
                                 HomeScreen(
                                     state = home,
                                     onLesson = vm::startLesson,
+                                    onGate = vm::startGate,
                                     onDaily = { extra -> vm.startDaily(extra = extra) },
                                     onReview = vm::startReview,
                                     onSettings = vm::openSettings,

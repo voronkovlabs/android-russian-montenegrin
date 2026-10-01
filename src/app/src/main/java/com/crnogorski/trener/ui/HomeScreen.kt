@@ -52,6 +52,8 @@ import com.crnogorski.trener.net.Release
 fun HomeScreen(
     state: HomeState,
     onLesson: (String) -> Unit,
+    /** «Перейти сюда»: строгий тест раздела с этим id. */
+    onGate: (String) -> Unit,
     onDaily: (Boolean) -> Unit,
     onReview: () -> Unit,
     onSettings: () -> Unit,
@@ -183,7 +185,11 @@ fun HomeScreen(
                     }
                     if (open) {
                         items(group.cards, key = { it.ref.id }) { card ->
-                            LessonRow(card, onClick = { onLesson(card.ref.id) })
+                            LessonRow(
+                                card,
+                                onClick = { onLesson(card.ref.id) },
+                                onJump = { card.gate?.let { onGate(it.id) } }
+                            )
                         }
                     }
                 }
@@ -832,7 +838,11 @@ private fun ReviewCard(count: Int, onClick: () -> Unit) {
 }
 
 @Composable
-private fun LessonRow(card: LessonCard, onClick: () -> Unit) {
+private fun LessonRow(card: LessonCard, onClick: () -> Unit, onJump: () -> Unit) {
+    // Запертый урок (за непройденным тестом раздела) виден, но не открывается:
+    // видно, что впереди, а войти можно только тестом — кнопкой «Перейти
+    // сюда» у первого урока раздела.
+    val locked = card.gate != null
     Row(
         Modifier
             // Отступ слева — самый дешёвый признак подчинения: видно, что
@@ -844,7 +854,7 @@ private fun LessonRow(card: LessonCard, onClick: () -> Unit) {
             // Рамки нет вовсе. Золотая рамка у пройденного урока (до 1.67)
             // делала строку заметнее собственного заголовка; о пройденности
             // и так говорят золотой код урока и счёт справа.
-            .clickable(onClick = onClick)
+            .clickable(enabled = !locked, onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 15.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -857,9 +867,12 @@ private fun LessonRow(card: LessonCard, onClick: () -> Unit) {
         Text(
             card.ref.title,
             style = MaterialTheme.typography.bodyLarge,
-            color = Paper,
+            color = if (locked) Muted else Paper,
             modifier = Modifier.weight(1f)
         )
+        if (card.jumpHere) {
+            SmallAction("Перейти сюда", onJump)
+        }
         if (card.score != null) {
             Text(
                 card.score,

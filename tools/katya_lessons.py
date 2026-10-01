@@ -710,8 +710,12 @@ for les in L:
                words=[dict(me=m, ru=r) for m, r in les['words']])
     with open(os.path.join(OUT, les['id'] + '.json'), 'w', encoding='utf-8', newline='\n') as f:
         json.dump(doc, f, ensure_ascii=False, indent=2); f.write('\n')
-    index.append(dict(id=les['id'], title=les['title'], file=les['id'] + '.json',
-                      section='Первые шаги'))
+    ref = dict(id=les['id'], title=les['title'], file=les['id'] + '.json',
+               section=les.get('section', 'Первые шаги'))
+    # Тест раздела: всё, что после него, заперто, пока он не пройден.
+    if les.get('test'):
+        ref['test'] = True
+    index.append(ref)
     print(les['id'], len(exs), 'заданий,', len(les['words']), 'слов')
 with open(os.path.join(OUT, 'index.json'), 'w', encoding='utf-8', newline='\n') as f:
     json.dump(dict(lessons=index), f, ensure_ascii=False, indent=2); f.write('\n')

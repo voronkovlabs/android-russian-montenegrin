@@ -134,7 +134,11 @@ fun SessionScreen(
                         .background(Surface1)
                         .padding(14.dp)
                 ) {
-                    Text("ГРАММАТИКА УРОКА", style = MaterialTheme.typography.labelSmall, color = Muted)
+                    Text(
+                        if (state.strict) "ТЕСТ РАЗДЕЛА" else "ГРАММАТИКА УРОКА",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Muted
+                    )
                     Spacer(Modifier.height(8.dp))
                     Text(state.note, style = MaterialTheme.typography.bodyMedium, color = Paper)
                 }
@@ -175,7 +179,9 @@ fun SessionScreen(
             // Экран пар её не получает: слов на нём пять, и какое имелось в
             // виду, нажатие не говорит. Тот же довод, по которому жалоба с
             // экрана пар не откатывает карточку.
-            if (live && state.current !is Exercise.Match) {
+            // В строгом тесте откладывать нечего: это проверка, а не занятие,
+            // и подмена задания сломала бы счёт ошибок.
+            if (live && state.current !is Exercise.Match && !state.strict) {
                 TextButton(onClick = onSnooze) {
                     Text("Отложить на потом", color = Muted)
                 }
@@ -377,7 +383,10 @@ private fun ExerciseBody(
 
         is Exercise.Table -> ParadigmAnswer(ex, speaker, enabled, onParadigm)
 
-        is Exercise.Choice -> ChoiceAnswer(ex, speaker, enabled, onSubmit, onPeek)
+        // Строгий тест раздела идёт без подсказок: подчёркивания нет вовсе.
+        is Exercise.Choice -> ChoiceAnswer(
+            if (state.strict) ex.copy(hint = "") else ex, speaker, enabled, onSubmit, onPeek
+        )
 
         is Exercise.WordBank ->
             WordBankAnswer(ex, state.glossary.ru, sayHint, enabled, onSubmit)
@@ -1852,13 +1861,27 @@ private fun FinishedView(state: SessionState, onExit: () -> Unit) {
         Modifier.fillMaxSize().padding(28.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text("ГОТОВО", style = MaterialTheme.typography.labelSmall, color = Accent)
+        Text(
+            when {
+                state.failed -> "ТЕСТ НЕ СДАН"
+                state.strict -> "ТЕСТ СДАН"
+                else -> "ГОТОВО"
+            },
+            style = MaterialTheme.typography.labelSmall,
+            color = if (state.failed) Crimson else Accent
+        )
         Spacer(Modifier.height(12.dp))
         Text(state.title, style = MaterialTheme.typography.displaySmall, color = Paper)
         Spacer(Modifier.height(16.dp))
         Text(
-            "${state.correct} из ${state.items.size} с первого раза. " +
-                "Ошибки вернутся в повторении.",
+            when {
+                state.failed -> "Больше $STRICT_MISTAKES ошибок. Можно попробовать ещё раз " +
+                    "или пройти уроки раздела по порядку."
+                state.strict -> "Ошибок: ${state.mistakes}. Следующий раздел открыт, " +
+                    "слова пропущенных уроков появились в словаре."
+                else -> "${state.correct} из ${state.items.size} с первого раза. " +
+                    "Ошибки вернутся в повторении."
+            },
             style = MaterialTheme.typography.bodyLarge,
             color = Muted
         )

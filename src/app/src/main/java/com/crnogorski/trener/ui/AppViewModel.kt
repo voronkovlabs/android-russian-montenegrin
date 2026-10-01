@@ -25,6 +25,7 @@ import com.crnogorski.trener.data.Exercise
 import com.crnogorski.trener.data.Glossary
 import com.crnogorski.trener.data.LessonProgressEntity
 import com.crnogorski.trener.data.LessonRef
+import com.crnogorski.trener.data.gateBefore
 import com.crnogorski.trener.data.LessonRepository
 import com.crnogorski.trener.data.LocalCheck
 import com.crnogorski.trener.data.MatchPair
@@ -80,7 +81,17 @@ import java.time.ZoneId
 data class LessonCard(
     val ref: LessonRef,
     val done: Boolean,
-    val score: String?
+    val score: String?,
+    /**
+     * Урок заперт этим тестом раздела (`LessonRef.test`): пока тест не пройден,
+     * урок не открывается. `null` — открыт.
+     */
+    val gate: LessonRef? = null,
+    /**
+     * Первый урок запертого раздела: у него кнопка «Перейти сюда» — строгий
+     * тест [gate], сдал — раздел открыт (Катя, 01.10.2026).
+     */
+    val jumpHere: Boolean = false
 )
 
 /**
@@ -542,6 +553,18 @@ data class SessionState(
      */
     val checkup: Boolean = false,
     /**
+     * Строгий тест раздела — перескок через раздел (`LessonRef.test`).
+     *
+     * Без подсказок, не больше [STRICT_MISTAKES] ошибок за попытку, и как
+     * срез ничего не пишет в повторения: это проверка, а не занятие. Сдан —
+     * все уроки до теста засчитываются пройденными.
+     */
+    val strict: Boolean = false,
+    /** Ошибок в строгом тесте за эту попытку. */
+    val mistakes: Int = 0,
+    /** Строгий тест провален: ошибок больше [STRICT_MISTAKES]. */
+    val failed: Boolean = false,
+    /**
      * Когда показали текущее задание. По разнице со временем вердикта
      * замеряется темп — из него считается, сколько заданий влезает в
      * пятнадцать минут (`Pace`).
@@ -567,6 +590,9 @@ data class SessionState(
 // Значения приходят из config/tuning.json (см. data/Tuning.kt): имена
 // и места использования те же, менять их теперь можно без пересборки.
 private val REVIEW_LIMIT: Int get() = Config.current.srs.reviewLimit
+
+/** Сколько ошибок прощает строгий тест раздела; следующая — провал (Катя). */
+const val STRICT_MISTAKES = 3
 
 /**
  * Потолок словарной сессии и дневная норма новых слов.
@@ -951,9 +977,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 // миграции, если версия сменилась.
                 val byId = Trace.span("база: пройденные уроки") { dao.lessonProgress() }
                     .associateBy { it.lessonId }
-                val cards = refs.map { ref ->
+                val cards = refs.mapIndexed { i, ref ->
                     val p = byId[ref.id]
-                    LessonCard(ref, p != null, p?.let { "${it.correct}/${it.total}" })
+                    val gate = refs.gateBefore(i, byId.keys)
+                    LessonCard(
+                        ref, p != null, p?.let { "${it.correct}/${it.total}" },
+                        gate = gate,
+                        jumpHere = gate != null && i > 0 && refs[i - 1].test
+                    )
                 }
                 // Группируем подряд идущие, а не сортируем: порядок уроков задаёт
                 // index.json, и раздел не должен его перетасовывать.
@@ -1240,6 +1271,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // Здесь она была бы потолком, из-за которого в пустой день занятие
             // не набралось бы.
             if (fresh.isNotEmpty()) return ref to fresh
+            // Непройденный тест раздела — стена: за ним следующий раздел, и
+            // начинать его, пока тест не закрыт, нельзя (Катя).
+            if (ref.test) return null
         }
         return null
     }
@@ -1368,6 +1402,31 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         pace.minutes = value
         refreshHome()
         _settings.value = _settings.value?.copy(dailyMinutes = pace.minutes)
+    }
+
+    /**
+     * Строгий тест раздела — «Перейти сюда» у первого урока запертого раздела.
+     *
+     * Подсказок нет вовсе (пустой словарь подсказок, `Choice.hint` скрыт на
+     * экране), ошибок не больше [STRICT_MISTAKES], в повторения не пишется
+     * ничего. Сдан — все уроки до теста включительно засчитываются
+     * ([finish]): так решила Катя — кто сдал тест раздела, тот знает и всё
+     * до него.
+     */
+    fun startGate(testId: String) {
+        viewModelScope.launch {
+            val lesson = repo.lesson(testId)
+            val items = lesson.exercises.map { SessionItem(testId, it) }
+            _session.value = SessionState(
+                title = lesson.title,
+                note = "Без подсказок. Можно ошибиться не больше $STRICT_MISTAKES раз.",
+                items = items,
+                strict = true,
+                shownAt = System.currentTimeMillis(),
+                glossary = Glossary()
+            )
+            guardNetwork(items)
+        }
     }
 
     fun startLesson(lessonId: String) {
@@ -3689,6 +3748,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun skipCurrent() {
         val state = _session.value ?: return
+        // В строгом тесте пропуск — ошибка: иначе тест сдавался бы пропуском
+        // всех заданий на произношение. В базу при этом не пишется ничего.
+        if (state.strict) {
+            lastAnswer = ""
+            localResult(false, "Пропуск в тесте считается ошибкой.",
+                state.current.referenceAnswer, "")
+            return
+        }
         val item = state.items[state.index]
         val seconds = noteTime(state, item.exercise, measure = false)
         lastAnswer = ""
@@ -3749,9 +3816,23 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun localResult(correct: Boolean, note: String, expected: String, answer: String) {
         record(correct)
-        _session.value = _session.value?.copy(
-            phase = Phase.Result(correct, note, "", expected, answer),
-            correct = (_session.value?.correct ?: 0) + if (correct) 1 else 0
+        val state = _session.value ?: return
+        val mistakes = state.mistakes + if (state.strict && !correct) 1 else 0
+        _session.value = state.copy(
+            phase = Phase.Result(
+                correct,
+                // В строгом тесте после ошибки видно, сколько их ещё можно.
+                if (state.strict && !correct) {
+                    listOf(
+                        if (mistakes > STRICT_MISTAKES) "Это четвёртая ошибка — тест не сдан."
+                        else "Ошибок: $mistakes из $STRICT_MISTAKES.",
+                        note
+                    ).filter { it.isNotBlank() }.joinToString(" ")
+                } else note,
+                "", expected, answer
+            ),
+            correct = state.correct + if (correct) 1 else 0,
+            mistakes = mistakes
         )
     }
 
@@ -3892,6 +3973,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // заодно испортил бы «секунды на ответ» в отчёте, потому что без
         // подсказок отвечают заметно дольше обычного.
         if (state.checkup) return
+        // Строгий тест — тоже проверка, а не занятие: в повторения не пишет.
+        if (state.strict) return
         val item = state.items[state.index]
         // Сырые секунды снимаются **до** noteTime: тот отдаёт уже списанное,
         // а списанное у ответа быстрее полутора секунд равно нулю — то есть
@@ -4008,6 +4091,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun next() {
         val state = _session.value ?: return
+        // Строгий тест обрывается на четвёртой ошибке: попытка кончилась, раздел
+        // не открывается, в базу не пишется ничего.
+        if (state.strict && state.mistakes > STRICT_MISTAKES) {
+            _session.value = state.copy(finished = true, failed = true)
+            return
+        }
         if (state.index + 1 >= state.items.size) {
             finish(state)
         } else {
@@ -4022,6 +4111,30 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun finish(state: SessionState) {
         viewModelScope.launch {
+            if (state.strict) {
+                // Сдан строгий тест: засчитываются все уроки до него
+                // включительно, их слова открываются в словаре, следующий
+                // раздел отпирается. Время дня и повторения не трогаются.
+                val testId = state.items.first().lessonId
+                val refs = repo.index().lessons
+                val done = dao.lessonProgress().mapTo(mutableSetOf()) { it.lessonId }
+                val now = System.currentTimeMillis()
+                for (ref in refs.take(refs.indexOfFirst { it.id == testId } + 1)) {
+                    if (ref.id in done) continue
+                    val total = repo.lesson(ref.id).exercises.size
+                    dao.upsertLesson(
+                        LessonProgressEntity(
+                            lessonId = ref.id,
+                            completedAt = now,
+                            correct = if (ref.id == testId) state.correct else total,
+                            total = total
+                        )
+                    )
+                }
+                _session.value = state.copy(finished = true)
+                autoSaveProgress()
+                return@launch
+            }
             var closed = 0
             if (!state.isReview) {
                 val lessonId = state.items.first().lessonId
