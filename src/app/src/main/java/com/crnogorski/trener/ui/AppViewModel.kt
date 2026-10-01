@@ -1461,10 +1461,19 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             .mapNotNull { VocabRepository.lemmaOf(it.exerciseId) }
             .distinct()
             .toList()
-        val taken = inPlay.toSet()
+        // Хвост добирается словами, у которых **нет ни одной карточки**, а не
+        // теми, кого нет в обороте. Это разные множества, и разница была
+        // ошибкой (4.14, жалоба владельца): выученное и отложенное из оборота
+        // выпадает, а раз карточка у него есть, вторым заходом оно
+        // возвращалось в тот же список — отмеченное «уже знаю» приходило
+        // обратно в тот же день, а хвост навсегда застревал на одних и тех же
+        // частотных словах, потому что отметка его состав не меняла.
+        val carded = cards.mapNotNullTo(mutableSetOf()) {
+            VocabRepository.lemmaOf(it.exerciseId)
+        }
         val order = inPlay.asSequence() + file.words.asSequence()
             .map { it.id }
-            .filter { it !in taken }
+            .filter { it !in carded }
         val glosses = file.words.associate { it.id to it.gloss }
 
         // Ударения нужны прямо здесь: в записи уезжает номер ударной буквы, а

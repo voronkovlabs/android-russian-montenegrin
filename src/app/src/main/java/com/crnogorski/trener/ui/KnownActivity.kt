@@ -100,7 +100,16 @@ class KnownActivity : ComponentActivity() {
     private fun mark(lemma: String, word: String) {
         val ctx = applicationContext
         Toast.makeText(ctx, "$word — в выученных", Toast.LENGTH_SHORT).show()
+
+        // Из списка виджетов слово убирается **до** закрытия окна и до базы:
+        // это запись в настройки, она мгновенная, а база в свежем процессе
+        // открывается не сразу. Окно закрыто — процесс становится кэшированным
+        // и на Xiaomi может не дожить до конца корутины; тогда отметка
+        // потеряется, но слово хотя бы не будет мелькать как ни в чём не
+        // бывало. Список пересоберётся при открытии приложения.
+        WidgetWords.remove(ctx, lemma)
         finish()
+
         queue.launch {
             val dao = AppDb.get(ctx).dao()
             val now = System.currentTimeMillis()
@@ -108,9 +117,6 @@ class KnownActivity : ComponentActivity() {
                 val id = VocabRepository.cardId(lemma, kind)
                 dao.upsertCard(Scheduler.known(dao.card(id), id, VocabRepository.LESSON_ID, now))
             }
-            // Список пересоберётся при открытии приложения, а до того виджеты
-            // показывали бы отмеченное слово снова.
-            WidgetWords.remove(ctx, lemma)
             WordWidget.redraw(ctx)
             FlipWidget.redraw(ctx)
         }
