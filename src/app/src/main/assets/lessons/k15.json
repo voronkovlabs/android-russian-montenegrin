@@ -1,0 +1,453 @@
+{
+  "id": "k15",
+  "title": "Мачке варят похлёбку",
+  "exercises": [
+    {
+      "id": "k15e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "kuvati",
+      "hint": "kuvati — варить",
+      "options": [
+        "варить",
+        "есть",
+        "спать"
+      ],
+      "answer": "варить"
+    },
+    {
+      "id": "k15e02",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ja kuvam.",
+      "hint": "Ja kuvam. — Я варю.",
+      "options": [
+        "Я варю.",
+        "Я ем.",
+        "Я сплю."
+      ],
+      "answer": "Я варю.",
+      "explanation": "Формы как у spavati: kuvam, kuvaš, kuva, kuvamo, kuvate, kuvaju."
+    },
+    {
+      "id": "k15e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "kuvam"
+        },
+        {
+          "ru": "ti",
+          "me": "kuvaš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "kuva"
+        },
+        {
+          "ru": "mi",
+          "me": "kuvamo"
+        },
+        {
+          "ru": "vi",
+          "me": "kuvate"
+        },
+        {
+          "ru": "oni",
+          "me": "kuvaju"
+        }
+      ]
+    },
+    {
+      "id": "k15e04",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "riba",
+      "hint": "riba — рыба",
+      "options": [
+        "рыба",
+        "акула",
+        "черепаха"
+      ],
+      "answer": "рыба"
+    },
+    {
+      "id": "k15e05",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "supa",
+      "hint": "supa — суп",
+      "options": [
+        "суп",
+        "вода",
+        "хлеб"
+      ],
+      "answer": "суп"
+    },
+    {
+      "id": "k15e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "čorba",
+      "hint": "čorba — похлёбка",
+      "options": [
+        "похлёбка",
+        "суп",
+        "котлета"
+      ],
+      "answer": "похлёбка",
+      "explanation": "Supa — прозрачный суп, бульон. Čorba — густой, наваристый. Riblja čorba — почти уха."
+    },
+    {
+      "id": "k15e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "рыба",
+          "me": "riba"
+        },
+        {
+          "ru": "суп",
+          "me": "supa"
+        },
+        {
+          "ru": "похлёбка",
+          "me": "čorba"
+        },
+        {
+          "ru": "кошка",
+          "me": "mačka"
+        }
+      ]
+    },
+    {
+      "id": "k15e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mačke kuvaju riblju čorbu.",
+      "hint": "Mačke kuvaju riblju čorbu. — Кошки варят рыбную похлёбку.",
+      "options": [
+        "Кошки варят рыбную похлёбку.",
+        "Кошки едят рыбную похлёбку.",
+        "Кошка варит рыбный суп."
+      ],
+      "answer": "Кошки варят рыбную похлёбку.",
+      "explanation": "riblja — «рыбная», от riba."
+    },
+    {
+      "id": "k15e09",
+      "type": "word_bank",
+      "prompt": "Кошки варят рыбную похлёбку.",
+      "answer": "Mačke kuvaju riblju čorbu.",
+      "bank": [
+        "čorbu",
+        "mačke",
+        "riblju",
+        "kuvaju"
+      ]
+    },
+    {
+      "id": "k15e10",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ukusan",
+      "hint": "ukusan — вкусный",
+      "options": [
+        "вкусный",
+        "горячий",
+        "красивый"
+      ],
+      "answer": "вкусный"
+    },
+    {
+      "id": "k15e11",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "vruć",
+      "hint": "vruć — горячий",
+      "options": [
+        "тёплый",
+        "горячий",
+        "вкусный"
+      ],
+      "answer": "горячий",
+      "explanation": "vruć — горячий, topao — тёплый."
+    },
+    {
+      "id": "k15e12",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "вкусный",
+          "me": "ukusan"
+        },
+        {
+          "ru": "вкусная",
+          "me": "ukusna"
+        },
+        {
+          "ru": "горячий",
+          "me": "vruć"
+        },
+        {
+          "ru": "горячая",
+          "me": "vruća"
+        }
+      ]
+    },
+    {
+      "id": "k15e13",
+      "type": "choice",
+      "prompt": "Čorba je ___ .",
+      "options": [
+        "vruć",
+        "vruća",
+        "vruće"
+      ],
+      "answer": "vruća",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k15e14",
+      "type": "choice",
+      "prompt": "Pivo nije ___ .",
+      "options": [
+        "vruć",
+        "vruća",
+        "vruće"
+      ],
+      "answer": "vruće",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k15e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ajkula kuva čorbu od kornjače.",
+      "hint": "Ajkula kuva čorbu od kornjače. — Акула варит похлёбку из черепахи.",
+      "options": [
+        "Акула варит похлёбку из черепахи.",
+        "Черепаха варит похлёбку из акулы.",
+        "Акула ест похлёбку из рыбы."
+      ],
+      "answer": "Акула варит похлёбку из черепахи."
+    },
+    {
+      "id": "k15e16",
+      "type": "choice",
+      "prompt": "Kornjača kuva čorbu od ajkule.",
+      "options": [
+        "Черепаха варит похлёбку из акулы.",
+        "Акула варит похлёбку из черепахи.",
+        "Черепаха ест похлёбку из акулы."
+      ],
+      "answer": "Черепаха варит похлёбку из акулы.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k15e17",
+      "type": "speaking",
+      "phrase": "Mačke kuvaju riblju čorbu.",
+      "translation": "Кошки варят рыбную похлёбку."
+    },
+    {
+      "id": "k15e18",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Mi nismo mačke.",
+      "hint": "Mi nismo mačke. — Мы не кошки.",
+      "options": [
+        "Мы не кошки.",
+        "Мы кошки.",
+        "Вы не кошки."
+      ],
+      "answer": "Мы не кошки.",
+      "explanation": "Во множественном: nismo, niste, nisu."
+    },
+    {
+      "id": "k15e19",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Vi niste ajkule.",
+      "hint": "Vi niste ajkule. — Вы не акулы.",
+      "options": [
+        "Вы акулы.",
+        "Вы не акулы.",
+        "Мы не акулы."
+      ],
+      "answer": "Вы не акулы."
+    },
+    {
+      "id": "k15e20",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Oni nisu ribe.",
+      "hint": "Oni nisu ribe. — Они не рыбы.",
+      "options": [
+        "Они не рыбы.",
+        "Они рыбы.",
+        "Вы не рыбы."
+      ],
+      "answer": "Они не рыбы."
+    },
+    {
+      "id": "k15e21",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я не",
+          "me": "ja nisam"
+        },
+        {
+          "ru": "мы не",
+          "me": "mi nismo"
+        },
+        {
+          "ru": "вы не",
+          "me": "vi niste"
+        },
+        {
+          "ru": "они не",
+          "me": "oni nisu"
+        }
+      ]
+    },
+    {
+      "id": "k15e22",
+      "type": "choice",
+      "prompt": "Мы не кошки. — Mi ___ mačke.",
+      "options": [
+        "nismo",
+        "niste",
+        "nisu"
+      ],
+      "answer": "nismo",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k15e23",
+      "type": "choice",
+      "prompt": "Они не рыбы, они акулы. — Oni ___ ribe, oni su ajkule.",
+      "options": [
+        "nismo",
+        "niste",
+        "nisu"
+      ],
+      "answer": "nisu",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k15e24",
+      "type": "choice",
+      "prompt": "Supa nije vruća.",
+      "options": [
+        "Суп не горячий.",
+        "Суп горячий.",
+        "Похлёбка не горячая."
+      ],
+      "answer": "Суп не горячий.",
+      "byEar": true
+    },
+    {
+      "id": "k15e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Je li sve bilo ukusno?",
+      "hint": "Je li sve bilo ukusno? — Всё было вкусно?",
+      "options": [
+        "Всё было вкусно?",
+        "Можно мне меню?",
+        "Суп горячий?"
+      ],
+      "answer": "Всё было вкусно?",
+      "explanation": "Так спрашивает официант, когда убирает тарелки. Bilo — «было», это прошедшее время, пока учим целиком. Отвечают: «Jeste, hvala!» — «Да, спасибо!» или «Sve je bilo odlično!» — «Всё было отлично!»."
+    },
+    {
+      "id": "k15e26",
+      "type": "choice",
+      "prompt": "Je li sve bilo ukusno?\nКогда так говорят?",
+      "options": [
+        "Официант убирает тарелки.",
+        "Вы заходите в кафе.",
+        "Вы просите меню."
+      ],
+      "answer": "Официант убирает тарелки.",
+      "label": "Выбери ситуацию"
+    },
+    {
+      "id": "k15e27",
+      "type": "repeat",
+      "phrase": "Je li sve bilo ukusno?",
+      "translation": "Всё было вкусно?"
+    },
+    {
+      "id": "k15e28",
+      "type": "choice",
+      "prompt": "— Je li sve bilo ukusno?\n— Da, hvala!\n\nЧто ответил гость?",
+      "options": [
+        "Всё было вкусно, спасибо.",
+        "Счёт, пожалуйста.",
+        "Нет, невкусно."
+      ],
+      "answer": "Всё было вкусно, спасибо.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k15e29",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Кошки варят рыбную похлёбку.",
+          "me": "Mačke kuvaju riblju čorbu."
+        },
+        {
+          "ru": "Акула варит похлёбку из черепахи.",
+          "me": "Ajkula kuva čorbu od kornjače."
+        },
+        {
+          "ru": "Мы не кошки.",
+          "me": "Mi nismo mačke."
+        },
+        {
+          "ru": "Похлёбка горячая.",
+          "me": "Čorba je vruća."
+        },
+        {
+          "ru": "Всё было вкусно?",
+          "me": "Je li sve bilo ukusno?"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "kuvati",
+      "ru": "варить"
+    },
+    {
+      "me": "riba",
+      "ru": "рыба"
+    },
+    {
+      "me": "supa",
+      "ru": "суп"
+    },
+    {
+      "me": "čorba",
+      "ru": "похлёбка"
+    },
+    {
+      "me": "ukusan",
+      "ru": "вкусный"
+    },
+    {
+      "me": "vruć",
+      "ru": "горячий"
+    },
+    {
+      "me": "sve",
+      "ru": "всё"
+    }
+  ]
+}
