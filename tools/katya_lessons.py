@@ -1029,6 +1029,78 @@ L.append(dict(id='k16', title='Igram sa prijateljem. Laku noć!', section=S2, wo
           ('Спокойной ночи!', 'Laku noć!')),
 ]))
 
+# --- Урок 17 ---
+# Je li? — Jeste; длинные формы biti; ответ глаголом; voljeti; zgrada, vrata,
+# kokoška, visok, nizak; пары-противоположности; «Prijatno!».
+JE_LI = 'Je li — вопрос «да или нет», тот же образец, что Imate li, Mogu li. То же самое, что Da li je…'
+JESTE = ('У «быть» есть длинные формы: jesam, jesi, jeste, jesmo, jeste, jesu. Короткие '
+         '(sam, si, je) не могут стоять одни и начинать фразу, поэтому в ответе и в '
+         'начале вопроса — длинные: «Je li vruće? — Jeste.», «Jesi li dobro? — Jesam.». '
+         'Отвечают не «да», а тем же глаголом: «Imaš li brata? — Imam».')
+VOLJETI = 'Новый образец, на -im: volim, voliš, voli, volimo, volite, vole. Volim te — я тебя люблю.'
+ZGRADA = ('kuća — свой дом, частный, на одну семью. zgrada — большое здание, '
+          'многоэтажка, в том числе жилая.')
+VRATA = 'vrata бывает только во множественном числе, как русские «ворота»: vrata su velika — «дверь большая».'
+KOKOSKA = 'kokoška — живая курица. Курица на тарелке — piletina.'
+PRIJATNO = ('За едой — «приятного аппетита». Его же говорят, уходя из магазина или кафе, '
+            'в значении «всего доброго», и продавец отвечает тем же. В обычной речи '
+            'prijatno — просто «приятно».')
+L.append(dict(id='k17', title='Je li? — Jeste! Volim pomfrit. Prijatno!', section=S2, words=[
+    ('voljeti', 'любить'), ('zgrada', 'здание'), ('vrata', 'дверь'), ('kokoška', 'курица'),
+    ('visok', 'высокий'), ('nizak', 'низкий'), ('prijatno', 'приятно')],
+    ex=[
+    dict(phrase('Je li ovo tvoja kuća?', 'Это твой дом?',
+                ['Это твой дом?', 'Это мой дом.', 'Где твой дом?']), explanation=JE_LI),
+    dict(new('Jeste.', 'Да (это так).', ['Да (это так).', 'Нет.', 'Спасибо.'],
+             label='Новая форма'), explanation=JESTE),
+    dict(new('Jesi li dobro? — Jesam.', 'Ты в порядке? — Да.',
+             ['Ты в порядке? — Да.', 'Где ты? — Здесь.', 'Ты голоден? — Нет.'],
+             label='Новая форма'), explanation=JESTE),
+    pairs(('sam', 'jesam'), ('si', 'jesi'), ('je', 'jeste'), ('su', 'jesu')),
+    pick('— Je li čorba vruća?\nВыбери ответ:', ['Jeste.', 'Jesam.', 'Imam.'], 'Jeste.',
+         explanation=JESTE, label='Мини-диалог'),
+    pick('— Imaš li brata?\nВыбери ответ:', ['Imam.', 'Jesam.', 'Jeste.'], 'Imam.',
+         explanation='Отвечают тем же глаголом, что в вопросе.', label='Мини-диалог'),
+    pick('— Imaš li kompjuter?\nОтветь «нет»:', ['Nemam.', 'Nisam.', 'Nije.'], 'Nemam.',
+         label='Мини-диалог'),
+    pick('— Je li supa vruća?\nОтветь «нет»:', ['Nije.', 'Nemam.', 'Nisam.'], 'Nije.',
+         label='Мини-диалог'),
+    ear('Je li ovo tvoj pas?', ['Это твоя собака?', 'Это моя собака.', 'Где твоя собака?'],
+        'Это твоя собака?'),
+    say('Jesi li dobro?', 'Ты в порядке?'),
+    dict(new('voljeti', 'любить', ['любить', 'играть', 'иметь'], label='Новый глагол'),
+         explanation=VOLJETI),
+    new('Volim pomfrit.', 'Я люблю картошку фри.',
+        ['Я люблю картошку фри.', 'Я ем картошку фри.', 'Ты любишь картошку фри.'],
+        label='Новая форма'),
+    pairs(('ja', 'volim'), ('ti', 'voliš'), ('mi', 'volimo'), ('oni', 'vole')),
+    pick('— Voliš li čorbu?\nВыбери ответ:', ['Volim.', 'Jesam.', 'Imam.'], 'Volim.',
+         label='Мини-диалог'),
+    say('Volim kompjuterske igre.', 'Я люблю компьютерные игры.'),
+    dict(new('zgrada', 'здание', ['здание', 'дом', 'окно']), explanation=ZGRADA),
+    dict(new('vrata', 'дверь', ['дверь', 'окно', 'стена']), explanation=VRATA),
+    dict(new('kokoška', 'курица', ['курица', 'кошка', 'свинья']), explanation=KOKOSKA),
+    new('visok', 'высокий', ['высокий', 'низкий', 'быстрый']),
+    dict(new('nizak', 'низкий', ['высокий', 'низкий', 'маленький']),
+         explanation='В женском роде a выпадает: nizak, niska.'),
+    pairs(('высокий', 'visok'), ('низкий', 'nizak'), ('быстрый', 'brz'), ('медленный', 'spor')),
+    pairs(('большой', 'velik'), ('маленький', 'mali'), ('хорошо', 'dobro'), ('плохо', 'loše')),
+    pick('Zgrada je ___ .', ['visok', 'visoka', 'visoko'], 'visoka', label='Выбери форму'),
+    dict(pick('Vrata su niska.', ['Дверь низкая.', 'Дверь высокая.', 'Окно низкое.'],
+              'Дверь низкая.', label='Выбери перевод'), explanation=VRATA),
+    pick('Kokoška nije brza.', ['Курица не быстрая.', 'Курица быстрая.', 'Кошка не быстрая.'],
+         'Курица не быстрая.', label='Выбери перевод'),
+    bank('Наш дом не высокий.', 'Naša kuća nije visoka.', ['visoka', 'naša', 'nije', 'kuća']),
+    dict(phrase('Prijatno!', 'Приятного аппетита!', ['Приятного аппетита!', 'Спокойной ночи!',
+                                                     'Спасибо!']), explanation=PRIJATNO),
+    pick('Друзья садятся есть.', ['Prijatno!', 'Laku noć!', 'Doviđenja!'], 'Prijatno!',
+         explanation=PRIJATNO, label='Что скажешь?'),
+    echo('Prijatno!', 'Приятного аппетита!'),
+    pairs(('Это твой дом?', 'Je li ovo tvoja kuća?'), ('Да.', 'Jeste.'),
+          ('Я люблю картошку фри.', 'Volim pomfrit.'), ('Здание высокое.', 'Zgrada je visoka.'),
+          ('Приятного аппетита!', 'Prijatno!')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

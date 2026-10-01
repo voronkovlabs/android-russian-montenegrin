@@ -1,0 +1,456 @@
+{
+  "id": "k17",
+  "title": "Je li? — Jeste! Volim pomfrit. Prijatno!",
+  "exercises": [
+    {
+      "id": "k17e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Je li ovo tvoja kuća?",
+      "hint": "Je li ovo tvoja kuća? — Это твой дом?",
+      "options": [
+        "Это твой дом?",
+        "Это мой дом.",
+        "Где твой дом?"
+      ],
+      "answer": "Это твой дом?",
+      "explanation": "Je li — вопрос «да или нет», тот же образец, что Imate li, Mogu li. То же самое, что Da li je…"
+    },
+    {
+      "id": "k17e02",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Jeste.",
+      "hint": "Jeste. — Да (это так).",
+      "options": [
+        "Да (это так).",
+        "Нет.",
+        "Спасибо."
+      ],
+      "answer": "Да (это так).",
+      "explanation": "У «быть» есть длинные формы: jesam, jesi, jeste, jesmo, jeste, jesu. Короткие (sam, si, je) не могут стоять одни и начинать фразу, поэтому в ответе и в начале вопроса — длинные: «Je li vruće? — Jeste.», «Jesi li dobro? — Jesam.». Отвечают не «да», а тем же глаголом: «Imaš li brata? — Imam»."
+    },
+    {
+      "id": "k17e03",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Jesi li dobro? — Jesam.",
+      "hint": "Jesi li dobro? — Jesam. — Ты в порядке? — Да.",
+      "options": [
+        "Ты в порядке? — Да.",
+        "Где ты? — Здесь.",
+        "Ты голоден? — Нет."
+      ],
+      "answer": "Ты в порядке? — Да.",
+      "explanation": "У «быть» есть длинные формы: jesam, jesi, jeste, jesmo, jeste, jesu. Короткие (sam, si, je) не могут стоять одни и начинать фразу, поэтому в ответе и в начале вопроса — длинные: «Je li vruće? — Jeste.», «Jesi li dobro? — Jesam.». Отвечают не «да», а тем же глаголом: «Imaš li brata? — Imam»."
+    },
+    {
+      "id": "k17e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "sam",
+          "me": "jesam"
+        },
+        {
+          "ru": "si",
+          "me": "jesi"
+        },
+        {
+          "ru": "je",
+          "me": "jeste"
+        },
+        {
+          "ru": "su",
+          "me": "jesu"
+        }
+      ]
+    },
+    {
+      "id": "k17e05",
+      "type": "choice",
+      "prompt": "— Je li čorba vruća?\nВыбери ответ:",
+      "options": [
+        "Jeste.",
+        "Jesam.",
+        "Imam."
+      ],
+      "answer": "Jeste.",
+      "explanation": "У «быть» есть длинные формы: jesam, jesi, jeste, jesmo, jeste, jesu. Короткие (sam, si, je) не могут стоять одни и начинать фразу, поэтому в ответе и в начале вопроса — длинные: «Je li vruće? — Jeste.», «Jesi li dobro? — Jesam.». Отвечают не «да», а тем же глаголом: «Imaš li brata? — Imam».",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k17e06",
+      "type": "choice",
+      "prompt": "— Imaš li brata?\nВыбери ответ:",
+      "options": [
+        "Imam.",
+        "Jesam.",
+        "Jeste."
+      ],
+      "answer": "Imam.",
+      "explanation": "Отвечают тем же глаголом, что в вопросе.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k17e07",
+      "type": "choice",
+      "prompt": "— Imaš li kompjuter?\nОтветь «нет»:",
+      "options": [
+        "Nemam.",
+        "Nisam.",
+        "Nije."
+      ],
+      "answer": "Nemam.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k17e08",
+      "type": "choice",
+      "prompt": "— Je li supa vruća?\nОтветь «нет»:",
+      "options": [
+        "Nije.",
+        "Nemam.",
+        "Nisam."
+      ],
+      "answer": "Nije.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k17e09",
+      "type": "choice",
+      "prompt": "Je li ovo tvoj pas?",
+      "options": [
+        "Это твоя собака?",
+        "Это моя собака.",
+        "Где твоя собака?"
+      ],
+      "answer": "Это твоя собака?",
+      "byEar": true
+    },
+    {
+      "id": "k17e10",
+      "type": "speaking",
+      "phrase": "Jesi li dobro?",
+      "translation": "Ты в порядке?"
+    },
+    {
+      "id": "k17e11",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "voljeti",
+      "hint": "voljeti — любить",
+      "options": [
+        "любить",
+        "играть",
+        "иметь"
+      ],
+      "answer": "любить",
+      "explanation": "Новый образец, на -im: volim, voliš, voli, volimo, volite, vole. Volim te — я тебя люблю."
+    },
+    {
+      "id": "k17e12",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Volim pomfrit.",
+      "hint": "Volim pomfrit. — Я люблю картошку фри.",
+      "options": [
+        "Я люблю картошку фри.",
+        "Я ем картошку фри.",
+        "Ты любишь картошку фри."
+      ],
+      "answer": "Я люблю картошку фри."
+    },
+    {
+      "id": "k17e13",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "volim"
+        },
+        {
+          "ru": "ti",
+          "me": "voliš"
+        },
+        {
+          "ru": "mi",
+          "me": "volimo"
+        },
+        {
+          "ru": "oni",
+          "me": "vole"
+        }
+      ]
+    },
+    {
+      "id": "k17e14",
+      "type": "choice",
+      "prompt": "— Voliš li čorbu?\nВыбери ответ:",
+      "options": [
+        "Volim.",
+        "Jesam.",
+        "Imam."
+      ],
+      "answer": "Volim.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k17e15",
+      "type": "speaking",
+      "phrase": "Volim kompjuterske igre.",
+      "translation": "Я люблю компьютерные игры."
+    },
+    {
+      "id": "k17e16",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "zgrada",
+      "hint": "zgrada — здание",
+      "options": [
+        "здание",
+        "дом",
+        "окно"
+      ],
+      "answer": "здание",
+      "explanation": "kuća — свой дом, частный, на одну семью. zgrada — большое здание, многоэтажка, в том числе жилая."
+    },
+    {
+      "id": "k17e17",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "vrata",
+      "hint": "vrata — дверь",
+      "options": [
+        "дверь",
+        "окно",
+        "стена"
+      ],
+      "answer": "дверь",
+      "explanation": "vrata бывает только во множественном числе, как русские «ворота»: vrata su velika — «дверь большая»."
+    },
+    {
+      "id": "k17e18",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kokoška",
+      "hint": "kokoška — курица",
+      "options": [
+        "курица",
+        "кошка",
+        "свинья"
+      ],
+      "answer": "курица",
+      "explanation": "kokoška — живая курица. Курица на тарелке — piletina."
+    },
+    {
+      "id": "k17e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "visok",
+      "hint": "visok — высокий",
+      "options": [
+        "высокий",
+        "низкий",
+        "быстрый"
+      ],
+      "answer": "высокий"
+    },
+    {
+      "id": "k17e20",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "nizak",
+      "hint": "nizak — низкий",
+      "options": [
+        "высокий",
+        "низкий",
+        "маленький"
+      ],
+      "answer": "низкий",
+      "explanation": "В женском роде a выпадает: nizak, niska."
+    },
+    {
+      "id": "k17e21",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "высокий",
+          "me": "visok"
+        },
+        {
+          "ru": "низкий",
+          "me": "nizak"
+        },
+        {
+          "ru": "быстрый",
+          "me": "brz"
+        },
+        {
+          "ru": "медленный",
+          "me": "spor"
+        }
+      ]
+    },
+    {
+      "id": "k17e22",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "большой",
+          "me": "velik"
+        },
+        {
+          "ru": "маленький",
+          "me": "mali"
+        },
+        {
+          "ru": "хорошо",
+          "me": "dobro"
+        },
+        {
+          "ru": "плохо",
+          "me": "loše"
+        }
+      ]
+    },
+    {
+      "id": "k17e23",
+      "type": "choice",
+      "prompt": "Zgrada je ___ .",
+      "options": [
+        "visok",
+        "visoka",
+        "visoko"
+      ],
+      "answer": "visoka",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k17e24",
+      "type": "choice",
+      "prompt": "Vrata su niska.",
+      "options": [
+        "Дверь низкая.",
+        "Дверь высокая.",
+        "Окно низкое."
+      ],
+      "answer": "Дверь низкая.",
+      "label": "Выбери перевод",
+      "explanation": "vrata бывает только во множественном числе, как русские «ворота»: vrata su velika — «дверь большая»."
+    },
+    {
+      "id": "k17e25",
+      "type": "choice",
+      "prompt": "Kokoška nije brza.",
+      "options": [
+        "Курица не быстрая.",
+        "Курица быстрая.",
+        "Кошка не быстрая."
+      ],
+      "answer": "Курица не быстрая.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k17e26",
+      "type": "word_bank",
+      "prompt": "Наш дом не высокий.",
+      "answer": "Naša kuća nije visoka.",
+      "bank": [
+        "visoka",
+        "naša",
+        "nije",
+        "kuća"
+      ]
+    },
+    {
+      "id": "k17e27",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Prijatno!",
+      "hint": "Prijatno! — Приятного аппетита!",
+      "options": [
+        "Приятного аппетита!",
+        "Спокойной ночи!",
+        "Спасибо!"
+      ],
+      "answer": "Приятного аппетита!",
+      "explanation": "За едой — «приятного аппетита». Его же говорят, уходя из магазина или кафе, в значении «всего доброго», и продавец отвечает тем же. В обычной речи prijatno — просто «приятно»."
+    },
+    {
+      "id": "k17e28",
+      "type": "choice",
+      "prompt": "Друзья садятся есть.",
+      "options": [
+        "Prijatno!",
+        "Laku noć!",
+        "Doviđenja!"
+      ],
+      "answer": "Prijatno!",
+      "explanation": "За едой — «приятного аппетита». Его же говорят, уходя из магазина или кафе, в значении «всего доброго», и продавец отвечает тем же. В обычной речи prijatno — просто «приятно».",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k17e29",
+      "type": "repeat",
+      "phrase": "Prijatno!",
+      "translation": "Приятного аппетита!"
+    },
+    {
+      "id": "k17e30",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Это твой дом?",
+          "me": "Je li ovo tvoja kuća?"
+        },
+        {
+          "ru": "Да.",
+          "me": "Jeste."
+        },
+        {
+          "ru": "Я люблю картошку фри.",
+          "me": "Volim pomfrit."
+        },
+        {
+          "ru": "Здание высокое.",
+          "me": "Zgrada je visoka."
+        },
+        {
+          "ru": "Приятного аппетита!",
+          "me": "Prijatno!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "voljeti",
+      "ru": "любить"
+    },
+    {
+      "me": "zgrada",
+      "ru": "здание"
+    },
+    {
+      "me": "vrata",
+      "ru": "дверь"
+    },
+    {
+      "me": "kokoška",
+      "ru": "курица"
+    },
+    {
+      "me": "visok",
+      "ru": "высокий"
+    },
+    {
+      "me": "nizak",
+      "ru": "низкий"
+    },
+    {
+      "me": "prijatno",
+      "ru": "приятно"
+    }
+  ]
+}
