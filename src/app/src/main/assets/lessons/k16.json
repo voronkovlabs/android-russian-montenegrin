@@ -1,0 +1,471 @@
+{
+  "id": "k16",
+  "title": "Igram sa prijateljem. Laku noć!",
+  "exercises": [
+    {
+      "id": "k16e01",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Imam brata.",
+      "hint": "Imam brata. — У меня есть брат.",
+      "options": [
+        "У меня есть брат.",
+        "У меня нет брата.",
+        "Это мой брат."
+      ],
+      "answer": "У меня есть брат.",
+      "explanation": "imati — «иметь». По-русски говорим «у меня есть», по-черногорски «я имею». Формы как у kuvati: imam, imaš, ima, imamo, imate, imaju."
+    },
+    {
+      "id": "k16e02",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Nemam brata.",
+      "hint": "Nemam brata. — У меня нет брата.",
+      "options": [
+        "У меня есть брат.",
+        "У меня нет брата.",
+        "Я не брат."
+      ],
+      "answer": "У меня нет брата.",
+      "explanation": "Отрицание — одно слово: nemam = ne + imam, как nisam."
+    },
+    {
+      "id": "k16e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "imam"
+        },
+        {
+          "ru": "ti",
+          "me": "imaš"
+        },
+        {
+          "ru": "mi",
+          "me": "imamo"
+        },
+        {
+          "ru": "oni",
+          "me": "imaju"
+        }
+      ]
+    },
+    {
+      "id": "k16e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "у меня есть",
+          "me": "imam"
+        },
+        {
+          "ru": "у меня нет",
+          "me": "nemam"
+        },
+        {
+          "ru": "у тебя нет",
+          "me": "nemaš"
+        },
+        {
+          "ru": "у него нет",
+          "me": "nema"
+        }
+      ]
+    },
+    {
+      "id": "k16e05",
+      "type": "choice",
+      "prompt": "У нас нет собаки. — Mi ___ psa.",
+      "options": [
+        "imamo",
+        "nemamo",
+        "nismo"
+      ],
+      "answer": "nemamo",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k16e06",
+      "type": "choice",
+      "prompt": "Oni imaju dva psa.",
+      "options": [
+        "У них две собаки.",
+        "У нас две собаки.",
+        "У них нет собаки."
+      ],
+      "answer": "У них две собаки.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k16e07",
+      "type": "choice",
+      "prompt": "Nemam kusur.",
+      "options": [
+        "У меня нет сдачи.",
+        "У меня есть сдача.",
+        "У вас нет сдачи?"
+      ],
+      "answer": "У меня нет сдачи.",
+      "byEar": true
+    },
+    {
+      "id": "k16e08",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "igra",
+      "hint": "igra — игра",
+      "options": [
+        "игра",
+        "еда",
+        "год"
+      ],
+      "answer": "игра"
+    },
+    {
+      "id": "k16e09",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kompjuter",
+      "hint": "kompjuter — компьютер",
+      "options": [
+        "компьютер",
+        "машина",
+        "самолёт"
+      ],
+      "answer": "компьютер"
+    },
+    {
+      "id": "k16e10",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "igrati",
+      "hint": "igrati — играть",
+      "options": [
+        "играть",
+        "варить",
+        "спать"
+      ],
+      "answer": "играть"
+    },
+    {
+      "id": "k16e11",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "drug",
+      "hint": "drug — друг, товарищ",
+      "options": [
+        "друг, товарищ",
+        "брат",
+        "отец"
+      ],
+      "answer": "друг, товарищ",
+      "explanation": "prijatelj — «друг» в обычном, взрослом смысле. drug — скорее «товарищ, приятель, одноклассник»: так говорят школьники — «drug iz razreda». Подруга — prijateljica."
+    },
+    {
+      "id": "k16e12",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "prijatelj",
+      "hint": "prijatelj — друг",
+      "options": [
+        "сын",
+        "друг",
+        "мальчик"
+      ],
+      "answer": "друг",
+      "explanation": "prijatelj — «друг» в обычном, взрослом смысле. drug — скорее «товарищ, приятель, одноклассник»: так говорят школьники — «drug iz razreda». Подруга — prijateljica."
+    },
+    {
+      "id": "k16e13",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "игра",
+          "me": "igra"
+        },
+        {
+          "ru": "компьютер",
+          "me": "kompjuter"
+        },
+        {
+          "ru": "играть",
+          "me": "igrati"
+        },
+        {
+          "ru": "друг",
+          "me": "prijatelj"
+        }
+      ]
+    },
+    {
+      "id": "k16e14",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Igram kompjuterske igre.",
+      "hint": "Igram kompjuterske igre. — Я играю в компьютерные игры.",
+      "options": [
+        "Я играю в компьютерные игры.",
+        "У меня есть компьютер.",
+        "Я играю с другом."
+      ],
+      "answer": "Я играю в компьютерные игры.",
+      "explanation": "«Ja» можно не говорить: по igram и так ясно, кто играет. «Играть во что» — без предлога: igram igre. В разговоре компьютерные игры часто зовут ласково — igrice."
+    },
+    {
+      "id": "k16e15",
+      "type": "word_bank",
+      "prompt": "Я играю в компьютерные игры.",
+      "answer": "Igram kompjuterske igre.",
+      "bank": [
+        "igre",
+        "igram",
+        "kompjuterske"
+      ]
+    },
+    {
+      "id": "k16e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Igram sa prijateljem.",
+      "hint": "Igram sa prijateljem. — Я играю с другом.",
+      "options": [
+        "Я играю с другом.",
+        "Я играю с братом.",
+        "Мы играем с другом."
+      ],
+      "answer": "Я играю с другом.",
+      "explanation": "sa — «с»: sa prijateljem, sa sestrom. После j окончание мягче: -em."
+    },
+    {
+      "id": "k16e17",
+      "type": "choice",
+      "prompt": "Мы играем с другом. — Mi ___ sa prijateljem.",
+      "options": [
+        "igramo",
+        "igraju",
+        "igram"
+      ],
+      "answer": "igramo",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k16e18",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "igram"
+        },
+        {
+          "ru": "ti",
+          "me": "igraš"
+        },
+        {
+          "ru": "mi",
+          "me": "igramo"
+        },
+        {
+          "ru": "oni",
+          "me": "igraju"
+        }
+      ]
+    },
+    {
+      "id": "k16e19",
+      "type": "choice",
+      "prompt": "Школьник говорит про одноклассника: «Ovo je moj ___.»",
+      "options": [
+        "drug",
+        "otac",
+        "brat"
+      ],
+      "answer": "drug",
+      "explanation": "prijatelj — «друг» в обычном, взрослом смысле. drug — скорее «товарищ, приятель, одноклассник»: так говорят школьники — «drug iz razreda». Подруга — prijateljica.",
+      "label": "Выбери слово"
+    },
+    {
+      "id": "k16e20",
+      "type": "choice",
+      "prompt": "Moj sin igra sa drugom.",
+      "options": [
+        "Мой сын играет с другом.",
+        "Мой сын играет с братом.",
+        "Мой брат играет с сыном."
+      ],
+      "answer": "Мой сын играет с другом.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k16e21",
+      "type": "choice",
+      "prompt": "Moj sin ima kompjuter.",
+      "options": [
+        "У моего сына есть компьютер.",
+        "У моего сына нет компьютера.",
+        "Мой сын играет на компьютере."
+      ],
+      "answer": "У моего сына есть компьютер.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k16e22",
+      "type": "choice",
+      "prompt": "Nemamo kompjuter.",
+      "options": [
+        "У нас нет компьютера.",
+        "У вас нет компьютера.",
+        "У нас есть компьютер."
+      ],
+      "answer": "У нас нет компьютера.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k16e23",
+      "type": "speaking",
+      "phrase": "Igram kompjuterske igre.",
+      "translation": "Я играю в компьютерные игры."
+    },
+    {
+      "id": "k16e24",
+      "type": "choice",
+      "prompt": "— Gdje si?\n— Evo me! Igram sa prijateljem.\n\nЧто делает знакомый?",
+      "options": [
+        "Играет с другом.",
+        "Спит.",
+        "Варит суп."
+      ],
+      "answer": "Играет с другом.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k16e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Laku noć!",
+      "hint": "Laku noć! — Спокойной ночи!",
+      "options": [
+        "Спокойной ночи!",
+        "Добрый вечер!",
+        "До свидания!"
+      ],
+      "answer": "Спокойной ночи!",
+      "explanation": "Буквально «лёгкой ночи». Говорят перед сном или уходя поздно вечером. А приходя вечером — «Dobro veče»."
+    },
+    {
+      "id": "k16e26",
+      "type": "choice",
+      "prompt": "Одиннадцать вечера, идёшь спать.",
+      "options": [
+        "Laku noć!",
+        "Dobro veče!",
+        "Dobar dan!"
+      ],
+      "answer": "Laku noć!",
+      "explanation": "Буквально «лёгкой ночи». Говорят перед сном или уходя поздно вечером. А приходя вечером — «Dobro veče».",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k16e27",
+      "type": "choice",
+      "prompt": "Семь вечера, приходишь в гости.",
+      "options": [
+        "Dobro veče!",
+        "Laku noć!",
+        "Dobro jutro!"
+      ],
+      "answer": "Dobro veče!",
+      "explanation": "Буквально «лёгкой ночи». Говорят перед сном или уходя поздно вечером. А приходя вечером — «Dobro veče».",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k16e28",
+      "type": "repeat",
+      "phrase": "Laku noć!",
+      "translation": "Спокойной ночи!"
+    },
+    {
+      "id": "k16e29",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Доброе утро",
+          "me": "Dobro jutro"
+        },
+        {
+          "ru": "Добрый вечер",
+          "me": "Dobro veče"
+        },
+        {
+          "ru": "Спокойной ночи",
+          "me": "Laku noć"
+        },
+        {
+          "ru": "До свидания",
+          "me": "Doviđenja"
+        }
+      ]
+    },
+    {
+      "id": "k16e30",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "У меня нет брата.",
+          "me": "Nemam brata."
+        },
+        {
+          "ru": "Я играю в компьютерные игры.",
+          "me": "Igram kompjuterske igre."
+        },
+        {
+          "ru": "Я играю с другом.",
+          "me": "Igram sa prijateljem."
+        },
+        {
+          "ru": "У нас нет собаки.",
+          "me": "Nemamo psa."
+        },
+        {
+          "ru": "Спокойной ночи!",
+          "me": "Laku noć!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "igra",
+      "ru": "игра"
+    },
+    {
+      "me": "kompjuter",
+      "ru": "компьютер"
+    },
+    {
+      "me": "igrati",
+      "ru": "играть"
+    },
+    {
+      "me": "drug",
+      "ru": "друг, товарищ"
+    },
+    {
+      "me": "prijatelj",
+      "ru": "друг"
+    },
+    {
+      "me": "sa",
+      "ru": "с"
+    },
+    {
+      "me": "lak",
+      "ru": "лёгкий"
+    },
+    {
+      "me": "noć",
+      "ru": "ночь"
+    }
+  ]
+}
