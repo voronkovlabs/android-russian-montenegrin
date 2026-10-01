@@ -13,8 +13,13 @@ import android.widget.RemoteViews
 import com.crnogorski.trener.MainActivity
 import com.crnogorski.trener.R
 import com.crnogorski.trener.data.AppDb
+import com.crnogorski.trener.data.ComplaintStore
 import com.crnogorski.trener.data.Config
+import com.crnogorski.trener.data.Journal
 import com.crnogorski.trener.data.Pace
+import com.crnogorski.trener.data.VocabKind
+import com.crnogorski.trener.data.VocabRepository
+import com.crnogorski.trener.srs.Scheduler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -24,6 +29,7 @@ import com.crnogorski.trener.data.WidgetWord
 import com.crnogorski.trener.data.WidgetWords
 import com.crnogorski.trener.speech.Speaker
 import com.crnogorski.trener.ui.KnownActivity
+import com.crnogorski.trener.ui.NoteActivity
 
 /**
  * Карточка-перевёртыш на домашнем экране (4.7).
@@ -69,6 +75,14 @@ class FlipWidget : AppWidgetProvider() {
                 tap(context)
                 study(context)
             }
+            ACTION_RECALLED -> {
+                // Слово берётся до перехода: отмечается то, что было на
+                // обороте, а не следующее. Кнопка живёт только на обороте,
+                // поэтому переход здесь — всегда «следующее слово».
+                val word = WidgetWords.current(context, WidgetWords.FLIP) ?: return
+                if (side(context) == 1) tap(context)
+                study(context, recalled = word)
+            }
             ACTION_REDRAW -> full(context, advance = false)
             ACTION_SAY -> say(context, intent.getStringExtra(EXTRA_WORD).orEmpty())
             else -> super.onReceive(context, intent)
@@ -110,13 +124,17 @@ class FlipWidget : AppWidgetProvider() {
      * занятия». Первый виджет по-прежнему не засчитывает ничего — там слова
      * мелькают сами, а здесь человек вспоминает и переворачивает.
      *
-     * **Мерится время между нажатиями, но не больше порога простоя**
-     * (`daily.idleSeconds`, десять секунд) — ровно то правило, по которому
-     * `Touch` вычитает простой из заданий в приложении. Над словом думают
-     * молча, и десять секунд тишины — это раздумье; дольше отличить раздумье
-     * от телефона, отложенного на стол, нечем, и за одно молчание платим не
-     * больше порога. Иначе нажатие утром после вечернего записало бы в
-     * занятие ночь.
+     * **Мерится время между нажатиями, и только внутри захода.** Промежуток
+     * дольше порога простоя (`daily.idleSeconds`, десять секунд) не
+     * засчитывается **вовсе**: такое нажатие не продолжает работу, а начинает
+     * новую, и счёт с него только стартует. Решение владельца (4.9): «начинать
+     * засчитывать время можно только после первого нажатия». До 4.9 длинный
+     * промежуток давал порог целиком — по правилу `Touch` в приложении, — и
+     * каждое мимоходом нажатое слово записывало в занятие десять секунд,
+     * которых не было.
+     *
+     * В приложении правило другое намеренно: там задание уже на экране и над
+     * ним думают, а здесь до первого нажатия человек мог и не смотреть.
      *
      * **Копится, а не пишется каждым нажатием.** `Pace.spend` отбрасывает
      * всё короче полутора секунд — так в занятии отсекается мгновенный
@@ -130,32 +148,38 @@ class FlipWidget : AppWidgetProvider() {
      * прибавляется — их не было: ни верности, ни ошибки виджет не знает.
      * День с одной только работой в виджете продлевает серию: занятие было.
      */
-    private fun study(context: Context) {
+    private fun study(context: Context, recalled: WidgetWord? = null) {
         Config.load(context)
         val prefs = prefs(context)
         val now = System.currentTimeMillis()
         val last = prefs.getLong(KEY_LAST_TAP, 0L)
         val limit = Config.current.daily.idleSeconds.takeIf { it > 0 } ?: DEFAULT_IDLE
         val gap = if (last == 0L) 0.0 else (now - last) / 1000.0
-        val pending = prefs.getFloat(KEY_PENDING, 0f) + gap.coerceIn(0.0, limit.toDouble())
-        if (pending < FLUSH_SECONDS) {
-            prefs.edit().putLong(KEY_LAST_TAP, now).putFloat(KEY_PENDING, pending.toFloat()).apply()
-            return
-        }
-        prefs.edit().putLong(KEY_LAST_TAP, now).putFloat(KEY_PENDING, 0f).apply()
-        val spent = Pace(context).spend(pending)
-        if (spent <= 0) return
+        // Дольше порога — это не раздумье, а начало нового захода: ноль.
+        val step = if (gap > limit) 0.0 else gap
+        val pending = prefs.getFloat(KEY_PENDING, 0f) + step
+        val flush = pending >= FLUSH_SECONDS
+        prefs.edit()
+            .putLong(KEY_LAST_TAP, now)
+            .putFloat(KEY_PENDING, if (flush) 0f else pending.toFloat())
+            .apply()
+        val spent = if (flush) Pace(context).spend(pending) else 0
+        if (spent <= 0 && recalled == null) return
+        // Одна запись на нажатие, и одна `goAsync`: второй раз приёмник её
+        // не выдаёт.
+        val answer = if (recalled != null) 1 else 0
         val done = goAsync()
         queue.launch {
             try {
+                recalled?.let { remember(context, it, now) }
                 AppDb.get(context).dao().bumpDay(
                     day = LocalDate.now().toString(),
                     lessonSeconds = 0,
                     reviewSeconds = 0,
                     wordSeconds = spent,
                     storySeconds = 0,
-                    answers = 0,
-                    correct = 0,
+                    answers = answer,
+                    correct = answer,
                     lessons = 0,
                     sessions = 0,
                     chunks = 0,
@@ -165,6 +189,32 @@ class FlipWidget : AppWidgetProvider() {
                 done.finish()
             }
         }
+    }
+
+    /**
+     * «Вспомнил» — записать верный ответ по карточке значения (4.11).
+     *
+     * Карточка именно значения (`mean`): она и спрашивает «аптека» →
+     * `apoteka`, то есть ровно то, что делает перевёртыш — русское спереди,
+     * вспомнить черногорское. Как её двигать, решает [Scheduler.recalled] —
+     * по тем же правилам, что занятие в приложении.
+     *
+     * В журнал ответ уходит с видом `widget`: он отвечает на «что обкатано
+     * живым пользованием», и отличать ответы с домашнего экрана от ответов в
+     * занятии там нужно — верность первых держится на слове человека.
+     */
+    private suspend fun remember(context: Context, word: WidgetWord, now: Long) {
+        if (word.lemma.isEmpty()) return
+        val dao = AppDb.get(context).dao()
+        val id = VocabRepository.cardId(word.lemma, VocabKind.Meaning)
+        dao.upsertCard(Scheduler.recalled(dao.card(id), id, VocabRepository.LESSON_ID, now))
+        Journal.note(
+            context,
+            unit = Journal.VOCAB,
+            kind = "widget",
+            ok = true,
+            who = ComplaintStore(context).deviceId()
+        )
     }
 
     companion object {
@@ -184,6 +234,7 @@ class FlipWidget : AppWidgetProvider() {
         private const val ACTION_TAP = "com.crnogorski.trener.FLIP_TAP"
         private const val ACTION_REDRAW = "com.crnogorski.trener.FLIP_REDRAW"
         private const val ACTION_SAY = "com.crnogorski.trener.FLIP_SAY"
+        private const val ACTION_RECALLED = "com.crnogorski.trener.FLIP_RECALLED"
         private const val EXTRA_WORD = "word"
         private const val SAY_LIMIT_MS = 8_000L
 
@@ -240,6 +291,7 @@ class FlipWidget : AppWidgetProvider() {
                     context.getString(R.string.app_name) + ": слова появятся, когда откроешь приложение"
                 )
                 views.setViewVisibility(R.id.flip_known, View.GONE)
+                views.setViewVisibility(R.id.flip_note, View.GONE)
                 views.setOnClickPendingIntent(R.id.flip_card, open(context))
             } else {
                 fill(context, views, word)
@@ -254,22 +306,32 @@ class FlipWidget : AppWidgetProvider() {
          *
          * Слова может не оказаться (список опустел, пока карточка висела) —
          * тогда полная перерисовка покажет пустое состояние.
+         *
+         * **Меняется только скрытая сторона** (жалоба 165, 4.10). До этого
+         * переход к следующему слову заполнял обе стороны разом, пока на экране
+         * ещё стоял черногорский оборот, — и уходящая сторона успевала
+         * мелькнуть **следующим** черногорским словом, то есть ответом раньше
+         * вопроса. Теперь переход трогает только русскую сторону (она в этот
+         * момент скрыта), а оборот заполняется при перевороте на него — тоже
+         * пока он скрыт. Видимая сторона не меняется никогда.
          */
         private fun tap(context: Context) {
             val ids = ids(context)
             if (ids.isEmpty()) return
-            if (WidgetWords.current(context, WidgetWords.FLIP) == null) {
+            val current = WidgetWords.current(context, WidgetWords.FLIP)
+            if (current == null) {
                 full(context, advance = false)
                 return
             }
             val views = RemoteViews(context.packageName, R.layout.flip_widget)
             if (side(context) == 0) {
                 setSide(context, 1)
+                fillBack(context, views, current)
                 views.setDisplayedChild(R.id.flip_card, 1)
             } else {
                 val next = WidgetWords.advance(context, WidgetWords.FLIP) ?: return
                 setSide(context, 0)
-                fill(context, views, next)
+                fillFront(context, views, next)
                 views.setDisplayedChild(R.id.flip_card, 0)
             }
             AppWidgetManager.getInstance(context).partiallyUpdateAppWidget(ids, views)
@@ -277,16 +339,19 @@ class FlipWidget : AppWidgetProvider() {
 
         /** Обе стороны и кнопка «знаю» — под одно слово. */
         private fun fill(context: Context, views: RemoteViews, word: WidgetWord) {
+            fillFront(context, views, word)
+            fillBack(context, views, word)
+        }
+
+        /**
+         * Русская сторона и кнопка «знаю». Кнопка стоит вне переворота и
+         * относится к слову, а не к стороне, — поэтому меняется вместе с
+         * лицевой, когда приходит новое слово.
+         */
+        private fun fillFront(context: Context, views: RemoteViews, word: WidgetWord) {
             views.setTextViewText(R.id.flip_ru, word.gloss)
-            views.setTextViewText(R.id.flip_word, WordWidget.stressed(context, word))
-            views.setTextViewText(R.id.flip_gloss, word.gloss)
-            views.setOnClickPendingIntent(R.id.flip_say, sayIntent(context, word))
-            if (word.emoji.isEmpty()) {
-                views.setViewVisibility(R.id.flip_emoji, View.GONE)
-            } else {
-                views.setViewVisibility(R.id.flip_emoji, View.VISIBLE)
-                views.setTextViewText(R.id.flip_emoji, word.emoji)
-            }
+            views.setViewVisibility(R.id.flip_note, View.VISIBLE)
+            views.setOnClickPendingIntent(R.id.flip_note, note(context, word))
             // Записи, сложенные до 4.7, леммы не знают — отмечать нечего, и
             // кнопка прячется до пересборки списка при открытии приложения.
             if (word.lemma.isEmpty()) {
@@ -295,6 +360,30 @@ class FlipWidget : AppWidgetProvider() {
                 views.setViewVisibility(R.id.flip_known, View.VISIBLE)
                 views.setTextViewText(R.id.flip_known, KNOWN)
                 views.setOnClickPendingIntent(R.id.flip_known, known(context, word))
+            }
+        }
+
+        /** Черногорский оборот: слово, эмодзи, перевод для сверки, 🔊. */
+        private fun fillBack(context: Context, views: RemoteViews, word: WidgetWord) {
+            views.setTextViewText(R.id.flip_word, WordWidget.stressed(context, word))
+            views.setTextViewText(R.id.flip_gloss, word.gloss)
+            views.setOnClickPendingIntent(R.id.flip_say, sayIntent(context, word))
+            // Намерение без слова внутри: отмечается то, что под курсором в
+            // момент нажатия, а на обороте всегда оно.
+            views.setOnClickPendingIntent(
+                R.id.flip_recalled,
+                PendingIntent.getBroadcast(
+                    context,
+                    4,
+                    Intent(context, FlipWidget::class.java).setAction(ACTION_RECALLED),
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+            )
+            if (word.emoji.isEmpty()) {
+                views.setViewVisibility(R.id.flip_emoji, View.GONE)
+            } else {
+                views.setViewVisibility(R.id.flip_emoji, View.VISIBLE)
+                views.setTextViewText(R.id.flip_emoji, word.emoji)
             }
         }
 
@@ -313,6 +402,21 @@ class FlipWidget : AppWidgetProvider() {
                 Intent(context, FlipWidget::class.java)
                     .setAction(ACTION_SAY)
                     .putExtra(EXTRA_WORD, word.word),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+        /**
+         * Жалоба на слово — окно поверх домашнего экрана, как и «уже знаю»:
+         * текст надо набрать, а виджет полей ввода не умеет.
+         */
+        private fun note(context: Context, word: WidgetWord): PendingIntent =
+            PendingIntent.getActivity(
+                context,
+                5,
+                Intent(context, NoteActivity::class.java)
+                    .putExtra(NoteActivity.LEMMA, word.lemma)
+                    .putExtra(NoteActivity.WORD, word.word)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 

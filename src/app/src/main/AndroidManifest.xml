@@ -134,6 +134,18 @@
             android:excludeFromRecents="true"
             android:theme="@style/Theme.Crnogorski.Share" />
 
+        <!--
+            Жалоба на слово с перевёртыша (4.16). Та же механика, что у
+            подтверждения «уже знаю»: виджет полей ввода не умеет.
+        -->
+        <activity
+            android:name=".ui.NoteActivity"
+            android:exported="false"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Crnogorski.Share" />
+
         <!-- Отдаёт complaints.jsonl в share как content://; file:// с Android 7 запрещён. -->
         <provider
             android:name="androidx.core.content.FileProvider"
