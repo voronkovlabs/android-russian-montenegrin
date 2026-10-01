@@ -1,0 +1,396 @@
+{
+  "id": "kt1",
+  "title": "Тест: Первые шаги",
+  "exercises": [
+    {
+      "id": "kt1e01",
+      "type": "choice",
+      "prompt": "Ja sam žena.",
+      "options": [
+        "Я женщина.",
+        "Ты женщина.",
+        "Она женщина."
+      ],
+      "answer": "Я женщина.",
+      "label": "Выбери перевод",
+      "hint": "žena — женщина"
+    },
+    {
+      "id": "kt1e02",
+      "type": "choice",
+      "prompt": "Vi ___ ljudi.",
+      "options": [
+        "sam",
+        "ste",
+        "su"
+      ],
+      "answer": "ste",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt1e03",
+      "type": "choice",
+      "prompt": "Oni ___ pomfrit.",
+      "options": [
+        "jedu",
+        "jedemo",
+        "jede"
+      ],
+      "answer": "jedu",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt1e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "sam"
+        },
+        {
+          "ru": "ti",
+          "me": "si"
+        },
+        {
+          "ru": "mi",
+          "me": "smo"
+        },
+        {
+          "ru": "oni",
+          "me": "su"
+        }
+      ]
+    },
+    {
+      "id": "kt1e05",
+      "type": "choice",
+      "prompt": "Moj sin loše spava.",
+      "options": [
+        "Мой сын плохо спит.",
+        "Мой сын хорошо спит.",
+        "Её сын плохо спит."
+      ],
+      "answer": "Мой сын плохо спит.",
+      "label": "Выбери перевод",
+      "hint": "loše — плохо; spavati — спать"
+    },
+    {
+      "id": "kt1e06",
+      "type": "choice",
+      "prompt": "___ sestra je lijepa.",
+      "options": [
+        "Moj",
+        "Moja",
+        "Moje"
+      ],
+      "answer": "Moja",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt1e07",
+      "type": "choice",
+      "prompt": "Ovo je ___ prase.",
+      "options": [
+        "naš",
+        "naša",
+        "naše"
+      ],
+      "answer": "naše",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt1e08",
+      "type": "choice",
+      "prompt": "Это его сестра. — Ovo je ___ sestra.",
+      "options": [
+        "njegov",
+        "njegova"
+      ],
+      "answer": "njegova",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt1e09",
+      "type": "choice",
+      "prompt": "Njihov otac jede pljeskavicu.",
+      "options": [
+        "Их отец ест котлету.",
+        "Наш отец ест котлету.",
+        "Их отец ест картошку фри."
+      ],
+      "answer": "Их отец ест котлету.",
+      "label": "Выбери перевод",
+      "hint": "njihov — их; pljeskavica — котлета"
+    },
+    {
+      "id": "kt1e10",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "два брата",
+          "me": "dva brata"
+        },
+        {
+          "ru": "две сестры",
+          "me": "dvije sestre"
+        },
+        {
+          "ru": "два пива",
+          "me": "dva piva"
+        },
+        {
+          "ru": "одна дочь",
+          "me": "jedna ćerka"
+        }
+      ]
+    },
+    {
+      "id": "kt1e11",
+      "type": "choice",
+      "prompt": "Tri ___ spavaju.",
+      "options": [
+        "kornjača",
+        "kornjače"
+      ],
+      "answer": "kornjače",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt1e12",
+      "type": "choice",
+      "prompt": "Svinja ima tri praseta.",
+      "options": [
+        "У свиньи три поросёнка.",
+        "У свиньи четыре поросёнка.",
+        "У кошки три поросёнка."
+      ],
+      "answer": "У свиньи три поросёнка.",
+      "byEar": true
+    },
+    {
+      "id": "kt1e13",
+      "type": "speaking",
+      "phrase": "Moja sestra ima dva sina.",
+      "translation": "У моей сестры два сына."
+    },
+    {
+      "id": "kt1e14",
+      "type": "choice",
+      "prompt": "Kuća je ___ .",
+      "options": [
+        "velik",
+        "velika",
+        "veliko"
+      ],
+      "answer": "velika",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt1e15",
+      "type": "choice",
+      "prompt": "Drvo je ___ .",
+      "options": [
+        "zelen",
+        "zelena",
+        "zeleno"
+      ],
+      "answer": "zeleno",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt1e16",
+      "type": "choice",
+      "prompt": "___ psi spavaju.",
+      "options": [
+        "Mali",
+        "Male"
+      ],
+      "answer": "Mali",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt1e17",
+      "type": "word_bank",
+      "prompt": "Мой брат большой, как дерево.",
+      "answer": "Moj brat je velik kao drvo.",
+      "bank": [
+        "kao",
+        "brat",
+        "drvo",
+        "moj",
+        "velik",
+        "je"
+      ]
+    },
+    {
+      "id": "kt1e18",
+      "type": "choice",
+      "prompt": "— Koliko imaš godina?\nВыбери ответ:",
+      "options": [
+        "Imam četiri godine.",
+        "Ovo je moj brat.",
+        "Hvala."
+      ],
+      "answer": "Imam četiri godine.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "kt1e19",
+      "type": "choice",
+      "prompt": "— Kako si?\nВыбери ответ:",
+      "options": [
+        "Dobro sam, hvala.",
+        "Ja sam muškarac.",
+        "Ćao!"
+      ],
+      "answer": "Dobro sam, hvala.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "kt1e20",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Что это?",
+          "me": "Šta je ovo?"
+        },
+        {
+          "ru": "Кто это?",
+          "me": "Ko je ovo?"
+        },
+        {
+          "ru": "Сколько тебе лет?",
+          "me": "Koliko imaš godina?"
+        },
+        {
+          "ru": "Как дела?",
+          "me": "Kako si?"
+        }
+      ]
+    },
+    {
+      "id": "kt1e21",
+      "type": "choice",
+      "prompt": "— Gdje si?\n— Evo me!\n\nЧто это?",
+      "options": [
+        "Как дела? — Нормально.",
+        "Где ты? — Я дома.",
+        "До свидания!"
+      ],
+      "answer": "Как дела? — Нормально.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "kt1e22",
+      "type": "choice",
+      "prompt": "Восемь вечера, уже темно, заходишь в кафе.",
+      "options": [
+        "Dobro veče!",
+        "Dobar dan!",
+        "Dobro jutro!"
+      ],
+      "answer": "Dobro veče!",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "kt1e23",
+      "type": "speaking",
+      "phrase": "Dobro veče!",
+      "translation": "Добрый вечер!"
+    },
+    {
+      "id": "kt1e24",
+      "type": "choice",
+      "prompt": "Уходишь из магазина.",
+      "options": [
+        "Doviđenja!",
+        "Dobro jutro!",
+        "Evo me!"
+      ],
+      "answer": "Doviđenja!",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "kt1e25",
+      "type": "choice",
+      "prompt": "Možete li mi donijeti meni?",
+      "options": [
+        "Можете принести мне меню?",
+        "Можно мне кетчуп?",
+        "Счёт, пожалуйста."
+      ],
+      "answer": "Можете принести мне меню?",
+      "label": "Выбери перевод",
+      "hint": "donijeti — принести; meni — меню"
+    },
+    {
+      "id": "kt1e26",
+      "type": "word_bank",
+      "prompt": "Два пива, пожалуйста.",
+      "answer": "Dva piva, molim.",
+      "bank": [
+        "piva",
+        "molim",
+        "dva"
+      ]
+    },
+    {
+      "id": "kt1e27",
+      "type": "choice",
+      "prompt": "Karticom ili gotovinom?",
+      "options": [
+        "Карточкой или наличными?",
+        "Есть ли сдача?",
+        "Нужен пакет?"
+      ],
+      "answer": "Карточкой или наличными?",
+      "byEar": true
+    },
+    {
+      "id": "kt1e28",
+      "type": "repeat",
+      "phrase": "Imate li nešto sitnije?",
+      "translation": "Есть ли у вас что-нибудь помельче?"
+    },
+    {
+      "id": "kt1e29",
+      "type": "choice",
+      "prompt": "Ajkula jede kornjaču.",
+      "options": [
+        "Акула ест черепаху.",
+        "Черепаха ест акулу.",
+        "Акула ест яблоко."
+      ],
+      "answer": "Акула ест черепаху.",
+      "label": "Выбери перевод",
+      "hint": "ajkula — акула; kornjača — черепаха"
+    },
+    {
+      "id": "kt1e30",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Добро пожаловать в Черногорию!",
+          "me": "Dobro došli u Crnu Goru!"
+        },
+        {
+          "ru": "Нужен пакет?",
+          "me": "Treba li kesa?"
+        },
+        {
+          "ru": "Можно мне кетчуп?",
+          "me": "Mogu li dobiti kečap?"
+        },
+        {
+          "ru": "Поросёнок — ребёнок свиньи.",
+          "me": "Prase je dijete svinje."
+        },
+        {
+          "ru": "Спасибо.",
+          "me": "Hvala."
+        }
+      ]
+    }
+  ],
+  "words": []
+}

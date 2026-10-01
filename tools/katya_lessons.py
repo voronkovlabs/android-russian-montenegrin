@@ -743,6 +743,73 @@ L.append(dict(id='k13', title='Šta je ovo? Kako si?', words=[
           ('Это мой брат.', 'Ovo je moj brat.'), ('Его сестра.', 'Njegova sestra.')),
 ]))
 
+# --- Тест раздела «Первые шаги» ---
+# Последний в разделе; за ним всё заперто, пока он не пройден (LessonRef.test).
+# Новых слов нет. Подсказка — перевод ключевых слов, а не фразы: прошедшему
+# уроки она открыта, в строгом режиме («Перейти сюда») скрыта вовсе.
+def hinted(ex, hint):
+    return dict(ex, hint=hint)
+
+L.append(dict(id='kt1', title='Тест: Первые шаги', test=True, words=[], ex=[
+    hinted(pick('Ja sam žena.', ['Я женщина.', 'Ты женщина.', 'Она женщина.'], 'Я женщина.',
+                label='Выбери перевод'), 'žena — женщина'),
+    pick('Vi ___ ljudi.', ['sam', 'ste', 'su'], 'ste', label='Вставь слово'),
+    pick('Oni ___ pomfrit.', ['jedu', 'jedemo', 'jede'], 'jedu', label='Вставь слово'),
+    pairs(('ja', 'sam'), ('ti', 'si'), ('mi', 'smo'), ('oni', 'su')),
+    hinted(pick('Moj sin loše spava.', ['Мой сын плохо спит.', 'Мой сын хорошо спит.',
+                                        'Её сын плохо спит.'], 'Мой сын плохо спит.',
+                label='Выбери перевод'), 'loše — плохо; spavati — спать'),
+    pick('___ sestra je lijepa.', ['Moj', 'Moja', 'Moje'], 'Moja', label='Выбери форму'),
+    pick('Ovo je ___ prase.', ['naš', 'naša', 'naše'], 'naše', label='Выбери форму'),
+    pick('Это его сестра. — Ovo je ___ sestra.', ['njegov', 'njegova'], 'njegova',
+         label='Вставь слово'),
+    hinted(pick('Njihov otac jede pljeskavicu.',
+                ['Их отец ест котлету.', 'Наш отец ест котлету.', 'Их отец ест картошку фри.'],
+                'Их отец ест котлету.', label='Выбери перевод'),
+           'njihov — их; pljeskavica — котлета'),
+    pairs(('два брата', 'dva brata'), ('две сестры', 'dvije sestre'), ('два пива', 'dva piva'),
+          ('одна дочь', 'jedna ćerka')),
+    pick('Tri ___ spavaju.', ['kornjača', 'kornjače'], 'kornjače', label='Выбери форму'),
+    ear('Svinja ima tri praseta.', ['У свиньи три поросёнка.', 'У свиньи четыре поросёнка.',
+                                    'У кошки три поросёнка.'], 'У свиньи три поросёнка.'),
+    say('Moja sestra ima dva sina.', 'У моей сестры два сына.'),
+    pick('Kuća je ___ .', ['velik', 'velika', 'veliko'], 'velika', label='Выбери форму'),
+    pick('Drvo je ___ .', ['zelen', 'zelena', 'zeleno'], 'zeleno', label='Выбери форму'),
+    pick('___ psi spavaju.', ['Mali', 'Male'], 'Mali', label='Выбери форму'),
+    bank('Мой брат большой, как дерево.', 'Moj brat je velik kao drvo.',
+         ['kao', 'brat', 'drvo', 'moj', 'velik', 'je']),
+    pick('— Koliko imaš godina?\nВыбери ответ:', ['Imam četiri godine.', 'Ovo je moj brat.',
+                                                 'Hvala.'], 'Imam četiri godine.',
+         label='Мини-диалог'),
+    pick('— Kako si?\nВыбери ответ:', ['Dobro sam, hvala.', 'Ja sam muškarac.', 'Ćao!'],
+         'Dobro sam, hvala.', label='Мини-диалог'),
+    pairs(('Что это?', 'Šta je ovo?'), ('Кто это?', 'Ko je ovo?'),
+          ('Сколько тебе лет?', 'Koliko imaš godina?'), ('Как дела?', 'Kako si?')),
+    pick('— Gdje si?\n— Evo me!\n\nЧто это?', ['Как дела? — Нормально.', 'Где ты? — Я дома.',
+                                             'До свидания!'], 'Как дела? — Нормально.',
+         label='Мини-диалог'),
+    pick('Восемь вечера, уже темно, заходишь в кафе.', ['Dobro veče!', 'Dobar dan!',
+                                                        'Dobro jutro!'], 'Dobro veče!',
+         label='Что скажешь?'),
+    say('Dobro veče!', 'Добрый вечер!'),
+    pick('Уходишь из магазина.', ['Doviđenja!', 'Dobro jutro!', 'Evo me!'], 'Doviđenja!',
+         label='Что скажешь?'),
+    hinted(pick('Možete li mi donijeti meni?', ['Можете принести мне меню?',
+                                                'Можно мне кетчуп?', 'Счёт, пожалуйста.'],
+                'Можете принести мне меню?', label='Выбери перевод'),
+           'donijeti — принести; meni — меню'),
+    bank('Два пива, пожалуйста.', 'Dva piva, molim.', ['piva', 'molim', 'dva']),
+    ear('Karticom ili gotovinom?', ['Карточкой или наличными?', 'Есть ли сдача?',
+                                    'Нужен пакет?'], 'Карточкой или наличными?'),
+    echo('Imate li nešto sitnije?', 'Есть ли у вас что-нибудь помельче?'),
+    hinted(pick('Ajkula jede kornjaču.', ['Акула ест черепаху.', 'Черепаха ест акулу.',
+                                          'Акула ест яблоко.'], 'Акула ест черепаху.',
+                label='Выбери перевод'), 'ajkula — акула; kornjača — черепаха'),
+    pairs(('Добро пожаловать в Черногорию!', 'Dobro došli u Crnu Goru!'),
+          ('Нужен пакет?', 'Treba li kesa?'), ('Можно мне кетчуп?', 'Mogu li dobiti kečap?'),
+          ('Поросёнок — ребёнок свиньи.', 'Prase je dijete svinje.'), ('Спасибо.', 'Hvala.')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

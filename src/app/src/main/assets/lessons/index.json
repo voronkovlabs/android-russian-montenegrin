@@ -77,6 +77,13 @@
       "title": "Šta je ovo? Kako si?",
       "file": "k13.json",
       "section": "Первые шаги"
+    },
+    {
+      "id": "kt1",
+      "title": "Тест: Первые шаги",
+      "file": "kt1.json",
+      "section": "Первые шаги",
+      "test": true
     }
   ]
 }
