@@ -420,6 +420,13 @@ def main(lexpath):
     split_forms.write(slim, bands, OUT_DIR)
     print('полос парадигм: %d' % len(bands))
 
+    # Звательный дописывается отдельным шагом (4.30): `pick` его не берёт —
+    # у него почти всегда нулевая частота по корпусу, а нужен он всё равно.
+    # Без этого вызова пересборка молча стёрла бы его из полос. Импорт здесь,
+    # а не наверху: add_vocative сам берёт `reflex` из этого модуля.
+    import add_vocative
+    add_vocative.apply(lexpath, OUT_DIR)
+
     # --- сводка ---
     with_forms = [r for r in rows if r['forms']]
     with_odd = [r for r in rows if r['odd']]
