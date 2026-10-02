@@ -3858,6 +3858,34 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         return null
     }
 
+    /**
+     * 🧠 «уже знаю» прямо на перевёртыше (4.20) — то же, что кнопка в виджете
+     * (`KnownActivity`): счёт верных до «выучено», интервал `srs.knownDays`,
+     * две карточки — значение и обратный перевод. Подтверждение спрашивает
+     * экран, сюда приходят уже с согласием.
+     *
+     * Из списка виджетов слово уходит сразу: иначе оно мелькало бы на
+     * домашнем экране до следующей пересборки главного.
+     */
+    fun markKnown() {
+        val state = _session.value ?: return
+        val item = state.items[state.index]
+        val lemma = VocabRepository.lemmaOf(item.exercise.id) ?: return
+        val app = getApplication<Application>()
+        WidgetWords.remove(app, lemma)
+        viewModelScope.launch {
+            val now = System.currentTimeMillis()
+            for (kind in listOf(VocabKind.Meaning, VocabKind.Recall)) {
+                val id = VocabRepository.cardId(lemma, kind)
+                dao.upsertCard(Scheduler.known(dao.card(id), id, VocabRepository.LESSON_ID, now))
+            }
+            WordWidget.redraw(app)
+            FlipWidget.redraw(app)
+        }
+        _notice.value = "«${Ijekavica.show(lemma)}» — в выученных"
+        next()
+    }
+
     fun skipCurrent() {
         val state = _session.value ?: return
         val item = state.items[state.index]

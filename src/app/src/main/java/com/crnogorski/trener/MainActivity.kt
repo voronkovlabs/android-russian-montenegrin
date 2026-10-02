@@ -272,6 +272,7 @@ class MainActivity : ComponentActivity() {
                                 onSubmit = vm::submitText,
                                 onSkip = vm::skipCurrent,
                                 onSnooze = vm::snoozeCurrent,
+                                onKnown = vm::markKnown,
                                 onMatch = vm::submitMatch,
                                 onParadigm = vm::submitParadigm,
                                 onRate = vm::rateCurrent,
