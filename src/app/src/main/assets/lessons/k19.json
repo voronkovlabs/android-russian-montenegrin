@@ -1,0 +1,456 @@
+{
+  "id": "k19",
+  "title": "Skupo! Puno posla!",
+  "exercises": [
+    {
+      "id": "k19e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "skup",
+      "hint": "skup — дорогой",
+      "options": [
+        "дорогой",
+        "дешёвый",
+        "высокий"
+      ],
+      "answer": "дорогой"
+    },
+    {
+      "id": "k19e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "jeftin",
+      "hint": "jeftin — дешёвый",
+      "options": [
+        "дорогой",
+        "дешёвый",
+        "вкусный"
+      ],
+      "answer": "дешёвый"
+    },
+    {
+      "id": "k19e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "дорогой",
+          "me": "skup"
+        },
+        {
+          "ru": "дешёвый",
+          "me": "jeftin"
+        },
+        {
+          "ru": "высокий",
+          "me": "visok"
+        },
+        {
+          "ru": "низкий",
+          "me": "nizak"
+        }
+      ]
+    },
+    {
+      "id": "k19e04",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Kafa je skupa.",
+      "hint": "Kafa je skupa. — Кофе дорогой.",
+      "options": [
+        "Кофе дорогой.",
+        "Кофе дешёвый.",
+        "Кофе вкусный."
+      ],
+      "answer": "Кофе дорогой.",
+      "explanation": "kafa — женского рода, поэтому skupa, хотя по-русски «кофе дорогой»."
+    },
+    {
+      "id": "k19e05",
+      "type": "choice",
+      "prompt": "Pasta je ___ .",
+      "options": [
+        "jeftin",
+        "jeftina",
+        "jeftino"
+      ],
+      "answer": "jeftina",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k19e06",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Sve je skupo.",
+      "hint": "Sve je skupo. — Всё дорого.",
+      "options": [
+        "Всё дорого.",
+        "Всё дёшево.",
+        "Всё вкусно."
+      ],
+      "answer": "Всё дорого.",
+      "explanation": "skupo — «дорого». Наречие звучит как средний род прилагательного: skup → skupo, jeftin → jeftino, brz → brzo."
+    },
+    {
+      "id": "k19e07",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Sve je jeftino.",
+      "hint": "Sve je jeftino. — Всё дёшево.",
+      "options": [
+        "Всё дорого.",
+        "Всё дёшево.",
+        "Всё хорошо."
+      ],
+      "answer": "Всё дёшево."
+    },
+    {
+      "id": "k19e08",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "дорогой",
+          "me": "skup"
+        },
+        {
+          "ru": "дорого",
+          "me": "skupo"
+        },
+        {
+          "ru": "дешёвый",
+          "me": "jeftin"
+        },
+        {
+          "ru": "дёшево",
+          "me": "jeftino"
+        }
+      ]
+    },
+    {
+      "id": "k19e09",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "быстро",
+          "me": "brzo"
+        },
+        {
+          "ru": "медленно",
+          "me": "sporo"
+        },
+        {
+          "ru": "хорошо",
+          "me": "dobro"
+        },
+        {
+          "ru": "плохо",
+          "me": "loše"
+        }
+      ]
+    },
+    {
+      "id": "k19e10",
+      "type": "choice",
+      "prompt": "Сын ест быстро. — Sin jede ___ .",
+      "options": [
+        "brz",
+        "brzo"
+      ],
+      "answer": "brzo",
+      "label": "Вставь слово",
+      "explanation": "skupo — «дорого». Наречие звучит как средний род прилагательного: skup → skupo, jeftin → jeftino, brz → brzo."
+    },
+    {
+      "id": "k19e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Koliko košta?",
+      "hint": "Koliko košta? — Сколько стоит?",
+      "options": [
+        "Сколько стоит?",
+        "Сколько тебе лет?",
+        "Где это?"
+      ],
+      "answer": "Сколько стоит?"
+    },
+    {
+      "id": "k19e12",
+      "type": "choice",
+      "prompt": "— Koliko košta pasta?\n— Četiri eura.\n— Skupo!\n\nЧто думает покупатель?",
+      "options": [
+        "Дорого.",
+        "Дёшево.",
+        "Вкусно."
+      ],
+      "answer": "Дорого.",
+      "explanation": "«Евро» — eura: četiri eura, как dva brata.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k19e13",
+      "type": "choice",
+      "prompt": "Pomfrit je jeftin.",
+      "options": [
+        "Картошка фри дешёвая.",
+        "Картошка фри дорогая.",
+        "Котлета дешёвая."
+      ],
+      "answer": "Картошка фри дешёвая.",
+      "byEar": true
+    },
+    {
+      "id": "k19e14",
+      "type": "speaking",
+      "phrase": "Koliko košta kafa?",
+      "translation": "Сколько стоит кофе?"
+    },
+    {
+      "id": "k19e15",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "šolja",
+      "hint": "šolja — чашка",
+      "options": [
+        "чашка",
+        "стакан",
+        "дверь"
+      ],
+      "answer": "чашка",
+      "explanation": "šolja — чашка. Маленькая кофейная чашечка — šoljica: šoljica kafe — чашка кофе."
+    },
+    {
+      "id": "k19e16",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "čaša",
+      "hint": "čaša — стакан",
+      "options": [
+        "чашка",
+        "стакан",
+        "вода"
+      ],
+      "answer": "стакан",
+      "explanation": "čaša vode — стакан воды."
+    },
+    {
+      "id": "k19e17",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "braon",
+      "hint": "braon — коричневый",
+      "options": [
+        "коричневый",
+        "белый",
+        "зелёный"
+      ],
+      "answer": "коричневый",
+      "explanation": "braon не меняется: braon pas, braon mačka, braon šolja."
+    },
+    {
+      "id": "k19e18",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šolja kafe je jeftina, a kompjuter je skup.",
+      "hint": "Šolja kafe je jeftina, a kompjuter je skup. — Чашка кофе дешёвая, а компьютер дорогой.",
+      "options": [
+        "Чашка кофе дешёвая, а компьютер дорогой.",
+        "Чашка кофе дорогая, а компьютер дешёвый.",
+        "Стакан воды дешёвый, а компьютер дорогой."
+      ],
+      "answer": "Чашка кофе дешёвая, а компьютер дорогой.",
+      "explanation": "a — «а»: противопоставление, как в русском. kafe — «кофе» в «чашка кофе»."
+    },
+    {
+      "id": "k19e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "puno",
+      "hint": "puno — много",
+      "options": [
+        "много",
+        "мало",
+        "быстро"
+      ],
+      "answer": "много"
+    },
+    {
+      "id": "k19e20",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "malo",
+      "hint": "malo — мало, немного",
+      "options": [
+        "много",
+        "мало, немного",
+        "медленно"
+      ],
+      "answer": "мало, немного",
+      "explanation": "malo — и «мало», и «маленькое» (средний род от mali): malo prase."
+    },
+    {
+      "id": "k19e21",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "много",
+          "me": "puno"
+        },
+        {
+          "ru": "мало",
+          "me": "malo"
+        },
+        {
+          "ru": "дорого",
+          "me": "skupo"
+        },
+        {
+          "ru": "дёшево",
+          "me": "jeftino"
+        }
+      ]
+    },
+    {
+      "id": "k19e22",
+      "type": "choice",
+      "prompt": "Moj sin puno spava.",
+      "options": [
+        "Мой сын много спит.",
+        "Мой сын мало спит.",
+        "Мой сын много ест."
+      ],
+      "answer": "Мой сын много спит.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k19e23",
+      "type": "choice",
+      "prompt": "Mačka malo jede.",
+      "options": [
+        "Кошка мало ест.",
+        "Кошка много ест.",
+        "Кошка не ест."
+      ],
+      "answer": "Кошка мало ест.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k19e24",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Puno posla!",
+      "hint": "Puno posla! — Много работы!",
+      "options": [
+        "Много работы!",
+        "Всё дорого!",
+        "Не волнуйся!"
+      ],
+      "answer": "Много работы!",
+      "explanation": "Буквально «много работы»: posao — «работа, дело», posla — «работы». Всерьёз так говорят, когда дел невпроворот. И с иронией — когда дело проще простого, как наше «да что там делать-то!»; или про того, кто ничего не делает: друг лежит на диване и говорит «Puno posla!»."
+    },
+    {
+      "id": "k19e25",
+      "type": "choice",
+      "prompt": "— Kako si?\n— Puno posla!\n\nЧто ответил знакомый?",
+      "options": [
+        "Дел невпроворот.",
+        "Всё дёшево.",
+        "Хочу спать."
+      ],
+      "answer": "Дел невпроворот.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k19e26",
+      "type": "choice",
+      "prompt": "Тебя просят налить стакан воды. Ты отвечаешь: «Puno posla!»\nЧто это значит?",
+      "options": [
+        "Да что там делать-то!",
+        "Нет, мне некогда.",
+        "Вода дорогая."
+      ],
+      "answer": "Да что там делать-то!",
+      "explanation": "Буквально «много работы»: posao — «работа, дело», posla — «работы». Всерьёз так говорят, когда дел невпроворот. И с иронией — когда дело проще простого, как наше «да что там делать-то!»; или про того, кто ничего не делает: друг лежит на диване и говорит «Puno posla!».",
+      "label": "Ирония"
+    },
+    {
+      "id": "k19e27",
+      "type": "repeat",
+      "phrase": "Puno posla!",
+      "translation": "Много работы!"
+    },
+    {
+      "id": "k19e28",
+      "type": "word_bank",
+      "prompt": "Всё дорого.",
+      "answer": "Sve je skupo.",
+      "bank": [
+        "je",
+        "skupo",
+        "sve"
+      ]
+    },
+    {
+      "id": "k19e29",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Сколько стоит?",
+          "me": "Koliko košta?"
+        },
+        {
+          "ru": "Всё дорого.",
+          "me": "Sve je skupo."
+        },
+        {
+          "ru": "Кофе дорогой.",
+          "me": "Kafa je skupa."
+        },
+        {
+          "ru": "Мой сын много спит.",
+          "me": "Moj sin puno spava."
+        },
+        {
+          "ru": "Много работы!",
+          "me": "Puno posla!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "skup",
+      "ru": "дорогой"
+    },
+    {
+      "me": "jeftin",
+      "ru": "дешёвый"
+    },
+    {
+      "me": "puno",
+      "ru": "много"
+    },
+    {
+      "me": "malo",
+      "ru": "мало, немного"
+    },
+    {
+      "me": "koštati",
+      "ru": "стоить"
+    },
+    {
+      "me": "posao",
+      "ru": "работа, дело"
+    },
+    {
+      "me": "šolja",
+      "ru": "чашка"
+    },
+    {
+      "me": "čaša",
+      "ru": "стакан"
+    },
+    {
+      "me": "braon",
+      "ru": "коричневый"
+    }
+  ]
+}

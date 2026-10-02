@@ -114,6 +114,12 @@
       "title": "Hoću pastu, neću suši!",
       "file": "k18.json",
       "section": "Раздел 2"
+    },
+    {
+      "id": "k19",
+      "title": "Skupo! Puno posla!",
+      "file": "k19.json",
+      "section": "Раздел 2"
     }
   ]
 }
