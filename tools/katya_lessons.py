@@ -1262,7 +1262,7 @@ PECATI = 'pecati — ловить рыбу удочкой, одним слово
 PILECI = ('pileći — «куриный», от pile — цыплёнок. pileća supa — куриный суп. '
           'Варит что — supu, как хочу что — kafu.')
 ZA = 'za — «для»: za djeda — для дедушки.'
-L.append(dict(id='k20', title='Курица играет с поросёнком. Idem kući!', section=S2, words=[
+L.append(dict(id='k20', title='Где и куда. Jeste li kod kuće?', section=S2, words=[
     ('grad', 'город'), ('more', 'море'), ('prodavnica', 'магазин'), ('kuda', 'куда'),
     ('kod', 'у, возле'), ('sada', 'сейчас')],
     ex=[
