@@ -1119,6 +1119,15 @@ private fun ParadigmAnswer(
     enabled: Boolean,
     onSubmit: (List<String>) -> Unit
 ) {
+    // Спрос — парами, а не полями (4.33). Печатать шесть-семь форм подряд
+    // оказалось слишком тяжело (владелец, со снимком семи пустых полей у
+    // «pričati»), и он сам указал на образец: экран пар у Кати в ветке.
+    // Показ при первой встрече остаётся таблицей ниже.
+    if (ex.ask) {
+        ParadigmMatch(ex, speaker, enabled, onSubmit)
+        return
+    }
+
     var answers by remember(ex.id) { mutableStateOf(List(ex.cells.size) { "" }) }
 
     // Слова таблицы по порядку: в обычной парадигме одно, в серии по образцу
@@ -1176,6 +1185,128 @@ private fun ParadigmAnswer(
         enabled = enabled && (!ex.ask || answers.any { it.isNotBlank() })
     ) {
         if (!ex.ask && !last) open++ else onSubmit(answers)
+    }
+}
+
+/**
+ * Спрос парадигмы парами: слева падежи с вводными словами, справа формы.
+ *
+ * Заведено 02.10.2026: двенадцать полей набора, а потом и шесть, оказались
+ * слишком тяжелы — владелец прислал снимок семи пустых полей у «pričati» и
+ * предложил сделать «как с парами слов», указав на Катину ветку, где пары
+ * живут прямо в уроке.
+ *
+ * Отличий от экрана пар три, и все от того, что тут одно слово, а не пять:
+ *
+ * * **левый столбец не перемешивается** — падежи идут в грамматическом
+ *   порядке: порядок таблицы и есть то, что запоминают, и перемешивать его
+ *   значило бы прятать систему;
+ * * **одинаковые формы взаимозаменяемы.** Во множественном `kućama` стоит
+ *   трижды (дат., мест., тв.), у глагола `mogu` — и «ja», и «oni». Плашка
+ *   справа подходит любой ячейке с тем же написанием, иначе задание требовало
+ *   бы угадать, какая из двух одинаковых плашек «та самая»;
+ * * **сложенная пара звучит всей рамкой** — «Ja pričam», «Mislim o kući»:
+ *   падеж слышен в связке со словом, которое его требует.
+ *
+ * Засчитывается, как у пар, сложенное **с первой попытки**: ячейки, где
+ * ошибались, уходят в ответ пустыми, и `submitParadigm` честно назовёт их
+ * в разборе. Карточка одна на таблицу, поэтому одна ошибка — ошибка таблицы:
+ * лапс вернёт её показом целиком, а это ровно то, что нужно промахнувшемуся
+ * по системе.
+ */
+@Composable
+private fun ParadigmMatch(
+    ex: Exercise.Table,
+    speaker: Speaker,
+    enabled: Boolean,
+    onSubmit: (List<String>) -> Unit
+) {
+    val cells = ex.cells
+    // Правый столбец — индексы ячеек, перемешанные один раз на задание.
+    val right = remember(ex.id) { cells.indices.shuffled() }
+    var pickedLeft by remember(ex.id) { mutableStateOf<Int?>(null) }
+    var pickedRight by remember(ex.id) { mutableStateOf<Int?>(null) }
+    // Сложенные ячейки слева и занятые плашки справа — порознь: плашка с
+    // `kućama` могла уйти не в ту ячейку, откуда она «родом».
+    var solved by remember(ex.id) { mutableStateOf(setOf<Int>()) }
+    var used by remember(ex.id) { mutableStateOf(setOf<Int>()) }
+    var wrong by remember(ex.id) { mutableStateOf(setOf<Int>()) }
+    var flash by remember(ex.id) { mutableStateOf(setOf<String>()) }
+
+    LaunchedEffect(flash) {
+        if (flash.isNotEmpty()) {
+            delay(FLASH_MS)
+            flash = emptySet()
+        }
+    }
+
+    fun said(cell: ParadigmCell) =
+        if (cell.frame.contains("___")) cell.frame.replace("___", cell.form) else cell.form
+
+    fun attempt(l: Int, r: Int) {
+        pickedLeft = null
+        pickedRight = null
+        if (cells[r].form == cells[l].form) {
+            speaker.speak(said(cells[l]))
+            val next = solved + l
+            solved = next
+            used = used + r
+            if (next.size == cells.size) {
+                // Ошибавшиеся ячейки — пустым ответом: разбор назовёт их.
+                onSubmit(cells.mapIndexed { i, c -> if (i in wrong) "" else c.form })
+            }
+        } else {
+            wrong = wrong + l
+            flash = setOf("L" + l, "R" + r)
+        }
+    }
+
+    fun tapLeft(i: Int) {
+        if (!enabled || flash.isNotEmpty() || i in solved) return
+        val r = pickedRight
+        if (r != null) attempt(i, r) else pickedLeft = if (pickedLeft == i) null else i
+    }
+
+    fun tapRight(i: Int) {
+        if (!enabled || flash.isNotEmpty() || i in used) return
+        val l = pickedLeft
+        if (l != null) attempt(l, i) else pickedRight = if (pickedRight == i) null else i
+    }
+
+    Label("Сложи формы")
+    WordHead(cells.first(), speaker)
+    if (ex.note.isNotBlank()) {
+        Spacer(Modifier.height(6.dp))
+        Text(ex.note, style = MaterialTheme.typography.bodyMedium, color = Muted)
+    }
+    Spacer(Modifier.height(18.dp))
+
+    val muted = Muted
+    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            cells.forEachIndexed { i, cell ->
+                MatchTile(
+                    text = buildAnnotatedString {
+                        append(cell.frame.ifBlank { "___" })
+                        append("\n")
+                        withStyle(SpanStyle(color = muted, fontSize = 12.sp)) { append(cell.label) }
+                    },
+                    done = i in solved,
+                    chosen = pickedLeft == i,
+                    failed = ("L" + i) in flash
+                ) { tapLeft(i) }
+            }
+        }
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            right.forEach { i ->
+                MatchTile(
+                    text = stressed(cells[i].form),
+                    done = i in used,
+                    chosen = pickedRight == i,
+                    failed = ("R" + i) in flash
+                ) { tapRight(i) }
+            }
+        }
     }
 }
 
