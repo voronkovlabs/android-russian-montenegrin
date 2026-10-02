@@ -634,7 +634,12 @@ private fun VocabFile.synonymIndex(): Map<String, List<String>> = synchronized(i
  * что там засчитывается.
  */
 fun matchPairFor(cardId: String, word: VocabWord): MatchPair? =
-    LocalCheck.glossVariants(word.gloss)
+    // Показывается толкование как написано, а не разобранное для сверки:
+    // `glossVariants` чистит знаки и регистр, и «что-то» на плашке выходило
+    // «что то», а «Черногория» — со строчной (жалоба Кати 174).
+    word.gloss.replace(Regex("\\([^)]*\\)"), " ")
+        .split(';', ',')
+        .map { it.trim() }
         .firstOrNull { it.isNotBlank() }
         ?.let { MatchPair(cardId = cardId, ru = it, me = Ijekavica.show(word.id)) }
 
