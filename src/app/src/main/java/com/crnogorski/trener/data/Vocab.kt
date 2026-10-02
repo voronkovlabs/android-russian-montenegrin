@@ -456,7 +456,12 @@ class VocabRepository(private val context: Context) {
  * Рамка («Vidim ___.») лежит в самом словаре и задаёт падеж предлогом, а не
  * подписью: так видно, ради чего форма нужна, а не только как она называется.
  */
-private fun VocabFile.paradigmCells(word: VocabWord, wide: Boolean = false): List<ParadigmCell> {
+private fun VocabFile.paradigmCells(
+    word: VocabWord,
+    wide: Boolean = false,
+    /** Какие ячейки оставить — по коду ячейки (`g-s`, `a-p`). */
+    keep: (String) -> Boolean = { true }
+): List<ParadigmCell> {
     val have = word.forms.associateBy({ it.s }, { it.f })
     val verb = have.keys.any { it.startsWith("Vm") }
     val order = when {
@@ -465,7 +470,7 @@ private fun VocabFile.paradigmCells(word: VocabWord, wide: Boolean = false): Lis
         wide -> VocabRepository.FLIP_CASE_CELLS
         else -> VocabRepository.CASE_CELLS
     }
-    return order.mapNotNull { slot ->
+    return order.filter(keep).mapNotNull { slot ->
         val f = have[slot] ?: return@mapNotNull null
         ParadigmCell(
             lemma = Ijekavica.show(word.id),
@@ -533,8 +538,8 @@ fun VocabFile.exerciseFor(
         // вкладке слова тоже надо добавить все падежи»). Короткая четвёрка
         // `CASE_CELLS` осталась двум вещам: подписи образца (`signature`) и
         // соседям по образцу ниже.
-        val cells = paradigmCells(word, wide = true)
-        if (cells.isEmpty()) {
+        val full = paradigmCells(word, wide = true)
+        if (full.isEmpty()) {
             null
         } else {
             // Первая встреча — показ, дальше спрос.
@@ -544,6 +549,28 @@ fun VocabFile.exerciseFor(
             // не недосмотр, а то, чего и хочется: промахнулся по системе —
             // посмотри на неё целиком ещё раз.
             val first = repetitions == 0
+            // **Спрос — по половине таблицы за раз** (4.32, владелец: «12
+            // полей слишком много»). Показ остаётся полным: система видна
+            // только целиком. А спрашивается то единственное число, то
+            // множественное — по чётности повторений, как ячейка у прежней
+            // карточки склонения: не случайно, иначе таблица менялась бы при
+            // каждой перерисовке. За два повторения спрошена вся.
+            //
+            // У глагола семь форм и делить их не на что — спрашиваются все.
+            // Половины нет (у `vrata` нет единственного, у «молока» —
+            // множественного) — спрашивается другая.
+            val half = if (first || full.size <= 7) {
+                null
+            } else if (repetitions % 2 == 1) {
+                "-s"
+            } else {
+                "-p"
+            }
+            val cells = when (half) {
+                null -> full
+                else -> paradigmCells(word, wide = true) { it.endsWith(half) }
+                    .ifEmpty { full }
+            }
             // Соседи — на четырёх ячейках, а не на всех: при полной таблице
             // у каждого серия из трёх слов дала бы тридцать шесть строк, и
             // система, ради которой соседей показывают, утонула бы в них.
@@ -556,6 +583,11 @@ fun VocabFile.exerciseFor(
                     "Эти слова склоняются одинаково — посмотри на окончания."
                 } else if (first) {
                     "Посмотри, как слово меняется по падежам."
+                } else if (cells.size < full.size) {
+                    // Какая половина спрошена — сказать, иначе непонятно, куда
+                    // делась вторая.
+                    if (cells.all { it.label.endsWith("ед.") }) "Единственное число"
+                    else "Множественное число"
                 } else {
                     ""
                 },
