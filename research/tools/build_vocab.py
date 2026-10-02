@@ -365,6 +365,10 @@ def main(lexpath):
     for case, pattern in CASE_FRAMES.items():
         frames['%s-s' % case] = pattern
         frames['%s-p' % case] = pattern
+    # Именительному множественного нужна своя связка: «Ovo su kuće», а не
+    # «Ovo je kuće». Пока перевёртыш форм спрашивал только единственное число,
+    # эта рамка не показывалась нигде, и ошибка в ней не была видна (4.28).
+    frames['n-p'] = 'Ovo su ___.'
 
     out = {
         'version': 1,
