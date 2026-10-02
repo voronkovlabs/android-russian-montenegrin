@@ -1,0 +1,606 @@
+{
+  "id": "k20",
+  "title": "Курица играет с поросёнком. Idem kući!",
+  "exercises": [
+    {
+      "id": "k20e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "grad",
+      "hint": "grad — город",
+      "options": [
+        "город",
+        "дом",
+        "море"
+      ],
+      "answer": "город"
+    },
+    {
+      "id": "k20e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "more",
+      "hint": "more — море",
+      "options": [
+        "море",
+        "город",
+        "магазин"
+      ],
+      "answer": "море"
+    },
+    {
+      "id": "k20e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "prodavnica",
+      "hint": "prodavnica — магазин",
+      "options": [
+        "магазин",
+        "дом",
+        "город"
+      ],
+      "answer": "магазин"
+    },
+    {
+      "id": "k20e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "город",
+          "me": "grad"
+        },
+        {
+          "ru": "море",
+          "me": "more"
+        },
+        {
+          "ru": "магазин",
+          "me": "prodavnica"
+        },
+        {
+          "ru": "дом",
+          "me": "kuća"
+        }
+      ]
+    },
+    {
+      "id": "k20e05",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "U gradu sam.",
+      "hint": "U gradu sam. — Я в городе.",
+      "options": [
+        "Я в городе.",
+        "Я иду в город.",
+        "Я дома."
+      ],
+      "answer": "Я в городе.",
+      "explanation": "«Где?» и «куда?» звучат по-разному: u gradu — в городе, u grad — в город. Пока запоминаем парами."
+    },
+    {
+      "id": "k20e06",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Idem u grad.",
+      "hint": "Idem u grad. — Я иду в город.",
+      "options": [
+        "Я иду в город.",
+        "Я в городе.",
+        "Я иду домой."
+      ],
+      "answer": "Я иду в город.",
+      "explanation": "«Где?» и «куда?» звучат по-разному: u gradu — в городе, u grad — в город. Пока запоминаем парами."
+    },
+    {
+      "id": "k20e07",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Na moru sam.",
+      "hint": "Na moru sam. — Я на море.",
+      "options": [
+        "Я на море.",
+        "Я в городе.",
+        "Я в магазине."
+      ],
+      "answer": "Я на море.",
+      "explanation": "С морем — na, как и в русском: na moru — на море, idem na more — еду на море."
+    },
+    {
+      "id": "k20e08",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Idem na more.",
+      "hint": "Idem na more. — Я еду на море.",
+      "options": [
+        "Я еду на море.",
+        "Я на море.",
+        "Я еду в город."
+      ],
+      "answer": "Я еду на море.",
+      "explanation": "ići — и «идти», и «ехать»: Idem na more — еду на море. Формы как у jesti: idem, ideš, ide."
+    },
+    {
+      "id": "k20e09",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "U prodavnici sam.",
+      "hint": "U prodavnici sam. — Я в магазине.",
+      "options": [
+        "Я в магазине.",
+        "Я иду в магазин.",
+        "Я на море."
+      ],
+      "answer": "Я в магазине."
+    },
+    {
+      "id": "k20e10",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Idem u prodavnicu.",
+      "hint": "Idem u prodavnicu. — Я иду в магазин.",
+      "options": [
+        "Я иду в магазин.",
+        "Я в магазине.",
+        "Я иду в город."
+      ],
+      "answer": "Я иду в магазин."
+    },
+    {
+      "id": "k20e11",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "в городе",
+          "me": "u gradu"
+        },
+        {
+          "ru": "в город",
+          "me": "u grad"
+        },
+        {
+          "ru": "в магазине",
+          "me": "u prodavnici"
+        },
+        {
+          "ru": "в магазин",
+          "me": "u prodavnicu"
+        }
+      ]
+    },
+    {
+      "id": "k20e12",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "Kuda?",
+      "hint": "Kuda? — Куда?",
+      "options": [
+        "Куда?",
+        "Где?",
+        "Кто?"
+      ],
+      "answer": "Куда?"
+    },
+    {
+      "id": "k20e13",
+      "type": "choice",
+      "prompt": "— Gdje si?\n— ___",
+      "options": [
+        "U gradu sam.",
+        "Idem u grad."
+      ],
+      "answer": "U gradu sam.",
+      "explanation": "«Где?» и «куда?» звучат по-разному: u gradu — в городе, u grad — в город. Пока запоминаем парами.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "k20e14",
+      "type": "choice",
+      "prompt": "— Kuda ideš?\n— Idem ___ .",
+      "options": [
+        "u prodavnicu",
+        "u prodavnici"
+      ],
+      "answer": "u prodavnicu",
+      "explanation": "«Где?» и «куда?» звучат по-разному: u gradu — в городе, u grad — в город. Пока запоминаем парами.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k20e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kod kuće sam.",
+      "hint": "Kod kuće sam. — Я дома.",
+      "options": [
+        "Я дома.",
+        "Я иду домой.",
+        "Я в городе."
+      ],
+      "answer": "Я дома.",
+      "explanation": "«Дома» — kod kuće, «домой» — kući, без предлога: Idem kući. А u kući — именно внутри дома, в здании."
+    },
+    {
+      "id": "k20e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Idem kući.",
+      "hint": "Idem kući. — Я иду домой.",
+      "options": [
+        "Я иду домой.",
+        "Я дома.",
+        "Я иду в магазин."
+      ],
+      "answer": "Я иду домой.",
+      "explanation": "«Дома» — kod kuće, «домой» — kući, без предлога: Idem kući. А u kući — именно внутри дома, в здании."
+    },
+    {
+      "id": "k20e17",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "дома",
+          "me": "kod kuće"
+        },
+        {
+          "ru": "домой",
+          "me": "kući"
+        },
+        {
+          "ru": "в городе",
+          "me": "u gradu"
+        },
+        {
+          "ru": "на море",
+          "me": "na moru"
+        }
+      ]
+    },
+    {
+      "id": "k20e18",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ideš li u grad?",
+      "hint": "Ideš li u grad? — Ты идёшь в город?",
+      "options": [
+        "Ты идёшь в город?",
+        "Ты в городе?",
+        "Он идёт в город?"
+      ],
+      "answer": "Ты идёшь в город?",
+      "explanation": "ići — и «идти», и «ехать»: Idem na more — еду на море. Формы как у jesti: idem, ideš, ide."
+    },
+    {
+      "id": "k20e19",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я иду",
+          "me": "idem"
+        },
+        {
+          "ru": "ты идёшь",
+          "me": "ideš"
+        },
+        {
+          "ru": "он идёт",
+          "me": "ide"
+        },
+        {
+          "ru": "я ем",
+          "me": "jedem"
+        }
+      ]
+    },
+    {
+      "id": "k20e20",
+      "type": "choice",
+      "prompt": "Моя сестра едет на море. — Moja sestra ___ na more.",
+      "options": [
+        "idem",
+        "ideš",
+        "ide"
+      ],
+      "answer": "ide",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k20e21",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Jeste li sada kod kuće?",
+      "hint": "Jeste li sada kod kuće? — Вы сейчас дома?",
+      "options": [
+        "Вы сейчас дома?",
+        "Вы идёте домой?",
+        "Вы сейчас в городе?"
+      ],
+      "answer": "Вы сейчас дома?",
+      "explanation": "sada — «сейчас», в разговоре часто sad. На «ты»: Jesi li sada kod kuće? Отвечают: Jesam! или Nisam, u gradu sam."
+    },
+    {
+      "id": "k20e22",
+      "type": "choice",
+      "prompt": "— Jeste li sada kod kuće?\n— Nisam, na moru sam.\n\nГде человек?",
+      "options": [
+        "На море.",
+        "Дома.",
+        "В магазине."
+      ],
+      "answer": "На море.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k20e23",
+      "type": "speaking",
+      "phrase": "Jeste li sada kod kuće?",
+      "translation": "Вы сейчас дома?"
+    },
+    {
+      "id": "k20e24",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "baba",
+      "hint": "baba — бабушка",
+      "options": [
+        "бабушка",
+        "мама",
+        "сестра"
+      ],
+      "answer": "бабушка"
+    },
+    {
+      "id": "k20e25",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "djed",
+      "hint": "djed — дедушка",
+      "options": [
+        "дедушка",
+        "отец",
+        "брат"
+      ],
+      "answer": "дедушка",
+      "explanation": "В Черногории это слово часто произносят как «đed»."
+    },
+    {
+      "id": "k20e26",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "бабушка",
+          "me": "baba"
+        },
+        {
+          "ru": "дедушка",
+          "me": "djed"
+        },
+        {
+          "ru": "мать",
+          "me": "majka"
+        },
+        {
+          "ru": "отец",
+          "me": "otac"
+        }
+      ]
+    },
+    {
+      "id": "k20e27",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moj sin jede kao prase.",
+      "hint": "Moj sin jede kao prase. — Мой сын ест как поросёнок.",
+      "options": [
+        "Мой сын ест как поросёнок.",
+        "Мой сын спит как поросёнок.",
+        "Мой брат ест как поросёнок."
+      ],
+      "answer": "Мой сын ест как поросёнок."
+    },
+    {
+      "id": "k20e28",
+      "type": "word_bank",
+      "prompt": "Мой сын ест как поросёнок.",
+      "answer": "Moj sin jede kao prase.",
+      "bank": [
+        "kao",
+        "jede",
+        "prase",
+        "moj",
+        "sin"
+      ]
+    },
+    {
+      "id": "k20e29",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mačka voli da spava na kompjuteru.",
+      "hint": "Mačka voli da spava na kompjuteru. — Кошка любит спать на компьютере.",
+      "options": [
+        "Кошка любит спать на компьютере.",
+        "Кошка любит играть на компьютере.",
+        "Собака любит спать на компьютере."
+      ],
+      "answer": "Кошка любит спать на компьютере.",
+      "explanation": "voli da spava — буквально «любит, чтобы спит», как moram da idem. Можно и voli spavati. na kompjuteru — тот же «где?», что na moru."
+    },
+    {
+      "id": "k20e30",
+      "type": "speaking",
+      "phrase": "Mačka voli da spava na kompjuteru.",
+      "translation": "Кошка любит спать на компьютере."
+    },
+    {
+      "id": "k20e31",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "pecati",
+      "hint": "pecati — ловить рыбу (удочкой)",
+      "options": [
+        "ловить рыбу (удочкой)",
+        "варить",
+        "играть"
+      ],
+      "answer": "ловить рыбу (удочкой)",
+      "explanation": "pecati — ловить рыбу удочкой, одним словом. Формы как у kuvati: pecam, pecaš, peca."
+    },
+    {
+      "id": "k20e32",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moj djed voli da peca.",
+      "hint": "Moj djed voli da peca. — Мой дедушка любит ловить рыбу.",
+      "options": [
+        "Мой дедушка любит ловить рыбу.",
+        "Мой дедушка любит рыбу.",
+        "Моя бабушка любит ловить рыбу."
+      ],
+      "answer": "Мой дедушка любит ловить рыбу."
+    },
+    {
+      "id": "k20e33",
+      "type": "choice",
+      "prompt": "Moj djed voli da peca.",
+      "options": [
+        "Мой дедушка любит ловить рыбу.",
+        "Мой отец любит ловить рыбу.",
+        "Мой дедушка любит спать."
+      ],
+      "answer": "Мой дедушка любит ловить рыбу.",
+      "byEar": true
+    },
+    {
+      "id": "k20e34",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pileći",
+      "hint": "pileći — куриный",
+      "options": [
+        "куриный",
+        "рыбный",
+        "горячий"
+      ],
+      "answer": "куриный",
+      "explanation": "pileći — «куриный», от pile — цыплёнок. pileća supa — куриный суп. Варит что — supu, как хочу что — kafu."
+    },
+    {
+      "id": "k20e35",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Baba kuva pileću supu za djeda.",
+      "hint": "Baba kuva pileću supu za djeda. — Бабушка варит для дедушки куриный суп.",
+      "options": [
+        "Бабушка варит для дедушки куриный суп.",
+        "Дедушка варит для бабушки куриный суп.",
+        "Бабушка варит для дедушки рыбный суп."
+      ],
+      "answer": "Бабушка варит для дедушки куриный суп.",
+      "explanation": "za — «для»: za djeda — для дедушки."
+    },
+    {
+      "id": "k20e36",
+      "type": "word_bank",
+      "prompt": "Бабушка варит для дедушки куриный суп.",
+      "answer": "Baba kuva pileću supu za djeda.",
+      "bank": [
+        "supu",
+        "djeda",
+        "baba",
+        "za",
+        "pileću",
+        "kuva"
+      ]
+    },
+    {
+      "id": "k20e37",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kokoška igra kompjutersku igru sa prasetom.",
+      "hint": "Kokoška igra kompjutersku igru sa prasetom. — Курица играет в компьютерную игру с поросёнком.",
+      "options": [
+        "Курица играет в компьютерную игру с поросёнком.",
+        "Поросёнок играет в компьютерную игру с курицей.",
+        "Курица играет с поросёнком на море."
+      ],
+      "answer": "Курица играет в компьютерную игру с поросёнком.",
+      "explanation": "sa prasetom — «с поросёнком», как sa prijateljem."
+    },
+    {
+      "id": "k20e38",
+      "type": "repeat",
+      "phrase": "Idem kući.",
+      "translation": "Я иду домой."
+    },
+    {
+      "id": "k20e39",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я иду домой.",
+          "me": "Idem kući."
+        },
+        {
+          "ru": "Вы сейчас дома?",
+          "me": "Jeste li sada kod kuće?"
+        },
+        {
+          "ru": "Я на море.",
+          "me": "Na moru sam."
+        },
+        {
+          "ru": "Мой сын ест как поросёнок.",
+          "me": "Moj sin jede kao prase."
+        },
+        {
+          "ru": "Кошка любит спать на компьютере.",
+          "me": "Mačka voli da spava na kompjuteru."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "grad",
+      "ru": "город"
+    },
+    {
+      "me": "more",
+      "ru": "море"
+    },
+    {
+      "me": "prodavnica",
+      "ru": "магазин"
+    },
+    {
+      "me": "kuda",
+      "ru": "куда"
+    },
+    {
+      "me": "kod",
+      "ru": "у, возле"
+    },
+    {
+      "me": "sada",
+      "ru": "сейчас"
+    },
+    {
+      "me": "baba",
+      "ru": "бабушка"
+    },
+    {
+      "me": "djed",
+      "ru": "дедушка"
+    },
+    {
+      "me": "pecati",
+      "ru": "ловить рыбу (удочкой)"
+    },
+    {
+      "me": "pileći",
+      "ru": "куриный"
+    },
+    {
+      "me": "za",
+      "ru": "для"
+    }
+  ]
+}

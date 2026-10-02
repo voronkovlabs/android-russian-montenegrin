@@ -1242,6 +1242,115 @@ L.append(dict(id='k19', title='Skupo i jeftino. Puno posla!', section=S2, words=
           ('Много работы!', 'Puno posla!')),
 ]))
 
+# --- Урок 20 (абсурдный, каждый пятый) ---
+# «Где?» и «куда?»: kuća, grad, more, prodavnica — готовыми парами, без правил
+# окончаний. ići в единственном, kod kuće / kući, шаблон «Jeste li sada
+# kod kuće?». Бабушка и дедушка; абсурдные фразы — Катины.
+GDJE_KUDA = ('«Где?» и «куда?» звучат по-разному: u gradu — в городе, u grad — в город. '
+             'Пока запоминаем парами.')
+MORE = 'С морем — na, как и в русском: na moru — на море, idem na more — еду на море.'
+ICI = ('ići — и «идти», и «ехать»: Idem na more — еду на море. Формы как у jesti: '
+       'idem, ideš, ide.')
+KUCI = ('«Дома» — kod kuće, «домой» — kući, без предлога: Idem kući. А u kući — '
+        'именно внутри дома, в здании.')
+SADA = ('sada — «сейчас», в разговоре часто sad. На «ты»: Jesi li sada kod kuće? '
+        'Отвечают: Jesam! или Nisam, u gradu sam.')
+DJED = 'В Черногории это слово часто произносят как «đed».'
+VOLI_DA = ('voli da spava — буквально «любит, чтобы спит», как moram da idem. Можно '
+           'и voli spavati. na kompjuteru — тот же «где?», что na moru.')
+PECATI = 'pecati — ловить рыбу удочкой, одним словом. Формы как у kuvati: pecam, pecaš, peca.'
+PILECI = ('pileći — «куриный», от pile — цыплёнок. pileća supa — куриный суп. '
+          'Варит что — supu, как хочу что — kafu.')
+ZA = 'za — «для»: za djeda — для дедушки.'
+L.append(dict(id='k20', title='Курица играет с поросёнком. Idem kući!', section=S2, words=[
+    ('grad', 'город'), ('more', 'море'), ('prodavnica', 'магазин'), ('kuda', 'куда'),
+    ('kod', 'у, возле'), ('sada', 'сейчас'), ('baba', 'бабушка'), ('djed', 'дедушка'),
+    ('pecati', 'ловить рыбу (удочкой)'), ('pileći', 'куриный'), ('za', 'для')],
+    ex=[
+    new('grad', 'город', ['город', 'дом', 'море']),
+    new('more', 'море', ['море', 'город', 'магазин']),
+    new('prodavnica', 'магазин', ['магазин', 'дом', 'город']),
+    pairs(('город', 'grad'), ('море', 'more'), ('магазин', 'prodavnica'), ('дом', 'kuća')),
+    dict(new('U gradu sam.', 'Я в городе.', ['Я в городе.', 'Я иду в город.', 'Я дома.'],
+             label='Новая форма'), explanation=GDJE_KUDA),
+    dict(new('Idem u grad.', 'Я иду в город.', ['Я иду в город.', 'Я в городе.',
+                                                'Я иду домой.'], label='Новая форма'),
+         explanation=GDJE_KUDA),
+    dict(new('Na moru sam.', 'Я на море.', ['Я на море.', 'Я в городе.', 'Я в магазине.'],
+             label='Новая форма'), explanation=MORE),
+    dict(new('Idem na more.', 'Я еду на море.', ['Я еду на море.', 'Я на море.',
+                                                 'Я еду в город.'], label='Новая форма'),
+         explanation=ICI),
+    new('U prodavnici sam.', 'Я в магазине.', ['Я в магазине.', 'Я иду в магазин.',
+                                               'Я на море.'], label='Новая форма'),
+    new('Idem u prodavnicu.', 'Я иду в магазин.', ['Я иду в магазин.', 'Я в магазине.',
+                                                   'Я иду в город.'], label='Новая форма'),
+    pairs(('в городе', 'u gradu'), ('в город', 'u grad'), ('в магазине', 'u prodavnici'),
+          ('в магазин', 'u prodavnicu')),
+    new('Kuda?', 'Куда?', ['Куда?', 'Где?', 'Кто?']),
+    pick('— Gdje si?\n— ___', ['U gradu sam.', 'Idem u grad.'], 'U gradu sam.',
+         explanation=GDJE_KUDA, label='Выбери ответ'),
+    pick('— Kuda ideš?\n— Idem ___ .', ['u prodavnicu', 'u prodavnici'], 'u prodavnicu',
+         explanation=GDJE_KUDA, label='Вставь слово'),
+    dict(phrase('Kod kuće sam.', 'Я дома.', ['Я дома.', 'Я иду домой.', 'Я в городе.']),
+         explanation=KUCI),
+    dict(phrase('Idem kući.', 'Я иду домой.', ['Я иду домой.', 'Я дома.', 'Я иду в магазин.']),
+         explanation=KUCI),
+    pairs(('дома', 'kod kuće'), ('домой', 'kući'), ('в городе', 'u gradu'),
+          ('на море', 'na moru')),
+    dict(new('Ideš li u grad?', 'Ты идёшь в город?', ['Ты идёшь в город?', 'Ты в городе?',
+                                                      'Он идёт в город?'],
+             label='Новая форма'), explanation=ICI),
+    pairs(('я иду', 'idem'), ('ты идёшь', 'ideš'), ('он идёт', 'ide'), ('я ем', 'jedem')),
+    pick('Моя сестра едет на море. — Moja sestra ___ na more.', ['idem', 'ideš', 'ide'], 'ide',
+         label='Вставь слово'),
+    dict(phrase('Jeste li sada kod kuće?', 'Вы сейчас дома?',
+                ['Вы сейчас дома?', 'Вы идёте домой?', 'Вы сейчас в городе?']),
+         explanation=SADA),
+    pick('— Jeste li sada kod kuće?\n— Nisam, na moru sam.\n\nГде человек?',
+         ['На море.', 'Дома.', 'В магазине.'], 'На море.', label='Мини-диалог'),
+    say('Jeste li sada kod kuće?', 'Вы сейчас дома?'),
+    new('baba', 'бабушка', ['бабушка', 'мама', 'сестра']),
+    dict(new('djed', 'дедушка', ['дедушка', 'отец', 'брат']), explanation=DJED),
+    pairs(('бабушка', 'baba'), ('дедушка', 'djed'), ('мать', 'majka'), ('отец', 'otac')),
+    phrase('Moj sin jede kao prase.', 'Мой сын ест как поросёнок.',
+           ['Мой сын ест как поросёнок.', 'Мой сын спит как поросёнок.',
+            'Мой брат ест как поросёнок.']),
+    bank('Мой сын ест как поросёнок.', 'Moj sin jede kao prase.',
+         ['kao', 'jede', 'prase', 'moj', 'sin']),
+    dict(phrase('Mačka voli da spava na kompjuteru.', 'Кошка любит спать на компьютере.',
+                ['Кошка любит спать на компьютере.', 'Кошка любит играть на компьютере.',
+                 'Собака любит спать на компьютере.']),
+         explanation=VOLI_DA),
+    say('Mačka voli da spava na kompjuteru.', 'Кошка любит спать на компьютере.'),
+    dict(new('pecati', 'ловить рыбу (удочкой)', ['ловить рыбу (удочкой)', 'варить', 'играть'],
+             label='Новый глагол'), explanation=PECATI),
+    phrase('Moj djed voli da peca.', 'Мой дедушка любит ловить рыбу.',
+           ['Мой дедушка любит ловить рыбу.', 'Мой дедушка любит рыбу.',
+            'Моя бабушка любит ловить рыбу.']),
+    ear('Moj djed voli da peca.', ['Мой дедушка любит ловить рыбу.',
+                                   'Мой отец любит ловить рыбу.', 'Мой дедушка любит спать.'],
+        'Мой дедушка любит ловить рыбу.'),
+    dict(new('pileći', 'куриный', ['куриный', 'рыбный', 'горячий']), explanation=PILECI),
+    dict(phrase('Baba kuva pileću supu za djeda.', 'Бабушка варит для дедушки куриный суп.',
+                ['Бабушка варит для дедушки куриный суп.',
+                 'Дедушка варит для бабушки куриный суп.',
+                 'Бабушка варит для дедушки рыбный суп.']),
+         explanation=ZA),
+    bank('Бабушка варит для дедушки куриный суп.', 'Baba kuva pileću supu za djeda.',
+         ['supu', 'djeda', 'baba', 'za', 'pileću', 'kuva']),
+    dict(phrase('Kokoška igra kompjutersku igru sa prasetom.',
+                'Курица играет в компьютерную игру с поросёнком.',
+                ['Курица играет в компьютерную игру с поросёнком.',
+                 'Поросёнок играет в компьютерную игру с курицей.',
+                 'Курица играет с поросёнком на море.']),
+         explanation='sa prasetom — «с поросёнком», как sa prijateljem.'),
+    echo('Idem kući.', 'Я иду домой.'),
+    pairs(('Я иду домой.', 'Idem kući.'), ('Вы сейчас дома?', 'Jeste li sada kod kuće?'),
+          ('Я на море.', 'Na moru sam.'), ('Мой сын ест как поросёнок.', 'Moj sin jede kao prase.'),
+          ('Кошка любит спать на компьютере.', 'Mačka voli da spava na kompjuteru.')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

@@ -120,6 +120,12 @@
       "title": "Skupo i jeftino. Puno posla!",
       "file": "k19.json",
       "section": "Раздел 2"
+    },
+    {
+      "id": "k20",
+      "title": "Курица играет с поросёнком. Idem kući!",
+      "file": "k20.json",
+      "section": "Раздел 2"
     }
   ]
 }
