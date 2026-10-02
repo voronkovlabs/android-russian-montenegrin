@@ -1181,7 +1181,7 @@ POSLA = ('Буквально «много работы»: posao — «работ
          'делает: друг лежит на диване и говорит «Puno posla!».')
 SOLJA = 'šolja — чашка. Маленькая кофейная чашечка — šoljica: šoljica kafe — чашка кофе.'
 BRAON = 'braon не меняется: braon pas, braon mačka, braon šolja.'
-L.append(dict(id='k19', title='Skupo! Puno posla!', section=S2, words=[
+L.append(dict(id='k19', title='Skupo i jeftino. Puno posla!', section=S2, words=[
     ('skup', 'дорогой'), ('jeftin', 'дешёвый'), ('puno', 'много'), ('malo', 'мало, немного'),
     ('koštati', 'стоить'), ('posao', 'работа, дело'), ('šolja', 'чашка'), ('čaša', 'стакан'),
     ('braon', 'коричневый')],
