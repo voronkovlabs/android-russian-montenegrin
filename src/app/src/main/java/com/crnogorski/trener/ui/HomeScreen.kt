@@ -9,6 +9,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -61,8 +63,11 @@ fun HomeScreen(
      */
     onStory: (String, StoryMode, Boolean) -> Unit,
     onVocab: (Boolean, Boolean) -> Unit,
-    /** Перевёртыши: значение спереди, слово надо сказать вслух. */
-    onFlip: () -> Unit,
+    /**
+     * Перевёртыши: значение спереди, слово надо сказать вслух. `true` — формы:
+     * рамка с падежом спереди, сказать нужную форму.
+     */
+    onFlip: (Boolean) -> Unit,
     onTab: (HomeTab) -> Unit,
     onToggleGroup: (String) -> Unit,
     onStats: () -> Unit,
@@ -735,6 +740,7 @@ private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
  * идёт вне расписания, берёт самое шаткое и доступна всегда, сколько угодно
  * раз.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun VocabTile(
     title: String,
@@ -746,7 +752,7 @@ private fun VocabTile(
      * Перевёртыши — только у направления «с русского», и только там они и
      * имеют смысл: спереди значение, сказать надо черногорское слово.
      */
-    onFlip: (() -> Unit)? = null
+    onFlip: ((Boolean) -> Unit)? = null
 ) {
     val ready = track.due > 0 || track.fresh > 0
     Column(
@@ -792,15 +798,22 @@ private fun VocabTile(
         // Два прогона вне очереди, в одной строке: набором и вслух. Оба
         // доступны всегда, сколько угодно раз, — тем они и отличаются от
         // самой плашки, которая идёт по расписанию.
-        Row(modifier = Modifier.padding(start = 8.dp)) {
+        //
+        // Перевёртышей две кнопки, а не одна (4.19, просьба владельца): слова
+        // и формы тренируют порознь. Ряд переносится — на узком экране три
+        // кнопки в строку не встают.
+        FlowRow(modifier = Modifier.padding(start = 8.dp)) {
             if (track.ready > 0) {
                 TextButton(onClick = onPractice) {
                     Text("Тренировать (${track.ready})", color = Accent)
                 }
             }
             if (onFlip != null && track.total > 0) {
-                TextButton(onClick = onFlip) {
+                TextButton(onClick = { onFlip(false) }) {
                     Text("Перевёртыши", color = Accent)
+                }
+                TextButton(onClick = { onFlip(true) }) {
+                    Text("Перевёртыши: формы", color = Accent)
                 }
             }
         }

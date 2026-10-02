@@ -1489,12 +1489,21 @@ private fun FlipAnswer(
         if (enabled && granted) start()
     }
 
+    // Что звучит и что написано на обороте. У формы — вся рамка целиком,
+    // «Vidim kuću.», а не голое «kuću»: падеж слышен в связке с тем словом,
+    // которое его требует, и ради этой связки рамка и показана.
+    val said = if (ex.form && ex.frame.contains("___")) {
+        ex.frame.replace("___", ex.answer)
+    } else {
+        ex.answer
+    }
+
     // Голос ждёт конца поворота: слово, прозвучавшее над лицевой стороной,
     // читалось бы как подсказка, а не как ответ.
     LaunchedEffect(ex.id, turned) {
         if (turned) {
             delay(FLIP_MS.toLong())
-            speaker.speak(ex.answer)
+            speaker.speak(said)
         }
     }
 
@@ -1531,7 +1540,18 @@ private fun FlipAnswer(
                 1.dp,
                 if (turned) Accent.copy(alpha = 0.5f) else Surface2,
                 RoundedCornerShape(20.dp)
-            ),
+            )
+            // Нажатие на карточку — «не знаю, покажи» (4.19, просьба
+            // владельца). Это пропуск, а не ошибка: карточка отодвигается на
+            // несколько часов, `ease` и счёт повторений не трогаются. Раньше
+            // то же делала кнопка под карточкой, но перевернуть карточку
+            // пальцем — жест, который у перевёртыша и так ищут первым.
+            .clickable(enabled = enabled) {
+                listener.cancel()
+                listening = false
+                status = ""
+                onSkip()
+            },
         contentAlignment = Alignment.Center
     ) {
         // Середина поворота — тот самый миг, когда карточка стоит ребром:
@@ -1541,16 +1561,36 @@ private fun FlipAnswer(
                 Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (ex.icon.isNotBlank()) {
-                    Text(ex.icon, fontSize = 44.sp, lineHeight = 50.sp)
+                if (ex.form) {
+                    // Как в таблице склонения: подпись ячейки, рамка, которая
+                    // требует падежа, и от какого слова ставить.
+                    Text(ex.label.uppercase(), style = MaterialTheme.typography.labelSmall, color = Accent)
                     Spacer(Modifier.height(12.dp))
+                    Text(
+                        ex.frame.ifBlank { "___" },
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Paper,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Text(
+                        "${ex.lemma} — ${ex.prompt}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Muted,
+                        textAlign = TextAlign.Center
+                    )
+                } else {
+                    if (ex.icon.isNotBlank()) {
+                        Text(ex.icon, fontSize = 44.sp, lineHeight = 50.sp)
+                        Spacer(Modifier.height(12.dp))
+                    }
+                    Text(
+                        ex.prompt,
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Paper,
+                        textAlign = TextAlign.Center
+                    )
                 }
-                Text(
-                    ex.prompt,
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Paper,
-                    textAlign = TextAlign.Center
-                )
             }
         } else {
             Column(
@@ -1561,14 +1601,38 @@ private fun FlipAnswer(
                     .graphicsLayer { rotationY = 180f },
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    stressed(ex.answer),
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Paper,
-                    textAlign = TextAlign.Center
-                )
+                if (ex.form) {
+                    Text(ex.label.uppercase(), style = MaterialTheme.typography.labelSmall, color = Muted)
+                    Spacer(Modifier.height(12.dp))
+                    // Форма выделена в рамке цветом — ради неё карточка.
+                    val accent = Accent
+                    val parts = ex.frame.split("___", limit = 2)
+                    Text(
+                        if (parts.size == 2) {
+                            buildAnnotatedString {
+                                append(parts[0])
+                                withStyle(SpanStyle(color = accent, fontWeight = FontWeight.Bold)) {
+                                    append(ex.answer)
+                                }
+                                append(parts[1])
+                            }
+                        } else {
+                            stressed(ex.answer)
+                        },
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Paper,
+                        textAlign = TextAlign.Center
+                    )
+                } else {
+                    Text(
+                        stressed(ex.answer),
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Paper,
+                        textAlign = TextAlign.Center
+                    )
+                }
                 Spacer(Modifier.height(16.dp))
-                SmallAction("Послушать ещё раз") { speaker.speak(ex.answer) }
+                SmallAction("Послушать ещё раз") { speaker.speak(said) }
             }
         }
     }
@@ -1604,13 +1668,12 @@ private fun FlipAnswer(
     }
 
     if (enabled) {
-        Spacer(Modifier.height(4.dp))
-        // «Не могу сказать» — это пропуск, а не ошибка: карточка отодвигается
-        // на несколько часов, ease и счёт повторений не трогаются. Оборот при
-        // этом показывается — за тем на кнопку и нажимают.
-        TextButton(onClick = onSkip) {
-            Text("Не могу сказать — показать", color = Muted)
-        }
+        Spacer(Modifier.height(10.dp))
+        Text(
+            "Не помнишь — нажми на карточку, покажу без штрафа",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Muted
+        )
     }
 }
 

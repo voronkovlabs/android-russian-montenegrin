@@ -557,6 +557,33 @@ fun VocabFile.flipFor(word: VocabWord): Exercise.Card = Exercise.Card(
 )
 
 /**
+ * Перевёртыш формы: рамка с пропуском спереди, сказать нужную форму.
+ *
+ * [word] должен прийти с формами (`hydrate`): ячейки берутся из парадигмы, той
+ * же, что у таблицы склонения, и подписи с рамками у них те же. [pick] —
+ * номер ячейки; вызывающий выбирает его случайно, чтобы за несколько заходов
+ * слово показалось в разных формах. Строится один раз на заход, поэтому под
+ * пальцем ничего не прыгает.
+ *
+ * Идентификатор — карточки склонения (`decl`): о том, как слово меняется,
+ * помнить надо в одном месте.
+ */
+fun VocabFile.formFlipFor(word: VocabWord, pick: Int): Exercise.Card? {
+    val cells = paradigmCells(word)
+    if (cells.isEmpty()) return null
+    val cell = cells[Math.floorMod(pick, cells.size)]
+    return Exercise.Card(
+        id = VocabRepository.cardId(word.id, VocabKind.Pattern),
+        prompt = word.gloss,
+        answer = cell.form,
+        form = true,
+        label = cell.label,
+        frame = cell.frame,
+        lemma = cell.lemma
+    )
+}
+
+/**
  * Другие слова словаря с тем же толкованием.
  *
  * Перебор по всем словам на каждое задание — 1152 сравнения, доли миллисекунды;

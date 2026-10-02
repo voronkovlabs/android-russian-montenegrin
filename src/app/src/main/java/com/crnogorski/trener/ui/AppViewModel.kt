@@ -53,6 +53,7 @@ import com.crnogorski.trener.data.VocabWord
 import com.crnogorski.trener.data.VoiceRecorder
 import com.crnogorski.trener.data.exerciseFor
 import com.crnogorski.trener.data.flipFor
+import com.crnogorski.trener.data.formFlipFor
 import com.crnogorski.trener.data.matchExercise
 import com.crnogorski.trener.data.matchPairFor
 import com.crnogorski.trener.data.needsModelCheck
@@ -2230,7 +2231,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * Ступеней (падежей, особых форм) тут нет и быть не может: таблицу вслух
      * не скажешь. Перевёртыш спрашивает одно — как это слово по-черногорски.
      */
-    fun startFlip() {
+    fun startFlip(forms: Boolean = false) {
+        if (forms) {
+            startFormFlip()
+            return
+        }
         viewModelScope.launch {
             val file = vocabRepo.load()
             if (file.words.isEmpty()) {
@@ -2295,6 +2300,87 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
             _session.value = SessionState(
                 title = "Перевёртыши",
+                note = "",
+                items = items,
+                isReview = true,
+                offSchedule = true,
+                shownAt = System.currentTimeMillis(),
+                glossary = repo.glossary()
+            )
+        }
+    }
+
+    /**
+     * Перевёртыши форм: рамка с пропуском — «вин. ед. · Vidim ___. (kuća)», —
+     * сказать надо нужную форму (4.19, просьба владельца: «хочу видеть слова в
+     * разных формах… отдельной кнопкой, чтобы тренировать основные формы и
+     * падежи порознь»).
+     *
+     * Слова — те, до которых дошла ступень склонения: у `decl` уже есть
+     * карточка (таблицу показали), долг первым, потом самое шаткое. Половину
+     * захода отдаём словам, чьё значение уже выучено, а таблицы ещё не было:
+     * иначе на свежей установке форм не нашлось бы вовсе. Им расписание не
+     * трогается — первая встреча с парадигмой остаётся за таблицей (см.
+     * `Exercise.Card.form`).
+     *
+     * Ячейка у каждого слова случайная: за несколько заходов слово показывается
+     * в разных формах, ради этого всё и просили. Заход собирается один раз, так
+     * что под пальцем ничего не меняется.
+     */
+    private fun startFormFlip() {
+        viewModelScope.launch {
+            val file = vocabRepo.load()
+            if (file.words.isEmpty()) {
+                _home.value = _home.value.copy(error = "Словарь не загрузился.")
+                return@launch
+            }
+            val now = System.currentTimeMillis()
+            val all = dao.vocabCards(VocabRepository.LESSON_ID)
+            val byId = all.associateBy { it.exerciseId }
+            val words = file.words.associateBy { it.id }
+            val patternKey = "-" + VocabKind.Pattern.key
+
+            val decl = all.filter {
+                it.exerciseId.endsWith(patternKey) && !Scheduler.snoozed(it, now)
+            }
+            val due = decl.filter { it.dueAt <= now }.sortedBy { it.dueAt }
+            val shaky = decl.filter { it.dueAt > now }.sortedBy { it.correct - it.lapses * 2 }
+            val seen = (due + shaky).take(VOCAB_LIMIT)
+                .mapNotNull { words[VocabRepository.lemmaOf(it.exerciseId) ?: return@mapNotNull null] }
+
+            // Значение выучено, таблицы ещё не было. Отложенное слово сюда не
+            // попадает само: у него отложена и карточка значения.
+            val fresh = file.words.asSequence()
+                .filter { it.hasForms }
+                .filter { !byId.containsKey(VocabRepository.cardId(it.id, VocabKind.Pattern)) }
+                .filter { w ->
+                    val mean = byId[VocabRepository.cardId(w.id, VocabKind.Meaning)]
+                    mean != null && vocabLearned(byId, mean.exerciseId) &&
+                        !Scheduler.snoozed(mean, now)
+                }
+                .take(VOCAB_LIMIT)
+                .toList()
+
+            val half = VOCAB_LIMIT / 2
+            val picked = (fresh.take(half) + seen + fresh.drop(half))
+                .distinctBy { it.id }
+                .take(VOCAB_LIMIT)
+            val forms = vocabRepo.formsOf(picked)
+            val items = picked.mapNotNull { w ->
+                file.formFlipFor(vocabRepo.hydrate(w, forms), kotlin.random.Random.nextInt(1000))
+                    ?.let { SessionItem(VocabRepository.LESSON_ID, it) }
+            }
+
+            if (items.isEmpty()) {
+                refreshHome()
+                _home.value = _home.value.copy(
+                    error = "Форм пока нет: они открываются, когда слово выучено в словаре."
+                )
+                return@launch
+            }
+
+            _session.value = SessionState(
+                title = "Перевёртыши: формы",
                 note = "",
                 items = items,
                 isReview = true,
@@ -3651,6 +3737,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // Семнадцать «мочь» подряд вместо семнадцати разных вопросов.
             val fresh = when {
                 state.checkup -> null
+                // У форм подменять нечем: подходящее слово должно быть уже
+                // выучено, а «первое без карточки» им не годится.
+                (item.exercise as? Exercise.Card)?.form == true -> null
                 lemma != null -> untouchedWord(item.exercise is Exercise.Card)
                 else -> untouchedExercise(state, item)
             }
@@ -3996,6 +4085,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val existing = dao.card(item.exercise.id)
             noteAnswer(item, existing, seconds, if (shown) null else correct)
             cardBeforeAnswer = item.exercise.id to existing
+            // Перевёртыш формы не вправе завести `decl`: первая встреча с
+            // парадигмой — таблица целиком, и одна ячейка отняла бы её. Время
+            // и ответ в счёт дня идут, расписание не трогается.
+            if (existing == null && (item.exercise as? Exercise.Card)?.form == true) {
+                return@launch
+            }
             val updated: CardEntity = when {
                 shown -> when {
                     existing == null -> Scheduler.shownCard(item.exercise.id, item.lessonId, now)
