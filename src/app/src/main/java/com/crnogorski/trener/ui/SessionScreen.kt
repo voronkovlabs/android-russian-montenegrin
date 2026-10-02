@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -98,6 +98,9 @@ import kotlinx.coroutines.delay
  */
 private const val FLIP_MS = 420
 
+/** Пауза после верного ответа перед следующей карточкой — просьба владельца. */
+private const val AUTO_NEXT_MS = 1000L
+
 @Composable
 fun SessionScreen(
     state: SessionState,
@@ -167,7 +170,8 @@ fun SessionScreen(
                 onSubmit = onSubmit,
                 onSkip = onSkip,
                 onMatch = onMatch,
-                onParadigm = onParadigm
+                onParadigm = onParadigm,
+                onNext = onNext
             )
 
             // Оценка — под телом задания, рядом с «Отложить», и по тому же
@@ -281,7 +285,8 @@ private fun ExerciseBody(
     onSubmit: (String) -> Unit,
     onSkip: () -> Unit,
     onMatch: (Set<String>) -> Unit,
-    onParadigm: (List<String>) -> Unit
+    onParadigm: (List<String>) -> Unit,
+    onNext: () -> Unit
 ) {
     // Что движок расслышал в последний заход. По нему подсвечиваются слова
     // прямо в задании: строка «Услышано:» говорит, ЧТО он разобрал, но какие
@@ -390,6 +395,8 @@ private fun ExerciseBody(
             ex = ex,
             turned = state.phase is Phase.Result || state.phase is Phase.Skipped,
             attempt = (state.phase as? Phase.Retry)?.attempts ?: 0,
+            correct = (state.phase as? Phase.Result)?.correct == true,
+            onNext = onNext,
             speaker = speaker,
             enabled = enabled,
             onSubmit = onSubmit,
@@ -1412,10 +1419,13 @@ private fun FlipAnswer(
     turned: Boolean,
     /** Сколько заходов уже не совпало: по нему перезапускается микрофон. */
     attempt: Int,
+    /** Сказано верно: через паузу карточка уйдёт сама. */
+    correct: Boolean,
     speaker: Speaker,
     enabled: Boolean,
     onSubmit: (String) -> Unit,
-    onSkip: () -> Unit
+    onSkip: () -> Unit,
+    onNext: () -> Unit
 ) {
     val context = LocalContext.current
     val listener = remember { Listener(context) }
@@ -1426,11 +1436,17 @@ private fun FlipAnswer(
     // сервис и заглушку на звуке, поставленную на время записи.
     DisposableEffect(Unit) { onDispose { listener.stop() } }
 
-    val angle by animateFloatAsState(
-        targetValue = if (turned) 180f else 0f,
-        animationSpec = tween(FLIP_MS),
-        label = "flip"
-    )
+    // Угол свой у каждой карточки, а не общий на экран (жалоба владельца,
+    // 4.18: «сначала обновляется слово на черногорском, а потом карточка
+    // переворачивается на русский»). Общий угол после «Дальше» стоял ещё на
+    // 180°, а слово уже было новое: оборот успевал показать **следующий**
+    // ответ, и только потом карточка ехала лицом. Ровно беда виджета из
+    // жалобы 165. Новая карточка теперь просто появляется лицом — поворачивать
+    // назад нечего, вопрос и так новый.
+    val angle = remember(ex.id) { Animatable(0f) }
+    LaunchedEffect(ex.id, turned) {
+        angle.animateTo(if (turned) 180f else 0f, tween(FLIP_MS))
+    }
 
     fun start() {
         // Слушать и говорить одновременно нельзя: предыдущая карточка могла
@@ -1482,6 +1498,21 @@ private fun FlipAnswer(
         }
     }
 
+    // Сказано верно — через секунду следующая карточка сама (просьба
+    // владельца, 4.18). Делать тут человеку нечего: ответ засчитан, слово
+    // прозвучало, и тянуться к «Дальше» на каждой карточке значит рвать темп,
+    // ради которого перевёртыши и затевались. Промах и пропуск ждут кнопку:
+    // там надо посмотреть на ответ, и сколько смотреть, решает человек.
+    //
+    // Ключ — карточка: нажал «Дальше» раньше паузы — эффект отменится вместе
+    // со сменой слова, и лишнего перехода не будет.
+    LaunchedEffect(ex.id, correct) {
+        if (correct) {
+            delay(FLIP_MS + AUTO_NEXT_MS)
+            onNext()
+        }
+    }
+
     Label(if (turned) "Так это звучит" else "Скажи по-черногорски")
 
     Box(
@@ -1489,7 +1520,7 @@ private fun FlipAnswer(
             .fillMaxWidth()
             .height(230.dp)
             .graphicsLayer {
-                rotationY = angle
+                rotationY = angle.value
                 // Без этого поворот выглядит плоским сжатием: перспектива у
                 // Compose по умолчанию такая дальняя, что её не видно.
                 cameraDistance = 14f * density
@@ -1505,7 +1536,7 @@ private fun FlipAnswer(
     ) {
         // Середина поворота — тот самый миг, когда карточка стоит ребром:
         // менять сторону надо там, иначе видно, как текст подменяется.
-        if (angle <= 90f) {
+        if (angle.value <= 90f) {
             Column(
                 Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
