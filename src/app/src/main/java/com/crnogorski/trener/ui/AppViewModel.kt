@@ -52,6 +52,7 @@ import com.crnogorski.trener.notify.Replies
 import com.crnogorski.trener.data.VocabWord
 import com.crnogorski.trener.data.VoiceRecorder
 import com.crnogorski.trener.data.exerciseFor
+import com.crnogorski.trener.data.flipFor
 import com.crnogorski.trener.data.matchExercise
 import com.crnogorski.trener.data.matchPairFor
 import com.crnogorski.trener.data.needsModelCheck
@@ -524,6 +525,21 @@ data class SessionState(
      * же считается полноценной — см. `Scheduler.practice`.
      */
     val practice: Boolean = false,
+    /**
+     * Очередь собрана не по расписанию.
+     *
+     * Так работают перевёртыши: они берут всё, что в обороте, — как виджет на
+     * домашнем экране, — и среди взятого созревшего может не быть вовсе.
+     * Правило отсюда ровно то же, которым виджет отмечает «вспомнил»
+     * (`Scheduler.recalled`): **созревшая** карточка двигается обычным
+     * ответом, **несозревшая** идёт как тренировка — счёт растёт, интервал
+     * стоит. Без оговорки двадцать карточек за вечер уехали бы на полгода по
+     * одному вечеру.
+     *
+     * От [practice] отличается тем, что долг всё же разбирается: карточка,
+     * которую и так спросили бы сегодня, спрошена по-настоящему.
+     */
+    val offSchedule: Boolean = false,
     /**
      * Собрано ежедневным заданием.
      *
@@ -2192,6 +2208,104 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /**
+     * Перевёртыши: русское значение на лицевой стороне, слово надо сказать.
+     *
+     * Просьба владельца после месяца с таким же виджетом на домашнем экране:
+     * «хочу вот такие перевёртыши прямо в приложении в разделе слов, только
+     * надо слово произносить».
+     *
+     * **Очередь взята у виджета, а не у расписания**, и это осознанно. Виджет
+     * показывает всё, что в обороте, самое шаткое вперёд, — ровно потому за
+     * него и берутся по десять раз на дню. Заход, который на половине дней
+     * отвечал бы «на сегодня всё», этой привычки не получил бы никогда.
+     *
+     * Но долг всё же идёт первым: карточку, которую расписание и так
+     * спрашивает сегодня, перевёртыш спрашивает по-настоящему, и двигается
+     * она обычным ответом (см. [SessionState.offSchedule]).
+     *
+     * Новые слова — половиной вперёд, как на словарной вкладке. Без этого
+     * очередь оборота заняла бы заход целиком и новых слов не появлялось бы
+     * вовсе: ровно та беда, которую чинили в 1.75 и снова в 4.15.
+     *
+     * Ступеней (падежей, особых форм) тут нет и быть не может: таблицу вслух
+     * не скажешь. Перевёртыш спрашивает одно — как это слово по-черногорски.
+     */
+    fun startFlip() {
+        viewModelScope.launch {
+            val file = vocabRepo.load()
+            if (file.words.isEmpty()) {
+                _home.value = _home.value.copy(error = "Словарь не загрузился.")
+                return@launch
+            }
+            val now = System.currentTimeMillis()
+            val all = dao.vocabCards(VocabRepository.LESSON_ID)
+            val byId = all.associateBy { it.exerciseId }
+            val words = file.words.associateBy { it.id }
+            val mean = all.filter { isMeaning(it.exerciseId) }
+
+            fun flip(word: VocabWord) = SessionItem(VocabRepository.LESSON_ID, file.flipFor(word))
+            fun flipById(id: String): SessionItem? {
+                val lemma = VocabRepository.lemmaOf(id) ?: return null
+                return words[lemma]?.let { flip(it) }
+            }
+
+            // Отложенное рукой не берём нигде — «уйти из глаз» значит
+            // отовсюду. Проверка идёт по признаку «срок дальше, чем дал бы
+            // собственный интервал», как и в тренировке: отдельного поля под
+            // «отложено» в карточке нет.
+            val live = mean.filter { !Scheduler.snoozed(it, now) }
+            val due = live.filter { it.dueAt <= now }
+                .sortedBy { it.dueAt }
+                .take(VOCAB_LIMIT)
+                .mapNotNull { flipById(it.exerciseId) }
+            val shaky = live.filter {
+                it.dueAt > now && it.correct < VocabRepository.LEARNED
+            }
+                .sortedBy { it.correct - it.lapses * 2 }
+                .take(VOCAB_LIMIT)
+                .mapNotNull { flipById(it.exerciseId) }
+
+            // Новые слова — те, у которых карточки значения нет вовсе, в
+            // порядке частоты. Потолок тот же, что у словарной вкладки: пул
+            // незаученных слов в обороте.
+            val budget = (POOL_TARGET - mean.count { it.correct < VocabRepository.LEARNED })
+                .coerceAtLeast(0)
+            val fresh = file.words.asSequence()
+                .filter { !byId.containsKey(VocabRepository.cardId(it.id, VocabKind.Meaning)) }
+                .take(minOf(budget, VOCAB_LIMIT))
+                .map { flip(it) }
+                .toList()
+
+            val half = VOCAB_LIMIT / 2
+            val items = (fresh.take(half) + due + shaky + fresh.drop(half))
+                .distinctBy { it.exercise.id }
+                .take(VOCAB_LIMIT)
+
+            if (items.isEmpty()) {
+                refreshHome()
+                _home.value = _home.value.copy(error = "Слов пока нет — заведи их в словаре.")
+                return@launch
+            }
+
+            // Норма новых слов отмечается по тому, что реально попало в заход:
+            // перевёртыш заводит карточку так же, как обычное задание, и
+            // считать это надо в том же счёте, иначе словарная вкладка выдала
+            // бы те же слова ещё раз как новые.
+            vocabRepo.noteIntroduced(freshWords(items, byId))
+
+            _session.value = SessionState(
+                title = "Перевёртыши",
+                note = "",
+                items = items,
+                isReview = true,
+                offSchedule = true,
+                shownAt = System.currentTimeMillis(),
+                glossary = repo.glossary()
+            )
+        }
+    }
+
+    /**
      * Добавляет в сессию то, что открылось: новые слова и следующие ступени.
      *
      * Обратный перевод новых слов не заводит: слово попадает в него уже
@@ -3286,6 +3400,20 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 ex.answer,
                 answer
             )
+            // Перевёртыш отвечают голосом, поэтому и сверка речевая: со
+            // скидкой на слух и с тремя заходами, как у произношения.
+            //
+            // Варианты перебираются все: толкование в словаре одно на слово,
+            // но «дочь» — это и `ćerka`, и `kći`, а у прилагательного законны
+            // обе формы. Сказавшему `novi` при эталоне `nov` отвечать
+            // «неверно» было бы придиркой, а не проверкой.
+            is Exercise.Card -> spokenResult(
+                (listOf(ex.answer) + ex.also).any {
+                    LocalCheck.spokenScore(answer, it).passed
+                },
+                ex.answer,
+                answer
+            )
             is Exercise.Listening -> localResult(
                 LocalCheck.matchesTyped(answer, ex.audioText),
                 withReflexNote(answer, ex.audioText, ex.translation),
@@ -3523,7 +3651,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             // Семнадцать «мочь» подряд вместо семнадцати разных вопросов.
             val fresh = when {
                 state.checkup -> null
-                lemma != null -> untouchedWord()
+                lemma != null -> untouchedWord(item.exercise is Exercise.Card)
                 else -> untouchedExercise(state, item)
             }
             _notice.value = when {
@@ -3598,13 +3726,18 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * так что первое найденное и есть самое полезное. Отложенные слова сюда не
      * попадают сами собой: у них теперь есть карточки.
      */
-    private suspend fun untouchedWord(): SessionItem? {
+    private suspend fun untouchedWord(flip: Boolean): SessionItem? {
         val file = vocabRepo.load()
         val byId = dao.vocabCards(VocabRepository.LESSON_ID).associateBy { it.exerciseId }
         val word = file.words.firstOrNull {
             !byId.containsKey(VocabRepository.cardId(it.id, VocabKind.Meaning))
         } ?: return null
-        val ex = file.exerciseFor(word, VocabKind.Meaning) ?: return null
+        // Подмена обязана быть того же рода, что заход. Иначе посреди
+        // перевёртышей, где отвечают голосом, вылезло бы поле ввода — и
+        // человек, отложивший слово, получил бы в наказание другое занятие.
+        val ex: Exercise =
+            if (flip) file.flipFor(word)
+            else file.exerciseFor(word, VocabKind.Meaning) ?: return null
         // Слово вводится по-настоящему, значит идёт в дневную норму: иначе
         // кнопка «отложить» стала бы способом получить сверх неё.
         vocabRepo.noteIntroduced(1)
@@ -3877,6 +4010,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     Scheduler.newCard(item.exercise.id, item.lessonId, correct, now, easy)
                 // Тренировка вне расписания интервал не двигает: см. Scheduler.
                 state.practice -> Scheduler.practice(existing, correct, now)
+                // Перевёртыши берут слова не по расписанию, поэтому
+                // несозревшая карточка идёт как тренировка, а созревшая —
+                // обычным ответом. См. SessionState.offSchedule; то же
+                // правило, что у `Scheduler.recalled` в виджете.
+                state.offSchedule && existing.dueAt > now ->
+                    Scheduler.practice(existing, correct, now)
                 else -> Scheduler.update(existing, correct, now, easy)
             }
             dao.upsertCard(updated)

@@ -5,6 +5,8 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -28,6 +30,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -65,6 +69,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
@@ -84,6 +89,14 @@ import com.crnogorski.trener.speech.AnswerLanguage
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.speech.Speaker
 import kotlinx.coroutines.delay
+
+/**
+ * Сколько длится поворот карточки-перевёртыша.
+ *
+ * Тем же числом отмеряется пауза перед тем, как оборот заговорит: голос
+ * должен застать карточку уже повёрнутой, иначе слово звучит над вопросом.
+ */
+private const val FLIP_MS = 420
 
 @Composable
 fun SessionScreen(
@@ -367,6 +380,20 @@ private fun ExerciseBody(
             // клавиатура остаётся на месте — набрать руками можно всегда.
             autoListen = true,
             onSubmit = onSubmit
+        )
+
+        // Перевёртышу нужна фаза, а не только `enabled`: карточка поворачивается
+        // оборотом ровно тогда, когда вердикт вынесен. `enabled` для этого не
+        // годится — он гаснет и на `Checking`, которого у речи не бывает, и
+        // ничего не говорит о пропуске.
+        is Exercise.Card -> FlipAnswer(
+            ex = ex,
+            turned = state.phase is Phase.Result || state.phase is Phase.Skipped,
+            attempt = (state.phase as? Phase.Retry)?.attempts ?: 0,
+            speaker = speaker,
+            enabled = enabled,
+            onSubmit = onSubmit,
+            onSkip = onSkip
         )
 
         is Exercise.Match -> MatchAnswer(ex, speaker, enabled, onMatch)
@@ -1354,6 +1381,209 @@ private fun SpokenAnswer(
 }
 
 /**
+ * Карточка-перевёртыш: русское значение спереди, слово надо **сказать**.
+ *
+ * От [TextAnswer] отличается не оформлением, а работой: там слово набирают и
+ * могут подглядеть в клавиатуру, тут его произносят — то есть припоминают
+ * целиком, вместе со звучанием. Клавиатуры здесь нет вовсе и быть не должно:
+ * набор слова уже есть на соседней плашке, и две двери в одну комнату — это
+ * не выбор, а шум.
+ *
+ * **Поворот настоящий, а не плоский.** Виджету на домашнем экране пришлось
+ * обойтись сжатием по ширине — `RemoteViews` своих анимаций не принимает, — а
+ * здесь обычный Compose: карточка вращается вокруг вертикальной оси
+ * (`rotationY`), и оборот доворачивается обратно, иначе текст на нём вышел бы
+ * зеркальным.
+ *
+ * Поворачивает её **вердикт**, а не нажатие: вопрос и ответ — это и есть две
+ * стороны карточки, и показывать оборот раньше ответа значило бы отдать
+ * задание даром. Отсюда же [turned] параметром, а не своим состоянием: решает
+ * фаза сессии, и после «Дальше» карточка возвращается лицом сама.
+ *
+ * **Оборот произносится сам.** Ради этого всё и затевалось: человек сказал
+ * слово по памяти и тут же слышит, как оно звучит на самом деле. На домашнем
+ * экране такое запрещено — телефон открывают и в метро, — а внутри занятия
+ * это ровно то, что делают задания «на слух».
+ */
+@Composable
+private fun FlipAnswer(
+    ex: Exercise.Card,
+    /** Вердикт вынесен: показываем оборот. */
+    turned: Boolean,
+    /** Сколько заходов уже не совпало: по нему перезапускается микрофон. */
+    attempt: Int,
+    speaker: Speaker,
+    enabled: Boolean,
+    onSubmit: (String) -> Unit,
+    onSkip: () -> Unit
+) {
+    val context = LocalContext.current
+    val listener = remember { Listener(context) }
+    var status by remember(ex.id) { mutableStateOf("") }
+    var listening by remember(ex.id) { mutableStateOf(false) }
+
+    // Уходя с задания, распознаватель надо отпустить: он держит системный
+    // сервис и заглушку на звуке, поставленную на время записи.
+    DisposableEffect(Unit) { onDispose { listener.stop() } }
+
+    val angle by animateFloatAsState(
+        targetValue = if (turned) 180f else 0f,
+        animationSpec = tween(FLIP_MS),
+        label = "flip"
+    )
+
+    fun start() {
+        // Слушать и говорить одновременно нельзя: предыдущая карточка могла
+        // ещё договаривать свой оборот, и микрофон подхватил бы синтезатор.
+        speaker.silence()
+        listening = true
+        status = "Говори…"
+        listener.listen(
+            onResult = { heard ->
+                listening = false
+                status = ""
+                onSubmit(heard)
+            },
+            onError = { message ->
+                listening = false
+                status = message
+            }
+        )
+    }
+
+    val permission = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) start() else status = "Без доступа к микрофону карточку не проверить"
+    }
+
+    // Микрофон включается сам, как и в словарных карточках: слово проще
+    // сказать, чем нажать кнопку и сказать. Разрешение отсюда не спрашиваем —
+    // диалог выскочил бы без нажатия, посреди занятия; нет доступа, значит
+    // просто не слушаем, и остаётся кнопка.
+    //
+    // Перезапускается он и после каждого промаха — отсюда [attempt] в ключе.
+    // Движок теряет слово сам по себе, и «не совпало» чаще значит «не
+    // расслышал», чем «не знаешь»: заставлять за это тянуться к кнопке —
+    // наказывать человека за чужую осечку. Круга не выйдет, попыток три.
+    LaunchedEffect(ex.id, attempt) {
+        val granted = ContextCompat.checkSelfPermission(
+            context, Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED
+        if (enabled && granted) start()
+    }
+
+    // Голос ждёт конца поворота: слово, прозвучавшее над лицевой стороной,
+    // читалось бы как подсказка, а не как ответ.
+    LaunchedEffect(ex.id, turned) {
+        if (turned) {
+            delay(FLIP_MS.toLong())
+            speaker.speak(ex.answer)
+        }
+    }
+
+    Label(if (turned) "Так это звучит" else "Скажи по-черногорски")
+
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(230.dp)
+            .graphicsLayer {
+                rotationY = angle
+                // Без этого поворот выглядит плоским сжатием: перспектива у
+                // Compose по умолчанию такая дальняя, что её не видно.
+                cameraDistance = 14f * density
+            }
+            .clip(RoundedCornerShape(20.dp))
+            .background(Surface1)
+            .border(
+                1.dp,
+                if (turned) Accent.copy(alpha = 0.5f) else Surface2,
+                RoundedCornerShape(20.dp)
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        // Середина поворота — тот самый миг, когда карточка стоит ребром:
+        // менять сторону надо там, иначе видно, как текст подменяется.
+        if (angle <= 90f) {
+            Column(
+                Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (ex.icon.isNotBlank()) {
+                    Text(ex.icon, fontSize = 44.sp, lineHeight = 50.sp)
+                    Spacer(Modifier.height(12.dp))
+                }
+                Text(
+                    ex.prompt,
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = Paper,
+                    textAlign = TextAlign.Center
+                )
+            }
+        } else {
+            Column(
+                Modifier
+                    .padding(24.dp)
+                    // Оборот перевернулся вместе с карточкой: доворачиваем его
+                    // обратно, иначе текст был бы зеркальным.
+                    .graphicsLayer { rotationY = 180f },
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    stressed(ex.answer),
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = Paper,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(Modifier.height(16.dp))
+                SmallAction("Послушать ещё раз") { speaker.speak(ex.answer) }
+            }
+        }
+    }
+
+    if (enabled) {
+        Spacer(Modifier.height(20.dp))
+        Button(
+            onClick = {
+                val granted = ContextCompat.checkSelfPermission(
+                    context, Manifest.permission.RECORD_AUDIO
+                ) == PackageManager.PERMISSION_GRANTED
+                if (granted) start() else permission.launch(Manifest.permission.RECORD_AUDIO)
+            },
+            enabled = !listening,
+            modifier = Modifier.fillMaxWidth().height(56.dp),
+            shape = RoundedCornerShape(14.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Accent, contentColor = Ink)
+        ) {
+            Icon(
+                if (listening) Icons.Filled.Mic else Icons.Outlined.Mic,
+                contentDescription = null
+            )
+            Text(
+                if (listening) "  Слушаю…" else "  Сказать",
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
+
+    if (status.isNotBlank()) {
+        Spacer(Modifier.height(12.dp))
+        Text(status, style = MaterialTheme.typography.bodyMedium, color = Muted)
+    }
+
+    if (enabled) {
+        Spacer(Modifier.height(4.dp))
+        // «Не могу сказать» — это пропуск, а не ошибка: карточка отодвигается
+        // на несколько часов, ease и счёт повторений не трогаются. Оборот при
+        // этом показывается — за тем на кнопку и нажимают.
+        TextButton(onClick = onSkip) {
+            Text("Не могу сказать — показать", color = Muted)
+        }
+    }
+}
+
+/**
  * Эталон в карточке результата.
  *
  * Черногорский эталон **нажимается**: по нажатию видно перевод слова и
@@ -1404,7 +1634,8 @@ private fun ResultView(
     // Для речи это не то, что ты сказал, а то, что расслышал движок.
     val spoken = exercise is Exercise.Speaking ||
         exercise is Exercise.Repeat ||
-        exercise is Exercise.Reading
+        exercise is Exercise.Reading ||
+        exercise is Exercise.Card
     val answerLabel = if (spoken) "Услышано" else "Твой ответ"
     // Черногорский ли эталон. Решает две вещи: ставить ли ударение (размечать
     // русское слово по сербской норме значило бы врать) и нажимается ли

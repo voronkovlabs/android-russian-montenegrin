@@ -252,6 +252,7 @@ class MainActivity : ComponentActivity() {
                                     onVocab = { back, practice ->
                                         vm.startVocab(back = back, practice = practice)
                                     },
+                                    onFlip = vm::startFlip,
                                     onTab = vm::selectTab,
                                     onToggleGroup = vm::toggleGroup,
                                     onStats = vm::openStats,

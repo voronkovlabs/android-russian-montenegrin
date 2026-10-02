@@ -61,6 +61,8 @@ fun HomeScreen(
      */
     onStory: (String, StoryMode, Boolean) -> Unit,
     onVocab: (Boolean, Boolean) -> Unit,
+    /** Перевёртыши: значение спереди, слово надо сказать вслух. */
+    onFlip: () -> Unit,
     onTab: (HomeTab) -> Unit,
     onToggleGroup: (String) -> Unit,
     onStats: () -> Unit,
@@ -196,7 +198,8 @@ fun HomeScreen(
                         hint = "Назвать слово и поставить его в форму",
                         track = state.vocab.toTarget,
                         onStart = { onVocab(false, false) },
-                        onPractice = { onVocab(false, true) }
+                        onPractice = { onVocab(false, true) },
+                        onFlip = onFlip
                     )
                     Spacer(Modifier.height(12.dp))
                     VocabTile(
@@ -738,7 +741,12 @@ private fun VocabTile(
     hint: String,
     track: VocabTrack,
     onStart: () -> Unit,
-    onPractice: () -> Unit
+    onPractice: () -> Unit,
+    /**
+     * Перевёртыши — только у направления «с русского», и только там они и
+     * имеют смысл: спереди значение, сказать надо черногорское слово.
+     */
+    onFlip: (() -> Unit)? = null
 ) {
     val ready = track.due > 0 || track.fresh > 0
     Column(
@@ -781,12 +789,19 @@ private fun VocabTile(
                 color = Muted
             )
         }
-        if (track.ready > 0) {
-            TextButton(
-                onClick = onPractice,
-                modifier = Modifier.padding(start = 8.dp)
-            ) {
-                Text("Тренировать (${track.ready})", color = Accent)
+        // Два прогона вне очереди, в одной строке: набором и вслух. Оба
+        // доступны всегда, сколько угодно раз, — тем они и отличаются от
+        // самой плашки, которая идёт по расписанию.
+        Row(modifier = Modifier.padding(start = 8.dp)) {
+            if (track.ready > 0) {
+                TextButton(onClick = onPractice) {
+                    Text("Тренировать (${track.ready})", color = Accent)
+                }
+            }
+            if (onFlip != null && track.total > 0) {
+                TextButton(onClick = onFlip) {
+                    Text("Перевёртыши", color = Accent)
+                }
             }
         }
     }
