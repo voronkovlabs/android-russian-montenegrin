@@ -76,6 +76,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
@@ -875,6 +876,8 @@ private fun MatchTile(
     done: Boolean,
     chosen: Boolean,
     failed: Boolean,
+    /** Точная высота — в сетке, где плашки должны стоять друг напротив друга. */
+    fixed: Dp? = null,
     onClick: () -> Unit
 ) {
     val border = when {
@@ -891,7 +894,7 @@ private fun MatchTile(
     Box(
         Modifier
             .fillMaxWidth()
-            .heightIn(min = 64.dp)
+            .then(if (fixed != null) Modifier.height(fixed) else Modifier.heightIn(min = 64.dp))
             // Сложенная пара гаснет, но остаётся на месте. Убрать её нельзя:
             // остальные плашки перепрыгнули бы под пальцем, а гашение и так
             // отвечает на вопрос «что уже сделано» — по жалобе владельца.
@@ -900,12 +903,14 @@ private fun MatchTile(
             .background(Surface1)
             .border(if (chosen || failed) 2.dp else 1.dp, border, RoundedCornerShape(12.dp))
             .clickable(onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 14.dp),
+            .padding(horizontal = 12.dp, vertical = if (fixed != null) 4.dp else 14.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                lineHeight = if (fixed != null) 20.sp else MaterialTheme.typography.bodyLarge.lineHeight
+            ),
             color = ink,
             textAlign = TextAlign.Center
         )
@@ -1281,34 +1286,76 @@ private fun ParadigmMatch(
     }
     Spacer(Modifier.height(18.dp))
 
+    // Сетка ровная (4.34, владелец: «боксы во второй колонке должны
+    // находиться напротив боксов в первой»): пара плашек — одна строка, и
+    // высота у обеих одна. Двумя независимыми столбцами левый, где плашка в
+    // две строки, уезжал вниз от правого, где в одну.
     val muted = Muted
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            cells.forEachIndexed { i, cell ->
-                MatchTile(
-                    text = buildAnnotatedString {
-                        append(cell.frame.ifBlank { "___" })
-                        append("\n")
-                        withStyle(SpanStyle(color = muted, fontSize = 12.sp)) { append(cell.label) }
-                    },
-                    done = i in solved,
-                    chosen = pickedLeft == i,
-                    failed = ("L" + i) in flash
-                ) { tapLeft(i) }
-            }
-        }
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            right.forEach { i ->
-                MatchTile(
-                    text = stressed(cells[i].form),
-                    done = i in used,
-                    chosen = pickedRight == i,
-                    failed = ("R" + i) in flash
-                ) { tapRight(i) }
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        cells.indices.forEach { row ->
+            val r = right[row]
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Box(Modifier.weight(1f)) {
+                    MatchTile(
+                        text = buildAnnotatedString {
+                            append(cue(cells[row].frame))
+                            append("\n")
+                            withStyle(SpanStyle(color = muted, fontSize = 12.sp)) {
+                                append(caseName(cells[row].label))
+                            }
+                        },
+                        done = row in solved,
+                        chosen = pickedLeft == row,
+                        failed = ("L" + row) in flash,
+                        fixed = PAIR_ROW
+                    ) { tapLeft(row) }
+                }
+                Box(Modifier.weight(1f)) {
+                    MatchTile(
+                        text = stressed(cells[r].form),
+                        done = r in used,
+                        chosen = pickedRight == r,
+                        failed = ("R" + r) in flash,
+                        fixed = PAIR_ROW
+                    ) { tapRight(r) }
+                }
             }
         }
     }
 }
+
+/** Высота строки пар в таблице: две строки текста и немного воздуха. */
+private val PAIR_ROW = 56.dp
+
+/**
+ * Вводные слова без пропуска и знаков: «Nema», «Idem ka», «Zdravo», «Ja».
+ *
+ * Владелец: «подчёркивание и точка не нужны, и так понятно, что делать». На
+ * плашке пар рамка — подсказка, а не предложение: справа стоит слово, слева
+ * то, что его требует, и пропуск между ними глаз дорисовывает сам.
+ */
+private fun cue(frame: String): String =
+    frame.replace("___", "").trim().trimEnd('.', '!', '?', ',', ' ').trim()
+
+/**
+ * Падеж словом, а не сокращением: «родительный ед.», «творительный мн.».
+ * Число остаётся сокращённым — владелец так и просил.
+ */
+private fun caseName(label: String): String {
+    val head = label.substringBefore(' ')
+    val full = CASE_NAMES[head] ?: return label
+    return full + label.removePrefix(head)
+}
+
+private val CASE_NAMES = mapOf(
+    "им." to "именительный",
+    "род." to "родительный",
+    "дат." to "дательный",
+    "вин." to "винительный",
+    "зв." to "звательный",
+    "тв." to "творительный",
+    "мест." to "местный"
+)
 
 /**
  * Заголовок слова в таблице — нажимается и переводится (жалоба 120).
@@ -1358,7 +1405,7 @@ private fun CellRow(
         Text(
             // Подпись и рамка вместе: название падежа говорит, как форма
             // зовётся, а рамка — ради чего она нужна.
-            if (cell.frame.isBlank()) cell.label else "${cell.label}  ·  ${cell.frame}",
+            if (cell.frame.isBlank()) caseName(cell.label) else "${caseName(cell.label)}  ·  ${cell.frame}",
             style = MaterialTheme.typography.labelSmall,
             color = verdict ?: Muted
         )
@@ -1750,7 +1797,7 @@ private fun FlipSession(
                     }
                 ) {
                     if (ex.form) {
-                        Text(ex.label.uppercase(), style = MaterialTheme.typography.labelSmall, color = Accent)
+                        Text(caseName(ex.label).uppercase(), style = MaterialTheme.typography.labelSmall, color = Accent)
                         Spacer(Modifier.height(14.dp))
                         Text(
                             ex.frame.ifBlank { "___" },
@@ -1788,7 +1835,7 @@ private fun FlipSession(
                         corner = { CardIcon("🔊", "Послушать ещё раз") { speaker.speak(said) } }
                     ) {
                         if (ex.form) {
-                            Text(ex.label.uppercase(), style = MaterialTheme.typography.labelSmall, color = Muted)
+                            Text(caseName(ex.label).uppercase(), style = MaterialTheme.typography.labelSmall, color = Muted)
                             Spacer(Modifier.height(14.dp))
                             // Форма выделена в рамке цветом — ради неё карточка.
                             val accent = Accent
