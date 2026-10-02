@@ -276,8 +276,11 @@ private fun SessionHeader(
                 )
             }
             Spacer(Modifier.weight(1f))
+            // У бесконечного захода «из скольких» нет: показываем, сколько
+            // пройдено, а полосу оставляем пустой — её высота держит место,
+            // чтобы шапка не прыгала.
             Text(
-                "${state.index + 1} / ${state.items.size}",
+                if (state.endless) "${state.index + 1}" else "${state.index + 1} / ${state.items.size}",
                 style = MaterialTheme.typography.labelSmall,
                 color = Muted
             )
@@ -287,7 +290,7 @@ private fun SessionHeader(
         }
         Spacer(Modifier.height(8.dp))
         LinearProgressIndicator(
-            progress = { state.progress },
+            progress = { if (state.endless) 0f else state.progress },
             modifier = Modifier.fillMaxWidth().height(3.dp).clip(RoundedCornerShape(2.dp)),
             color = Accent,
             trackColor = Surface2

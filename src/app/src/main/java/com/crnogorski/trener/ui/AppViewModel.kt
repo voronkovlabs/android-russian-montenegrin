@@ -542,6 +542,17 @@ data class SessionState(
      */
     val offSchedule: Boolean = false,
     /**
+     * Заход без конца (4.21, владелец: «сделать перевёртыши бесконечными —
+     * не фиксированный урок, а просто бесконечное изучение слов»).
+     *
+     * Кончилась порция — [AppViewModel.next] добирает следующую тем же
+     * правилом отбора, и так пока человек сам не выйдет. Конец занятия тогда —
+     * это выход, а не последняя карточка: там и засчитывается занятие.
+     */
+    val endless: Boolean = false,
+    /** Бесконечный заход форм, а не слов: из чего добирать порцию. */
+    val flipForms: Boolean = false,
+    /**
      * Собрано ежедневным заданием.
      *
      * Отличается от повторения тем, что может вводить новые уроки порциями, —
@@ -1294,8 +1305,23 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Долг от этого растёт быстрее — каждое новое слово это ещё две
         // карточки в обороте, — и это осознанная плата. Словарь, в который не
         // входят новые слова, это не словарь, а список из тридцати позиций.
+        // **Карточки значения в ежедневном — перевёртышами** (4.21, владелец:
+        // «в ежедневные задания то же самое можно включать, но с лимитом»).
+        // Лимит тут и так есть — бюджет минут; меняется только способ
+        // ответа. Карточка та же (`-mean`), так что расписание не замечает
+        // разницы, а дележ бюджета считает их по своему темпу (`card`, семь
+        // секунд против тринадцати у набора) — в те же минуты входит больше
+        // слов. Остальные ступени — падежи, особые формы, обратный перевод —
+        // остаются как были.
+        fun voiced(item: SessionItem): SessionItem {
+            val ex = item.exercise as? Exercise.Word ?: return item
+            if (ex.native || !isMeaning(ex.id)) return item
+            val word = words[VocabRepository.lemmaOf(ex.id) ?: return item] ?: return item
+            return SessionItem(item.lessonId, file.flipFor(word))
+        }
+
         val lead = Config.current.daily.freshLead
-        return (matches + fresh.take(lead) + due + fresh.drop(lead))
+        return (matches + (fresh.take(lead) + due + fresh.drop(lead)).map(::voiced))
             .map { Cand(it, pace.seconds(it.exercise.typeName)) }
     }
 
@@ -2232,78 +2258,28 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * не скажешь. Перевёртыш спрашивает одно — как это слово по-черногорски.
      */
     fun startFlip(forms: Boolean = false) {
-        if (forms) {
-            startFormFlip()
-            return
-        }
         viewModelScope.launch {
-            val file = vocabRepo.load()
-            if (file.words.isEmpty()) {
+            if (vocabRepo.load().words.isEmpty()) {
                 _home.value = _home.value.copy(error = "Словарь не загрузился.")
                 return@launch
             }
-            val now = System.currentTimeMillis()
-            val all = dao.vocabCards(VocabRepository.LESSON_ID)
-            val byId = all.associateBy { it.exerciseId }
-            val words = file.words.associateBy { it.id }
-            val mean = all.filter { isMeaning(it.exerciseId) }
-
-            fun flip(word: VocabWord) = SessionItem(VocabRepository.LESSON_ID, file.flipFor(word))
-            fun flipById(id: String): SessionItem? {
-                val lemma = VocabRepository.lemmaOf(id) ?: return null
-                return words[lemma]?.let { flip(it) }
-            }
-
-            // Отложенное рукой не берём нигде — «уйти из глаз» значит
-            // отовсюду. Проверка идёт по признаку «срок дальше, чем дал бы
-            // собственный интервал», как и в тренировке: отдельного поля под
-            // «отложено» в карточке нет.
-            val live = mean.filter { !Scheduler.snoozed(it, now) }
-            val due = live.filter { it.dueAt <= now }
-                .sortedBy { it.dueAt }
-                .take(VOCAB_LIMIT)
-                .mapNotNull { flipById(it.exerciseId) }
-            val shaky = live.filter {
-                it.dueAt > now && it.correct < VocabRepository.LEARNED
-            }
-                .sortedBy { it.correct - it.lapses * 2 }
-                .take(VOCAB_LIMIT)
-                .mapNotNull { flipById(it.exerciseId) }
-
-            // Новые слова — те, у которых карточки значения нет вовсе, в
-            // порядке частоты. Потолок тот же, что у словарной вкладки: пул
-            // незаученных слов в обороте.
-            val budget = (POOL_TARGET - mean.count { it.correct < VocabRepository.LEARNED })
-                .coerceAtLeast(0)
-            val fresh = file.words.asSequence()
-                .filter { !byId.containsKey(VocabRepository.cardId(it.id, VocabKind.Meaning)) }
-                .take(minOf(budget, VOCAB_LIMIT))
-                .map { flip(it) }
-                .toList()
-
-            val half = VOCAB_LIMIT / 2
-            val items = (fresh.take(half) + due + shaky + fresh.drop(half))
-                .distinctBy { it.exercise.id }
-                .take(VOCAB_LIMIT)
-
+            val items = flipBatch(forms, emptySet())
             if (items.isEmpty()) {
                 refreshHome()
-                _home.value = _home.value.copy(error = "Слов пока нет — заведи их в словаре.")
+                _home.value = _home.value.copy(
+                    error = if (forms) "Форм пока нет: они открываются, когда слово выучено в словаре."
+                    else "Слов пока нет — заведи их в словаре."
+                )
                 return@launch
             }
-
-            // Норма новых слов отмечается по тому, что реально попало в заход:
-            // перевёртыш заводит карточку так же, как обычное задание, и
-            // считать это надо в том же счёте, иначе словарная вкладка выдала
-            // бы те же слова ещё раз как новые.
-            vocabRepo.noteIntroduced(freshWords(items, byId))
-
             _session.value = SessionState(
-                title = "Перевёртыши",
+                title = if (forms) "Перевёртыши: формы" else "Перевёртыши",
                 note = "",
                 items = items,
                 isReview = true,
                 offSchedule = true,
+                endless = true,
+                flipForms = forms,
                 shownAt = System.currentTimeMillis(),
                 glossary = repo.glossary()
             )
@@ -2311,83 +2287,138 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /**
-     * Перевёртыши форм: рамка с пропуском — «вин. ед. · Vidim ___. (kuća)», —
-     * сказать надо нужную форму (4.19, просьба владельца: «хочу видеть слова в
-     * разных формах… отдельной кнопкой, чтобы тренировать основные формы и
-     * падежи порознь»).
+     * Следующая порция перевёртышей — для начала захода и для его
+     * продолжения (4.21: заход бесконечный, см. [SessionState.endless]).
+     *
+     * [skip] — карточки последней порции. Без него только что отвеченное
+     * шаткое слово вставало бы снова первым: верный ответ прибавляет к счёту
+     * единицу, а сортировка «самое шаткое вперёд» от одной единицы почти не
+     * меняется. Если кроме них брать нечего (словарь крошечный), берём и их:
+     * пустая порция закончила бы бесконечный заход.
+     */
+    private suspend fun flipBatch(forms: Boolean, skip: Set<String>): List<SessionItem> {
+        val batch = if (forms) formBatch(skip) else wordBatch(skip)
+        return batch.ifEmpty { if (skip.isEmpty()) batch else flipBatch(forms, emptySet()) }
+    }
+
+    /**
+     * Порция перевёртышей слов: русское значение, слово надо сказать.
+     *
+     * **Очередь взята у виджета, а не у расписания**, и это осознанно. Виджет
+     * показывает всё, что в обороте, самое шаткое вперёд, — ровно потому за
+     * него и берутся по десять раз на дню. Но долг всё же идёт первым:
+     * карточку, которую расписание и так спрашивает сегодня, перевёртыш
+     * спрашивает по-настоящему (см. [SessionState.offSchedule]).
+     *
+     * Новые слова — половиной вперёд, как на словарной вкладке. Без этого
+     * очередь оборота заняла бы заход целиком и новых слов не появлялось бы
+     * вовсе: ровно та беда, которую чинили в 1.75 и снова в 4.15.
+     */
+    private suspend fun wordBatch(skip: Set<String>): List<SessionItem> {
+        val file = vocabRepo.load()
+        if (file.words.isEmpty()) return emptyList()
+        val now = System.currentTimeMillis()
+        val all = dao.vocabCards(VocabRepository.LESSON_ID)
+        val byId = all.associateBy { it.exerciseId }
+        val words = file.words.associateBy { it.id }
+        val mean = all.filter { isMeaning(it.exerciseId) }
+
+        fun flip(word: VocabWord) = SessionItem(VocabRepository.LESSON_ID, file.flipFor(word))
+        fun flipById(id: String): SessionItem? {
+            val lemma = VocabRepository.lemmaOf(id) ?: return null
+            return words[lemma]?.let { flip(it) }
+        }
+
+        // Отложенное рукой не берём нигде — «уйти из глаз» значит отовсюду.
+        val live = mean.filter { !Scheduler.snoozed(it, now) && it.exerciseId !in skip }
+        val due = live.filter { it.dueAt <= now }
+            .sortedBy { it.dueAt }
+            .take(VOCAB_LIMIT)
+            .mapNotNull { flipById(it.exerciseId) }
+        val shaky = live.filter { it.dueAt > now && it.correct < VocabRepository.LEARNED }
+            .sortedBy { it.correct - it.lapses * 2 }
+            .take(VOCAB_LIMIT)
+            .mapNotNull { flipById(it.exerciseId) }
+
+        // Новые слова — те, у которых карточки значения нет вовсе, в порядке
+        // частоты. Потолок тот же, что у словарной вкладки: пул незаученных.
+        val budget = (POOL_TARGET - mean.count { it.correct < VocabRepository.LEARNED })
+            .coerceAtLeast(0)
+        val fresh = file.words.asSequence()
+            .filter { !byId.containsKey(VocabRepository.cardId(it.id, VocabKind.Meaning)) }
+            .take(minOf(budget, VOCAB_LIMIT))
+            .map { flip(it) }
+            .toList()
+
+        val half = VOCAB_LIMIT / 2
+        val items = (fresh.take(half) + due + shaky + fresh.drop(half))
+            .distinctBy { it.exercise.id }
+            .take(VOCAB_LIMIT)
+
+        // Норма новых слов отмечается по тому, что реально попало в порцию:
+        // перевёртыш заводит карточку так же, как обычное задание.
+        vocabRepo.noteIntroduced(freshWords(items, byId))
+        return items
+    }
+
+    /**
+     * Порция перевёртышей форм: рамка с пропуском — «вин. ед. · Vidim ___.
+     * (kuća)», — сказать надо нужную форму (4.19, просьба владельца: «хочу
+     * видеть слова в разных формах… отдельной кнопкой»).
      *
      * Слова — те, до которых дошла ступень склонения: у `decl` уже есть
      * карточка (таблицу показали), долг первым, потом самое шаткое. Половину
-     * захода отдаём словам, чьё значение уже выучено, а таблицы ещё не было:
+     * порции отдаём словам, чьё значение уже выучено, а таблицы ещё не было:
      * иначе на свежей установке форм не нашлось бы вовсе. Им расписание не
      * трогается — первая встреча с парадигмой остаётся за таблицей (см.
      * `Exercise.Card.form`).
      *
      * Ячейка у каждого слова случайная: за несколько заходов слово показывается
-     * в разных формах, ради этого всё и просили. Заход собирается один раз, так
-     * что под пальцем ничего не меняется.
+     * в разных формах. Порция собирается один раз, под пальцем ничего не
+     * меняется.
      */
-    private fun startFormFlip() {
-        viewModelScope.launch {
-            val file = vocabRepo.load()
-            if (file.words.isEmpty()) {
-                _home.value = _home.value.copy(error = "Словарь не загрузился.")
-                return@launch
+    private suspend fun formBatch(skip: Set<String>): List<SessionItem> {
+        val file = vocabRepo.load()
+        if (file.words.isEmpty()) return emptyList()
+        val now = System.currentTimeMillis()
+        val all = dao.vocabCards(VocabRepository.LESSON_ID)
+        val byId = all.associateBy { it.exerciseId }
+        val words = file.words.associateBy { it.id }
+        val patternKey = "-" + VocabKind.Pattern.key
+
+        val decl = all.filter {
+            it.exerciseId.endsWith(patternKey) && !Scheduler.snoozed(it, now) &&
+                it.exerciseId !in skip
+        }
+        val due = decl.filter { it.dueAt <= now }.sortedBy { it.dueAt }
+        val shaky = decl.filter { it.dueAt > now }.sortedBy { it.correct - it.lapses * 2 }
+        val seen = (due + shaky).take(VOCAB_LIMIT)
+            .mapNotNull { words[VocabRepository.lemmaOf(it.exerciseId) ?: return@mapNotNull null] }
+
+        // Значение выучено, таблицы ещё не было. Отложенное слово сюда не
+        // попадает само: у него отложена и карточка значения.
+        val fresh = file.words.asSequence()
+            .filter { it.hasForms }
+            .filter {
+                val declId = VocabRepository.cardId(it.id, VocabKind.Pattern)
+                !byId.containsKey(declId) && declId !in skip
             }
-            val now = System.currentTimeMillis()
-            val all = dao.vocabCards(VocabRepository.LESSON_ID)
-            val byId = all.associateBy { it.exerciseId }
-            val words = file.words.associateBy { it.id }
-            val patternKey = "-" + VocabKind.Pattern.key
-
-            val decl = all.filter {
-                it.exerciseId.endsWith(patternKey) && !Scheduler.snoozed(it, now)
+            .filter { w ->
+                val mean = byId[VocabRepository.cardId(w.id, VocabKind.Meaning)]
+                mean != null && vocabLearned(byId, mean.exerciseId) &&
+                    !Scheduler.snoozed(mean, now)
             }
-            val due = decl.filter { it.dueAt <= now }.sortedBy { it.dueAt }
-            val shaky = decl.filter { it.dueAt > now }.sortedBy { it.correct - it.lapses * 2 }
-            val seen = (due + shaky).take(VOCAB_LIMIT)
-                .mapNotNull { words[VocabRepository.lemmaOf(it.exerciseId) ?: return@mapNotNull null] }
+            .take(VOCAB_LIMIT)
+            .toList()
 
-            // Значение выучено, таблицы ещё не было. Отложенное слово сюда не
-            // попадает само: у него отложена и карточка значения.
-            val fresh = file.words.asSequence()
-                .filter { it.hasForms }
-                .filter { !byId.containsKey(VocabRepository.cardId(it.id, VocabKind.Pattern)) }
-                .filter { w ->
-                    val mean = byId[VocabRepository.cardId(w.id, VocabKind.Meaning)]
-                    mean != null && vocabLearned(byId, mean.exerciseId) &&
-                        !Scheduler.snoozed(mean, now)
-                }
-                .take(VOCAB_LIMIT)
-                .toList()
-
-            val half = VOCAB_LIMIT / 2
-            val picked = (fresh.take(half) + seen + fresh.drop(half))
-                .distinctBy { it.id }
-                .take(VOCAB_LIMIT)
-            val forms = vocabRepo.formsOf(picked)
-            val items = picked.mapNotNull { w ->
-                file.formFlipFor(vocabRepo.hydrate(w, forms), kotlin.random.Random.nextInt(1000))
-                    ?.let { SessionItem(VocabRepository.LESSON_ID, it) }
-            }
-
-            if (items.isEmpty()) {
-                refreshHome()
-                _home.value = _home.value.copy(
-                    error = "Форм пока нет: они открываются, когда слово выучено в словаре."
-                )
-                return@launch
-            }
-
-            _session.value = SessionState(
-                title = "Перевёртыши: формы",
-                note = "",
-                items = items,
-                isReview = true,
-                offSchedule = true,
-                shownAt = System.currentTimeMillis(),
-                glossary = repo.glossary()
-            )
+        val half = VOCAB_LIMIT / 2
+        val picked = (fresh.take(half) + seen + fresh.drop(half))
+            .distinctBy { it.id }
+            .take(VOCAB_LIMIT)
+        val forms = vocabRepo.formsOf(picked)
+        return picked.mapNotNull { w ->
+            file.formFlipFor(vocabRepo.hydrate(w, forms), kotlin.random.Random.nextInt(1000))
+                ?.let { SessionItem(VocabRepository.LESSON_ID, it) }
         }
     }
 
@@ -2773,6 +2804,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun exitSession() {
+        // Бесконечный заход кончается выходом, а не последней карточкой, —
+        // значит здесь и засчитывается занятие, и здесь же повод для
+        // заставки, если норма дня набралась на перевёртышах.
+        val state = _session.value
+        if (state != null && state.endless && !state.finished && state.index > 0) {
+            viewModelScope.launch {
+                bump(sessions = 1)
+                maybeCelebrate(state)
+            }
+        }
         _session.value = null
         autoSaveProgress()
         refreshHome()
@@ -4210,11 +4251,43 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun next() {
         val state = _session.value ?: return
-        if (state.index + 1 >= state.items.size) {
+        if (state.endless && state.index + 1 >= state.items.size) {
+            more(state)
+        } else if (state.index + 1 >= state.items.size) {
             finish(state)
         } else {
             _session.value = state.copy(
                 index = state.index + 1,
+                phase = Phase.Input,
+                shownAt = System.currentTimeMillis(),
+                complaintFiled = false
+            )
+        }
+    }
+
+    /** Добор порции идёт сейчас: второе нажатие «Дальше» не должно звать его снова. */
+    private var growing = false
+
+    /**
+     * Следующая порция бесконечного захода. Последняя порция в неё не берётся
+     * (см. [flipBatch]); не нашлось вовсе ничего — заход кончается как
+     * обычный.
+     */
+    private fun more(state: SessionState) {
+        if (growing) return
+        growing = true
+        viewModelScope.launch {
+            val recent = state.items.takeLast(VOCAB_LIMIT).mapTo(mutableSetOf()) { it.exercise.id }
+            val batch = flipBatch(state.flipForms, recent)
+            growing = false
+            val now = _session.value ?: return@launch
+            if (batch.isEmpty()) {
+                finish(now)
+                return@launch
+            }
+            _session.value = now.copy(
+                items = now.items + batch,
+                index = now.index + 1,
                 phase = Phase.Input,
                 shownAt = System.currentTimeMillis(),
                 complaintFiled = false
