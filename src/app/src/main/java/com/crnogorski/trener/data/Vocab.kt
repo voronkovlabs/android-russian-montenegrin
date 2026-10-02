@@ -368,9 +368,13 @@ class VocabRepository(private val context: Context) {
          * Именительного единственного нет и быть не может: это сама лемма, она
          * стоит на карточке подсказкой.
          */
-        val FLIP_CASE_CELLS = CASE_CELLS +
-            listOf("d-s", "v-s", "n-p", "g-p", "d-p", "a-p", "l-p", "i-p")
-        val FLIP_VERB_CELLS = VERB_CELLS + listOf("Vmr1p", "Vmp-sm", "Vmp-sf")
+        val FLIP_CASE_CELLS = listOf(
+            "g-s", "d-s", "a-s", "v-s", "l-s", "i-s",
+            "n-p", "g-p", "d-p", "a-p", "l-p", "i-p"
+        )
+        val FLIP_VERB_CELLS = listOf(
+            "Vmr1s", "Vmr2s", "Vmr3s", "Vmr1p", "Vmr3p", "Vmp-sm", "Vmp-sf"
+        )
 
         // Те же настройки, что у копии прогресса: файл один на приложение.
         private const val PREFS = "crnogorski"
@@ -525,7 +529,11 @@ fun VocabFile.exerciseFor(
     )
 
     VocabKind.Pattern -> {
-        val cells = paradigmCells(word)
+        // С 4.31 таблица полная, как у перевёртыша форм (владелец: «на
+        // вкладке слова тоже надо добавить все падежи»). Короткая четвёрка
+        // `CASE_CELLS` осталась двум вещам: подписи образца (`signature`) и
+        // соседям по образцу ниже.
+        val cells = paradigmCells(word, wide = true)
         if (cells.isEmpty()) {
             null
         } else {
@@ -536,6 +544,10 @@ fun VocabFile.exerciseFor(
             // не недосмотр, а то, чего и хочется: промахнулся по системе —
             // посмотри на неё целиком ещё раз.
             val first = repetitions == 0
+            // Соседи — на четырёх ячейках, а не на всех: при полной таблице
+            // у каждого серия из трёх слов дала бы тридцать шесть строк, и
+            // система, ради которой соседей показывают, утонула бы в них.
+            // Сходство окончаний видно и по четырём.
             val series = if (first) mates.flatMap { paradigmCells(it) } else emptyList()
             Exercise.Table(
                 id = VocabRepository.cardId(word.id, kind),
