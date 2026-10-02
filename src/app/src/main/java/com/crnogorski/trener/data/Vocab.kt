@@ -339,6 +339,29 @@ class VocabRepository(private val context: Context) {
         val CASE_CELLS = listOf("a-s", "g-s", "l-s", "i-s")
         val VERB_CELLS = listOf("Vmr1s", "Vmr2s", "Vmr3s", "Vmr3p")
 
+        /**
+         * Ячейки перевёртыша форм — шире, чем у таблицы (4.28, владелец
+         * согласился с предложением «множественное и прошедшее»).
+         *
+         * Таблица остаётся на четырёх: там все ячейки вписывают руками за раз,
+         * и восемь полей вместо четырёх удвоили бы задание. Перевёртыш
+         * спрашивает одну ячейку за карточку, и лишняя ячейка ему ничего не
+         * стоит — только разнообразит, ради чего его и просили.
+         *
+         * Добавлено то, что в данных уже лежит и нужно каждый день:
+         * множественное число — именительный («Ovo su kuće»), родительный
+         * («Nema kuća»), винительный, местный и творительный (последние два
+         * совпадают, `kućama`, но рамки у них разные, и связку видно); у
+         * глагола — «mi» и прошедшее «on je / ona je».
+         *
+         * Дательного нет: в единственном он почти всегда равен местному, во
+         * множественном — местному и творительному сразу. Звательного нет в
+         * самих данных — его частота по корпусу нулевая, и сборка словаря его
+         * отсеяла (см. `research/tools/build_vocab.py`).
+         */
+        val FLIP_CASE_CELLS = CASE_CELLS + listOf("n-p", "g-p", "a-p", "l-p", "i-p")
+        val FLIP_VERB_CELLS = VERB_CELLS + listOf("Vmr1p", "Vmp-sm", "Vmp-sf")
+
         // Те же настройки, что у копии прогресса: файл один на приложение.
         private const val PREFS = "crnogorski"
         private const val KEY_DAY = "vocab_day"
@@ -419,11 +442,15 @@ class VocabRepository(private val context: Context) {
  * Рамка («Vidim ___.») лежит в самом словаре и задаёт падеж предлогом, а не
  * подписью: так видно, ради чего форма нужна, а не только как она называется.
  */
-private fun VocabFile.paradigmCells(word: VocabWord): List<ParadigmCell> {
+private fun VocabFile.paradigmCells(word: VocabWord, wide: Boolean = false): List<ParadigmCell> {
     val have = word.forms.associateBy({ it.s }, { it.f })
-    val order =
-        if (have.keys.any { it.startsWith("Vm") }) VocabRepository.VERB_CELLS
-        else VocabRepository.CASE_CELLS
+    val verb = have.keys.any { it.startsWith("Vm") }
+    val order = when {
+        verb && wide -> VocabRepository.FLIP_VERB_CELLS
+        verb -> VocabRepository.VERB_CELLS
+        wide -> VocabRepository.FLIP_CASE_CELLS
+        else -> VocabRepository.CASE_CELLS
+    }
     return order.mapNotNull { slot ->
         val f = have[slot] ?: return@mapNotNull null
         ParadigmCell(
@@ -569,7 +596,8 @@ fun VocabFile.flipFor(word: VocabWord): Exercise.Card = Exercise.Card(
  * помнить надо в одном месте.
  */
 fun VocabFile.formFlipFor(word: VocabWord, pick: Int): Exercise.Card? {
-    val cells = paradigmCells(word)
+    // Ячейки шире, чем у таблицы: см. VocabRepository.FLIP_CASE_CELLS.
+    val cells = paradigmCells(word, wide = true)
     if (cells.isEmpty()) return null
     val cell = cells[Math.floorMod(pick, cells.size)]
     return Exercise.Card(
