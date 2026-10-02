@@ -823,7 +823,7 @@ POLAKO = ('Polako — одно из самых частых слов в Черн
           '«помедленнее, пожалуйста», когда говорят слишком быстро — Polako, molim; '
           '«потихоньку» в ответ на «Kako si?» — ни хорошо, ни плохо; «осторожно», '
           'когда что-то несут или паркуются — Polako, polako!')
-L.append(dict(id='k14', title='Nisam pas. Polako!', section=S2, words=[
+L.append(dict(id='k14', title='Nisam, nisi, nije. Polako!', section=S2, words=[
     ('brz', 'быстрый'), ('spor', 'медленный'), ('avion', 'самолёт'), ('auto', 'машина'),
     ('polako', 'медленно, спокойно, потихоньку'), ('brinuti se', 'волноваться')],
     ex=[
@@ -885,7 +885,7 @@ CORBA = ('Supa — прозрачный суп, бульон. Čorba — гус�
 SVE = ('Так спрашивает официант, когда убирает тарелки. Bilo — «было», это '
        'прошедшее время, пока учим целиком. Отвечают: «Jeste, hvala!» — «Да, '
        'спасибо!» или «Sve je bilo odlično!» — «Всё было отлично!».')
-L.append(dict(id='k15', title='Мачке варят похлёбку', section=S2, words=[
+L.append(dict(id='k15', title='Кошки варят похлёбку. Je li bilo ukusno?', section=S2, words=[
     ('kuvati', 'варить'), ('riba', 'рыба'), ('supa', 'суп'), ('čorba', 'похлёбка'),
     ('ukusan', 'вкусный'), ('vruć', 'горячий'), ('sve', 'всё')],
     ex=[
