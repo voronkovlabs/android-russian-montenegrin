@@ -9,6 +9,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -63,6 +65,11 @@ fun HomeScreen(
      */
     onStory: (String, StoryMode, Boolean) -> Unit,
     onVocab: (Boolean, Boolean) -> Unit,
+    /**
+     * Перевёртыши: значение спереди, слово надо сказать вслух. `true` — формы:
+     * рамка с падежом спереди, сказать нужную форму.
+     */
+    onFlip: (Boolean) -> Unit,
     onTab: (HomeTab) -> Unit,
     onToggleGroup: (String) -> Unit,
     onStats: () -> Unit,
@@ -202,7 +209,8 @@ fun HomeScreen(
                         hint = "Назвать слово и поставить его в форму",
                         track = state.vocab.toTarget,
                         onStart = { onVocab(false, false) },
-                        onPractice = { onVocab(false, true) }
+                        onPractice = { onVocab(false, true) },
+                        onFlip = onFlip
                     )
                     Spacer(Modifier.height(12.dp))
                     VocabTile(
@@ -738,13 +746,19 @@ private fun StoryRow(card: StoryCard, onClick: () -> Unit) {
  * идёт вне расписания, берёт самое шаткое и доступна всегда, сколько угодно
  * раз.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun VocabTile(
     title: String,
     hint: String,
     track: VocabTrack,
     onStart: () -> Unit,
-    onPractice: () -> Unit
+    onPractice: () -> Unit,
+    /**
+     * Перевёртыши — только у направления «с русского», и только там они и
+     * имеют смысл: спереди значение, сказать надо черногорское слово.
+     */
+    onFlip: ((Boolean) -> Unit)? = null
 ) {
     val ready = track.due > 0 || track.fresh > 0
     Column(
@@ -787,12 +801,23 @@ private fun VocabTile(
                 color = Muted
             )
         }
-        if (track.ready > 0) {
-            TextButton(
-                onClick = onPractice,
-                modifier = Modifier.padding(start = 8.dp)
-            ) {
-                Text("Тренировать (${track.ready})", color = Accent)
+        // Два прогона вне очереди, в одной строке: набором и вслух. Оба
+        // доступны всегда, сколько угодно раз, — тем они и отличаются от
+        // самой плашки, которая идёт по расписанию.
+        //
+        // Катина сборка: кнопка одна, без «Перевёртыши: формы» из main — у
+        // слов её словаря форм нет, и кнопка только отвечала бы «форм пока
+        // нет». Механизм форм в коде остался: вернуть кнопку — одна строка.
+        FlowRow(modifier = Modifier.padding(start = 8.dp)) {
+            if (track.ready > 0) {
+                TextButton(onClick = onPractice) {
+                    Text("Тренировать (${track.ready})", color = Accent)
+                }
+            }
+            if (onFlip != null && track.total > 0) {
+                TextButton(onClick = { onFlip(false) }) {
+                    Text("Перевёртыши", color = Accent)
+                }
             }
         }
     }

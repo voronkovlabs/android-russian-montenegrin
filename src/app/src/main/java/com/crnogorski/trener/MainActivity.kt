@@ -253,6 +253,7 @@ class MainActivity : ComponentActivity() {
                                     onVocab = { back, practice ->
                                         vm.startVocab(back = back, practice = practice)
                                     },
+                                    onFlip = { forms -> vm.startFlip(forms) },
                                     onTab = vm::selectTab,
                                     onToggleGroup = vm::toggleGroup,
                                     onStats = vm::openStats,
@@ -272,6 +273,7 @@ class MainActivity : ComponentActivity() {
                                 onSubmit = vm::submitText,
                                 onSkip = vm::skipCurrent,
                                 onSnooze = vm::snoozeCurrent,
+                                onKnown = vm::markKnown,
                                 onMatch = vm::submitMatch,
                                 onParadigm = vm::submitParadigm,
                                 onPeek = vm::peekCurrent,

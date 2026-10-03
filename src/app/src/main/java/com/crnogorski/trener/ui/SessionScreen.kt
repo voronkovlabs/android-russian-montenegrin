@@ -5,6 +5,8 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,9 +32,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -67,6 +72,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
@@ -87,6 +93,22 @@ import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.speech.Speaker
 import kotlinx.coroutines.delay
 
+/**
+ * Сколько длится поворот карточки-перевёртыша.
+ *
+ * Тем же числом отмеряется пауза перед тем, как оборот заговорит: голос
+ * должен застать карточку уже повёрнутой, иначе слово звучит над вопросом.
+ */
+private const val FLIP_MS = 420
+
+/**
+ * Пауза после верного ответа перед следующей карточкой — просьба владельца.
+ * Была секунда (4.18), и её не хватало: слово звучит после поворота и
+ * договаривается почти к самому переходу, посмотреть на оборот некогда. С 4.22
+ * две секунды.
+ */
+private const val AUTO_NEXT_MS = 2000L
+
 @Composable
 fun SessionScreen(
     state: SessionState,
@@ -95,6 +117,8 @@ fun SessionScreen(
     onSkip: () -> Unit,
     /** Отложить слово надолго — кнопка есть только у словарных карточек. */
     onSnooze: () -> Unit,
+    /** 🧠 «уже знаю» — только у перевёртыша. */
+    onKnown: () -> Unit,
     /** Экран пар отвечает не строкой, а списком слов, где ошиблись. */
     onMatch: (Set<String>) -> Unit,
     onParadigm: (List<String>) -> Unit,
@@ -114,6 +138,22 @@ fun SessionScreen(
 
     if (state.finished) {
         FinishedView(state, onExit)
+        return
+    }
+
+    val current = state.current
+    if (current is Exercise.Card) {
+        FlipSession(
+            state, current, speaker,
+            onSubmit = onSubmit,
+            onSkip = onSkip,
+            onSnooze = onSnooze,
+            onKnown = onKnown,
+            onNext = onNext,
+            onNote = onNote,
+            onIdea = onIdea,
+            onExit = onExit
+        )
         return
     }
 
@@ -252,8 +292,11 @@ private fun SessionHeader(
                 )
             }
             Spacer(Modifier.weight(1f))
+            // У бесконечного захода «из скольких» нет: показываем, сколько
+            // пройдено, а полосу оставляем пустой — её высота держит место,
+            // чтобы шапка не прыгала.
             Text(
-                "${state.index + 1} / ${state.items.size}",
+                if (state.endless) "${state.index + 1}" else "${state.index + 1} / ${state.items.size}",
                 style = MaterialTheme.typography.labelSmall,
                 color = Muted
             )
@@ -263,7 +306,7 @@ private fun SessionHeader(
         }
         Spacer(Modifier.height(8.dp))
         LinearProgressIndicator(
-            progress = { state.progress },
+            progress = { if (state.endless) 0f else state.progress },
             modifier = Modifier.fillMaxWidth().height(3.dp).clip(RoundedCornerShape(2.dp)),
             color = Accent,
             trackColor = Surface2
@@ -380,6 +423,14 @@ private fun ExerciseBody(
             autoListen = true,
             onSubmit = onSubmit
         )
+
+        // Перевёртышу нужна фаза, а не только `enabled`: карточка поворачивается
+        // оборотом ровно тогда, когда вердикт вынесен. `enabled` для этого не
+        // годится — он гаснет и на `Checking`, которого у речи не бывает, и
+        // ничего не говорит о пропуске.
+        // Перевёртыш рисуется своим экраном целиком (FlipSession): в общей
+        // колонке он дёргался от плашек, появляющихся по фазе.
+        is Exercise.Card -> Unit
 
         is Exercise.Match -> MatchAnswer(ex, speaker, enabled, onMatch)
 
@@ -1432,6 +1483,401 @@ private fun SpokenAnswer(
 }
 
 /**
+ * Перевёртыши — свой экран, а не тело задания в общей колонке (4.20).
+ *
+ * Владелец: «интерфейс всё время скачет, кнопки снизу создают визуальный
+ * шум». Причина была в устройстве, а не в отступах: общий экран заданий под
+ * телом показывает «Отложить», лайки, плашку попыток, плашку вердикта,
+ * «Дальше» и жалобу — и каждая из них появляется и пропадает по фазе. Для
+ * урока это терпимо, там над заданием думают; перевёртыш же меняет фазу
+ * каждые три секунды, и экран дёргался на каждой.
+ *
+ * Поэтому здесь **ничего не появляется и не пропадает**: шапка, карточка на
+ * всю середину и одна кнопка внизу, всегда на одном месте. Всё, что раньше
+ * жило под карточкой, переехало на неё саму, как в виджете:
+ *
+ * * **флаг** в углу — на каком языке сторона;
+ * * **💤 отложить** и **🧠 уже знаю** — на лицевой стороне, там, где решают,
+ *   нужно ли слово вообще;
+ * * **🔊** — на обороте, где есть что слушать;
+ * * **строка состояния** — внизу карточки, в своём месте фиксированной высоты:
+ *   «говори», что расслышано, «верно». Меняется текст, а не раскладка.
+ *
+ * Карточка нажимается: лицом — «не помню, покажи» (пропуск без штрафа),
+ * оборотом — дальше. Кнопка внизу та же самая и на том же месте: лицом она
+ * микрофон, оборотом — «Дальше». Две руки на одно и то же действие —
+ * намеренно: палец лежит то на карточке, то у кнопки, и искать не надо.
+ *
+ * Чего тут нет: лайков (журнал оценок перевёртышу ничего не добавит — оценивать
+ * тут нечего, слово одно) и категорийной жалобы на вердикт. Жалоба остаётся
+ * флажком в шапке, как и везде.
+ */
+@Composable
+private fun FlipSession(
+    state: SessionState,
+    ex: Exercise.Card,
+    speaker: Speaker,
+    onSubmit: (String) -> Unit,
+    onSkip: () -> Unit,
+    onSnooze: () -> Unit,
+    onKnown: () -> Unit,
+    onNext: () -> Unit,
+    onNote: (String) -> Unit,
+    onIdea: (String, String) -> Unit,
+    onExit: () -> Unit
+) {
+    val phase = state.phase
+    val turned = phase is Phase.Result || phase is Phase.Skipped
+    val live = phase is Phase.Input || phase is Phase.Retry
+    val attempt = (phase as? Phase.Retry)?.attempts ?: 0
+    val correct = (phase as? Phase.Result)?.correct == true
+
+    val context = LocalContext.current
+    val listener = remember { Listener(context) }
+    var status by remember(ex.id) { mutableStateOf("") }
+    var listening by remember(ex.id) { mutableStateOf(false) }
+    var askKnown by remember(ex.id) { mutableStateOf(false) }
+
+    // Уходя с экрана, распознаватель надо отпустить: он держит системный
+    // сервис и заглушку на звуке, поставленную на время записи.
+    DisposableEffect(Unit) { onDispose { listener.stop() } }
+
+    // Угол свой у каждой карточки (4.18): общий после «Дальше» стоял бы на
+    // 180°, и оборот успевал показать **следующий** ответ раньше вопроса —
+    // беда виджета из жалобы 165. Новая карточка появляется сразу лицом.
+    val angle = remember(ex.id) { Animatable(0f) }
+    LaunchedEffect(ex.id, turned) {
+        angle.animateTo(if (turned) 180f else 0f, tween(FLIP_MS))
+    }
+
+    fun start() {
+        // Слушать и говорить одновременно нельзя: предыдущая карточка могла
+        // ещё договаривать свой оборот, и микрофон подхватил бы синтезатор.
+        speaker.silence()
+        listening = true
+        status = ""
+        listener.listen(
+            onResult = { heard ->
+                listening = false
+                onSubmit(heard)
+            },
+            onError = { message ->
+                listening = false
+                status = message
+            }
+        )
+    }
+
+    fun quiet() {
+        listener.cancel()
+        listening = false
+        status = ""
+    }
+
+    val permission = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) start() else status = "Без доступа к микрофону карточку не проверить"
+    }
+
+    fun record() {
+        val granted = ContextCompat.checkSelfPermission(
+            context, Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED
+        if (granted) start() else permission.launch(Manifest.permission.RECORD_AUDIO)
+    }
+
+    // Микрофон включается сам — и после каждого промаха тоже: «не совпало»
+    // чаще значит «не расслышал», чем «не знаешь». Попыток три, круга не
+    // выйдет. Разрешение отсюда не спрашиваем — диалог выскочил бы без
+    // нажатия; нет доступа — остаётся кнопка.
+    LaunchedEffect(ex.id, attempt) {
+        val granted = ContextCompat.checkSelfPermission(
+            context, Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED
+        if (live && granted) start()
+    }
+
+    // У формы звучит и пишется вся рамка, «Vidim kuću.»: падеж слышен в
+    // связке со словом, которое его требует.
+    val said = if (ex.form && ex.frame.contains("___")) {
+        ex.frame.replace("___", ex.answer)
+    } else {
+        ex.answer
+    }
+
+    // Голос ждёт конца поворота: слово над лицевой стороной читалось бы как
+    // подсказка, а не как ответ.
+    LaunchedEffect(ex.id, turned) {
+        if (turned) {
+            delay(FLIP_MS.toLong())
+            speaker.speak(said)
+        }
+    }
+
+    // Верно — через секунду следующая карточка сама (4.18). Ключ — карточка:
+    // ушли раньше паузы — эффект отменится, лишнего перехода не будет.
+    LaunchedEffect(ex.id, correct) {
+        if (correct) {
+            delay(FLIP_MS + AUTO_NEXT_MS)
+            onNext()
+        }
+    }
+
+    // Строка состояния. Одна на все фазы и в одном месте: меняется текст, а
+    // не раскладка экрана.
+    val line: Pair<String, Color> = when (phase) {
+        is Phase.Retry -> "Услышано «${phase.heard}» · ещё ${phase.left}" to Muted
+        is Phase.Result -> if (phase.correct) {
+            "Верно" to Jade
+        } else {
+            (if (phase.answer.isNotBlank()) "Не совпало: «${phase.answer}»" else "Не совпало") to Crimson
+        }
+        is Phase.Skipped -> "Без штрафа · нажми — дальше" to Muted
+        else -> when {
+            listening -> "Говори…" to Accent
+            status.isNotBlank() -> status to Muted
+            else -> "Не помнишь — нажми на карточку" to Muted
+        }
+    }
+
+    Column(Modifier.fillMaxSize()) {
+        SessionHeader(state, onNote, onIdea, onExit)
+
+        Box(
+            Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 12.dp)
+                .graphicsLayer {
+                    rotationY = angle.value
+                    // Без этого поворот выглядит плоским сжатием: перспектива
+                    // у Compose по умолчанию такая дальняя, что её не видно.
+                    cameraDistance = 14f * density
+                }
+                .clip(RoundedCornerShape(24.dp))
+                .background(Surface1)
+                .border(
+                    1.dp,
+                    if (turned) Accent.copy(alpha = 0.5f) else Surface2,
+                    RoundedCornerShape(24.dp)
+                )
+                .clickable(enabled = turned || live) {
+                    if (turned) {
+                        onNext()
+                    } else {
+                        quiet()
+                        onSkip()
+                    }
+                }
+        ) {
+            // Середина поворота — когда карточка стоит ребром: менять сторону
+            // надо там, иначе видно, как текст подменяется.
+            if (angle.value <= 90f) {
+                FlipFace(
+                    flag = R.drawable.flag_ru,
+                    line = line,
+                    corner = {
+                        // Отложить и «уже знаю» — на лице: решают, нужно ли
+                        // слово, до того как его вспоминать.
+                        if (live) {
+                            CardIcon("💤", "Отложить на потом") {
+                                quiet()
+                                onSnooze()
+                            }
+                            // У формы «уже знаю» значило бы «знаю слово», а
+                            // спрашивают падеж: кнопки там нет.
+                            if (!ex.form) {
+                                CardIcon("🧠", "Уже знаю") {
+                                    quiet()
+                                    askKnown = true
+                                }
+                            }
+                        }
+                    }
+                ) {
+                    if (ex.form) {
+                        Text(ex.label.uppercase(), style = MaterialTheme.typography.labelSmall, color = Accent)
+                        Spacer(Modifier.height(14.dp))
+                        Text(
+                            ex.frame.ifBlank { "___" },
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = Paper,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(Modifier.height(14.dp))
+                        Text(
+                            "${ex.lemma} — ${ex.prompt}",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = Muted,
+                            textAlign = TextAlign.Center
+                        )
+                    } else {
+                        if (ex.icon.isNotBlank()) {
+                            Text(ex.icon, fontSize = 52.sp, lineHeight = 58.sp)
+                            Spacer(Modifier.height(16.dp))
+                        }
+                        Text(
+                            ex.prompt,
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = Paper,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            } else {
+                // Оборот перевернулся вместе с карточкой: доворачиваем его
+                // обратно, иначе текст был бы зеркальным.
+                Box(Modifier.fillMaxSize().graphicsLayer { rotationY = 180f }) {
+                    FlipFace(
+                        flag = R.drawable.flag_me,
+                        line = line,
+                        corner = { CardIcon("🔊", "Послушать ещё раз") { speaker.speak(said) } }
+                    ) {
+                        if (ex.form) {
+                            Text(ex.label.uppercase(), style = MaterialTheme.typography.labelSmall, color = Muted)
+                            Spacer(Modifier.height(14.dp))
+                            // Форма выделена в рамке цветом — ради неё карточка.
+                            val accent = Accent
+                            val parts = ex.frame.split("___", limit = 2)
+                            Text(
+                                if (parts.size == 2) {
+                                    buildAnnotatedString {
+                                        append(parts[0])
+                                        withStyle(SpanStyle(color = accent, fontWeight = FontWeight.Bold)) {
+                                            append(ex.answer)
+                                        }
+                                        append(parts[1])
+                                    }
+                                } else {
+                                    stressed(ex.answer)
+                                },
+                                style = MaterialTheme.typography.headlineLarge,
+                                color = Paper,
+                                textAlign = TextAlign.Center
+                            )
+                        } else {
+                            Text(
+                                stressed(ex.answer),
+                                style = MaterialTheme.typography.headlineLarge,
+                                color = Paper,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        // Одна кнопка, всегда на одном месте и одной высоты. Лицом — микрофон,
+        // оборотом — «Дальше»: то же, что нажатие на карточку.
+        Button(
+            onClick = { if (turned) onNext() else record() },
+            enabled = turned || (live && !listening),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp, top = 4.dp, bottom = 24.dp)
+                .height(64.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Accent, contentColor = Ink)
+        ) {
+            if (turned) {
+                Text("Дальше", style = MaterialTheme.typography.titleMedium)
+            } else {
+                Icon(
+                    if (listening) Icons.Filled.Mic else Icons.Outlined.Mic,
+                    contentDescription = null
+                )
+                Text(
+                    if (listening) "  Слушаю…" else "  Сказать",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+        }
+    }
+
+    // Подтверждение — как в виджете: значок маленький, а цена случайного
+    // касания — слово, пропавшее из занятий на два месяца.
+    if (askKnown) {
+        AlertDialog(
+            onDismissRequest = { askKnown = false },
+            title = { Text("🧠 Уже знаю") },
+            text = {
+                Text("«${ex.answer}» уйдёт в выученные и вернётся на проверку через два месяца.")
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    askKnown = false
+                    onKnown()
+                }) { Text("Знаю", color = Accent) }
+            },
+            dismissButton = {
+                TextButton(onClick = { askKnown = false }) { Text("Отмена", color = Muted) }
+            }
+        )
+    }
+}
+
+/**
+ * Сторона карточки: флаг слева сверху, значки справа сверху, содержимое по
+ * центру, строка состояния снизу. Места у всех частей постоянные — меняется
+ * только их текст.
+ */
+@Composable
+private fun FlipFace(
+    flag: Int,
+    line: Pair<String, Color>,
+    corner: @Composable () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Box(Modifier.fillMaxSize()) {
+        Image(
+            painterResource(flag),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(16.dp)
+                .height(20.dp)
+        )
+        Row(
+            Modifier.align(Alignment.TopEnd).padding(6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) { corner() }
+        Column(
+            Modifier
+                .align(Alignment.Center)
+                .padding(horizontal = 24.dp, vertical = 56.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) { content() }
+        Text(
+            line.first,
+            style = MaterialTheme.typography.bodyMedium,
+            color = line.second,
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 18.dp)
+        )
+    }
+}
+
+/** Значок на карточке: эмодзи, как в виджете, с полем под палец. */
+@Composable
+private fun CardIcon(emoji: String, description: String, onClick: () -> Unit) {
+    Box(
+        Modifier
+            .size(48.dp)
+            .clip(RoundedCornerShape(24.dp))
+            .clickable(onClickLabel = description, onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(emoji, fontSize = 22.sp)
+    }
+}
+
+/**
  * Эталон в карточке результата.
  *
  * Черногорский эталон **нажимается**: по нажатию видно перевод слова и
@@ -1482,7 +1928,8 @@ private fun ResultView(
     // Для речи это не то, что ты сказал, а то, что расслышал движок.
     val spoken = exercise is Exercise.Speaking ||
         exercise is Exercise.Repeat ||
-        exercise is Exercise.Reading
+        exercise is Exercise.Reading ||
+        exercise is Exercise.Card
     val answerLabel = if (spoken) "Услышано" else "Твой ответ"
     // Черногорский ли эталон. Решает две вещи: ставить ли ударение (размечать
     // русское слово по сербской норме значило бы врать) и нажимается ли
