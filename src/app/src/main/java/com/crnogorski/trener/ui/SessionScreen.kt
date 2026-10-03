@@ -14,8 +14,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -851,31 +853,35 @@ private fun MatchAnswer(
     Label("Сложи пары")
     Spacer(Modifier.height(20.dp))
 
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Column(
-            Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            left.forEach { pair ->
-                MatchTile(
-                    text = AnnotatedString(pair.ru),
-                    done = pair.cardId in solved,
-                    chosen = picked?.cardId == pair.cardId && pickedLeft,
-                    failed = key(pair, true) in flash
-                ) { tap(pair, true) }
-            }
-        }
-        Column(
-            Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            right.forEach { pair ->
-                MatchTile(
-                    text = stressed(pair.me),
-                    done = pair.cardId in solved,
-                    chosen = picked?.cardId == pair.cardId && !pickedLeft,
-                    failed = key(pair, false) in flash
-                ) { tap(pair, false) }
+    // Сетка ровная (из main 4.34, владелец: «боксы во второй колонке должны
+    // находиться напротив боксов в первой»): строка — две плашки, и высота у
+    // них общая, по более высокой. Двумя независимыми столбцами длинное
+    // русское толкование уходило в две строки и сдвигало вниз всё под собой,
+    // а справа плашки оставались прежней высоты.
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        left.indices.forEach { row ->
+            val l = left[row]
+            val r = right[row]
+            Row(
+                Modifier.height(IntrinsicSize.Min),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Box(Modifier.weight(1f).fillMaxHeight()) {
+                    MatchTile(
+                        text = AnnotatedString(l.ru),
+                        done = l.cardId in solved,
+                        chosen = picked?.cardId == l.cardId && pickedLeft,
+                        failed = key(l, true) in flash
+                    ) { tap(l, true) }
+                }
+                Box(Modifier.weight(1f).fillMaxHeight()) {
+                    MatchTile(
+                        text = stressed(r.me),
+                        done = r.cardId in solved,
+                        chosen = picked?.cardId == r.cardId && !pickedLeft,
+                        failed = key(r, false) in flash
+                    ) { tap(r, false) }
+                }
             }
         }
     }
@@ -911,6 +917,7 @@ private fun MatchTile(
     Box(
         Modifier
             .fillMaxWidth()
+            .fillMaxHeight()
             .heightIn(min = 64.dp)
             // Сложенная пара гаснет, но остаётся на месте. Убрать её нельзя:
             // остальные плашки перепрыгнули бы под пальцем, а гашение и так
