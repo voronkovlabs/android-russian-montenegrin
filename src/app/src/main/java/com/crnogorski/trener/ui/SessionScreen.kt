@@ -541,6 +541,8 @@ private fun TextAnswer(
     prompt: String,
     /** Картинка к слову: эмодзи или пусто. Бывает только у словарных карточек. */
     icon: String = "",
+    /** Рисунок к слову вместо эмодзи — пока только проба, см. [PicturePreview]. */
+    picture: Int? = null,
     hint: String,
     enabled: Boolean,
     language: AnswerLanguage,
@@ -572,7 +574,10 @@ private fun TextAnswer(
     Label(label)
     // Картинка стоит над условием и крупно: она тут вместо картинки в бумажном
     // словаре — на неё смотрят до того, как прочтут слово, а не после.
-    if (icon.isNotBlank()) {
+    if (picture != null) {
+        Image(painterResource(picture), contentDescription = null, modifier = Modifier.size(96.dp))
+        Spacer(Modifier.height(4.dp))
+    } else if (icon.isNotBlank()) {
         Text(icon, fontSize = 40.sp, lineHeight = 46.sp)
         Spacer(Modifier.height(4.dp))
     }
@@ -2474,5 +2479,118 @@ private fun Chip(text: String, filled: Boolean, enabled: Boolean, onClick: () ->
             .padding(horizontal = 12.dp, vertical = 9.dp)
     ) {
         Text(text, style = MaterialTheme.typography.bodyLarge, color = Paper)
+    }
+}
+
+/**
+ * Проба картинки к слову (4.35, временная): `smokva` рисунком вместо эмодзи
+ * в обеих словарных карточках — перевёртыше и карточке значения с набором.
+ *
+ * **Витрина, а не занятие.** Собрана из тех же частей, что настоящие
+ * карточки ([FlipFace], [CardIcon], [TextAnswer]), но в базу не ходит вовсе:
+ * релиз едет на все три телефона, а настоящий заход по `smokva` записал бы
+ * ответ в чужой прогресс. Кнопки ничего не делают; карточка перевёртыша
+ * поворачивается нажатием, без анимации.
+ *
+ * Размеры — те, что предлагались для настоящего показа: 140 dp на
+ * перевёртыше, 96 dp на карточке с набором. Файл один, 256 px, — смотрим,
+ * хватает ли его на перевёртыше. Уберётся вместе с кнопками в настройках.
+ */
+@Composable
+fun PicturePreview(flip: Boolean, onClose: () -> Unit) {
+    BackHandler(onBack = onClose)
+    Column(Modifier.fillMaxSize().background(Ink)) {
+        Row(
+            Modifier.padding(horizontal = 20.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onClose) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Закрыть", tint = Muted)
+            }
+            Text(
+                if (flip) "Проба: перевёртыш, 140 dp" else "Проба: набор, 96 dp",
+                style = MaterialTheme.typography.labelSmall,
+                color = Muted
+            )
+        }
+        if (flip) {
+            var turned by remember { mutableStateOf(false) }
+            Box(
+                Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 12.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(Surface1)
+                    .border(
+                        1.dp,
+                        if (turned) Accent.copy(alpha = 0.5f) else Surface2,
+                        RoundedCornerShape(24.dp)
+                    )
+                    .clickable { turned = !turned }
+            ) {
+                if (!turned) {
+                    FlipFace(
+                        flag = R.drawable.flag_ru,
+                        line = "Не помнишь — нажми на карточку" to Muted,
+                        corner = {
+                            CardIcon("💤", "Отложить на потом") {}
+                            CardIcon("🧠", "Уже знаю") {}
+                        }
+                    ) {
+                        Image(
+                            painterResource(R.drawable.word_smokva),
+                            contentDescription = null,
+                            modifier = Modifier.size(140.dp)
+                        )
+                        Spacer(Modifier.height(16.dp))
+                        Text(
+                            "инжир",
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = Paper,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                } else {
+                    FlipFace(
+                        flag = R.drawable.flag_me,
+                        line = "Нажми — снова лицом" to Muted,
+                        corner = {}
+                    ) {
+                        Text(
+                            stressed("smokva"),
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = Paper,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
+            Button(
+                onClick = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp, top = 4.dp, bottom = 24.dp)
+                    .height(64.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Accent, contentColor = Ink)
+            ) {
+                Icon(Icons.Outlined.Mic, contentDescription = null)
+                Text("  Сказать", style = MaterialTheme.typography.titleMedium)
+            }
+        } else {
+            Column(Modifier.padding(horizontal = 20.dp)) {
+                TextAnswer(
+                    key = "picture-preview",
+                    label = "Как это по-черногорски?",
+                    prompt = "инжир",
+                    picture = R.drawable.word_smokva,
+                    hint = "",
+                    enabled = true,
+                    language = AnswerLanguage.Target,
+                    onSubmit = {}
+                )
+            }
+        }
     }
 }

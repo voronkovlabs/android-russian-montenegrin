@@ -45,6 +45,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import android.app.TimePickerDialog
 import android.app.NotificationManager
 import android.provider.Settings
@@ -449,6 +451,9 @@ fun SettingsScreen(
             SplashRow(onShowSplash)
 
             Spacer(Modifier.height(20.dp))
+            PictureRow()
+
+            Spacer(Modifier.height(20.dp))
             NativeModeRow()
 
             Spacer(Modifier.height(20.dp))
@@ -730,6 +735,29 @@ private fun SplashRow(onShow: () -> Unit) {
 
     Spacer(Modifier.height(14.dp))
     SecondaryAction(text = "Показать заставку", onClick = onShow)
+}
+
+/**
+ * Проба картинки к слову (4.35, временная): две кнопки, по одной на карточку.
+ * Витрина открывается поверх настроек и ничего не пишет — см. [PicturePreview].
+ * Уберётся, когда решим, как картинки встают в словарь.
+ */
+@Composable
+private fun PictureRow() {
+    var flip by remember { mutableStateOf<Boolean?>(null) }
+    Text("КАРТИНКА К СЛОВУ · ПРОБА", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(10.dp))
+    SecondaryAction(text = "Перевёртыш с картинкой", onClick = { flip = true })
+    Spacer(Modifier.height(10.dp))
+    SecondaryAction(text = "Карточка с набором и картинкой", onClick = { flip = false })
+    flip?.let { mode ->
+        Dialog(
+            onDismissRequest = { flip = null },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            PicturePreview(flip = mode, onClose = { flip = null })
+        }
+    }
 }
 
 /**
