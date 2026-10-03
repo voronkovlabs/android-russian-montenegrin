@@ -258,10 +258,22 @@ GitHub. Раньше рядом лежала копия в OneDrive — как �
 | | |
 |---|---|
 | Android SDK | `D:\Android\Sdk` (platform 35, build-tools 35.0.0, platform-tools) |
-| JDK | `C:\Program Files\Java\jdk-21` (Oracle 21) |
-| Кэш Gradle | `D:\GradleHome` — вынесен с C:, там мало места |
+| JDK | `C:\Program Files\Java\jdk-21.0.12` (Oracle 21) |
+| Кэш Gradle | `D:\GradleHome` |
+| GitHub CLI | `C:\Program Files\GitHub CLI\gh.exe`, вход под `voronkovlabs` — нужен `release.py` и разбору issues |
+| Python | 3.12, `%LOCALAPPDATA%\Programs\Python\Python312` — `release.py` берёт только стандартную библиотеку |
 
-`ANDROID_HOME`, `ANDROID_SDK_ROOT`, `JAVA_HOME`, `GRADLE_USER_HOME` прописаны в пользовательских переменных среды; `platform-tools` и `cmdline-tools\latest\bin` — в `PATH`. `src/local.properties` создан. Ключ Anthropic в сборку не входит с 3.5 — его вводят на самом устройстве.
+Машина новая с 03.10.2026, раскладка путей повторяет прежнюю. Довод «на C: мало
+места», по которому SDK и кэш когда-то уехали на D:, здесь неверен: свободно
+наоборот, на C: больше терабайта, на D: около семидесяти гигабайт. Пути оставлены
+как были ради одинаковых команд, а не ради места.
+
+`ANDROID_HOME`, `ANDROID_SDK_ROOT`, `JAVA_HOME`, `GRADLE_USER_HOME` прописаны в пользовательских переменных среды; `platform-tools`, `cmdline-tools\latest\bin` и `bin` из JDK — в `PATH`. `src/local.properties` создан. Ключ Anthropic в сборку не входит с 3.5 — его вводят на самом устройстве.
+
+`~/.android/debug.keystore` перенесён со старой машины; отпечаток SHA-256
+`0f5651de…942352` сверен с подписью релиза 4.34 — совпадает. **Без этого файла
+не собирать**: Gradle молча заведёт новый ключ, и телефоны откажутся ставить
+обновление поверх.
 
 ## Обновление приложения из релизов
 
