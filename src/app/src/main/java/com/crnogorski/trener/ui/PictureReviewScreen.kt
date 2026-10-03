@@ -63,8 +63,12 @@ private val LIGHT_BACK = Color(0xFFF1F6FB)
  * «принято» или «отвергнуто», пишем комментарий. Оценки лежат в
  * [PictureReview] и сохраняются сразу при каждом изменении.
  *
- * Список — только слова с файлом в `assets/pictures/`, в порядке словаря.
+ * Список — слова нынешнего круга ([PictureReview.lemmas]), в порядке словаря.
  * Открывается на первом слове без вердикта.
+ *
+ * «Принять» и «Отвергнуть» стоят сразу под словом, выше комментария (4.37,
+ * владелец): на них жмут на каждой картинке, а комментарий пишут изредка, и
+ * тянуться к кнопкам через поле в самый низ экрана незачем.
  */
 @Composable
 fun PictureReviewScreen(onClose: () -> Unit) {
@@ -73,10 +77,7 @@ fun PictureReviewScreen(onClose: () -> Unit) {
 
     val pics by produceState<List<Pic>?>(null) {
         value = withContext(Dispatchers.IO) {
-            val have = context.assets.list("pictures").orEmpty()
-                .filter { it.endsWith(".webp") }
-                .map { it.removeSuffix(".webp") }
-                .toSet()
+            val have = PictureReview.lemmas(context).toSet()
             val words = VocabRepository(context).load().words
             val known = words.filter { it.id in have }
                 .map { Pic(it.id, it.gloss) }
@@ -208,7 +209,22 @@ private fun androidx.compose.foundation.layout.ColumnScope.Review(list: List<Pic
             else -> Spacer(Modifier.height(24.dp))
         }
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(12.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Button(
+                onClick = { rate("reject") },
+                modifier = Modifier.weight(1f).height(56.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Crimson, contentColor = Ink)
+            ) { Text("Отвергнуть", style = MaterialTheme.typography.titleMedium) }
+            Button(
+                onClick = { rate("accept") },
+                modifier = Modifier.weight(1f).height(56.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Jade, contentColor = Ink)
+            ) { Text("Принять", style = MaterialTheme.typography.titleMedium) }
+        }
+        Spacer(Modifier.height(12.dp))
         OutlinedTextField(
             value = mark?.comment.orEmpty(),
             onValueChange = { text ->
@@ -227,20 +243,6 @@ private fun androidx.compose.foundation.layout.ColumnScope.Review(list: List<Pic
     }
 
     Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Button(
-                onClick = { rate("reject") },
-                modifier = Modifier.weight(1f).height(56.dp),
-                shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Crimson, contentColor = Ink)
-            ) { Text("Отвергнуть", style = MaterialTheme.typography.titleMedium) }
-            Button(
-                onClick = { rate("accept") },
-                modifier = Modifier.weight(1f).height(56.dp),
-                shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Jade, contentColor = Ink)
-            ) { Text("Принять", style = MaterialTheme.typography.titleMedium) }
-        }
         Row(
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween

@@ -32,10 +32,31 @@ data class PictureMark(
  * килобайт, а «потеряли набранное» тут хуже любой лишней записи.
  */
 object PictureReview {
-    private const val FILE = "picture-review.json"
+    /**
+     * Круг оценки (4.37). Первый шёл по всем 176 картинкам, второй — только по
+     * переделанным после него. У круга свой файл: вердикты первого («отвергнуто»)
+     * относятся к старым картинкам и на новые переносить их нельзя.
+     */
+    private const val ROUND = 2
+    private const val FILE = "picture-review-$ROUND.json"
     private val STAMP: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmm")
 
     private fun file(context: Context) = File(context.filesDir, FILE)
+
+    /**
+     * Леммы круга: из `assets/pictures/round.txt` (по строке), а нет его — все
+     * картинки папки. Файл кладётся вместе с переделанными картинками, так что
+     * экран показывает ровно то, что надо пересмотреть.
+     */
+    fun lemmas(context: Context): List<String> {
+        val listed = runCatching {
+            context.assets.open("pictures/round.txt").bufferedReader().readLines()
+                .map { it.trim() }.filter { it.isNotEmpty() }
+        }.getOrNull()
+        return listed ?: context.assets.list("pictures").orEmpty()
+            .filter { it.endsWith(".webp") }
+            .map { it.removeSuffix(".webp") }
+    }
 
     /** Всё сохранённое, по лемме. Битый или отсутствующий файл — пусто. */
     fun load(context: Context): Map<String, PictureMark> {
@@ -80,6 +101,7 @@ object PictureReview {
             val root = JSONObject()
                 .put("device", ComplaintStore(context).deviceTag())
                 .put("versionName", BuildConfig.VERSION_NAME)
+                .put("round", ROUND)
                 .put("items", items)
             file(context).writeText(root.toString(2))
         }
@@ -96,7 +118,7 @@ object PictureReview {
         save(context, load(context)) // свежие device и версия в шапке
         val dir = File(context.cacheDir, "share").apply { mkdirs() }
         dir.listFiles()?.forEach { if (it.name.startsWith("kartinki-ocenki-")) it.delete() }
-        val out = File(dir, "kartinki-ocenki-${STAMP.format(LocalDateTime.now())}.zip")
+        val out = File(dir, "kartinki-ocenki-r$ROUND-${STAMP.format(LocalDateTime.now())}.zip")
         val src = file(context)
         val bytes = if (src.exists()) src.readBytes() else "{}".toByteArray()
         ZipOutputStream(out.outputStream().buffered()).use { zip ->

@@ -747,7 +747,7 @@ private fun PictureReviewRow() {
     val context = LocalContext.current
     var open by remember { mutableStateOf(false) }
     var judged by remember { mutableIntStateOf(PictureReview.judged(context)) }
-    val total = remember { context.assets.list("pictures").orEmpty().size }
+    val total = remember { PictureReview.lemmas(context).size }
 
     Text("КАРТИНКИ К СЛОВАМ", style = MaterialTheme.typography.labelSmall, color = Accent)
     Spacer(Modifier.height(10.dp))
