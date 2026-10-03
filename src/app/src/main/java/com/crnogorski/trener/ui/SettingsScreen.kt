@@ -45,8 +45,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import android.app.TimePickerDialog
 import android.app.NotificationManager
 import android.provider.Settings
@@ -63,6 +61,9 @@ import com.crnogorski.trener.net.HaikuChecker
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import com.crnogorski.trener.data.Pace
+import com.crnogorski.trener.data.PictureReview
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.notify.Reminder
 import com.crnogorski.trener.data.ProgressStore
@@ -451,7 +452,7 @@ fun SettingsScreen(
             SplashRow(onShowSplash)
 
             Spacer(Modifier.height(20.dp))
-            PictureRow()
+            PictureReviewRow()
 
             Spacer(Modifier.height(20.dp))
             NativeModeRow()
@@ -738,24 +739,47 @@ private fun SplashRow(onShow: () -> Unit) {
 }
 
 /**
- * Проба картинки к слову (4.35, временная): две кнопки, по одной на карточку.
- * Витрина открывается поверх настроек и ничего не пишет — см. [PicturePreview].
- * Уберётся, когда решим, как картинки встают в словарь.
+ * Картинки к словам (4.36): просмотр сгенерированных рисунков с оценками и
+ * отправка оценок архивом через системную шторку, как записи носителя.
  */
 @Composable
-private fun PictureRow() {
-    var flip by remember { mutableStateOf<Boolean?>(null) }
-    Text("КАРТИНКА К СЛОВУ · ПРОБА", style = MaterialTheme.typography.labelSmall, color = Accent)
+private fun PictureReviewRow() {
+    val context = LocalContext.current
+    var open by remember { mutableStateOf(false) }
+    var judged by remember { mutableIntStateOf(PictureReview.judged(context)) }
+    val total = remember { context.assets.list("pictures").orEmpty().size }
+
+    Text("КАРТИНКИ К СЛОВАМ", style = MaterialTheme.typography.labelSmall, color = Accent)
     Spacer(Modifier.height(10.dp))
-    SecondaryAction(text = "Перевёртыш с картинкой", onClick = { flip = true })
+    Text(
+        "Оценено $judged из $total",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
     Spacer(Modifier.height(10.dp))
-    SecondaryAction(text = "Карточка с набором и картинкой", onClick = { flip = false })
-    flip?.let { mode ->
+    SecondaryAction(text = "Просмотр картинок", onClick = { open = true })
+    Spacer(Modifier.height(10.dp))
+    SecondaryAction(text = "Отправить оценки", enabled = judged > 0) {
+        val archive = PictureReview.exportZip(context)
+        val uri = FileProvider.getUriForFile(
+            context, "${context.packageName}.files", archive
+        )
+        val send = Intent(Intent.ACTION_SEND).apply {
+            type = "application/zip"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        runCatching {
+            context.startActivity(Intent.createChooser(send, "Куда отправить оценки"))
+        }
+    }
+
+    if (open) {
         Dialog(
-            onDismissRequest = { flip = null },
+            onDismissRequest = { open = false; judged = PictureReview.judged(context) },
             properties = DialogProperties(usePlatformDefaultWidth = false)
         ) {
-            PicturePreview(flip = mode, onClose = { flip = null })
+            PictureReviewScreen(onClose = { open = false; judged = PictureReview.judged(context) })
         }
     }
 }
