@@ -30,10 +30,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,9 +44,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.crnogorski.trener.data.Ijekavica
@@ -107,16 +107,16 @@ fun PictureReviewScreen(onClose: () -> Unit) {
 @Composable
 private fun androidx.compose.foundation.layout.ColumnScope.Review(list: List<Pic>, onClose: () -> Unit) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     var marks by remember { mutableStateOf(PictureReview.load(context)) }
-    var index by remember {
-        mutableIntStateOf(
-            list.indexOfFirst { marks[it.lemma]?.verdict == null }.coerceAtLeast(0)
-        )
-    }
+    // Листатель страниц (4.38): свайп в любом месте экрана, страница едет за
+    // пальцем — видно, что сменилась картинка, а не что-то мигнуло. Сначала
+    // свайп ловился только на самой картинке и менял её мгновенно.
+    val pager = rememberPagerState(
+        initialPage = list.indexOfFirst { marks[it.lemma]?.verdict == null }.coerceAtLeast(0)
+    ) { list.size }
     var darkBack by remember { mutableStateOf(true) }
 
-    val pic = list[index]
-    val mark = marks[pic.lemma]
     val accepted = marks.values.count { it.verdict == "accept" }
     val rejected = marks.values.count { it.verdict == "reject" }
 
@@ -125,20 +125,14 @@ private fun androidx.compose.foundation.layout.ColumnScope.Review(list: List<Pic
         PictureReview.save(context, marks)
     }
 
-    fun rate(verdict: String) {
-        put(
-            PictureMark(
-                pic.lemma, verdict, mark?.comment.orEmpty(), System.currentTimeMillis()
-            )
-        )
-        if (index < list.lastIndex) index++
+    fun go(page: Int) {
+        if (page in list.indices) scope.launch { pager.animateScrollToPage(page) }
     }
 
-    val bitmap = remember(pic.lemma) {
-        runCatching {
-            context.assets.open("pictures/${pic.lemma}.webp").use { BitmapFactory.decodeStream(it) }
-                ?.asImageBitmap()
-        }.getOrNull()
+    fun rate(lemma: String, verdict: String) {
+        val mark = marks[lemma]
+        put(PictureMark(lemma, verdict, mark?.comment.orEmpty(), System.currentTimeMillis()))
+        go(pager.currentPage + 1)
     }
 
     Row(
@@ -149,7 +143,7 @@ private fun androidx.compose.foundation.layout.ColumnScope.Review(list: List<Pic
             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Закрыть", tint = Muted)
         }
         Text(
-            "${index + 1} из ${list.size}",
+            "${pager.currentPage + 1} из ${list.size}",
             style = MaterialTheme.typography.labelLarge,
             color = Muted,
             modifier = Modifier.weight(1f)
@@ -161,113 +155,115 @@ private fun androidx.compose.foundation.layout.ColumnScope.Review(list: List<Pic
         )
     }
 
-    Column(
-        Modifier
-            .weight(1f)
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Свайп по картинке листает (4.38): влево — следующая, вправо —
-        // предыдущая, как страницы. Порог 60 dp: случайное касание при
-        // прокрутке экрана листать не должно.
-        val swipe = with(LocalDensity.current) { 60.dp.toPx() }
-        Box(
+    HorizontalPager(
+        state = pager,
+        modifier = Modifier.weight(1f).fillMaxWidth(),
+        // Соседняя страница держится готовой, чтобы при свайпе картинка не
+        // появлялась с опозданием.
+        beyondViewportPageCount = 1
+    ) { page ->
+        val pic = list[page]
+        val mark = marks[pic.lemma]
+        val bitmap = remember(pic.lemma) {
+            runCatching {
+                context.assets.open("pictures/${pic.lemma}.webp").use { BitmapFactory.decodeStream(it) }
+                    ?.asImageBitmap()
+            }.getOrNull()
+        }
+
+        Column(
             Modifier
-                .clip(RoundedCornerShape(20.dp))
-                .background(if (darkBack) DARK_BACK else LIGHT_BACK)
-                .pointerInput(list.size) {
-                    var dx = 0f
-                    detectHorizontalDragGestures(
-                        onDragStart = { dx = 0f },
-                        onDragEnd = {
-                            if (dx < -swipe && index < list.lastIndex) index++
-                            else if (dx > swipe && index > 0) index--
-                        }
-                    ) { change, amount ->
-                        change.consume()
-                        dx += amount
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(if (darkBack) DARK_BACK else LIGHT_BACK)
+                    .padding(16.dp)
+            ) {
+                if (bitmap != null) {
+                    Image(bitmap, contentDescription = null, modifier = Modifier.size(200.dp))
+                } else {
+                    Box(Modifier.size(200.dp), contentAlignment = Alignment.Center) {
+                        Text("нет файла", color = Muted)
                     }
                 }
-                .padding(16.dp)
-        ) {
-            if (bitmap != null) {
-                Image(bitmap, contentDescription = null, modifier = Modifier.size(200.dp))
-            } else {
-                Box(Modifier.size(200.dp), contentAlignment = Alignment.Center) {
-                    Text("нет файла", color = Muted)
+            }
+            Row {
+                TextButton(onClick = { darkBack = true }) {
+                    Text("Тёмная", color = if (darkBack) Accent else Muted)
+                }
+                TextButton(onClick = { darkBack = false }) {
+                    Text("Светлая", color = if (!darkBack) Accent else Muted)
                 }
             }
-        }
-        Row {
-            TextButton(onClick = { darkBack = true }) {
-                Text("Тёмная", color = if (darkBack) Accent else Muted)
-            }
-            TextButton(onClick = { darkBack = false }) {
-                Text("Светлая", color = if (!darkBack) Accent else Muted)
-            }
-        }
 
-        Text(
-            Ijekavica.show(pic.lemma),
-            style = MaterialTheme.typography.headlineLarge,
-            color = Paper,
-            textAlign = TextAlign.Center
-        )
-        Text(
-            pic.gloss,
-            style = MaterialTheme.typography.bodyLarge,
-            color = Muted,
-            textAlign = TextAlign.Center
-        )
+            Text(
+                Ijekavica.show(pic.lemma),
+                style = MaterialTheme.typography.headlineLarge,
+                color = Paper,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                pic.gloss,
+                style = MaterialTheme.typography.bodyLarge,
+                color = Muted,
+                textAlign = TextAlign.Center
+            )
 
-        Spacer(Modifier.height(8.dp))
-        when (mark?.verdict) {
-            "accept" -> Text("Принято", color = Jade, style = MaterialTheme.typography.titleMedium)
-            "reject" -> Text("Отвергнуто", color = Crimson, style = MaterialTheme.typography.titleMedium)
-            else -> Spacer(Modifier.height(24.dp))
-        }
-
-        Spacer(Modifier.height(12.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Button(
-                onClick = { rate("reject") },
-                modifier = Modifier.weight(1f).height(56.dp),
-                shape = RoundedCornerShape(14.dp),
-                // Вердикт виден и на кнопках (4.38): выбранная яркая, другая
-                // приглушена. Нажать другую — значит поменять вердикт.
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Crimson.copy(alpha = if (mark?.verdict == "accept") 0.35f else 1f),
-                    contentColor = Ink
-                )
-            ) { Text(if (mark?.verdict == "reject") "✗ Отвергнуто" else "Отвергнуть", style = MaterialTheme.typography.titleMedium) }
-            Button(
-                onClick = { rate("accept") },
-                modifier = Modifier.weight(1f).height(56.dp),
-                shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Jade.copy(alpha = if (mark?.verdict == "reject") 0.35f else 1f),
-                    contentColor = Ink
-                )
-            ) { Text(if (mark?.verdict == "accept") "✓ Принято" else "Принять", style = MaterialTheme.typography.titleMedium) }
-        }
-        Spacer(Modifier.height(12.dp))
-        OutlinedTextField(
-            value = mark?.comment.orEmpty(),
-            onValueChange = { text ->
-                put(
-                    PictureMark(
-                        pic.lemma, mark?.verdict, text,
-                        if (mark?.at ?: 0L > 0L) mark!!.at else System.currentTimeMillis()
+            Spacer(Modifier.height(20.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Button(
+                    onClick = { rate(pic.lemma, "reject") },
+                    modifier = Modifier.weight(1f).height(56.dp),
+                    shape = RoundedCornerShape(14.dp),
+                    // Вердикт виден на кнопках (4.38): выбранная яркая, другая
+                    // приглушена. Нажать другую — значит поменять вердикт.
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Crimson.copy(alpha = if (mark?.verdict == "accept") 0.35f else 1f),
+                        contentColor = Ink
                     )
-                )
-            },
-            label = { Text("Комментарий") },
-            maxLines = 3,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(Modifier.height(12.dp))
+                ) {
+                    Text(
+                        if (mark?.verdict == "reject") "✗ Отвергнуто" else "Отвергнуть",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+                Button(
+                    onClick = { rate(pic.lemma, "accept") },
+                    modifier = Modifier.weight(1f).height(56.dp),
+                    shape = RoundedCornerShape(14.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Jade.copy(alpha = if (mark?.verdict == "reject") 0.35f else 1f),
+                        contentColor = Ink
+                    )
+                ) {
+                    Text(
+                        if (mark?.verdict == "accept") "✓ Принято" else "Принять",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+            }
+            Spacer(Modifier.height(12.dp))
+            OutlinedTextField(
+                value = mark?.comment.orEmpty(),
+                onValueChange = { text ->
+                    put(
+                        PictureMark(
+                            pic.lemma, mark?.verdict, text,
+                            if ((mark?.at ?: 0L) > 0L) mark!!.at else System.currentTimeMillis()
+                        )
+                    )
+                },
+                label = { Text("Комментарий") },
+                maxLines = 3,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(Modifier.height(12.dp))
+        }
     }
 
     Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
@@ -275,11 +271,12 @@ private fun androidx.compose.foundation.layout.ColumnScope.Review(list: List<Pic
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            TextButton(onClick = { index-- }, enabled = index > 0) {
-                Text("← Назад", color = if (index > 0) Paper else Muted)
+            val page = pager.currentPage
+            TextButton(onClick = { go(page - 1) }, enabled = page > 0) {
+                Text("← Назад", color = if (page > 0) Paper else Muted)
             }
-            TextButton(onClick = { index++ }, enabled = index < list.lastIndex) {
-                Text("Вперёд →", color = if (index < list.lastIndex) Paper else Muted)
+            TextButton(onClick = { go(page + 1) }, enabled = page < list.lastIndex) {
+                Text("Вперёд →", color = if (page < list.lastIndex) Paper else Muted)
             }
         }
     }
