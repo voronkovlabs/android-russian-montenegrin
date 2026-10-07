@@ -34,10 +34,10 @@ data class PictureMark(
 object PictureReview {
     /**
      * Круг оценки (4.37). Первый шёл по всем 176 картинкам, второй — только по
-     * переделанным после него. У круга свой файл: вердикты первого («отвергнуто»)
+     * переделанным после него, третий (4.38) — по всем нарисованным после них. У круга свой файл: вердикты первого («отвергнуто»)
      * относятся к старым картинкам и на новые переносить их нельзя.
      */
-    private const val ROUND = 2
+    private const val ROUND = 3
     private const val FILE = "picture-review-$ROUND.json"
     private val STAMP: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmm")
 
@@ -119,12 +119,17 @@ object PictureReview {
         val dir = File(context.cacheDir, "share").apply { mkdirs() }
         dir.listFiles()?.forEach { if (it.name.startsWith("kartinki-ocenki-")) it.delete() }
         val out = File(dir, "kartinki-ocenki-r$ROUND-${STAMP.format(LocalDateTime.now())}.zip")
-        val src = file(context)
-        val bytes = if (src.exists()) src.readBytes() else "{}".toByteArray()
+        // В архив идут файлы всех кругов, а не только нынешнего: оценки прошлого
+        // круга, не отправленные до обновления, иначе остались бы на телефоне.
+        val rounds = context.filesDir.listFiles()
+            ?.filter { it.name.startsWith("picture-review") && it.name.endsWith(".json") }
+            .orEmpty()
         ZipOutputStream(out.outputStream().buffered()).use { zip ->
-            zip.putNextEntry(ZipEntry(FILE))
-            zip.write(bytes)
-            zip.closeEntry()
+            for (f in rounds) {
+                zip.putNextEntry(ZipEntry(f.name))
+                zip.write(f.readBytes())
+                zip.closeEntry()
+            }
         }
         return out
     }

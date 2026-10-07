@@ -41,6 +41,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.crnogorski.trener.data.Ijekavica
@@ -166,10 +169,27 @@ private fun androidx.compose.foundation.layout.ColumnScope.Review(list: List<Pic
             .padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Свайп по картинке листает (4.38): влево — следующая, вправо —
+        // предыдущая, как страницы. Порог 60 dp: случайное касание при
+        // прокрутке экрана листать не должно.
+        val swipe = with(LocalDensity.current) { 60.dp.toPx() }
         Box(
             Modifier
                 .clip(RoundedCornerShape(20.dp))
                 .background(if (darkBack) DARK_BACK else LIGHT_BACK)
+                .pointerInput(list.size) {
+                    var dx = 0f
+                    detectHorizontalDragGestures(
+                        onDragStart = { dx = 0f },
+                        onDragEnd = {
+                            if (dx < -swipe && index < list.lastIndex) index++
+                            else if (dx > swipe && index > 0) index--
+                        }
+                    ) { change, amount ->
+                        change.consume()
+                        dx += amount
+                    }
+                }
                 .padding(16.dp)
         ) {
             if (bitmap != null) {
@@ -215,14 +235,22 @@ private fun androidx.compose.foundation.layout.ColumnScope.Review(list: List<Pic
                 onClick = { rate("reject") },
                 modifier = Modifier.weight(1f).height(56.dp),
                 shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Crimson, contentColor = Ink)
-            ) { Text("Отвергнуть", style = MaterialTheme.typography.titleMedium) }
+                // Вердикт виден и на кнопках (4.38): выбранная яркая, другая
+                // приглушена. Нажать другую — значит поменять вердикт.
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Crimson.copy(alpha = if (mark?.verdict == "accept") 0.35f else 1f),
+                    contentColor = Ink
+                )
+            ) { Text(if (mark?.verdict == "reject") "✗ Отвергнуто" else "Отвергнуть", style = MaterialTheme.typography.titleMedium) }
             Button(
                 onClick = { rate("accept") },
                 modifier = Modifier.weight(1f).height(56.dp),
                 shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Jade, contentColor = Ink)
-            ) { Text("Принять", style = MaterialTheme.typography.titleMedium) }
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Jade.copy(alpha = if (mark?.verdict == "reject") 0.35f else 1f),
+                    contentColor = Ink
+                )
+            ) { Text(if (mark?.verdict == "accept") "✓ Принято" else "Принять", style = MaterialTheme.typography.titleMedium) }
         }
         Spacer(Modifier.height(12.dp))
         OutlinedTextField(
