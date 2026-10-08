@@ -34,10 +34,10 @@ data class PictureMark(
 object PictureReview {
     /**
      * Круг оценки (4.37). Первый шёл по всем 176 картинкам, второй — только по
-     * переделанным после него, третий (4.38) — по всем нарисованным после них. У круга свой файл: вердикты первого («отвергнуто»)
+     * переделанным после него, третий (4.38) — по всем нарисованным после них, четвёртый (4.40) — по переделкам третьего и глаголам. У круга свой файл: вердикты первого («отвергнуто»)
      * относятся к старым картинкам и на новые переносить их нельзя.
      */
-    private const val ROUND = 3
+    private const val ROUND = 4
     private const val FILE = "picture-review-$ROUND.json"
     private val STAMP: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmm")
 
