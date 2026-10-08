@@ -21,7 +21,9 @@ data class WidgetWord(
      * выученным (4.7) можно только по ней. Пусто у записей, сложенных до 4.7:
      * тогда отмечать нечего, и кнопка не показывается до пересборки списка.
      */
-    val lemma: String = ""
+    val lemma: String = "",
+    /** Нарисованная картинка (4.41, [WordPicture]); есть — вместо [emoji]. */
+    val picture: String = ""
 )
 
 /**
@@ -88,7 +90,7 @@ object WidgetWords {
      */
     fun save(context: Context, words: List<WidgetWord>) {
         val line = words.take(LIMIT).joinToString("\n") {
-            listOf(it.word, it.gloss, it.stress.toString(), it.emoji, it.lemma).joinToString("\t")
+            listOf(it.word, it.gloss, it.stress.toString(), it.emoji, it.lemma, it.picture).joinToString("\t")
         }
         prefs(context).edit().putString(KEY_WORDS, line).apply()
     }
@@ -99,7 +101,7 @@ object WidgetWords {
             .mapNotNull { row ->
                 val f = row.split('\t')
                 if (f.size < 4 || f[0].isEmpty()) null
-                else WidgetWord(f[0], f[1], f[2].toIntOrNull() ?: -1, f[3], f.getOrElse(4) { "" })
+                else WidgetWord(f[0], f[1], f[2].toIntOrNull() ?: -1, f[3], f.getOrElse(4) { "" }, f.getOrElse(5) { "" })
             }
             .toList()
 

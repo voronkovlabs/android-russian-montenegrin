@@ -61,6 +61,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.asImageBitmap
+import com.crnogorski.trener.data.WordPicture
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -390,6 +392,7 @@ private fun ExerciseBody(
             label = ex.label,
             prompt = ex.prompt,
             icon = ex.icon,
+            picture = ex.picture,
             hint = "",
             enabled = enabled,
             // Язык ответа, а не задания: у обратного перевода отвечают
@@ -541,6 +544,8 @@ private fun TextAnswer(
     prompt: String,
     /** Картинка к слову: эмодзи или пусто. Бывает только у словарных карточек. */
     icon: String = "",
+    /** Нарисованная картинка вместо эмодзи (4.41) — имя в `assets/pictures/`. */
+    picture: String = "",
     hint: String,
     enabled: Boolean,
     language: AnswerLanguage,
@@ -572,7 +577,13 @@ private fun TextAnswer(
     Label(label)
     // Картинка стоит над условием и крупно: она тут вместо картинки в бумажном
     // словаре — на неё смотрят до того, как прочтут слово, а не после.
-    if (icon.isNotBlank()) {
+    // Нарисованная картинка стоит там же, где эмодзи, и крупнее его: 96 dp —
+    // размер, на котором владелец смотрел её в пробе 4.35. Нет своей —
+    // остаётся эмодзи, как раньше.
+    if (picture.isNotBlank()) {
+        WordPictureImage(picture, 96.dp)
+        Spacer(Modifier.height(4.dp))
+    } else if (icon.isNotBlank()) {
         Text(icon, fontSize = 40.sp, lineHeight = 46.sp)
         Spacer(Modifier.height(4.dp))
     }
@@ -1813,7 +1824,12 @@ private fun FlipSession(
                             textAlign = TextAlign.Center
                         )
                     } else {
-                        if (ex.icon.isNotBlank()) {
+                        // 140 dp — как в пробе 4.35, которую владелец смотрел на
+                        // телефоне: карточка во весь экран, места хватает.
+                        if (ex.picture.isNotBlank()) {
+                            WordPictureImage(ex.picture, 140.dp)
+                            Spacer(Modifier.height(16.dp))
+                        } else if (ex.icon.isNotBlank()) {
                             Text(ex.icon, fontSize = 52.sp, lineHeight = 58.sp)
                             Spacer(Modifier.height(16.dp))
                         }
@@ -2475,4 +2491,15 @@ private fun Chip(text: String, filled: Boolean, enabled: Boolean, onClick: () ->
     ) {
         Text(text, style = MaterialTheme.typography.bodyLarge, color = Paper)
     }
+}
+
+/**
+ * Нарисованная картинка к слову ([WordPicture]). Не прочиталась — места не
+ * занимает: пустой квадрат читался бы как сломанная карточка.
+ */
+@Composable
+private fun WordPictureImage(name: String, size: androidx.compose.ui.unit.Dp) {
+    val context = LocalContext.current
+    val bitmap = remember(name) { WordPicture.bitmap(context, name)?.asImageBitmap() } ?: return
+    Image(bitmap, contentDescription = null, modifier = Modifier.size(size))
 }

@@ -310,7 +310,13 @@ sealed class Exercise {
          * картинка у слова есть, — там спрашивают значение, и она была бы
          * ответом.
          */
-        val icon: String = ""
+        val icon: String = "",
+        /**
+         * Нарисованная картинка (4.41, [WordPicture]) — имя файла в
+         * `assets/pictures/`. Есть — показывается вместо [icon]; пусто там же,
+         * где пуст [icon], и по той же причине.
+         */
+        val picture: String = ""
     ) : Exercise()
 
     /**
@@ -370,6 +376,8 @@ sealed class Exercise {
         val also: List<String> = emptyList(),
         /** Картинка к слову: эмодзи или пусто. */
         val icon: String = "",
+        /** Нарисованная картинка вместо [icon] — см. [Word.picture]. */
+        val picture: String = "",
         /**
          * Перевёртыш формы (4.19): спереди не значение, а рамка с пропуском —
          * «вин. ед. · Vidim ___. (kuća)», как в таблице склонения. Сказать надо

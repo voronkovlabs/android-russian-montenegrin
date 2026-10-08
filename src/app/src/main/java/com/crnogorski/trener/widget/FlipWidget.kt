@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import com.crnogorski.trener.data.WidgetWord
 import com.crnogorski.trener.data.WidgetWords
+import com.crnogorski.trener.data.WordPicture
 import com.crnogorski.trener.speech.Speaker
 import com.crnogorski.trener.ui.KnownActivity
 import com.crnogorski.trener.ui.NoteActivity
@@ -379,9 +380,19 @@ class FlipWidget : AppWidgetProvider() {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
             )
-            if (word.emoji.isEmpty()) {
+            // Нарисованная картинка (4.41) — на месте эмодзи; нет её или не
+            // прочиталась — эмодзи, как раньше.
+            val picture = word.picture.takeIf { it.isNotEmpty() }
+                ?.let { WordPicture.bitmap(context, it) }
+            if (picture != null) {
                 views.setViewVisibility(R.id.flip_emoji, View.GONE)
+                views.setViewVisibility(R.id.flip_picture, View.VISIBLE)
+                views.setImageViewBitmap(R.id.flip_picture, picture)
+            } else if (word.emoji.isEmpty()) {
+                views.setViewVisibility(R.id.flip_emoji, View.GONE)
+                views.setViewVisibility(R.id.flip_picture, View.GONE)
             } else {
+                views.setViewVisibility(R.id.flip_picture, View.GONE)
                 views.setViewVisibility(R.id.flip_emoji, View.VISIBLE)
                 views.setTextViewText(R.id.flip_emoji, word.emoji)
             }

@@ -43,6 +43,7 @@ import com.crnogorski.trener.data.Ijekavica
 import com.crnogorski.trener.data.WidgetWord
 import com.crnogorski.trener.data.WidgetWords
 import com.crnogorski.trener.data.WordEmoji
+import com.crnogorski.trener.data.WordPicture
 import com.crnogorski.trener.data.VocabForm
 import com.crnogorski.trener.data.VocabFile
 import com.crnogorski.trener.data.VocabKind
@@ -896,6 +897,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val notice: StateFlow<String?> = _notice.asStateFlow()
 
     init {
+        // Список нарисованных картинок — до первой сборки заданий, иначе первые
+        // карточки за запуск вышли бы с эмодзи. Это assets.list и маленький
+        // файл, миллисекунды.
+        WordPicture.init(app)
         refreshHome()
         // Свежие настройки курса: пришли — применились сразу, не пришли —
         // работаем на вчерашних, и это не повод шуметь.
@@ -1536,7 +1541,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     gloss = gloss,
                     stress = Stress.of(shown) ?: -1,
                     emoji = WordEmoji.of(lemma).orEmpty(),
-                    lemma = lemma
+                    lemma = lemma,
+                    picture = WordPicture.of(lemma).orEmpty()
                 )
             }.take(WidgetWords.LIMIT).toList()
         )
