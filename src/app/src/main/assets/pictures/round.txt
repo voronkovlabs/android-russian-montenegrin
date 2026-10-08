@@ -56,7 +56,6 @@ salo
 sići
 skakati
 skupljati
-soba-plan
 soba
 som
 spremati
