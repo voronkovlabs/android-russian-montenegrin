@@ -57,7 +57,9 @@ FILL = {
 
 # Где ключ словаря расходится с леммой srLex: парадигма лежит под её леммой.
 SRC_LEMMA = {'đavo': 'đavol', 'pravi': 'prav', 'ceo': 'cijel', 'trudna': 'trudan',
-             'mobilni': 'mobilan', 'takođe': 'također'}
+             'mobilni': 'mobilan', 'takođe': 'također',
+             # Омоним «ванна» под служебным ключом: парадигма — существительного kada.
+             'kada2': 'kada'}
 
 
 def batch(marks_dir):
