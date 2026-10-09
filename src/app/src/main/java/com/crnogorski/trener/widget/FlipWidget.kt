@@ -283,6 +283,22 @@ class FlipWidget : AppWidgetProvider() {
             if (ids.isEmpty()) return
             val word = if (advance) WidgetWords.advance(context, WidgetWords.FLIP)
             else WidgetWords.current(context, WidgetWords.FLIP)
+
+            // На экране оборот — полная перерисовка его трогать не вправе
+            // (4.47, жалоба Кати: после 🧠 мелькало следующее черногорское
+            // слово). Полная заполняла обе стороны разом, видимый оборот
+            // успевал показать **следующий** ответ, и лишь потом карточка
+            // переворачивалась. То же правило, что у перехода по нажатию
+            // (жалоба 165, 4.10): меняется только скрытая сторона, оборот
+            // заполнится при перевороте на него.
+            if (word != null && side(context) == 1) {
+                setSide(context, 0)
+                val views = RemoteViews(context.packageName, R.layout.flip_widget)
+                fillFront(context, views, word)
+                views.setDisplayedChild(R.id.flip_card, 0)
+                AppWidgetManager.getInstance(context).partiallyUpdateAppWidget(ids, views)
+                return
+            }
             setSide(context, 0)
 
             val views = RemoteViews(context.packageName, R.layout.flip_widget)
