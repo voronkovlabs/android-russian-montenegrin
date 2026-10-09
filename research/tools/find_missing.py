@@ -120,6 +120,16 @@ def main(lexpath):
             if k not in ijek or freq > lemmas[ijek[k]]:
                 ijek[k] = lemma
 
+    # Экавское написание для свёрнутого ключа — самое частое из экавских.
+    # Ключ словаря экавский (решение Кати, 09.10.2026: на случай сербской
+    # версии), иекавица идёт отдельным списком, как у старых слов.
+    ekav = {}
+    for lemma, freq in lemmas.items():
+        if not jat(lemma):
+            k = reflex(lemma)
+            if k not in ekav or freq > lemmas[ekav[k]]:
+                ekav[k] = lemma
+
     # --- 1. Пропавшие
     seen = set()
     out = []
@@ -129,12 +139,14 @@ def main(lexpath):
             continue
         seen.add(key)
         shown = ijek.get(key, lemma)
-        ru = (glossary.get(shown) or glossary.get(lemma) or katya.get(shown) or katya.get(lemma) or '')
-        out.append((b['rank'], shown, lemma, POS_RU[b['pos']], b['form'], b['count'], ru))
+        base = ekav.get(key, lemma)
+        ru = (glossary.get(shown) or glossary.get(lemma) or glossary.get(base)
+              or katya.get(shown) or katya.get(lemma) or katya.get(base) or '')
+        out.append((b['rank'], base, shown, POS_RU[b['pos']], b['form'], b['count'], ru))
 
     path = os.path.join(DATA, 'vocab-missing.tsv')
     with io.open(path, 'w', encoding='utf-8', newline='\n') as f:
-        f.write('rank\tword\tlemma_srlex\tpos\tbest_form\tcount_50k\tru_ready\n')
+        f.write('rank\tkey\tshow\tpos\tbest_form\tcount_50k\tru_ready\n')
         for row in out:
             f.write('\t'.join(str(x) for x in row) + '\n')
 

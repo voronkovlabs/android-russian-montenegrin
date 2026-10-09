@@ -1,11 +1,11 @@
-rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
+rank	key	show	pos	best_form	count_50k	ru_ready
 2	biti	biti	глаг.	je	27917376	быть
 37	hteti	hteti	глаг.	će	2705288	
 66	mnogo	mnogo	нареч.	više	706189	много
 75	trebati	trebati	глаг.	treba	933111	быть нужным, нужно
 81	kada	kada	нареч.	kada	412355	когда
 82	nemati	nemati	глаг.	nema	664141	
-101	željeti	želeti	глаг.	želim	900581	
+101	želeti	željeti	глаг.	želim	900581	
 105	stvarno	stvarno	нареч.	stvarno	299938	
 151	značiti	značiti	глаг.	znači	221246	
 155	žao	žao	нареч.	žao	200759	
@@ -95,7 +95,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 607	polako	polako	нареч.	polako	46097	потихоньку, медленно
 610	učiniti	učiniti	глаг.	učiniti	168198	
 616	prilično	prilično	нареч.	prilično	45283	
-624	cijel	cel	прил.	ceo	179470	
+624	cel	cijel	прил.	ceo	179470	
 637	voditi	voditi	глаг.	vodi	106650	
 643	pojam	pojam	сущ.	pojma	44027	
 654	gospoda	gospoda	сущ.	gospodo	64773	
@@ -129,7 +129,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 818	ostali	ostali	прил.	ostali	117262	остались; остальные
 819	pokušati	pokušati	глаг.	pokušao	106335	
 836	otvoriti	otvoriti	глаг.	otvori	100970	открыть
-837	boljeti	boleti	глаг.	boli	39402	
+837	boleti	boljeti	глаг.	boli	39402	
 854	nastaviti	nastaviti	глаг.	nastavi	88541	
 856	lud	lud	прил.	lud	74303	
 860	gđa	gđa	сущ.	gđo	51952	
@@ -291,7 +291,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 1613	cipela	cipela	сущ.	cipele	23049	
 1614	dobrodošao	dobrodošao	прил.	dobrodošli	26424	
 1623	zaustaviti	zaustaviti	глаг.	zaustaviti	57972	
-1625	smjeti	smeti	глаг.	smem	63586	
+1625	smeti	smjeti	глаг.	smem	63586	
 1634	klub	klub	сущ.	klub	31926	
 1639	mirno	mirno	нареч.	mirno	14842	спокойно, тихо
 1641	probati	probati	глаг.	probaj	57233	попробовать
@@ -570,7 +570,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 3091	skloniti	skloniti	глаг.	sklonite	16068	
 3094	inspektor	inspektor	сущ.	inspektore	15340	
 3099	zamoliti	zamoliti	глаг.	zamolio	22095	
-3100	namjerno	namerno	нареч.	namerno	7043	
+3100	namerno	namjerno	нареч.	namerno	7043	
 3101	saliti	saliti	глаг.	sali	7716	
 3111	priznavati	priznavati	глаг.	priznajem	9847	
 3116	zabrinuti	zabrinuti	глаг.	zabrinuta	10487	
@@ -592,7 +592,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 3171	pozdraviti	pozdraviti	глаг.	pozdravi	19825	
 3177	dnevno	dnevno	нареч.	dnevno	6870	в день, ежедневно
 3191	detalj	detalj	сущ.	detalje	16112	
-3194	pomjeriti	pomeriti	глаг.	pomeri	17583	
+3194	pomeriti	pomjeriti	глаг.	pomeri	17583	
 3196	popraviti	popraviti	глаг.	popraviti	25623	починить
 3198	suđenje	suđenje	сущ.	suđenje	12749	
 3207	utakmica	utakmica	сущ.	utakmicu	16845	
@@ -919,7 +919,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 4869	izlazak	izlazak	сущ.	izlazak	8358	
 4872	prigovor	prigovor	сущ.	prigovor	4794	
 4875	malopre	malopre	нареч.	malopre	5264	
-4880	nijemac	nemac	сущ.	nemci	7472	
+4880	nemac	nijemac	сущ.	nemci	7472	
 4886	humor	humor	сущ.	humor	4753	
 4887	trojica	trojica	сущ.	trojica	6865	
 4892	mreža	mreža	сущ.	mrežu	13485	
@@ -950,7 +950,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 5043	mamac	mamac	сущ.	mamac	4141	
 5052	skladište	skladište	сущ.	skladište	8892	
 5053	kamenje	kamenje	сущ.	kamenje	6967	
-5056	umiješan	umešan	прил.	umešan	4134	
+5056	umešan	umiješan	прил.	umešan	4134	
 5064	buka	buka	сущ.	buku	10215	шум
 5086	skupo	skupo	нареч.	skupo	4732	дорого
 5087	saslušati	saslušati	глаг.	saslušaj	10367	
@@ -1128,7 +1128,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 6115	gubljenje	gubljenje	сущ.	gubljenje	3704	
 6118	korisno	korisno	нареч.	korisno	3339	
 6123	borac	borac	сущ.	borac	7018	
-6125	njemački	nemački	прил.	nemački	7513	
+6125	nemački	njemački	прил.	nemački	7513	
 6126	rit	rit	сущ.	rita	3718	
 6128	incident	incident	сущ.	incident	6055	
 6129	žica	žica	сущ.	žice	8498	
@@ -1331,7 +1331,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 7334	uputstvo	uputstvo	сущ.	uputstva	3964	
 7341	prijati	prijati	глаг.	prija	5706	
 7342	odanost	odanost	сущ.	odanost	3627	
-7347	nježno	nežno	нареч.	nežno	2711	
+7347	nežno	nježno	нареч.	nežno	2711	
 7357	zarobiti	zarobiti	глаг.	zarobljen	10794	
 7363	pregledati	pregledati	глаг.	pregledao	13352	
 7376	tuš	tuš	сущ.	tuš	4471	
@@ -1620,7 +1620,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 8959	junior	junior	сущ.	junior	4145	
 8962	hajati	hajati	глаг.	hajmo	4143	
 8970	rasa	rasa	сущ.	rasa	5647	
-8973	namjeran	nameran	прил.	namjerno	2149	
+8973	nameran	namjeran	прил.	namjerno	2149	
 8978	prekršaj	prekršaj	сущ.	prekršaj	3305	
 8984	kaucija	kaucija	сущ.	kauciju	3053	
 8985	točka	točka	сущ.	točka	4494	
@@ -1820,7 +1820,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 10091	tatin	tatin	прил.	tatin	6241	
 10093	rezervni	rezervni	прил.	rezervni	3868	
 10111	sadržaj	sadržaj	сущ.	sadržaj	2287	
-10116	osjetljiv	osetljiv	прил.	osetljiv	6379	
+10116	osetljiv	osjetljiv	прил.	osetljiv	6379	
 10128	pozadina	pozadina	сущ.	pozadini	3905	
 10135	nadalje	nadalje	нареч.	nadalje	1864	
 10141	izdaja	izdaja	сущ.	izdaja	2151	
@@ -1846,7 +1846,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 10249	derište	derište	сущ.	derište	2331	
 10251	otmica	otmica	сущ.	otmice	5205	
 10253	odar	odar	сущ.	odri	1844	
-10260	nijekati	nekati	глаг.	nečem	6472	
+10260	nekati	nijekati	глаг.	nečem	6472	
 10270	nacionalan	nacionalan	прил.	nacionalne	9529	
 10272	slavlje	slavlje	сущ.	slavlje	2214	
 10277	oštećenje	oštećenje	сущ.	oštećenja	3258	
@@ -1947,7 +1947,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 10761	pominjati	pominjati	глаг.	pominjem	8466	
 10766	nezakonito	nezakonito	нареч.	nezakonito	1748	
 10775	pretpostavka	pretpostavka	сущ.	pretpostavka	3801	
-10779	premijera	premijera	сущ.	premijeru	2437	
+10779	premera	premijera	сущ.	premijeru	2437	
 10787	boks	boks	сущ.	boks	2692	
 10807	sâm	sâm	прил.	sâm	1741	
 10811	gluma	gluma	сущ.	gluma	4354	
@@ -1975,7 +1975,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 10965	spas	spas	сущ.	spas	2575	
 10979	upotrebiti	upotrebiti	глаг.	upotrebiti	11360	
 10988	verenica	verenica	сущ.	verenica	3028	
-10991	nježan	nežan	прил.	nežan	6054	
+10991	nežan	nježan	прил.	nežan	6054	
 10996	otkada	otkada	нареч.	otkada	1704	
 11001	poslovno	poslovno	нареч.	poslovno	1703	
 11002	pokriti	pokriti	глаг.	pokriti	9997	
@@ -2219,7 +2219,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 12506	vidik	vidik	сущ.	vidiku	2333	
 12516	izgubljen	izgubljen	прил.	izgubljene	4157	
 12520	ogrebotina	ogrebotina	сущ.	ogrebotine	3242	
-12540	djelimično	delimično	нареч.	delimično	1466	
+12540	delimično	djelimično	нареч.	delimično	1466	
 12549	post	post	сущ.	post	2378	
 12565	kršenje	kršenje	сущ.	kršenje	2019	
 12573	ispustiti	ispustiti	глаг.	ispustio	4232	
@@ -2317,7 +2317,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 13045	zaustavljati	zaustavljati	глаг.	zaustavlja	2608	
 13052	jagoda	jagoda	сущ.	jagode	2290	
 13071	popušiti	popušiti	глаг.	popuši	4151	
-13085	neizbježno	neizbežno	нареч.	neizbežno	1385	
+13085	neizbežno	neizbježno	нареч.	neizbežno	1385	
 13104	šoping	šoping	сущ.	šoping	1383	
 13108	naglasak	naglasak	сущ.	naglasak	1908	
 13123	civil	civil	сущ.	civila	4558	
@@ -2404,7 +2404,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 13631	puknuti	puknuti	глаг.	pukne	2685	
 13633	nalaz	nalaz	сущ.	nalaz	1867	результат анализа
 13637	divota	divota	сущ.	divota	1316	
-13638	vječan	večan	прил.	večni	4988	
+13638	večan	vječan	прил.	večni	4988	
 13642	vodeći	vodeći	прил.	vodeći	1923	
 13646	zoo	zoo	сущ.	zoo	1315	
 13650	veseliti	veseliti	глаг.	veseli	2653	
@@ -2730,7 +2730,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 15421	škoditi	škoditi	глаг.	škodi	2333	
 15434	olakšati	olakšati	глаг.	olakšati	3505	
 15441	ulov	ulov	сущ.	ulov	1582	
-15450	nasljedstvo	nasledstvo	сущ.	nasledstvo	1547	
+15450	nasledstvo	nasljedstvo	сущ.	nasledstvo	1547	
 15453	greben	greben	сущ.	grebena	2729	
 15459	unatrag	unatrag	нареч.	unatrag	1126	
 15464	nesumnjivo	nesumnjivo	нареч.	nesumnjivo	1125	
@@ -3107,7 +3107,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 17649	obračun	obračun	сущ.	obračun	1380	
 17656	cimerka	cimerka	сущ.	cimerka	1619	
 17664	nepravedno	nepravedno	нареч.	nepravedno	962	
-17665	dragocjen	dragocen	прил.	dragoceno	3627	
+17665	dragocen	dragocjen	прил.	dragoceno	3627	
 17669	seminar	seminar	сущ.	seminar	1354	
 17690	objava	objava	сущ.	objave	2089	
 17694	mrdnuti	mrdnuti	глаг.	mrdni	2796	
@@ -3137,7 +3137,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 17837	kočiti	kočiti	глаг.	koči	950	
 17840	optuživati	optuživati	глаг.	optužuješ	3880	
 17843	nagoveštaj	nagoveštaj	сущ.	nagoveštaj	950	
-17847	ozlijeda	ozleda	сущ.	ozljede	1683	
+17847	ozleda	ozlijeda	сущ.	ozljede	1683	
 17870	posedovanje	posedovanje	сущ.	posedovanje	1808	
 17874	nevino	nevino	нареч.	nevino	948	
 17878	srećnik	srećnik	сущ.	srećnik	948	
@@ -3293,7 +3293,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 18847	mastiti	mastiti	глаг.	mastilo	1235	
 18849	dužina	dužina	сущ.	dužine	2879	
 18858	zatvorski	zatvorski	прил.	zatvorski	3538	
-18862	mačje	mače	сущ.	mače	888	
+18862	mače	mačje	сущ.	mače	888	
 18879	trač	trač	сущ.	trač	2108	
 18881	nevesta	nevesta	сущ.	nevesta	1692	
 18882	kraljev	kraljev	прил.	kraljev	1782	
@@ -3369,7 +3369,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 19275	garda	garda	сущ.	garda	2471	
 19280	draga	draga	сущ.	dragu	1497	
 19283	pogotovu	pogotovu	нареч.	pogotovu	864	
-19284	tijesno	tesno	нареч.	tesno	864	
+19284	tesno	tijesno	нареч.	tesno	864	
 19287	rulja	rulja	сущ.	rulja	1454	
 19296	kapsula	kapsula	сущ.	kapsula	2746	
 19301	udoban	udoban	прил.	udoban	1619	
@@ -3453,7 +3453,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 19771	ranjiv	ranjiv	прил.	ranjiv	2515	
 19796	naspavati	naspavati	глаг.	naspavaj	2503	
 19798	briljantan	briljantan	прил.	briljantan	1566	
-19809	bijedno	bedno	нареч.	bedno	834	
+19809	bedno	bijedno	нареч.	bedno	834	
 19818	objekt	objekt	сущ.	objekt	3796	
 19822	kupka	kupka	сущ.	kupku	1645	
 19827	vitalan	vitalan	прил.	vitalni	1815	
@@ -3828,7 +3828,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 22214	genijalan	genijalan	прил.	genijalan	1793	
 22215	truliti	truliti	глаг.	truli	721	
 22219	iznervirati	iznervirati	глаг.	iznervirao	1915	
-22223	lebdjeti	lebdeti	глаг.	lebdi	1238	
+22223	lebdeti	lebdjeti	глаг.	lebdi	1238	
 22224	otmičar	otmičar	сущ.	otmičar	2022	
 22228	dirnuti	dirnuti	глаг.	dirnut	2070	
 22243	viza	viza	сущ.	vizu	1723	
@@ -3962,7 +3962,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 22971	stisak	stisak	сущ.	stisak	690	
 22979	zasnovati	zasnovati	прил.	zasnovan	1912	
 22982	osećajan	osećajan	прил.	osećajan	980	
-23001	smiješak	smešak	сущ.	smešak	1000	
+23001	smešak	smiješak	сущ.	smešak	1000	
 23013	hipi	hipi	сущ.	hipi	689	
 23018	potegnuti	potegnuti	глаг.	potegao	1043	
 23023	suprotstaviti	suprotstaviti	глаг.	suprotstaviti	2111	
@@ -4280,7 +4280,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 25050	stupiti	stupiti	глаг.	stupio	3107	
 25053	otkazivati	otkazivati	глаг.	otkazuje	1261	
 25082	šašavo	šašavo	нареч.	šašavo	616	
-25084	uvjerljivo	uverljivo	нареч.	uverljivo	616	
+25084	uverljivo	uvjerljivo	нареч.	uverljivo	616	
 25093	bat	bat	сущ.	bat	1147	
 25098	starati	starati	глаг.	staram	1639	
 25108	registracija	registracija	сущ.	registraciju	1475	регистрация, техосмотр
@@ -4518,14 +4518,14 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 26551	predstavljanje	predstavljanje	сущ.	predstavljanje	569	
 26552	pederski	pederski	прил.	pederski	569	
 26576	monopol	monopol	сущ.	monopol	568	
-26578	izvjesno	izvesno	нареч.	izvesno	568	
+26578	izvesno	izvjesno	нареч.	izvesno	568	
 26580	izvršenje	izvršenje	сущ.	izvršenje	910	
 26591	sečivo	sečivo	сущ.	sečivo	858	
 26593	relikvija	relikvija	сущ.	relikvije	1248	
 26595	odrastanje	odrastanje	сущ.	odrastanje	990	
 26610	makarone	makarone	сущ.	makarone	568	
 26611	zgaziti	zgaziti	глаг.	zgazio	1089	
-26614	izvjestan	izvestan	прил.	izvesnog	2609	
+26614	izvestan	izvjestan	прил.	izvesnog	2609	
 26617	knjigovođa	knjigovođa	сущ.	knjigovođa	567	
 26635	deljenje	deljenje	сущ.	deljenje	807	
 26651	ograditi	ograditi	глаг.	ogradi	567	
@@ -4711,7 +4711,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 27862	izmeniti	izmeniti	глаг.	izmenio	2186	
 27863	protivno	protivno	нареч.	protivno	535	
 27866	izolacija	izolacija	сущ.	izolaciju	1674	
-27871	drhtjeti	drhteti	глаг.	drhti	1683	
+27871	drhteti	drhtjeti	глаг.	drhti	1683	
 27873	pravosuđe	pravosuđe	сущ.	pravosuđa	773	
 27876	zapečatiti	zapečatiti	глаг.	zapečaćena	1376	
 27887	izražavati	izražavati	глаг.	izražava	1109	
@@ -4899,7 +4899,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 28927	prvenstveno	prvenstveno	нареч.	prvenstveno	509	
 28929	grupni	grupni	прил.	grupni	771	
 28938	genijalac	genijalac	сущ.	genijalac	788	
-28949	prijestupnik	prestupnik	сущ.	prestupnik	951	
+28949	prestupnik	prijestupnik	сущ.	prestupnik	951	
 28958	statistika	statistika	сущ.	statistika	1451	
 28976	otimati	otimati	глаг.	otimaju	979	
 28980	razgledanje	razgledanje	сущ.	razgledanje	507	
@@ -4920,7 +4920,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 29068	povraćaj	povraćaj	сущ.	povraćaj	505	
 29070	naplata	naplata	сущ.	naplatu	1249	
 29076	oličenje	oličenje	сущ.	oličenje	505	
-29086	svijećica	svećica	сущ.	svećice	505	
+29086	svećica	svijećica	сущ.	svećice	505	
 29106	urazumiti	urazumiti	глаг.	urazumi	1236	
 29109	hiper	hiper	нареч.	hiper	505	
 29112	obuzeti	obuzeti	глаг.	obuzme	1732	
@@ -4958,7 +4958,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 29288	elisa	elisa	сущ.	elise	966	
 29294	ravnica	ravnica	сущ.	ravnice	1080	
 29297	rata	rata	сущ.	rate	501	
-29302	strjelica	strelica	сущ.	strelice	1187	
+29302	strelica	strjelica	сущ.	strelice	1187	
 29307	uhoda	uhoda	сущ.	uhoda	817	
 29310	pušiona	pušiona	сущ.	pušiona	500	
 29311	trend	trend	сущ.	trend	837	
@@ -5019,7 +5019,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 29661	oklevanje	oklevanje	сущ.	oklevanja	492	
 29664	mimoići	mimoići	глаг.	mimoišli	492	
 29668	dovod	dovod	сущ.	dovod	492	
-29669	udjel	udel	сущ.	udela	492	
+29669	udel	udjel	сущ.	udela	492	
 29677	zurka	zurka	сущ.	zurku	904	
 29691	presrećan	presrećan	прил.	presrećan	864	
 29698	selen	selen	сущ.	selena	492	
@@ -5352,7 +5352,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 31989	uzica	uzica	сущ.	uzici	443	
 31999	astronom	astronom	сущ.	astronomi	737	
 32000	tračak	tračak	сущ.	tračak	443	
-32009	bdenije	bdenje	сущ.	bdenje	443	
+32009	bdenje	bdenije	сущ.	bdenje	443	
 32033	plemstvo	plemstvo	сущ.	plemstvo	443	
 32037	prevoditi	prevoditi	глаг.	prevodi	442	
 32045	menjanje	menjanje	сущ.	menjanje	442	
@@ -5367,7 +5367,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 32095	pomirenje	pomirenje	сущ.	pomirenje	835	
 32098	nesrećno	nesrećno	нареч.	nesrećno	441	
 32113	nadležan	nadležan	прил.	nadležni	802	
-32132	sljedovati	sledovati	глаг.	sleduje	441	
+32132	sledovati	sljedovati	глаг.	sleduje	441	
 32142	civilizovati	civilizovati	прил.	civilizovani	746	
 32144	izdržljivost	izdržljivost	сущ.	izdržljivost	799	
 32154	takt	takt	сущ.	takta	440	
@@ -5742,7 +5742,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 34590	dobaciti	dobaciti	глаг.	dobaci	398	
 34594	svući	svući	глаг.	svuci	398	
 34604	predstojati	predstojati	глаг.	predstoji	398	
-34614	zaprijetiti	zapretiti	глаг.	zapretio	398	
+34614	zapretiti	zaprijetiti	глаг.	zapretio	398	
 34622	besnilo	besnilo	сущ.	besnilo	398	
 34629	suseda	suseda	сущ.	susede	398	
 34631	plejboj	plejboj	сущ.	plejboj	398	
@@ -6067,7 +6067,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 36763	skija	skija	сущ.	skije	367	
 36768	mušica	mušica	сущ.	mušice	662	
 36772	zapanjujuć	zapanjujuć	прил.	zapanjujuća	704	
-36773	brijeg	breg	сущ.	breg	715	
+36773	breg	brijeg	сущ.	breg	715	
 36775	sklapanje	sklapanje	сущ.	sklapanje	367	
 36776	pokvarenjak	pokvarenjak	сущ.	pokvarenjak	367	
 36777	pošast	pošast	сущ.	pošast	367	
@@ -6140,7 +6140,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 37240	pripasti	pripasti	глаг.	pripasti	630	
 37244	prisećati	prisećati	глаг.	prisećam	360	
 37275	lupetati	lupetati	глаг.	lupetaš	636	
-37281	cijelost	celost	сущ.	celosti	360	
+37281	celost	cijelost	сущ.	celosti	360	
 37283	pazuh	pazuh	сущ.	pazuha	360	
 37284	pionir	pionir	сущ.	pionir	648	
 37291	glečer	glečer	сущ.	glečera	926	
@@ -6161,7 +6161,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 37408	trovati	trovati	глаг.	truje	358	
 37418	nicati	nicati	глаг.	niče	358	
 37429	fotografisanje	fotografisanje	сущ.	fotografisanje	358	
-37438	uvjerljiv	uverljiv	прил.	uvjerljivo	957	
+37438	uverljiv	uvjerljiv	прил.	uvjerljivo	957	
 37439	nazdravljati	nazdravljati	глаг.	nazdravljam	357	
 37442	prileći	prileći	глаг.	prilegnem	357	
 37450	ljubičasto	ljubičasto	нареч.	ljubičasto	357	
@@ -6281,7 +6281,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 38304	sprijateljiti	sprijateljiti	глаг.	sprijateljio	933	
 38305	svilen	svilen	прил.	svilene	609	
 38319	istoričar	istoričar	сущ.	istoričar	346	
-38324	neprimjetno	neprimetno	нареч.	neprimetno	346	
+38324	neprimetno	neprimjetno	нареч.	neprimetno	346	
 38325	zaokupiti	zaokupiti	прил.	zaokupljen	346	
 38326	uskršnji	uskršnji	прил.	uskršnji	346	
 38327	prespor	prespor	прил.	presporo	346	
@@ -6363,7 +6363,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 38906	zataškavanje	zataškavanje	сущ.	zataškavanje	338	
 38908	morfij	morfij	сущ.	morfij	338	
 38920	ubilački	ubilački	прил.	ubilački	338	
-38924	sjemenka	semenka	сущ.	semenke	338	
+38924	semenka	sjemenka	сущ.	semenke	338	
 38925	užasnuti	užasnuti	прил.	užasnut	610	
 38926	ispisati	ispisati	прил.	ispisao	588	
 38945	šuplje	šuplje	нареч.	šuplje	338	
@@ -6408,7 +6408,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 39194	šlep	šlep	сущ.	šlep	335	
 39202	planer	planer	сущ.	planer	335	
 39204	samilost	samilost	сущ.	samilosti	666	
-39220	zahtjevan	zahtevan	прил.	zahtevan	648	
+39220	zahtevan	zahtjevan	прил.	zahtevan	648	
 39223	divovski	divovski	прил.	divovski	334	
 39234	zaputiti	zaputiti	глаг.	zaputio	334	
 39243	uraniti	uraniti	глаг.	uranio	334	
@@ -6553,7 +6553,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 40181	obveznik	obveznik	сущ.	obveznika	323	
 40184	stanodavac	stanodavac	сущ.	stanodavac	323	
 40187	petarda	petarda	сущ.	petarde	323	
-40193	mjesečev	mesečev	прил.	mesečev	323	
+40193	mesečev	mjesečev	прил.	mesečev	323	
 40195	patološki	patološki	прил.	patološki	323	
 40198	purica	purica	сущ.	puricu	323	
 40209	stadijum	stadijum	сущ.	stadijumu	639	
@@ -6727,7 +6727,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 41429	prikrivati	prikrivati	глаг.	prikriva	309	
 41431	serž	serž	сущ.	serž	309	
 41433	strahopoštovanje	strahopoštovanje	сущ.	strahopoštovanje	309	
-41437	neprimjereno	neprimereno	нареч.	neprimereno	309	
+41437	neprimereno	neprimjereno	нареч.	neprimereno	309	
 41438	mutiti	mutiti	глаг.	muti	309	
 41442	isploviti	isploviti	глаг.	isplovio	309	
 41448	football	football	сущ.	football	309	
@@ -6858,7 +6858,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 42317	remetiti	remetiti	глаг.	remeti	300	
 42318	glavešina	glavešina	сущ.	glavešine	300	
 42320	iskaznica	iskaznica	сущ.	iskaznicu	300	
-42332	maloljetan	maloletan	прил.	maloletna	300	
+42332	maloletan	maloljetan	прил.	maloletna	300	
 42335	živcirati	živcirati	глаг.	živcira	299	
 42344	skoknuti	skoknuti	глаг.	skoknem	299	
 42353	maturalni	maturalni	прил.	maturalnu	299	
@@ -7091,7 +7091,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 43856	murja	murja	сущ.	murja	285	
 43857	tačdaun	tačdaun	сущ.	tačdaun	285	
 43863	đakuzi	đakuzi	сущ.	đakuzi	285	
-43868	slijepilo	slepilo	сущ.	slepilo	285	
+43868	slepilo	slijepilo	сущ.	slepilo	285	
 43869	rotacija	rotacija	сущ.	rotaciju	566	
 43878	telegraf	telegraf	сущ.	telegraf	285	
 43887	škorpija	škorpija	сущ.	škorpija	285	
@@ -7336,7 +7336,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 45655	iskušavati	iskušavati	глаг.	iskušavaj	533	
 45656	mutan	mutan	прил.	mutna	269	
 45664	krznen	krznen	прил.	krzneni	269	
-45675	pačje	pače	сущ.	pače	269	
+45675	pače	pačje	сущ.	pače	269	
 45677	uglađen	uglađen	прил.	uglađen	269	
 45678	sakrivanje	sakrivanje	сущ.	sakrivanje	269	
 45679	verbalno	verbalno	нареч.	verbalno	269	
@@ -7396,7 +7396,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 46072	zev	zev	сущ.	zev	266	
 46073	neuništiv	neuništiv	прил.	neuništiv	266	
 46074	svitati	svitati	глаг.	sviće	266	
-46076	kolosjek	kolosek	сущ.	koloseka	519	
+46076	kolosek	kolosjek	сущ.	koloseka	519	
 46081	znojenje	znojenje	сущ.	znojenje	266	
 46085	glinen	glinen	прил.	glineni	266	
 46089	vriti	vriti	глаг.	vrio	266	
@@ -7449,7 +7449,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 46470	sašiti	sašiti	глаг.	sašila	263	
 46479	izdvojiti	izdvojiti	глаг.	izdvojiti	263	
 46488	provaljivati	provaljivati	глаг.	provaljuje	263	
-46490	vjerski	verski	прил.	verski	263	
+46490	verski	vjerski	прил.	verski	263	
 46495	šišak	šišak	сущ.	šiške	263	
 46502	lokalac	lokalac	сущ.	lokalci	262	
 46515	trbušnjak	trbušnjak	сущ.	trbušnjake	262	
@@ -7606,7 +7606,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 47646	polizati	polizati	глаг.	poliži	254	
 47658	skiper	skiper	сущ.	skiperu	254	
 47667	žurno	žurno	нареч.	žurno	254	
-47677	neprimjeren	neprimeren	прил.	neprimjereno	254	
+47677	neprimeren	neprimjeren	прил.	neprimjereno	254	
 47681	spontan	spontan	прил.	spontana	507	
 47682	preceniti	preceniti	прил.	precenjena	254	
 47685	književan	književan	прил.	književni	254	
@@ -7629,7 +7629,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 47777	bušiti	bušiti	глаг.	buši	253	
 47788	pila	pila	сущ.	pilu	253	
 47815	kavaljer	kavaljer	сущ.	kavaljer	252	
-47825	cijelokupan	celokupan	прил.	celokupnu	252	
+47825	celokupan	cijelokupan	прил.	celokupnu	252	
 47830	paramparčad	paramparčad	сущ.	paramparčad	252	
 47833	supervizor	supervizor	сущ.	supervizor	252	
 47842	paketić	paketić	сущ.	paketić	252	
@@ -7782,7 +7782,7 @@ rank	word	lemma_srlex	pos	best_form	count_50k	ru_ready
 48937	božićnjak	božićnjak	сущ.	božićnjak	244	
 48938	ukrug	ukrug	нареч.	ukrug	244	
 48943	preduzimati	preduzimati	глаг.	preduzima	244	
-48946	zaposjesti	zaposesti	глаг.	zaposeo	244	
+48946	zaposesti	zaposjesti	глаг.	zaposeo	244	
 48953	topljenje	topljenje	сущ.	topljenje	244	
 48982	čistina	čistina	сущ.	čistinu	243	
 48995	upiškiti	upiškiti	глаг.	upiškio	243	
