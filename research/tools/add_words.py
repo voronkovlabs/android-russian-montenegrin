@@ -177,6 +177,8 @@ def main(lexpath, marks_dir):
             entry['odd'] = odd
         if w['se']:
             entry['se'] = True
+        if w.get('cap'):
+            entry['t'] = True    # бытовое: свои места в порядке ввода (4.55)
         entries.append(entry)
         if forms:
             bands.setdefault((n - 1) // BAND, {})[w['id']] = [

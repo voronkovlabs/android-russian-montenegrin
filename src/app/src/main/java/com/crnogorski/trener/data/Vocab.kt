@@ -68,7 +68,14 @@ data class VocabWord(
      * их надо по частоте: `biti` и `hteti` — не хвост словаря, а его начало.
      * Поэтому порядок задаёт [rank]: дробное число между номерами старых слов.
      */
-    val o: Double = 0.0
+    val o: Double = 0.0,
+    /**
+     * Бытовое слово (4.55): найдено не частотным списком, а по темам, в
+     * каталогах магазинов, в меню, про хобби. Частота у таких слов из
+     * субтитров низкая, а нужны они рано, — поэтому в порядке ввода у них
+     * свои места (`vocab.order`).
+     */
+    val t: Boolean = false
 ) {
     /** Частотный порядок слова: [o], если задано, иначе [n]. */
     val rank: Double get() = if (o > 0) o else n.toDouble()
@@ -193,6 +200,8 @@ class VocabRepository(private val context: Context) {
     private fun learningOrder(all: List<VocabWord>): List<VocabWord> {
         // Сперва частота, с дописанными словами на своих местах (4.46).
         val words = all.sortedBy { it.rank }
+        val order = Config.current.vocab.order
+        if (order.isNotEmpty()) return byStreams(words, order)
         val every = Config.current.vocab.picturesEvery
         if (every <= 0) return words
         val (pic, rest) = words.partition { WordPicture.of(it.id) != null }
@@ -206,6 +215,39 @@ class VocabRepository(private val context: Context) {
                 r < rest.size -> rest[r++]
                 else -> pic[p++]
             }
+        }
+        return out
+    }
+
+    /**
+     * Три потока по кругу (4.55, Катя): частотное, с картинкой, бытовое —
+     * в порядке букв [order]. Слово с картинкой идёт потоком картинок, даже
+     * если оно бытовое. Кончился поток — его место берёт следующий по кругу,
+     * так что ни одно слово не теряется и длина списка не меняется.
+     */
+    private fun byStreams(words: List<VocabWord>, order: String): List<VocabWord> {
+        val streams = mapOf(
+            'p' to ArrayDeque<VocabWord>(),
+            't' to ArrayDeque<VocabWord>(),
+            'f' to ArrayDeque<VocabWord>()
+        )
+        for (w in words) {
+            val key = when {
+                WordPicture.of(w.id) != null -> 'p'
+                w.t -> 't'
+                else -> 'f'
+            }
+            streams.getValue(key).addLast(w)
+        }
+        val cycle = order.toList()
+        val out = ArrayList<VocabWord>(words.size)
+        var i = 0
+        while (out.size < words.size) {
+            val start = cycle[i++ % cycle.size]
+            // Свой поток пуст — первый непустой из остальных, в том же порядке.
+            val q = (listOf(start) + "fpt".toList()).map { streams.getValue(it) }
+                .first { it.isNotEmpty() }
+            out += q.removeFirst()
         }
         return out
     }

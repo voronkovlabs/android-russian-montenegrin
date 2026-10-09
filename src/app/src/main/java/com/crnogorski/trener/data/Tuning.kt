@@ -222,6 +222,14 @@ data class Tuning(
          * Ноль — прежний порядок по частоте.
          */
         val picturesEvery: Int = 2,
+        /**
+         * Порядок ввода новых слов по кругу (4.55, Катя): `f` — следующее по
+         * частоте, `p` — следующее с картинкой, `t` — следующее бытовое (слова,
+         * найденные по темам, на сайтах магазинов и про хобби). «fpt» — по
+         * трети. Пусто — прежний порядок через [picturesEvery]: им живут
+         * сборки старше 4.55.
+         */
+        val order: String = "fpt",
         /** Со скольких повторений открывается следующая ступень карточки. */
         val stepReps: Int = 2,
         val matchPairs: Int = 5,
@@ -384,6 +392,7 @@ data class Tuning(
             replayGap = vocab.replayGap.coerceIn(0, 50),
             replays = vocab.replays.coerceIn(0, 5),
             picturesEvery = vocab.picturesEvery.coerceIn(0, 10),
+            order = vocab.order.filter { it in "fpt" }.take(20),
             stepReps = vocab.stepReps.coerceIn(1, 50),
             matchPairs = vocab.matchPairs.coerceIn(2, 10),
             matchMin = vocab.matchMin.coerceIn(2, 10),
