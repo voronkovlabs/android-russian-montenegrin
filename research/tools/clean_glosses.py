@@ -46,14 +46,43 @@ MANUAL = {
     'anus': 'анус',
     'lavanda': 'лаванда',
     'uranijum': 'уран (химический элемент)',
+    'hram': 'храм',
+    'prorok': 'пророк',
+    'belo': 'белый; героин, кокаин (жарг.)',
 }
+
+
+# 4.53, Катя: «почисть метки». Предметные пометки Викисловаря («зоол.»,
+# «шахм.») ученику ничего не говорят и убираются; стилевые говорят, как слово
+# звучит, и переезжают в скобки после слова: «разг. трус» → «трус (разг.)».
+STYLE = {'разг.', 'перен.', 'бран.', 'вульг.', 'обсц.', 'жарг.', 'устар.',
+         'рег.', 'книжн.'}
+LABELS = re.compile(r'^((?:[а-яё]{2,10}\.(?:-[а-яё]+\.)?,?\s*)+)(?:\((?:sr|hr|bs|me)\)\s*)?')
+
+
+def unlabel(part):
+    m = LABELS.match(part)
+    if not m:
+        return part
+    labels = re.findall(r'[а-яё]{2,10}\.(?:-[а-яё]+\.)?', m.group(1))
+    rest = part[m.end():].strip()
+    style = [l for l in labels if l in STYLE]
+    if not rest:
+        return part
+    return rest + (' (%s)' % ', '.join(style) if style else '')
 
 
 def clean(gloss):
     g = re.sub(r'\s*\(аналогично русскому слову\)', '', gloss)
     g = re.sub(r'\s*\[\d+\]', '', g)
+    if LABELS.match(g):
+        # Латынь вида и номер омонима бывают только у помеченных статей:
+        # «зоол. волк (Canis lupus)», «зоол. рак I». Без пометки в скобках
+        # латиницей стоят наши же подсказки — «(vratiti se)», их не трогаем.
+        g = re.sub(r'\s*\((?:лат\. )?[A-Za-z][A-Za-z .()]*\)', '', g)
+        g = re.sub(r'\s+(?:I|II|III|IV)\b', '', g)
     parts = []
-    for p in (x.strip() for x in g.split(';')):
+    for p in (unlabel(x.strip()) for x in g.split(';')):
         if p and p not in parts:
             parts.append(p)
     return '; '.join(parts)
