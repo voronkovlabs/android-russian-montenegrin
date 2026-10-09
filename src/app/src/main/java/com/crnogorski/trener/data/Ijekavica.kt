@@ -187,6 +187,17 @@ object Ijekavica {
         "veštački" to "vještački",
         // 4.51: мебель и ванная из меню lubenicashop.me.
         "višenamenski" to "višenamjenski",
+        // 4.52: продукты (Glovo, VOLI) и мебель (lubenicashop.me).
+        "oceđivač" to "ocjeđivač",
+        "dečji" to "dječji",
+        "mesečni" to "mjesečni",
+        "svež" to "svjež",
+        "mlečni" to "mliječni",
+        "testo" to "tijesto",
+        "mleven" to "mljeven",
+        "semenka" to "sjemenka",
+        "penušav" to "pjenušav",
+        "nega" to "njega",
         // Омоним: «ванна» пишется так же, как наречие kada («когда»), а ключ
         // словаря — написание, двух записей под ним быть не может. Поэтому
         // у «ванны» служебный ключ, а показывается она обычным kada.
