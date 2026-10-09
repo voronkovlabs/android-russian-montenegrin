@@ -407,6 +407,19 @@ class VocabRepository(private val context: Context) {
         val LEARNED: Int get() = Config.current.vocab.learned
 
         /**
+         * Выучено ли слово (4.42): верный ответ в [LEARNED_DAYS] разных днях
+         * подряд, без ошибки между ними. Решение Кати вместо десяти верных
+         * ответов вообще — см. [CardEntity.streakDays].
+         *
+         * Всё, что раньше сравнивало счёт с [LEARNED], идёт сюда: пул, виджет,
+         * перевёртыши, тренировка и витрина отчёта должны считать выученным
+         * одно и то же.
+         */
+        val LEARNED_DAYS: Int get() = Config.current.vocab.learnedDays
+
+        fun learned(card: CardEntity): Boolean = card.streakDays >= LEARNED_DAYS
+
+        /**
          * Идентификатор карточки: `w-apoteka-mean`, `w-apoteka-form-apoteci`.
          *
          * Он уходит в базу и в жалобы, поэтому не меняется никогда — как и

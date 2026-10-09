@@ -109,7 +109,7 @@ data class LessonGroup(
  *
  * [due] — сколько карточек просрочено, [fresh] — сколько новых слов ещё можно
  * взять сегодня, [ready] — сколько можно прогнать вне расписания, [learned] —
- * сколько уже выучено (десять верных ответов, см. `VocabRepository.LEARNED`).
+ * сколько уже выучено (верно в три разных дня подряд, см. `VocabRepository.learned`).
  *
  * Новых слов в день намеренно немного: карточке нужно 8–10 встреч, и обещать
  * себе больше десятка слов в день значит копить долг.
@@ -1439,7 +1439,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         for (card in cards) {
             val back = isBackCard(card.exerciseId)
             val due = card.dueAt <= now
-            val learned = card.correct >= VocabRepository.LEARNED
+            val learned = VocabRepository.learned(card)
             // Отложенное рукой не идёт в счёт кнопки «Тренировать»: сам заход
             // его не берёт, и число на кнопке обещало бы больше, чем даёт.
             val hidden = Scheduler.snoozed(card, now)
@@ -1503,7 +1503,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private suspend fun saveWidgetWords(file: VocabFile, cards: List<CardEntity>) {
         val now = System.currentTimeMillis()
         val inPlay = cards.asSequence()
-            .filter { isMeaning(it.exerciseId) && it.correct < VocabRepository.LEARNED }
+            .filter { isMeaning(it.exerciseId) && !VocabRepository.learned(it) }
             .filter { !Scheduler.snoozed(it, now) }
             .sortedBy { it.correct - 2 * it.lapses }
             .mapNotNull { VocabRepository.lemmaOf(it.exerciseId) }
@@ -1799,7 +1799,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 exercisesDone = cards.count { it.lessonId in courseIds },
                 exercisesTotal = course.sumOf { repo.lesson(it.id).exercises.size },
                 wordsIntroduced = meanings.size,
-                wordsLearned = meanings.count { it.correct >= VocabRepository.LEARNED },
+                wordsLearned = meanings.count { VocabRepository.learned(it) },
                 wordsTotal = vocabRepo.load().words.size,
                 dueLessons = dao.dueCount(now, VocabRepository.LESSON_ID),
                 dueWords = dao.vocabDue(now, VocabRepository.LESSON_ID),
@@ -2026,7 +2026,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val streak = streakNow(rows)
         val vocab = dao.vocabCards(VocabRepository.LESSON_ID)
         val learned = vocab.count {
-            isMeaning(it.exerciseId) && it.correct >= VocabRepository.LEARNED
+            isMeaning(it.exerciseId) && VocabRepository.learned(it)
         }
         // Лестница без тематических уроков — **оба** числа разом.
         // Раньше знаменатель фильтровался, а числитель нет, и
@@ -2166,7 +2166,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 // нельзя: проверено на телефоне, отложенное слово возвращалось
                 // в тот же день и набирало верные ответы.
                 cards.filter {
-                    it.correct < VocabRepository.LEARNED && !Scheduler.snoozed(it, now)
+                    !VocabRepository.learned(it) && !Scheduler.snoozed(it, now)
                 }
                     .sortedBy { it.correct - it.lapses * 2 }
                     .forEach {
@@ -2341,14 +2341,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             .sortedBy { it.dueAt }
             .take(VOCAB_LIMIT)
             .mapNotNull { flipById(it.exerciseId) }
-        val shaky = live.filter { it.dueAt > now && it.correct < VocabRepository.LEARNED }
+        val shaky = live.filter { it.dueAt > now && !VocabRepository.learned(it) }
             .sortedBy { it.correct - it.lapses * 2 }
             .take(VOCAB_LIMIT)
             .mapNotNull { flipById(it.exerciseId) }
 
         // Новые слова — те, у которых карточки значения нет вовсе, в порядке
         // частоты. Потолок тот же, что у словарной вкладки: пул незаученных.
-        val budget = (POOL_TARGET - mean.count { it.correct < VocabRepository.LEARNED })
+        val budget = (POOL_TARGET - mean.count { !VocabRepository.learned(it) })
             .coerceAtLeast(0)
         val fresh = file.words.asSequence()
             .filter { !byId.containsKey(VocabRepository.cardId(it.id, VocabKind.Meaning)) }
@@ -2526,7 +2526,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // прекратились бы навсегда.
         var taken = 0
         val rotation = byId.values.count {
-            isMeaning(it.exerciseId) && it.correct < VocabRepository.LEARNED
+            isMeaning(it.exerciseId) && !VocabRepository.learned(it)
         }
         val budget =
             if (pool) (POOL_TARGET - rotation).coerceAtLeast(0)
@@ -2591,7 +2591,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val extra = spare
             .filter {
                 pairable(it.exerciseId) &&
-                    it.correct < VocabRepository.LEARNED &&
+                    !VocabRepository.learned(it) &&
                     !Scheduler.snoozed(it, now)
             }
             .sortedBy(::shaky)

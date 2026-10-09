@@ -43,7 +43,25 @@ data class CardEntity(
      * Streak на эту роль не годится: интервалы растут, и десять верных подряд
      * набегают годами.
      */
-    @ColumnInfo(defaultValue = "0") val correct: Int = 0
+    @ColumnInfo(defaultValue = "0") val correct: Int = 0,
+    /**
+     * В скольких разных днях подряд на карточку отвечали верно (Room v7).
+     *
+     * Это и есть «выучено» с 4.42 — решение Кати, которой Сергей отдал
+     * методику: три верных ответа в три разных календарных дня, без ошибки
+     * между ними (`VocabRepository.learned`). Засчитывается **любой** верный
+     * ответ — виджет, перевёртыши, тренировка, — но не больше одного в день:
+     * час перевёртышей подряд даёт один день, а не шестьдесят ответов.
+     * Ошибка обнуляет.
+     *
+     * Прежний порог — десять верных ответов вообще ([correct]) — Катя
+     * назвала диким и была права: исследования за ним мерили встречи слова
+     * в тексте, а не вспоминание по карточке, и знакомое слово висело в
+     * обороте месяцами, не пуская в виджет новые.
+     */
+    @ColumnInfo(defaultValue = "0") val streakDays: Int = 0,
+    /** Последний засчитанный день — номер дня по местному календарю (`toEpochDay`). */
+    @ColumnInfo(defaultValue = "0") val streakDay: Long = 0
 )
 
 @Entity(tableName = "lesson_progress")
@@ -429,6 +447,25 @@ private val MIGRATION_5_6 = object : Migration(5, 6) {
     }
 }
 
+/**
+ * Версия 7 добавила счёт верных дней подряд (4.42, см. [CardEntity.streakDays]).
+ *
+ * Две колонки с нулём по умолчанию — старого не трогают. Одна правка данных
+ * всё же есть, и она нужна, чтобы прогресс не откатился: **выученное по
+ * прежнему правилу остаётся выученным**. Карточки с десятью и больше верными
+ * ответами (сюда же попадает «уже знаю» — оно ставило ровно десять) получают
+ * три дня сразу. Без этого у Кати и Сергея сотни выученных слов разом
+ * вернулись бы в оборот и в виджет. Тройка здесь записана числом намеренно:
+ * это порог на момент перехода, а не настройка, которая может поменяться.
+ */
+private val MIGRATION_6_7 = object : Migration(6, 7) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE `cards` ADD COLUMN `streakDays` INTEGER NOT NULL DEFAULT 0")
+        db.execSQL("ALTER TABLE `cards` ADD COLUMN `streakDay` INTEGER NOT NULL DEFAULT 0")
+        db.execSQL("UPDATE `cards` SET `streakDays` = 3 WHERE `correct` >= 10")
+    }
+}
+
 @Database(
     entities = [
         CheckupEntity::class,
@@ -437,7 +474,7 @@ private val MIGRATION_5_6 = object : Migration(5, 6) {
         StoryProgressEntity::class,
         DayStatEntity::class
     ],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 abstract class AppDb : RoomDatabase() {
@@ -452,7 +489,8 @@ abstract class AppDb : RoomDatabase() {
                 AppDb::class.java,
                 "crnogorski.db"
             ).addMigrations(
-                MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6
+                MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6,
+                MIGRATION_6_7
             )
                 .build().also { instance = it }
         }

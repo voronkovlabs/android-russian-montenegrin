@@ -2,6 +2,8 @@ package com.crnogorski.trener.srs
 
 import com.crnogorski.trener.data.CardEntity
 import com.crnogorski.trener.data.Config
+import java.time.Instant
+import java.time.ZoneId
 import kotlin.math.roundToInt
 
 /**
@@ -38,6 +40,23 @@ object Scheduler {
     private const val VOCAB_LESSON = "vocab"
     private val LAPSE_DELAY_MS get() = cfg.lapseMinutes * 60_000L
     private val SKIP_DELAY_MS get() = cfg.skipHours * 60L * 60 * 1000
+
+    /** Номер календарного дня по местному времени: полночь — граница дня, как у человека. */
+    fun dayOf(now: Long): Long =
+        Instant.ofEpochMilli(now).atZone(ZoneId.systemDefault()).toLocalDate().toEpochDay()
+
+    /**
+     * Засчитать верный ответ в счёт дней подряд (4.42, [CardEntity.streakDays]).
+     *
+     * Один день — одна единица, сколько бы верных ответов в нём ни было: «три
+     * разных дня» проверяют, держится ли слово через сутки, а не короткую
+     * память одного вечера.
+     */
+    private fun counted(card: CardEntity, now: Long): CardEntity {
+        val today = dayOf(now)
+        return if (card.streakDay == today) card
+        else card.copy(streakDays = card.streakDays + 1, streakDay = today)
+    }
 
     fun newCard(
         exerciseId: String,
@@ -168,6 +187,9 @@ object Scheduler {
         )
         val learned = Config.current.vocab.learned
         return base.copy(
+            // «Уже знаю» — сразу выучено и по счёту дней (4.42).
+            streakDays = maxOf(base.streakDays, Config.current.vocab.learnedDays),
+            streakDay = dayOf(now),
             dueAt = now + cfg.knownDays * DAY_MS,
             intervalDays = cfg.knownDays,
             ease = maxOf(base.ease, cfg.easeStart),
@@ -218,7 +240,7 @@ object Scheduler {
      * полноценной: она и вне расписания означает, что слово не знают.
      */
     fun practice(card: CardEntity, correct: Boolean, now: Long): CardEntity =
-        if (correct) card.copy(correct = card.correct + 1)
+        if (correct) counted(card.copy(correct = card.correct + 1), now)
         else update(card, false, now)
 
     /**
@@ -238,7 +260,13 @@ object Scheduler {
      */
     fun shown(card: CardEntity, now: Long): CardEntity =
         update(card, correct = true, now = now)
-            .copy(correct = card.correct, ease = card.ease)
+            .copy(
+                correct = card.correct,
+                ease = card.ease,
+                // Показ не ответ — и день он не засчитывает.
+                streakDays = card.streakDays,
+                streakDay = card.streakDay
+            )
 
     /**
      * Показ парадигмы в тренировке вне расписания.
@@ -299,7 +327,7 @@ object Scheduler {
             repetitions = 0,
             lapses = 0,
             correct = if (correct) 1 else 0
-        )
+        ).let { if (correct) counted(it, now) else it }
 
     /**
      * Верный ответ двигает карточку вперёд, неверный — сбрасывает.
@@ -349,6 +377,9 @@ object Scheduler {
             return card.copy(
                 repetitions = 0,
                 intervalDays = 0,
+                // Ошибка рвёт и счёт дней подряд: «без ошибки между ними».
+                streakDays = 0,
+                streakDay = 0,
                 lapses = card.lapses + 1,
                 ease = (card.ease - cfg.easeStep * 4).coerceAtLeast(cfg.easeMin),
                 dueAt = now + back
@@ -368,7 +399,7 @@ object Scheduler {
         // Лёгкость растёт втрое быстрее: одна прибавка — это шаг, которого на
         // разгоне не видно, а весь смысл в том, чтобы разгон ускорился.
         val step = if (easy) cfg.easeStep * 3 else cfg.easeStep
-        return card.copy(
+        return counted(card, now).copy(
             repetitions = reps,
             correct = card.correct + 1,
             intervalDays = interval,

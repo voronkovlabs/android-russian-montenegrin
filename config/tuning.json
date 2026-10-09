@@ -35,6 +35,7 @@
     "newPerDay": 10,
     "sessionLimit": 25,
     "learned": 10,
+    "learnedDays": 3,
     "stepReps": 2,
     "matchPairs": 5,
     "matchMin": 4,

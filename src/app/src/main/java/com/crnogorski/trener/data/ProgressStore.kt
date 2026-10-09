@@ -25,7 +25,10 @@ data class ProgressCard(
     val repetitions: Int,
     val lapses: Int,
     /** Появился позже остальных полей: старые копии читаются с нулём. */
-    val correct: Int = 0
+    val correct: Int = 0,
+    /** С 4.42; в старых копиях нет — читаются с нулём, см. [CardEntity.streakDays]. */
+    val streakDays: Int = 0,
+    val streakDay: Long = 0
 )
 
 @Serializable
@@ -174,7 +177,8 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
                 versionName = versionName,
                 cards = dao.allCards().map {
                     ProgressCard(it.exerciseId, it.lessonId, it.dueAt, it.intervalDays,
-                        it.ease, it.repetitions, it.lapses, it.correct)
+                        it.ease, it.repetitions, it.lapses, it.correct,
+                        it.streakDays, it.streakDay)
                 },
                 lessons = dao.lessonProgress().map {
                     ProgressLesson(it.lessonId, it.completedAt, it.correct, it.total)
@@ -288,7 +292,11 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
         snap.cards.forEach {
             dao.upsertCard(
                 CardEntity(it.exerciseId, it.lessonId, it.dueAt, it.intervalDays,
-                    it.ease, it.repetitions, it.lapses, it.correct)
+                    it.ease, it.repetitions, it.lapses, it.correct,
+                    // Копия старше 4.42 дней не знает: выученное по прежнему
+                    // правилу остаётся выученным, как и в миграции 6 → 7.
+                    if (it.streakDays == 0 && it.correct >= 10) 3 else it.streakDays,
+                    it.streakDay)
             )
         }
         snap.lessons.forEach {

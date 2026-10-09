@@ -197,8 +197,17 @@ data class Tuning(
         val poolTarget: Int = 200,
         val newPerDay: Int = 10,
         val sessionLimit: Int = 25,
-        /** Сколько верных ответов делают слово выученным. */
+        /**
+         * Прежний порог «выучено» — верных ответов вообще. С 4.42 приложение
+         * его не читает, но ключ в `tuning.json` остаётся: его читают сборки
+         * старше 4.42, и смена смысла под тем же именем сломала бы им словарь.
+         */
         val learned: Int = 10,
+        /**
+         * «Выучено» с 4.42: в скольких разных днях подряд был верный ответ,
+         * без ошибки между ними. Решение Кати — три.
+         */
+        val learnedDays: Int = 3,
         /** Со скольких повторений открывается следующая ступень карточки. */
         val stepReps: Int = 2,
         val matchPairs: Int = 5,
@@ -357,6 +366,7 @@ data class Tuning(
             newPerDay = vocab.newPerDay.coerceIn(0, 100),
             sessionLimit = vocab.sessionLimit.coerceIn(1, 200),
             learned = vocab.learned.coerceIn(1, 100),
+            learnedDays = vocab.learnedDays.coerceIn(1, 30),
             stepReps = vocab.stepReps.coerceIn(1, 50),
             matchPairs = vocab.matchPairs.coerceIn(2, 10),
             matchMin = vocab.matchMin.coerceIn(2, 10),
