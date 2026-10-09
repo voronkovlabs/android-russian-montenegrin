@@ -511,7 +511,8 @@ fun VocabFile.exerciseFor(
         explanation = "",
         // Картинка рядом с русским условием ответа не выдаёт: она значит ровно
         // то же, что написанное слово, а спрашивают черногорское.
-        icon = WordEmoji.of(word.id).orEmpty()
+        icon = WordEmoji.of(word.id).orEmpty(),
+        picture = WordPicture.of(word.id).orEmpty()
     )
 
     VocabKind.Pattern -> {
@@ -555,7 +556,8 @@ fun VocabFile.exerciseFor(
             // Основа тут меняется, и сказать об этом стоит прямо: иначе
             // выглядит как опечатка в задании.
             explanation = "Основа меняется: ${Ijekavica.show(word.id)} → $form",
-            icon = WordEmoji.of(word.id).orEmpty()
+            icon = WordEmoji.of(word.id).orEmpty(),
+            picture = WordPicture.of(word.id).orEmpty()
         )
     }
 }
@@ -580,7 +582,8 @@ fun VocabFile.flipFor(word: VocabWord): Exercise.Card = Exercise.Card(
     also = synonyms(word) + definite(word),
     // Картинка рядом с русским толкованием ответа не выдаёт: она значит ровно
     // то же, что написанное слово, а сказать надо черногорское.
-    icon = WordEmoji.of(word.id).orEmpty()
+    icon = WordEmoji.of(word.id).orEmpty(),
+    picture = WordPicture.of(word.id).orEmpty()
 )
 
 /**

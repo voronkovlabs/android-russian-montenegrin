@@ -18,6 +18,7 @@ import com.crnogorski.trener.MainActivity
 import com.crnogorski.trener.R
 import com.crnogorski.trener.data.WidgetWord
 import com.crnogorski.trener.data.WidgetWords
+import com.crnogorski.trener.data.WordPicture
 
 /**
  * Словарная карточка на домашнем экране (4.5, идея 143).
@@ -132,15 +133,26 @@ class WordWidget : AppWidgetProvider() {
                 views.setTextViewText(R.id.widget_word, context.getString(R.string.app_name))
                 views.setTextViewText(R.id.widget_gloss, "слова появятся, когда откроешь приложение")
                 views.setViewVisibility(R.id.widget_emoji, View.GONE)
+                views.setViewVisibility(R.id.widget_picture, View.GONE)
                 return views
             }
 
             views.setOnClickPendingIntent(R.id.widget_root, tap(context))
             views.setTextViewText(R.id.widget_word, stressed(context, word))
             views.setTextViewText(R.id.widget_gloss, word.gloss)
-            if (word.emoji.isEmpty()) {
+            // Нарисованная картинка (4.41) — на месте эмодзи; нет её или не
+            // прочиталась — эмодзи, как раньше.
+            val picture = word.picture.takeIf { it.isNotEmpty() }
+                ?.let { WordPicture.bitmap(context, it) }
+            if (picture != null) {
                 views.setViewVisibility(R.id.widget_emoji, View.GONE)
+                views.setViewVisibility(R.id.widget_picture, View.VISIBLE)
+                views.setImageViewBitmap(R.id.widget_picture, picture)
+            } else if (word.emoji.isEmpty()) {
+                views.setViewVisibility(R.id.widget_emoji, View.GONE)
+                views.setViewVisibility(R.id.widget_picture, View.GONE)
             } else {
+                views.setViewVisibility(R.id.widget_picture, View.GONE)
                 views.setViewVisibility(R.id.widget_emoji, View.VISIBLE)
                 views.setTextViewText(R.id.widget_emoji, word.emoji)
             }
