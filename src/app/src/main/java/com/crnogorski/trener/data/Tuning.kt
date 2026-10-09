@@ -208,6 +208,13 @@ data class Tuning(
          * без ошибки между ними. Решение Кати — три.
          */
         val learnedDays: Int = 3,
+        /**
+         * Повтор нового слова в виджете-перевёртыше (4.43, Катя): перевернули
+         * совсем новое слово и не нажали ни ✅, ни 🧠 — оно вернётся через
+         * [replayGap] слов, и так [replays] раз. Ноль в любом — выключено.
+         */
+        val replayGap: Int = 5,
+        val replays: Int = 2,
         /** Со скольких повторений открывается следующая ступень карточки. */
         val stepReps: Int = 2,
         val matchPairs: Int = 5,
@@ -367,6 +374,8 @@ data class Tuning(
             sessionLimit = vocab.sessionLimit.coerceIn(1, 200),
             learned = vocab.learned.coerceIn(1, 100),
             learnedDays = vocab.learnedDays.coerceIn(1, 30),
+            replayGap = vocab.replayGap.coerceIn(0, 50),
+            replays = vocab.replays.coerceIn(0, 5),
             stepReps = vocab.stepReps.coerceIn(1, 50),
             matchPairs = vocab.matchPairs.coerceIn(2, 10),
             matchMin = vocab.matchMin.coerceIn(2, 10),

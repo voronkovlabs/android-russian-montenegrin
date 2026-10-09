@@ -23,7 +23,13 @@ data class WidgetWord(
      */
     val lemma: String = "",
     /** Нарисованная картинка (4.41, [WordPicture]); есть — вместо [emoji]. */
-    val picture: String = ""
+    val picture: String = "",
+    /**
+     * Совсем новое слово — у леммы нет ни одной карточки (4.43). Только такие
+     * перевёртыш повторяет через несколько слов, если их не вспомнили: см.
+     * [WidgetWords.next]. Решение Кати — начатые не повторяются.
+     */
+    val fresh: Boolean = false
 )
 
 /**
@@ -90,7 +96,10 @@ object WidgetWords {
      */
     fun save(context: Context, words: List<WidgetWord>) {
         val line = words.take(LIMIT).joinToString("\n") {
-            listOf(it.word, it.gloss, it.stress.toString(), it.emoji, it.lemma, it.picture).joinToString("\t")
+            listOf(
+                it.word, it.gloss, it.stress.toString(), it.emoji, it.lemma, it.picture,
+                if (it.fresh) "1" else ""
+            ).joinToString("\t")
         }
         prefs(context).edit().putString(KEY_WORDS, line).apply()
     }
@@ -101,7 +110,10 @@ object WidgetWords {
             .mapNotNull { row ->
                 val f = row.split('\t')
                 if (f.size < 4 || f[0].isEmpty()) null
-                else WidgetWord(f[0], f[1], f[2].toIntOrNull() ?: -1, f[3], f.getOrElse(4) { "" }, f.getOrElse(5) { "" })
+                else WidgetWord(
+                    f[0], f[1], f[2].toIntOrNull() ?: -1, f[3],
+                    f.getOrElse(4) { "" }, f.getOrElse(5) { "" }, f.getOrElse(6) { "" } == "1"
+                )
             }
             .toList()
 
@@ -109,17 +121,104 @@ object WidgetWords {
     fun current(context: Context, cursor: String = PLAIN): WidgetWord? {
         val words = all(context)
         if (words.isEmpty()) return null
+        if (cursor == FLIP) showing(context)?.let { (lemma, _) ->
+            words.firstOrNull { it.lemma == lemma }?.let { return it }
+        }
         return words[prefs(context).getInt(cursor, 0).mod(words.size)]
     }
 
-    /** Следующее слово: сдвинуть курсор и отдать. */
+    /**
+     * Следующее слово по списку: сдвинуть курсор и отдать.
+     *
+     * У перевёртыша так ходит только тик системы. Повтор, если он был на
+     * экране, при этом сходит — тик не нажатие, — а очередь повторов стоит:
+     * шаги в ней считаются словами, которые человек перевернул сам.
+     */
     fun advance(context: Context, cursor: String = PLAIN): WidgetWord? {
         val words = all(context)
         if (words.isEmpty()) return null
         val at = (prefs(context).getInt(cursor, 0) + 1).mod(words.size)
-        prefs(context).edit().putInt(cursor, at).apply()
+        prefs(context).edit().putInt(cursor, at).apply {
+            if (cursor == FLIP) remove(KEY_SHOWING)
+        }.apply()
         return words[at]
     }
+
+    /**
+     * Следующее слово перевёртыша по нажатию — с повтором нового (4.43).
+     *
+     * Катя: «если человеку в виджете показали новое слово, и он не нажал ни
+     * на мозг, ни на галочку, значит, это слово для него новое. Такое слово
+     * надо ещё раз показать через пять слов, и потом ещё через пять». Так
+     * устроено заучивание и в Anki: новое возвращают в том же заходе
+     * короткими шагами, а не через полный круг из ста слов, когда оно уже
+     * забыто.
+     *
+     * [missed] — уходящее слово перевернули и не отметили: нажатие «дальше»
+     * без ✅. Перейти, не увидев ответа, перевёртыш не даёт — первое нажатие
+     * переворачивает, второе листает, — поэтому «не вспомнил» здесь
+     * однозначно. ✅ зовёт сюда же с `false`, 🧠 убирает слово через [remove].
+     *
+     * Повторяются **только совсем новые** ([WidgetWord.fresh]) — решение
+     * Кати. Вспомнили на повторе — следующего не будет; не вспомнили — идёт
+     * по плану. Очередь лежит отдельно от списка: приложение переписывает
+     * список после каждого занятия, а очередь при этом теряться не должна.
+     * Слово, которого в новом списке нет, из очереди молча выпадает.
+     */
+    fun next(context: Context, missed: Boolean, gap: Int, replays: Int): WidgetWord? {
+        val words = all(context)
+        if (words.isEmpty()) return null
+        val byLemma = words.associateBy { it.lemma }
+        val queue = replayQueue(context).toMutableList()
+        val shown = current(context, FLIP)
+        val showing = showing(context)
+        if (missed && gap > 0 && shown != null && shown.fresh && shown.lemma.isNotEmpty()) {
+            // Сколько повторов осталось после этого показа: на первом проходе
+            // по списку — все, на повторе — то, что записано при нём.
+            val left = if (showing?.first == shown.lemma) showing.second else replays
+            if (left > 0 && queue.none { it.lemma == shown.lemma }) {
+                // +1: шаг ниже вычитается сразу, а «через пять» значит пять
+                // других слов между показами.
+                queue += Replay(shown.lemma, gap + 1, left - 1)
+            }
+        }
+        val stepped = queue.map { it.copy(wait = it.wait - 1) }
+            .filter { it.lemma in byLemma }
+        val due = stepped.firstOrNull { it.wait <= 0 }
+        val edit = prefs(context).edit()
+        val word = if (due != null) {
+            edit.putString(KEY_SHOWING, due.lemma + "\t" + due.left)
+            byLemma.getValue(due.lemma)
+        } else {
+            val at = (prefs(context).getInt(FLIP, 0) + 1).mod(words.size)
+            edit.putInt(FLIP, at).remove(KEY_SHOWING)
+            words[at]
+        }
+        edit.putString(KEY_REPLAY, stepped.filter { it !== due }.joinToString("\n") {
+            it.lemma + "\t" + it.wait + "\t" + it.left
+        }).apply()
+        return word
+    }
+
+    /** Слово в очереди повтора: через сколько нажатий и сколько повторов после. */
+    private data class Replay(val lemma: String, val wait: Int, val left: Int)
+
+    private fun replayQueue(context: Context): List<Replay> =
+        prefs(context).getString(KEY_REPLAY, "").orEmpty().lineSequence().mapNotNull {
+            val f = it.split('\t')
+            if (f.size < 3 || f[0].isEmpty()) null
+            else Replay(f[0], f[1].toIntOrNull() ?: return@mapNotNull null, f[2].toIntOrNull() ?: 0)
+        }.toList()
+
+    /** Повтор на экране сейчас: лемма и сколько повторов останется после него. */
+    private fun showing(context: Context): Pair<String, Int>? {
+        val f = prefs(context).getString(KEY_SHOWING, "").orEmpty().split('\t')
+        if (f.size < 2 || f[0].isEmpty()) return null
+        return f[0] to (f[1].toIntOrNull() ?: 0)
+    }
+
+    private const val KEY_REPLAY = "widget_flip_replay"
+    private const val KEY_SHOWING = "widget_flip_showing"
 
     /**
      * Убрать слово из списка — после отметки «уже знаю».
@@ -131,6 +230,12 @@ object WidgetWords {
      */
     fun remove(context: Context, lemma: String) {
         save(context, all(context).filter { it.lemma != lemma })
+        // «Уже знаю» снимает и повтор: знакомое повторять незачем.
+        val edit = prefs(context).edit()
+        if (showing(context)?.first == lemma) edit.remove(KEY_SHOWING)
+        edit.putString(KEY_REPLAY, replayQueue(context).filter { it.lemma != lemma }
+            .joinToString("\n") { it.lemma + "\t" + it.wait + "\t" + it.left })
+        edit.apply()
     }
 
     /**

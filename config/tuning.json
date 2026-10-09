@@ -36,6 +36,8 @@
     "sessionLimit": 25,
     "learned": 10,
     "learnedDays": 3,
+    "replayGap": 5,
+    "replays": 2,
     "stepReps": 2,
     "matchPairs": 5,
     "matchMin": 4,

@@ -1542,7 +1542,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     stress = Stress.of(shown) ?: -1,
                     emoji = WordEmoji.of(lemma).orEmpty(),
                     lemma = lemma,
-                    picture = WordPicture.of(lemma).orEmpty()
+                    picture = WordPicture.of(lemma).orEmpty(),
+                    // Совсем новое — у леммы нет ни одной карточки: только его
+                    // перевёртыш повторяет через пять слов (4.43).
+                    fresh = lemma !in carded
                 )
             }.take(WidgetWords.LIMIT).toList()
         )

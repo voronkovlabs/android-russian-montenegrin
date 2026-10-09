@@ -73,7 +73,8 @@ class FlipWidget : AppWidgetProvider() {
         when (intent.action) {
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> full(context, advance = true)
             ACTION_TAP -> {
-                tap(context)
+                Config.load(context)
+                tap(context, missed = true)
                 study(context)
             }
             ACTION_RECALLED -> {
@@ -81,7 +82,8 @@ class FlipWidget : AppWidgetProvider() {
                 // обороте, а не следующее. Кнопка живёт только на обороте,
                 // поэтому переход здесь — всегда «следующее слово».
                 val word = WidgetWords.current(context, WidgetWords.FLIP) ?: return
-                if (side(context) == 1) tap(context)
+                Config.load(context)
+                if (side(context) == 1) tap(context, missed = false)
                 study(context, recalled = word)
             }
             ACTION_REDRAW -> full(context, advance = false)
@@ -316,7 +318,7 @@ class FlipWidget : AppWidgetProvider() {
          * момент скрыта), а оборот заполняется при перевороте на него — тоже
          * пока он скрыт. Видимая сторона не меняется никогда.
          */
-        private fun tap(context: Context) {
+        private fun tap(context: Context, missed: Boolean) {
             val ids = ids(context)
             if (ids.isEmpty()) return
             val current = WidgetWords.current(context, WidgetWords.FLIP)
@@ -330,7 +332,10 @@ class FlipWidget : AppWidgetProvider() {
                 fillBack(context, views, current)
                 views.setDisplayedChild(R.id.flip_card, 1)
             } else {
-                val next = WidgetWords.advance(context, WidgetWords.FLIP) ?: return
+                // Дальше без ✅ — «не вспомнил»: совсем новое слово встанет в
+                // очередь повтора (4.43, [WidgetWords.next]).
+                val vocab = Config.current.vocab
+                val next = WidgetWords.next(context, missed, vocab.replayGap, vocab.replays) ?: return
                 setSide(context, 0)
                 fillFront(context, views, next)
                 views.setDisplayedChild(R.id.flip_card, 0)
