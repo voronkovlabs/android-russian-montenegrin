@@ -952,3 +952,105 @@ kapar	kapar	NOUN	каперсы	capers	yes	a jar of capers in brine
 kifla	kifla	NOUN	рогалик, булочка	bread roll	yes	a golden crescent bread roll
 burek	burek	NOUN	бурек (слоёный пирог)	burek pie	yes	a slice of golden flaky burek pastry
 tunjevina	tunjevina	NOUN	тунец (консервы, мясо)	canned tuna	yes	a tin of tuna chunks in oil
+viola	viola	NOUN	альт (инструмент)	viola	yes	a viola string instrument resting on a wooden stand, bow beside it
+violončelo	violončelo	NOUN	виолончель	cello	yes	a cello standing upright with a bow, a musician seated playing it
+kontrabas	kontrabas	NOUN	контрабас	double bass	yes	a tall double bass standing upright, a musician playing it
+trombon	trombon	NOUN	тромбон	trombone	yes	a shiny brass slide trombone on a plain background
+frula	frula	NOUN	свирель, дудочка	shepherd's flute	yes	a simple wooden end-blown shepherd's flute lying on a surface
+gusle	gusle	NOUN	гусле (однострунный смычковый инструмент)	gusle	yes	a single-string Balkan bowed instrument with a horsehair bow
+tamburica	tamburica	NOUN	тамбурица	tamburitza lute	yes	a pear-shaped Balkan tamburitza lute with a long neck and frets
+mandolina	mandolina	NOUN	мандолина	mandolin	yes	a mandolin with a pear-shaped body and curved neck
+sintisajzer	sintisajzer	NOUN	синтезатор	synthesizer	yes	an electronic synthesizer keyboard with knobs and sliders
+klavijatura	klavijatura	NOUN	клавиатура, клавиши	keyboard (piano keys)	maybe	a row of piano keys on a musical keyboard instrument
+gudalo	gudalo	NOUN	смычок	violin bow	yes	a violin bow with taut horsehair lying diagonally
+žica	žica	NOUN	струна; проволока	string	maybe	a single taut guitar string stretched across a plain background
+partitura	partitura	NOUN	партитура, ноты	musical score	yes	an open sheet music score with staves and notes on a stand
+metronom	metronom	NOUN	метроном	metronome	yes	a wooden pyramid metronome with a swinging pendulum
+horovođa	horovođa	NOUN	хормейстер	choir conductor	yes	a choir director with raised baton in front of a small singing choir
+bend	bend	NOUN	группа (музыкальная)	music band	yes	a band of musicians playing guitar, drums and keyboard together
+pevač	pjevač	NOUN	певец	singer	yes	a male singer performing on stage holding a microphone
+takt	takt	NOUN	такт	musical bar	maybe	a music staff with a bar line and time signature
+proba	proba	NOUN	репетиция; проба	rehearsal	maybe	musicians rehearsing together in a practice room with their instruments
+svirati	svirati	VERB	играть (на инструменте)	to play (an instrument)	yes	a person playing a guitar, fingers on the strings
+udaraljke	udaraljke	NOUN	ударные (инструменты)	percussion instruments	yes	a drum kit and percussion instruments such as tambourine and bongos
+činela	činela	NOUN	тарелка (ударный инструмент)	cymbal	yes	a pair of shiny brass cymbals on a drum stand
+ksilofon	ksilofon	NOUN	ксилофон	xylophone	yes	a wooden xylophone with coloured bars and two mallets
+orgulje	orgulje	NOUN	орган (инструмент)	pipe organ	yes	a large pipe organ with tall metal pipes and keyboards
+slikati	slikati	VERB	рисовать (красками); фотографировать	to paint	maybe	a person painting a canvas with a brush at an easel
+crtati	crtati	VERB	рисовать (карандашом), чертить	to draw (with a pencil)	yes	a person sketching with a pencil on paper
+bojica	bojica	NOUN	цветной карандаш, мелок	coloured pencil	yes	a set of coloured pencils with sharpened tips
+flomaster	flomaster	NOUN	фломастер	felt-tip marker	yes	a felt-tip marker pen with its cap beside it
+kist	kist	NOUN	кисть (художника)	paintbrush	yes	an artist's paintbrush with a wooden handle and bristles
+akvarel	akvarel	NOUN	акварель	watercolour paint	yes	a watercolour paint pan with a brush and soft washes of colour
+tempera	tempera	NOUN	гуашь, темпера	gouache paint	yes	tubes of gouache paint with a brush
+štafelaj	štafelaj	NOUN	мольберт	easel	yes	a wooden artist's easel holding a blank canvas
+paleta	paleta	NOUN	палитра; поддон	artist's palette	yes	a wooden painter's palette with dabs of paint and a brush
+gumica	gumica	NOUN	ластик; резинка	eraser	yes	a pink rubber eraser next to a pencil
+lenjir	lenjir	NOUN	линейка	ruler	yes	a wooden ruler lying flat with centimetre markings
+ugljen	ugljen	NOUN	уголь	charcoal	maybe	sticks of black drawing charcoal on a sketchbook page
+plastelin	plastelin	NOUN	пластилин	plasticine	yes	colourful plasticine clay blocks and a small sculpted figure
+galerija	galerija	NOUN	галерея	art gallery	yes	an art gallery room with framed paintings on white walls
+izložba	izložba	NOUN	выставка	art exhibition	yes	visitors looking at paintings in an art exhibition hall
+pejzaž	pejzaž	NOUN	пейзаж	landscape painting	yes	a painting of a mountain and sea landscape on an easel
+vajar	vajar	NOUN	скульптор	sculptor	yes	a sculptor shaping a clay bust with a tool in a studio
+keramika	keramika	NOUN	керамика	ceramics	yes	glazed ceramic pottery vases and bowls on a shelf
+grnčarija	grnčarija	NOUN	гончарные изделия, гончарство	pottery	yes	a potter's wheel with a clay vessel being shaped
+šivenje	šivenje	NOUN	шитьё	sewing	yes	a person sewing fabric with a needle and thread on a sewing machine
+sašiti	sašiti	VERB	сшить, пришить	to sew	yes	a person sewing a button onto a shirt with a needle and thread
+konac	konac	NOUN	нитка	thread	yes	a spool of coloured sewing thread with a needle
+naprstak	naprstak	NOUN	напёрсток	thimble	yes	a metal sewing thimble on a fingertip
+pribadača	pribadača	NOUN	булавка	pin	yes	a few straight sewing pins with coloured heads on fabric
+krojačica	krojačica	NOUN	портниха	seamstress	yes	a seamstress with a measuring tape around her neck cutting fabric
+krojiti	krojiti	VERB	кроить	to cut out (fabric)	yes	a tailor cutting fabric along a paper pattern with scissors
+kroj	kroj	NOUN	покрой, выкройка	sewing pattern	maybe	a paper sewing pattern lying on fabric
+čipka	čipka	NOUN	кружево	lace	yes	a piece of white lace fabric with an openwork pattern
+vez	vez	NOUN	вышивка	embroidery	yes	an embroidery hoop with colourful floral stitching on linen
+vesti	vesti	VERB	вышивать	to embroider	yes	a person embroidering flowers on fabric in an embroidery hoop
+krpiti	krpiti	VERB	штопать, латать	to darn, to mend	yes	a person mending a sock with a darning needle and thread
+zakrpa	zakrpa	NOUN	заплатка	patch	yes	a colourful fabric patch sewn onto a pair of jeans
+rub	rub	NOUN	край, кромка	edge, hem	maybe	the edge of a piece of fabric with a neat hem
+kragna	kragna	NOUN	воротник	collar	yes	a shirt with a collar, close-up
+plesti	plesti	VERB	вязать (спицами); плести	to knit, to braid	yes	a person knitting with two needles and yarn
+pletenje	pletenje	NOUN	вязание	knitting	yes	knitting needles and a ball of yarn beside a half-knitted scarf
+štrikati	štrikati	VERB	вязать (спицами, разг.)	to knit	yes	a person knitting a sweater with long needles
+heklati	heklati	VERB	вязать крючком	to crochet	yes	a person crocheting with a hook and yarn
+kukica	kukica	NOUN	крючок (вязальный)	crochet hook	yes	a metal crochet hook with a yarn loop
+klupko	klupko	NOUN	клубок	ball of yarn	yes	a ball of colourful wool yarn
+pređa	pređa	NOUN	пряжа	yarn	yes	skeins of colourful spun wool yarn
+pletivo	pletivo	NOUN	вязанье (то, что вяжут)	knitted item	maybe	a knitted sweater lying flat
+očica	očica	NOUN	петля (в вязании)	stitch (in knitting)	maybe	a close-up of knitted stitches on needles
+tkati	tkati	VERB	ткать	to weave	yes	a person weaving fabric on a loom
+razboj	razboj	NOUN	ткацкий станок	loom	yes	a wooden hand loom with threads stretched and a half-woven cloth
+fotoaparat	fotoaparat	NOUN	фотоаппарат	camera	yes	a vintage camera with a lens
+pecanje	pecanje	NOUN	рыбалка (с удочкой)	fishing (with a rod)	yes	a person fishing from a rocky shore with a rod
+pecati	pecati	VERB	удить рыбу	to fish	yes	a person casting a fishing line from a riverbank
+štap	štap	NOUN	палка; удочка (štap za pecanje)	fishing rod	yes	a fishing rod with a reel and line lying on a wooden dock
+mamac	mamac	NOUN	приманка, наживка	bait, lure	yes	a fishing lure and a hook on a wooden table
+planinarenje	planinarenje	NOUN	поход в горы	mountain hiking	yes	hikers walking a mountain trail with backpacks
+planinar	planinar	NOUN	альпинист, турист (в горах)	mountain hiker	yes	a hiker with a backpack and walking pole on a mountain ridge
+ruksak	ruksak	NOUN	рюкзак	backpack	yes	a hiking backpack with straps
+kamp	kamp	NOUN	кемпинг	campsite	yes	a campsite with a tent and a campfire
+kampovanje	kampovanje	NOUN	отдых в палатке	camping	yes	a small tent in a forest clearing next to a campfire
+baštovanstvo	baštovanstvo	NOUN	садоводство	gardening	yes	a person gardening with a spade and watering can among plants
+markica	markica	NOUN	марка (почтовая)	postage stamp	yes	a postage stamp with a small picture and perforated edge
+origami	origami	NOUN	оригами	origami	yes	a folded paper crane origami on a table
+biciklizam	biciklizam	NOUN	велоспорт	cycling	yes	a cyclist riding a road bicycle on a path
+skija	skija	NOUN	лыжа	ski	yes	a pair of skis standing upright in snow
+klizaljka	klizaljka	NOUN	конёк (ботинок)	ice skate	yes	a white ice skate with a metal blade
+peraja	peraja	NOUN	ласт; плавник	swim fins	yes	a pair of rubber swim fins on a sandy beach
+plivanje	plivanje	NOUN	плавание	swimming	yes	a swimmer doing front crawl in a pool
+ronjenje	ronjenje	NOUN	ныряние, дайвинг	scuba diving	yes	a scuba diver underwater with an air tank and mask
+joga	joga	NOUN	йога	yoga	yes	a person doing a yoga pose on a mat
+čitanje	čitanje	NOUN	чтение	reading	yes	a person reading a book in an armchair
+dnevnik	dnevnik	NOUN	дневник; новости (по ТВ)	diary	maybe	a closed leather diary with a pen on a desk
+vrištati	vrištati	VERB	визжать, кричать пронзительно	to scream	yes	a person screaming with mouth wide open
+vrisnuti	vrisnuti	VERB	взвизгнуть, вскрикнуть	to shriek	yes	a person letting out a sudden shriek with mouth open
+vrisak	vrisak	NOUN	визг, пронзительный крик	shriek	yes	a person with mouth wide open, shrieking
+viknuti	viknuti	VERB	крикнуть	to shout	yes	a person shouting with hands cupped around mouth
+krik	krik	NOUN	крик	shout, cry	yes	a person with mouth open in a loud shout
+uzviknuti	uzviknuti	VERB	воскликнуть	to exclaim	maybe	a person raising a hand and exclaiming with a surprised face
+uzvikivati	uzvikivati	VERB	восклицать	to exclaim (repeatedly)	maybe	a person repeatedly exclaiming with a raised hand
+uzvik	uzvik	NOUN	возглас, восклицание	exclamation	no	
+cviliti	cviliti	VERB	пищать, скулить	to whine	maybe	a child whining with a sad face
+pištati	pištati	VERB	пищать (о приборе); свистеть	to whistle (of a device)	maybe	a kettle with steam rising, whistling
+cičati	cičati	VERB	визжать (о поросёнке, ребёнке)	to squeal	maybe	a small piglet squealing with mouth open
