@@ -179,5 +179,11 @@ object Ijekavica {
         "prekosutra" to "prekosjutra",
         "petao" to "pijetao",
         "zalevati" to "zalijevati",
+        // 4.49: слова из каталогов магазинов.
+        "rasveta" to "rasvjeta",
+        "svećnjak" to "svijećnjak",
+        "nalepnica" to "naljepnica",
+        "letnji" to "ljetnji",
+        "veštački" to "vještački",
     )
 }
