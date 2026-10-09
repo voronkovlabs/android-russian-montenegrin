@@ -172,5 +172,12 @@ object Ijekavica {
         "mlečan" to "mliječan",
         "prestonica" to "prijestonica",
         "svetski" to "svjetski",
+        // 4.47: обиходные слова по темам.
+        "zavesa" to "zavjesa",
+        "testenina" to "tjestenina",
+        "koleno" to "koljeno",
+        "prekosutra" to "prekosjutra",
+        "petao" to "pijetao",
+        "zalevati" to "zalijevati",
     )
 }
