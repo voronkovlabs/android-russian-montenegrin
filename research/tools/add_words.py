@@ -29,6 +29,7 @@
 ## Запуск
 
     PYTHONUTF8=1 python research/tools/add_words.py <srLex.gz> <каталог отметок>
+    PYTHONUTF8=1 python research/tools/add_words.py <srLex.gz> research/data/vocab-themes-missing.tsv
 """
 import glob
 import gzip
@@ -84,6 +85,24 @@ def batch(marks_dir):
     return out, skipped
 
 
+# Тематические слова встают в порядок ввода не дальше этого места.
+THEME_CAP = 800
+
+
+def themes(path):
+    """Тематический список (`vocab-themes-missing.tsv`), принятый Катей целиком."""
+    rows = [l.rstrip('\n').split('\t') for l in io.open(path, encoding='utf-8')][1:]
+    out = []
+    for r in rows:
+        r += [''] * (5 - len(r))
+        topic, key, show, pos, ru = r[:5]
+        if ' ' in key or not ru:
+            continue
+        out.append({'rank': None, 'id': key, 'pos': POS[pos], 'gloss': ru,
+                    'se': show.endswith(' se')})
+    return out
+
+
 def subtitle_ranks(lexpath, lemmas):
     """Ранг по `sr_50k` для лемм — той же раскладкой, что в `find_missing`."""
     rank = {}
@@ -115,16 +134,30 @@ def main(lexpath, marks_dir):
     old_ids = [w['id'] for w in old]
     have = set(old_ids)
 
-    new, skipped = batch(marks_dir)
+    if marks_dir.endswith('.tsv'):
+        new, skipped = themes(marks_dir), []
+    else:
+        new, skipped = batch(marks_dir)
     new = [w for w in new if w['id'] not in have]
     print('к добавлению: %d; пропущено без перевода: %s' % (len(new), ', '.join(skipped) or '—'))
 
     # Место в порядке ввода: после стольких старых слов, сколько их частотнее.
-    ranks = subtitle_ranks(lexpath, have)
+    ranks = subtitle_ranks(lexpath, have | {w['id'] for w in new})
+    for w in new:
+        if w['rank'] is None:
+            # Тематические слова — бытовые, а частоту им считают субтитры, где
+            # кухни и огорода почти нет. Поэтому место по частоте, но не
+            # дальше THEME_CAP-го старого слова: Катя просила быт раньше.
+            r = ranks.get(w['id'], 10 ** 9)
+            w['rank'] = r
+            w['cap'] = True
+    ranks = {k: v for k, v in ranks.items() if k in have}
     old_ranks = sorted(ranks.values())
     import bisect
     for i, w in enumerate(sorted(new, key=lambda x: x['rank'])):
         c = bisect.bisect_right(old_ranks, w['rank'])
+        if w.get('cap'):
+            c = min(c, THEME_CAP)
         w['o'] = round(c + 0.5 + i * 1e-4, 4)
 
     # Парадигмы.

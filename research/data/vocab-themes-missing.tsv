@@ -121,7 +121,7 @@ topic	key	show	pos	ru
 дела	umivati	umivati se	глаг.	умываться
 дела	ručati		глаг.	обедать
 дела	večerati		глаг.	ужинать
-дела	zalivati		глаг.	поливать
+дела	zalevati	zalijevati	глаг.	поливать
 дела	odmarati	odmarati se	глаг.	отдыхать
 техника	punjač		сущ.	зарядка (устройство)
 техника	daljinski		сущ.	пульт
@@ -131,3 +131,9 @@ topic	key	show	pos	ru
 цвета	narandžast		прил.	оранжевый
 цвета	ljubičast		прил.	фиолетовый
 учёба	hemijska		сущ.	ручка (шариковая)
+кухня	čajnik		сущ.	чайник
+кухня	džezva		сущ.	турка (для кофе)
+дела	topiti		глаг.	поливать (в Черногории); топить, плавить
+дом	saditi		глаг.	сажать
+природа	voćnjak		сущ.	фруктовый сад
+природа	njiva		сущ.	поле, нива

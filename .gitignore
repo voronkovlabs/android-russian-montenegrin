@@ -1,1 +1,5 @@
 __pycache__/
+
+# Сырьё для скриптов словаря: srLex (57 МБ, CC BY-SA, качается с CLARIN.SI) и пилот словаря от ChatGPT.
+research/data/srLex_v1.3.gz
+research/data/pilot/
