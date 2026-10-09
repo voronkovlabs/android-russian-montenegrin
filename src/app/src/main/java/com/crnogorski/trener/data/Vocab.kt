@@ -52,8 +52,27 @@ data class VocabWord(
     val nf: Int = 0,
     val odd: List<String> = emptyList(),
     val ex: List<VocabExample> = emptyList(),
-    val doubt: String = ""
+    val doubt: String = "",
+    /**
+     * Глагол живёт только с `se` (4.46, решение Кати): в карточке слово стоит
+     * целиком — «desiti se», «nadati se», — а не голым с пометой в переводе.
+     * Ключ остаётся голым (`desiti`): по нему ищется парадигма в srLex, и у
+     * сербской версии, если её однажды сделают, тот же ключ.
+     */
+    val se: Boolean = false,
+    /**
+     * Место в порядке ввода новых слов, если оно не совпадает с [n] (4.46).
+     *
+     * У слов, дописанных после сборки словаря, [n] — хвостовой номер (3502…):
+     * по нему ищется полоса форм, и менять его у старых слов нельзя. А вводить
+     * их надо по частоте: `biti` и `hteti` — не хвост словаря, а его начало.
+     * Поэтому порядок задаёт [rank]: дробное число между номерами старых слов.
+     */
+    val o: Double = 0.0
 ) {
+    /** Частотный порядок слова: [o], если задано, иначе [n]. */
+    val rank: Double get() = if (o > 0) o else n.toDouble()
+
     /**
      * Есть ли у слова парадигма — без чтения парадигм.
      *
@@ -171,7 +190,9 @@ class VocabRepository(private val context: Context) {
      * сам. Файл словаря не меняется, прогресс не задет: карточка привязана к
      * лемме, а порядок решает только, какое новое слово придёт следующим.
      */
-    private fun learningOrder(words: List<VocabWord>): List<VocabWord> {
+    private fun learningOrder(all: List<VocabWord>): List<VocabWord> {
+        // Сперва частота, с дописанными словами на своих местах (4.46).
+        val words = all.sortedBy { it.rank }
         val every = Config.current.vocab.picturesEvery
         if (every <= 0) return words
         val (pic, rest) = words.partition { WordPicture.of(it.id) != null }
@@ -529,7 +550,7 @@ private fun VocabFile.paradigmCells(
     return order.filter(keep).mapNotNull { slot ->
         val f = have[slot] ?: return@mapNotNull null
         ParadigmCell(
-            lemma = Ijekavica.show(word.id),
+            lemma = word.shown,
             gloss = word.gloss,
             label = slots[slot] ?: slot,
             frame = frames[slot].orEmpty(),
@@ -557,7 +578,7 @@ fun VocabFile.exerciseFor(
         // Показываем иекавское написание, а ключ карточки остаётся прежним:
         // словарь собран из сербского источника, а курс черногорский. См.
         // [Ijekavica] — там же, почему нельзя просто переименовать лемму.
-        prompt = Ijekavica.show(word.id),
+        prompt = word.shown,
         answer = word.gloss,
         explanation = "",
         native = true
@@ -571,7 +592,7 @@ fun VocabFile.exerciseFor(
         // засчитает свёртка (`LocalCheck.reflex` сводит `ovdje` и `ovde` к
         // одному виду), так что цена ошибки тут нулевая, а польза прямая:
         // до этого приложение выдавало сербскую форму за черногорскую.
-        answer = Ijekavica.show(word.id),
+        answer = word.shown,
         // Слова с тем же толкованием засчитываются наравне с эталоном: по
         // словарю таких пар 55, и «дочь» — это и ćerka, и kći. Ключ тот же,
         // что у экрана пар: первый вариант статьи после разбора помет.
@@ -635,7 +656,7 @@ fun VocabFile.exerciseFor(
             val series = if (first) mates.flatMap { paradigmCells(it) } else emptyList()
             Exercise.Table(
                 id = VocabRepository.cardId(word.id, kind),
-                title = Ijekavica.show(word.id),
+                title = word.shown,
                 note = if (first && series.isNotEmpty()) {
                     "Эти слова склоняются одинаково — посмотри на окончания."
                 } else if (first) {
@@ -661,11 +682,11 @@ fun VocabFile.exerciseFor(
             id = VocabRepository.cardId(word.id, kind, form),
             label = slot?.s?.let { slots[it] }?.let { "Особая форма: $it" }
                 ?: "Особая форма",
-            prompt = "${pattern ?: "___"}  (${Ijekavica.show(word.id)})",
+            prompt = "${pattern ?: "___"}  (${word.shown})",
             answer = form,
             // Основа тут меняется, и сказать об этом стоит прямо: иначе
             // выглядит как опечатка в задании.
-            explanation = "Основа меняется: ${Ijekavica.show(word.id)} → $form",
+            explanation = "Основа меняется: ${word.shown} → $form",
             icon = WordEmoji.of(word.id).orEmpty(),
             picture = WordPicture.of(word.id).orEmpty()
         )
@@ -685,10 +706,17 @@ fun VocabFile.exerciseFor(
  * Поэтому [VocabKind] не трогается вовсе: он описывает, **что** спрашивают, а
  * перевёртыш меняет только **как**.
  */
+/**
+ * Как показать слово: иекавицей ([Ijekavica]) и, если глагол живёт только с
+ * `se`, вместе с ним (4.46). Эталон ответа тот же — «desiti se» и надо
+ * сказать: так слово и учат, целиком.
+ */
+val VocabWord.shown: String get() = Ijekavica.show(id) + if (se) " se" else ""
+
 fun VocabFile.flipFor(word: VocabWord): Exercise.Card = Exercise.Card(
     id = VocabRepository.cardId(word.id, VocabKind.Meaning),
     prompt = word.gloss,
-    answer = Ijekavica.show(word.id),
+    answer = word.shown,
     also = synonyms(word) + definite(word),
     // Картинка рядом с русским толкованием ответа не выдаёт: она значит ровно
     // то же, что написанное слово, а сказать надо черногорское.
@@ -800,7 +828,7 @@ private fun VocabFile.synonymIndex(): Map<String, List<String>> = synchronized(i
 fun matchPairFor(cardId: String, word: VocabWord): MatchPair? =
     LocalCheck.glossVariants(word.gloss)
         .firstOrNull { it.isNotBlank() }
-        ?.let { MatchPair(cardId = cardId, ru = it, me = Ijekavica.show(word.id)) }
+        ?.let { MatchPair(cardId = cardId, ru = it, me = word.shown) }
 
 /**
  * Экран пар из готовых пар.

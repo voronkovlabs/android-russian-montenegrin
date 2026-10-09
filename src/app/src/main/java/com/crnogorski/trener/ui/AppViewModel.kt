@@ -1526,6 +1526,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             VocabRepository.lemmaOf(it.exerciseId)
         }
         val glosses = file.words.associate { it.id to it.gloss }
+        // Глаголы только с se — показываются вместе с ним (4.46).
+        val reflexive = file.words.filter { it.se }.mapTo(HashSet()) { it.id }
 
         // Ударения нужны прямо здесь: в записи уезжает номер ударной буквы, а
         // не лемма, по которой его потом искать. Второй раз файл не читается.
@@ -1536,11 +1538,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             if (gloss.isEmpty()) return null
             // Показывается иекавское написание, и ударение считается по
             // нему же: у «ovde» и «ovdje» ударная буква на разных местах.
-            val shown = Ijekavica.show(lemma)
+            val bare = Ijekavica.show(lemma)
+            // Ударение — по самому глаголу: номер буквы у «desiti se» тот же,
+            // что у «desiti», а фразу `Stress.of` не размечает вовсе.
+            val shown = if (lemma in reflexive) "$bare se" else bare
             return WidgetWord(
                 word = shown,
                 gloss = gloss,
-                stress = Stress.of(shown) ?: -1,
+                stress = Stress.of(bare) ?: -1,
                 emoji = WordEmoji.of(lemma).orEmpty(),
                 lemma = lemma,
                 picture = WordPicture.of(lemma).orEmpty(),
@@ -2749,7 +2754,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             }
             // По частоте явно: с 4.45 список словаря идёт в порядке ввода
             // новых слов (картинки вперёд), а срезу нужны полосы частоты.
-            val byFreq = file.words.sortedBy { it.n }
+            val byFreq = file.words.sortedBy { it.rank }
             val size = byFreq.size
             val perBand = CHECKUP_ITEMS / CHECKUP_BANDS
             val picked = (0 until CHECKUP_BANDS).flatMap { band ->
