@@ -185,5 +185,11 @@ object Ijekavica {
         "nalepnica" to "naljepnica",
         "letnji" to "ljetnji",
         "veštački" to "vještački",
+        // 4.51: мебель и ванная из меню lubenicashop.me.
+        "višenamenski" to "višenamjenski",
+        // Омоним: «ванна» пишется так же, как наречие kada («когда»), а ключ
+        // словаря — написание, двух записей под ним быть не может. Поэтому
+        // у «ванны» служебный ключ, а показывается она обычным kada.
+        "kada2" to "kada",
     )
 }
