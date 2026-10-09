@@ -1,10 +1,25 @@
 package com.crnogorski.trener.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -40,6 +55,13 @@ import kotlinx.coroutines.launch
  * до «выучено», слово уходит из пула, и на его место занятие возьмёт новое;
  * через два месяца его спросят один раз. Карточек две — значение и обратный
  * перевод: «знаю слово» говорит про обе стороны.
+ *
+ * **Подтверждение можно отключить галочкой «Больше не спрашивать»** (4.44,
+ * Катя: «мне приходится часто нажимать на эту кнопку, чтобы добраться до
+ * новых слов, и каждый раз подтверждать мучительно»). Тогда окно не
+ * появляется вовсе — ни здесь, ни на перевёртышах в приложении: отметка
+ * ставится сразу, а о сделанном говорит всплывающая строка. Вернуть вопрос
+ * можно галочкой в настройках ([confirm]).
  */
 class KnownActivity : ComponentActivity() {
 
@@ -55,8 +77,14 @@ class KnownActivity : ComponentActivity() {
         // процессе сработали бы умолчания из кода, а не то, что задано.
         Config.load(this)
 
+        if (!confirm(this)) {
+            mark(lemma, word)
+            return
+        }
+
         setContent {
             CrnogorskiTheme {
+                var never by remember { mutableStateOf(false) }
                 AlertDialog(
                     onDismissRequest = ::finish,
                     containerColor = Surface1,
@@ -64,23 +92,30 @@ class KnownActivity : ComponentActivity() {
                     textContentColor = Muted,
                     title = { Text("${FlipWidget.KNOWN} Уже знаю") },
                     text = {
-                        Text(
-                            buildAnnotatedString {
-                                append("Отметить ")
-                                withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = Paper)) {
-                                    append(word)
-                                }
-                                append(
-                                    " выученным? Слово уйдёт из занятий, на его место " +
-                                        "придёт новое. Через два месяца его спросят один раз " +
-                                        "— проверить, что оно правда держится."
-                                )
-                            },
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                        Column {
+                            Text(
+                                buildAnnotatedString {
+                                    append("Отметить ")
+                                    withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = Paper)) {
+                                        append(word)
+                                    }
+                                    append(
+                                        " выученным? Слово уйдёт из занятий, на его место " +
+                                            "придёт новое. Через два месяца его спросят один раз " +
+                                            "— проверить, что оно правда держится."
+                                    )
+                                },
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            NeverAsk(never) { never = it }
+                        }
                     },
                     confirmButton = {
-                        TextButton(onClick = { mark(lemma, word) }) {
+                        TextButton(onClick = {
+                            if (never) setConfirm(applicationContext, false)
+                            mark(lemma, word)
+                        }) {
                             Text("Знаю", color = Accent)
                         }
                     },
@@ -126,6 +161,40 @@ class KnownActivity : ComponentActivity() {
         const val LEMMA = "lemma"
         const val WORD = "word"
 
+        private const val CONFIRM_KEY = "known_confirm"
+
+        /** Спрашивать ли подтверждение у 🧠 — и в виджете, и в приложении. */
+        fun confirm(context: Context): Boolean =
+            context.getSharedPreferences("crnogorski", Context.MODE_PRIVATE)
+                .getBoolean(CONFIRM_KEY, true)
+
+        fun setConfirm(context: Context, value: Boolean) {
+            context.getSharedPreferences("crnogorski", Context.MODE_PRIVATE)
+                .edit().putBoolean(CONFIRM_KEY, value).apply()
+        }
+
         private val queue = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    }
+}
+
+/**
+ * Галочка «Больше не спрашивать» под вопросом «Уже знаю» — общая для окна
+ * виджета и диалога на перевёртышах в приложении. Срабатывает только вместе
+ * с «Знаю»: отказ от отметки отказом от вопроса не считается.
+ */
+@androidx.compose.runtime.Composable
+fun NeverAsk(checked: Boolean, onChange: (Boolean) -> Unit) {
+    Row(
+        Modifier.clickable { onChange(!checked) },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = checked,
+            onCheckedChange = onChange,
+            colors = CheckboxDefaults.colors(
+                checkedColor = Accent, checkmarkColor = Ink, uncheckedColor = Muted
+            )
+        )
+        Text("Больше не спрашивать", color = Paper, style = MaterialTheme.typography.bodyMedium)
     }
 }

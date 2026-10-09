@@ -452,6 +452,9 @@ fun SettingsScreen(
             SplashRow(onShowSplash)
 
             Spacer(Modifier.height(20.dp))
+            KnownConfirmRow()
+
+            Spacer(Modifier.height(20.dp))
             PictureReviewRow()
 
             Spacer(Modifier.height(20.dp))
@@ -687,6 +690,55 @@ private fun TuningRow(fetched: String?, onRefresh: () -> Unit) {
  * Галочка звука живёт в тех же настройках, что и распознавание, и читается
  * прямо на заставке — тащить её через модель ради одного флага незачем.
  */
+/**
+ * Вернуть вопрос у 🧠 (4.44): галочку «Больше не спрашивать» ставят в самом
+ * окне, а снять её больше негде.
+ */
+@Composable
+private fun KnownConfirmRow() {
+    val context = LocalContext.current
+    var ask by remember { mutableStateOf(KnownActivity.confirm(context)) }
+
+    Text("УЖЕ ЗНАЮ", style = MaterialTheme.typography.labelSmall, color = Accent)
+    Spacer(Modifier.height(12.dp))
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .clickable {
+                ask = !ask
+                KnownActivity.setConfirm(context, ask)
+            }
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = ask,
+            onCheckedChange = {
+                ask = it
+                KnownActivity.setConfirm(context, it)
+            },
+            colors = CheckboxDefaults.colors(
+                checkedColor = Accent, checkmarkColor = Ink, uncheckedColor = Muted
+            )
+        )
+        Spacer(Modifier.width(8.dp))
+        Text(
+            "Спрашивать подтверждение у 🧠",
+            style = MaterialTheme.typography.titleMedium,
+            color = Paper,
+            modifier = Modifier.weight(1f)
+        )
+    }
+    Spacer(Modifier.height(6.dp))
+    Text(
+        "Снимешь — отметка «уже знаю» ставится сразу, без окна, и в виджете, и в " +
+            "приложении. Включается и галочкой «Больше не спрашивать» в самом окне.",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Muted
+    )
+}
+
 @Composable
 private fun SplashRow(onShow: () -> Unit) {
     val context = LocalContext.current

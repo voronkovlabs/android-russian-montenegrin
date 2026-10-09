@@ -1801,7 +1801,10 @@ private fun FlipSession(
                             if (!ex.form) {
                                 CardIcon("🧠", "Уже знаю") {
                                     quiet()
-                                    askKnown = true
+                                    // Галочка «Больше не спрашивать» (4.44) —
+                                    // та же, что в окне виджета.
+                                    if (KnownActivity.confirm(context)) askKnown = true
+                                    else onKnown()
                                 }
                             }
                         }
@@ -1915,15 +1918,21 @@ private fun FlipSession(
     // Подтверждение — как в виджете: значок маленький, а цена случайного
     // касания — слово, пропавшее из занятий на два месяца.
     if (askKnown) {
+        var never by remember { mutableStateOf(false) }
         AlertDialog(
             onDismissRequest = { askKnown = false },
             title = { Text("🧠 Уже знаю") },
             text = {
-                Text("«${ex.answer}» уйдёт в выученные и вернётся на проверку через два месяца.")
+                Column {
+                    Text("«${ex.answer}» уйдёт в выученные и вернётся на проверку через два месяца.")
+                    Spacer(Modifier.height(8.dp))
+                    NeverAsk(never) { never = it }
+                }
             },
             confirmButton = {
                 TextButton(onClick = {
                     askKnown = false
+                    if (never) KnownActivity.setConfirm(context, false)
                     onKnown()
                 }) { Text("Знаю", color = Accent) }
             },

@@ -1499,6 +1499,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * предварительное знакомство со словом до первого спроса — то самое, ради
      * чего в 1.38 появился экран пар. Показать слово раньше, чем спросить, —
      * не изъян, а порядок.
+     *
+     * **Каждое третье слово — совсем новое, всегда** (4.44, решение Кати). До
+     * этого новые шли только хвостом, то есть лишь пока начатых меньше сотни, —
+     * а у того, кто занимается каждый день, их двести, и виджет крутил одну и
+     * ту же сотню начатых слов, сколько ни листай. Кончились одни — место
+     * добирают другие.
      */
     private suspend fun saveWidgetWords(file: VocabFile, cards: List<CardEntity>) {
         val now = System.currentTimeMillis()
@@ -1519,36 +1525,52 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val carded = cards.mapNotNullTo(mutableSetOf()) {
             VocabRepository.lemmaOf(it.exerciseId)
         }
-        val order = inPlay.asSequence() + file.words.asSequence()
-            .map { it.id }
-            .filter { it !in carded }
         val glosses = file.words.associate { it.id to it.gloss }
 
         // Ударения нужны прямо здесь: в записи уезжает номер ударной буквы, а
         // не лемма, по которой его потом искать. Второй раз файл не читается.
         Stress.load(getApplication())
 
-        WidgetWords.save(
-            getApplication<Application>(),
-            order.mapNotNull { lemma ->
-                val gloss = WidgetWords.short(glosses[lemma].orEmpty())
-                if (gloss.isEmpty()) return@mapNotNull null
-                // Показывается иекавское написание, и ударение считается по
-                // нему же: у «ovde» и «ovdje» ударная буква на разных местах.
-                val shown = Ijekavica.show(lemma)
-                WidgetWord(
-                    word = shown,
-                    gloss = gloss,
-                    stress = Stress.of(shown) ?: -1,
-                    emoji = WordEmoji.of(lemma).orEmpty(),
-                    lemma = lemma,
-                    picture = WordPicture.of(lemma).orEmpty(),
-                    // Совсем новое — у леммы нет ни одной карточки: только его
-                    // перевёртыш повторяет через пять слов (4.43).
-                    fresh = lemma !in carded
-                )
-            }.take(WidgetWords.LIMIT).toList()
-        )
+        fun entry(lemma: String): WidgetWord? {
+            val gloss = WidgetWords.short(glosses[lemma].orEmpty())
+            if (gloss.isEmpty()) return null
+            // Показывается иекавское написание, и ударение считается по
+            // нему же: у «ovde» и «ovdje» ударная буква на разных местах.
+            val shown = Ijekavica.show(lemma)
+            return WidgetWord(
+                word = shown,
+                gloss = gloss,
+                stress = Stress.of(shown) ?: -1,
+                emoji = WordEmoji.of(lemma).orEmpty(),
+                lemma = lemma,
+                picture = WordPicture.of(lemma).orEmpty(),
+                // Совсем новое — у леммы нет ни одной карточки: только его
+                // перевёртыш повторяет через пять слов (4.43).
+                fresh = lemma !in carded
+            )
+        }
+
+        val limit = WidgetWords.LIMIT
+        val started = inPlay.mapNotNull(::entry).take(limit)
+        val fresh = file.words.asSequence()
+            .map { it.id }
+            .filter { it !in carded }
+            .mapNotNull(::entry)
+            .take(limit)
+            .toList()
+        // Места 3, 6, 9… — новым, остальные — начатым.
+        val list = ArrayList<WidgetWord>(limit)
+        var s = 0
+        var f = 0
+        while (list.size < limit && (s < started.size || f < fresh.size)) {
+            val third = (list.size + 1) % 3 == 0
+            list += when {
+                third && f < fresh.size -> fresh[f++]
+                s < started.size -> started[s++]
+                else -> fresh[f++]
+            }
+        }
+        WidgetWords.save(getApplication<Application>(), list)
         // Слово не сдвигаем: перелистывать карточку за человека при каждом
         // возвращении на главный экран незачем. Перерисовка нужна ради
         // другого — слово, только что отвеченное в занятии, из оборота ушло.
