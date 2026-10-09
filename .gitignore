@@ -4,3 +4,4 @@ __pycache__/
 research/data/srLex_v1.3.gz
 research/data/pilot/
 research/data/shops/
+research/data/kaikki-en-sh.jsonl.gz

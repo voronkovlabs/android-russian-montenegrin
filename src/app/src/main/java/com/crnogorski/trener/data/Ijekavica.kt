@@ -200,6 +200,19 @@ object Ijekavica {
         "nega" to "njega",
         // 4.54: хобби и голос.
         "pevač" to "pjevač",
+        // 4.57: слова на ž через английский Викисловарь; železnica — пропущенная пара.
+        "železnički" to "željeznički",
+        "žlezda" to "žlijezda",
+        "železara" to "željezara",
+        "ždrelo" to "ždrijelo",
+        "žleb" to "žlijeb",
+        "železan" to "željezan",
+        "žudeti" to "žudjeti",
+        "ždrebe" to "ždrijebe",
+        "železo" to "željezo",
+        "ždrebac" to "ždrijebac",
+        "ždrebica" to "ždrijebica",
+        "železnica" to "željeznica",
         // Омоним: «ванна» пишется так же, как наречие kada («когда»), а ключ
         // словаря — написание, двух записей под ним быть не может. Поэтому
         // у «ванны» служебный ключ, а показывается она обычным kada.

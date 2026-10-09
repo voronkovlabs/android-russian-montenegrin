@@ -30,6 +30,7 @@
 
     PYTHONUTF8=1 python research/tools/add_words.py <srLex.gz> <каталог отметок>
     PYTHONUTF8=1 python research/tools/add_words.py <srLex.gz> research/data/vocab-themes-missing.tsv
+    PYTHONUTF8=1 python research/tools/add_words.py <srLex.gz> research/data/vocab-z.tsv --freq
 """
 import glob
 import gzip
@@ -129,7 +130,7 @@ def subtitle_ranks(lexpath, lemmas):
     return best
 
 
-def main(lexpath, marks_dir):
+def main(lexpath, marks_dir, cap=True):
     path = os.path.join(ASSETS, 'words.json')
     data = json.load(io.open(path, encoding='utf-8'))
     old = data['words']
@@ -152,7 +153,7 @@ def main(lexpath, marks_dir):
             # дальше THEME_CAP-го старого слова: Катя просила быт раньше.
             r = ranks.get(w['id'], 10 ** 9)
             w['rank'] = r
-            w['cap'] = True
+            w['cap'] = cap
     ranks = {k: v for k, v in ranks.items() if k in have}
     old_ranks = sorted(ranks.values())
     import bisect
@@ -203,4 +204,6 @@ def main(lexpath, marks_dir):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    # --freq: слова не бытовые, а общие (найдены по буквам через английский
+    # Викисловарь) — встают по своей частоте, без потолка THEME_CAP и без `t`.
+    main(sys.argv[1], sys.argv[2], cap='--freq' not in sys.argv[3:])
