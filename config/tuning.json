@@ -38,6 +38,7 @@
     "learnedDays": 3,
     "replayGap": 5,
     "replays": 2,
+    "picturesEvery": 2,
     "stepReps": 2,
     "matchPairs": 5,
     "matchMin": 4,

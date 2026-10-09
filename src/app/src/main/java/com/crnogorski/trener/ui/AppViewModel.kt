@@ -2747,7 +2747,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 _notice.value = "Словарь не загрузился."
                 return@launch
             }
-            val size = file.words.size
+            // По частоте явно: с 4.45 список словаря идёт в порядке ввода
+            // новых слов (картинки вперёд), а срезу нужны полосы частоты.
+            val byFreq = file.words.sortedBy { it.n }
+            val size = byFreq.size
             val perBand = CHECKUP_ITEMS / CHECKUP_BANDS
             val picked = (0 until CHECKUP_BANDS).flatMap { band ->
                 // Полоса — это просто отрезок списка: словарь лежит по
@@ -2759,7 +2762,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 // три случайные трети.
                 val from = size * band / CHECKUP_BANDS
                 val to = size * (band + 1) / CHECKUP_BANDS
-                file.words.subList(from, to).shuffled().take(perBand)
+                byFreq.subList(from, to).shuffled().take(perBand)
             }.shuffled()
 
             val items = picked.mapNotNull { word ->

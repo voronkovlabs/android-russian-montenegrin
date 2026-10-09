@@ -147,10 +147,46 @@ class VocabRepository(private val context: Context) {
                 json.decodeFromString<VocabFile>(
                     context.assets.open(PATH).bufferedReader().use { it.readText() }
                 ).let { file ->
-                    file.copy(words = file.words.filter { Excluded.allows(it.id) })
+                    WordPicture.init(context)
+                    file.copy(words = learningOrder(file.words.filter { Excluded.allows(it.id) }))
                 }
             }.getOrDefault(VocabFile())
         }.also { cached = it }
+    }
+
+    /**
+     * Порядок ввода новых слов: картинки вперёд, вперемешку с частотой (4.45).
+     *
+     * Катя: частоты взяты из субтитров фильмов, и «кинолексика» стоит выше
+     * быта — `metak` (пуля) раньше `krava`, `brava` (замок) раньше `tanjir`.
+     * Слова с нарисованной картинкой — почти сплошь конкретные бытовые
+     * предметы, животные, еда, то есть готовая разметка того, что нужно
+     * раньше. Каждое `vocab.picturesEvery`-е место отдаётся слову с
+     * картинкой (по частоте среди них), остальные — прочим по частоте;
+     * кончились одни — добирают другие.
+     *
+     * **Переставляется список, а не номера.** [VocabWord.n] остаётся частотным
+     * рангом: по нему ищутся полосы форм (`band`), и сломать это значило бы
+     * молча потерять падежи. Срез, которому нужна именно частота, сортирует
+     * сам. Файл словаря не меняется, прогресс не задет: карточка привязана к
+     * лемме, а порядок решает только, какое новое слово придёт следующим.
+     */
+    private fun learningOrder(words: List<VocabWord>): List<VocabWord> {
+        val every = Config.current.vocab.picturesEvery
+        if (every <= 0) return words
+        val (pic, rest) = words.partition { WordPicture.of(it.id) != null }
+        val out = ArrayList<VocabWord>(words.size)
+        var p = 0
+        var r = 0
+        while (p < pic.size || r < rest.size) {
+            val slot = (out.size + 1) % every == 0 || every == 1
+            out += when {
+                slot && p < pic.size -> pic[p++]
+                r < rest.size -> rest[r++]
+                else -> pic[p++]
+            }
+        }
+        return out
     }
 
     /**

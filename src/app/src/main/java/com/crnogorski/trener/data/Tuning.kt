@@ -215,6 +215,13 @@ data class Tuning(
          */
         val replayGap: Int = 5,
         val replays: Int = 2,
+        /**
+         * Слова с картинкой — вперёд (4.45, Катя): каждое [picturesEvery]-е
+         * место в порядке ввода новых слов отдано слову с нарисованной
+         * картинкой, остальные идут по частоте, как раньше. Два — через одно.
+         * Ноль — прежний порядок по частоте.
+         */
+        val picturesEvery: Int = 2,
         /** Со скольких повторений открывается следующая ступень карточки. */
         val stepReps: Int = 2,
         val matchPairs: Int = 5,
@@ -376,6 +383,7 @@ data class Tuning(
             learnedDays = vocab.learnedDays.coerceIn(1, 30),
             replayGap = vocab.replayGap.coerceIn(0, 50),
             replays = vocab.replays.coerceIn(0, 5),
+            picturesEvery = vocab.picturesEvery.coerceIn(0, 10),
             stepReps = vocab.stepReps.coerceIn(1, 50),
             matchPairs = vocab.matchPairs.coerceIn(2, 10),
             matchMin = vocab.matchMin.coerceIn(2, 10),
