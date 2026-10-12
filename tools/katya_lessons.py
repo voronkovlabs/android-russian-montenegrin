@@ -1348,8 +1348,7 @@ NA_POMOCI = 'Благодарят «на» чём-то: hvala na pomoći — с�
 NEMA = 'Буквально «нет на чём». Обычный ответ на hvala.'
 L.append(dict(id='k21', title='Treba li vam neka pomoć?', section=S2, words=[
     ('baba', 'бабушка'), ('djed', 'дедушка'), ('u', 'в'), ('na', 'на'),
-    ('pomoć', 'помощь'), ('neki', 'какой-то, какой-нибудь'), ('red', 'порядок, очередь'),
-    ('pecati', 'ловить рыбу (удочкой)'), ('pileći', 'куриный'), ('za', 'для')],
+    ('pomoć', 'помощь'), ('neki', 'какой-то, какой-нибудь'), ('red', 'порядок, очередь')],
     ex=[
     new('baba', 'бабушка', ['бабушка', 'мама', 'сестра']),
     dict(new('djed', 'дедушка', ['дедушка', 'отец', 'брат']), explanation=DJED),
@@ -1385,8 +1384,8 @@ L.append(dict(id='k21', title='Treba li vam neka pomoć?', section=S2, words=[
     ear('Pas je u kući.', ['Собака в доме.', 'Собака идёт домой.', 'Кошка в доме.'],
         'Собака в доме.'),
     bank('Кошка спит в машине.', 'Mačka spava u autu.', ['autu', 'spava', 'u', 'mačka']),
-    pick('Kornjača je u supi!', ['Черепаха в супе!', 'Черепаха варит суп!',
-                                 'Черепаха в стакане!'], 'Черепаха в супе!',
+    pick('Krompir je u supi.', ['Картошка в супе.', 'Картошка варит суп.',
+                                'Картошка в стакане.'], 'Картошка в супе.',
          label='Выбери перевод'),
     say('Riba je u vodi.', 'Рыба в воде.'),
     new('pomoć', 'помощь', ['помощь', 'работа', 'порядок']),
@@ -1412,6 +1411,16 @@ L.append(dict(id='k21', title='Treba li vam neka pomoć?', section=S2, words=[
          explanation=NEMA, label='Что скажешь?'),
     echo('Nema na čemu.', 'Не за что.'),
     say('Treba li vam neka pomoć?', 'Вам нужна какая-нибудь помощь?'),
+    pairs(('Я у бабушки.', 'Ja sam kod babe.'), ('Рыба в воде.', 'Riba je u vodi.'),
+          ('Вам нужна какая-нибудь помощь?', 'Treba li vam neka pomoć?'),
+          ('Спасибо вам за помощь!', 'Hvala vam na pomoći!'), ('Не за что.', 'Nema na čemu.')),
+]))
+
+# Заготовка урока 22: перенесено из урока 21 по просьбе Кати (12.10.2026).
+# В курс не идёт, пока не станет уроком.
+K22_DRAFT = dict(words=[
+    ('pecati', 'ловить рыбу (удочкой)'), ('pileći', 'куриный'), ('za', 'для')],
+    ex=[
     dict(new('pecati', 'ловить рыбу (удочкой)', ['ловить рыбу (удочкой)', 'варить', 'играть'],
              label='Новый глагол'), explanation=PECATI),
     phrase('Moj djed voli da peca.', 'Мой дедушка любит ловить рыбу.',
@@ -1428,10 +1437,7 @@ L.append(dict(id='k21', title='Treba li vam neka pomoć?', section=S2, words=[
          explanation=ZA),
     bank('Бабушка варит для дедушки куриный суп.', 'Baba kuva pileću supu za djeda.',
          ['supu', 'djeda', 'baba', 'za', 'pileću', 'kuva']),
-    pairs(('Я у бабушки.', 'Ja sam kod babe.'), ('Рыба в воде.', 'Riba je u vodi.'),
-          ('Вам нужна какая-нибудь помощь?', 'Treba li vam neka pomoć?'),
-          ('Спасибо вам за помощь!', 'Hvala vam na pomoći!'), ('Не за что.', 'Nema na čemu.')),
-]))
+])
 
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
