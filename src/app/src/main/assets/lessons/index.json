@@ -132,6 +132,12 @@
       "title": "Treba li vam neka pomoć?",
       "file": "k21.json",
       "section": "Раздел 2"
+    },
+    {
+      "id": "k22",
+      "title": "Odakle si? Ljeto i zima",
+      "file": "k22.json",
+      "section": "Раздел 2"
     }
   ]
 }

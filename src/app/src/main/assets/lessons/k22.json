@@ -1,0 +1,502 @@
+{
+  "id": "k22",
+  "title": "Odakle si? Ljeto i zima",
+  "exercises": [
+    {
+      "id": "k22e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "proljeće",
+      "hint": "proljeće — весна",
+      "options": [
+        "весна",
+        "лето",
+        "осень"
+      ],
+      "answer": "весна"
+    },
+    {
+      "id": "k22e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ljeto",
+      "hint": "ljeto — лето",
+      "options": [
+        "лето",
+        "зима",
+        "весна"
+      ],
+      "answer": "лето"
+    },
+    {
+      "id": "k22e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "jesen",
+      "hint": "jesen — осень",
+      "options": [
+        "осень",
+        "зима",
+        "лето"
+      ],
+      "answer": "осень",
+      "explanation": "jesen — женского рода, хотя кончается на согласную: jesen je lijepa."
+    },
+    {
+      "id": "k22e04",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "zima",
+      "hint": "zima — зима",
+      "options": [
+        "зима",
+        "осень",
+        "весна"
+      ],
+      "answer": "зима"
+    },
+    {
+      "id": "k22e05",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "весна",
+          "me": "proljeće"
+        },
+        {
+          "ru": "лето",
+          "me": "ljeto"
+        },
+        {
+          "ru": "осень",
+          "me": "jesen"
+        },
+        {
+          "ru": "зима",
+          "me": "zima"
+        }
+      ]
+    },
+    {
+      "id": "k22e06",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Volim ljeto.",
+      "hint": "Volim ljeto. — Я люблю лето.",
+      "options": [
+        "Я люблю лето.",
+        "Я люблю зиму.",
+        "Я не люблю лето."
+      ],
+      "answer": "Я люблю лето."
+    },
+    {
+      "id": "k22e07",
+      "type": "choice",
+      "prompt": "Я не люблю зиму. — Ne volim ___ .",
+      "options": [
+        "zima",
+        "zimu"
+      ],
+      "answer": "zimu",
+      "explanation": "Люблю что — у слов на -a окончание -u, как hoću kafu: volim zimu.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k22e08",
+      "type": "choice",
+      "prompt": "Jesen je lijepa.",
+      "options": [
+        "Осень красивая.",
+        "Весна красивая.",
+        "Осень холодная."
+      ],
+      "answer": "Осень красивая.",
+      "explanation": "jesen — женского рода, хотя кончается на согласную: jesen je lijepa.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k22e09",
+      "type": "choice",
+      "prompt": "Proljeće je ___ .",
+      "options": [
+        "lijep",
+        "lijepa",
+        "lijepo"
+      ],
+      "answer": "lijepo",
+      "explanation": "proljeće и ljeto — среднего рода, как drvo: proljeće je lijepo.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k22e10",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "odakle",
+      "hint": "odakle — откуда",
+      "options": [
+        "откуда",
+        "куда",
+        "где"
+      ],
+      "answer": "откуда"
+    },
+    {
+      "id": "k22e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Odakle si?",
+      "hint": "Odakle si? — Откуда ты?",
+      "options": [
+        "Откуда ты?",
+        "Куда ты идёшь?",
+        "Где ты?"
+      ],
+      "answer": "Откуда ты?",
+      "explanation": "odakle — «откуда». На «ты»: Odakle si? На «вы» или многим: Odakle ste?"
+    },
+    {
+      "id": "k22e12",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ja sam iz Rusije.",
+      "hint": "Ja sam iz Rusije. — Я из России.",
+      "options": [
+        "Я из России.",
+        "Я в России.",
+        "Я из Украины."
+      ],
+      "answer": "Я из России.",
+      "explanation": "iz — «из». Rusija — iz Rusije, Ukrajina — iz Ukrajine, Crna Gora — iz Crne Gore. Запоминаем кусками."
+    },
+    {
+      "id": "k22e13",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ja sam iz Ukrajine.",
+      "hint": "Ja sam iz Ukrajine. — Я из Украины.",
+      "options": [
+        "Я из Украины.",
+        "Я из России.",
+        "Я в Украине."
+      ],
+      "answer": "Я из Украины."
+    },
+    {
+      "id": "k22e14",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ja sam iz Crne Gore.",
+      "hint": "Ja sam iz Crne Gore. — Я из Черногории.",
+      "options": [
+        "Я из Черногории.",
+        "Я в Черногории.",
+        "Я из России."
+      ],
+      "answer": "Я из Черногории."
+    },
+    {
+      "id": "k22e15",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Россия",
+          "me": "Rusija"
+        },
+        {
+          "ru": "из России",
+          "me": "iz Rusije"
+        },
+        {
+          "ru": "Украина",
+          "me": "Ukrajina"
+        },
+        {
+          "ru": "из Украины",
+          "me": "iz Ukrajine"
+        }
+      ]
+    },
+    {
+      "id": "k22e16",
+      "type": "choice",
+      "prompt": "— Odakle ste?\n— Iz Rusije, a vi?\n— Ja sam iz Crne Gore.\n\nОткуда второй человек?",
+      "options": [
+        "Из Черногории.",
+        "Из России.",
+        "Из Украины."
+      ],
+      "answer": "Из Черногории.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k22e17",
+      "type": "speaking",
+      "phrase": "Ja sam iz Rusije.",
+      "translation": "Я из России."
+    },
+    {
+      "id": "k22e18",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Mačka je na drvetu.",
+      "hint": "Mačka je na drvetu. — Кошка на дереве.",
+      "options": [
+        "Кошка на дереве.",
+        "Кошка в доме.",
+        "Кошка под деревом."
+      ],
+      "answer": "Кошка на дереве.",
+      "explanation": "na — «на». И «где?» снова звучит иначе: drvo — na drvetu, sunce — na suncu. Запоминаем кусками."
+    },
+    {
+      "id": "k22e19",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "ležati",
+      "hint": "ležati — лежать",
+      "options": [
+        "лежать",
+        "спать",
+        "сидеть"
+      ],
+      "answer": "лежать",
+      "explanation": "Формы как у voljeti: ležim, ležiš, leži, ležimo, ležite, leže."
+    },
+    {
+      "id": "k22e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kornjača leži na suncu.",
+      "hint": "Kornjača leži na suncu. — Черепаха лежит на солнце.",
+      "options": [
+        "Черепаха лежит на солнце.",
+        "Черепаха спит на солнце.",
+        "Кошка лежит на солнце."
+      ],
+      "answer": "Черепаха лежит на солнце."
+    },
+    {
+      "id": "k22e21",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "на дереве",
+          "me": "na drvetu"
+        },
+        {
+          "ru": "на солнце",
+          "me": "na suncu"
+        },
+        {
+          "ru": "на море",
+          "me": "na moru"
+        },
+        {
+          "ru": "в море",
+          "me": "u moru"
+        }
+      ]
+    },
+    {
+      "id": "k22e22",
+      "type": "choice",
+      "prompt": "Кошка на дереве. — Mačka je ___ drvetu.",
+      "options": [
+        "na",
+        "u",
+        "kod"
+      ],
+      "answer": "na",
+      "explanation": "na — «на». И «где?» снова звучит иначе: drvo — na drvetu, sunce — na suncu. Запоминаем кусками.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k22e23",
+      "type": "choice",
+      "prompt": "Kornjača leži na suncu.",
+      "options": [
+        "Черепаха лежит на солнце.",
+        "Черепаха в воде.",
+        "Черепаха ест на солнце."
+      ],
+      "answer": "Черепаха лежит на солнце.",
+      "byEar": true
+    },
+    {
+      "id": "k22e24",
+      "type": "word_bank",
+      "prompt": "Кошка на дереве.",
+      "answer": "Mačka je na drvetu.",
+      "bank": [
+        "drvetu",
+        "je",
+        "mačka",
+        "na"
+      ]
+    },
+    {
+      "id": "k22e25",
+      "type": "speaking",
+      "phrase": "Kornjača leži na suncu.",
+      "translation": "Черепаха лежит на солнце."
+    },
+    {
+      "id": "k22e26",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "pecati",
+      "hint": "pecati — ловить рыбу (удочкой)",
+      "options": [
+        "ловить рыбу (удочкой)",
+        "варить",
+        "играть"
+      ],
+      "answer": "ловить рыбу (удочкой)",
+      "explanation": "pecati — ловить рыбу удочкой, одним словом. Формы как у kuvati: pecam, pecaš, peca."
+    },
+    {
+      "id": "k22e27",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moj djed voli da peca.",
+      "hint": "Moj djed voli da peca. — Мой дедушка любит ловить рыбу.",
+      "options": [
+        "Мой дедушка любит ловить рыбу.",
+        "Мой дедушка любит рыбу.",
+        "Моя бабушка любит ловить рыбу."
+      ],
+      "answer": "Мой дедушка любит ловить рыбу."
+    },
+    {
+      "id": "k22e28",
+      "type": "choice",
+      "prompt": "Moj djed voli da peca.",
+      "options": [
+        "Мой дедушка любит ловить рыбу.",
+        "Мой отец любит ловить рыбу.",
+        "Мой дедушка любит спать."
+      ],
+      "answer": "Мой дедушка любит ловить рыбу.",
+      "byEar": true
+    },
+    {
+      "id": "k22e29",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pileći",
+      "hint": "pileći — куриный",
+      "options": [
+        "куриный",
+        "рыбный",
+        "горячий"
+      ],
+      "answer": "куриный",
+      "explanation": "pileći — «куриный», от pile — цыплёнок. pileća supa — куриный суп. Варит что — supu, как хочу что — kafu."
+    },
+    {
+      "id": "k22e30",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Baba kuva pileću supu za djeda.",
+      "hint": "Baba kuva pileću supu za djeda. — Бабушка варит для дедушки куриный суп.",
+      "options": [
+        "Бабушка варит для дедушки куриный суп.",
+        "Дедушка варит для бабушки куриный суп.",
+        "Бабушка варит для дедушки рыбный суп."
+      ],
+      "answer": "Бабушка варит для дедушки куриный суп.",
+      "explanation": "za — «для»: za djeda — для дедушки."
+    },
+    {
+      "id": "k22e31",
+      "type": "word_bank",
+      "prompt": "Бабушка варит для дедушки куриный суп.",
+      "answer": "Baba kuva pileću supu za djeda.",
+      "bank": [
+        "supu",
+        "djeda",
+        "baba",
+        "za",
+        "pileću",
+        "kuva"
+      ]
+    },
+    {
+      "id": "k22e32",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Откуда ты?",
+          "me": "Odakle si?"
+        },
+        {
+          "ru": "Я из России.",
+          "me": "Ja sam iz Rusije."
+        },
+        {
+          "ru": "Я люблю лето.",
+          "me": "Volim ljeto."
+        },
+        {
+          "ru": "Кошка на дереве.",
+          "me": "Mačka je na drvetu."
+        },
+        {
+          "ru": "Мой дедушка любит ловить рыбу.",
+          "me": "Moj djed voli da peca."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "proljeće",
+      "ru": "весна"
+    },
+    {
+      "me": "ljeto",
+      "ru": "лето"
+    },
+    {
+      "me": "jesen",
+      "ru": "осень"
+    },
+    {
+      "me": "zima",
+      "ru": "зима"
+    },
+    {
+      "me": "odakle",
+      "ru": "откуда"
+    },
+    {
+      "me": "iz",
+      "ru": "из"
+    },
+    {
+      "me": "Rusija",
+      "ru": "Россия"
+    },
+    {
+      "me": "Ukrajina",
+      "ru": "Украина"
+    },
+    {
+      "me": "ležati",
+      "ru": "лежать"
+    },
+    {
+      "me": "pecati",
+      "ru": "ловить рыбу (удочкой)"
+    },
+    {
+      "me": "pileći",
+      "ru": "куриный"
+    },
+    {
+      "me": "za",
+      "ru": "для"
+    }
+  ]
+}

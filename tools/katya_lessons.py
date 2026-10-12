@@ -1416,11 +1416,71 @@ L.append(dict(id='k21', title='Treba li vam neka pomoć?', section=S2, words=[
           ('Спасибо вам за помощь!', 'Hvala vam na pomoći!'), ('Не за что.', 'Nema na čemu.')),
 ]))
 
-# Заготовка урока 22: перенесено из урока 21 по просьбе Кати (12.10.2026).
-# В курс не идёт, пока не станет уроком.
-K22_DRAFT = dict(words=[
+# --- Урок 22 ---
+# Времена года, «Odakle si?» — «Ja sam iz Rusije / Ukrajine / Crne Gore» и na «на»
+# с тем, что уже знакомо. Плюс дедушка с рыбалкой и куриный суп, перенесённые
+# из урока 21. Формы после iz и na — готовыми кусками, без правил.
+JESEN = 'jesen — женского рода, хотя кончается на согласную: jesen je lijepa.'
+LJETO = 'proljeće и ljeto — среднего рода, как drvo: proljeće je lijepo.'
+VOLIM_ZIMU = 'Люблю что — у слов на -a окончание -u, как hoću kafu: volim zimu.'
+ODAKLE = 'odakle — «откуда». На «ты»: Odakle si? На «вы» или многим: Odakle ste?'
+IZ = ('iz — «из». Rusija — iz Rusije, Ukrajina — iz Ukrajine, Crna Gora — iz Crne Gore. '
+      'Запоминаем кусками.')
+NA_GDJE = ('na — «на». И «где?» снова звучит иначе: drvo — na drvetu, sunce — na suncu. '
+           'Запоминаем кусками.')
+LEZATI = 'Формы как у voljeti: ležim, ležiš, leži, ležimo, ležite, leže.'
+L.append(dict(id='k22', title='Odakle si? Ljeto i zima', section=S2, words=[
+    ('proljeće', 'весна'), ('ljeto', 'лето'), ('jesen', 'осень'), ('zima', 'зима'),
+    ('odakle', 'откуда'), ('iz', 'из'), ('Rusija', 'Россия'), ('Ukrajina', 'Украина'),
+    ('ležati', 'лежать'),
     ('pecati', 'ловить рыбу (удочкой)'), ('pileći', 'куриный'), ('za', 'для')],
     ex=[
+    new('proljeće', 'весна', ['весна', 'лето', 'осень']),
+    new('ljeto', 'лето', ['лето', 'зима', 'весна']),
+    dict(new('jesen', 'осень', ['осень', 'зима', 'лето']), explanation=JESEN),
+    new('zima', 'зима', ['зима', 'осень', 'весна']),
+    pairs(('весна', 'proljeće'), ('лето', 'ljeto'), ('осень', 'jesen'), ('зима', 'zima')),
+    phrase('Volim ljeto.', 'Я люблю лето.', ['Я люблю лето.', 'Я люблю зиму.',
+                                            'Я не люблю лето.']),
+    pick('Я не люблю зиму. — Ne volim ___ .', ['zima', 'zimu'], 'zimu',
+         explanation=VOLIM_ZIMU, label='Выбери форму'),
+    pick('Jesen je lijepa.', ['Осень красивая.', 'Весна красивая.', 'Осень холодная.'],
+         'Осень красивая.', explanation=JESEN, label='Выбери перевод'),
+    pick('Proljeće je ___ .', ['lijep', 'lijepa', 'lijepo'], 'lijepo',
+         explanation=LJETO, label='Выбери форму'),
+    new('odakle', 'откуда', ['откуда', 'куда', 'где']),
+    dict(phrase('Odakle si?', 'Откуда ты?', ['Откуда ты?', 'Куда ты идёшь?', 'Где ты?']),
+         explanation=ODAKLE),
+    dict(new('Ja sam iz Rusije.', 'Я из России.', ['Я из России.', 'Я в России.',
+                                                   'Я из Украины.'], label='Новая форма'),
+         explanation=IZ),
+    new('Ja sam iz Ukrajine.', 'Я из Украины.', ['Я из Украины.', 'Я из России.',
+                                                 'Я в Украине.'], label='Новая форма'),
+    new('Ja sam iz Crne Gore.', 'Я из Черногории.', ['Я из Черногории.', 'Я в Черногории.',
+                                                     'Я из России.'], label='Новая форма'),
+    pairs(('Россия', 'Rusija'), ('из России', 'iz Rusije'), ('Украина', 'Ukrajina'),
+          ('из Украины', 'iz Ukrajine')),
+    pick('— Odakle ste?\n— Iz Rusije, a vi?\n— Ja sam iz Crne Gore.\n\n'
+         'Откуда второй человек?', ['Из Черногории.', 'Из России.', 'Из Украины.'],
+         'Из Черногории.', label='Мини-диалог'),
+    say('Ja sam iz Rusije.', 'Я из России.'),
+    dict(new('Mačka je na drvetu.', 'Кошка на дереве.', ['Кошка на дереве.',
+                                                          'Кошка в доме.',
+                                                          'Кошка под деревом.'],
+             label='Новая форма'), explanation=NA_GDJE),
+    dict(new('ležati', 'лежать', ['лежать', 'спать', 'сидеть'], label='Новый глагол'),
+         explanation=LEZATI),
+    phrase('Kornjača leži na suncu.', 'Черепаха лежит на солнце.',
+           ['Черепаха лежит на солнце.', 'Черепаха спит на солнце.',
+            'Кошка лежит на солнце.']),
+    pairs(('на дереве', 'na drvetu'), ('на солнце', 'na suncu'), ('на море', 'na moru'),
+          ('в море', 'u moru')),
+    pick('Кошка на дереве. — Mačka je ___ drvetu.', ['na', 'u', 'kod'], 'na',
+         explanation=NA_GDJE, label='Вставь слово'),
+    ear('Kornjača leži na suncu.', ['Черепаха лежит на солнце.', 'Черепаха в воде.',
+                                    'Черепаха ест на солнце.'], 'Черепаха лежит на солнце.'),
+    bank('Кошка на дереве.', 'Mačka je na drvetu.', ['drvetu', 'je', 'mačka', 'na']),
+    say('Kornjača leži na suncu.', 'Черепаха лежит на солнце.'),
     dict(new('pecati', 'ловить рыбу (удочкой)', ['ловить рыбу (удочкой)', 'варить', 'играть'],
              label='Новый глагол'), explanation=PECATI),
     phrase('Moj djed voli da peca.', 'Мой дедушка любит ловить рыбу.',
@@ -1437,7 +1497,10 @@ K22_DRAFT = dict(words=[
          explanation=ZA),
     bank('Бабушка варит для дедушки куриный суп.', 'Baba kuva pileću supu za djeda.',
          ['supu', 'djeda', 'baba', 'za', 'pileću', 'kuva']),
-])
+    pairs(('Откуда ты?', 'Odakle si?'), ('Я из России.', 'Ja sam iz Rusije.'),
+          ('Я люблю лето.', 'Volim ljeto.'), ('Кошка на дереве.', 'Mačka je na drvetu.'),
+          ('Мой дедушка любит ловить рыбу.', 'Moj djed voli da peca.')),
+]))
 
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
