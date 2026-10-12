@@ -1,0 +1,516 @@
+{
+  "id": "k21",
+  "title": "Treba li vam neka pomoć?",
+  "exercises": [
+    {
+      "id": "k21e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "baba",
+      "hint": "baba — бабушка",
+      "options": [
+        "бабушка",
+        "мама",
+        "сестра"
+      ],
+      "answer": "бабушка"
+    },
+    {
+      "id": "k21e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "djed",
+      "hint": "djed — дедушка",
+      "options": [
+        "дедушка",
+        "отец",
+        "брат"
+      ],
+      "answer": "дедушка",
+      "explanation": "В Черногории это слово часто произносят как «đed»."
+    },
+    {
+      "id": "k21e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "бабушка",
+          "me": "baba"
+        },
+        {
+          "ru": "дедушка",
+          "me": "djed"
+        },
+        {
+          "ru": "мать",
+          "me": "majka"
+        },
+        {
+          "ru": "отец",
+          "me": "otac"
+        }
+      ]
+    },
+    {
+      "id": "k21e04",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ja sam kod babe.",
+      "hint": "Ja sam kod babe. — Я у бабушки.",
+      "options": [
+        "Я у бабушки.",
+        "Я иду к бабушке.",
+        "Я бабушка."
+      ],
+      "answer": "Я у бабушки.",
+      "explanation": "kod — «у кого-то»: kod babe — у бабушки, kod djeda — у дедушки. Как kod kuće — дома, у себя."
+    },
+    {
+      "id": "k21e05",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Idem kod djeda.",
+      "hint": "Idem kod djeda. — Я иду к дедушке.",
+      "options": [
+        "Я иду к дедушке.",
+        "Я у дедушки.",
+        "Я иду домой."
+      ],
+      "answer": "Я иду к дедушке.",
+      "explanation": "К людям «куда» тоже kod: Idem kod djeda — иду к дедушке."
+    },
+    {
+      "id": "k21e06",
+      "type": "choice",
+      "prompt": "— Gdje si?\n— ___",
+      "options": [
+        "Kod babe.",
+        "U babi.",
+        "Na babi."
+      ],
+      "answer": "Kod babe.",
+      "explanation": "kod — «у кого-то»: kod babe — у бабушки, kod djeda — у дедушки. Как kod kuće — дома, у себя.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "k21e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "у бабушки",
+          "me": "kod babe"
+        },
+        {
+          "ru": "к дедушке",
+          "me": "kod djeda"
+        },
+        {
+          "ru": "дома",
+          "me": "kod kuće"
+        },
+        {
+          "ru": "домой",
+          "me": "kući"
+        }
+      ]
+    },
+    {
+      "id": "k21e08",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Riba je u vodi.",
+      "hint": "Riba je u vodi. — Рыба в воде.",
+      "options": [
+        "Рыба в воде.",
+        "Рыба пьёт воду.",
+        "Рыба на море."
+      ],
+      "answer": "Рыба в воде.",
+      "explanation": "u — «в». И «где?» снова звучит иначе: voda — u vodi, šolja — u šolji. Запоминаем кусками."
+    },
+    {
+      "id": "k21e09",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Ajkula je u moru.",
+      "hint": "Ajkula je u moru. — Акула в море.",
+      "options": [
+        "Акула в море.",
+        "Акула на море.",
+        "Акула в воде."
+      ],
+      "answer": "Акула в море.",
+      "explanation": "u moru — в самой воде, в море. na moru — на море, на побережье, в отпуске."
+    },
+    {
+      "id": "k21e10",
+      "type": "choice",
+      "prompt": "Я отдыхаю на море. — Ja sam ___ .",
+      "options": [
+        "na moru",
+        "u moru"
+      ],
+      "answer": "na moru",
+      "explanation": "u moru — в самой воде, в море. na moru — на море, на побережье, в отпуске.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k21e11",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Kafa je u šolji.",
+      "hint": "Kafa je u šolji. — Кофе в чашке.",
+      "options": [
+        "Кофе в чашке.",
+        "Кофе в стакане.",
+        "Чай в чашке."
+      ],
+      "answer": "Кофе в чашке."
+    },
+    {
+      "id": "k21e12",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Voda je u čaši.",
+      "hint": "Voda je u čaši. — Вода в стакане.",
+      "options": [
+        "Вода в стакане.",
+        "Вода в чашке.",
+        "Вода в море."
+      ],
+      "answer": "Вода в стакане."
+    },
+    {
+      "id": "k21e13",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "в воде",
+          "me": "u vodi"
+        },
+        {
+          "ru": "в море",
+          "me": "u moru"
+        },
+        {
+          "ru": "в чашке",
+          "me": "u šolji"
+        },
+        {
+          "ru": "в стакане",
+          "me": "u čaši"
+        }
+      ]
+    },
+    {
+      "id": "k21e14",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Mačka spava u autu.",
+      "hint": "Mačka spava u autu. — Кошка спит в машине.",
+      "options": [
+        "Кошка спит в машине.",
+        "Кошка спит в доме.",
+        "Собака спит в машине."
+      ],
+      "answer": "Кошка спит в машине."
+    },
+    {
+      "id": "k21e15",
+      "type": "choice",
+      "prompt": "Pas je u kući.",
+      "options": [
+        "Собака в доме.",
+        "Собака идёт домой.",
+        "Кошка в доме."
+      ],
+      "answer": "Собака в доме.",
+      "byEar": true
+    },
+    {
+      "id": "k21e16",
+      "type": "word_bank",
+      "prompt": "Кошка спит в машине.",
+      "answer": "Mačka spava u autu.",
+      "bank": [
+        "autu",
+        "spava",
+        "u",
+        "mačka"
+      ]
+    },
+    {
+      "id": "k21e17",
+      "type": "choice",
+      "prompt": "Kornjača je u supi!",
+      "options": [
+        "Черепаха в супе!",
+        "Черепаха варит суп!",
+        "Черепаха в стакане!"
+      ],
+      "answer": "Черепаха в супе!",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k21e18",
+      "type": "speaking",
+      "phrase": "Riba je u vodi.",
+      "translation": "Рыба в воде."
+    },
+    {
+      "id": "k21e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pomoć",
+      "hint": "pomoć — помощь",
+      "options": [
+        "помощь",
+        "работа",
+        "порядок"
+      ],
+      "answer": "помощь"
+    },
+    {
+      "id": "k21e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Treba li vam neka pomoć?",
+      "hint": "Treba li vam neka pomoć? — Вам нужна какая-нибудь помощь?",
+      "options": [
+        "Вам нужна какая-нибудь помощь?",
+        "Вам нужно что-нибудь?",
+        "Вы можете мне помочь?"
+      ],
+      "answer": "Вам нужна какая-нибудь помощь?",
+      "explanation": "Буквально «нужна ли вам какая-то помощь». vam — «вам»: вежливо или многим. Своему, на «ты»: Treba li ti neka pomoć? neka — «какая-нибудь»."
+    },
+    {
+      "id": "k21e21",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ne, hvala, sve je u redu.",
+      "hint": "Ne, hvala, sve je u redu. — Нет, спасибо, всё в порядке.",
+      "options": [
+        "Нет, спасибо, всё в порядке.",
+        "Да, спасибо, нужна.",
+        "Нет, спасибо, всё дорого."
+      ],
+      "answer": "Нет, спасибо, всё в порядке.",
+      "explanation": "u redu — «в порядке». Ещё один кусок с u: red — «порядок», а ещё «очередь»."
+    },
+    {
+      "id": "k21e22",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Hvala vam na pomoći!",
+      "hint": "Hvala vam na pomoći! — Спасибо вам за помощь!",
+      "options": [
+        "Спасибо вам за помощь!",
+        "Вам нужна помощь?",
+        "Спасибо, всё вкусно!"
+      ],
+      "answer": "Спасибо вам за помощь!",
+      "explanation": "Благодарят «на» чём-то: hvala na pomoći — спасибо за помощь."
+    },
+    {
+      "id": "k21e23",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nema na čemu.",
+      "hint": "Nema na čemu. — Не за что.",
+      "options": [
+        "Не за что.",
+        "Ничего нет.",
+        "Всё в порядке."
+      ],
+      "answer": "Не за что.",
+      "explanation": "Буквально «нет на чём». Обычный ответ на hvala."
+    },
+    {
+      "id": "k21e24",
+      "type": "choice",
+      "prompt": "— Treba li ti neka pomoć?\n— Da, hvala!\n\nЧто ответил человек?",
+      "options": [
+        "Да, нужна, спасибо.",
+        "Нет, спасибо.",
+        "Не за что."
+      ],
+      "answer": "Да, нужна, спасибо.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k21e25",
+      "type": "choice",
+      "prompt": "Тебе говорят: «Hvala vam na pomoći!» Что ответишь?",
+      "options": [
+        "Nema na čemu.",
+        "Sve je u redu.",
+        "Doviđenja!"
+      ],
+      "answer": "Nema na čemu.",
+      "explanation": "Буквально «нет на чём». Обычный ответ на hvala.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k21e26",
+      "type": "repeat",
+      "phrase": "Nema na čemu.",
+      "translation": "Не за что."
+    },
+    {
+      "id": "k21e27",
+      "type": "speaking",
+      "phrase": "Treba li vam neka pomoć?",
+      "translation": "Вам нужна какая-нибудь помощь?"
+    },
+    {
+      "id": "k21e28",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "pecati",
+      "hint": "pecati — ловить рыбу (удочкой)",
+      "options": [
+        "ловить рыбу (удочкой)",
+        "варить",
+        "играть"
+      ],
+      "answer": "ловить рыбу (удочкой)",
+      "explanation": "pecati — ловить рыбу удочкой, одним словом. Формы как у kuvati: pecam, pecaš, peca."
+    },
+    {
+      "id": "k21e29",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moj djed voli da peca.",
+      "hint": "Moj djed voli da peca. — Мой дедушка любит ловить рыбу.",
+      "options": [
+        "Мой дедушка любит ловить рыбу.",
+        "Мой дедушка любит рыбу.",
+        "Моя бабушка любит ловить рыбу."
+      ],
+      "answer": "Мой дедушка любит ловить рыбу."
+    },
+    {
+      "id": "k21e30",
+      "type": "choice",
+      "prompt": "Moj djed voli da peca.",
+      "options": [
+        "Мой дедушка любит ловить рыбу.",
+        "Мой отец любит ловить рыбу.",
+        "Мой дедушка любит спать."
+      ],
+      "answer": "Мой дедушка любит ловить рыбу.",
+      "byEar": true
+    },
+    {
+      "id": "k21e31",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pileći",
+      "hint": "pileći — куриный",
+      "options": [
+        "куриный",
+        "рыбный",
+        "горячий"
+      ],
+      "answer": "куриный",
+      "explanation": "pileći — «куриный», от pile — цыплёнок. pileća supa — куриный суп. Варит что — supu, как хочу что — kafu."
+    },
+    {
+      "id": "k21e32",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Baba kuva pileću supu za djeda.",
+      "hint": "Baba kuva pileću supu za djeda. — Бабушка варит для дедушки куриный суп.",
+      "options": [
+        "Бабушка варит для дедушки куриный суп.",
+        "Дедушка варит для бабушки куриный суп.",
+        "Бабушка варит для дедушки рыбный суп."
+      ],
+      "answer": "Бабушка варит для дедушки куриный суп.",
+      "explanation": "za — «для»: za djeda — для дедушки."
+    },
+    {
+      "id": "k21e33",
+      "type": "word_bank",
+      "prompt": "Бабушка варит для дедушки куриный суп.",
+      "answer": "Baba kuva pileću supu za djeda.",
+      "bank": [
+        "supu",
+        "djeda",
+        "baba",
+        "za",
+        "pileću",
+        "kuva"
+      ]
+    },
+    {
+      "id": "k21e34",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я у бабушки.",
+          "me": "Ja sam kod babe."
+        },
+        {
+          "ru": "Рыба в воде.",
+          "me": "Riba je u vodi."
+        },
+        {
+          "ru": "Вам нужна какая-нибудь помощь?",
+          "me": "Treba li vam neka pomoć?"
+        },
+        {
+          "ru": "Спасибо вам за помощь!",
+          "me": "Hvala vam na pomoći!"
+        },
+        {
+          "ru": "Не за что.",
+          "me": "Nema na čemu."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "baba",
+      "ru": "бабушка"
+    },
+    {
+      "me": "djed",
+      "ru": "дедушка"
+    },
+    {
+      "me": "u",
+      "ru": "в"
+    },
+    {
+      "me": "na",
+      "ru": "на"
+    },
+    {
+      "me": "pomoć",
+      "ru": "помощь"
+    },
+    {
+      "me": "neki",
+      "ru": "какой-то, какой-нибудь"
+    },
+    {
+      "me": "red",
+      "ru": "порядок, очередь"
+    },
+    {
+      "me": "pecati",
+      "ru": "ловить рыбу (удочкой)"
+    },
+    {
+      "me": "pileći",
+      "ru": "куриный"
+    },
+    {
+      "me": "za",
+      "ru": "для"
+    }
+  ]
+}
