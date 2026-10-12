@@ -1532,6 +1532,8 @@ L.append(dict(id='k23', title='Koliko mačaka ima na krevetu?', section=S2, word
     pick('Pile je malo.', ['Цыплёнок маленький.', 'Поросёнок маленький.',
                            'Цыплёнок большой.'], 'Цыплёнок маленький.',
          label='Выбери перевод'),
+    pairs(('ja', 'ležim'), ('ti', 'ležiš'), ('on / ona', 'leži'), ('mi', 'ležimo'),
+          ('vi', 'ležite'), ('oni', 'leže')),
     new('pet', 'пять', ['пять', 'четыре', 'семь']),
     new('šest', 'шесть', ['шесть', 'семь', 'три']),
     new('sedam', 'семь', ['семь', 'шесть', 'пять']),

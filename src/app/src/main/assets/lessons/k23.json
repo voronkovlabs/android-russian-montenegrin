@@ -91,6 +91,36 @@
     },
     {
       "id": "k23e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "ležim"
+        },
+        {
+          "ru": "ti",
+          "me": "ležiš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "leži"
+        },
+        {
+          "ru": "mi",
+          "me": "ležimo"
+        },
+        {
+          "ru": "vi",
+          "me": "ležite"
+        },
+        {
+          "ru": "oni",
+          "me": "leže"
+        }
+      ]
+    },
+    {
+      "id": "k23e08",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "pet",
@@ -103,7 +133,7 @@
       "answer": "пять"
     },
     {
-      "id": "k23e08",
+      "id": "k23e09",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "šest",
@@ -116,7 +146,7 @@
       "answer": "шесть"
     },
     {
-      "id": "k23e09",
+      "id": "k23e10",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "sedam",
@@ -129,7 +159,7 @@
       "answer": "семь"
     },
     {
-      "id": "k23e10",
+      "id": "k23e11",
       "type": "match",
       "pairs": [
         {
@@ -155,7 +185,7 @@
       ]
     },
     {
-      "id": "k23e11",
+      "id": "k23e12",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "krevet",
@@ -168,7 +198,7 @@
       "answer": "кровать"
     },
     {
-      "id": "k23e12",
+      "id": "k23e13",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "slika",
@@ -181,7 +211,7 @@
       "answer": "рисунок, картина"
     },
     {
-      "id": "k23e13",
+      "id": "k23e14",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "stan",
@@ -194,7 +224,7 @@
       "answer": "квартира"
     },
     {
-      "id": "k23e14",
+      "id": "k23e15",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Koliko mačaka ima na krevetu?",
@@ -208,7 +238,7 @@
       "explanation": "Буквально «сколько кошек имеется на кровати». После koliko и после чисел от пяти слово звучит иначе: mačka — koliko mačaka, pet mačaka. Запоминаем кусками."
     },
     {
-      "id": "k23e15",
+      "id": "k23e16",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Na krevetu ima pet mačaka.",
@@ -222,7 +252,7 @@
       "explanation": "ima здесь — «есть, имеется»: na krevetu ima pet mačaka — на кровати пять кошек."
     },
     {
-      "id": "k23e16",
+      "id": "k23e17",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Koliko pasa ima na slici?",
@@ -235,7 +265,7 @@
       "answer": "Сколько собак на рисунке?"
     },
     {
-      "id": "k23e17",
+      "id": "k23e18",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Na slici ima šest pasa.",
@@ -249,7 +279,7 @@
       "explanation": "С двумя — dva psa, как dva brata. С пяти — уже pet pasa, šest pasa."
     },
     {
-      "id": "k23e18",
+      "id": "k23e19",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Koliko stanova ima u zgradi?",
@@ -262,7 +292,7 @@
       "answer": "Сколько квартир в здании?"
     },
     {
-      "id": "k23e19",
+      "id": "k23e20",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "U zgradi ima sedam stanova.",
@@ -275,7 +305,7 @@
       "answer": "В здании семь квартир."
     },
     {
-      "id": "k23e20",
+      "id": "k23e21",
       "type": "match",
       "pairs": [
         {
@@ -297,7 +327,7 @@
       ]
     },
     {
-      "id": "k23e21",
+      "id": "k23e22",
       "type": "choice",
       "prompt": "— Koliko mačaka ima na krevetu?\n— ___",
       "options": [
@@ -310,7 +340,7 @@
       "label": "Выбери ответ"
     },
     {
-      "id": "k23e22",
+      "id": "k23e23",
       "type": "choice",
       "prompt": "Na slici ima šest pasa.",
       "options": [
@@ -322,7 +352,7 @@
       "byEar": true
     },
     {
-      "id": "k23e23",
+      "id": "k23e24",
       "type": "word_bank",
       "prompt": "В здании семь квартир.",
       "answer": "U zgradi ima sedam stanova.",
@@ -335,13 +365,13 @@
       ]
     },
     {
-      "id": "k23e24",
+      "id": "k23e25",
       "type": "speaking",
       "phrase": "Na krevetu ima pet mačaka.",
       "translation": "На кровати пять кошек."
     },
     {
-      "id": "k23e25",
+      "id": "k23e26",
       "type": "choice",
       "label": "Новый глагол",
       "prompt": "dirati",
@@ -355,7 +385,7 @@
       "explanation": "Формы как у kuvati: diram, diraš, dira."
     },
     {
-      "id": "k23e26",
+      "id": "k23e27",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Ne diraj moju sestru!",
@@ -369,7 +399,7 @@
       "explanation": "Ne diraj! — «не трогай!». Так просят и запрещают на «ты». Сестру — moju sestru, как hoću kafu."
     },
     {
-      "id": "k23e27",
+      "id": "k23e28",
       "type": "choice",
       "prompt": "Брат трогает кошку. Что ты скажешь?",
       "options": [
@@ -382,13 +412,13 @@
       "label": "Что скажешь?"
     },
     {
-      "id": "k23e28",
+      "id": "k23e29",
       "type": "repeat",
       "phrase": "Ne diraj moju sestru!",
       "translation": "Не трогай мою сестру!"
     },
     {
-      "id": "k23e29",
+      "id": "k23e30",
       "type": "match",
       "pairs": [
         {
