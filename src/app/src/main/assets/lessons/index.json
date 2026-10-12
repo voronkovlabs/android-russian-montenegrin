@@ -138,6 +138,12 @@
       "title": "Odakle si? Ljeto i zima",
       "file": "k22.json",
       "section": "Раздел 2"
+    },
+    {
+      "id": "k23",
+      "title": "Koliko mačaka ima na krevetu?",
+      "file": "k23.json",
+      "section": "Раздел 2"
     }
   ]
 }

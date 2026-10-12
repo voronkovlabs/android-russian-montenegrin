@@ -1,0 +1,459 @@
+{
+  "id": "k23",
+  "title": "Koliko mačaka ima na krevetu?",
+  "exercises": [
+    {
+      "id": "k23e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "štene",
+      "hint": "štene — щенок",
+      "options": [
+        "щенок",
+        "котёнок",
+        "собака"
+      ],
+      "answer": "щенок"
+    },
+    {
+      "id": "k23e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "mače",
+      "hint": "mače — котёнок",
+      "options": [
+        "котёнок",
+        "кошка",
+        "щенок"
+      ],
+      "answer": "котёнок"
+    },
+    {
+      "id": "k23e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pile",
+      "hint": "pile — цыплёнок",
+      "options": [
+        "цыплёнок",
+        "курица",
+        "поросёнок"
+      ],
+      "answer": "цыплёнок",
+      "explanation": "pile — отсюда pileći, «куриный»: pileća supa."
+    },
+    {
+      "id": "k23e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "щенок",
+          "me": "štene"
+        },
+        {
+          "ru": "котёнок",
+          "me": "mače"
+        },
+        {
+          "ru": "цыплёнок",
+          "me": "pile"
+        },
+        {
+          "ru": "поросёнок",
+          "me": "prase"
+        }
+      ]
+    },
+    {
+      "id": "k23e05",
+      "type": "choice",
+      "prompt": "Mače je ___ .",
+      "options": [
+        "mali",
+        "mala",
+        "malo"
+      ],
+      "answer": "malo",
+      "explanation": "štene, mače, pile и prase — среднего рода, как drvo: mače je malo.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k23e06",
+      "type": "choice",
+      "prompt": "Pile je malo.",
+      "options": [
+        "Цыплёнок маленький.",
+        "Поросёнок маленький.",
+        "Цыплёнок большой."
+      ],
+      "answer": "Цыплёнок маленький.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k23e07",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pet",
+      "hint": "pet — пять",
+      "options": [
+        "пять",
+        "четыре",
+        "семь"
+      ],
+      "answer": "пять"
+    },
+    {
+      "id": "k23e08",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "šest",
+      "hint": "šest — шесть",
+      "options": [
+        "шесть",
+        "семь",
+        "три"
+      ],
+      "answer": "шесть"
+    },
+    {
+      "id": "k23e09",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "sedam",
+      "hint": "sedam — семь",
+      "options": [
+        "семь",
+        "шесть",
+        "пять"
+      ],
+      "answer": "семь"
+    },
+    {
+      "id": "k23e10",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "один",
+          "me": "jedan"
+        },
+        {
+          "ru": "четыре",
+          "me": "četiri"
+        },
+        {
+          "ru": "пять",
+          "me": "pet"
+        },
+        {
+          "ru": "шесть",
+          "me": "šest"
+        },
+        {
+          "ru": "семь",
+          "me": "sedam"
+        }
+      ]
+    },
+    {
+      "id": "k23e11",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "krevet",
+      "hint": "krevet — кровать",
+      "options": [
+        "кровать",
+        "стол",
+        "дом"
+      ],
+      "answer": "кровать"
+    },
+    {
+      "id": "k23e12",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "slika",
+      "hint": "slika — рисунок, картина",
+      "options": [
+        "рисунок, картина",
+        "окно",
+        "чашка"
+      ],
+      "answer": "рисунок, картина"
+    },
+    {
+      "id": "k23e13",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "stan",
+      "hint": "stan — квартира",
+      "options": [
+        "квартира",
+        "здание",
+        "дом"
+      ],
+      "answer": "квартира"
+    },
+    {
+      "id": "k23e14",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Koliko mačaka ima na krevetu?",
+      "hint": "Koliko mačaka ima na krevetu? — Сколько кошек на кровати?",
+      "options": [
+        "Сколько кошек на кровати?",
+        "Сколько собак на кровати?",
+        "Чья кошка на кровати?"
+      ],
+      "answer": "Сколько кошек на кровати?",
+      "explanation": "Буквально «сколько кошек имеется на кровати». После koliko и после чисел от пяти слово звучит иначе: mačka — koliko mačaka, pet mačaka. Запоминаем кусками."
+    },
+    {
+      "id": "k23e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Na krevetu ima pet mačaka.",
+      "hint": "Na krevetu ima pet mačaka. — На кровати пять кошек.",
+      "options": [
+        "На кровати пять кошек.",
+        "На кровати шесть кошек.",
+        "На кровати пять собак."
+      ],
+      "answer": "На кровати пять кошек.",
+      "explanation": "ima здесь — «есть, имеется»: na krevetu ima pet mačaka — на кровати пять кошек."
+    },
+    {
+      "id": "k23e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Koliko pasa ima na slici?",
+      "hint": "Koliko pasa ima na slici? — Сколько собак на рисунке?",
+      "options": [
+        "Сколько собак на рисунке?",
+        "Сколько кошек на рисунке?",
+        "Сколько собак в доме?"
+      ],
+      "answer": "Сколько собак на рисунке?"
+    },
+    {
+      "id": "k23e17",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Na slici ima šest pasa.",
+      "hint": "Na slici ima šest pasa. — На рисунке шесть собак.",
+      "options": [
+        "На рисунке шесть собак.",
+        "На рисунке семь собак.",
+        "На кровати шесть собак."
+      ],
+      "answer": "На рисунке шесть собак.",
+      "explanation": "С двумя — dva psa, как dva brata. С пяти — уже pet pasa, šest pasa."
+    },
+    {
+      "id": "k23e18",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Koliko stanova ima u zgradi?",
+      "hint": "Koliko stanova ima u zgradi? — Сколько квартир в здании?",
+      "options": [
+        "Сколько квартир в здании?",
+        "Сколько зданий в городе?",
+        "Сколько стоит квартира?"
+      ],
+      "answer": "Сколько квартир в здании?"
+    },
+    {
+      "id": "k23e19",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "U zgradi ima sedam stanova.",
+      "hint": "U zgradi ima sedam stanova. — В здании семь квартир.",
+      "options": [
+        "В здании семь квартир.",
+        "В здании шесть квартир.",
+        "В доме семь комнат."
+      ],
+      "answer": "В здании семь квартир."
+    },
+    {
+      "id": "k23e20",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "две собаки",
+          "me": "dva psa"
+        },
+        {
+          "ru": "шесть собак",
+          "me": "šest pasa"
+        },
+        {
+          "ru": "пять кошек",
+          "me": "pet mačaka"
+        },
+        {
+          "ru": "семь квартир",
+          "me": "sedam stanova"
+        }
+      ]
+    },
+    {
+      "id": "k23e21",
+      "type": "choice",
+      "prompt": "— Koliko mačaka ima na krevetu?\n— ___",
+      "options": [
+        "Pet mačaka.",
+        "Pet mačke.",
+        "Pet mačka."
+      ],
+      "answer": "Pet mačaka.",
+      "explanation": "Буквально «сколько кошек имеется на кровати». После koliko и после чисел от пяти слово звучит иначе: mačka — koliko mačaka, pet mačaka. Запоминаем кусками.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "k23e22",
+      "type": "choice",
+      "prompt": "Na slici ima šest pasa.",
+      "options": [
+        "На рисунке шесть собак.",
+        "На рисунке семь собак.",
+        "На кровати шесть собак."
+      ],
+      "answer": "На рисунке шесть собак.",
+      "byEar": true
+    },
+    {
+      "id": "k23e23",
+      "type": "word_bank",
+      "prompt": "В здании семь квартир.",
+      "answer": "U zgradi ima sedam stanova.",
+      "bank": [
+        "sedam",
+        "zgradi",
+        "ima",
+        "stanova",
+        "u"
+      ]
+    },
+    {
+      "id": "k23e24",
+      "type": "speaking",
+      "phrase": "Na krevetu ima pet mačaka.",
+      "translation": "На кровати пять кошек."
+    },
+    {
+      "id": "k23e25",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "dirati",
+      "hint": "dirati — трогать",
+      "options": [
+        "трогать",
+        "бросать",
+        "играть"
+      ],
+      "answer": "трогать",
+      "explanation": "Формы как у kuvati: diram, diraš, dira."
+    },
+    {
+      "id": "k23e26",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ne diraj moju sestru!",
+      "hint": "Ne diraj moju sestru! — Не трогай мою сестру!",
+      "options": [
+        "Не трогай мою сестру!",
+        "Не буди мою сестру!",
+        "Позови мою сестру!"
+      ],
+      "answer": "Не трогай мою сестру!",
+      "explanation": "Ne diraj! — «не трогай!». Так просят и запрещают на «ты». Сестру — moju sestru, как hoću kafu."
+    },
+    {
+      "id": "k23e27",
+      "type": "choice",
+      "prompt": "Брат трогает кошку. Что ты скажешь?",
+      "options": [
+        "Ne diraj mačku!",
+        "Ne diraj mačka!",
+        "Ne dira mačku!"
+      ],
+      "answer": "Ne diraj mačku!",
+      "explanation": "Ne diraj! — «не трогай!». Так просят и запрещают на «ты». Сестру — moju sestru, как hoću kafu.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k23e28",
+      "type": "repeat",
+      "phrase": "Ne diraj moju sestru!",
+      "translation": "Не трогай мою сестру!"
+    },
+    {
+      "id": "k23e29",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Котёнок маленький.",
+          "me": "Mače je malo."
+        },
+        {
+          "ru": "Сколько собак на рисунке?",
+          "me": "Koliko pasa ima na slici?"
+        },
+        {
+          "ru": "На кровати пять кошек.",
+          "me": "Na krevetu ima pet mačaka."
+        },
+        {
+          "ru": "В здании семь квартир.",
+          "me": "U zgradi ima sedam stanova."
+        },
+        {
+          "ru": "Не трогай мою сестру!",
+          "me": "Ne diraj moju sestru!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "štene",
+      "ru": "щенок"
+    },
+    {
+      "me": "mače",
+      "ru": "котёнок"
+    },
+    {
+      "me": "pile",
+      "ru": "цыплёнок"
+    },
+    {
+      "me": "pet",
+      "ru": "пять"
+    },
+    {
+      "me": "šest",
+      "ru": "шесть"
+    },
+    {
+      "me": "sedam",
+      "ru": "семь"
+    },
+    {
+      "me": "krevet",
+      "ru": "кровать"
+    },
+    {
+      "me": "slika",
+      "ru": "рисунок, картина"
+    },
+    {
+      "me": "stan",
+      "ru": "квартира"
+    },
+    {
+      "me": "dirati",
+      "ru": "трогать"
+    }
+  ]
+}
