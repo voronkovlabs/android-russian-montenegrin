@@ -1666,7 +1666,8 @@ L.append(dict(id='k24', title='Gladan kao vuk', section=S2, words=[
 
 # --- Урок 25 (абсурдный, каждый пятый) ---
 # То, чего не хватило истории kd01 «Na aerodromu»: знакомство (zovem se, kako se
-# zovete, drago mi je), živjeti, ovdje, već, sjedjeti и sjesti, kafić, radije.
+# zovete, drago mi je), živjeti, ovdje, već, sjedjeti и sjesti, kafić, bolje
+# («лучше» в жизни говорят bolje, а не radije — замечание Кати).
 # Знакомятся акула Тибурон и черепаха Тортуга — фразы Кати. Уменьшительное -ica:
 # kesa → kesica, šolja → šoljica. Прошедшее время — в следующем разделе.
 ZOVEM = ('Буквально «я зову себя Тибурон». se стоит вторым словом: Zovem se Tiburon '
@@ -1679,13 +1680,13 @@ SJESTI = 'sjesti — сесть, один раз. Просьба на «ты»: 
 ICA = ('-ica делает слово маленьким и ласковым: kesa — kesica, пакет — пакетик. '
        'Так говорят очень часто, особенно про еду и посуду.')
 SOLJICA = 'šolja — šoljica: šoljica kafe — чашечка кофе.'
-RADIJE = 'radije — «лучше, охотнее»: когда выбирают одно вместо другого.'
+BOLJE = 'bolje — «лучше», от dobro: dobro — хорошо, bolje — лучше.'
 L.append(dict(id='k25', title='Zovem se Tiburon', section=S2, words=[
     ('zvati se', 'зваться (zovem se — меня зовут)'), ('drago', 'приятно (drago mi je)'),
     ('živjeti', 'жить'), ('ovdje', 'здесь'), ('već', 'уже'),
     ('sjedjeti', 'сидеть'), ('sjesti', 'сесть'),
     ('kesica', 'пакетик'), ('šoljica', 'чашечка'),
-    ('kafić', 'кафе'), ('radije', 'лучше, охотнее')],
+    ('čaj', 'чай'), ('kafić', 'кафе'), ('bolje', 'лучше')],
     ex=[
     dict(phrase('Zovem se Tiburon.', 'Меня зовут Тибурон.',
                 ['Меня зовут Тибурон.', 'Я акула Тибурон.', 'Его зовут Тибурон.']),
@@ -1711,6 +1712,10 @@ L.append(dict(id='k25', title='Zovem se Tiburon', section=S2, words=[
           ('vi', 'živite'), ('oni', 'žive')),
     phrase('Ajkula živi u moru.', 'Акула живёт в море.',
            ['Акула живёт в море.', 'Акула плавает в море.', 'Черепаха живёт в море.']),
+    dict(phrase('Mačke žive u stanu.', 'Кошки живут в квартире.',
+                ['Кошки живут в квартире.', 'Кошка живёт в квартире.',
+                 'Кошки спят в квартире.']),
+         explanation='u stanu — «в квартире»: «где?» снова звучит иначе, как u gradu.'),
     new('ovdje', 'здесь', ['здесь', 'где', 'сейчас']),
     new('već', 'уже', ['уже', 'ещё', 'очень']),
     phrase('Tiburon živi ovdje već sedam godina.', 'Тибурон живёт здесь уже семь лет.',
@@ -1736,15 +1741,17 @@ L.append(dict(id='k25', title='Zovem se Tiburon', section=S2, words=[
     dict(new('šoljica', 'чашечка', ['чашечка', 'чашка', 'стакан']), explanation=SOLJICA),
     pairs(('пакет', 'kesa'), ('пакетик', 'kesica'), ('чашка', 'šolja'),
           ('чашечка', 'šoljica')),
-    dict(phrase('U kesici je riba.', 'В пакетике рыба.',
-                ['В пакетике рыба.', 'В пакете рыба.', 'В чашечке рыба.']),
-         explanation='u kesici — «в пакетике»: «где?» снова звучит иначе, как u šolji.'),
+    new('čaj', 'чай', ['чай', 'кофе', 'вода']),
+    dict(phrase('U kesici je čaj.', 'В пакетике чай.',
+                ['В пакетике чай.', 'В пакете чай.', 'В чашечке чай.']),
+         explanation='u kesici — «в пакетике»: «где?» снова звучит иначе, как u šolji. '
+                     'Чайный пакетик так и называют — kesica čaja.'),
     phrase('Hoćete li u kafić?', 'Хотите в кафе?', ['Хотите в кафе?', 'Хотите кофе?',
                                                    'Вы в кафе?']),
-    dict(phrase('Ne, hvala, radije u prodavnicu.', 'Нет, спасибо, лучше в магазин.',
+    dict(phrase('Ne, hvala, bolje u prodavnicu.', 'Нет, спасибо, лучше в магазин.',
                 ['Нет, спасибо, лучше в магазин.', 'Нет, спасибо, мне в кафе.',
                  'Да, спасибо, в магазин.']),
-         explanation=RADIJE),
+         explanation=BOLJE),
     echo('Drago mi je.', 'Приятно познакомиться.'),
     pairs(('Меня зовут Тибурон.', 'Zovem se Tiburon.'), ('Как вас зовут?', 'Kako se vi zovete?'),
           ('Приятно познакомиться.', 'Drago mi je.'), ('Акула живёт в море.', 'Ajkula živi u moru.'),

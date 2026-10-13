@@ -156,6 +156,20 @@
     {
       "id": "k25e11",
       "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mačke žive u stanu.",
+      "hint": "Mačke žive u stanu. — Кошки живут в квартире.",
+      "options": [
+        "Кошки живут в квартире.",
+        "Кошка живёт в квартире.",
+        "Кошки спят в квартире."
+      ],
+      "answer": "Кошки живут в квартире.",
+      "explanation": "u stanu — «в квартире»: «где?» снова звучит иначе, как u gradu."
+    },
+    {
+      "id": "k25e12",
+      "type": "choice",
       "label": "Новое слово",
       "prompt": "ovdje",
       "hint": "ovdje — здесь",
@@ -167,7 +181,7 @@
       "answer": "здесь"
     },
     {
-      "id": "k25e12",
+      "id": "k25e13",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "već",
@@ -180,7 +194,7 @@
       "answer": "уже"
     },
     {
-      "id": "k25e13",
+      "id": "k25e14",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Tiburon živi ovdje već sedam godina.",
@@ -193,7 +207,7 @@
       "answer": "Тибурон живёт здесь уже семь лет."
     },
     {
-      "id": "k25e14",
+      "id": "k25e15",
       "type": "choice",
       "prompt": "— Gdje živiš?\n— ___",
       "options": [
@@ -206,7 +220,7 @@
       "label": "Выбери ответ"
     },
     {
-      "id": "k25e15",
+      "id": "k25e16",
       "type": "choice",
       "label": "Новый глагол",
       "prompt": "sjedjeti",
@@ -220,7 +234,7 @@
       "explanation": "Сидеть — sjedjeti: sjedim, sjediš, sjedi. А сесть — sjesti."
     },
     {
-      "id": "k25e16",
+      "id": "k25e17",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Kornjača sjedi na krevetu.",
@@ -233,7 +247,7 @@
       "answer": "Черепаха сидит на кровати."
     },
     {
-      "id": "k25e17",
+      "id": "k25e18",
       "type": "choice",
       "label": "Новый глагол",
       "prompt": "sjesti",
@@ -247,7 +261,7 @@
       "explanation": "sjesti — сесть, один раз. Просьба на «ты»: Sjedi! На «вы»: Sjedite!"
     },
     {
-      "id": "k25e18",
+      "id": "k25e19",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Sjedite, molim vas.",
@@ -260,7 +274,7 @@
       "answer": "Садитесь, пожалуйста."
     },
     {
-      "id": "k25e19",
+      "id": "k25e20",
       "type": "choice",
       "prompt": "Акула предлагает черепахе сесть, на «ты». Что она скажет?",
       "options": [
@@ -273,7 +287,7 @@
       "label": "Что скажешь?"
     },
     {
-      "id": "k25e20",
+      "id": "k25e21",
       "type": "match",
       "pairs": [
         {
@@ -295,7 +309,7 @@
       ]
     },
     {
-      "id": "k25e21",
+      "id": "k25e22",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "kesica",
@@ -309,7 +323,7 @@
       "explanation": "-ica делает слово маленьким и ласковым: kesa — kesica, пакет — пакетик. Так говорят очень часто, особенно про еду и посуду."
     },
     {
-      "id": "k25e22",
+      "id": "k25e23",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "šoljica",
@@ -323,7 +337,7 @@
       "explanation": "šolja — šoljica: šoljica kafe — чашечка кофе."
     },
     {
-      "id": "k25e23",
+      "id": "k25e24",
       "type": "match",
       "pairs": [
         {
@@ -345,21 +359,34 @@
       ]
     },
     {
-      "id": "k25e24",
+      "id": "k25e25",
       "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "U kesici je riba.",
-      "hint": "U kesici je riba. — В пакетике рыба.",
+      "label": "Новое слово",
+      "prompt": "čaj",
+      "hint": "čaj — чай",
       "options": [
-        "В пакетике рыба.",
-        "В пакете рыба.",
-        "В чашечке рыба."
+        "чай",
+        "кофе",
+        "вода"
       ],
-      "answer": "В пакетике рыба.",
-      "explanation": "u kesici — «в пакетике»: «где?» снова звучит иначе, как u šolji."
+      "answer": "чай"
     },
     {
-      "id": "k25e25",
+      "id": "k25e26",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "U kesici je čaj.",
+      "hint": "U kesici je čaj. — В пакетике чай.",
+      "options": [
+        "В пакетике чай.",
+        "В пакете чай.",
+        "В чашечке чай."
+      ],
+      "answer": "В пакетике чай.",
+      "explanation": "u kesici — «в пакетике»: «где?» снова звучит иначе, как u šolji. Чайный пакетик так и называют — kesica čaja."
+    },
+    {
+      "id": "k25e27",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Hoćete li u kafić?",
@@ -372,27 +399,27 @@
       "answer": "Хотите в кафе?"
     },
     {
-      "id": "k25e26",
+      "id": "k25e28",
       "type": "choice",
       "label": "Новая фраза",
-      "prompt": "Ne, hvala, radije u prodavnicu.",
-      "hint": "Ne, hvala, radije u prodavnicu. — Нет, спасибо, лучше в магазин.",
+      "prompt": "Ne, hvala, bolje u prodavnicu.",
+      "hint": "Ne, hvala, bolje u prodavnicu. — Нет, спасибо, лучше в магазин.",
       "options": [
         "Нет, спасибо, лучше в магазин.",
         "Нет, спасибо, мне в кафе.",
         "Да, спасибо, в магазин."
       ],
       "answer": "Нет, спасибо, лучше в магазин.",
-      "explanation": "radije — «лучше, охотнее»: когда выбирают одно вместо другого."
+      "explanation": "bolje — «лучше», от dobro: dobro — хорошо, bolje — лучше."
     },
     {
-      "id": "k25e27",
+      "id": "k25e29",
       "type": "repeat",
       "phrase": "Drago mi je.",
       "translation": "Приятно познакомиться."
     },
     {
-      "id": "k25e28",
+      "id": "k25e30",
       "type": "match",
       "pairs": [
         {
@@ -456,12 +483,16 @@
       "ru": "чашечка"
     },
     {
+      "me": "čaj",
+      "ru": "чай"
+    },
+    {
       "me": "kafić",
       "ru": "кафе"
     },
     {
-      "me": "radije",
-      "ru": "лучше, охотнее"
+      "me": "bolje",
+      "ru": "лучше"
     }
   ]
 }

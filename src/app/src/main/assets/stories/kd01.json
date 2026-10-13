@@ -21,7 +21,7 @@
     { "who": "you", "sr": "Hvala.", "ru": "Спасибо." },
     { "who": "you", "sr": "Let je bio jako dug i sada sam gladan kao vuk.", "ru": "Полёт был очень долгим, и сейчас я голоден как волк." },
     { "who": "them", "sr": "Hoćete li u kafić?", "ru": "Хотите в кафе?" },
-    { "who": "you", "sr": "Ne, hvala, radije u prodavnicu.", "ru": "Нет, спасибо, лучше в магазин." },
+    { "who": "you", "sr": "Ne, hvala, bolje u prodavnicu.", "ru": "Нет, спасибо, лучше в магазин." },
     { "who": "you", "sr": "Hoću nešto za brzo kuvanje.", "ru": "Хочу что-нибудь, что быстро варится." },
     { "who": "you", "sr": "Na primjer, pileću supu iz kesice.", "ru": "Например, куриный суп из пакетика." }
   ]
