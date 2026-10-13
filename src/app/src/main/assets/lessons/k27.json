@@ -1,0 +1,415 @@
+{
+  "id": "k27",
+  "title": "Mogu li sjesti?",
+  "exercises": [
+    {
+      "id": "k27e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "moći",
+      "hint": "moći — мочь",
+      "options": [
+        "мочь",
+        "хотеть",
+        "должен"
+      ],
+      "answer": "мочь",
+      "explanation": "Неправильный: mogu, možeš, može, možemo, možete, mogu. g меняется на ž, а «я могу» и «они могут» звучат одинаково — mogu."
+    },
+    {
+      "id": "k27e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "mogu"
+        },
+        {
+          "ru": "ti",
+          "me": "možeš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "može"
+        },
+        {
+          "ru": "mi",
+          "me": "možemo"
+        },
+        {
+          "ru": "vi",
+          "me": "možete"
+        },
+        {
+          "ru": "oni",
+          "me": "mogu"
+        }
+      ]
+    },
+    {
+      "id": "k27e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mogu li sjesti?",
+      "hint": "Mogu li sjesti? — Можно сесть?",
+      "options": [
+        "Можно сесть?",
+        "Можно войти?",
+        "Я могу сидеть?"
+      ],
+      "answer": "Можно сесть?",
+      "explanation": "Mogu li…? — «можно…?», буквально «могу ли». Дальше глагол в неопределённой форме: Mogu li sjesti? Mogu li dobiti kečap?"
+    },
+    {
+      "id": "k27e04",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Možeš li mi pomoći?",
+      "hint": "Možeš li mi pomoći? — Ты можешь мне помочь?",
+      "options": [
+        "Ты можешь мне помочь?",
+        "Тебе нужна помощь?",
+        "Вы можете мне помочь?"
+      ],
+      "answer": "Ты можешь мне помочь?",
+      "explanation": "pomoći — «помочь», от pomoć. Možeš li mi pomoći? — Ты можешь мне помочь?"
+    },
+    {
+      "id": "k27e05",
+      "type": "choice",
+      "prompt": "Мы можем идти домой. — Mi ___ ići kući.",
+      "options": [
+        "možemo",
+        "mogu",
+        "može"
+      ],
+      "answer": "možemo",
+      "explanation": "Неправильный: mogu, možeš, može, možemo, možete, mogu. g меняется на ž, а «я могу» и «они могут» звучат одинаково — mogu.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k27e06",
+      "type": "choice",
+      "prompt": "Они могут есть картошку фри. — Oni ___ jesti pomfrit.",
+      "options": [
+        "mogu",
+        "može",
+        "možemo"
+      ],
+      "answer": "mogu",
+      "explanation": "mogu — и «я могу», и «они могут»: кто именно, ясно по тому, кто стоит рядом.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k27e07",
+      "type": "choice",
+      "prompt": "Ne mogu da spavam.",
+      "options": [
+        "Я не могу спать.",
+        "Я не хочу спать.",
+        "Он не может спать."
+      ],
+      "answer": "Я не могу спать.",
+      "byEar": true
+    },
+    {
+      "id": "k27e08",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "stolica",
+      "hint": "stolica — стул",
+      "options": [
+        "стул",
+        "диван",
+        "стол"
+      ],
+      "answer": "стул"
+    },
+    {
+      "id": "k27e09",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kauč",
+      "hint": "kauč — диван",
+      "options": [
+        "диван",
+        "кровать",
+        "стул"
+      ],
+      "answer": "диван"
+    },
+    {
+      "id": "k27e10",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "стул",
+          "me": "stolica"
+        },
+        {
+          "ru": "диван",
+          "me": "kauč"
+        },
+        {
+          "ru": "кровать",
+          "me": "krevet"
+        },
+        {
+          "ru": "окно",
+          "me": "prozor"
+        }
+      ]
+    },
+    {
+      "id": "k27e11",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Gdje da sjednem?",
+      "hint": "Gdje da sjednem? — Куда мне сесть?",
+      "options": [
+        "Куда мне сесть?",
+        "Где мне сидеть?",
+        "Где ты сидишь?"
+      ],
+      "answer": "Куда мне сесть?",
+      "explanation": "-nem: sjesti — sjednem, sjedneš, sjedne, sjednemo, sjednete, sjednu. После da стоит такая форма: Gdje da sjednem? — Куда мне сесть?"
+    },
+    {
+      "id": "k27e12",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "sjednem"
+        },
+        {
+          "ru": "ti",
+          "me": "sjedneš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "sjedne"
+        },
+        {
+          "ru": "mi",
+          "me": "sjednemo"
+        },
+        {
+          "ru": "vi",
+          "me": "sjednete"
+        },
+        {
+          "ru": "oni",
+          "me": "sjednu"
+        }
+      ]
+    },
+    {
+      "id": "k27e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mogu li da sjednem na stolicu?",
+      "hint": "Mogu li da sjednem na stolicu? — Можно я сяду на стул?",
+      "options": [
+        "Можно я сяду на стул?",
+        "Можно я сяду на диван?",
+        "Можно мне стул?"
+      ],
+      "answer": "Можно я сяду на стул?",
+      "explanation": "Mogu li da sjednem? — то же, что Mogu li sjesti? В Черногории часто говорят с da."
+    },
+    {
+      "id": "k27e14",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mačka sjedne na kauč i spava.",
+      "hint": "Mačka sjedne na kauč i spava. — Кошка садится на диван и спит.",
+      "options": [
+        "Кошка садится на диван и спит.",
+        "Кошка сидит на стуле и спит.",
+        "Собака садится на диван и спит."
+      ],
+      "answer": "Кошка садится на диван и спит."
+    },
+    {
+      "id": "k27e15",
+      "type": "choice",
+      "prompt": "Куда нам сесть? — Gdje da ___ ?",
+      "options": [
+        "sjednemo",
+        "sjednem",
+        "sjednu"
+      ],
+      "answer": "sjednemo",
+      "explanation": "-nem: sjesti — sjednem, sjedneš, sjedne, sjednemo, sjednete, sjednu. После da стоит такая форма: Gdje da sjednem? — Куда мне сесть?",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k27e16",
+      "type": "choice",
+      "prompt": "Mogu li da sjednem na kauč?",
+      "options": [
+        "Можно я сяду на диван?",
+        "Можно я сяду на стул?",
+        "Можно я лягу на диван?"
+      ],
+      "answer": "Можно я сяду на диван?",
+      "byEar": true
+    },
+    {
+      "id": "k27e17",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "krenuti",
+      "hint": "krenuti — тронуться, отправиться",
+      "options": [
+        "тронуться, отправиться",
+        "сесть",
+        "путешествовать"
+      ],
+      "answer": "тронуться, отправиться",
+      "explanation": "krenuti — тронуться, отправиться. Тот же образец -nem: krenem, kreneš, krene, krenemo, krenete, krenu."
+    },
+    {
+      "id": "k27e18",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "krenem"
+        },
+        {
+          "ru": "ti",
+          "me": "kreneš"
+        },
+        {
+          "ru": "mi",
+          "me": "krenemo"
+        },
+        {
+          "ru": "oni",
+          "me": "krenu"
+        }
+      ]
+    },
+    {
+      "id": "k27e19",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moram da krenem kući.",
+      "hint": "Moram da krenem kući. — Мне пора идти домой.",
+      "options": [
+        "Мне пора идти домой.",
+        "Я уже дома.",
+        "Мне нужно в магазин."
+      ],
+      "answer": "Мне пора идти домой.",
+      "explanation": "Буквально «я должен, чтобы отправился». Так говорят, когда пора уходить: Moram da krenem kući. Как moram da idem."
+    },
+    {
+      "id": "k27e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moramo da krenemo kod babe.",
+      "hint": "Moramo da krenemo kod babe. — Нам пора к бабушке.",
+      "options": [
+        "Нам пора к бабушке.",
+        "Мы у бабушки.",
+        "Нам пора к дедушке."
+      ],
+      "answer": "Нам пора к бабушке."
+    },
+    {
+      "id": "k27e21",
+      "type": "choice",
+      "prompt": "Мне пора к дедушке. — Moram da krenem ___ .",
+      "options": [
+        "kod djeda",
+        "kući",
+        "u djeda"
+      ],
+      "answer": "kod djeda",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k27e22",
+      "type": "choice",
+      "prompt": "— Hoćeš li kafu?\n— Ne, hvala, moram da krenem kod djeda.\n\nЧто ответил человек?",
+      "options": [
+        "Ему пора к дедушке.",
+        "Он сейчас у дедушки.",
+        "Он хочет кофе с дедушкой."
+      ],
+      "answer": "Ему пора к дедушке.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k27e23",
+      "type": "word_bank",
+      "prompt": "Мне пора идти домой.",
+      "answer": "Moram da krenem kući.",
+      "bank": [
+        "kući",
+        "da",
+        "krenem",
+        "moram"
+      ]
+    },
+    {
+      "id": "k27e24",
+      "type": "speaking",
+      "phrase": "Mogu li sjesti?",
+      "translation": "Можно сесть?"
+    },
+    {
+      "id": "k27e25",
+      "type": "repeat",
+      "phrase": "Moram da krenem kući.",
+      "translation": "Мне пора идти домой."
+    },
+    {
+      "id": "k27e26",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Можно сесть?",
+          "me": "Mogu li sjesti?"
+        },
+        {
+          "ru": "Ты можешь мне помочь?",
+          "me": "Možeš li mi pomoći?"
+        },
+        {
+          "ru": "Куда мне сесть?",
+          "me": "Gdje da sjednem?"
+        },
+        {
+          "ru": "Мне пора идти домой.",
+          "me": "Moram da krenem kući."
+        },
+        {
+          "ru": "Нам пора к бабушке.",
+          "me": "Moramo da krenemo kod babe."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "pomoći",
+      "ru": "помочь"
+    },
+    {
+      "me": "stolica",
+      "ru": "стул"
+    },
+    {
+      "me": "kauč",
+      "ru": "диван"
+    },
+    {
+      "me": "krenuti",
+      "ru": "тронуться, отправиться"
+    }
+  ]
+}

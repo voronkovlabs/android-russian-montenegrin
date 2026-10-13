@@ -1835,6 +1835,83 @@ L.append(dict(id='k26', title='Kupujem, putujem, pijem', section=S2, words=[
           ('Я слышу музыку.', 'Čujem muziku.'), ('Мы идём в город!', 'Idemo u grad!')),
 ]))
 
+# --- Урок 27 ---
+# Оставшиеся образцы настоящего времени (решение Кати): moći целиком, с
+# «Mogu li…?», и -nem — sjesti (sjednem) и krenuti (krenem). К «сесть» — stolica
+# и kauč; к «krenuti» — kod babe, kod djeda, kući. moći уже в словаре с урока 6.
+MOCI = ('Неправильный: mogu, možeš, može, možemo, možete, mogu. g меняется на ž, '
+        'а «я могу» и «они могут» звучат одинаково — mogu.')
+MOGU_LI = ('Mogu li…? — «можно…?», буквально «могу ли». Дальше глагол в неопределённой '
+           'форме: Mogu li sjesti? Mogu li dobiti kečap?')
+POMOCI = 'pomoći — «помочь», от pomoć. Možeš li mi pomoći? — Ты можешь мне помочь?'
+OBA_MOGU = 'mogu — и «я могу», и «они могут»: кто именно, ясно по тому, кто стоит рядом.'
+NEM = ('-nem: sjesti — sjednem, sjedneš, sjedne, sjednemo, sjednete, sjednu. '
+       'После da стоит такая форма: Gdje da sjednem? — Куда мне сесть?')
+MOGU_DA = 'Mogu li da sjednem? — то же, что Mogu li sjesti? В Черногории часто говорят с da.'
+KRENUTI = ('krenuti — тронуться, отправиться. Тот же образец -nem: krenem, kreneš, krene, '
+           'krenemo, krenete, krenu.')
+MORAM_KRENUTI = ('Буквально «я должен, чтобы отправился». Так говорят, когда пора уходить: '
+                 'Moram da krenem kući. Как moram da idem.')
+L.append(dict(id='k27', title='Mogu li sjesti?', section=S2, words=[
+    ('pomoći', 'помочь'), ('stolica', 'стул'), ('kauč', 'диван'),
+    ('krenuti', 'тронуться, отправиться')],
+    ex=[
+    dict(new('moći', 'мочь', ['мочь', 'хотеть', 'должен'], label='Новый глагол'),
+         explanation=MOCI),
+    pairs(('ja', 'mogu'), ('ti', 'možeš'), ('on / ona', 'može'), ('mi', 'možemo'),
+          ('vi', 'možete'), ('oni', 'mogu')),
+    dict(phrase('Mogu li sjesti?', 'Можно сесть?', ['Можно сесть?', 'Можно войти?',
+                                                    'Я могу сидеть?']),
+         explanation=MOGU_LI),
+    dict(phrase('Možeš li mi pomoći?', 'Ты можешь мне помочь?',
+                ['Ты можешь мне помочь?', 'Тебе нужна помощь?', 'Вы можете мне помочь?']),
+         explanation=POMOCI),
+    pick('Мы можем идти домой. — Mi ___ ići kući.', ['možemo', 'mogu', 'može'], 'možemo',
+         explanation=MOCI, label='Вставь слово'),
+    pick('Они могут есть картошку фри. — Oni ___ jesti pomfrit.', ['mogu', 'može', 'možemo'],
+         'mogu', explanation=OBA_MOGU, label='Вставь слово'),
+    ear('Ne mogu da spavam.', ['Я не могу спать.', 'Я не хочу спать.', 'Он не может спать.'],
+        'Я не могу спать.'),
+    new('stolica', 'стул', ['стул', 'диван', 'стол']),
+    new('kauč', 'диван', ['диван', 'кровать', 'стул']),
+    pairs(('стул', 'stolica'), ('диван', 'kauč'), ('кровать', 'krevet'), ('окно', 'prozor')),
+    dict(new('Gdje da sjednem?', 'Куда мне сесть?', ['Куда мне сесть?', 'Где мне сидеть?',
+                                                    'Где ты сидишь?'], label='Новая форма'),
+         explanation=NEM),
+    pairs(('ja', 'sjednem'), ('ti', 'sjedneš'), ('on / ona', 'sjedne'), ('mi', 'sjednemo'),
+          ('vi', 'sjednete'), ('oni', 'sjednu')),
+    dict(phrase('Mogu li da sjednem na stolicu?', 'Можно я сяду на стул?',
+                ['Можно я сяду на стул?', 'Можно я сяду на диван?', 'Можно мне стул?']),
+         explanation=MOGU_DA),
+    phrase('Mačka sjedne na kauč i spava.', 'Кошка садится на диван и спит.',
+           ['Кошка садится на диван и спит.', 'Кошка сидит на стуле и спит.',
+            'Собака садится на диван и спит.']),
+    pick('Куда нам сесть? — Gdje da ___ ?', ['sjednemo', 'sjednem', 'sjednu'], 'sjednemo',
+         explanation=NEM, label='Вставь слово'),
+    ear('Mogu li da sjednem na kauč?', ['Можно я сяду на диван?', 'Можно я сяду на стул?',
+                                        'Можно я лягу на диван?'], 'Можно я сяду на диван?'),
+    dict(new('krenuti', 'тронуться, отправиться', ['тронуться, отправиться', 'сесть',
+                                                  'путешествовать'], label='Новый глагол'),
+         explanation=KRENUTI),
+    pairs(('ja', 'krenem'), ('ti', 'kreneš'), ('mi', 'krenemo'), ('oni', 'krenu')),
+    dict(phrase('Moram da krenem kući.', 'Мне пора идти домой.',
+                ['Мне пора идти домой.', 'Я уже дома.', 'Мне нужно в магазин.']),
+         explanation=MORAM_KRENUTI),
+    phrase('Moramo da krenemo kod babe.', 'Нам пора к бабушке.',
+           ['Нам пора к бабушке.', 'Мы у бабушки.', 'Нам пора к дедушке.']),
+    pick('Мне пора к дедушке. — Moram da krenem ___ .', ['kod djeda', 'kući', 'u djeda'],
+         'kod djeda', label='Вставь слово'),
+    pick('— Hoćeš li kafu?\n— Ne, hvala, moram da krenem kod djeda.\n\nЧто ответил человек?',
+         ['Ему пора к дедушке.', 'Он сейчас у дедушки.', 'Он хочет кофе с дедушкой.'],
+         'Ему пора к дедушке.', label='Мини-диалог'),
+    bank('Мне пора идти домой.', 'Moram da krenem kući.', ['kući', 'da', 'krenem', 'moram']),
+    say('Mogu li sjesti?', 'Можно сесть?'),
+    echo('Moram da krenem kući.', 'Мне пора идти домой.'),
+    pairs(('Можно сесть?', 'Mogu li sjesti?'), ('Ты можешь мне помочь?', 'Možeš li mi pomoći?'),
+          ('Куда мне сесть?', 'Gdje da sjednem?'), ('Мне пора идти домой.', 'Moram da krenem kući.'),
+          ('Нам пора к бабушке.', 'Moramo da krenemo kod babe.')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

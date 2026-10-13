@@ -162,6 +162,12 @@
       "title": "Kupujem, putujem, pijem",
       "file": "k26.json",
       "section": "Раздел 2"
+    },
+    {
+      "id": "k27",
+      "title": "Mogu li sjesti?",
+      "file": "k27.json",
+      "section": "Раздел 2"
     }
   ]
 }
