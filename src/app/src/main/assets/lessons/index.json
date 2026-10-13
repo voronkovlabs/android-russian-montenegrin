@@ -4,85 +4,85 @@
       "id": "k01",
       "title": "Я, ты и магазин",
       "file": "k01.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k02",
       "title": "Он, она и животные",
       "file": "k02.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k03",
       "title": "Мы, вы и семья",
       "file": "k03.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k04",
       "title": "Они, взрослые и животные",
       "file": "k04.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k05",
       "title": "Акула, черепаха и яблоко",
       "file": "k05.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k06",
       "title": "Мы едим: pomfrit и pljeskavica",
       "file": "k06.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k07",
       "title": "Я ем, ты ешь. Семья и счёт",
       "file": "k07.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k08",
       "title": "Дерево растёт, кошка спит. Gdje si?",
       "file": "k08.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k09",
       "title": "Мой сын плохо спит. Dobar dan!",
       "file": "k09.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k10",
       "title": "Три черепахи едят одну котлету",
       "file": "k10.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k11",
       "title": "Dva piva i tri praseta. Наш, ваш, их",
       "file": "k11.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k12",
       "title": "Свинья и три поросёнка. Doviđenja!",
       "file": "k12.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "k13",
       "title": "Šta je ovo? Kako si?",
       "file": "k13.json",
-      "section": "Первые шаги"
+      "section": "Раздел 1"
     },
     {
       "id": "kt1",
-      "title": "Тест: Первые шаги",
+      "title": "Тест: Раздел 1",
       "file": "kt1.json",
-      "section": "Первые шаги",
+      "section": "Раздел 1",
       "test": true
     },
     {

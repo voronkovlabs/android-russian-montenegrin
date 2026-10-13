@@ -743,14 +743,14 @@ L.append(dict(id='k13', title='Šta je ovo? Kako si?', words=[
           ('Это мой брат.', 'Ovo je moj brat.'), ('Его сестра.', 'Njegova sestra.')),
 ]))
 
-# --- Тест раздела «Первые шаги» ---
+# --- Тест раздела 1 ---
 # Последний в разделе; за ним всё заперто, пока он не пройден (LessonRef.test).
 # Новых слов нет. Подсказка — перевод ключевых слов, а не фразы: прошедшему
 # уроки она открыта, в строгом режиме («Перейти сюда») скрыта вовсе.
 def hinted(ex, hint):
     return dict(ex, hint=hint)
 
-L.append(dict(id='kt1', title='Тест: Первые шаги', test=True, words=[], ex=[
+L.append(dict(id='kt1', title='Тест: Раздел 1', test=True, words=[], ex=[
     hinted(pick('Ja sam žena.', ['Я женщина.', 'Ты женщина.', 'Она женщина.'], 'Я женщина.',
                 label='Выбери перевод'), 'žena — женщина'),
     pick('Vi ___ ljudi.', ['sam', 'ste', 'su'], 'ste', label='Вставь слово'),
@@ -2093,7 +2093,7 @@ for les in L:
     with open(os.path.join(OUT, les['id'] + '.json'), 'w', encoding='utf-8', newline='\n') as f:
         json.dump(doc, f, ensure_ascii=False, indent=2); f.write('\n')
     ref = dict(id=les['id'], title=les['title'], file=les['id'] + '.json',
-               section=les.get('section', 'Первые шаги'))
+               section=les.get('section', 'Раздел 1'))  # разделы пока только нумеруются (решение Кати)
     # Тест раздела: всё, что после него, заперто, пока он не пройден.
     if les.get('test'):
         ref['test'] = True
