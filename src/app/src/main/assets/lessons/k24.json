@@ -330,6 +330,33 @@
     {
       "id": "k24e24",
       "type": "choice",
+      "label": "Новое слово",
+      "prompt": "žedan",
+      "hint": "žedan — жаждущий, хочет пить",
+      "options": [
+        "жаждущий, хочет пить",
+        "голодный",
+        "горячий"
+      ],
+      "answer": "жаждущий, хочет пить",
+      "explanation": "Žedan sam — «я хочу пить», буквально «я жаждущий». О себе-женщине — Žedna sam."
+    },
+    {
+      "id": "k24e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ja sam gladan i žedan.",
+      "hint": "Ja sam gladan i žedan. — Я голоден и хочу пить.",
+      "options": [
+        "Я голоден и хочу пить.",
+        "Я голоден и хочу спать.",
+        "Я не голоден."
+      ],
+      "answer": "Я голоден и хочу пить."
+    },
+    {
+      "id": "k24e26",
+      "type": "choice",
       "prompt": "— Jesi li gladan?\n— ___",
       "options": [
         "Jesam, gladan sam!",
@@ -341,7 +368,7 @@
       "label": "Выбери ответ"
     },
     {
-      "id": "k24e25",
+      "id": "k24e27",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Ja sam gladan kao vuk.",
@@ -355,13 +382,13 @@
       "explanation": "Так и говорят — gladan kao vuk, как по-русски «голодный как волк»."
     },
     {
-      "id": "k24e26",
+      "id": "k24e28",
       "type": "repeat",
       "phrase": "Ja sam gladan kao vuk.",
       "translation": "Я голоден как волк."
     },
     {
-      "id": "k24e27",
+      "id": "k24e29",
       "type": "match",
       "pairs": [
         {
@@ -423,6 +450,10 @@
     {
       "me": "gladan",
       "ru": "голодный"
+    },
+    {
+      "me": "žedan",
+      "ru": "жаждущий, хочет пить"
     }
   ]
 }

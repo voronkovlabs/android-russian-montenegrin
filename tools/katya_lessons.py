@@ -1604,7 +1604,7 @@ L.append(dict(id='k24', title='Gladan kao vuk', section=S2, words=[
     ('rep', 'хвост'), ('lisica', 'лиса'), ('vuk', 'волк'),
     ('dug', 'длинный'), ('kratak', 'короткий'),
     ('crn', 'чёрный'), ('riđ', 'рыжий'), ('roze', 'розовый'),
-    ('gladan', 'голодный')],
+    ('gladan', 'голодный'), ('žedan', 'жаждущий, хочет пить')],
     ex=[
     dict(new('rep', 'хвост', ['хвост', 'нос', 'лапа']), explanation=REP),
     new('lisica', 'лиса', ['лиса', 'кошка', 'волк']),
@@ -1645,6 +1645,12 @@ L.append(dict(id='k24', title='Gladan kao vuk', section=S2, words=[
          explanation=GLADAN),
     new('Gladna sam.', 'Я голодна.', ['Я голодна.', 'Я голоден.', 'Она голодна.'],
         label='Новая форма'),
+    dict(new('žedan', 'жаждущий, хочет пить', ['жаждущий, хочет пить', 'голодный',
+                                               'горячий']),
+         explanation='Žedan sam — «я хочу пить», буквально «я жаждущий». О себе-женщине — '
+                     'Žedna sam.'),
+    phrase('Ja sam gladan i žedan.', 'Я голоден и хочу пить.',
+           ['Я голоден и хочу пить.', 'Я голоден и хочу спать.', 'Я не голоден.']),
     pick('— Jesi li gladan?\n— ___', ['Jesam, gladan sam!', 'Imam, gladan sam!',
                                       'Hoću, gladan sam!'], 'Jesam, gladan sam!',
          explanation='Отвечают тем же глаголом, что в вопросе: Jesi li? — Jesam.',
