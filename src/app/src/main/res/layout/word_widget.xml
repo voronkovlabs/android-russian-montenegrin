@@ -10,6 +10,13 @@
     Размер шрифта поднят в полтора раза (4.6) по первому живому взгляду
     владельца: 19sp и 12sp на домашнем экране читались мелко — виджет
     смотрят мельком и на расстоянии руки, а не как текст в занятии.
+
+    В одну строку домашнего экрана (4.59, Катя) карточка не влезала: сверху
+    над словом стояло пустое место, а перевод срезало наполовину. Место
+    набиралось из трёх запасов — отступ 12 dp, картинка в 40 dp выше строки
+    слова (слово центрировалось по ней) и шрифтовой запас перевода. Отступ
+    сверху и снизу теперь 6 dp, картинка в высоту строки слова, у перевода
+    шрифтового запаса нет. Бока остались 12 dp: там место не тесно.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
@@ -18,7 +25,8 @@
     android:orientation="vertical"
     android:gravity="center_vertical"
     android:background="@drawable/word_widget_bg"
-    android:padding="12dp">
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,9 +49,9 @@
 
             android:id="@+id/widget_picture"
 
-            android:layout_width="40dp"
+            android:layout_width="32dp"
 
-            android:layout_height="40dp"
+            android:layout_height="32dp"
 
             android:layout_marginEnd="10dp"
 
@@ -69,8 +77,9 @@
         android:id="@+id/widget_gloss"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:maxLines="2"
+        android:includeFontPadding="false"
         android:ellipsize="end"
         android:textSize="18sp"
         android:textColor="@color/widget_muted" />
