@@ -1,0 +1,28 @@
+{
+  "id": "kd01",
+  "title": "Na aerodromu",
+  "note": "Первая история Катиного курса: знакомство в аэропорту. Текст Кати, перевод упрощён по её решению — без прошедшего и будущего времени, кроме «bio».",
+  "speaker": "Vladislav",
+  "chunks": [
+    { "who": "you", "sr": "Dobar dan.", "ru": "Добрый день." },
+    { "who": "them", "sr": "Dobar dan.", "ru": "Добрый день." },
+    { "who": "them", "sr": "Jeste li vi Aleksej?", "ru": "Вы Алексей?" },
+    { "who": "you", "sr": "Da, zovem se Aleksej.", "ru": "Да, меня зовут Алексей." },
+    { "who": "you", "sr": "A kako se vi zovete?", "ru": "А как вас зовут?" },
+    { "who": "them", "sr": "Zovem se Vladislav.", "ru": "Меня зовут Владислав." },
+    { "who": "them", "sr": "Drago mi je.", "ru": "Приятно познакомиться." },
+    { "who": "them", "sr": "Odakle ste?", "ru": "Откуда вы?" },
+    { "who": "you", "sr": "Ja sam iz Rusije.", "ru": "Я из России." },
+    { "who": "you", "sr": "Iz Kalinjingrada, a vi?", "ru": "Из Калининграда, а вы?" },
+    { "who": "them", "sr": "A ja sam iz Ukrajine.", "ru": "А я из Украины." },
+    { "who": "them", "sr": "Ovdje živim već sedam godina.", "ru": "Живу здесь уже семь лет." },
+    { "who": "them", "sr": "Ovo je moj auto.", "ru": "Вот мой автомобиль." },
+    { "who": "them", "sr": "Sjedite, molim vas.", "ru": "Садитесь, пожалуйста." },
+    { "who": "you", "sr": "Hvala.", "ru": "Спасибо." },
+    { "who": "you", "sr": "Let je bio jako dug i sada sam gladan kao vuk.", "ru": "Полёт был очень долгим, и сейчас я голоден как волк." },
+    { "who": "them", "sr": "Hoćete li u kafić?", "ru": "Хотите в кафе?" },
+    { "who": "you", "sr": "Ne, hvala, radije u prodavnicu.", "ru": "Нет, спасибо, лучше в магазин." },
+    { "who": "you", "sr": "Hoću nešto za brzo kuvanje.", "ru": "Хочу что-нибудь, что быстро варится." },
+    { "who": "you", "sr": "Na primjer, pileću supu iz kesice.", "ru": "Например, куриный суп из пакетика." }
+  ]
+}
