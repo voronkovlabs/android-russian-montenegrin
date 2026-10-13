@@ -1664,6 +1664,93 @@ L.append(dict(id='k24', title='Gladan kao vuk', section=S2, words=[
           ('Я голоден.', 'Gladan sam.'), ('Я голоден как волк.', 'Ja sam gladan kao vuk.')),
 ]))
 
+# --- Урок 25 (абсурдный, каждый пятый) ---
+# То, чего не хватило истории kd01 «Na aerodromu»: знакомство (zovem se, kako se
+# zovete, drago mi je), živjeti, ovdje, već, sjedjeti и sjesti, kafić, radije.
+# Знакомятся акула Тибурон и черепаха Тортуга — фразы Кати. Уменьшительное -ica:
+# kesa → kesica, šolja → šoljica. Прошедшее время — в следующем разделе.
+ZOVEM = ('Буквально «я зову себя Тибурон». se стоит вторым словом: Zovem se Tiburon '
+         'или Ja se zovem Tiburon.')
+ZOVETE = 'На «вы» или многим: Kako se zovete? На «ты»: Kako se zoveš?'
+DRAGO = 'Буквально «мне приятно». Так говорят при знакомстве.'
+ZIVJETI = 'Формы как у voljeti: živim, živiš, živi, živimo, živite, žive.'
+SJEDJETI = 'Сидеть — sjedjeti: sjedim, sjediš, sjedi. А сесть — sjesti.'
+SJESTI = 'sjesti — сесть, один раз. Просьба на «ты»: Sjedi! На «вы»: Sjedite!'
+ICA = ('-ica делает слово маленьким и ласковым: kesa — kesica, пакет — пакетик. '
+       'Так говорят очень часто, особенно про еду и посуду.')
+SOLJICA = 'šolja — šoljica: šoljica kafe — чашечка кофе.'
+RADIJE = 'radije — «лучше, охотнее»: когда выбирают одно вместо другого.'
+L.append(dict(id='k25', title='Zovem se Tiburon', section=S2, words=[
+    ('zvati se', 'зваться (zovem se — меня зовут)'), ('drago', 'приятно (drago mi je)'),
+    ('živjeti', 'жить'), ('ovdje', 'здесь'), ('već', 'уже'),
+    ('sjedjeti', 'сидеть'), ('sjesti', 'сесть'),
+    ('kesica', 'пакетик'), ('šoljica', 'чашечка'),
+    ('kafić', 'кафе'), ('radije', 'лучше, охотнее')],
+    ex=[
+    dict(phrase('Zovem se Tiburon.', 'Меня зовут Тибурон.',
+                ['Меня зовут Тибурон.', 'Я акула Тибурон.', 'Его зовут Тибурон.']),
+         explanation=ZOVEM),
+    dict(phrase('Kako se vi zovete?', 'Как вас зовут?', ['Как вас зовут?', 'Как у вас дела?',
+                                                          'Откуда вы?']),
+         explanation=ZOVETE),
+    pairs(('меня зовут', 'zovem se'), ('тебя зовут', 'zoveš se'),
+          ('как вас зовут?', 'kako se zovete?'), ('как тебя зовут?', 'kako se zoveš?')),
+    dict(phrase('Drago mi je.', 'Приятно познакомиться.',
+                ['Приятно познакомиться.', 'Мне жаль.', 'Мне нравится.']),
+         explanation=DRAGO),
+    pick('— Zdravo, ja sam ajkula, zovem se Tiburon. A kako se vi zovete?\n'
+         '— Ja se zovem Tortuga, kornjača sam.\n— Drago mi je. Gladan sam.\n\n'
+         'Почему Тортуге стоит волноваться?',
+         ['Акула голодна.', 'Акула устала.', 'Акула в кафе.'], 'Акула голодна.',
+         label='Мини-диалог'),
+    bank('Меня зовут Тортуга.', 'Ja se zovem Tortuga.', ['Tortuga', 'zovem', 'ja', 'se']),
+    say('Kako se vi zovete?', 'Как вас зовут?'),
+    dict(new('živjeti', 'жить', ['жить', 'лежать', 'сидеть'], label='Новый глагол'),
+         explanation=ZIVJETI),
+    pairs(('ja', 'živim'), ('ti', 'živiš'), ('on / ona', 'živi'), ('mi', 'živimo'),
+          ('vi', 'živite'), ('oni', 'žive')),
+    phrase('Ajkula živi u moru.', 'Акула живёт в море.',
+           ['Акула живёт в море.', 'Акула плавает в море.', 'Черепаха живёт в море.']),
+    new('ovdje', 'здесь', ['здесь', 'где', 'сейчас']),
+    new('već', 'уже', ['уже', 'ещё', 'очень']),
+    phrase('Tiburon živi ovdje već sedam godina.', 'Тибурон живёт здесь уже семь лет.',
+           ['Тибурон живёт здесь уже семь лет.', 'Тибурону уже семь лет.',
+            'Тибурон живёт здесь семь дней.']),
+    pick('— Gdje živiš?\n— ___', ['Živim ovdje.', 'Živiš ovdje.', 'Žive ovdje.'],
+         'Živim ovdje.', explanation=ZIVJETI, label='Выбери ответ'),
+    dict(new('sjedjeti', 'сидеть', ['сидеть', 'сесть', 'лежать'], label='Новый глагол'),
+         explanation=SJEDJETI),
+    phrase('Kornjača sjedi na krevetu.', 'Черепаха сидит на кровати.',
+           ['Черепаха сидит на кровати.', 'Черепаха лежит на кровати.',
+            'Акула сидит на кровати.']),
+    dict(new('sjesti', 'сесть', ['сесть', 'сидеть', 'встать'], label='Новый глагол'),
+         explanation=SJESTI),
+    phrase('Sjedite, molim vas.', 'Садитесь, пожалуйста.',
+           ['Садитесь, пожалуйста.', 'Сидите, пожалуйста.', 'Подождите, пожалуйста.']),
+    pick('Акула предлагает черепахе сесть, на «ты». Что она скажет?',
+         ['Sjedi, Tortuga!', 'Sjedite, Tortuga!', 'Sjedim, Tortuga!'], 'Sjedi, Tortuga!',
+         explanation=SJESTI, label='Что скажешь?'),
+    pairs(('сидеть', 'sjedjeti'), ('сесть', 'sjesti'), ('жить', 'živjeti'),
+          ('лежать', 'ležati')),
+    dict(new('kesica', 'пакетик', ['пакетик', 'пакет', 'чашечка']), explanation=ICA),
+    dict(new('šoljica', 'чашечка', ['чашечка', 'чашка', 'стакан']), explanation=SOLJICA),
+    pairs(('пакет', 'kesa'), ('пакетик', 'kesica'), ('чашка', 'šolja'),
+          ('чашечка', 'šoljica')),
+    dict(phrase('U kesici je riba.', 'В пакетике рыба.',
+                ['В пакетике рыба.', 'В пакете рыба.', 'В чашечке рыба.']),
+         explanation='u kesici — «в пакетике»: «где?» снова звучит иначе, как u šolji.'),
+    phrase('Hoćete li u kafić?', 'Хотите в кафе?', ['Хотите в кафе?', 'Хотите кофе?',
+                                                   'Вы в кафе?']),
+    dict(phrase('Ne, hvala, radije u prodavnicu.', 'Нет, спасибо, лучше в магазин.',
+                ['Нет, спасибо, лучше в магазин.', 'Нет, спасибо, мне в кафе.',
+                 'Да, спасибо, в магазин.']),
+         explanation=RADIJE),
+    echo('Drago mi je.', 'Приятно познакомиться.'),
+    pairs(('Меня зовут Тибурон.', 'Zovem se Tiburon.'), ('Как вас зовут?', 'Kako se vi zovete?'),
+          ('Приятно познакомиться.', 'Drago mi je.'), ('Акула живёт в море.', 'Ajkula živi u moru.'),
+          ('Садитесь, пожалуйста.', 'Sjedite, molim vas.')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

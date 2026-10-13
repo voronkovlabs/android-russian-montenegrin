@@ -1,0 +1,467 @@
+{
+  "id": "k25",
+  "title": "Zovem se Tiburon",
+  "exercises": [
+    {
+      "id": "k25e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Zovem se Tiburon.",
+      "hint": "Zovem se Tiburon. — Меня зовут Тибурон.",
+      "options": [
+        "Меня зовут Тибурон.",
+        "Я акула Тибурон.",
+        "Его зовут Тибурон."
+      ],
+      "answer": "Меня зовут Тибурон.",
+      "explanation": "Буквально «я зову себя Тибурон». se стоит вторым словом: Zovem se Tiburon или Ja se zovem Tiburon."
+    },
+    {
+      "id": "k25e02",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kako se vi zovete?",
+      "hint": "Kako se vi zovete? — Как вас зовут?",
+      "options": [
+        "Как вас зовут?",
+        "Как у вас дела?",
+        "Откуда вы?"
+      ],
+      "answer": "Как вас зовут?",
+      "explanation": "На «вы» или многим: Kako se zovete? На «ты»: Kako se zoveš?"
+    },
+    {
+      "id": "k25e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "меня зовут",
+          "me": "zovem se"
+        },
+        {
+          "ru": "тебя зовут",
+          "me": "zoveš se"
+        },
+        {
+          "ru": "как вас зовут?",
+          "me": "kako se zovete?"
+        },
+        {
+          "ru": "как тебя зовут?",
+          "me": "kako se zoveš?"
+        }
+      ]
+    },
+    {
+      "id": "k25e04",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Drago mi je.",
+      "hint": "Drago mi je. — Приятно познакомиться.",
+      "options": [
+        "Приятно познакомиться.",
+        "Мне жаль.",
+        "Мне нравится."
+      ],
+      "answer": "Приятно познакомиться.",
+      "explanation": "Буквально «мне приятно». Так говорят при знакомстве."
+    },
+    {
+      "id": "k25e05",
+      "type": "choice",
+      "prompt": "— Zdravo, ja sam ajkula, zovem se Tiburon. A kako se vi zovete?\n— Ja se zovem Tortuga, kornjača sam.\n— Drago mi je. Gladan sam.\n\nПочему Тортуге стоит волноваться?",
+      "options": [
+        "Акула голодна.",
+        "Акула устала.",
+        "Акула в кафе."
+      ],
+      "answer": "Акула голодна.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k25e06",
+      "type": "word_bank",
+      "prompt": "Меня зовут Тортуга.",
+      "answer": "Ja se zovem Tortuga.",
+      "bank": [
+        "Tortuga",
+        "zovem",
+        "ja",
+        "se"
+      ]
+    },
+    {
+      "id": "k25e07",
+      "type": "speaking",
+      "phrase": "Kako se vi zovete?",
+      "translation": "Как вас зовут?"
+    },
+    {
+      "id": "k25e08",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "živjeti",
+      "hint": "živjeti — жить",
+      "options": [
+        "жить",
+        "лежать",
+        "сидеть"
+      ],
+      "answer": "жить",
+      "explanation": "Формы как у voljeti: živim, živiš, živi, živimo, živite, žive."
+    },
+    {
+      "id": "k25e09",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "živim"
+        },
+        {
+          "ru": "ti",
+          "me": "živiš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "živi"
+        },
+        {
+          "ru": "mi",
+          "me": "živimo"
+        },
+        {
+          "ru": "vi",
+          "me": "živite"
+        },
+        {
+          "ru": "oni",
+          "me": "žive"
+        }
+      ]
+    },
+    {
+      "id": "k25e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ajkula živi u moru.",
+      "hint": "Ajkula živi u moru. — Акула живёт в море.",
+      "options": [
+        "Акула живёт в море.",
+        "Акула плавает в море.",
+        "Черепаха живёт в море."
+      ],
+      "answer": "Акула живёт в море."
+    },
+    {
+      "id": "k25e11",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ovdje",
+      "hint": "ovdje — здесь",
+      "options": [
+        "здесь",
+        "где",
+        "сейчас"
+      ],
+      "answer": "здесь"
+    },
+    {
+      "id": "k25e12",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "već",
+      "hint": "već — уже",
+      "options": [
+        "уже",
+        "ещё",
+        "очень"
+      ],
+      "answer": "уже"
+    },
+    {
+      "id": "k25e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Tiburon živi ovdje već sedam godina.",
+      "hint": "Tiburon živi ovdje već sedam godina. — Тибурон живёт здесь уже семь лет.",
+      "options": [
+        "Тибурон живёт здесь уже семь лет.",
+        "Тибурону уже семь лет.",
+        "Тибурон живёт здесь семь дней."
+      ],
+      "answer": "Тибурон живёт здесь уже семь лет."
+    },
+    {
+      "id": "k25e14",
+      "type": "choice",
+      "prompt": "— Gdje živiš?\n— ___",
+      "options": [
+        "Živim ovdje.",
+        "Živiš ovdje.",
+        "Žive ovdje."
+      ],
+      "answer": "Živim ovdje.",
+      "explanation": "Формы как у voljeti: živim, živiš, živi, živimo, živite, žive.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "k25e15",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "sjedjeti",
+      "hint": "sjedjeti — сидеть",
+      "options": [
+        "сидеть",
+        "сесть",
+        "лежать"
+      ],
+      "answer": "сидеть",
+      "explanation": "Сидеть — sjedjeti: sjedim, sjediš, sjedi. А сесть — sjesti."
+    },
+    {
+      "id": "k25e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kornjača sjedi na krevetu.",
+      "hint": "Kornjača sjedi na krevetu. — Черепаха сидит на кровати.",
+      "options": [
+        "Черепаха сидит на кровати.",
+        "Черепаха лежит на кровати.",
+        "Акула сидит на кровати."
+      ],
+      "answer": "Черепаха сидит на кровати."
+    },
+    {
+      "id": "k25e17",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "sjesti",
+      "hint": "sjesti — сесть",
+      "options": [
+        "сесть",
+        "сидеть",
+        "встать"
+      ],
+      "answer": "сесть",
+      "explanation": "sjesti — сесть, один раз. Просьба на «ты»: Sjedi! На «вы»: Sjedite!"
+    },
+    {
+      "id": "k25e18",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Sjedite, molim vas.",
+      "hint": "Sjedite, molim vas. — Садитесь, пожалуйста.",
+      "options": [
+        "Садитесь, пожалуйста.",
+        "Сидите, пожалуйста.",
+        "Подождите, пожалуйста."
+      ],
+      "answer": "Садитесь, пожалуйста."
+    },
+    {
+      "id": "k25e19",
+      "type": "choice",
+      "prompt": "Акула предлагает черепахе сесть, на «ты». Что она скажет?",
+      "options": [
+        "Sjedi, Tortuga!",
+        "Sjedite, Tortuga!",
+        "Sjedim, Tortuga!"
+      ],
+      "answer": "Sjedi, Tortuga!",
+      "explanation": "sjesti — сесть, один раз. Просьба на «ты»: Sjedi! На «вы»: Sjedite!",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k25e20",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "сидеть",
+          "me": "sjedjeti"
+        },
+        {
+          "ru": "сесть",
+          "me": "sjesti"
+        },
+        {
+          "ru": "жить",
+          "me": "živjeti"
+        },
+        {
+          "ru": "лежать",
+          "me": "ležati"
+        }
+      ]
+    },
+    {
+      "id": "k25e21",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kesica",
+      "hint": "kesica — пакетик",
+      "options": [
+        "пакетик",
+        "пакет",
+        "чашечка"
+      ],
+      "answer": "пакетик",
+      "explanation": "-ica делает слово маленьким и ласковым: kesa — kesica, пакет — пакетик. Так говорят очень часто, особенно про еду и посуду."
+    },
+    {
+      "id": "k25e22",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "šoljica",
+      "hint": "šoljica — чашечка",
+      "options": [
+        "чашечка",
+        "чашка",
+        "стакан"
+      ],
+      "answer": "чашечка",
+      "explanation": "šolja — šoljica: šoljica kafe — чашечка кофе."
+    },
+    {
+      "id": "k25e23",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "пакет",
+          "me": "kesa"
+        },
+        {
+          "ru": "пакетик",
+          "me": "kesica"
+        },
+        {
+          "ru": "чашка",
+          "me": "šolja"
+        },
+        {
+          "ru": "чашечка",
+          "me": "šoljica"
+        }
+      ]
+    },
+    {
+      "id": "k25e24",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "U kesici je riba.",
+      "hint": "U kesici je riba. — В пакетике рыба.",
+      "options": [
+        "В пакетике рыба.",
+        "В пакете рыба.",
+        "В чашечке рыба."
+      ],
+      "answer": "В пакетике рыба.",
+      "explanation": "u kesici — «в пакетике»: «где?» снова звучит иначе, как u šolji."
+    },
+    {
+      "id": "k25e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Hoćete li u kafić?",
+      "hint": "Hoćete li u kafić? — Хотите в кафе?",
+      "options": [
+        "Хотите в кафе?",
+        "Хотите кофе?",
+        "Вы в кафе?"
+      ],
+      "answer": "Хотите в кафе?"
+    },
+    {
+      "id": "k25e26",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ne, hvala, radije u prodavnicu.",
+      "hint": "Ne, hvala, radije u prodavnicu. — Нет, спасибо, лучше в магазин.",
+      "options": [
+        "Нет, спасибо, лучше в магазин.",
+        "Нет, спасибо, мне в кафе.",
+        "Да, спасибо, в магазин."
+      ],
+      "answer": "Нет, спасибо, лучше в магазин.",
+      "explanation": "radije — «лучше, охотнее»: когда выбирают одно вместо другого."
+    },
+    {
+      "id": "k25e27",
+      "type": "repeat",
+      "phrase": "Drago mi je.",
+      "translation": "Приятно познакомиться."
+    },
+    {
+      "id": "k25e28",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Меня зовут Тибурон.",
+          "me": "Zovem se Tiburon."
+        },
+        {
+          "ru": "Как вас зовут?",
+          "me": "Kako se vi zovete?"
+        },
+        {
+          "ru": "Приятно познакомиться.",
+          "me": "Drago mi je."
+        },
+        {
+          "ru": "Акула живёт в море.",
+          "me": "Ajkula živi u moru."
+        },
+        {
+          "ru": "Садитесь, пожалуйста.",
+          "me": "Sjedite, molim vas."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "zvati se",
+      "ru": "зваться (zovem se — меня зовут)"
+    },
+    {
+      "me": "drago",
+      "ru": "приятно (drago mi je)"
+    },
+    {
+      "me": "živjeti",
+      "ru": "жить"
+    },
+    {
+      "me": "ovdje",
+      "ru": "здесь"
+    },
+    {
+      "me": "već",
+      "ru": "уже"
+    },
+    {
+      "me": "sjedjeti",
+      "ru": "сидеть"
+    },
+    {
+      "me": "sjesti",
+      "ru": "сесть"
+    },
+    {
+      "me": "kesica",
+      "ru": "пакетик"
+    },
+    {
+      "me": "šoljica",
+      "ru": "чашечка"
+    },
+    {
+      "me": "kafić",
+      "ru": "кафе"
+    },
+    {
+      "me": "radije",
+      "ru": "лучше, охотнее"
+    }
+  ]
+}
