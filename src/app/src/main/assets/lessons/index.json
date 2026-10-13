@@ -156,6 +156,12 @@
       "title": "Zovem se Tiburon",
       "file": "k25.json",
       "section": "Раздел 2"
+    },
+    {
+      "id": "k26",
+      "title": "Kupujem, putujem, pijem",
+      "file": "k26.json",
+      "section": "Раздел 2"
     }
   ]
 }

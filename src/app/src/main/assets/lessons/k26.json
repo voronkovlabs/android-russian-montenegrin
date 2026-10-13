@@ -1,0 +1,499 @@
+{
+  "id": "k26",
+  "title": "Kupujem, putujem, pijem",
+  "exercises": [
+    {
+      "id": "k26e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "kupovati",
+      "hint": "kupovati — покупать",
+      "options": [
+        "покупать",
+        "стоить",
+        "путешествовать"
+      ],
+      "answer": "покупать",
+      "explanation": "-ovati → -ujem: kupovati — kupujem, kupuješ, kupuje, kupujemo, kupujete, kupuju. По инфинитиву не угадать, запоминаем образец."
+    },
+    {
+      "id": "k26e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "kupujem"
+        },
+        {
+          "ru": "ti",
+          "me": "kupuješ"
+        },
+        {
+          "ru": "on / ona",
+          "me": "kupuje"
+        },
+        {
+          "ru": "mi",
+          "me": "kupujemo"
+        },
+        {
+          "ru": "vi",
+          "me": "kupujete"
+        },
+        {
+          "ru": "oni",
+          "me": "kupuju"
+        }
+      ]
+    },
+    {
+      "id": "k26e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kupujem hljeb i vodu.",
+      "hint": "Kupujem hljeb i vodu. — Я покупаю хлеб и воду.",
+      "options": [
+        "Я покупаю хлеб и воду.",
+        "Я хочу хлеб и воду.",
+        "Я ем хлеб и пью воду."
+      ],
+      "answer": "Я покупаю хлеб и воду."
+    },
+    {
+      "id": "k26e04",
+      "type": "choice",
+      "prompt": "Что ты покупаешь? — Šta ___ ?",
+      "options": [
+        "kupuješ",
+        "kupovaš",
+        "kupuje"
+      ],
+      "answer": "kupuješ",
+      "explanation": "-ovati → -ujem: kupovati — kupujem, kupuješ, kupuje, kupujemo, kupujete, kupuju. По инфинитиву не угадать, запоминаем образец.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k26e05",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "putovati",
+      "hint": "putovati — путешествовать",
+      "options": [
+        "путешествовать",
+        "покупать",
+        "идти"
+      ],
+      "answer": "путешествовать",
+      "explanation": "Тот же образец: putovati — putujem, putuješ, putuje, putujemo, putujete, putuju."
+    },
+    {
+      "id": "k26e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "autobus",
+      "hint": "autobus — автобус",
+      "options": [
+        "автобус",
+        "поезд",
+        "машина"
+      ],
+      "answer": "автобус"
+    },
+    {
+      "id": "k26e07",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "voz",
+      "hint": "voz — поезд",
+      "options": [
+        "поезд",
+        "автобус",
+        "самолёт"
+      ],
+      "answer": "поезд"
+    },
+    {
+      "id": "k26e08",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "автобус",
+          "me": "autobus"
+        },
+        {
+          "ru": "поезд",
+          "me": "voz"
+        },
+        {
+          "ru": "самолёт",
+          "me": "avion"
+        },
+        {
+          "ru": "машина",
+          "me": "auto"
+        }
+      ]
+    },
+    {
+      "id": "k26e09",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Putujem vozom.",
+      "hint": "Putujem vozom. — Я путешествую поездом.",
+      "options": [
+        "Я путешествую поездом.",
+        "Я путешествую автобусом.",
+        "Я жду поезд."
+      ],
+      "answer": "Я путешествую поездом.",
+      "explanation": "vozom, autobusom, avionom — «на поезде, на автобусе, на самолёте». Окончание -om, как sa prijateljem."
+    },
+    {
+      "id": "k26e10",
+      "type": "choice",
+      "prompt": "Mi putujemo autobusom.",
+      "options": [
+        "Мы путешествуем автобусом.",
+        "Мы путешествуем поездом.",
+        "Вы путешествуете автобусом."
+      ],
+      "answer": "Мы путешествуем автобусом.",
+      "explanation": "vozom, autobusom, avionom — «на поезде, на автобусе, на самолёте». Окончание -om, как sa prijateljem.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k26e11",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "radovati se",
+      "hint": "radovati se — радоваться",
+      "options": [
+        "радоваться",
+        "волноваться",
+        "играть"
+      ],
+      "answer": "радоваться",
+      "explanation": "Тот же образец, только с se: radujem se, raduješ se, raduje se. Radujem se! — «Я рад!»"
+    },
+    {
+      "id": "k26e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Radujem se!",
+      "hint": "Radujem se! — Я рад!",
+      "options": [
+        "Я рад!",
+        "Я голоден!",
+        "Я устал!"
+      ],
+      "answer": "Я рад!"
+    },
+    {
+      "id": "k26e13",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "piti",
+      "hint": "piti — пить",
+      "options": [
+        "пить",
+        "есть",
+        "варить"
+      ],
+      "answer": "пить",
+      "explanation": "-jem: piti — pijem, piješ, pije, pijemo, pijete, piju."
+    },
+    {
+      "id": "k26e14",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "pijem"
+        },
+        {
+          "ru": "ti",
+          "me": "piješ"
+        },
+        {
+          "ru": "on / ona",
+          "me": "pije"
+        },
+        {
+          "ru": "mi",
+          "me": "pijemo"
+        },
+        {
+          "ru": "vi",
+          "me": "pijete"
+        },
+        {
+          "ru": "oni",
+          "me": "piju"
+        }
+      ]
+    },
+    {
+      "id": "k26e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Pas pije vodu.",
+      "hint": "Pas pije vodu. — Собака пьёт воду.",
+      "options": [
+        "Собака пьёт воду.",
+        "Собака хочет воду.",
+        "Кошка пьёт воду."
+      ],
+      "answer": "Собака пьёт воду."
+    },
+    {
+      "id": "k26e16",
+      "type": "choice",
+      "prompt": "— Piješ li kafu?\n— ___",
+      "options": [
+        "Pijem, hvala!",
+        "Pije, hvala!",
+        "Piju, hvala!"
+      ],
+      "answer": "Pijem, hvala!",
+      "explanation": "-jem: piti — pijem, piješ, pije, pijemo, pijete, piju.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "k26e17",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "čuti",
+      "hint": "čuti — слышать",
+      "options": [
+        "слышать",
+        "слушать музыку",
+        "пить"
+      ],
+      "answer": "слышать",
+      "explanation": "Тот же образец -jem: čujem, čuješ, čuje, čujemo, čujete, čuju."
+    },
+    {
+      "id": "k26e18",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "zvuk",
+      "hint": "zvuk — звук",
+      "options": [
+        "звук",
+        "музыка",
+        "голос"
+      ],
+      "answer": "звук"
+    },
+    {
+      "id": "k26e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "muzika",
+      "hint": "muzika — музыка",
+      "options": [
+        "музыка",
+        "звук",
+        "игра"
+      ],
+      "answer": "музыка"
+    },
+    {
+      "id": "k26e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Čujem muziku.",
+      "hint": "Čujem muziku. — Я слышу музыку.",
+      "options": [
+        "Я слышу музыку.",
+        "Я люблю музыку.",
+        "Я слышу звук."
+      ],
+      "answer": "Я слышу музыку.",
+      "explanation": "muzika — muziku, как kafa — kafu: слышу что."
+    },
+    {
+      "id": "k26e21",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Čuješ li zvuk?",
+      "hint": "Čuješ li zvuk? — Ты слышишь звук?",
+      "options": [
+        "Ты слышишь звук?",
+        "Ты слышишь музыку?",
+        "Вы слышите звук?"
+      ],
+      "answer": "Ты слышишь звук?"
+    },
+    {
+      "id": "k26e22",
+      "type": "choice",
+      "prompt": "Mi čujemo muziku.",
+      "options": [
+        "Мы слышим музыку.",
+        "Вы слышите музыку.",
+        "Мы любим музыку."
+      ],
+      "answer": "Мы слышим музыку.",
+      "byEar": true
+    },
+    {
+      "id": "k26e23",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я покупаю",
+          "me": "kupujem"
+        },
+        {
+          "ru": "я путешествую",
+          "me": "putujem"
+        },
+        {
+          "ru": "я пью",
+          "me": "pijem"
+        },
+        {
+          "ru": "я слышу",
+          "me": "čujem"
+        }
+      ]
+    },
+    {
+      "id": "k26e24",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Idemo u grad!",
+      "hint": "Idemo u grad! — Мы идём в город!",
+      "options": [
+        "Мы идём в город!",
+        "Я иду в город!",
+        "Они идут в город!"
+      ],
+      "answer": "Мы идём в город!",
+      "explanation": "ići во множественном: idemo, idete, idu. Idemo! — ещё и «пошли!»."
+    },
+    {
+      "id": "k26e25",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я иду",
+          "me": "idem"
+        },
+        {
+          "ru": "мы идём",
+          "me": "idemo"
+        },
+        {
+          "ru": "вы идёте",
+          "me": "idete"
+        },
+        {
+          "ru": "они идут",
+          "me": "idu"
+        }
+      ]
+    },
+    {
+      "id": "k26e26",
+      "type": "choice",
+      "prompt": "Они идут домой. — Oni ___ kući.",
+      "options": [
+        "idu",
+        "idemo",
+        "ide"
+      ],
+      "answer": "idu",
+      "explanation": "ići во множественном: idemo, idete, idu. Idemo! — ещё и «пошли!».",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k26e27",
+      "type": "word_bank",
+      "prompt": "Мы путешествуем поездом.",
+      "answer": "Mi putujemo vozom.",
+      "bank": [
+        "vozom",
+        "putujemo",
+        "mi"
+      ]
+    },
+    {
+      "id": "k26e28",
+      "type": "speaking",
+      "phrase": "Čujem muziku.",
+      "translation": "Я слышу музыку."
+    },
+    {
+      "id": "k26e29",
+      "type": "repeat",
+      "phrase": "Idemo u grad!",
+      "translation": "Мы идём в город!"
+    },
+    {
+      "id": "k26e30",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я покупаю хлеб и воду.",
+          "me": "Kupujem hljeb i vodu."
+        },
+        {
+          "ru": "Я путешествую поездом.",
+          "me": "Putujem vozom."
+        },
+        {
+          "ru": "Собака пьёт воду.",
+          "me": "Pas pije vodu."
+        },
+        {
+          "ru": "Я слышу музыку.",
+          "me": "Čujem muziku."
+        },
+        {
+          "ru": "Мы идём в город!",
+          "me": "Idemo u grad!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "kupovati",
+      "ru": "покупать"
+    },
+    {
+      "me": "putovati",
+      "ru": "путешествовать"
+    },
+    {
+      "me": "radovati se",
+      "ru": "радоваться"
+    },
+    {
+      "me": "autobus",
+      "ru": "автобус"
+    },
+    {
+      "me": "voz",
+      "ru": "поезд"
+    },
+    {
+      "me": "piti",
+      "ru": "пить"
+    },
+    {
+      "me": "čuti",
+      "ru": "слышать"
+    },
+    {
+      "me": "zvuk",
+      "ru": "звук"
+    },
+    {
+      "me": "muzika",
+      "ru": "музыка"
+    }
+  ]
+}

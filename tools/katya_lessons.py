@@ -1758,6 +1758,84 @@ L.append(dict(id='k25', title='Zovem se Tiburon', section=S2, words=[
           ('Садитесь, пожалуйста.', 'Sjedite, molim vas.')),
 ]))
 
+# --- Урок 26 ---
+# Недостающие образцы настоящего времени (решение Кати — задержаться во втором
+# разделе): -ovati → -ujem (kupovati, putovati, radovati se) и -jem (piti, čuti).
+# К путешествиям — autobus и voz, к «слышать» — zvuk и muzika. Плюс
+# множественное число ići: idemo, idete, idu.
+OVATI = ('-ovati → -ujem: kupovati — kupujem, kupuješ, kupuje, kupujemo, kupujete, kupuju. '
+         'По инфинитиву не угадать, запоминаем образец.')
+PUTOVATI = 'Тот же образец: putovati — putujem, putuješ, putuje, putujemo, putujete, putuju.'
+VOZOM = ('vozom, autobusom, avionom — «на поезде, на автобусе, на самолёте». '
+         'Окончание -om, как sa prijateljem.')
+RADOVATI = 'Тот же образец, только с se: radujem se, raduješ se, raduje se. Radujem se! — «Я рад!»'
+JEM = '-jem: piti — pijem, piješ, pije, pijemo, pijete, piju.'
+CUTI = 'Тот же образец -jem: čujem, čuješ, čuje, čujemo, čujete, čuju.'
+MUZIKU = 'muzika — muziku, как kafa — kafu: слышу что.'
+IDEMO = 'ići во множественном: idemo, idete, idu. Idemo! — ещё и «пошли!».'
+L.append(dict(id='k26', title='Kupujem, putujem, pijem', section=S2, words=[
+    ('kupovati', 'покупать'), ('putovati', 'путешествовать'), ('radovati se', 'радоваться'),
+    ('autobus', 'автобус'), ('voz', 'поезд'),
+    ('piti', 'пить'), ('čuti', 'слышать'), ('zvuk', 'звук'), ('muzika', 'музыка')],
+    ex=[
+    dict(new('kupovati', 'покупать', ['покупать', 'стоить', 'путешествовать'],
+             label='Новый глагол'), explanation=OVATI),
+    pairs(('ja', 'kupujem'), ('ti', 'kupuješ'), ('on / ona', 'kupuje'), ('mi', 'kupujemo'),
+          ('vi', 'kupujete'), ('oni', 'kupuju')),
+    phrase('Kupujem hljeb i vodu.', 'Я покупаю хлеб и воду.',
+           ['Я покупаю хлеб и воду.', 'Я хочу хлеб и воду.', 'Я ем хлеб и пью воду.']),
+    pick('Что ты покупаешь? — Šta ___ ?', ['kupuješ', 'kupovaš', 'kupuje'], 'kupuješ',
+         explanation=OVATI, label='Вставь слово'),
+    dict(new('putovati', 'путешествовать', ['путешествовать', 'покупать', 'идти'],
+             label='Новый глагол'), explanation=PUTOVATI),
+    new('autobus', 'автобус', ['автобус', 'поезд', 'машина']),
+    new('voz', 'поезд', ['поезд', 'автобус', 'самолёт']),
+    pairs(('автобус', 'autobus'), ('поезд', 'voz'), ('самолёт', 'avion'), ('машина', 'auto')),
+    dict(phrase('Putujem vozom.', 'Я путешествую поездом.',
+                ['Я путешествую поездом.', 'Я путешествую автобусом.', 'Я жду поезд.']),
+         explanation=VOZOM),
+    pick('Mi putujemo autobusom.', ['Мы путешествуем автобусом.',
+                                    'Мы путешествуем поездом.',
+                                    'Вы путешествуете автобусом.'],
+         'Мы путешествуем автобусом.', explanation=VOZOM, label='Выбери перевод'),
+    dict(new('radovati se', 'радоваться', ['радоваться', 'волноваться', 'играть'],
+             label='Новый глагол'), explanation=RADOVATI),
+    phrase('Radujem se!', 'Я рад!', ['Я рад!', 'Я голоден!', 'Я устал!']),
+    dict(new('piti', 'пить', ['пить', 'есть', 'варить'], label='Новый глагол'),
+         explanation=JEM),
+    pairs(('ja', 'pijem'), ('ti', 'piješ'), ('on / ona', 'pije'), ('mi', 'pijemo'),
+          ('vi', 'pijete'), ('oni', 'piju')),
+    phrase('Pas pije vodu.', 'Собака пьёт воду.',
+           ['Собака пьёт воду.', 'Собака хочет воду.', 'Кошка пьёт воду.']),
+    pick('— Piješ li kafu?\n— ___', ['Pijem, hvala!', 'Pije, hvala!', 'Piju, hvala!'],
+         'Pijem, hvala!', explanation=JEM, label='Выбери ответ'),
+    dict(new('čuti', 'слышать', ['слышать', 'слушать музыку', 'пить'], label='Новый глагол'),
+         explanation=CUTI),
+    new('zvuk', 'звук', ['звук', 'музыка', 'голос']),
+    new('muzika', 'музыка', ['музыка', 'звук', 'игра']),
+    dict(phrase('Čujem muziku.', 'Я слышу музыку.',
+                ['Я слышу музыку.', 'Я люблю музыку.', 'Я слышу звук.']),
+         explanation=MUZIKU),
+    phrase('Čuješ li zvuk?', 'Ты слышишь звук?', ['Ты слышишь звук?', 'Ты слышишь музыку?',
+                                                 'Вы слышите звук?']),
+    ear('Mi čujemo muziku.', ['Мы слышим музыку.', 'Вы слышите музыку.', 'Мы любим музыку.'],
+        'Мы слышим музыку.'),
+    pairs(('я покупаю', 'kupujem'), ('я путешествую', 'putujem'), ('я пью', 'pijem'),
+          ('я слышу', 'čujem')),
+    dict(new('Idemo u grad!', 'Мы идём в город!', ['Мы идём в город!', 'Я иду в город!',
+                                                  'Они идут в город!'], label='Новая форма'),
+         explanation=IDEMO),
+    pairs(('я иду', 'idem'), ('мы идём', 'idemo'), ('вы идёте', 'idete'), ('они идут', 'idu')),
+    pick('Они идут домой. — Oni ___ kući.', ['idu', 'idemo', 'ide'], 'idu',
+         explanation=IDEMO, label='Вставь слово'),
+    bank('Мы путешествуем поездом.', 'Mi putujemo vozom.', ['vozom', 'putujemo', 'mi']),
+    say('Čujem muziku.', 'Я слышу музыку.'),
+    echo('Idemo u grad!', 'Мы идём в город!'),
+    pairs(('Я покупаю хлеб и воду.', 'Kupujem hljeb i vodu.'),
+          ('Я путешествую поездом.', 'Putujem vozom.'), ('Собака пьёт воду.', 'Pas pije vodu.'),
+          ('Я слышу музыку.', 'Čujem muziku.'), ('Мы идём в город!', 'Idemo u grad!')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
