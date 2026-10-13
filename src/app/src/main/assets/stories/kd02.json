@@ -1,0 +1,32 @@
+{
+  "id": "kd02",
+  "title": "Kod komšinice",
+  "note": "Вторая история Катиного курса: мама с сыном вечером в гостях у соседки. Ситуация Кати, текст собран из слов уроков 1–28. Реплики мамы и сына — «свои», соседки — «чужие».",
+  "speaker": "Komšinica",
+  "chunks": [
+    { "who": "them", "sr": "Dobro veče!", "ru": "Добрый вечер!" },
+    { "who": "you", "sr": "Dobro veče!", "ru": "Добрый вечер!" },
+    { "who": "you", "sr": "Zdravo, teta!", "ru": "Здравствуйте, тётя!" },
+    { "who": "them", "sr": "Uđite, molim vas.", "ru": "Проходите, пожалуйста." },
+    { "who": "them", "sr": "Sjedite ovdje, na kauč.", "ru": "Садитесь сюда, на диван." },
+    { "who": "you", "sr": "Hvala, kako je lijepo ovdje!", "ru": "Спасибо, как здесь красиво!" },
+    { "who": "them", "sr": "Hoćete li sok ili kafu?", "ru": "Хотите сок или кофе?" },
+    { "who": "you", "sr": "Hoću kafu, hvala.", "ru": "Я хочу кофе, спасибо." },
+    { "who": "you", "sr": "A ja hoću sok!", "ru": "А я хочу сок!" },
+    { "who": "them", "sr": "Imam i supu i pastu.", "ru": "У меня есть и суп, и паста." },
+    { "who": "them", "sr": "Jeste li gladni?", "ru": "Вы голодны?" },
+    { "who": "you", "sr": "Hoću supu, hvala.", "ru": "Я хочу суп, спасибо." },
+    { "who": "you", "sr": "A ja hoću pastu!", "ru": "А я хочу пасту!" },
+    { "who": "them", "sr": "Kako ste?", "ru": "Как у вас дела?" },
+    { "who": "you", "sr": "Dobro smo, hvala.", "ru": "Хорошо, спасибо." },
+    { "who": "you", "sr": "A kako ste vi?", "ru": "А как вы?" },
+    { "who": "them", "sr": "Polako, puno posla.", "ru": "Потихоньку, дел много." },
+    { "who": "you", "sr": "Sve je bilo jako ukusno.", "ru": "Всё было очень вкусно." },
+    { "who": "them", "sr": "Drago mi je!", "ru": "Мне очень приятно!" },
+    { "who": "you", "sr": "Moramo da krenemo kući.", "ru": "Нам пора домой." },
+    { "who": "you", "sr": "Hvala vam na svemu!", "ru": "Спасибо вам за всё!" },
+    { "who": "them", "sr": "Nema na čemu.", "ru": "Не за что." },
+    { "who": "them", "sr": "Laku noć!", "ru": "Спокойной ночи!" },
+    { "who": "you", "sr": "Ćao, teta!", "ru": "Пока, тётя!" }
+  ]
+}
