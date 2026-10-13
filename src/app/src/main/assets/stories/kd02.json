@@ -6,7 +6,7 @@
   "chunks": [
     { "who": "them", "sr": "Dobro veče!", "ru": "Добрый вечер!" },
     { "who": "you", "sr": "Dobro veče!", "ru": "Добрый вечер!" },
-    { "who": "you", "sr": "Zdravo, teta!", "ru": "Здравствуйте, тётя!" },
+    { "who": "you", "sr": "Dobro veče!", "ru": "Добрый вечер!" },
     { "who": "them", "sr": "Uđite, molim vas.", "ru": "Проходите, пожалуйста." },
     { "who": "them", "sr": "Sjedite ovdje, na kauč.", "ru": "Садитесь сюда, на диван." },
     { "who": "you", "sr": "Hvala, kako je lijepo ovdje!", "ru": "Спасибо, как здесь красиво!" },
@@ -27,6 +27,6 @@
     { "who": "you", "sr": "Hvala vam na svemu!", "ru": "Спасибо вам за всё!" },
     { "who": "them", "sr": "Nema na čemu.", "ru": "Не за что." },
     { "who": "them", "sr": "Laku noć!", "ru": "Спокойной ночи!" },
-    { "who": "you", "sr": "Ćao, teta!", "ru": "Пока, тётя!" }
+    { "who": "you", "sr": "Doviđenja!", "ru": "До свидания!" }
   ]
 }
