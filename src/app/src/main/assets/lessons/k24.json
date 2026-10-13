@@ -1,0 +1,428 @@
+{
+  "id": "k24",
+  "title": "Gladan kao vuk",
+  "exercises": [
+    {
+      "id": "k24e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "rep",
+      "hint": "rep — хвост",
+      "options": [
+        "хвост",
+        "нос",
+        "лапа"
+      ],
+      "answer": "хвост",
+      "explanation": "rep — мужского рода, как pas: dug rep, kratak rep."
+    },
+    {
+      "id": "k24e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "lisica",
+      "hint": "lisica — лиса",
+      "options": [
+        "лиса",
+        "кошка",
+        "волк"
+      ],
+      "answer": "лиса"
+    },
+    {
+      "id": "k24e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "vuk",
+      "hint": "vuk — волк",
+      "options": [
+        "волк",
+        "собака",
+        "лиса"
+      ],
+      "answer": "волк"
+    },
+    {
+      "id": "k24e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "лиса",
+          "me": "lisica"
+        },
+        {
+          "ru": "волк",
+          "me": "vuk"
+        },
+        {
+          "ru": "собака",
+          "me": "pas"
+        },
+        {
+          "ru": "кошка",
+          "me": "mačka"
+        }
+      ]
+    },
+    {
+      "id": "k24e05",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "dug",
+      "hint": "dug — длинный",
+      "options": [
+        "длинный",
+        "короткий",
+        "высокий"
+      ],
+      "answer": "длинный"
+    },
+    {
+      "id": "k24e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kratak",
+      "hint": "kratak — короткий",
+      "options": [
+        "короткий",
+        "длинный",
+        "низкий"
+      ],
+      "answer": "короткий",
+      "explanation": "В женском роде a выпадает, как у nizak: kratak, kratka, kratko."
+    },
+    {
+      "id": "k24e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "длинный",
+          "me": "dug"
+        },
+        {
+          "ru": "короткий",
+          "me": "kratak"
+        },
+        {
+          "ru": "высокий",
+          "me": "visok"
+        },
+        {
+          "ru": "низкий",
+          "me": "nizak"
+        }
+      ]
+    },
+    {
+      "id": "k24e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Lisica ima dug rep.",
+      "hint": "Lisica ima dug rep. — У лисы длинный хвост.",
+      "options": [
+        "У лисы длинный хвост.",
+        "У лисы короткий хвост.",
+        "У волка длинный хвост."
+      ],
+      "answer": "У лисы длинный хвост."
+    },
+    {
+      "id": "k24e09",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Prase ima kratak rep.",
+      "hint": "Prase ima kratak rep. — У поросёнка короткий хвост.",
+      "options": [
+        "У поросёнка короткий хвост.",
+        "У поросёнка длинный хвост.",
+        "У кошки короткий хвост."
+      ],
+      "answer": "У поросёнка короткий хвост."
+    },
+    {
+      "id": "k24e10",
+      "type": "choice",
+      "prompt": "Mačka ima ___ rep.",
+      "options": [
+        "dug",
+        "duga",
+        "dugo"
+      ],
+      "answer": "dug",
+      "explanation": "Окончание — по хвосту, а не по кошке: rep мужского рода, поэтому dug rep.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k24e11",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "crn",
+      "hint": "crn — чёрный",
+      "options": [
+        "чёрный",
+        "белый",
+        "коричневый"
+      ],
+      "answer": "чёрный"
+    },
+    {
+      "id": "k24e12",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "riđ",
+      "hint": "riđ — рыжий",
+      "options": [
+        "рыжий",
+        "красный",
+        "розовый"
+      ],
+      "answer": "рыжий",
+      "explanation": "riđ — рыжий, про шерсть и волосы. Красный — crven."
+    },
+    {
+      "id": "k24e13",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "roze",
+      "hint": "roze — розовый",
+      "options": [
+        "розовый",
+        "рыжий",
+        "зелёный"
+      ],
+      "answer": "розовый",
+      "explanation": "roze не меняется, как braon: roze prase, roze mačka."
+    },
+    {
+      "id": "k24e14",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "чёрный",
+          "me": "crn"
+        },
+        {
+          "ru": "рыжий",
+          "me": "riđ"
+        },
+        {
+          "ru": "розовый",
+          "me": "roze"
+        },
+        {
+          "ru": "коричневый",
+          "me": "braon"
+        },
+        {
+          "ru": "белый",
+          "me": "bijel"
+        }
+      ]
+    },
+    {
+      "id": "k24e15",
+      "type": "choice",
+      "prompt": "Lisica je ___ .",
+      "options": [
+        "riđ",
+        "riđa",
+        "riđe"
+      ],
+      "answer": "riđa",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k24e16",
+      "type": "choice",
+      "prompt": "Prase je roze.",
+      "options": [
+        "Поросёнок розовый.",
+        "Поросёнок рыжий.",
+        "Поросёнок маленький."
+      ],
+      "answer": "Поросёнок розовый.",
+      "explanation": "roze не меняется, как braon: roze prase, roze mačka.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k24e17",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moj pas je crn i ima dug rep.",
+      "hint": "Moj pas je crn i ima dug rep. — Моя собака чёрная, и у неё длинный хвост.",
+      "options": [
+        "Моя собака чёрная, и у неё длинный хвост.",
+        "Моя собака белая, и у неё длинный хвост.",
+        "Моя кошка чёрная, и у неё короткий хвост."
+      ],
+      "answer": "Моя собака чёрная, и у неё длинный хвост."
+    },
+    {
+      "id": "k24e18",
+      "type": "choice",
+      "prompt": "Vuk ima dug rep.",
+      "options": [
+        "У волка длинный хвост.",
+        "У волка короткий хвост.",
+        "У лисы длинный хвост."
+      ],
+      "answer": "У волка длинный хвост.",
+      "byEar": true
+    },
+    {
+      "id": "k24e19",
+      "type": "word_bank",
+      "prompt": "У поросёнка короткий хвост.",
+      "answer": "Prase ima kratak rep.",
+      "bank": [
+        "rep",
+        "kratak",
+        "prase",
+        "ima"
+      ]
+    },
+    {
+      "id": "k24e20",
+      "type": "speaking",
+      "phrase": "Lisica ima dug rep.",
+      "translation": "У лисы длинный хвост."
+    },
+    {
+      "id": "k24e21",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "gladan",
+      "hint": "gladan — голодный",
+      "options": [
+        "голодный",
+        "горячий",
+        "вкусный"
+      ],
+      "answer": "голодный"
+    },
+    {
+      "id": "k24e22",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Gladan sam.",
+      "hint": "Gladan sam. — Я голоден.",
+      "options": [
+        "Я голоден.",
+        "Я хочу пить.",
+        "Я устал."
+      ],
+      "answer": "Я голоден.",
+      "explanation": "О себе-женщине — Gladna sam. ja можно не говорить: по sam и так ясно, кто голоден."
+    },
+    {
+      "id": "k24e23",
+      "type": "choice",
+      "label": "Новая форма",
+      "prompt": "Gladna sam.",
+      "hint": "Gladna sam. — Я голодна.",
+      "options": [
+        "Я голодна.",
+        "Я голоден.",
+        "Она голодна."
+      ],
+      "answer": "Я голодна."
+    },
+    {
+      "id": "k24e24",
+      "type": "choice",
+      "prompt": "— Jesi li gladan?\n— ___",
+      "options": [
+        "Jesam, gladan sam!",
+        "Imam, gladan sam!",
+        "Hoću, gladan sam!"
+      ],
+      "answer": "Jesam, gladan sam!",
+      "explanation": "Отвечают тем же глаголом, что в вопросе: Jesi li? — Jesam.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "k24e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ja sam gladan kao vuk.",
+      "hint": "Ja sam gladan kao vuk. — Я голоден как волк.",
+      "options": [
+        "Я голоден как волк.",
+        "Я сильный как волк.",
+        "Волк голоден."
+      ],
+      "answer": "Я голоден как волк.",
+      "explanation": "Так и говорят — gladan kao vuk, как по-русски «голодный как волк»."
+    },
+    {
+      "id": "k24e26",
+      "type": "repeat",
+      "phrase": "Ja sam gladan kao vuk.",
+      "translation": "Я голоден как волк."
+    },
+    {
+      "id": "k24e27",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "У лисы длинный хвост.",
+          "me": "Lisica ima dug rep."
+        },
+        {
+          "ru": "Поросёнок розовый.",
+          "me": "Prase je roze."
+        },
+        {
+          "ru": "Лиса рыжая.",
+          "me": "Lisica je riđa."
+        },
+        {
+          "ru": "Я голоден.",
+          "me": "Gladan sam."
+        },
+        {
+          "ru": "Я голоден как волк.",
+          "me": "Ja sam gladan kao vuk."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "rep",
+      "ru": "хвост"
+    },
+    {
+      "me": "lisica",
+      "ru": "лиса"
+    },
+    {
+      "me": "vuk",
+      "ru": "волк"
+    },
+    {
+      "me": "dug",
+      "ru": "длинный"
+    },
+    {
+      "me": "kratak",
+      "ru": "короткий"
+    },
+    {
+      "me": "crn",
+      "ru": "чёрный"
+    },
+    {
+      "me": "riđ",
+      "ru": "рыжий"
+    },
+    {
+      "me": "roze",
+      "ru": "розовый"
+    },
+    {
+      "me": "gladan",
+      "ru": "голодный"
+    }
+  ]
+}

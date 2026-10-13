@@ -144,6 +144,12 @@
       "title": "Koliko mačaka ima na krevetu?",
       "file": "k23.json",
       "section": "Раздел 2"
+    },
+    {
+      "id": "k24",
+      "title": "Gladan kao vuk",
+      "file": "k24.json",
+      "section": "Раздел 2"
     }
   ]
 }
