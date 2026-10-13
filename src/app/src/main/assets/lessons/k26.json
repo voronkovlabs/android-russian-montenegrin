@@ -146,7 +146,7 @@
         "Я жду поезд."
       ],
       "answer": "Я путешествую поездом.",
-      "explanation": "vozom, autobusom, avionom — «на поезде, на автобусе, на самолёте». Окончание -om, как sa prijateljem."
+      "explanation": "vozom, autobusom, avionom — «на поезде, на автобусе, на самолёте»."
     },
     {
       "id": "k26e10",
@@ -158,7 +158,7 @@
         "Вы путешествуете автобусом."
       ],
       "answer": "Мы путешествуем автобусом.",
-      "explanation": "vozom, autobusom, avionom — «на поезде, на автобусе, на самолёте». Окончание -om, как sa prijateljem.",
+      "explanation": "vozom, autobusom, avionom — «на поезде, на автобусе, на самолёте».",
       "label": "Выбери перевод"
     },
     {

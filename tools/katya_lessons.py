@@ -1766,8 +1766,7 @@ L.append(dict(id='k25', title='Zovem se Tiburon', section=S2, words=[
 OVATI = ('-ovati → -ujem: kupovati — kupujem, kupuješ, kupuje, kupujemo, kupujete, kupuju. '
          'По инфинитиву не угадать, запоминаем образец.')
 PUTOVATI = 'Тот же образец: putovati — putujem, putuješ, putuje, putujemo, putujete, putuju.'
-VOZOM = ('vozom, autobusom, avionom — «на поезде, на автобусе, на самолёте». '
-         'Окончание -om, как sa prijateljem.')
+VOZOM = 'vozom, autobusom, avionom — «на поезде, на автобусе, на самолёте».' 
 RADOVATI = 'Тот же образец, только с se: radujem se, raduješ se, raduje se. Radujem se! — «Я рад!»'
 JEM = '-jem: piti — pijem, piješ, pije, pijemo, pijete, piju.'
 CUTI = 'Тот же образец -jem: čujem, čuješ, čuje, čujemo, čujete, čuju.'
