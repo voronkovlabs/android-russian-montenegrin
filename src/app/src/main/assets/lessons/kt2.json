@@ -1,0 +1,445 @@
+{
+  "id": "kt2",
+  "title": "Тест: Раздел 2",
+  "exercises": [
+    {
+      "id": "kt2e01",
+      "type": "choice",
+      "prompt": "Я не собака. — Ja ___ pas.",
+      "options": [
+        "nisam",
+        "ne sam",
+        "nije"
+      ],
+      "answer": "nisam",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt2e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я не",
+          "me": "ja nisam"
+        },
+        {
+          "ru": "ты не",
+          "me": "ti nisi"
+        },
+        {
+          "ru": "он не",
+          "me": "on nije"
+        },
+        {
+          "ru": "мы не",
+          "me": "mi nismo"
+        }
+      ]
+    },
+    {
+      "id": "kt2e03",
+      "type": "choice",
+      "prompt": "Pivo nije ___ .",
+      "options": [
+        "vruć",
+        "vruća",
+        "vruće"
+      ],
+      "answer": "vruće",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt2e04",
+      "type": "choice",
+      "prompt": "Mačke kuvaju riblju čorbu.",
+      "options": [
+        "Кошки варят рыбную похлёбку.",
+        "Кошки едят рыбную похлёбку.",
+        "Кошка варит рыбный суп."
+      ],
+      "answer": "Кошки варят рыбную похлёбку.",
+      "label": "Выбери перевод",
+      "hint": "kuvati — варить; čorba — похлёбка"
+    },
+    {
+      "id": "kt2e05",
+      "type": "choice",
+      "prompt": "— Imaš li brata?\n— ___",
+      "options": [
+        "Imam.",
+        "Jesam.",
+        "Hoću."
+      ],
+      "answer": "Imam.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "kt2e06",
+      "type": "choice",
+      "prompt": "— Je li supa vruća?\n— ___",
+      "options": [
+        "Jeste.",
+        "Imam.",
+        "Jesam."
+      ],
+      "answer": "Jeste.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "kt2e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "volim"
+        },
+        {
+          "ru": "ti",
+          "me": "voliš"
+        },
+        {
+          "ru": "mi",
+          "me": "volimo"
+        },
+        {
+          "ru": "oni",
+          "me": "vole"
+        }
+      ]
+    },
+    {
+      "id": "kt2e08",
+      "type": "choice",
+      "prompt": "Hoću ___ .",
+      "options": [
+        "kafu",
+        "kafa"
+      ],
+      "answer": "kafu",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt2e09",
+      "type": "choice",
+      "prompt": "Я не хочу суши. — ___ suši.",
+      "options": [
+        "Neću",
+        "Ne hoću",
+        "Nisam"
+      ],
+      "answer": "Neću",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt2e10",
+      "type": "choice",
+      "prompt": "Sve je ___ .",
+      "options": [
+        "skup",
+        "skupa",
+        "skupo"
+      ],
+      "answer": "skupo",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt2e11",
+      "type": "choice",
+      "prompt": "— Kako si?\n— Puno posla!\n\nЧто ответил знакомый?",
+      "options": [
+        "Дел невпроворот.",
+        "Всё дёшево.",
+        "Хочу спать."
+      ],
+      "answer": "Дел невпроворот.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "kt2e12",
+      "type": "choice",
+      "prompt": "— Gdje si?\n— ___",
+      "options": [
+        "U gradu sam.",
+        "Idem u grad."
+      ],
+      "answer": "U gradu sam.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "kt2e13",
+      "type": "choice",
+      "prompt": "Я иду домой. — Idem ___ .",
+      "options": [
+        "kući",
+        "kod kuće",
+        "u kući"
+      ],
+      "answer": "kući",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt2e14",
+      "type": "choice",
+      "prompt": "Jeste li sada kod kuće?",
+      "options": [
+        "Вы сейчас дома?",
+        "Вы идёте домой?",
+        "Вы сейчас в городе?"
+      ],
+      "answer": "Вы сейчас дома?",
+      "label": "Выбери перевод",
+      "hint": "sada — сейчас; kod kuće — дома"
+    },
+    {
+      "id": "kt2e15",
+      "type": "choice",
+      "prompt": "Я у бабушки. — Ja sam ___ .",
+      "options": [
+        "kod babe",
+        "u babi",
+        "na babi"
+      ],
+      "answer": "kod babe",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt2e16",
+      "type": "choice",
+      "prompt": "Тебе говорят: «Hvala vam na pomoći!» Что ответишь?",
+      "options": [
+        "Nema na čemu.",
+        "Sve je u redu.",
+        "Doviđenja!"
+      ],
+      "answer": "Nema na čemu.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "kt2e17",
+      "type": "choice",
+      "prompt": "Кошка на дереве. — Mačka je ___ drvetu.",
+      "options": [
+        "na",
+        "u",
+        "kod"
+      ],
+      "answer": "na",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt2e18",
+      "type": "choice",
+      "prompt": "— Odakle si?\n— ___",
+      "options": [
+        "Iz Rusije.",
+        "U Rusiji.",
+        "Na Rusiji."
+      ],
+      "answer": "Iz Rusije.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "kt2e19",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "весна",
+          "me": "proljeće"
+        },
+        {
+          "ru": "лето",
+          "me": "ljeto"
+        },
+        {
+          "ru": "осень",
+          "me": "jesen"
+        },
+        {
+          "ru": "зима",
+          "me": "zima"
+        }
+      ]
+    },
+    {
+      "id": "kt2e20",
+      "type": "choice",
+      "prompt": "Na krevetu ima pet ___ .",
+      "options": [
+        "mačaka",
+        "mačke",
+        "mačka"
+      ],
+      "answer": "mačaka",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt2e21",
+      "type": "choice",
+      "prompt": "Ne diraj moju sestru!",
+      "options": [
+        "Не трогай мою сестру!",
+        "Не буди мою сестру!",
+        "Позови мою сестру!"
+      ],
+      "answer": "Не трогай мою сестру!",
+      "byEar": true
+    },
+    {
+      "id": "kt2e22",
+      "type": "choice",
+      "prompt": "Lisica je ___ .",
+      "options": [
+        "riđa",
+        "riđ",
+        "riđe"
+      ],
+      "answer": "riđa",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt2e23",
+      "type": "choice",
+      "prompt": "Ja sam gladan kao vuk.",
+      "options": [
+        "Я голоден как волк.",
+        "Я сильный как волк.",
+        "Волк голоден."
+      ],
+      "answer": "Я голоден как волк.",
+      "label": "Выбери перевод",
+      "hint": "gladan — голодный; vuk — волк"
+    },
+    {
+      "id": "kt2e24",
+      "type": "choice",
+      "prompt": "— Kako se vi zovete?\n— ___",
+      "options": [
+        "Zovem se Tortuga.",
+        "Zovete se Tortuga.",
+        "Drago mi je."
+      ],
+      "answer": "Zovem se Tortuga.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "kt2e25",
+      "type": "choice",
+      "prompt": "Где ты живёшь? — Gdje ___ ?",
+      "options": [
+        "živiš",
+        "živim",
+        "žive"
+      ],
+      "answer": "živiš",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt2e26",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я покупаю",
+          "me": "kupujem"
+        },
+        {
+          "ru": "ты пьёшь",
+          "me": "piješ"
+        },
+        {
+          "ru": "они слышат",
+          "me": "čuju"
+        },
+        {
+          "ru": "мы идём",
+          "me": "idemo"
+        }
+      ]
+    },
+    {
+      "id": "kt2e27",
+      "type": "choice",
+      "prompt": "Как спросить «Можно сесть?»",
+      "options": [
+        "Mogu li sjesti?",
+        "Možeš li sjesti?",
+        "Mogu sjesti."
+      ],
+      "answer": "Mogu li sjesti?",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "kt2e28",
+      "type": "choice",
+      "prompt": "Мне пора идти домой. — Moram da ___ kući.",
+      "options": [
+        "krenem",
+        "krenuti",
+        "kreneš"
+      ],
+      "answer": "krenem",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt2e29",
+      "type": "word_bank",
+      "prompt": "Я немного говорю по-черногорски.",
+      "answer": "Govorim malo crnogorski.",
+      "bank": [
+        "crnogorski",
+        "malo",
+        "govorim"
+      ]
+    },
+    {
+      "id": "kt2e30",
+      "type": "choice",
+      "prompt": "Ты не знаешь, как что-то назвать. Что спросишь?",
+      "options": [
+        "Kako se ovo kaže na crnogorskom?",
+        "Šta kažeš?",
+        "Govoriš li ruski?"
+      ],
+      "answer": "Kako se ovo kaže na crnogorskom?",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "kt2e31",
+      "type": "speaking",
+      "phrase": "Treba li vam neka pomoć?",
+      "translation": "Вам нужна какая-нибудь помощь?"
+    },
+    {
+      "id": "kt2e32",
+      "type": "repeat",
+      "phrase": "Kupujem hljeb i vodu.",
+      "translation": "Я покупаю хлеб и воду."
+    },
+    {
+      "id": "kt2e33",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я не собака.",
+          "me": "Ja nisam pas."
+        },
+        {
+          "ru": "Сколько стоит?",
+          "me": "Koliko košta?"
+        },
+        {
+          "ru": "Откуда ты?",
+          "me": "Odakle si?"
+        },
+        {
+          "ru": "Я голоден.",
+          "me": "Gladan sam."
+        },
+        {
+          "ru": "Что скажешь?",
+          "me": "Šta kažeš?"
+        }
+      ]
+    }
+  ],
+  "words": []
+}
