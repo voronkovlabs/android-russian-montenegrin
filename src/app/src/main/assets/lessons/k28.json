@@ -1,0 +1,488 @@
+{
+  "id": "k28",
+  "title": "Kako se ovo kaže na crnogorskom?",
+  "exercises": [
+    {
+      "id": "k28e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "pisati",
+      "hint": "pisati — писать",
+      "options": [
+        "писать",
+        "пить",
+        "говорить"
+      ],
+      "answer": "писать",
+      "explanation": "s меняется на š: pišem, pišeš, piše, pišemo, pišete, pišu."
+    },
+    {
+      "id": "k28e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "pišem"
+        },
+        {
+          "ru": "ti",
+          "me": "pišeš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "piše"
+        },
+        {
+          "ru": "mi",
+          "me": "pišemo"
+        },
+        {
+          "ru": "vi",
+          "me": "pišete"
+        },
+        {
+          "ru": "oni",
+          "me": "pišu"
+        }
+      ]
+    },
+    {
+      "id": "k28e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pismo",
+      "hint": "pismo — письмо",
+      "options": [
+        "письмо",
+        "сказка",
+        "рисунок"
+      ],
+      "answer": "письмо"
+    },
+    {
+      "id": "k28e04",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Pišem pismo.",
+      "hint": "Pišem pismo. — Я пишу письмо.",
+      "options": [
+        "Я пишу письмо.",
+        "Я читаю письмо.",
+        "Я пишу сказку."
+      ],
+      "answer": "Я пишу письмо."
+    },
+    {
+      "id": "k28e05",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "bajka",
+      "hint": "bajka — сказка",
+      "options": [
+        "сказка",
+        "легенда",
+        "письмо"
+      ],
+      "answer": "сказка"
+    },
+    {
+      "id": "k28e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "legenda",
+      "hint": "legenda — легенда",
+      "options": [
+        "легенда",
+        "сказка",
+        "музыка"
+      ],
+      "answer": "легенда"
+    },
+    {
+      "id": "k28e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "сказка",
+          "me": "bajka"
+        },
+        {
+          "ru": "легенда",
+          "me": "legenda"
+        },
+        {
+          "ru": "письмо",
+          "me": "pismo"
+        },
+        {
+          "ru": "рисунок",
+          "me": "slika"
+        }
+      ]
+    },
+    {
+      "id": "k28e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Djed piše bajku.",
+      "hint": "Djed piše bajku. — Дедушка пишет сказку.",
+      "options": [
+        "Дедушка пишет сказку.",
+        "Бабушка пишет сказку.",
+        "Дедушка пишет письмо."
+      ],
+      "answer": "Дедушка пишет сказку.",
+      "explanation": "bajka — bajku: пишет что, как kafa — kafu."
+    },
+    {
+      "id": "k28e09",
+      "type": "choice",
+      "prompt": "Мы пишем письмо. — Mi ___ pismo.",
+      "options": [
+        "pišemo",
+        "pisamo",
+        "piše"
+      ],
+      "answer": "pišemo",
+      "explanation": "s меняется на š: pišem, pišeš, piše, pišemo, pišete, pišu.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k28e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Volim bajke i legende.",
+      "hint": "Volim bajke i legende. — Я люблю сказки и легенды.",
+      "options": [
+        "Я люблю сказки и легенды.",
+        "Я пишу сказки и легенды.",
+        "Я люблю сказки и музыку."
+      ],
+      "answer": "Я люблю сказки и легенды."
+    },
+    {
+      "id": "k28e11",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "kazati",
+      "hint": "kazati — сказать, говорить",
+      "options": [
+        "сказать, говорить",
+        "писать",
+        "слышать"
+      ],
+      "answer": "сказать, говорить",
+      "explanation": "z меняется на ž: kažem, kažeš, kaže, kažemo, kažete, kažu. Тот же приём, что pisati — pišem."
+    },
+    {
+      "id": "k28e12",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "kažem"
+        },
+        {
+          "ru": "ti",
+          "me": "kažeš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "kaže"
+        },
+        {
+          "ru": "mi",
+          "me": "kažemo"
+        },
+        {
+          "ru": "vi",
+          "me": "kažete"
+        },
+        {
+          "ru": "oni",
+          "me": "kažu"
+        }
+      ]
+    },
+    {
+      "id": "k28e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šta kažeš?",
+      "hint": "Šta kažeš? — Что скажешь?",
+      "options": [
+        "Что скажешь?",
+        "Что пишешь?",
+        "Что слышишь?"
+      ],
+      "answer": "Что скажешь?"
+    },
+    {
+      "id": "k28e14",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kako se ovo kaže na crnogorskom?",
+      "hint": "Kako se ovo kaže na crnogorskom? — Как это сказать по-черногорски?",
+      "options": [
+        "Как это сказать по-черногорски?",
+        "Как это написать по-черногорски?",
+        "Ты говоришь по-черногорски?"
+      ],
+      "answer": "Как это сказать по-черногорски?",
+      "explanation": "Буквально «как это говорится по-черногорски». Самый нужный вопрос, когда не знаешь слова. na crnogorskom — по-черногорски, na ruskom — по-русски."
+    },
+    {
+      "id": "k28e15",
+      "type": "choice",
+      "prompt": "Ты не знаешь, как что-то назвать. Что спросишь?",
+      "options": [
+        "Kako se ovo kaže na crnogorskom?",
+        "Šta kažeš?",
+        "Govoriš li ruski?"
+      ],
+      "answer": "Kako se ovo kaže na crnogorskom?",
+      "explanation": "Буквально «как это говорится по-черногорски». Самый нужный вопрос, когда не знаешь слова. na crnogorskom — по-черногорски, na ruskom — по-русски.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k28e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ajkula kaže: «Gladan sam!»",
+      "hint": "Ajkula kaže: «Gladan sam!» — Акула говорит: «Я голоден!»",
+      "options": [
+        "Акула говорит: «Я голоден!»",
+        "Акула пишет: «Я голоден!»",
+        "Черепаха говорит: «Я голодна!»"
+      ],
+      "answer": "Акула говорит: «Я голоден!»"
+    },
+    {
+      "id": "k28e17",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "govoriti",
+      "hint": "govoriti — говорить",
+      "options": [
+        "говорить",
+        "писать",
+        "жить"
+      ],
+      "answer": "говорить",
+      "explanation": "-iti → -im, как živjeti: govorim, govoriš, govori, govorimo, govorite, govore. На -iti кончается очень много глаголов."
+    },
+    {
+      "id": "k28e18",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "govorim"
+        },
+        {
+          "ru": "ti",
+          "me": "govoriš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "govori"
+        },
+        {
+          "ru": "mi",
+          "me": "govorimo"
+        },
+        {
+          "ru": "vi",
+          "me": "govorite"
+        },
+        {
+          "ru": "oni",
+          "me": "govore"
+        }
+      ]
+    },
+    {
+      "id": "k28e19",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Govorim malo crnogorski.",
+      "hint": "Govorim malo crnogorski. — Я немного говорю по-черногорски.",
+      "options": [
+        "Я немного говорю по-черногорски.",
+        "Я немного говорю по-русски.",
+        "Я много говорю по-черногорски."
+      ],
+      "answer": "Я немного говорю по-черногорски.",
+      "explanation": "govoriti crnogorski, ruski — говорить по-черногорски, по-русски."
+    },
+    {
+      "id": "k28e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Govorite li ruski?",
+      "hint": "Govorite li ruski? — Вы говорите по-русски?",
+      "options": [
+        "Вы говорите по-русски?",
+        "Ты говоришь по-русски?",
+        "Вы из России?"
+      ],
+      "answer": "Вы говорите по-русски?"
+    },
+    {
+      "id": "k28e21",
+      "type": "choice",
+      "prompt": "Она говорит по-русски. — Ona ___ ruski.",
+      "options": [
+        "govori",
+        "govore",
+        "govorim"
+      ],
+      "answer": "govori",
+      "explanation": "-iti → -im, как živjeti: govorim, govoriš, govori, govorimo, govorite, govore. На -iti кончается очень много глаголов.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k28e22",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "jako",
+      "hint": "jako — очень",
+      "options": [
+        "очень",
+        "уже",
+        "здесь"
+      ],
+      "answer": "очень"
+    },
+    {
+      "id": "k28e23",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Jako sam gladan.",
+      "hint": "Jako sam gladan. — Я очень голоден.",
+      "options": [
+        "Я очень голоден.",
+        "Я уже голоден.",
+        "Я не голоден."
+      ],
+      "answer": "Я очень голоден."
+    },
+    {
+      "id": "k28e24",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Volim životinje, na primjer mačke.",
+      "hint": "Volim životinje, na primjer mačke. — Я люблю животных, например кошек.",
+      "options": [
+        "Я люблю животных, например кошек.",
+        "Я люблю животных, особенно кошек.",
+        "Я люблю кошек и собак."
+      ],
+      "answer": "Я люблю животных, например кошек.",
+      "explanation": "na primjer — «например»."
+    },
+    {
+      "id": "k28e25",
+      "type": "choice",
+      "prompt": "Bajka je jako lijepa.",
+      "options": [
+        "Сказка очень красивая.",
+        "Сказка очень длинная.",
+        "Легенда очень красивая."
+      ],
+      "answer": "Сказка очень красивая.",
+      "byEar": true
+    },
+    {
+      "id": "k28e26",
+      "type": "word_bank",
+      "prompt": "Я немного говорю по-черногорски.",
+      "answer": "Govorim malo crnogorski.",
+      "bank": [
+        "crnogorski",
+        "malo",
+        "govorim"
+      ]
+    },
+    {
+      "id": "k28e27",
+      "type": "speaking",
+      "phrase": "Govorim malo crnogorski.",
+      "translation": "Я немного говорю по-черногорски."
+    },
+    {
+      "id": "k28e28",
+      "type": "repeat",
+      "phrase": "Pišem pismo.",
+      "translation": "Я пишу письмо."
+    },
+    {
+      "id": "k28e29",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я пишу письмо.",
+          "me": "Pišem pismo."
+        },
+        {
+          "ru": "Дедушка пишет сказку.",
+          "me": "Djed piše bajku."
+        },
+        {
+          "ru": "Что скажешь?",
+          "me": "Šta kažeš?"
+        },
+        {
+          "ru": "Я немного говорю по-черногорски.",
+          "me": "Govorim malo crnogorski."
+        },
+        {
+          "ru": "Я очень голоден.",
+          "me": "Jako sam gladan."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "pisati",
+      "ru": "писать"
+    },
+    {
+      "me": "pismo",
+      "ru": "письмо"
+    },
+    {
+      "me": "bajka",
+      "ru": "сказка"
+    },
+    {
+      "me": "legenda",
+      "ru": "легенда"
+    },
+    {
+      "me": "kazati",
+      "ru": "сказать, говорить"
+    },
+    {
+      "me": "govoriti",
+      "ru": "говорить"
+    },
+    {
+      "me": "crnogorski",
+      "ru": "черногорский"
+    },
+    {
+      "me": "ruski",
+      "ru": "русский"
+    },
+    {
+      "me": "jako",
+      "ru": "очень"
+    },
+    {
+      "me": "na primjer",
+      "ru": "например"
+    }
+  ]
+}

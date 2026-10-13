@@ -168,6 +168,12 @@
       "title": "Mogu li sjesti?",
       "file": "k27.json",
       "section": "Раздел 2"
+    },
+    {
+      "id": "k28",
+      "title": "Kako se ovo kaže na crnogorskom?",
+      "file": "k28.json",
+      "section": "Раздел 2"
     }
   ]
 }

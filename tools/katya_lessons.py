@@ -1914,6 +1914,91 @@ L.append(dict(id='k27', title='Mogu li sjesti?', section=S2, words=[
           ('Нам пора к бабушке.', 'Moramo da krenemo kod babe.')),
 ]))
 
+# --- Урок 28 ---
+# Последние образцы настоящего времени: pisati → pišem и kazati → kažem
+# (согласная в основе меняется), govoriti → govorim (-iti → -im). К ним bajka,
+# pismo, legenda. Плюс jako и na primjer — то, что осталось из истории kd01.
+# Русских слов внутри черногорской фразы нет намеренно: её произносит голос sr-RS.
+PISATI = 's меняется на š: pišem, pišeš, piše, pišemo, pišete, pišu.'
+BAJKU = 'bajka — bajku: пишет что, как kafa — kafu.'
+KAZATI = ('z меняется на ž: kažem, kažeš, kaže, kažemo, kažete, kažu. '
+          'Тот же приём, что pisati — pišem.')
+KAKO_SE_KAZE = ('Буквально «как это говорится по-черногорски». Самый нужный вопрос, '
+                'когда не знаешь слова. na crnogorskom — по-черногорски, na ruskom — по-русски.')
+GOVORITI = ('-iti → -im, как živjeti: govorim, govoriš, govori, govorimo, govorite, govore. '
+            'На -iti кончается очень много глаголов.')
+JEZIK = 'govoriti crnogorski, ruski — говорить по-черногорски, по-русски.'
+L.append(dict(id='k28', title='Kako se ovo kaže na crnogorskom?', section=S2, words=[
+    ('pisati', 'писать'), ('pismo', 'письмо'), ('bajka', 'сказка'), ('legenda', 'легенда'),
+    ('kazati', 'сказать, говорить'), ('govoriti', 'говорить'),
+    ('crnogorski', 'черногорский'), ('ruski', 'русский'),
+    ('jako', 'очень'), ('na primjer', 'например')],
+    ex=[
+    dict(new('pisati', 'писать', ['писать', 'пить', 'говорить'], label='Новый глагол'),
+         explanation=PISATI),
+    pairs(('ja', 'pišem'), ('ti', 'pišeš'), ('on / ona', 'piše'), ('mi', 'pišemo'),
+          ('vi', 'pišete'), ('oni', 'pišu')),
+    new('pismo', 'письмо', ['письмо', 'сказка', 'рисунок']),
+    phrase('Pišem pismo.', 'Я пишу письмо.', ['Я пишу письмо.', 'Я читаю письмо.',
+                                              'Я пишу сказку.']),
+    new('bajka', 'сказка', ['сказка', 'легенда', 'письмо']),
+    new('legenda', 'легенда', ['легенда', 'сказка', 'музыка']),
+    pairs(('сказка', 'bajka'), ('легенда', 'legenda'), ('письмо', 'pismo'),
+          ('рисунок', 'slika')),
+    dict(phrase('Djed piše bajku.', 'Дедушка пишет сказку.',
+                ['Дедушка пишет сказку.', 'Бабушка пишет сказку.', 'Дедушка пишет письмо.']),
+         explanation=BAJKU),
+    pick('Мы пишем письмо. — Mi ___ pismo.', ['pišemo', 'pisamo', 'piše'], 'pišemo',
+         explanation=PISATI, label='Вставь слово'),
+    phrase('Volim bajke i legende.', 'Я люблю сказки и легенды.',
+           ['Я люблю сказки и легенды.', 'Я пишу сказки и легенды.',
+            'Я люблю сказки и музыку.']),
+    dict(new('kazati', 'сказать, говорить', ['сказать, говорить', 'писать', 'слышать'],
+             label='Новый глагол'), explanation=KAZATI),
+    pairs(('ja', 'kažem'), ('ti', 'kažeš'), ('on / ona', 'kaže'), ('mi', 'kažemo'),
+          ('vi', 'kažete'), ('oni', 'kažu')),
+    phrase('Šta kažeš?', 'Что скажешь?', ['Что скажешь?', 'Что пишешь?', 'Что слышишь?']),
+    dict(phrase('Kako se ovo kaže na crnogorskom?', 'Как это сказать по-черногорски?',
+                ['Как это сказать по-черногорски?', 'Как это написать по-черногорски?',
+                 'Ты говоришь по-черногорски?']),
+         explanation=KAKO_SE_KAZE),
+    pick('Ты не знаешь, как что-то назвать. Что спросишь?',
+         ['Kako se ovo kaže na crnogorskom?', 'Šta kažeš?', 'Govoriš li ruski?'],
+         'Kako se ovo kaže na crnogorskom?', explanation=KAKO_SE_KAZE, label='Что скажешь?'),
+    phrase('Ajkula kaže: «Gladan sam!»', 'Акула говорит: «Я голоден!»',
+           ['Акула говорит: «Я голоден!»', 'Акула пишет: «Я голоден!»',
+            'Черепаха говорит: «Я голодна!»']),
+    dict(new('govoriti', 'говорить', ['говорить', 'писать', 'жить'], label='Новый глагол'),
+         explanation=GOVORITI),
+    pairs(('ja', 'govorim'), ('ti', 'govoriš'), ('on / ona', 'govori'), ('mi', 'govorimo'),
+          ('vi', 'govorite'), ('oni', 'govore')),
+    dict(phrase('Govorim malo crnogorski.', 'Я немного говорю по-черногорски.',
+                ['Я немного говорю по-черногорски.', 'Я немного говорю по-русски.',
+                 'Я много говорю по-черногорски.']),
+         explanation=JEZIK),
+    phrase('Govorite li ruski?', 'Вы говорите по-русски?',
+           ['Вы говорите по-русски?', 'Ты говоришь по-русски?', 'Вы из России?']),
+    pick('Она говорит по-русски. — Ona ___ ruski.', ['govori', 'govore', 'govorim'], 'govori',
+         explanation=GOVORITI, label='Вставь слово'),
+    new('jako', 'очень', ['очень', 'уже', 'здесь']),
+    phrase('Jako sam gladan.', 'Я очень голоден.', ['Я очень голоден.', 'Я уже голоден.',
+                                                   'Я не голоден.']),
+    dict(phrase('Volim životinje, na primjer mačke.', 'Я люблю животных, например кошек.',
+                ['Я люблю животных, например кошек.', 'Я люблю животных, особенно кошек.',
+                 'Я люблю кошек и собак.']),
+         explanation='na primjer — «например».'),
+    ear('Bajka je jako lijepa.', ['Сказка очень красивая.', 'Сказка очень длинная.',
+                                  'Легенда очень красивая.'], 'Сказка очень красивая.'),
+    bank('Я немного говорю по-черногорски.', 'Govorim malo crnogorski.',
+         ['crnogorski', 'malo', 'govorim']),
+    say('Govorim malo crnogorski.', 'Я немного говорю по-черногорски.'),
+    echo('Pišem pismo.', 'Я пишу письмо.'),
+    pairs(('Я пишу письмо.', 'Pišem pismo.'), ('Дедушка пишет сказку.', 'Djed piše bajku.'),
+          ('Что скажешь?', 'Šta kažeš?'),
+          ('Я немного говорю по-черногорски.', 'Govorim malo crnogorski.'),
+          ('Я очень голоден.', 'Jako sam gladan.')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
