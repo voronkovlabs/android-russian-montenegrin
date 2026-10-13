@@ -64,6 +64,19 @@
       "id": "k27e04",
       "type": "choice",
       "label": "Новая фраза",
+      "prompt": "Možete sjesti ovdje.",
+      "hint": "Možete sjesti ovdje. — Вы можете сесть здесь.",
+      "options": [
+        "Вы можете сесть здесь.",
+        "Вы можете сесть там.",
+        "Ты можешь сесть здесь."
+      ],
+      "answer": "Вы можете сесть здесь."
+    },
+    {
+      "id": "k27e05",
+      "type": "choice",
+      "label": "Новая фраза",
       "prompt": "Možeš li mi pomoći?",
       "hint": "Možeš li mi pomoći? — Ты можешь мне помочь?",
       "options": [
@@ -75,7 +88,7 @@
       "explanation": "pomoći — «помочь», от pomoć. Možeš li mi pomoći? — Ты можешь мне помочь?"
     },
     {
-      "id": "k27e05",
+      "id": "k27e06",
       "type": "choice",
       "prompt": "Мы можем идти домой. — Mi ___ ići kući.",
       "options": [
@@ -88,7 +101,7 @@
       "label": "Вставь слово"
     },
     {
-      "id": "k27e06",
+      "id": "k27e07",
       "type": "choice",
       "prompt": "Они могут есть картошку фри. — Oni ___ jesti pomfrit.",
       "options": [
@@ -101,7 +114,7 @@
       "label": "Вставь слово"
     },
     {
-      "id": "k27e07",
+      "id": "k27e08",
       "type": "choice",
       "prompt": "Ne mogu da spavam.",
       "options": [
@@ -113,7 +126,7 @@
       "byEar": true
     },
     {
-      "id": "k27e08",
+      "id": "k27e09",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "stolica",
@@ -126,7 +139,7 @@
       "answer": "стул"
     },
     {
-      "id": "k27e09",
+      "id": "k27e10",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "kauč",
@@ -139,7 +152,7 @@
       "answer": "диван"
     },
     {
-      "id": "k27e10",
+      "id": "k27e11",
       "type": "match",
       "pairs": [
         {
@@ -161,7 +174,7 @@
       ]
     },
     {
-      "id": "k27e11",
+      "id": "k27e12",
       "type": "choice",
       "label": "Новая форма",
       "prompt": "Gdje da sjednem?",
@@ -175,7 +188,7 @@
       "explanation": "-nem: sjesti — sjednem, sjedneš, sjedne, sjednemo, sjednete, sjednu. После da стоит такая форма: Gdje da sjednem? — Куда мне сесть?"
     },
     {
-      "id": "k27e12",
+      "id": "k27e13",
       "type": "match",
       "pairs": [
         {
@@ -205,7 +218,7 @@
       ]
     },
     {
-      "id": "k27e13",
+      "id": "k27e14",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Mogu li da sjednem na stolicu?",
@@ -219,7 +232,7 @@
       "explanation": "Mogu li da sjednem? — то же, что Mogu li sjesti? В Черногории часто говорят с da."
     },
     {
-      "id": "k27e14",
+      "id": "k27e15",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Mačka sjedne na kauč i spava.",
@@ -232,7 +245,7 @@
       "answer": "Кошка садится на диван и спит."
     },
     {
-      "id": "k27e15",
+      "id": "k27e16",
       "type": "choice",
       "prompt": "Куда нам сесть? — Gdje da ___ ?",
       "options": [
@@ -245,7 +258,7 @@
       "label": "Вставь слово"
     },
     {
-      "id": "k27e16",
+      "id": "k27e17",
       "type": "choice",
       "prompt": "Mogu li da sjednem na kauč?",
       "options": [
@@ -257,7 +270,7 @@
       "byEar": true
     },
     {
-      "id": "k27e17",
+      "id": "k27e18",
       "type": "choice",
       "label": "Новый глагол",
       "prompt": "krenuti",
@@ -271,7 +284,7 @@
       "explanation": "krenuti — тронуться, отправиться. Тот же образец -nem: krenem, kreneš, krene, krenemo, krenete, krenu."
     },
     {
-      "id": "k27e18",
+      "id": "k27e19",
       "type": "match",
       "pairs": [
         {
@@ -293,7 +306,7 @@
       ]
     },
     {
-      "id": "k27e19",
+      "id": "k27e20",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Moram da krenem kući.",
@@ -307,7 +320,7 @@
       "explanation": "Буквально «я должен, чтобы отправился». Так говорят, когда пора уходить: Moram da krenem kući. Как moram da idem."
     },
     {
-      "id": "k27e20",
+      "id": "k27e21",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Moramo da krenemo kod babe.",
@@ -320,7 +333,7 @@
       "answer": "Нам пора к бабушке."
     },
     {
-      "id": "k27e21",
+      "id": "k27e22",
       "type": "choice",
       "prompt": "Мне пора к дедушке. — Moram da krenem ___ .",
       "options": [
@@ -332,7 +345,7 @@
       "label": "Вставь слово"
     },
     {
-      "id": "k27e22",
+      "id": "k27e23",
       "type": "choice",
       "prompt": "— Hoćeš li kafu?\n— Ne, hvala, moram da krenem kod djeda.\n\nЧто ответил человек?",
       "options": [
@@ -344,7 +357,7 @@
       "label": "Мини-диалог"
     },
     {
-      "id": "k27e23",
+      "id": "k27e24",
       "type": "word_bank",
       "prompt": "Мне пора идти домой.",
       "answer": "Moram da krenem kući.",
@@ -356,19 +369,19 @@
       ]
     },
     {
-      "id": "k27e24",
+      "id": "k27e25",
       "type": "speaking",
       "phrase": "Mogu li sjesti?",
       "translation": "Можно сесть?"
     },
     {
-      "id": "k27e25",
+      "id": "k27e26",
       "type": "repeat",
       "phrase": "Moram da krenem kući.",
       "translation": "Мне пора идти домой."
     },
     {
-      "id": "k27e26",
+      "id": "k27e27",
       "type": "match",
       "pairs": [
         {

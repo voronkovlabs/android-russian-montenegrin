@@ -1863,6 +1863,8 @@ L.append(dict(id='k27', title='Mogu li sjesti?', section=S2, words=[
     dict(phrase('Mogu li sjesti?', 'Можно сесть?', ['Можно сесть?', 'Можно войти?',
                                                     'Я могу сидеть?']),
          explanation=MOGU_LI),
+    phrase('Možete sjesti ovdje.', 'Вы можете сесть здесь.',
+           ['Вы можете сесть здесь.', 'Вы можете сесть там.', 'Ты можешь сесть здесь.']),
     dict(phrase('Možeš li mi pomoći?', 'Ты можешь мне помочь?',
                 ['Ты можешь мне помочь?', 'Тебе нужна помощь?', 'Вы можете мне помочь?']),
          explanation=POMOCI),
