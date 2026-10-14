@@ -181,6 +181,12 @@
       "file": "kt2.json",
       "section": "Раздел 2",
       "test": true
+    },
+    {
+      "id": "k29",
+      "title": "Kad sam bio mali",
+      "file": "k29.json",
+      "section": "Раздел 3"
     }
   ]
 }

@@ -2074,6 +2074,95 @@ L.append(dict(id='kt2', title='Тест: Раздел 2', section=S2, test=True,
           ('Что скажешь?', 'Šta kažeš?')),
 ]))
 
+# ===== Раздел 3: прошедшее время =====
+S3 = 'Раздел 3'
+
+# --- Урок 29 ---
+# Прошедшее время начинается с «быть»: bio / bila / bili плюс sam, si, je…
+# Kad sam bio mali, kad sam bila mlada. И фраза из «моих фраз» Кати (82, 213):
+# карта местности — mapa, а не karta.
+BIO = ('Прошедшее время собирается из двух частей: sam, si, je, smo, ste, su — как в '
+       'настоящем, — и bio / bila / bili. bio — был (мужчина), bila — была (женщина), '
+       'bili — были (несколько). Ja sam bio mali — говорит мужчина, Ja sam bila mala — '
+       'женщина. А bilo — «было»: помнишь Je li bilo ukusno? из урока 15.')
+BIO_RED = ('Без ja слово sam встаёт вторым: Bio sam mali. После kad — тоже сразу за ним: '
+           'Kad sam bio mali. В начало фразы sam не ставят никогда.')
+MALI = ('После bio прилагательное стоит в обычной форме, а не «маленьким», как в русском: '
+        'bio sam mali, bila sam mala, bili smo mali.')
+KAD = 'kad (или kada) — «когда». Kad sam bila mlada… — Когда я была молодой…'
+MAPA = ('mapa — карта местности, так и говорят: na mapi, na Google mapi. karta чаще значит '
+        '«билет» (karta za autobus) или игральную карту; карта местности как karta звучит '
+        'книжно — geografska karta.')
+HAJDE = ('Hajde da… — «давай я…, давай мы…»: Hajde da ti pokažem — давай я тебе покажу. '
+         'Само по себе Hajde! — «Давай! Пошли!» na mapi — на карте (местный падеж от mapa).')
+L.append(dict(id='k29', title='Kad sam bio mali', section=S3, words=[
+    ('bio / bila / bili', 'был / была / были'), ('kad', 'когда'), ('mlad', 'молодой'),
+    ('mapa', 'карта (географическая)'), ('mjesto', 'место'), ('pokazati', 'показать'),
+    ('hajde', 'давай')],
+    ex=[
+    dict(phrase('Ja sam bio mali.', 'Я был маленьким.',
+                ['Я был маленьким.', 'Я маленький.', 'Он был маленьким.']), explanation=BIO),
+    dict(phrase('Ja sam bila mala.', 'Я была маленькой.',
+                ['Я была маленькой.', 'Я маленькая.', 'Она была маленькой.']), explanation=BIO),
+    pick('Говорит мужчина: «Я был маленьким». — Ja sam ___ mali.', ['bio', 'bila', 'bili'],
+         'bio', explanation=BIO, label='Вставь слово'),
+    pick('Говорит женщина: «Я была маленькой». — Ja sam ___ mala.', ['bio', 'bila', 'bili'],
+         'bila', explanation=BIO, label='Вставь слово'),
+    pairs(('я был', 'ja sam bio'), ('я была', 'ja sam bila'), ('ты был', 'ti si bio'),
+          ('он был', 'on je bio'), ('она была', 'ona je bila')),
+    pairs(('мы были', 'mi smo bili'), ('вы были', 'vi ste bili'), ('они были', 'oni su bili'),
+          ('она была', 'ona je bila')),
+    pick('Он был маленьким. — On ___ bio mali.', ['sam', 'si', 'je'], 'je',
+         explanation=BIO, label='Вставь слово'),
+    pick('Мы были маленькими. — Mi smo ___ mali.', ['bio', 'bila', 'bili'], 'bili',
+         explanation=BIO, label='Вставь слово'),
+    dict(pick('Bio sam mali.', ['Я был маленьким.', 'Я маленький.', 'Ты был маленьким.'],
+              'Я был маленьким.', label='Выбери перевод'), explanation=BIO_RED),
+    pick('Она была маленькой. — Bila je ___ .', ['mali', 'mala', 'malo'], 'mala',
+         explanation=MALI, label='Выбери форму'),
+    dict(new('kad', 'когда', ['когда', 'где', 'как']), explanation=KAD),
+    dict(phrase('Kad sam bio mali…', 'Когда я был маленьким…',
+                ['Когда я был маленьким…', 'Когда я маленький…', 'Где я был маленьким…']),
+         explanation=BIO_RED),
+    new('mlad', 'молодой', ['молодой', 'маленький', 'голодный']),
+    dict(phrase('Kad sam bila mlada…', 'Когда я была молодой…',
+                ['Когда я была молодой…', 'Когда я была маленькой…', 'Когда ты была молодой…']),
+         explanation=MALI),
+    pick('Когда я был молодым… (говорит мужчина) — Kad sam bio ___ …', ['mlad', 'mlada'],
+         'mlad', explanation=MALI, label='Выбери форму'),
+    phrase('Kad sam bio mlad, bio sam brz.', 'Когда я был молодым, я был быстрым.',
+           ['Когда я был молодым, я был быстрым.', 'Когда я был маленьким, я был быстрым.',
+            'Я молодой и быстрый.']),
+    pick('Kad smo bili mali…', ['Когда мы были маленькими…', 'Когда мы маленькие…',
+                                'Когда они были маленькими…'], 'Когда мы были маленькими…',
+         label='Выбери перевод'),
+    ear('Kad sam bila mala, bila sam u Rusiji.',
+        ['Когда я была маленькой, я была в России.', 'Когда я была молодой, я была в России.',
+         'Я маленькая, я в России.'], 'Когда я была маленькой, я была в России.'),
+    bank('Я была маленькой.', 'Ja sam bila mala.', ['mala', 'sam', 'ja', 'bila']),
+    bank('Когда я был молодым, я был быстрым.', 'Kad sam bio mlad, bio sam brz.',
+         ['brz', 'sam', 'kad', 'bio', 'mlad', 'bio', 'sam']),
+    say('Kad sam bila mlada, bila sam brza.', 'Когда я была молодой, я была быстрой.'),
+    dict(new('mapa', 'карта (географическая)', ['карта (географическая)', 'место', 'море']),
+         explanation=MAPA),
+    pick('Карта местности — как скажешь в разговоре?', ['mapa', 'karta'], 'mapa',
+         explanation=MAPA, label='Выбери слово'),
+    new('mjesto', 'место', ['место', 'море', 'город']),
+    dict(phrase('Hajde da ti pokažem to mjesto na mapi.', 'Давай я покажу тебе это место на карте.',
+                ['Давай я покажу тебе это место на карте.', 'Давай я покажу тебе эту карту.',
+                 'Покажи мне это место на карте.']), explanation=HAJDE),
+    pick('Хочешь показать подруге пляж на карте. Что скажешь?',
+         ['Hajde da ti pokažem to mjesto na mapi.', 'Gdje je to mjesto?',
+          'Kako se ovo kaže na crnogorskom?'], 'Hajde da ti pokažem to mjesto na mapi.',
+         explanation=HAJDE, label='Что скажешь?'),
+    bank('Давай я покажу тебе это место на карте.', 'Hajde da ti pokažem to mjesto na mapi.',
+         ['mapi', 'to', 'da', 'pokažem', 'na', 'hajde', 'mjesto', 'ti']),
+    echo('Hajde da ti pokažem to mjesto na mapi.', 'Давай я покажу тебе это место на карте.'),
+    pairs(('Я был маленьким.', 'Bio sam mali.'), ('Я была молодой.', 'Bila sam mlada.'),
+          ('Когда мы были маленькими…', 'Kad smo bili mali…'), ('карта', 'mapa'),
+          ('место', 'mjesto')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

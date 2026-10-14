@@ -1,0 +1,441 @@
+{
+  "id": "k29",
+  "title": "Kad sam bio mali",
+  "exercises": [
+    {
+      "id": "k29e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ja sam bio mali.",
+      "hint": "Ja sam bio mali. — Я был маленьким.",
+      "options": [
+        "Я был маленьким.",
+        "Я маленький.",
+        "Он был маленьким."
+      ],
+      "answer": "Я был маленьким.",
+      "explanation": "Прошедшее время собирается из двух частей: sam, si, je, smo, ste, su — как в настоящем, — и bio / bila / bili. bio — был (мужчина), bila — была (женщина), bili — были (несколько). Ja sam bio mali — говорит мужчина, Ja sam bila mala — женщина. А bilo — «было»: помнишь Je li bilo ukusno? из урока 15."
+    },
+    {
+      "id": "k29e02",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ja sam bila mala.",
+      "hint": "Ja sam bila mala. — Я была маленькой.",
+      "options": [
+        "Я была маленькой.",
+        "Я маленькая.",
+        "Она была маленькой."
+      ],
+      "answer": "Я была маленькой.",
+      "explanation": "Прошедшее время собирается из двух частей: sam, si, je, smo, ste, su — как в настоящем, — и bio / bila / bili. bio — был (мужчина), bila — была (женщина), bili — были (несколько). Ja sam bio mali — говорит мужчина, Ja sam bila mala — женщина. А bilo — «было»: помнишь Je li bilo ukusno? из урока 15."
+    },
+    {
+      "id": "k29e03",
+      "type": "choice",
+      "prompt": "Говорит мужчина: «Я был маленьким». — Ja sam ___ mali.",
+      "options": [
+        "bio",
+        "bila",
+        "bili"
+      ],
+      "answer": "bio",
+      "explanation": "Прошедшее время собирается из двух частей: sam, si, je, smo, ste, su — как в настоящем, — и bio / bila / bili. bio — был (мужчина), bila — была (женщина), bili — были (несколько). Ja sam bio mali — говорит мужчина, Ja sam bila mala — женщина. А bilo — «было»: помнишь Je li bilo ukusno? из урока 15.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k29e04",
+      "type": "choice",
+      "prompt": "Говорит женщина: «Я была маленькой». — Ja sam ___ mala.",
+      "options": [
+        "bio",
+        "bila",
+        "bili"
+      ],
+      "answer": "bila",
+      "explanation": "Прошедшее время собирается из двух частей: sam, si, je, smo, ste, su — как в настоящем, — и bio / bila / bili. bio — был (мужчина), bila — была (женщина), bili — были (несколько). Ja sam bio mali — говорит мужчина, Ja sam bila mala — женщина. А bilo — «было»: помнишь Je li bilo ukusno? из урока 15.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k29e05",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я был",
+          "me": "ja sam bio"
+        },
+        {
+          "ru": "я была",
+          "me": "ja sam bila"
+        },
+        {
+          "ru": "ты был",
+          "me": "ti si bio"
+        },
+        {
+          "ru": "он был",
+          "me": "on je bio"
+        },
+        {
+          "ru": "она была",
+          "me": "ona je bila"
+        }
+      ]
+    },
+    {
+      "id": "k29e06",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "мы были",
+          "me": "mi smo bili"
+        },
+        {
+          "ru": "вы были",
+          "me": "vi ste bili"
+        },
+        {
+          "ru": "они были",
+          "me": "oni su bili"
+        },
+        {
+          "ru": "она была",
+          "me": "ona je bila"
+        }
+      ]
+    },
+    {
+      "id": "k29e07",
+      "type": "choice",
+      "prompt": "Он был маленьким. — On ___ bio mali.",
+      "options": [
+        "sam",
+        "si",
+        "je"
+      ],
+      "answer": "je",
+      "explanation": "Прошедшее время собирается из двух частей: sam, si, je, smo, ste, su — как в настоящем, — и bio / bila / bili. bio — был (мужчина), bila — была (женщина), bili — были (несколько). Ja sam bio mali — говорит мужчина, Ja sam bila mala — женщина. А bilo — «было»: помнишь Je li bilo ukusno? из урока 15.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k29e08",
+      "type": "choice",
+      "prompt": "Мы были маленькими. — Mi smo ___ mali.",
+      "options": [
+        "bio",
+        "bila",
+        "bili"
+      ],
+      "answer": "bili",
+      "explanation": "Прошедшее время собирается из двух частей: sam, si, je, smo, ste, su — как в настоящем, — и bio / bila / bili. bio — был (мужчина), bila — была (женщина), bili — были (несколько). Ja sam bio mali — говорит мужчина, Ja sam bila mala — женщина. А bilo — «было»: помнишь Je li bilo ukusno? из урока 15.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k29e09",
+      "type": "choice",
+      "prompt": "Bio sam mali.",
+      "options": [
+        "Я был маленьким.",
+        "Я маленький.",
+        "Ты был маленьким."
+      ],
+      "answer": "Я был маленьким.",
+      "label": "Выбери перевод",
+      "explanation": "Без ja слово sam встаёт вторым: Bio sam mali. После kad — тоже сразу за ним: Kad sam bio mali. В начало фразы sam не ставят никогда."
+    },
+    {
+      "id": "k29e10",
+      "type": "choice",
+      "prompt": "Она была маленькой. — Bila je ___ .",
+      "options": [
+        "mali",
+        "mala",
+        "malo"
+      ],
+      "answer": "mala",
+      "explanation": "После bio прилагательное стоит в обычной форме, а не «маленьким», как в русском: bio sam mali, bila sam mala, bili smo mali.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k29e11",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kad",
+      "hint": "kad — когда",
+      "options": [
+        "когда",
+        "где",
+        "как"
+      ],
+      "answer": "когда",
+      "explanation": "kad (или kada) — «когда». Kad sam bila mlada… — Когда я была молодой…"
+    },
+    {
+      "id": "k29e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kad sam bio mali…",
+      "hint": "Kad sam bio mali… — Когда я был маленьким…",
+      "options": [
+        "Когда я был маленьким…",
+        "Когда я маленький…",
+        "Где я был маленьким…"
+      ],
+      "answer": "Когда я был маленьким…",
+      "explanation": "Без ja слово sam встаёт вторым: Bio sam mali. После kad — тоже сразу за ним: Kad sam bio mali. В начало фразы sam не ставят никогда."
+    },
+    {
+      "id": "k29e13",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "mlad",
+      "hint": "mlad — молодой",
+      "options": [
+        "молодой",
+        "маленький",
+        "голодный"
+      ],
+      "answer": "молодой"
+    },
+    {
+      "id": "k29e14",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kad sam bila mlada…",
+      "hint": "Kad sam bila mlada… — Когда я была молодой…",
+      "options": [
+        "Когда я была молодой…",
+        "Когда я была маленькой…",
+        "Когда ты была молодой…"
+      ],
+      "answer": "Когда я была молодой…",
+      "explanation": "После bio прилагательное стоит в обычной форме, а не «маленьким», как в русском: bio sam mali, bila sam mala, bili smo mali."
+    },
+    {
+      "id": "k29e15",
+      "type": "choice",
+      "prompt": "Когда я был молодым… (говорит мужчина) — Kad sam bio ___ …",
+      "options": [
+        "mlad",
+        "mlada"
+      ],
+      "answer": "mlad",
+      "explanation": "После bio прилагательное стоит в обычной форме, а не «маленьким», как в русском: bio sam mali, bila sam mala, bili smo mali.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k29e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kad sam bio mlad, bio sam brz.",
+      "hint": "Kad sam bio mlad, bio sam brz. — Когда я был молодым, я был быстрым.",
+      "options": [
+        "Когда я был молодым, я был быстрым.",
+        "Когда я был маленьким, я был быстрым.",
+        "Я молодой и быстрый."
+      ],
+      "answer": "Когда я был молодым, я был быстрым."
+    },
+    {
+      "id": "k29e17",
+      "type": "choice",
+      "prompt": "Kad smo bili mali…",
+      "options": [
+        "Когда мы были маленькими…",
+        "Когда мы маленькие…",
+        "Когда они были маленькими…"
+      ],
+      "answer": "Когда мы были маленькими…",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k29e18",
+      "type": "choice",
+      "prompt": "Kad sam bila mala, bila sam u Rusiji.",
+      "options": [
+        "Когда я была маленькой, я была в России.",
+        "Когда я была молодой, я была в России.",
+        "Я маленькая, я в России."
+      ],
+      "answer": "Когда я была маленькой, я была в России.",
+      "byEar": true
+    },
+    {
+      "id": "k29e19",
+      "type": "word_bank",
+      "prompt": "Я была маленькой.",
+      "answer": "Ja sam bila mala.",
+      "bank": [
+        "mala",
+        "sam",
+        "ja",
+        "bila"
+      ]
+    },
+    {
+      "id": "k29e20",
+      "type": "word_bank",
+      "prompt": "Когда я был молодым, я был быстрым.",
+      "answer": "Kad sam bio mlad, bio sam brz.",
+      "bank": [
+        "brz",
+        "sam",
+        "kad",
+        "bio",
+        "mlad",
+        "bio",
+        "sam"
+      ]
+    },
+    {
+      "id": "k29e21",
+      "type": "speaking",
+      "phrase": "Kad sam bila mlada, bila sam brza.",
+      "translation": "Когда я была молодой, я была быстрой."
+    },
+    {
+      "id": "k29e22",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "mapa",
+      "hint": "mapa — карта (географическая)",
+      "options": [
+        "карта (географическая)",
+        "место",
+        "море"
+      ],
+      "answer": "карта (географическая)",
+      "explanation": "mapa — карта местности, так и говорят: na mapi, na Google mapi. karta чаще значит «билет» (karta za autobus) или игральную карту; карта местности как karta звучит книжно — geografska karta."
+    },
+    {
+      "id": "k29e23",
+      "type": "choice",
+      "prompt": "Карта местности — как скажешь в разговоре?",
+      "options": [
+        "mapa",
+        "karta"
+      ],
+      "answer": "mapa",
+      "explanation": "mapa — карта местности, так и говорят: na mapi, na Google mapi. karta чаще значит «билет» (karta za autobus) или игральную карту; карта местности как karta звучит книжно — geografska karta.",
+      "label": "Выбери слово"
+    },
+    {
+      "id": "k29e24",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "mjesto",
+      "hint": "mjesto — место",
+      "options": [
+        "место",
+        "море",
+        "город"
+      ],
+      "answer": "место"
+    },
+    {
+      "id": "k29e25",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Hajde da ti pokažem to mjesto na mapi.",
+      "hint": "Hajde da ti pokažem to mjesto na mapi. — Давай я покажу тебе это место на карте.",
+      "options": [
+        "Давай я покажу тебе это место на карте.",
+        "Давай я покажу тебе эту карту.",
+        "Покажи мне это место на карте."
+      ],
+      "answer": "Давай я покажу тебе это место на карте.",
+      "explanation": "Hajde da… — «давай я…, давай мы…»: Hajde da ti pokažem — давай я тебе покажу. Само по себе Hajde! — «Давай! Пошли!» na mapi — на карте (местный падеж от mapa)."
+    },
+    {
+      "id": "k29e26",
+      "type": "choice",
+      "prompt": "Хочешь показать подруге пляж на карте. Что скажешь?",
+      "options": [
+        "Hajde da ti pokažem to mjesto na mapi.",
+        "Gdje je to mjesto?",
+        "Kako se ovo kaže na crnogorskom?"
+      ],
+      "answer": "Hajde da ti pokažem to mjesto na mapi.",
+      "explanation": "Hajde da… — «давай я…, давай мы…»: Hajde da ti pokažem — давай я тебе покажу. Само по себе Hajde! — «Давай! Пошли!» na mapi — на карте (местный падеж от mapa).",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k29e27",
+      "type": "word_bank",
+      "prompt": "Давай я покажу тебе это место на карте.",
+      "answer": "Hajde da ti pokažem to mjesto na mapi.",
+      "bank": [
+        "mapi",
+        "to",
+        "da",
+        "pokažem",
+        "na",
+        "hajde",
+        "mjesto",
+        "ti"
+      ]
+    },
+    {
+      "id": "k29e28",
+      "type": "repeat",
+      "phrase": "Hajde da ti pokažem to mjesto na mapi.",
+      "translation": "Давай я покажу тебе это место на карте."
+    },
+    {
+      "id": "k29e29",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я был маленьким.",
+          "me": "Bio sam mali."
+        },
+        {
+          "ru": "Я была молодой.",
+          "me": "Bila sam mlada."
+        },
+        {
+          "ru": "Когда мы были маленькими…",
+          "me": "Kad smo bili mali…"
+        },
+        {
+          "ru": "карта",
+          "me": "mapa"
+        },
+        {
+          "ru": "место",
+          "me": "mjesto"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "bio / bila / bili",
+      "ru": "был / была / были"
+    },
+    {
+      "me": "kad",
+      "ru": "когда"
+    },
+    {
+      "me": "mlad",
+      "ru": "молодой"
+    },
+    {
+      "me": "mapa",
+      "ru": "карта (географическая)"
+    },
+    {
+      "me": "mjesto",
+      "ru": "место"
+    },
+    {
+      "me": "pokazati",
+      "ru": "показать"
+    },
+    {
+      "me": "hajde",
+      "ru": "давай"
+    }
+  ]
+}
