@@ -1,6 +1,6 @@
 {
   "id": "k31",
-  "title": "Juče, u petak, kao i obično. Pošalji mi lokaciju!",
+  "title": "Juče, u petak. Pošalji mi lokaciju!",
   "exercises": [
     {
       "id": "k31e01",
@@ -289,58 +289,6 @@
     {
       "id": "k31e20",
       "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Kao i obično.",
-      "hint": "Kao i obično. — Как обычно.",
-      "options": [
-        "Как обычно.",
-        "Как всегда?",
-        "Как дела?"
-      ],
-      "answer": "Как обычно.",
-      "explanation": "kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično."
-    },
-    {
-      "id": "k31e21",
-      "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "U subotu smo bili kod babe, kao i obično.",
-      "hint": "U subotu smo bili kod babe, kao i obično. — В субботу мы были у бабушки, как обычно.",
-      "options": [
-        "В субботу мы были у бабушки, как обычно.",
-        "В пятницу мы были у бабушки, как обычно.",
-        "В субботу мы идём к бабушке, как обычно."
-      ],
-      "answer": "В субботу мы были у бабушки, как обычно."
-    },
-    {
-      "id": "k31e22",
-      "type": "choice",
-      "prompt": "В пятницу ты была дома, как всегда.",
-      "options": [
-        "U petak sam bila kod kuće, kao i obično.",
-        "U petak sam kod kuće.",
-        "U petak idem kući."
-      ],
-      "answer": "U petak sam bila kod kuće, kao i obično.",
-      "explanation": "kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično.",
-      "label": "Что скажешь?"
-    },
-    {
-      "id": "k31e23",
-      "type": "choice",
-      "prompt": "Juče sam bio kod kuće, kao i obično.",
-      "options": [
-        "Вчера я был дома, как обычно.",
-        "Раньше я был дома, как обычно.",
-        "Вчера я был в городе."
-      ],
-      "answer": "Вчера я был дома, как обычно.",
-      "byEar": true
-    },
-    {
-      "id": "k31e24",
-      "type": "choice",
       "label": "Новый глагол",
       "prompt": "poslati",
       "hint": "poslati — послать, отправить",
@@ -353,7 +301,7 @@
       "explanation": "poslati — послать, отправить. Просьба: Pošalji! (ты), Pošaljite! (вы). После da: pošaljem, pošalješ, pošalje, pošaljemo, pošaljete, pošalju — как sjesti → sjednem."
     },
     {
-      "id": "k31e25",
+      "id": "k31e21",
       "type": "match",
       "pairs": [
         {
@@ -383,7 +331,7 @@
       ]
     },
     {
-      "id": "k31e26",
+      "id": "k31e22",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Moram da pošaljem pismo.",
@@ -397,7 +345,7 @@
       "explanation": "poslati — послать, отправить. Просьба: Pošalji! (ты), Pošaljite! (вы). После da: pošaljem, pošalješ, pošalje, pošaljemo, pošaljete, pošalju — как sjesti → sjednem."
     },
     {
-      "id": "k31e27",
+      "id": "k31e23",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "lokacija",
@@ -410,7 +358,7 @@
       "answer": "геопозиция, местоположение"
     },
     {
-      "id": "k31e28",
+      "id": "k31e24",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Pošalji mi svoju lokaciju.",
@@ -424,7 +372,7 @@
       "explanation": "Так и пишут в Viber и WhatsApp. svoju — «свою»: svoja → svoju, как moja → moju. На «вы»: Pošaljite mi svoju lokaciju."
     },
     {
-      "id": "k31e29",
+      "id": "k31e25",
       "type": "choice",
       "prompt": "Ты ищешь подругу в городе и не знаешь, где она. Что напишешь?",
       "options": [
@@ -437,7 +385,7 @@
       "label": "Что скажешь?"
     },
     {
-      "id": "k31e30",
+      "id": "k31e26",
       "type": "choice",
       "prompt": "На «вы»: «Отправьте мне свою геопозицию». — ___ mi svoju lokaciju.",
       "options": [
@@ -450,7 +398,7 @@
       "label": "Вставь слово"
     },
     {
-      "id": "k31e31",
+      "id": "k31e27",
       "type": "word_bank",
       "prompt": "Отправь мне свою геопозицию.",
       "answer": "Pošalji mi svoju lokaciju.",
@@ -462,7 +410,7 @@
       ]
     },
     {
-      "id": "k31e32",
+      "id": "k31e28",
       "type": "word_bank",
       "prompt": "На прошлой неделе мы были на море.",
       "answer": "Prošle nedjelje smo bili na moru.",
@@ -476,36 +424,19 @@
       ]
     },
     {
-      "id": "k31e33",
-      "type": "word_bank",
-      "prompt": "В пятницу я была у бабушки, как обычно.",
-      "answer": "U petak sam bila kod babe, kao i obično.",
-      "bank": [
-        "obično",
-        "sam",
-        "kod",
-        "u",
-        "kao",
-        "bila",
-        "petak",
-        "i",
-        "babe"
-      ]
-    },
-    {
-      "id": "k31e34",
+      "id": "k31e29",
       "type": "speaking",
       "phrase": "Pošalji mi svoju lokaciju.",
       "translation": "Отправь мне свою геопозицию."
     },
     {
-      "id": "k31e35",
+      "id": "k31e30",
       "type": "repeat",
-      "phrase": "U subotu smo bili kod babe, kao i obično.",
-      "translation": "В субботу мы были у бабушки, как обычно."
+      "phrase": "Juče sam bila u gradu.",
+      "translation": "Вчера я была в городе."
     },
     {
-      "id": "k31e36",
+      "id": "k31e31",
       "type": "match",
       "pairs": [
         {
@@ -525,8 +456,8 @@
           "me": "Pas i mačka su bili gladni."
         },
         {
-          "ru": "как обычно",
-          "me": "kao i obično"
+          "ru": "в пятницу",
+          "me": "u petak"
         }
       ]
     }
@@ -551,10 +482,6 @@
     {
       "me": "subota",
       "ru": "суббота"
-    },
-    {
-      "me": "kao i obično",
-      "ru": "как обычно"
     },
     {
       "me": "poslati",

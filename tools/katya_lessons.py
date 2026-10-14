@@ -2261,8 +2261,8 @@ L.append(dict(id='k30', title='Bilo, bili, bile, bila', section=S3, words=[
 
 # --- Урок 31 ---
 # Отложенное из урока 30: смешанная группа и mi smo bile; слова времени juče,
-# ranije, prošle nedjelje, petak, subota, kao i obično (запись Кати 241).
-# И poslati: «Pošalji mi svoju lokaciju».
+# ranije, prošle nedjelje, petak, subota. И poslati: «Pošalji mi svoju lokaciju».
+# kao i obično (запись Кати 241) — в урок 32.
 MIX = ('Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — '
        'bile: mačka i kornjača su bile.')
 MI_BILE = 'mi smo bile — «мы были», если мы только женщины. Если с нами мужчина — mi smo bili.'
@@ -2272,15 +2272,13 @@ NEDJELJA = ('nedjelja — и «неделя», и «воскресенье». pr
             'Так говорят чаще всего; ещё можно prošle sedmice.')
 U_DAN = ('«В пятницу» — u petak, «в субботу» — u subotu: subota → subotu, как kafa → kafu. '
          'petak не меняется.')
-OBICNO = ('kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в '
-          'конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično.')
 POSLATI = ('poslati — послать, отправить. Просьба: Pošalji! (ты), Pošaljite! (вы). После da: '
            'pošaljem, pošalješ, pošalje, pošaljemo, pošaljete, pošalju — как sjesti → sjednem.')
 LOKACIJA = ('Так и пишут в Viber и WhatsApp. svoju — «свою»: svoja → svoju, как moja → moju. '
             'На «вы»: Pošaljite mi svoju lokaciju.')
-L.append(dict(id='k31', title='Juče, u petak, kao i obično. Pošalji mi lokaciju!', section=S3, words=[
+L.append(dict(id='k31', title='Juče, u petak. Pošalji mi lokaciju!', section=S3, words=[
     ('juče', 'вчера'), ('ranije', 'раньше'), ('prošle nedjelje', 'на прошлой неделе'),
-    ('petak', 'пятница'), ('subota', 'суббота'), ('kao i obično', 'как обычно'),
+    ('petak', 'пятница'), ('subota', 'суббота'),
     ('poslati', 'послать, отправить'), ('lokacija', 'геопозиция, местоположение'),
     ('svoj', 'свой')],
     ex=[
@@ -2325,17 +2323,6 @@ L.append(dict(id='k31', title='Juče, u petak, kao i obično. Pošalji mi lokaci
          label='Выбери форму'),
     pairs(('пятница', 'petak'), ('суббота', 'subota'), ('в пятницу', 'u petak'),
           ('в субботу', 'u subotu')),
-    dict(phrase('Kao i obično.', 'Как обычно.', ['Как обычно.', 'Как всегда?', 'Как дела?']),
-         explanation=OBICNO),
-    phrase('U subotu smo bili kod babe, kao i obično.', 'В субботу мы были у бабушки, как обычно.',
-           ['В субботу мы были у бабушки, как обычно.', 'В пятницу мы были у бабушки, как обычно.',
-            'В субботу мы идём к бабушке, как обычно.']),
-    pick('В пятницу ты была дома, как всегда.',
-         ['U petak sam bila kod kuće, kao i obično.', 'U petak sam kod kuće.', 'U petak idem kući.'],
-         'U petak sam bila kod kuće, kao i obično.', explanation=OBICNO, label='Что скажешь?'),
-    ear('Juče sam bio kod kuće, kao i obično.',
-        ['Вчера я был дома, как обычно.', 'Раньше я был дома, как обычно.', 'Вчера я был в городе.'],
-        'Вчера я был дома, как обычно.'),
     dict(new('poslati', 'послать, отправить', ['послать, отправить', 'показать', 'писать'],
              label='Новый глагол'), explanation=POSLATI),
     pairs(('ja', 'pošaljem'), ('ti', 'pošalješ'), ('on / ona', 'pošalje'), ('mi', 'pošaljemo'),
@@ -2358,15 +2345,13 @@ L.append(dict(id='k31', title='Juče, u petak, kao i obično. Pošalji mi lokaci
          ['lokaciju', 'mi', 'svoju', 'pošalji']),
     bank('На прошлой неделе мы были на море.', 'Prošle nedjelje smo bili na moru.',
          ['moru', 'smo', 'prošle', 'bili', 'na', 'nedjelje']),
-    bank('В пятницу я была у бабушки, как обычно.', 'U petak sam bila kod babe, kao i obično.',
-         ['obično', 'sam', 'kod', 'u', 'kao', 'bila', 'petak', 'i', 'babe']),
     say('Pošalji mi svoju lokaciju.', 'Отправь мне свою геопозицию.'),
-    echo('U subotu smo bili kod babe, kao i obično.', 'В субботу мы были у бабушки, как обычно.'),
+    echo('Juče sam bila u gradu.', 'Вчера я была в городе.'),
     pairs(('Отправь мне свою геопозицию.', 'Pošalji mi svoju lokaciju.'),
           ('Вчера я была в городе.', 'Juče sam bila u gradu.'),
           ('Мы (женщины) были у бабушки.', 'Mi smo bile kod babe.'),
           ('Собака и кошка были голодными.', 'Pas i mačka su bili gladni.'),
-          ('как обычно', 'kao i obično')),
+          ('в пятницу', 'u petak')),
 ]))
 
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
