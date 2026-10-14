@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -37,6 +39,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -88,7 +91,23 @@ fun HomeScreen(
         return
     }
 
+    // Список уроков открывается на следующем уроке, по центру экрана
+    // (заметки 277, 286): после урока экран начинался сверху, и следующий
+    // приходилось искать прокруткой. Ключ — сам следующий урок: вернулись из
+    // урока, пересобрался экран, переключили вкладку — список едет к нему.
+    val list = rememberLazyListState()
+    val next = if (state.tab == HomeTab.Lessons) nextLessonRow(state) else null
+    LaunchedEffect(state.tab, next) {
+        if (next == null) return@LaunchedEffect
+        list.scrollToItem(next)
+        val row = list.layoutInfo.visibleItemsInfo.firstOrNull { it.index == next }
+            ?: return@LaunchedEffect
+        val view = list.layoutInfo.viewportEndOffset - list.layoutInfo.viewportStartOffset
+        list.scrollBy(row.offset + row.size / 2f - view / 2f)
+    }
+
     LazyColumn(
+        state = list,
         modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
@@ -918,4 +937,25 @@ private fun cardsWord(n: Int): String {
         mod10 in 2..4 -> "карточки"
         else -> "карточек"
     }
+}
+
+/**
+ * Номер строки следующего урока в списке вкладки «Уроки» — первого не
+ * пройденного и не запертого. Раздел свёрнут — номер его заголовка.
+ *
+ * Считается тем же порядком, каким строится список: шапка, плитка повторения,
+ * потом по разделам заголовок и, если раздел открыт, уроки. Меняя список,
+ * меняй и здесь — иначе прокрутка уедет мимо.
+ */
+private fun nextLessonRow(state: HomeState): Int? {
+    // 0 — шапка, дальше строка ошибки (если есть) и плитка повторения.
+    var row = if (state.error != null) 3 else 2
+    for (group in state.groups) {
+        val open = group.title.isBlank() || group.title in state.expandedGroups
+        val header = if (group.title.isNotBlank()) row++ else null
+        val target = group.cards.indexOfFirst { !it.done && it.gate == null }
+        if (target >= 0) return if (open) row + target else header ?: row
+        if (open) row += group.cards.size
+    }
+    return null
 }

@@ -636,6 +636,9 @@ data class SessionState(
 // и места использования те же, менять их теперь можно без пересборки.
 private val REVIEW_LIMIT: Int get() = Config.current.srs.reviewLimit
 
+/** Через сколько после прошлой проверки спрашивать про обновление снова, при возвращении. */
+private const val UPDATE_RECHECK_MS = 60 * 60 * 1000L
+
 /** Сколько ошибок прощает строгий тест раздела; следующая — провал (Катя). */
 const val STRICT_MISTAKES = 3
 
@@ -945,6 +948,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val _notice = MutableStateFlow<String?>(null)
     val notice: StateFlow<String?> = _notice.asStateFlow()
 
+    /**
+     * Когда в последний раз спрашивали про обновление. Объявлено до `init`:
+     * объявленное ниже обнулилось бы уже после первой проверки.
+     */
+    private var updateCheckedAt = 0L
+
     init {
         // Список нарисованных картинок — до первой сборки заданий, иначе первые
         // карточки за запуск вышли бы с эмодзи. Это assets.list и маленький
@@ -1121,7 +1130,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     fun refreshIfNewDay() {
         if (homeDay.isNotEmpty() && homeDay != LocalDate.now().toString()) refreshHome()
+        // Обновление спрашивается и при возвращении, если с прошлого раза
+        // прошёл час (заметка 283). Раз за запуск было мало: Android держит
+        // процесс сутками, и до нового запуска свежая сборка не находилась.
+        if (System.currentTimeMillis() - updateCheckedAt > UPDATE_RECHECK_MS) lookForUpdate()
     }
+
 
     /**
      * Сводка словаря — вторым проходом, после того как экран уже показан.
@@ -1945,6 +1959,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * удалось» на главном экране каждый день — это шум, а не забота.
      */
     private fun lookForUpdate() {
+        updateCheckedAt = System.currentTimeMillis()
         viewModelScope.launch {
             Trace.span("сеть: проверка обновления") { updater.check() }.getOrNull()?.let { release ->
                 // Один запрос отвечает на два вопроса. Пришёл ответ про
