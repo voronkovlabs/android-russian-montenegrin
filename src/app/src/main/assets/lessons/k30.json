@@ -1,14 +1,59 @@
 {
   "id": "k30",
-  "title": "Juče, u petak, kao i obično",
+  "title": "Bilo, bili, bile, bila",
   "exercises": [
     {
       "id": "k30e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ono",
+      "hint": "ono — оно",
+      "options": [
+        "оно",
+        "она",
+        "он"
+      ],
+      "answer": "оно",
+      "explanation": "ono — «оно». Про него — bilo: ono je bilo. Средний род: drvo, sunce, pivo, prase, mače."
+    },
+    {
+      "id": "k30e02",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ono je bilo malo.",
+      "hint": "Ono je bilo malo. — Оно было маленьким.",
+      "options": [
+        "Оно было маленьким.",
+        "Она была маленькой.",
+        "Он был маленьким."
+      ],
+      "answer": "Оно было маленьким.",
+      "explanation": "ono — «оно». Про него — bilo: ono je bilo. Средний род: drvo, sunce, pivo, prase, mače."
+    },
+    {
+      "id": "k30e03",
+      "type": "choice",
+      "prompt": "Оно было большим. — Ono je ___ veliko.",
+      "options": [
+        "bilo",
+        "bio",
+        "bila"
+      ],
+      "answer": "bilo",
+      "explanation": "ono — «оно». Про него — bilo: ono je bilo. Средний род: drvo, sunce, pivo, prase, mače.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k30e04",
       "type": "match",
       "pairs": [
         {
           "ru": "я был",
           "me": "ja sam bio"
+        },
+        {
+          "ru": "я была",
+          "me": "ja sam bila"
         },
         {
           "ru": "ты был",
@@ -19,520 +64,447 @@
           "me": "on je bio"
         },
         {
-          "ru": "мы были",
-          "me": "mi smo bili"
+          "ru": "она была",
+          "me": "ona je bila"
         },
         {
-          "ru": "вы были",
-          "me": "vi ste bili"
-        },
-        {
-          "ru": "они были",
-          "me": "oni su bili"
+          "ru": "оно было",
+          "me": "ono je bilo"
         }
-      ],
-      "explanation": "Все формы: ja sam bio / bila, ti si bio / bila, on je bio, ona je bila, ono je bilo; mi smo bili, vi ste bili, oni su bili. Окончание — по тому, кто был: мужчина -o, женщина -la, несколько -li."
-    },
-    {
-      "id": "k30e02",
-      "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Gdje si bio?",
-      "hint": "Gdje si bio? — Где ты был?",
-      "options": [
-        "Где ты был?",
-        "Где ты?",
-        "Где он был?"
-      ],
-      "answer": "Где ты был?",
-      "explanation": "Все формы: ja sam bio / bila, ti si bio / bila, on je bio, ona je bila, ono je bilo; mi smo bili, vi ste bili, oni su bili. Окончание — по тому, кто был: мужчина -o, женщина -la, несколько -li."
-    },
-    {
-      "id": "k30e03",
-      "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Gdje si bila?",
-      "hint": "Gdje si bila? — Где ты была?",
-      "options": [
-        "Где ты была?",
-        "Где ты был?",
-        "Где она была?"
-      ],
-      "answer": "Где ты была?"
-    },
-    {
-      "id": "k30e04",
-      "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Mi smo bile kod babe.",
-      "hint": "Mi smo bile kod babe. — Мы (женщины) были у бабушки.",
-      "options": [
-        "Мы (женщины) были у бабушки.",
-        "Мы идём к бабушке.",
-        "Они были у бабушки."
-      ],
-      "answer": "Мы (женщины) были у бабушки.",
-      "explanation": "Если были только женщины или девочки — bile: Mi smo bile kod babe, One su bile kod kuće. Если среди них хоть один мужчина — bili."
+      ]
     },
     {
       "id": "k30e05",
       "type": "choice",
-      "prompt": "Мы с мамой (две женщины) были на море. — Mi smo ___ na moru.",
+      "label": "Новая фраза",
+      "prompt": "Drvo je bilo visoko.",
+      "hint": "Drvo je bilo visoko. — Дерево было высоким.",
       "options": [
-        "bile",
-        "bili",
-        "bila"
+        "Дерево было высоким.",
+        "Дерево высокое.",
+        "Дерево было большим."
       ],
-      "answer": "bile",
-      "explanation": "Если были только женщины или девочки — bile: Mi smo bile kod babe, One su bile kod kuće. Если среди них хоть один мужчина — bili.",
-      "label": "Вставь слово"
+      "answer": "Дерево было высоким.",
+      "explanation": "drvo — среднего рода, поэтому bilo и visoko: Drvo je bilo visoko."
     },
     {
       "id": "k30e06",
       "type": "choice",
-      "prompt": "Мы с папой были на море. — Mi smo ___ na moru.",
+      "prompt": "Drvo je bilo ___ .",
       "options": [
-        "bili",
-        "bile",
-        "bila"
+        "visoko",
+        "visok",
+        "visoka"
       ],
-      "answer": "bili",
-      "explanation": "Если были только женщины или девочки — bile: Mi smo bile kod babe, One su bile kod kuće. Если среди них хоть один мужчина — bili.",
-      "label": "Вставь слово"
+      "answer": "visoko",
+      "explanation": "drvo — среднего рода, поэтому bilo и visoko: Drvo je bilo visoko.",
+      "label": "Выбери форму"
     },
     {
       "id": "k30e07",
       "type": "choice",
-      "prompt": "Девочки были дома. — Djevojčice su ___ kod kuće.",
+      "label": "Новая фраза",
+      "prompt": "Mače je bilo malo.",
+      "hint": "Mače je bilo malo. — Котёнок был маленьким.",
       "options": [
-        "bile",
-        "bili",
-        "bila"
+        "Котёнок был маленьким.",
+        "Кошка была маленькой.",
+        "Котёнок маленький."
       ],
-      "answer": "bile",
-      "explanation": "Если были только женщины или девочки — bile: Mi smo bile kod babe, One su bile kod kuće. Если среди них хоть один мужчина — bili.",
-      "label": "Вставь слово"
+      "answer": "Котёнок был маленьким.",
+      "explanation": "mače — котёнок, среднего рода, как prase. Поэтому bilo и malo: Mače je bilo malo."
     },
     {
       "id": "k30e08",
       "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Gdje ste bili?",
-      "hint": "Gdje ste bili? — Где вы были?",
-      "options": [
-        "Где вы были?",
-        "Где вы?",
-        "Где мы были?"
-      ],
-      "answer": "Где вы были?",
-      "explanation": "На «вы» — всегда bili, даже к одной женщине: Gdje ste bili, gospođo? Так же, как по-русски «вы были»."
-    },
-    {
-      "id": "k30e09",
-      "type": "choice",
-      "prompt": "Вежливо, к пожилой соседке: «Где вы были?» — Gdje ste ___ ?",
-      "options": [
-        "bili",
-        "bila",
-        "bile"
-      ],
-      "answer": "bili",
-      "explanation": "На «вы» — всегда bili, даже к одной женщине: Gdje ste bili, gospođo? Так же, как по-русски «вы были».",
-      "label": "Вставь слово"
-    },
-    {
-      "id": "k30e10",
-      "type": "choice",
-      "prompt": "Ребёнок был голодным. — Dijete je ___ gladno.",
+      "prompt": "Котёнок был маленьким. — Mače je ___ malo.",
       "options": [
         "bilo",
         "bio",
         "bila"
       ],
       "answer": "bilo",
-      "explanation": "Про ребёнка, поросёнка, дерево (средний род) — bilo: Dijete je bilo gladno.",
+      "explanation": "mače — котёнок, среднего рода, как prase. Поэтому bilo и malo: Mače je bilo malo.",
       "label": "Вставь слово"
     },
     {
-      "id": "k30e11",
+      "id": "k30e09",
+      "type": "choice",
+      "prompt": "Поросёнок был розовым. — Prase je ___ roze.",
+      "options": [
+        "bilo",
+        "bio",
+        "bila"
+      ],
+      "answer": "bilo",
+      "explanation": "ono — «оно». Про него — bilo: ono je bilo. Средний род: drvo, sunce, pivo, prase, mače.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k30e10",
       "type": "match",
       "pairs": [
         {
-          "ru": "ты была",
-          "me": "ti si bila"
+          "ru": "дерево было",
+          "me": "drvo je bilo"
+        },
+        {
+          "ru": "котёнок был",
+          "me": "mače je bilo"
+        },
+        {
+          "ru": "собака была",
+          "me": "pas je bio"
+        },
+        {
+          "ru": "кошка была",
+          "me": "mačka je bila"
+        }
+      ]
+    },
+    {
+      "id": "k30e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Psi su bili mali.",
+      "hint": "Psi su bili mali. — Собаки были маленькими.",
+      "options": [
+        "Собаки были маленькими.",
+        "Кошки были маленькими.",
+        "Собака была маленькой."
+      ],
+      "answer": "Собаки были маленькими.",
+      "explanation": "oni su bili — о мужском роде: psi, dječaci."
+    },
+    {
+      "id": "k30e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mačke su bile male.",
+      "hint": "Mačke su bile male. — Кошки были маленькими.",
+      "options": [
+        "Кошки были маленькими.",
+        "Собаки были маленькими.",
+        "Кошка была маленькой."
+      ],
+      "answer": "Кошки были маленькими.",
+      "explanation": "one su bile — о женском роде: mačke, sestre, djevojčice."
+    },
+    {
+      "id": "k30e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Pisma su bila duga.",
+      "hint": "Pisma su bila duga. — Письма были длинными.",
+      "options": [
+        "Письма были длинными.",
+        "Письмо было длинным.",
+        "Сказки были длинными."
+      ],
+      "answer": "Письма были длинными.",
+      "explanation": "ona su bila — о среднем роде: pisma, piva. Здесь ona — «они», а не «она». Различает je / su: ona je bila — она была, ona su bila — они были."
+    },
+    {
+      "id": "k30e14",
+      "type": "choice",
+      "prompt": "Кошки — это…",
+      "options": [
+        "one",
+        "oni",
+        "ona"
+      ],
+      "answer": "one",
+      "explanation": "В черногорском три «они»: oni — мужской род (psi, dječaci), one — женский (mačke, sestre), ona — средний (pisma, piva).",
+      "label": "Выбери слово"
+    },
+    {
+      "id": "k30e15",
+      "type": "choice",
+      "prompt": "Собаки — это…",
+      "options": [
+        "oni",
+        "one",
+        "ona"
+      ],
+      "answer": "oni",
+      "explanation": "В черногорском три «они»: oni — мужской род (psi, dječaci), one — женский (mačke, sestre), ona — средний (pisma, piva).",
+      "label": "Выбери слово"
+    },
+    {
+      "id": "k30e16",
+      "type": "choice",
+      "prompt": "Письма — это…",
+      "options": [
+        "ona",
+        "oni",
+        "one"
+      ],
+      "answer": "ona",
+      "explanation": "В черногорском три «они»: oni — мужской род (psi, dječaci), one — женский (mačke, sestre), ona — средний (pisma, piva).",
+      "label": "Выбери слово"
+    },
+    {
+      "id": "k30e17",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "они (собаки)",
+          "me": "oni"
+        },
+        {
+          "ru": "они (кошки)",
+          "me": "one"
+        },
+        {
+          "ru": "они (письма)",
+          "me": "ona"
+        },
+        {
+          "ru": "оно (дерево)",
+          "me": "ono"
+        }
+      ]
+    },
+    {
+      "id": "k30e18",
+      "type": "choice",
+      "prompt": "Сёстры были у бабушки. — Sestre su ___ kod babe.",
+      "options": [
+        "bile",
+        "bili",
+        "bila"
+      ],
+      "answer": "bile",
+      "explanation": "one su bile — о женском роде: mačke, sestre, djevojčice.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k30e19",
+      "type": "choice",
+      "prompt": "Мальчики были в городе. — Dječaci su ___ u gradu.",
+      "options": [
+        "bili",
+        "bile",
+        "bila"
+      ],
+      "answer": "bili",
+      "explanation": "oni su bili — о мужском роде: psi, dječaci.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k30e20",
+      "type": "choice",
+      "prompt": "Письма были красивыми. — Pisma su ___ lijepa.",
+      "options": [
+        "bila",
+        "bile",
+        "bili"
+      ],
+      "answer": "bila",
+      "explanation": "ona su bila — о среднем роде: pisma, piva. Здесь ona — «они», а не «она». Различает je / su: ona je bila — она была, ona su bila — они были.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k30e21",
+      "type": "choice",
+      "prompt": "Ona su bila duga.",
+      "options": [
+        "Они были длинными.",
+        "Она была длинной.",
+        "Оно было длинным."
+      ],
+      "answer": "Они были длинными.",
+      "explanation": "ona su bila — о среднем роде: pisma, piva. Здесь ona — «они», а не «она». Различает je / su: ona je bila — она была, ona su bila — они были.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k30e22",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Pas i mačka su bili gladni.",
+      "hint": "Pas i mačka su bili gladni. — Собака и кошка были голодными.",
+      "options": [
+        "Собака и кошка были голодными.",
+        "Собака и кошка голодные.",
+        "Собаки были голодными."
+      ],
+      "answer": "Собака и кошка были голодными.",
+      "explanation": "Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — bile: mačka i kornjača su bile."
+    },
+    {
+      "id": "k30e23",
+      "type": "choice",
+      "prompt": "Кошка и черепаха были голодными. — Mačka i kornjača su ___ gladne.",
+      "options": [
+        "bile",
+        "bili"
+      ],
+      "answer": "bile",
+      "explanation": "Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — bile: mačka i kornjača su bile.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k30e24",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "мы были",
+          "me": "mi smo bili"
         },
         {
           "ru": "мы (женщины) были",
           "me": "mi smo bile"
         },
         {
-          "ru": "они (женщины) были",
+          "ru": "вы были",
+          "me": "vi ste bili"
+        },
+        {
+          "ru": "они были (м. р.)",
+          "me": "oni su bili"
+        },
+        {
+          "ru": "они были (ж. р.)",
           "me": "one su bile"
         },
         {
-          "ru": "ребёнок был",
-          "me": "dijete je bilo"
+          "ru": "они были (ср. р.)",
+          "me": "ona su bila"
         }
-      ]
-    },
-    {
-      "id": "k30e12",
-      "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Nisam bio kod kuće.",
-      "hint": "Nisam bio kod kuće. — Я не был дома.",
-      "options": [
-        "Я не был дома.",
-        "Я не дома.",
-        "Я был дома."
       ],
-      "answer": "Я не был дома.",
-      "explanation": "Не был — nisam bio, nisi bio, nije bio… То же nisam, что в настоящем: Nisam kod kuće → Nisam bio kod kuće."
-    },
-    {
-      "id": "k30e13",
-      "type": "choice",
-      "prompt": "Она не была в городе. — Ona ___ bila u gradu.",
-      "options": [
-        "nije",
-        "nisam",
-        "ne je"
-      ],
-      "answer": "nije",
-      "explanation": "Не был — nisam bio, nisi bio, nije bio… То же nisam, что в настоящем: Nisam kod kuće → Nisam bio kod kuće.",
-      "label": "Вставь слово"
-    },
-    {
-      "id": "k30e14",
-      "type": "choice",
-      "label": "Новое слово",
-      "prompt": "juče",
-      "hint": "juče — вчера",
-      "options": [
-        "вчера",
-        "сейчас",
-        "раньше"
-      ],
-      "answer": "вчера",
-      "explanation": "juče — вчера. Ставится в начало, а sam сразу за ним: Juče sam bila u gradu."
-    },
-    {
-      "id": "k30e15",
-      "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Juče sam bila u gradu.",
-      "hint": "Juče sam bila u gradu. — Вчера я была в городе.",
-      "options": [
-        "Вчера я была в городе.",
-        "Вчера я была дома.",
-        "Сейчас я в городе."
-      ],
-      "answer": "Вчера я была в городе."
-    },
-    {
-      "id": "k30e16",
-      "type": "choice",
-      "label": "Новое слово",
-      "prompt": "ranije",
-      "hint": "ranije — раньше",
-      "options": [
-        "раньше",
-        "вчера",
-        "уже"
-      ],
-      "answer": "раньше"
-    },
-    {
-      "id": "k30e17",
-      "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Ranije sam bio brz.",
-      "hint": "Ranije sam bio brz. — Раньше я был быстрым.",
-      "options": [
-        "Раньше я был быстрым.",
-        "Вчера я был быстрым.",
-        "Я быстрый."
-      ],
-      "answer": "Раньше я был быстрым."
-    },
-    {
-      "id": "k30e18",
-      "type": "choice",
-      "label": "Новое выражение",
-      "prompt": "prošle nedjelje",
-      "hint": "prošle nedjelje — на прошлой неделе",
-      "options": [
-        "на прошлой неделе",
-        "в воскресенье",
-        "вчера"
-      ],
-      "answer": "на прошлой неделе",
-      "explanation": "nedjelja — и «неделя», и «воскресенье». prošle nedjelje — «на прошлой неделе». Так говорят чаще всего; ещё можно prošle sedmice."
-    },
-    {
-      "id": "k30e19",
-      "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Prošle nedjelje smo bili na moru.",
-      "hint": "Prošle nedjelje smo bili na moru. — На прошлой неделе мы были на море.",
-      "options": [
-        "На прошлой неделе мы были на море.",
-        "Вчера мы были на море.",
-        "На прошлой неделе мы были в городе."
-      ],
-      "answer": "На прошлой неделе мы были на море."
-    },
-    {
-      "id": "k30e20",
-      "type": "match",
-      "pairs": [
-        {
-          "ru": "вчера",
-          "me": "juče"
-        },
-        {
-          "ru": "раньше",
-          "me": "ranije"
-        },
-        {
-          "ru": "на прошлой неделе",
-          "me": "prošle nedjelje"
-        },
-        {
-          "ru": "сейчас",
-          "me": "sada"
-        }
-      ]
-    },
-    {
-      "id": "k30e21",
-      "type": "choice",
-      "label": "Новое слово",
-      "prompt": "petak",
-      "hint": "petak — пятница",
-      "options": [
-        "пятница",
-        "суббота",
-        "неделя"
-      ],
-      "answer": "пятница"
-    },
-    {
-      "id": "k30e22",
-      "type": "choice",
-      "label": "Новое слово",
-      "prompt": "subota",
-      "hint": "subota — суббота",
-      "options": [
-        "суббота",
-        "пятница",
-        "неделя"
-      ],
-      "answer": "суббота"
-    },
-    {
-      "id": "k30e23",
-      "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "U petak sam bila kod babe.",
-      "hint": "U petak sam bila kod babe. — В пятницу я была у бабушки.",
-      "options": [
-        "В пятницу я была у бабушки.",
-        "В субботу я была у бабушки.",
-        "В пятницу я была дома."
-      ],
-      "answer": "В пятницу я была у бабушки.",
-      "explanation": "«В пятницу» — u petak, «в субботу» — u subotu: subota → subotu, как kafa → kafu. petak не меняется."
-    },
-    {
-      "id": "k30e24",
-      "type": "choice",
-      "prompt": "В субботу — u ___",
-      "options": [
-        "subotu",
-        "subota",
-        "suboti"
-      ],
-      "answer": "subotu",
-      "explanation": "«В пятницу» — u petak, «в субботу» — u subotu: subota → subotu, как kafa → kafu. petak не меняется.",
-      "label": "Выбери форму"
+      "explanation": "mi smo bile, vi ste bile — только о женщинах, как one su bile."
     },
     {
       "id": "k30e25",
-      "type": "match",
-      "pairs": [
-        {
-          "ru": "пятница",
-          "me": "petak"
-        },
-        {
-          "ru": "суббота",
-          "me": "subota"
-        },
-        {
-          "ru": "в пятницу",
-          "me": "u petak"
-        },
-        {
-          "ru": "в субботу",
-          "me": "u subotu"
-        }
-      ]
+      "type": "choice",
+      "prompt": "Мы с сестрой (две женщины) были у бабушки. — Mi smo ___ kod babe.",
+      "options": [
+        "bile",
+        "bili"
+      ],
+      "answer": "bile",
+      "explanation": "mi smo bile, vi ste bile — только о женщинах, как one su bile.",
+      "label": "Вставь слово"
     },
     {
       "id": "k30e26",
       "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Kao i obično.",
-      "hint": "Kao i obično. — Как обычно.",
+      "prompt": "Mače je bilo malo.",
       "options": [
-        "Как обычно.",
-        "Как всегда?",
-        "Как дела?"
+        "Котёнок был маленьким.",
+        "Кошка была маленькой.",
+        "Котёнок маленький."
       ],
-      "answer": "Как обычно.",
-      "explanation": "kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično."
+      "answer": "Котёнок был маленьким.",
+      "byEar": true
     },
     {
       "id": "k30e27",
       "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "U subotu smo bili kod babe, kao i obično.",
-      "hint": "U subotu smo bili kod babe, kao i obično. — В субботу мы были у бабушки, как обычно.",
+      "prompt": "Mačke su bile gladne.",
       "options": [
-        "В субботу мы были у бабушки, как обычно.",
-        "В пятницу мы были у бабушки, как обычно.",
-        "В субботу мы идём к бабушке, как обычно."
+        "Кошки были голодными.",
+        "Кошка была голодной.",
+        "Собаки были голодными."
       ],
-      "answer": "В субботу мы были у бабушки, как обычно."
+      "answer": "Кошки были голодными.",
+      "byEar": true
     },
     {
       "id": "k30e28",
-      "type": "choice",
-      "prompt": "— Gdje si bila u petak?\nТы была дома, как всегда. Что ответишь?",
-      "options": [
-        "Kod kuće, kao i obično.",
-        "Idem kući.",
-        "Nisam kod kuće."
-      ],
-      "answer": "Kod kuće, kao i obično.",
-      "explanation": "kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično.",
-      "label": "Мини-диалог"
+      "type": "word_bank",
+      "prompt": "Дерево было высоким.",
+      "answer": "Drvo je bilo visoko.",
+      "bank": [
+        "visoko",
+        "je",
+        "drvo",
+        "bilo"
+      ]
     },
     {
       "id": "k30e29",
-      "type": "choice",
-      "prompt": "Juče sam bio kod kuće, kao i obično.",
-      "options": [
-        "Вчера я был дома, как обычно.",
-        "Вчера я не был дома.",
-        "Раньше я был дома, как обычно."
-      ],
-      "answer": "Вчера я был дома, как обычно.",
-      "byEar": true
+      "type": "word_bank",
+      "prompt": "Котёнок был маленьким.",
+      "answer": "Mače je bilo malo.",
+      "bank": [
+        "malo",
+        "je",
+        "mače",
+        "bilo"
+      ]
     },
     {
       "id": "k30e30",
       "type": "word_bank",
-      "prompt": "На прошлой неделе мы были на море.",
-      "answer": "Prošle nedjelje smo bili na moru.",
+      "prompt": "Кошки были маленькими.",
+      "answer": "Mačke su bile male.",
       "bank": [
-        "moru",
-        "smo",
-        "prošle",
-        "bili",
-        "na",
-        "nedjelje"
+        "male",
+        "su",
+        "mačke",
+        "bile"
       ]
     },
     {
       "id": "k30e31",
-      "type": "word_bank",
-      "prompt": "В пятницу я была у бабушки, как обычно.",
-      "answer": "U petak sam bila kod babe, kao i obično.",
-      "bank": [
-        "obično",
-        "sam",
-        "kod",
-        "u",
-        "kao",
-        "bila",
-        "petak",
-        "i",
-        "babe"
-      ]
+      "type": "speaking",
+      "phrase": "Drvo je bilo visoko.",
+      "translation": "Дерево было высоким."
     },
     {
       "id": "k30e32",
-      "type": "speaking",
-      "phrase": "Gdje ste bili prošle nedjelje?",
-      "translation": "Где вы были на прошлой неделе?"
+      "type": "repeat",
+      "phrase": "Psi su bili gladni.",
+      "translation": "Собаки были голодными."
     },
     {
       "id": "k30e33",
-      "type": "repeat",
-      "phrase": "U subotu smo bili kod babe, kao i obično.",
-      "translation": "В субботу мы были у бабушки, как обычно."
-    },
-    {
-      "id": "k30e34",
       "type": "match",
       "pairs": [
         {
-          "ru": "Где ты была?",
-          "me": "Gdje si bila?"
+          "ru": "Дерево было высоким.",
+          "me": "Drvo je bilo visoko."
         },
         {
-          "ru": "Я не был дома.",
-          "me": "Nisam bio kod kuće."
+          "ru": "Котёнок был маленьким.",
+          "me": "Mače je bilo malo."
         },
         {
-          "ru": "Вчера я была в городе.",
-          "me": "Juče sam bila u gradu."
+          "ru": "Собаки были маленькими.",
+          "me": "Psi su bili mali."
         },
         {
-          "ru": "Мы (женщины) были у бабушки.",
-          "me": "Mi smo bile kod babe."
+          "ru": "Кошки были маленькими.",
+          "me": "Mačke su bile male."
         },
         {
-          "ru": "как обычно",
-          "me": "kao i obično"
+          "ru": "Письма были длинными.",
+          "me": "Pisma su bila duga."
         }
       ]
     }
   ],
   "words": [
     {
-      "me": "bile",
-      "ru": "были (о женщинах)"
+      "me": "ono",
+      "ru": "оно"
     },
     {
       "me": "bilo",
       "ru": "было"
     },
     {
-      "me": "juče",
-      "ru": "вчера"
+      "me": "one",
+      "ru": "они (женский род)"
     },
     {
-      "me": "ranije",
-      "ru": "раньше"
+      "me": "bile",
+      "ru": "были (женский род)"
     },
     {
-      "me": "prošle nedjelje",
-      "ru": "на прошлой неделе"
-    },
-    {
-      "me": "petak",
-      "ru": "пятница"
-    },
-    {
-      "me": "subota",
-      "ru": "суббота"
-    },
-    {
-      "me": "kao i obično",
-      "ru": "как обычно"
+      "me": "ona su bila",
+      "ru": "они были (средний род)"
     }
   ]
 }

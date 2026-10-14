@@ -2175,102 +2175,95 @@ L.append(dict(id='k29', title='Kad sam bio mali', section=S3, words=[
 ]))
 
 # --- Урок 30 ---
-# «Быть» в прошедшем во всех лицах: bile, bilo, ste bili на «вы», nisam bio.
-# Время: juče, ranije, prošle nedjelje, u petak, u subotu. И kao i obično
-# (запись Кати 241 «нужно выражение „как обычно“»).
-SVI = ('Все формы: ja sam bio / bila, ti si bio / bila, on je bio, ona je bila, ono je bilo; '
-       'mi smo bili, vi ste bili, oni su bili. Окончание — по тому, кто был: мужчина -o, '
-       'женщина -la, несколько -li.')
-BILE = ('Если были только женщины или девочки — bile: Mi smo bile kod babe, One su bile kod '
-        'kuće. Если среди них хоть один мужчина — bili.')
-VI_BILI = ('На «вы» — всегда bili, даже к одной женщине: Gdje ste bili, gospođo? Так же, как '
-           'по-русски «вы были».')
-BILO = 'Про ребёнка, поросёнка, дерево (средний род) — bilo: Dijete je bilo gladno.'
-NISAM_BIO = ('Не был — nisam bio, nisi bio, nije bio… То же nisam, что в настоящем: Nisam kod '
-             'kuće → Nisam bio kod kuće.')
-JUCE = 'juče — вчера. Ставится в начало, а sam сразу за ним: Juče sam bila u gradu.'
-NEDJELJA = ('nedjelja — и «неделя», и «воскресенье». prošle nedjelje — «на прошлой неделе». '
-            'Так говорят чаще всего; ещё можно prošle sedmice.')
-U_DAN = ('«В пятницу» — u petak, «в субботу» — u subotu: subota → subotu, как kafa → kafu. '
-         'petak не меняется.')
-OBICNO = ('kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в '
-          'конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično.')
-L.append(dict(id='k30', title='Juče, u petak, kao i obično', section=S3, words=[
-    ('bile', 'были (о женщинах)'), ('bilo', 'было'), ('juče', 'вчера'), ('ranije', 'раньше'),
-    ('prošle nedjelje', 'на прошлой неделе'), ('petak', 'пятница'), ('subota', 'суббота'),
-    ('kao i obično', 'как обычно')],
+# Весь урок — «быть» в прошедшем во всех лицах и родах: ono je bilo, три «они»
+# (oni / one / ona), смешанная группа, mi smo bile. Слова времени (juče,
+# ranije, prošle nedjelje, petak, subota, kao i obično) отложены на урок 31.
+ONO = ('ono — «оно». Про него — bilo: ono je bilo. Средний род: drvo, sunce, pivo, prase, '
+       'mače.')
+DRVO = 'drvo — среднего рода, поэтому bilo и visoko: Drvo je bilo visoko.'
+MACE = 'mače — котёнок, среднего рода, как prase. Поэтому bilo и malo: Mače je bilo malo.'
+ONI3 = ('В черногорском три «они»: oni — мужской род (psi, dječaci), one — женский (mačke, '
+        'sestre), ona — средний (pisma, piva).')
+ONI_M = 'oni su bili — о мужском роде: psi, dječaci.'
+ONE = 'one su bile — о женском роде: mačke, sestre, djevojčice.'
+ONA_SR = ('ona su bila — о среднем роде: pisma, piva. Здесь ona — «они», а не «она». '
+          'Различает je / su: ona je bila — она была, ona su bila — они были.')
+MIX = ('Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — '
+       'bile: mačka i kornjača su bile.')
+MI_BILE = 'mi smo bile, vi ste bile — только о женщинах, как one su bile.'
+L.append(dict(id='k30', title='Bilo, bili, bile, bila', section=S3, words=[
+    ('ono', 'оно'), ('bilo', 'было'), ('one', 'они (женский род)'), ('bile', 'были (женский род)'),
+    ('ona su bila', 'они были (средний род)')],
     ex=[
-    dict(pairs(('я был', 'ja sam bio'), ('ты был', 'ti si bio'), ('он был', 'on je bio'),
-               ('мы были', 'mi smo bili'), ('вы были', 'vi ste bili'), ('они были', 'oni su bili')),
-         explanation=SVI),
-    dict(phrase('Gdje si bio?', 'Где ты был?', ['Где ты был?', 'Где ты?', 'Где он был?']),
-         explanation=SVI),
-    phrase('Gdje si bila?', 'Где ты была?', ['Где ты была?', 'Где ты был?', 'Где она была?']),
-    dict(phrase('Mi smo bile kod babe.', 'Мы (женщины) были у бабушки.',
-                ['Мы (женщины) были у бабушки.', 'Мы идём к бабушке.', 'Они были у бабушки.']),
-         explanation=BILE),
-    pick('Мы с мамой (две женщины) были на море. — Mi smo ___ na moru.', ['bile', 'bili', 'bila'],
-         'bile', explanation=BILE, label='Вставь слово'),
-    pick('Мы с папой были на море. — Mi smo ___ na moru.', ['bili', 'bile', 'bila'],
-         'bili', explanation=BILE, label='Вставь слово'),
-    pick('Девочки были дома. — Djevojčice su ___ kod kuće.', ['bile', 'bili', 'bila'], 'bile',
-         explanation=BILE, label='Вставь слово'),
-    dict(phrase('Gdje ste bili?', 'Где вы были?', ['Где вы были?', 'Где вы?', 'Где мы были?']),
-         explanation=VI_BILI),
-    pick('Вежливо, к пожилой соседке: «Где вы были?» — Gdje ste ___ ?', ['bili', 'bila', 'bile'],
-         'bili', explanation=VI_BILI, label='Вставь слово'),
-    pick('Ребёнок был голодным. — Dijete je ___ gladno.', ['bilo', 'bio', 'bila'], 'bilo',
-         explanation=BILO, label='Вставь слово'),
-    pairs(('ты была', 'ti si bila'), ('мы (женщины) были', 'mi smo bile'),
-          ('они (женщины) были', 'one su bile'), ('ребёнок был', 'dijete je bilo')),
-    dict(phrase('Nisam bio kod kuće.', 'Я не был дома.',
-                ['Я не был дома.', 'Я не дома.', 'Я был дома.']), explanation=NISAM_BIO),
-    pick('Она не была в городе. — Ona ___ bila u gradu.', ['nije', 'nisam', 'ne je'], 'nije',
-         explanation=NISAM_BIO, label='Вставь слово'),
-    dict(new('juče', 'вчера', ['вчера', 'сейчас', 'раньше']), explanation=JUCE),
-    phrase('Juče sam bila u gradu.', 'Вчера я была в городе.',
-           ['Вчера я была в городе.', 'Вчера я была дома.', 'Сейчас я в городе.']),
-    new('ranije', 'раньше', ['раньше', 'вчера', 'уже']),
-    phrase('Ranije sam bio brz.', 'Раньше я был быстрым.',
-           ['Раньше я был быстрым.', 'Вчера я был быстрым.', 'Я быстрый.']),
-    dict(new('prošle nedjelje', 'на прошлой неделе',
-             ['на прошлой неделе', 'в воскресенье', 'вчера'], label='Новое выражение'),
-         explanation=NEDJELJA),
-    phrase('Prošle nedjelje smo bili na moru.', 'На прошлой неделе мы были на море.',
-           ['На прошлой неделе мы были на море.', 'Вчера мы были на море.',
-            'На прошлой неделе мы были в городе.']),
-    pairs(('вчера', 'juče'), ('раньше', 'ranije'), ('на прошлой неделе', 'prošle nedjelje'),
-          ('сейчас', 'sada')),
-    new('petak', 'пятница', ['пятница', 'суббота', 'неделя']),
-    new('subota', 'суббота', ['суббота', 'пятница', 'неделя']),
-    dict(phrase('U petak sam bila kod babe.', 'В пятницу я была у бабушки.',
-                ['В пятницу я была у бабушки.', 'В субботу я была у бабушки.',
-                 'В пятницу я была дома.']), explanation=U_DAN),
-    pick('В субботу — u ___', ['subotu', 'subota', 'suboti'], 'subotu', explanation=U_DAN,
+    dict(new('ono', 'оно', ['оно', 'она', 'он']), explanation=ONO),
+    dict(phrase('Ono je bilo malo.', 'Оно было маленьким.',
+                ['Оно было маленьким.', 'Она была маленькой.', 'Он был маленьким.']),
+         explanation=ONO),
+    pick('Оно было большим. — Ono je ___ veliko.', ['bilo', 'bio', 'bila'], 'bilo',
+         explanation=ONO, label='Вставь слово'),
+    pairs(('я был', 'ja sam bio'), ('я была', 'ja sam bila'), ('ты был', 'ti si bio'),
+          ('он был', 'on je bio'), ('она была', 'ona je bila'), ('оно было', 'ono je bilo')),
+    dict(phrase('Drvo je bilo visoko.', 'Дерево было высоким.',
+                ['Дерево было высоким.', 'Дерево высокое.', 'Дерево было большим.']),
+         explanation=DRVO),
+    pick('Drvo je bilo ___ .', ['visoko', 'visok', 'visoka'], 'visoko', explanation=DRVO,
          label='Выбери форму'),
-    pairs(('пятница', 'petak'), ('суббота', 'subota'), ('в пятницу', 'u petak'),
-          ('в субботу', 'u subotu')),
-    dict(phrase('Kao i obično.', 'Как обычно.', ['Как обычно.', 'Как всегда?', 'Как дела?']),
-         explanation=OBICNO),
-    phrase('U subotu smo bili kod babe, kao i obično.', 'В субботу мы были у бабушки, как обычно.',
-           ['В субботу мы были у бабушки, как обычно.', 'В пятницу мы были у бабушки, как обычно.',
-            'В субботу мы идём к бабушке, как обычно.']),
-    pick('— Gdje si bila u petak?\nТы была дома, как всегда. Что ответишь?',
-         ['Kod kuće, kao i obično.', 'Idem kući.', 'Nisam kod kuće.'], 'Kod kuće, kao i obično.',
-         explanation=OBICNO, label='Мини-диалог'),
-    ear('Juče sam bio kod kuće, kao i obično.',
-        ['Вчера я был дома, как обычно.', 'Вчера я не был дома.', 'Раньше я был дома, как обычно.'],
-        'Вчера я был дома, как обычно.'),
-    bank('На прошлой неделе мы были на море.', 'Prošle nedjelje smo bili na moru.',
-         ['moru', 'smo', 'prošle', 'bili', 'na', 'nedjelje']),
-    bank('В пятницу я была у бабушки, как обычно.', 'U petak sam bila kod babe, kao i obično.',
-         ['obično', 'sam', 'kod', 'u', 'kao', 'bila', 'petak', 'i', 'babe']),
-    say('Gdje ste bili prošle nedjelje?', 'Где вы были на прошлой неделе?'),
-    echo('U subotu smo bili kod babe, kao i obično.', 'В субботу мы были у бабушки, как обычно.'),
-    pairs(('Где ты была?', 'Gdje si bila?'), ('Я не был дома.', 'Nisam bio kod kuće.'),
-          ('Вчера я была в городе.', 'Juče sam bila u gradu.'),
-          ('Мы (женщины) были у бабушки.', 'Mi smo bile kod babe.'),
-          ('как обычно', 'kao i obično')),
+    dict(phrase('Mače je bilo malo.', 'Котёнок был маленьким.',
+                ['Котёнок был маленьким.', 'Кошка была маленькой.', 'Котёнок маленький.']),
+         explanation=MACE),
+    pick('Котёнок был маленьким. — Mače je ___ malo.', ['bilo', 'bio', 'bila'], 'bilo',
+         explanation=MACE, label='Вставь слово'),
+    pick('Поросёнок был розовым. — Prase je ___ roze.', ['bilo', 'bio', 'bila'], 'bilo',
+         explanation=ONO, label='Вставь слово'),
+    pairs(('дерево было', 'drvo je bilo'), ('котёнок был', 'mače je bilo'),
+          ('собака была', 'pas je bio'), ('кошка была', 'mačka je bila')),
+    dict(phrase('Psi su bili mali.', 'Собаки были маленькими.',
+                ['Собаки были маленькими.', 'Кошки были маленькими.', 'Собака была маленькой.']),
+         explanation=ONI_M),
+    dict(phrase('Mačke su bile male.', 'Кошки были маленькими.',
+                ['Кошки были маленькими.', 'Собаки были маленькими.', 'Кошка была маленькой.']),
+         explanation=ONE),
+    dict(phrase('Pisma su bila duga.', 'Письма были длинными.',
+                ['Письма были длинными.', 'Письмо было длинным.', 'Сказки были длинными.']),
+         explanation=ONA_SR),
+    pick('Кошки — это…', ['one', 'oni', 'ona'], 'one', explanation=ONI3, label='Выбери слово'),
+    pick('Собаки — это…', ['oni', 'one', 'ona'], 'oni', explanation=ONI3, label='Выбери слово'),
+    pick('Письма — это…', ['ona', 'oni', 'one'], 'ona', explanation=ONI3, label='Выбери слово'),
+    pairs(('они (собаки)', 'oni'), ('они (кошки)', 'one'), ('они (письма)', 'ona'),
+          ('оно (дерево)', 'ono')),
+    pick('Сёстры были у бабушки. — Sestre su ___ kod babe.', ['bile', 'bili', 'bila'], 'bile',
+         explanation=ONE, label='Вставь слово'),
+    pick('Мальчики были в городе. — Dječaci su ___ u gradu.', ['bili', 'bile', 'bila'], 'bili',
+         explanation=ONI_M, label='Вставь слово'),
+    pick('Письма были красивыми. — Pisma su ___ lijepa.', ['bila', 'bile', 'bili'], 'bila',
+         explanation=ONA_SR, label='Вставь слово'),
+    pick('Ona su bila duga.', ['Они были длинными.', 'Она была длинной.', 'Оно было длинным.'],
+         'Они были длинными.', explanation=ONA_SR, label='Выбери перевод'),
+    dict(phrase('Pas i mačka su bili gladni.', 'Собака и кошка были голодными.',
+                ['Собака и кошка были голодными.', 'Собака и кошка голодные.',
+                 'Собаки были голодными.']), explanation=MIX),
+    pick('Кошка и черепаха были голодными. — Mačka i kornjača su ___ gladne.', ['bile', 'bili'],
+         'bile', explanation=MIX, label='Вставь слово'),
+    dict(pairs(('мы были', 'mi smo bili'), ('мы (женщины) были', 'mi smo bile'),
+               ('вы были', 'vi ste bili'), ('они были (м. р.)', 'oni su bili'),
+               ('они были (ж. р.)', 'one su bile'), ('они были (ср. р.)', 'ona su bila')),
+         explanation=MI_BILE),
+    pick('Мы с сестрой (две женщины) были у бабушки. — Mi smo ___ kod babe.', ['bile', 'bili'],
+         'bile', explanation=MI_BILE, label='Вставь слово'),
+    ear('Mače je bilo malo.', ['Котёнок был маленьким.', 'Кошка была маленькой.',
+                               'Котёнок маленький.'], 'Котёнок был маленьким.'),
+    ear('Mačke su bile gladne.', ['Кошки были голодными.', 'Кошка была голодной.',
+                                  'Собаки были голодными.'], 'Кошки были голодными.'),
+    bank('Дерево было высоким.', 'Drvo je bilo visoko.', ['visoko', 'je', 'drvo', 'bilo']),
+    bank('Котёнок был маленьким.', 'Mače je bilo malo.', ['malo', 'je', 'mače', 'bilo']),
+    bank('Кошки были маленькими.', 'Mačke su bile male.', ['male', 'su', 'mačke', 'bile']),
+    say('Drvo je bilo visoko.', 'Дерево было высоким.'),
+    echo('Psi su bili gladni.', 'Собаки были голодными.'),
+    pairs(('Дерево было высоким.', 'Drvo je bilo visoko.'),
+          ('Котёнок был маленьким.', 'Mače je bilo malo.'),
+          ('Собаки были маленькими.', 'Psi su bili mali.'),
+          ('Кошки были маленькими.', 'Mačke su bile male.'),
+          ('Письма были длинными.', 'Pisma su bila duga.')),
 ]))
 
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
