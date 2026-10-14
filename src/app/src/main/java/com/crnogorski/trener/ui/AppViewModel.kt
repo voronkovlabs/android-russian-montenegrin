@@ -2242,11 +2242,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             if (!practice) vocabRepo.noteIntroduced(freshWords(items, byId))
 
             if (items.isEmpty()) {
-                refreshHome()
-                _home.value = _home.value.copy(
-                    error = if (practice) "Тренировать пока нечего — сперва заведи слова."
-                    else "На сегодня всё. Новые слова откроются завтра."
-                )
+                // Всплывающей строкой — по той же причине, что в `startFlip`
+                // (жалоба 248): `refreshHome` стирал ошибку через полсекунды.
+                _notice.value = if (practice) "Тренировать пока нечего — сперва заведи слова."
+                else "На сегодня всё. Новые слова откроются завтра."
                 return@launch
             }
 
@@ -2301,11 +2300,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             }
             val items = flipBatch(forms, emptySet())
             if (items.isEmpty()) {
-                refreshHome()
-                _home.value = _home.value.copy(
-                    error = if (forms) "Форм пока нет: они открываются, когда слово выучено в словаре."
-                    else "Слов пока нет — заведи их в словаре."
-                )
+                // Всплывающей строкой, а не полем `error` (жалоба 248): ошибка
+                // рисуется в самом верху списка, далеко от нажатой кнопки, а
+                // `refreshHome`, который тут же звался, пересобирал состояние
+                // целиком и стирал её через полсекунды. Человек видел, что экран
+                // дёрнулся, — и всё.
+                _notice.value = if (forms) "Форм пока нет: они открываются, когда значение слова выучено."
+                else "Слов пока нет — заведи их в словаре."
                 return@launch
             }
             _session.value = SessionState(
