@@ -251,6 +251,36 @@
     {
       "id": "k29e18",
       "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kad je svinja bila mala, bila je prase.",
+      "hint": "Kad je svinja bila mala, bila je prase. — Когда свинья была маленькой, она была поросёнком.",
+      "options": [
+        "Когда свинья была маленькой, она была поросёнком.",
+        "Когда свинья была молодой, она была поросёнком.",
+        "Свинья маленькая, это поросёнок."
+      ],
+      "answer": "Когда свинья была маленькой, она была поросёнком.",
+      "explanation": "Про неё — je, как в настоящем: svinja je mala → svinja je bila mala. После kad je встаёт сразу: Kad je svinja bila mala. bila — потому что svinja женского рода, хотя prase среднего: форму задаёт тот, кто «был»."
+    },
+    {
+      "id": "k29e19",
+      "type": "word_bank",
+      "prompt": "Когда свинья была маленькой, она была поросёнком.",
+      "answer": "Kad je svinja bila mala, bila je prase.",
+      "bank": [
+        "prase",
+        "je",
+        "bila",
+        "svinja",
+        "kad",
+        "mala",
+        "bila",
+        "je"
+      ]
+    },
+    {
+      "id": "k29e20",
+      "type": "choice",
       "prompt": "Kad sam bila mala, bila sam u Rusiji.",
       "options": [
         "Когда я была маленькой, я была в России.",
@@ -261,7 +291,7 @@
       "byEar": true
     },
     {
-      "id": "k29e19",
+      "id": "k29e21",
       "type": "word_bank",
       "prompt": "Я была маленькой.",
       "answer": "Ja sam bila mala.",
@@ -273,7 +303,7 @@
       ]
     },
     {
-      "id": "k29e20",
+      "id": "k29e22",
       "type": "word_bank",
       "prompt": "Когда я был молодым, я был быстрым.",
       "answer": "Kad sam bio mlad, bio sam brz.",
@@ -288,13 +318,13 @@
       ]
     },
     {
-      "id": "k29e21",
+      "id": "k29e23",
       "type": "speaking",
       "phrase": "Kad sam bila mlada, bila sam brza.",
       "translation": "Когда я была молодой, я была быстрой."
     },
     {
-      "id": "k29e22",
+      "id": "k29e24",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "mapa",
@@ -308,7 +338,7 @@
       "explanation": "mapa — карта местности, так и говорят: na mapi, na Google mapi. karta чаще значит «билет» (karta za autobus) или игральную карту; карта местности как karta звучит книжно — geografska karta."
     },
     {
-      "id": "k29e23",
+      "id": "k29e25",
       "type": "choice",
       "prompt": "Карта местности — как скажешь в разговоре?",
       "options": [
@@ -320,7 +350,7 @@
       "label": "Выбери слово"
     },
     {
-      "id": "k29e24",
+      "id": "k29e26",
       "type": "choice",
       "label": "Новое слово",
       "prompt": "mjesto",
@@ -333,7 +363,7 @@
       "answer": "место"
     },
     {
-      "id": "k29e25",
+      "id": "k29e27",
       "type": "choice",
       "label": "Новая фраза",
       "prompt": "Hajde da ti pokažem to mjesto na mapi.",
@@ -347,7 +377,7 @@
       "explanation": "Hajde da… — «давай я…, давай мы…»: Hajde da ti pokažem — давай я тебе покажу. Само по себе Hajde! — «Давай! Пошли!» na mapi — на карте (местный падеж от mapa)."
     },
     {
-      "id": "k29e26",
+      "id": "k29e28",
       "type": "choice",
       "prompt": "Хочешь показать подруге пляж на карте. Что скажешь?",
       "options": [
@@ -360,7 +390,7 @@
       "label": "Что скажешь?"
     },
     {
-      "id": "k29e27",
+      "id": "k29e29",
       "type": "word_bank",
       "prompt": "Давай я покажу тебе это место на карте.",
       "answer": "Hajde da ti pokažem to mjesto na mapi.",
@@ -376,13 +406,13 @@
       ]
     },
     {
-      "id": "k29e28",
+      "id": "k29e30",
       "type": "repeat",
       "phrase": "Hajde da ti pokažem to mjesto na mapi.",
       "translation": "Давай я покажу тебе это место на карте."
     },
     {
-      "id": "k29e29",
+      "id": "k29e31",
       "type": "match",
       "pairs": [
         {

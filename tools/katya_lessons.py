@@ -2093,6 +2093,9 @@ KAD = 'kad (или kada) — «когда». Kad sam bila mlada… — Когд�
 MAPA = ('mapa — карта местности, так и говорят: na mapi, na Google mapi. karta чаще значит '
         '«билет» (karta za autobus) или игральную карту; карта местности как karta звучит '
         'книжно — geografska karta.')
+SVINJA = ('Про неё — je, как в настоящем: svinja je mala → svinja je bila mala. После kad '
+          'je встаёт сразу: Kad je svinja bila mala. bila — потому что svinja женского рода, '
+          'хотя prase среднего: форму задаёт тот, кто «был».')
 HAJDE = ('Hajde da… — «давай я…, давай мы…»: Hajde da ti pokažem — давай я тебе покажу. '
          'Само по себе Hajde! — «Давай! Пошли!» na mapi — на карте (местный падеж от mapa).')
 L.append(dict(id='k29', title='Kad sam bio mali', section=S3, words=[
@@ -2136,6 +2139,14 @@ L.append(dict(id='k29', title='Kad sam bio mali', section=S3, words=[
     pick('Kad smo bili mali…', ['Когда мы были маленькими…', 'Когда мы маленькие…',
                                 'Когда они были маленькими…'], 'Когда мы были маленькими…',
          label='Выбери перевод'),
+    dict(phrase('Kad je svinja bila mala, bila je prase.',
+                'Когда свинья была маленькой, она была поросёнком.',
+                ['Когда свинья была маленькой, она была поросёнком.',
+                 'Когда свинья была молодой, она была поросёнком.',
+                 'Свинья маленькая, это поросёнок.']), explanation=SVINJA),
+    bank('Когда свинья была маленькой, она была поросёнком.',
+         'Kad je svinja bila mala, bila je prase.',
+         ['prase', 'je', 'bila', 'svinja', 'kad', 'mala', 'bila', 'je']),
     ear('Kad sam bila mala, bila sam u Rusiji.',
         ['Когда я была маленькой, я была в России.', 'Когда я была молодой, я была в России.',
          'Я маленькая, я в России.'], 'Когда я была маленькой, я была в России.'),
