@@ -2174,6 +2174,105 @@ L.append(dict(id='k29', title='Kad sam bio mali', section=S3, words=[
           ('место', 'mjesto')),
 ]))
 
+# --- Урок 30 ---
+# «Быть» в прошедшем во всех лицах: bile, bilo, ste bili на «вы», nisam bio.
+# Время: juče, ranije, prošle nedjelje, u petak, u subotu. И kao i obično
+# (запись Кати 241 «нужно выражение „как обычно“»).
+SVI = ('Все формы: ja sam bio / bila, ti si bio / bila, on je bio, ona je bila, ono je bilo; '
+       'mi smo bili, vi ste bili, oni su bili. Окончание — по тому, кто был: мужчина -o, '
+       'женщина -la, несколько -li.')
+BILE = ('Если были только женщины или девочки — bile: Mi smo bile kod babe, One su bile kod '
+        'kuće. Если среди них хоть один мужчина — bili.')
+VI_BILI = ('На «вы» — всегда bili, даже к одной женщине: Gdje ste bili, gospođo? Так же, как '
+           'по-русски «вы были».')
+BILO = 'Про ребёнка, поросёнка, дерево (средний род) — bilo: Dijete je bilo gladno.'
+NISAM_BIO = ('Не был — nisam bio, nisi bio, nije bio… То же nisam, что в настоящем: Nisam kod '
+             'kuće → Nisam bio kod kuće.')
+JUCE = 'juče — вчера. Ставится в начало, а sam сразу за ним: Juče sam bila u gradu.'
+NEDJELJA = ('nedjelja — и «неделя», и «воскресенье». prošle nedjelje — «на прошлой неделе». '
+            'Так говорят чаще всего; ещё можно prošle sedmice.')
+U_DAN = ('«В пятницу» — u petak, «в субботу» — u subotu: subota → subotu, как kafa → kafu. '
+         'petak не меняется.')
+OBICNO = ('kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в '
+          'конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično.')
+L.append(dict(id='k30', title='Juče, u petak, kao i obično', section=S3, words=[
+    ('bile', 'были (о женщинах)'), ('bilo', 'было'), ('juče', 'вчера'), ('ranije', 'раньше'),
+    ('prošle nedjelje', 'на прошлой неделе'), ('petak', 'пятница'), ('subota', 'суббота'),
+    ('kao i obično', 'как обычно')],
+    ex=[
+    dict(pairs(('я был', 'ja sam bio'), ('ты был', 'ti si bio'), ('он был', 'on je bio'),
+               ('мы были', 'mi smo bili'), ('вы были', 'vi ste bili'), ('они были', 'oni su bili')),
+         explanation=SVI),
+    dict(phrase('Gdje si bio?', 'Где ты был?', ['Где ты был?', 'Где ты?', 'Где он был?']),
+         explanation=SVI),
+    phrase('Gdje si bila?', 'Где ты была?', ['Где ты была?', 'Где ты был?', 'Где она была?']),
+    dict(phrase('Mi smo bile kod babe.', 'Мы (женщины) были у бабушки.',
+                ['Мы (женщины) были у бабушки.', 'Мы идём к бабушке.', 'Они были у бабушки.']),
+         explanation=BILE),
+    pick('Мы с мамой (две женщины) были на море. — Mi smo ___ na moru.', ['bile', 'bili', 'bila'],
+         'bile', explanation=BILE, label='Вставь слово'),
+    pick('Мы с папой были на море. — Mi smo ___ na moru.', ['bili', 'bile', 'bila'],
+         'bili', explanation=BILE, label='Вставь слово'),
+    pick('Девочки были дома. — Djevojčice su ___ kod kuće.', ['bile', 'bili', 'bila'], 'bile',
+         explanation=BILE, label='Вставь слово'),
+    dict(phrase('Gdje ste bili?', 'Где вы были?', ['Где вы были?', 'Где вы?', 'Где мы были?']),
+         explanation=VI_BILI),
+    pick('Вежливо, к пожилой соседке: «Где вы были?» — Gdje ste ___ ?', ['bili', 'bila', 'bile'],
+         'bili', explanation=VI_BILI, label='Вставь слово'),
+    pick('Ребёнок был голодным. — Dijete je ___ gladno.', ['bilo', 'bio', 'bila'], 'bilo',
+         explanation=BILO, label='Вставь слово'),
+    pairs(('ты была', 'ti si bila'), ('мы (женщины) были', 'mi smo bile'),
+          ('они (женщины) были', 'one su bile'), ('ребёнок был', 'dijete je bilo')),
+    dict(phrase('Nisam bio kod kuće.', 'Я не был дома.',
+                ['Я не был дома.', 'Я не дома.', 'Я был дома.']), explanation=NISAM_BIO),
+    pick('Она не была в городе. — Ona ___ bila u gradu.', ['nije', 'nisam', 'ne je'], 'nije',
+         explanation=NISAM_BIO, label='Вставь слово'),
+    dict(new('juče', 'вчера', ['вчера', 'сейчас', 'раньше']), explanation=JUCE),
+    phrase('Juče sam bila u gradu.', 'Вчера я была в городе.',
+           ['Вчера я была в городе.', 'Вчера я была дома.', 'Сейчас я в городе.']),
+    new('ranije', 'раньше', ['раньше', 'вчера', 'уже']),
+    phrase('Ranije sam bio brz.', 'Раньше я был быстрым.',
+           ['Раньше я был быстрым.', 'Вчера я был быстрым.', 'Я быстрый.']),
+    dict(new('prošle nedjelje', 'на прошлой неделе',
+             ['на прошлой неделе', 'в воскресенье', 'вчера'], label='Новое выражение'),
+         explanation=NEDJELJA),
+    phrase('Prošle nedjelje smo bili na moru.', 'На прошлой неделе мы были на море.',
+           ['На прошлой неделе мы были на море.', 'Вчера мы были на море.',
+            'На прошлой неделе мы были в городе.']),
+    pairs(('вчера', 'juče'), ('раньше', 'ranije'), ('на прошлой неделе', 'prošle nedjelje'),
+          ('сейчас', 'sada')),
+    new('petak', 'пятница', ['пятница', 'суббота', 'неделя']),
+    new('subota', 'суббота', ['суббота', 'пятница', 'неделя']),
+    dict(phrase('U petak sam bila kod babe.', 'В пятницу я была у бабушки.',
+                ['В пятницу я была у бабушки.', 'В субботу я была у бабушки.',
+                 'В пятницу я была дома.']), explanation=U_DAN),
+    pick('В субботу — u ___', ['subotu', 'subota', 'suboti'], 'subotu', explanation=U_DAN,
+         label='Выбери форму'),
+    pairs(('пятница', 'petak'), ('суббота', 'subota'), ('в пятницу', 'u petak'),
+          ('в субботу', 'u subotu')),
+    dict(phrase('Kao i obično.', 'Как обычно.', ['Как обычно.', 'Как всегда?', 'Как дела?']),
+         explanation=OBICNO),
+    phrase('U subotu smo bili kod babe, kao i obično.', 'В субботу мы были у бабушки, как обычно.',
+           ['В субботу мы были у бабушки, как обычно.', 'В пятницу мы были у бабушки, как обычно.',
+            'В субботу мы идём к бабушке, как обычно.']),
+    pick('— Gdje si bila u petak?\nТы была дома, как всегда. Что ответишь?',
+         ['Kod kuće, kao i obično.', 'Idem kući.', 'Nisam kod kuće.'], 'Kod kuće, kao i obično.',
+         explanation=OBICNO, label='Мини-диалог'),
+    ear('Juče sam bio kod kuće, kao i obično.',
+        ['Вчера я был дома, как обычно.', 'Вчера я не был дома.', 'Раньше я был дома, как обычно.'],
+        'Вчера я был дома, как обычно.'),
+    bank('На прошлой неделе мы были на море.', 'Prošle nedjelje smo bili na moru.',
+         ['moru', 'smo', 'prošle', 'bili', 'na', 'nedjelje']),
+    bank('В пятницу я была у бабушки, как обычно.', 'U petak sam bila kod babe, kao i obično.',
+         ['obično', 'sam', 'kod', 'u', 'kao', 'bila', 'petak', 'i', 'babe']),
+    say('Gdje ste bili prošle nedjelje?', 'Где вы были на прошлой неделе?'),
+    echo('U subotu smo bili kod babe, kao i obično.', 'В субботу мы были у бабушки, как обычно.'),
+    pairs(('Где ты была?', 'Gdje si bila?'), ('Я не был дома.', 'Nisam bio kod kuće.'),
+          ('Вчера я была в городе.', 'Juče sam bila u gradu.'),
+          ('Мы (женщины) были у бабушки.', 'Mi smo bile kod babe.'),
+          ('как обычно', 'kao i obično')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
