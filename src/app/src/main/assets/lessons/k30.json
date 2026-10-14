@@ -81,7 +81,7 @@
       "hint": "Drvo je bilo visoko. — Дерево было высоким.",
       "options": [
         "Дерево было высоким.",
-        "Дерево было голодным.",
+        "Дерево было зелёным.",
         "Дерево было розовым."
       ],
       "answer": "Дерево было высоким.",
@@ -90,7 +90,7 @@
     {
       "id": "k30e06",
       "type": "choice",
-      "prompt": "Дерево было высоким и голодным. — Drvo je bilo ___ i gladno.",
+      "prompt": "Дерево было высоким. — Drvo je bilo ___ .",
       "options": [
         "visoko",
         "visok",
@@ -422,8 +422,8 @@
     {
       "id": "k30e30",
       "type": "speaking",
-      "phrase": "Drvo je bilo visoko i gladno.",
-      "translation": "Дерево было высоким и голодным."
+      "phrase": "Drvo je bilo visoko.",
+      "translation": "Дерево было высоким."
     },
     {
       "id": "k30e31",
@@ -436,8 +436,8 @@
       "type": "match",
       "pairs": [
         {
-          "ru": "Дерево было высоким и голодным.",
-          "me": "Drvo je bilo visoko i gladno."
+          "ru": "Дерево было высоким.",
+          "me": "Drvo je bilo visoko."
         },
         {
           "ru": "Котёнок был большим, как дерево.",
