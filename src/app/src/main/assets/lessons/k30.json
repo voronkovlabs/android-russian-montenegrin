@@ -20,20 +20,20 @@
       "id": "k30e02",
       "type": "choice",
       "label": "Новая фраза",
-      "prompt": "Ono je bilo malo.",
-      "hint": "Ono je bilo malo. — Оно было маленьким.",
+      "prompt": "Ono je bilo malo i roze.",
+      "hint": "Ono je bilo malo i roze. — Оно было маленьким и розовым.",
       "options": [
-        "Оно было маленьким.",
-        "Она была маленькой.",
-        "Он был маленьким."
+        "Оно было маленьким и розовым.",
+        "Она была маленькой и розовой.",
+        "Он был маленьким и розовым."
       ],
-      "answer": "Оно было маленьким.",
+      "answer": "Оно было маленьким и розовым.",
       "explanation": "ono — «оно». Про него — bilo: ono je bilo. Средний род: drvo, sunce, pivo, prase, mače."
     },
     {
       "id": "k30e03",
       "type": "choice",
-      "prompt": "Оно было большим. — Ono je ___ veliko.",
+      "prompt": "Оно было большим и зелёным. — Ono je ___ veliko i zeleno.",
       "options": [
         "bilo",
         "bio",
@@ -81,8 +81,8 @@
       "hint": "Drvo je bilo visoko. — Дерево было высоким.",
       "options": [
         "Дерево было высоким.",
-        "Дерево высокое.",
-        "Дерево было большим."
+        "Дерево было голодным.",
+        "Дерево было розовым."
       ],
       "answer": "Дерево было высоким.",
       "explanation": "drvo — среднего рода, поэтому bilo и visoko: Drvo je bilo visoko."
@@ -90,7 +90,7 @@
     {
       "id": "k30e06",
       "type": "choice",
-      "prompt": "Drvo je bilo ___ .",
+      "prompt": "Дерево было высоким и голодным. — Drvo je bilo ___ i gladno.",
       "options": [
         "visoko",
         "visok",
@@ -108,8 +108,8 @@
       "hint": "Mače je bilo malo. — Котёнок был маленьким.",
       "options": [
         "Котёнок был маленьким.",
-        "Кошка была маленькой.",
-        "Котёнок маленький."
+        "Котёнок был акулой.",
+        "Котёнок был волком."
       ],
       "answer": "Котёнок был маленьким.",
       "explanation": "mače — котёнок, среднего рода, как prase. Поэтому bilo и malo: Mače je bilo malo."
@@ -117,7 +117,7 @@
     {
       "id": "k30e08",
       "type": "choice",
-      "prompt": "Котёнок был маленьким. — Mače je ___ malo.",
+      "prompt": "Котёнок был быстрым, как самолёт. — Mače je ___ brzo kao avion.",
       "options": [
         "bilo",
         "bio",
@@ -130,7 +130,7 @@
     {
       "id": "k30e09",
       "type": "choice",
-      "prompt": "Поросёнок был розовым. — Prase je ___ roze.",
+      "prompt": "Поросёнок был зелёным. — Prase je ___ zeleno.",
       "options": [
         "bilo",
         "bio",
@@ -153,12 +153,12 @@
           "me": "mače je bilo"
         },
         {
-          "ru": "собака была",
-          "me": "pas je bio"
+          "ru": "волк был",
+          "me": "vuk je bio"
         },
         {
-          "ru": "кошка была",
-          "me": "mačka je bila"
+          "ru": "акула была",
+          "me": "ajkula je bila"
         }
       ]
     },
@@ -269,48 +269,48 @@
       "id": "k30e18",
       "type": "choice",
       "label": "Новая фраза",
-      "prompt": "Psi su bili mali.",
-      "hint": "Psi su bili mali. — Собаки были маленькими.",
+      "prompt": "Psi su bili roze.",
+      "hint": "Psi su bili roze. — Собаки были розовыми.",
       "options": [
-        "Собаки были маленькими.",
-        "Кошки были маленькими.",
-        "Собака была маленькой."
+        "Собаки были розовыми.",
+        "Кошки были розовыми.",
+        "Собака была розовой."
       ],
-      "answer": "Собаки были маленькими.",
+      "answer": "Собаки были розовыми.",
       "explanation": "oni su bili — о мужском роде: psi, dječaci."
     },
     {
       "id": "k30e19",
       "type": "choice",
       "label": "Новая фраза",
-      "prompt": "Mačke su bile male.",
-      "hint": "Mačke su bile male. — Кошки были маленькими.",
+      "prompt": "Mačke su bile gladne kao vuk.",
+      "hint": "Mačke su bile gladne kao vuk. — Кошки были голодными, как волк.",
       "options": [
-        "Кошки были маленькими.",
-        "Собаки были маленькими.",
-        "Кошка была маленькой."
+        "Кошки были голодными, как волк.",
+        "Собаки были голодными, как волк.",
+        "Кошка была голодной, как волк."
       ],
-      "answer": "Кошки были маленькими.",
+      "answer": "Кошки были голодными, как волк.",
       "explanation": "one su bile — о женском роде: mačke, sestre, djevojčice."
     },
     {
       "id": "k30e20",
       "type": "choice",
       "label": "Новая фраза",
-      "prompt": "Pisma su bila duga.",
-      "hint": "Pisma su bila duga. — Письма были длинными.",
+      "prompt": "Pisma su bila duga i zelena.",
+      "hint": "Pisma su bila duga i zelena. — Письма были длинными и зелёными.",
       "options": [
-        "Письма были длинными.",
-        "Письмо было длинным.",
-        "Сказки были длинными."
+        "Письма были длинными и зелёными.",
+        "Письмо было длинным и зелёным.",
+        "Сказки были длинными и зелёными."
       ],
-      "answer": "Письма были длинными.",
+      "answer": "Письма были длинными и зелёными.",
       "explanation": "ona su bila — о среднем роде: pisma, piva. Здесь ona — «они», а не «она». Различает je / su: ona je bila — она была, ona su bila — они были."
     },
     {
       "id": "k30e21",
       "type": "choice",
-      "prompt": "Сёстры были у бабушки. — Sestre su ___ kod babe.",
+      "prompt": "Сёстры были на дереве. — Sestre su ___ na drvetu.",
       "options": [
         "bile",
         "bili",
@@ -323,7 +323,7 @@
     {
       "id": "k30e22",
       "type": "choice",
-      "prompt": "Мальчики были в городе. — Dječaci su ___ u gradu.",
+      "prompt": "Мальчики были зелёными. — Dječaci su ___ zeleni.",
       "options": [
         "bili",
         "bile",
@@ -336,7 +336,7 @@
     {
       "id": "k30e23",
       "type": "choice",
-      "prompt": "Письма были красивыми. — Pisma su ___ lijepa.",
+      "prompt": "Письма были голодными. — Pisma su ___ gladna.",
       "options": [
         "bila",
         "bile",
@@ -349,38 +349,38 @@
     {
       "id": "k30e24",
       "type": "choice",
-      "prompt": "Ona su bila duga.",
+      "prompt": "Ona su bila gladna.",
       "options": [
-        "Они были длинными.",
-        "Она была длинной.",
-        "Оно было длинным."
+        "Они были голодными.",
+        "Она была голодной.",
+        "Оно было голодным."
       ],
-      "answer": "Они были длинными.",
+      "answer": "Они были голодными.",
       "explanation": "ona su bila — о среднем роде: pisma, piva. Здесь ona — «они», а не «она». Различает je / su: ona je bila — она была, ona su bila — они были.",
       "label": "Выбери перевод"
     },
     {
       "id": "k30e25",
       "type": "choice",
-      "prompt": "Mače je bilo malo.",
+      "prompt": "Mače je bilo veliko kao drvo.",
       "options": [
-        "Котёнок был маленьким.",
-        "Кошка была маленькой.",
-        "Котёнок маленький."
+        "Котёнок был большим, как дерево.",
+        "Котёнок был маленьким, как дерево.",
+        "Дерево было большим, как котёнок."
       ],
-      "answer": "Котёнок был маленьким.",
+      "answer": "Котёнок был большим, как дерево.",
       "byEar": true
     },
     {
       "id": "k30e26",
       "type": "choice",
-      "prompt": "Mačke su bile gladne.",
+      "prompt": "Ajkule su bile roze.",
       "options": [
-        "Кошки были голодными.",
-        "Кошка была голодной.",
-        "Собаки были голодными."
+        "Акулы были розовыми.",
+        "Акула была розовой.",
+        "Черепахи были розовыми."
       ],
-      "answer": "Кошки были голодными.",
+      "answer": "Акулы были розовыми.",
       "byEar": true
     },
     {
@@ -410,10 +410,10 @@
     {
       "id": "k30e29",
       "type": "word_bank",
-      "prompt": "Кошки были маленькими.",
-      "answer": "Mačke su bile male.",
+      "prompt": "Кошки были зелёными.",
+      "answer": "Mačke su bile zelene.",
       "bank": [
-        "male",
+        "zelene",
         "su",
         "mačke",
         "bile"
@@ -422,38 +422,38 @@
     {
       "id": "k30e30",
       "type": "speaking",
-      "phrase": "Drvo je bilo visoko.",
-      "translation": "Дерево было высоким."
+      "phrase": "Drvo je bilo visoko i gladno.",
+      "translation": "Дерево было высоким и голодным."
     },
     {
       "id": "k30e31",
       "type": "repeat",
-      "phrase": "Psi su bili gladni.",
-      "translation": "Собаки были голодными."
+      "phrase": "Psi su bili roze kao prase.",
+      "translation": "Собаки были розовыми, как поросёнок."
     },
     {
       "id": "k30e32",
       "type": "match",
       "pairs": [
         {
-          "ru": "Дерево было высоким.",
-          "me": "Drvo je bilo visoko."
+          "ru": "Дерево было высоким и голодным.",
+          "me": "Drvo je bilo visoko i gladno."
         },
         {
-          "ru": "Котёнок был маленьким.",
-          "me": "Mače je bilo malo."
+          "ru": "Котёнок был большим, как дерево.",
+          "me": "Mače je bilo veliko kao drvo."
         },
         {
-          "ru": "Собаки были маленькими.",
-          "me": "Psi su bili mali."
+          "ru": "Собаки были розовыми.",
+          "me": "Psi su bili roze."
         },
         {
-          "ru": "Кошки были маленькими.",
-          "me": "Mačke su bile male."
+          "ru": "Кошки были зелёными.",
+          "me": "Mačke su bile zelene."
         },
         {
-          "ru": "Письма были длинными.",
-          "me": "Pisma su bila duga."
+          "ru": "Письма были голодными.",
+          "me": "Pisma su bila gladna."
         }
       ]
     }
