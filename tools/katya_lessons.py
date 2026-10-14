@@ -2371,7 +2371,7 @@ RANIJE_SADA = ('Ranije…, a sada… — «раньше…, а теперь…»
 BAKA = ('baba — бабушка, baka — ласково, «бабуля». djed — дедушка, deka — ласково, «дедуля». '
         'Внуки так и говорят: baka i deka.')
 SVOJOJ = ('svojoj kući — «в своём доме»: kuća женского рода, поэтому svojoj, как u kući. '
-          'živjeli — бабушка и дедушка вместе: есть мужчина, значит -li.')
+          'živjeli — бабуля и дедуля вместе: есть мужчина, значит -li.')
 L.append(dict(id='k32', title='Gdje si bila? Kod kuće, kao i obično', section=S3, words=[
     ('gdje si bio / bila', 'где ты был / была'), ('kao i obično', 'как обычно'),
     ('živio / živjela / živjeli', 'жил / жила / жили'), ('ranije…, a sada…', 'раньше…, а теперь…'),
@@ -2423,11 +2423,11 @@ L.append(dict(id='k32', title='Gdje si bila? Kod kuće, kao i obično', section=
     dict(new('deka', 'дедуля', ['дедуля', 'бабуля', 'папа']), explanation=BAKA),
     pairs(('бабушка', 'baba'), ('бабуля', 'baka'), ('дедушка', 'djed'), ('дедуля', 'deka')),
     dict(phrase('Ranije su baka i deka živjeli u stanu, a sada žive u svojoj kući.',
-                'Раньше бабушка и дедушка жили в квартире, а теперь живут в своём доме.',
-                ['Раньше бабушка и дедушка жили в квартире, а теперь живут в своём доме.',
-                 'Раньше бабушка и дедушка жили в своём доме, а теперь живут в квартире.',
-                 'Бабушка и дедушка живут в квартире.']), explanation=SVOJOJ),
-    pick('Бабушка и дедушка жили в квартире. — Baka i deka su ___ u stanu.',
+                'Раньше бабуля и дедуля жили в квартире, а теперь живут в своём доме.',
+                ['Раньше бабуля и дедуля жили в квартире, а теперь живут в своём доме.',
+                 'Раньше бабуля и дедуля жили в своём доме, а теперь живут в квартире.',
+                 'Бабуля и дедуля живут в квартире.']), explanation=SVOJOJ),
+    pick('Бабуля и дедуля жили в квартире. — Baka i deka su ___ u stanu.',
          ['živjeli', 'živjele', 'živio'], 'živjeli', explanation=SVOJOJ, label='Вставь слово'),
     pick('— Gdje žive baka i deka?\n— Ranije su živjeli u stanu, a sada žive u svojoj kući.\n\n'
          'Где они живут теперь?', ['В своём доме.', 'В квартире.', 'У моря.'], 'В своём доме.',
