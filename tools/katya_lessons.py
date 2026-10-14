@@ -2176,8 +2176,8 @@ L.append(dict(id='k29', title='Kad sam bio mali', section=S3, words=[
 
 # --- Урок 30 ---
 # Весь урок — «быть» в прошедшем во всех лицах и родах: ono je bilo, три «они»
-# (oni / one / ona), смешанная группа, mi smo bile. Слова времени (juče,
-# ranije, prošle nedjelje, petak, subota, kao i obično) отложены на урок 31.
+# (oni / one / ona) — сперва сами местоимения, потом с bili / bile / bila.
+# Смешанная группа, mi smo bile и слова времени отложены на следующие уроки.
 ONO = ('ono — «оно». Про него — bilo: ono je bilo. Средний род: drvo, sunce, pivo, prase, '
        'mače.')
 DRVO = 'drvo — среднего рода, поэтому bilo и visoko: Drvo je bilo visoko.'
@@ -2188,9 +2188,6 @@ ONI_M = 'oni su bili — о мужском роде: psi, dječaci.'
 ONE = 'one su bile — о женском роде: mačke, sestre, djevojčice.'
 ONA_SR = ('ona su bila — о среднем роде: pisma, piva. Здесь ona — «они», а не «она». '
           'Различает je / su: ona je bila — она была, ona su bila — они были.')
-MIX = ('Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — '
-       'bile: mačka i kornjača su bile.')
-MI_BILE = 'mi smo bile, vi ste bile — только о женщинах, как one su bile.'
 L.append(dict(id='k30', title='Bilo, bili, bile, bila', section=S3, words=[
     ('ono', 'оно'), ('bilo', 'было'), ('one', 'они (женский род)'), ('bile', 'были (женский род)'),
     ('ona su bila', 'они были (средний род)')],
@@ -2217,6 +2214,18 @@ L.append(dict(id='k30', title='Bilo, bili, bile, bila', section=S3, words=[
          explanation=ONO, label='Вставь слово'),
     pairs(('дерево было', 'drvo je bilo'), ('котёнок был', 'mače je bilo'),
           ('собака была', 'pas je bio'), ('кошка была', 'mačka je bila')),
+    dict(new('oni', 'они (мужской род)', ['они (мужской род)', 'они (женский род)', 'он']),
+         explanation='oni — «они» для слов мужского рода: psi, dječaci.'),
+    dict(new('one', 'они (женский род)', ['они (женский род)', 'они (мужской род)', 'она']),
+         explanation='one — «они» для слов женского рода: mačke, sestre.'),
+    dict(new('ona', 'они (средний род)', ['они (средний род)', 'она', 'оно']),
+         explanation=('ona — «они» для слов среднего рода: pisma, piva. Пишется так же, как ona '
+                      '«она», различаются по смыслу и глаголу: ona je — она, ona su — они.')),
+    pick('Кошки — это…', ['one', 'oni', 'ona'], 'one', explanation=ONI3, label='Выбери слово'),
+    pick('Собаки — это…', ['oni', 'one', 'ona'], 'oni', explanation=ONI3, label='Выбери слово'),
+    pick('Письма — это…', ['ona', 'oni', 'one'], 'ona', explanation=ONI3, label='Выбери слово'),
+    pairs(('они (собаки)', 'oni'), ('они (кошки)', 'one'), ('они (письма)', 'ona'),
+          ('оно (дерево)', 'ono')),
     dict(phrase('Psi su bili mali.', 'Собаки были маленькими.',
                 ['Собаки были маленькими.', 'Кошки были маленькими.', 'Собака была маленькой.']),
          explanation=ONI_M),
@@ -2226,11 +2235,6 @@ L.append(dict(id='k30', title='Bilo, bili, bile, bila', section=S3, words=[
     dict(phrase('Pisma su bila duga.', 'Письма были длинными.',
                 ['Письма были длинными.', 'Письмо было длинным.', 'Сказки были длинными.']),
          explanation=ONA_SR),
-    pick('Кошки — это…', ['one', 'oni', 'ona'], 'one', explanation=ONI3, label='Выбери слово'),
-    pick('Собаки — это…', ['oni', 'one', 'ona'], 'oni', explanation=ONI3, label='Выбери слово'),
-    pick('Письма — это…', ['ona', 'oni', 'one'], 'ona', explanation=ONI3, label='Выбери слово'),
-    pairs(('они (собаки)', 'oni'), ('они (кошки)', 'one'), ('они (письма)', 'ona'),
-          ('оно (дерево)', 'ono')),
     pick('Сёстры были у бабушки. — Sestre su ___ kod babe.', ['bile', 'bili', 'bila'], 'bile',
          explanation=ONE, label='Вставь слово'),
     pick('Мальчики были в городе. — Dječaci su ___ u gradu.', ['bili', 'bile', 'bila'], 'bili',
@@ -2239,17 +2243,6 @@ L.append(dict(id='k30', title='Bilo, bili, bile, bila', section=S3, words=[
          explanation=ONA_SR, label='Вставь слово'),
     pick('Ona su bila duga.', ['Они были длинными.', 'Она была длинной.', 'Оно было длинным.'],
          'Они были длинными.', explanation=ONA_SR, label='Выбери перевод'),
-    dict(phrase('Pas i mačka su bili gladni.', 'Собака и кошка были голодными.',
-                ['Собака и кошка были голодными.', 'Собака и кошка голодные.',
-                 'Собаки были голодными.']), explanation=MIX),
-    pick('Кошка и черепаха были голодными. — Mačka i kornjača su ___ gladne.', ['bile', 'bili'],
-         'bile', explanation=MIX, label='Вставь слово'),
-    dict(pairs(('мы были', 'mi smo bili'), ('мы (женщины) были', 'mi smo bile'),
-               ('вы были', 'vi ste bili'), ('они были (м. р.)', 'oni su bili'),
-               ('они были (ж. р.)', 'one su bile'), ('они были (ср. р.)', 'ona su bila')),
-         explanation=MI_BILE),
-    pick('Мы с сестрой (две женщины) были у бабушки. — Mi smo ___ kod babe.', ['bile', 'bili'],
-         'bile', explanation=MI_BILE, label='Вставь слово'),
     ear('Mače je bilo malo.', ['Котёнок был маленьким.', 'Кошка была маленькой.',
                                'Котёнок маленький.'], 'Котёнок был маленьким.'),
     ear('Mačke su bile gladne.', ['Кошки были голодными.', 'Кошка была голодной.',

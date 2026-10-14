@@ -165,44 +165,44 @@
     {
       "id": "k30e11",
       "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Psi su bili mali.",
-      "hint": "Psi su bili mali. — Собаки были маленькими.",
+      "label": "Новое слово",
+      "prompt": "oni",
+      "hint": "oni — они (мужской род)",
       "options": [
-        "Собаки были маленькими.",
-        "Кошки были маленькими.",
-        "Собака была маленькой."
+        "они (мужской род)",
+        "они (женский род)",
+        "он"
       ],
-      "answer": "Собаки были маленькими.",
-      "explanation": "oni su bili — о мужском роде: psi, dječaci."
+      "answer": "они (мужской род)",
+      "explanation": "oni — «они» для слов мужского рода: psi, dječaci."
     },
     {
       "id": "k30e12",
       "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Mačke su bile male.",
-      "hint": "Mačke su bile male. — Кошки были маленькими.",
+      "label": "Новое слово",
+      "prompt": "one",
+      "hint": "one — они (женский род)",
       "options": [
-        "Кошки были маленькими.",
-        "Собаки были маленькими.",
-        "Кошка была маленькой."
+        "они (женский род)",
+        "они (мужской род)",
+        "она"
       ],
-      "answer": "Кошки были маленькими.",
-      "explanation": "one su bile — о женском роде: mačke, sestre, djevojčice."
+      "answer": "они (женский род)",
+      "explanation": "one — «они» для слов женского рода: mačke, sestre."
     },
     {
       "id": "k30e13",
       "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Pisma su bila duga.",
-      "hint": "Pisma su bila duga. — Письма были длинными.",
+      "label": "Новое слово",
+      "prompt": "ona",
+      "hint": "ona — они (средний род)",
       "options": [
-        "Письма были длинными.",
-        "Письмо было длинным.",
-        "Сказки были длинными."
+        "они (средний род)",
+        "она",
+        "оно"
       ],
-      "answer": "Письма были длинными.",
-      "explanation": "ona su bila — о среднем роде: pisma, piva. Здесь ona — «они», а не «она». Различает je / su: ona je bila — она была, ona su bila — они были."
+      "answer": "они (средний род)",
+      "explanation": "ona — «они» для слов среднего рода: pisma, piva. Пишется так же, как ona «она», различаются по смыслу и глаголу: ona je — она, ona su — они."
     },
     {
       "id": "k30e14",
@@ -268,6 +268,48 @@
     {
       "id": "k30e18",
       "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Psi su bili mali.",
+      "hint": "Psi su bili mali. — Собаки были маленькими.",
+      "options": [
+        "Собаки были маленькими.",
+        "Кошки были маленькими.",
+        "Собака была маленькой."
+      ],
+      "answer": "Собаки были маленькими.",
+      "explanation": "oni su bili — о мужском роде: psi, dječaci."
+    },
+    {
+      "id": "k30e19",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mačke su bile male.",
+      "hint": "Mačke su bile male. — Кошки были маленькими.",
+      "options": [
+        "Кошки были маленькими.",
+        "Собаки были маленькими.",
+        "Кошка была маленькой."
+      ],
+      "answer": "Кошки были маленькими.",
+      "explanation": "one su bile — о женском роде: mačke, sestre, djevojčice."
+    },
+    {
+      "id": "k30e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Pisma su bila duga.",
+      "hint": "Pisma su bila duga. — Письма были длинными.",
+      "options": [
+        "Письма были длинными.",
+        "Письмо было длинным.",
+        "Сказки были длинными."
+      ],
+      "answer": "Письма были длинными.",
+      "explanation": "ona su bila — о среднем роде: pisma, piva. Здесь ona — «они», а не «она». Различает je / su: ona je bila — она была, ona su bila — они были."
+    },
+    {
+      "id": "k30e21",
+      "type": "choice",
       "prompt": "Сёстры были у бабушки. — Sestre su ___ kod babe.",
       "options": [
         "bile",
@@ -279,7 +321,7 @@
       "label": "Вставь слово"
     },
     {
-      "id": "k30e19",
+      "id": "k30e22",
       "type": "choice",
       "prompt": "Мальчики были в городе. — Dječaci su ___ u gradu.",
       "options": [
@@ -292,7 +334,7 @@
       "label": "Вставь слово"
     },
     {
-      "id": "k30e20",
+      "id": "k30e23",
       "type": "choice",
       "prompt": "Письма были красивыми. — Pisma su ___ lijepa.",
       "options": [
@@ -305,7 +347,7 @@
       "label": "Вставь слово"
     },
     {
-      "id": "k30e21",
+      "id": "k30e24",
       "type": "choice",
       "prompt": "Ona su bila duga.",
       "options": [
@@ -318,76 +360,7 @@
       "label": "Выбери перевод"
     },
     {
-      "id": "k30e22",
-      "type": "choice",
-      "label": "Новая фраза",
-      "prompt": "Pas i mačka su bili gladni.",
-      "hint": "Pas i mačka su bili gladni. — Собака и кошка были голодными.",
-      "options": [
-        "Собака и кошка были голодными.",
-        "Собака и кошка голодные.",
-        "Собаки были голодными."
-      ],
-      "answer": "Собака и кошка были голодными.",
-      "explanation": "Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — bile: mačka i kornjača su bile."
-    },
-    {
-      "id": "k30e23",
-      "type": "choice",
-      "prompt": "Кошка и черепаха были голодными. — Mačka i kornjača su ___ gladne.",
-      "options": [
-        "bile",
-        "bili"
-      ],
-      "answer": "bile",
-      "explanation": "Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — bile: mačka i kornjača su bile.",
-      "label": "Вставь слово"
-    },
-    {
-      "id": "k30e24",
-      "type": "match",
-      "pairs": [
-        {
-          "ru": "мы были",
-          "me": "mi smo bili"
-        },
-        {
-          "ru": "мы (женщины) были",
-          "me": "mi smo bile"
-        },
-        {
-          "ru": "вы были",
-          "me": "vi ste bili"
-        },
-        {
-          "ru": "они были (м. р.)",
-          "me": "oni su bili"
-        },
-        {
-          "ru": "они были (ж. р.)",
-          "me": "one su bile"
-        },
-        {
-          "ru": "они были (ср. р.)",
-          "me": "ona su bila"
-        }
-      ],
-      "explanation": "mi smo bile, vi ste bile — только о женщинах, как one su bile."
-    },
-    {
       "id": "k30e25",
-      "type": "choice",
-      "prompt": "Мы с сестрой (две женщины) были у бабушки. — Mi smo ___ kod babe.",
-      "options": [
-        "bile",
-        "bili"
-      ],
-      "answer": "bile",
-      "explanation": "mi smo bile, vi ste bile — только о женщинах, как one su bile.",
-      "label": "Вставь слово"
-    },
-    {
-      "id": "k30e26",
       "type": "choice",
       "prompt": "Mače je bilo malo.",
       "options": [
@@ -399,7 +372,7 @@
       "byEar": true
     },
     {
-      "id": "k30e27",
+      "id": "k30e26",
       "type": "choice",
       "prompt": "Mačke su bile gladne.",
       "options": [
@@ -411,7 +384,7 @@
       "byEar": true
     },
     {
-      "id": "k30e28",
+      "id": "k30e27",
       "type": "word_bank",
       "prompt": "Дерево было высоким.",
       "answer": "Drvo je bilo visoko.",
@@ -423,7 +396,7 @@
       ]
     },
     {
-      "id": "k30e29",
+      "id": "k30e28",
       "type": "word_bank",
       "prompt": "Котёнок был маленьким.",
       "answer": "Mače je bilo malo.",
@@ -435,7 +408,7 @@
       ]
     },
     {
-      "id": "k30e30",
+      "id": "k30e29",
       "type": "word_bank",
       "prompt": "Кошки были маленькими.",
       "answer": "Mačke su bile male.",
@@ -447,19 +420,19 @@
       ]
     },
     {
-      "id": "k30e31",
+      "id": "k30e30",
       "type": "speaking",
       "phrase": "Drvo je bilo visoko.",
       "translation": "Дерево было высоким."
     },
     {
-      "id": "k30e32",
+      "id": "k30e31",
       "type": "repeat",
       "phrase": "Psi su bili gladni.",
       "translation": "Собаки были голодными."
     },
     {
-      "id": "k30e33",
+      "id": "k30e32",
       "type": "match",
       "pairs": [
         {
