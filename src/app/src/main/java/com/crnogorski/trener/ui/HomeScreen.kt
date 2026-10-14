@@ -115,12 +115,10 @@ fun HomeScreen(
         list.scrollBy(row.offset + row.size / 2f - view / 2f)
     }
 
-    LazyColumn(
-        state = list,
-        modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        item {
+    // Шапка с вкладками стоит на месте и не уезжает с прокруткой (заметка
+    // 292): к вкладкам и настройкам тянутся из любой точки списка.
+    Column(Modifier.fillMaxSize()) {
+        Column(Modifier.padding(horizontal = 20.dp)) {
             Spacer(Modifier.height(28.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 TabIcon(
@@ -154,61 +152,114 @@ fun HomeScreen(
                     )
                 }
             }
-            Spacer(Modifier.height(10.dp))
-            Text("CRNOGORSKI", style = MaterialTheme.typography.labelSmall, color = Accent)
-            Spacer(Modifier.height(6.dp))
-            Text(
-                when (state.tab) {
-                    HomeTab.Today -> "Сегодня"
-                    HomeTab.Lessons -> "Курс"
-                    HomeTab.Stories -> "Истории"
-                    HomeTab.Words -> "Слова"
-                },
-                style = MaterialTheme.typography.displaySmall,
-                color = Paper
-            )
-            Spacer(Modifier.height(14.dp))
-            StatsStrip(state.stats, onStats)
-            val fresh = state.update
-            if (fresh != null) {
-                Spacer(Modifier.height(8.dp))
-                UpdateStrip(fresh.version, fresh.sizeMb, fresh.news, download, onUpdate)
-            }
-            Spacer(Modifier.height(20.dp))
         }
-
-        if (state.error != null) {
+        LazyColumn(
+            state = list,
+            modifier = Modifier.weight(1f).fillMaxWidth().padding(horizontal = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
             item {
-                Text(state.error, color = Crimson, style = MaterialTheme.typography.bodyMedium)
+                Spacer(Modifier.height(6.dp))
+                Text("CRNOGORSKI", style = MaterialTheme.typography.labelSmall, color = Accent)
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    when (state.tab) {
+                        HomeTab.Today -> "Сегодня"
+                        HomeTab.Lessons -> "Курс"
+                        HomeTab.Stories -> "Истории"
+                        HomeTab.Words -> "Слова"
+                    },
+                    style = MaterialTheme.typography.displaySmall,
+                    color = Paper
+                )
+                Spacer(Modifier.height(14.dp))
+                StatsStrip(state.stats, onStats)
+                val fresh = state.update
+                if (fresh != null) {
+                    Spacer(Modifier.height(8.dp))
+                    UpdateStrip(fresh.version, fresh.sizeMb, fresh.news, download, onUpdate)
+                }
+                Spacer(Modifier.height(20.dp))
             }
-        }
 
-        when (state.tab) {
-            HomeTab.Today -> {
+            if (state.error != null) {
                 item {
-                    DailyTile(state.daily, onStart = onDaily)
-                    val step = state.daily.story
-                    if (step != null) {
-                        Spacer(Modifier.height(12.dp))
-                        StoryStepTile(step, hasItems = state.daily.items.isNotEmpty()) {
-                            onStory(step.id, step.mode, true)
+                    Text(state.error, color = Crimson, style = MaterialTheme.typography.bodyMedium)
+                }
+            }
+
+            when (state.tab) {
+                HomeTab.Today -> {
+                    item {
+                        DailyTile(state.daily, onStart = onDaily)
+                        val step = state.daily.story
+                        if (step != null) {
+                            Spacer(Modifier.height(12.dp))
+                            StoryStepTile(step, hasItems = state.daily.items.isNotEmpty()) {
+                                onStory(step.id, step.mode, true)
+                            }
+                        }
+                        Spacer(Modifier.height(4.dp))
+                    }
+                }
+
+                HomeTab.Lessons -> {
+                    item {
+                        ReviewCard(count = state.dueCount, onClick = onReview)
+                        Spacer(Modifier.height(4.dp))
+                    }
+
+                    state.groups.forEach { group ->
+                        // Урок без раздела показываем без заголовка и всегда открытым:
+                        // прятать его было бы некуда.
+                        val open = group.title.isBlank() || group.title in state.expandedGroups
+                        if (group.title.isNotBlank()) {
+                            stickyHeader(key = "s-${group.title}") {
+                                SectionHeader(
+                                    title = group.title,
+                                    done = group.done,
+                                    total = group.cards.size,
+                                    expanded = open
+                                ) { onToggleGroup(group.title) }
+                            }
+                        }
+                        if (open) {
+                            items(group.cards, key = { it.ref.id }) { card ->
+                                LessonRow(
+                                    card,
+                                    onClick = { onLesson(card.ref.id) },
+                                    onJump = { card.gate?.let { onGate(it.id) } }
+                                )
+                            }
                         }
                     }
-                    Spacer(Modifier.height(4.dp))
-                }
-            }
-
-            HomeTab.Lessons -> {
-                item {
-                    ReviewCard(count = state.dueCount, onClick = onReview)
-                    Spacer(Modifier.height(4.dp))
                 }
 
-                state.groups.forEach { group ->
-                    // Урок без раздела показываем без заголовка и всегда открытым:
-                    // прятать его было бы некуда.
-                    val open = group.title.isBlank() || group.title in state.expandedGroups
-                    if (group.title.isNotBlank()) {
+                HomeTab.Words -> {
+                    item {
+                        VocabTile(
+                            title = "С русского",
+                            hint = "Назвать слово и поставить его в форму",
+                            track = state.vocab.toTarget,
+                            onStart = { onVocab(false, false) },
+                            onPractice = { onVocab(false, true) },
+                            onFlip = onFlip
+                        )
+                        Spacer(Modifier.height(12.dp))
+                        VocabTile(
+                            title = "На русский",
+                            hint = "Узнать слово: что оно значит",
+                            track = state.vocab.toNative,
+                            onStart = { onVocab(true, false) },
+                            onPractice = { onVocab(true, true) }
+                        )
+                        Spacer(Modifier.height(4.dp))
+                    }
+                }
+
+                HomeTab.Stories -> {
+                    state.storyGroups.forEach { group ->
+                        val open = group.title in state.expandedGroups
                         stickyHeader(key = "s-${group.title}") {
                             SectionHeader(
                                 title = group.title,
@@ -217,74 +268,29 @@ fun HomeScreen(
                                 expanded = open
                             ) { onToggleGroup(group.title) }
                         }
-                    }
-                    if (open) {
-                        items(group.cards, key = { it.ref.id }) { card ->
-                            LessonRow(
-                                card,
-                                onClick = { onLesson(card.ref.id) },
-                                onJump = { card.gate?.let { onGate(it.id) } }
-                            )
-                        }
-                    }
-                }
-            }
-
-            HomeTab.Words -> {
-                item {
-                    VocabTile(
-                        title = "С русского",
-                        hint = "Назвать слово и поставить его в форму",
-                        track = state.vocab.toTarget,
-                        onStart = { onVocab(false, false) },
-                        onPractice = { onVocab(false, true) },
-                        onFlip = onFlip
-                    )
-                    Spacer(Modifier.height(12.dp))
-                    VocabTile(
-                        title = "На русский",
-                        hint = "Узнать слово: что оно значит",
-                        track = state.vocab.toNative,
-                        onStart = { onVocab(true, false) },
-                        onPractice = { onVocab(true, true) }
-                    )
-                    Spacer(Modifier.height(4.dp))
-                }
-            }
-
-            HomeTab.Stories -> {
-                state.storyGroups.forEach { group ->
-                    val open = group.title in state.expandedGroups
-                    stickyHeader(key = "s-${group.title}") {
-                        SectionHeader(
-                            title = group.title,
-                            done = group.done,
-                            total = group.cards.size,
-                            expanded = open
-                        ) { onToggleGroup(group.title) }
-                    }
-                    if (open) {
-                        if (group.cards.isEmpty()) {
-                            item(key = "empty-${group.mode.key}") {
-                                Text(
-                                    "Историй пока нет.",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Muted
-                                )
-                            }
-                        } else {
-                            // Ключ с режимом: тексты в группах одни и те же, и
-                            // по одному id список нашёл бы две одинаковые строки.
-                            items(group.cards, key = { "${group.mode.key}-${it.ref.id}" }) { card ->
-                                StoryRow(card, onClick = { onStory(card.ref.id, card.mode, false) })
+                        if (open) {
+                            if (group.cards.isEmpty()) {
+                                item(key = "empty-${group.mode.key}") {
+                                    Text(
+                                        "Историй пока нет.",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = Muted
+                                    )
+                                }
+                            } else {
+                                // Ключ с режимом: тексты в группах одни и те же, и
+                                // по одному id список нашёл бы две одинаковые строки.
+                                items(group.cards, key = { "${group.mode.key}-${it.ref.id}" }) { card ->
+                                    StoryRow(card, onClick = { onStory(card.ref.id, card.mode, false) })
+                                }
                             }
                         }
                     }
                 }
             }
+
+            item { Spacer(Modifier.height(32.dp)) }
         }
-
-        item { Spacer(Modifier.height(32.dp)) }
     }
 }
 
