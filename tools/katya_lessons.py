@@ -2259,6 +2259,116 @@ L.append(dict(id='k30', title='Bilo, bili, bile, bila', section=S3, words=[
           ('Письма были длинными.', 'Pisma su bila duga.')),
 ]))
 
+# --- Урок 31 ---
+# Отложенное из урока 30: смешанная группа и mi smo bile; слова времени juče,
+# ranije, prošle nedjelje, petak, subota, kao i obično (запись Кати 241).
+# И poslati: «Pošalji mi svoju lokaciju».
+MIX = ('Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — '
+       'bile: mačka i kornjača su bile.')
+MI_BILE = 'mi smo bile — «мы были», если мы только женщины. Если с нами мужчина — mi smo bili.'
+MI_SVI = 'mi smo bile, vi ste bile — только о женщинах, как one su bile.'
+JUCE = 'juče — вчера. Ставится в начало, а sam сразу за ним: Juče sam bila u gradu.'
+NEDJELJA = ('nedjelja — и «неделя», и «воскресенье». prošle nedjelje — «на прошлой неделе». '
+            'Так говорят чаще всего; ещё можно prošle sedmice.')
+U_DAN = ('«В пятницу» — u petak, «в субботу» — u subotu: subota → subotu, как kafa → kafu. '
+         'petak не меняется.')
+OBICNO = ('kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в '
+          'конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično.')
+POSLATI = ('poslati — послать, отправить. Просьба: Pošalji! (ты), Pošaljite! (вы). После da: '
+           'pošaljem, pošalješ, pošalje, pošaljemo, pošaljete, pošalju — как sjesti → sjednem.')
+LOKACIJA = ('Так и пишут в Viber и WhatsApp. svoju — «свою»: svoja → svoju, как moja → moju. '
+            'На «вы»: Pošaljite mi svoju lokaciju.')
+L.append(dict(id='k31', title='Juče, u petak, kao i obično. Pošalji mi lokaciju!', section=S3, words=[
+    ('juče', 'вчера'), ('ranije', 'раньше'), ('prošle nedjelje', 'на прошлой неделе'),
+    ('petak', 'пятница'), ('subota', 'суббота'), ('kao i obično', 'как обычно'),
+    ('poslati', 'послать, отправить'), ('lokacija', 'геопозиция, местоположение'),
+    ('svoj', 'свой')],
+    ex=[
+    dict(phrase('Pas i mačka su bili gladni.', 'Собака и кошка были голодными.',
+                ['Собака и кошка были голодными.', 'Собака и кошка голодные.',
+                 'Собаки были голодными.']), explanation=MIX),
+    pick('Кошка и черепаха были голодными. — Mačka i kornjača su ___ gladne.', ['bile', 'bili'],
+         'bile', explanation=MIX, label='Вставь слово'),
+    pick('Мальчик и девочка были дома. — Dječak i djevojčica su ___ kod kuće.', ['bili', 'bile'],
+         'bili', explanation=MIX, label='Вставь слово'),
+    dict(phrase('Mi smo bile kod babe.', 'Мы (женщины) были у бабушки.',
+                ['Мы (женщины) были у бабушки.', 'Мы идём к бабушке.', 'Они были у бабушки.']),
+         explanation=MI_BILE),
+    pick('Мы с сестрой (две женщины) были у бабушки. — Mi smo ___ kod babe.', ['bile', 'bili'],
+         'bile', explanation=MI_BILE, label='Вставь слово'),
+    pick('Мы с братом были у бабушки. — Mi smo ___ kod babe.', ['bili', 'bile'], 'bili',
+         explanation=MI_BILE, label='Вставь слово'),
+    dict(pairs(('мы были', 'mi smo bili'), ('мы (женщины) были', 'mi smo bile'),
+               ('вы были', 'vi ste bili'), ('они были (м. р.)', 'oni su bili'),
+               ('они были (ж. р.)', 'one su bile'), ('они были (ср. р.)', 'ona su bila')),
+         explanation=MI_SVI),
+    dict(new('juče', 'вчера', ['вчера', 'сейчас', 'уже']), explanation=JUCE),
+    phrase('Juče sam bila u gradu.', 'Вчера я была в городе.',
+           ['Вчера я была в городе.', 'Вчера я была дома.', 'Сейчас я в городе.']),
+    new('ranije', 'раньше', ['раньше', 'вчера', 'уже']),
+    phrase('Ranije sam bio brz.', 'Раньше я был быстрым.',
+           ['Раньше я был быстрым.', 'Вчера я был быстрым.', 'Я быстрый.']),
+    dict(new('prošle nedjelje', 'на прошлой неделе',
+             ['на прошлой неделе', 'в воскресенье', 'вчера'], label='Новое выражение'),
+         explanation=NEDJELJA),
+    phrase('Prošle nedjelje smo bili na moru.', 'На прошлой неделе мы были на море.',
+           ['На прошлой неделе мы были на море.', 'Вчера мы были на море.',
+            'На прошлой неделе мы были в городе.']),
+    pairs(('вчера', 'juče'), ('раньше', 'ranije'), ('на прошлой неделе', 'prošle nedjelje'),
+          ('сейчас', 'sada')),
+    new('petak', 'пятница', ['пятница', 'суббота', 'неделя']),
+    new('subota', 'суббота', ['суббота', 'пятница', 'неделя']),
+    dict(phrase('U petak sam bila kod babe.', 'В пятницу я была у бабушки.',
+                ['В пятницу я была у бабушки.', 'В субботу я была у бабушки.',
+                 'В пятницу я была дома.']), explanation=U_DAN),
+    pick('В субботу — u ___', ['subotu', 'subota', 'suboti'], 'subotu', explanation=U_DAN,
+         label='Выбери форму'),
+    pairs(('пятница', 'petak'), ('суббота', 'subota'), ('в пятницу', 'u petak'),
+          ('в субботу', 'u subotu')),
+    dict(phrase('Kao i obično.', 'Как обычно.', ['Как обычно.', 'Как всегда?', 'Как дела?']),
+         explanation=OBICNO),
+    phrase('U subotu smo bili kod babe, kao i obično.', 'В субботу мы были у бабушки, как обычно.',
+           ['В субботу мы были у бабушки, как обычно.', 'В пятницу мы были у бабушки, как обычно.',
+            'В субботу мы идём к бабушке, как обычно.']),
+    pick('В пятницу ты была дома, как всегда.',
+         ['U petak sam bila kod kuće, kao i obično.', 'U petak sam kod kuće.', 'U petak idem kući.'],
+         'U petak sam bila kod kuće, kao i obično.', explanation=OBICNO, label='Что скажешь?'),
+    ear('Juče sam bio kod kuće, kao i obično.',
+        ['Вчера я был дома, как обычно.', 'Раньше я был дома, как обычно.', 'Вчера я был в городе.'],
+        'Вчера я был дома, как обычно.'),
+    dict(new('poslati', 'послать, отправить', ['послать, отправить', 'показать', 'писать'],
+             label='Новый глагол'), explanation=POSLATI),
+    pairs(('ja', 'pošaljem'), ('ti', 'pošalješ'), ('on / ona', 'pošalje'), ('mi', 'pošaljemo'),
+          ('vi', 'pošaljete'), ('oni', 'pošalju')),
+    dict(phrase('Moram da pošaljem pismo.', 'Мне надо отправить письмо.',
+                ['Мне надо отправить письмо.', 'Мне надо написать письмо.', 'Отправь письмо.']),
+         explanation=POSLATI),
+    new('lokacija', 'геопозиция, местоположение', ['геопозиция, местоположение', 'карта', 'место']),
+    dict(phrase('Pošalji mi svoju lokaciju.', 'Отправь мне свою геопозицию.',
+                ['Отправь мне свою геопозицию.', 'Покажи мне это место на карте.',
+                 'Я отправлю тебе свою геопозицию.']), explanation=LOKACIJA),
+    pick('Ты ищешь подругу в городе и не знаешь, где она. Что напишешь?',
+         ['Pošalji mi svoju lokaciju.', 'Hajde da ti pokažem to mjesto na mapi.',
+          'Moram da pošaljem pismo.'], 'Pošalji mi svoju lokaciju.', explanation=LOKACIJA,
+         label='Что скажешь?'),
+    pick('На «вы»: «Отправьте мне свою геопозицию». — ___ mi svoju lokaciju.',
+         ['Pošaljite', 'Pošalji', 'Pošaljem'], 'Pošaljite', explanation=POSLATI,
+         label='Вставь слово'),
+    bank('Отправь мне свою геопозицию.', 'Pošalji mi svoju lokaciju.',
+         ['lokaciju', 'mi', 'svoju', 'pošalji']),
+    bank('На прошлой неделе мы были на море.', 'Prošle nedjelje smo bili na moru.',
+         ['moru', 'smo', 'prošle', 'bili', 'na', 'nedjelje']),
+    bank('В пятницу я была у бабушки, как обычно.', 'U petak sam bila kod babe, kao i obično.',
+         ['obično', 'sam', 'kod', 'u', 'kao', 'bila', 'petak', 'i', 'babe']),
+    say('Pošalji mi svoju lokaciju.', 'Отправь мне свою геопозицию.'),
+    echo('U subotu smo bili kod babe, kao i obično.', 'В субботу мы были у бабушки, как обычно.'),
+    pairs(('Отправь мне свою геопозицию.', 'Pošalji mi svoju lokaciju.'),
+          ('Вчера я была в городе.', 'Juče sam bila u gradu.'),
+          ('Мы (женщины) были у бабушки.', 'Mi smo bile kod babe.'),
+          ('Собака и кошка были голодными.', 'Pas i mačka su bili gladni.'),
+          ('как обычно', 'kao i obično')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

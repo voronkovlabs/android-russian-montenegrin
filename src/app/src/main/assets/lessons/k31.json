@@ -1,0 +1,572 @@
+{
+  "id": "k31",
+  "title": "Juče, u petak, kao i obično. Pošalji mi lokaciju!",
+  "exercises": [
+    {
+      "id": "k31e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Pas i mačka su bili gladni.",
+      "hint": "Pas i mačka su bili gladni. — Собака и кошка были голодными.",
+      "options": [
+        "Собака и кошка были голодными.",
+        "Собака и кошка голодные.",
+        "Собаки были голодными."
+      ],
+      "answer": "Собака и кошка были голодными.",
+      "explanation": "Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — bile: mačka i kornjača su bile."
+    },
+    {
+      "id": "k31e02",
+      "type": "choice",
+      "prompt": "Кошка и черепаха были голодными. — Mačka i kornjača su ___ gladne.",
+      "options": [
+        "bile",
+        "bili"
+      ],
+      "answer": "bile",
+      "explanation": "Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — bile: mačka i kornjača su bile.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k31e03",
+      "type": "choice",
+      "prompt": "Мальчик и девочка были дома. — Dječak i djevojčica su ___ kod kuće.",
+      "options": [
+        "bili",
+        "bile"
+      ],
+      "answer": "bili",
+      "explanation": "Если в группе есть хоть один мужской род — bili: pas i mačka su bili. Только женский — bile: mačka i kornjača su bile.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k31e04",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mi smo bile kod babe.",
+      "hint": "Mi smo bile kod babe. — Мы (женщины) были у бабушки.",
+      "options": [
+        "Мы (женщины) были у бабушки.",
+        "Мы идём к бабушке.",
+        "Они были у бабушки."
+      ],
+      "answer": "Мы (женщины) были у бабушки.",
+      "explanation": "mi smo bile — «мы были», если мы только женщины. Если с нами мужчина — mi smo bili."
+    },
+    {
+      "id": "k31e05",
+      "type": "choice",
+      "prompt": "Мы с сестрой (две женщины) были у бабушки. — Mi smo ___ kod babe.",
+      "options": [
+        "bile",
+        "bili"
+      ],
+      "answer": "bile",
+      "explanation": "mi smo bile — «мы были», если мы только женщины. Если с нами мужчина — mi smo bili.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k31e06",
+      "type": "choice",
+      "prompt": "Мы с братом были у бабушки. — Mi smo ___ kod babe.",
+      "options": [
+        "bili",
+        "bile"
+      ],
+      "answer": "bili",
+      "explanation": "mi smo bile — «мы были», если мы только женщины. Если с нами мужчина — mi smo bili.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k31e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "мы были",
+          "me": "mi smo bili"
+        },
+        {
+          "ru": "мы (женщины) были",
+          "me": "mi smo bile"
+        },
+        {
+          "ru": "вы были",
+          "me": "vi ste bili"
+        },
+        {
+          "ru": "они были (м. р.)",
+          "me": "oni su bili"
+        },
+        {
+          "ru": "они были (ж. р.)",
+          "me": "one su bile"
+        },
+        {
+          "ru": "они были (ср. р.)",
+          "me": "ona su bila"
+        }
+      ],
+      "explanation": "mi smo bile, vi ste bile — только о женщинах, как one su bile."
+    },
+    {
+      "id": "k31e08",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "juče",
+      "hint": "juče — вчера",
+      "options": [
+        "вчера",
+        "сейчас",
+        "уже"
+      ],
+      "answer": "вчера",
+      "explanation": "juče — вчера. Ставится в начало, а sam сразу за ним: Juče sam bila u gradu."
+    },
+    {
+      "id": "k31e09",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Juče sam bila u gradu.",
+      "hint": "Juče sam bila u gradu. — Вчера я была в городе.",
+      "options": [
+        "Вчера я была в городе.",
+        "Вчера я была дома.",
+        "Сейчас я в городе."
+      ],
+      "answer": "Вчера я была в городе."
+    },
+    {
+      "id": "k31e10",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ranije",
+      "hint": "ranije — раньше",
+      "options": [
+        "раньше",
+        "вчера",
+        "уже"
+      ],
+      "answer": "раньше"
+    },
+    {
+      "id": "k31e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ranije sam bio brz.",
+      "hint": "Ranije sam bio brz. — Раньше я был быстрым.",
+      "options": [
+        "Раньше я был быстрым.",
+        "Вчера я был быстрым.",
+        "Я быстрый."
+      ],
+      "answer": "Раньше я был быстрым."
+    },
+    {
+      "id": "k31e12",
+      "type": "choice",
+      "label": "Новое выражение",
+      "prompt": "prošle nedjelje",
+      "hint": "prošle nedjelje — на прошлой неделе",
+      "options": [
+        "на прошлой неделе",
+        "в воскресенье",
+        "вчера"
+      ],
+      "answer": "на прошлой неделе",
+      "explanation": "nedjelja — и «неделя», и «воскресенье». prošle nedjelje — «на прошлой неделе». Так говорят чаще всего; ещё можно prošle sedmice."
+    },
+    {
+      "id": "k31e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Prošle nedjelje smo bili na moru.",
+      "hint": "Prošle nedjelje smo bili na moru. — На прошлой неделе мы были на море.",
+      "options": [
+        "На прошлой неделе мы были на море.",
+        "Вчера мы были на море.",
+        "На прошлой неделе мы были в городе."
+      ],
+      "answer": "На прошлой неделе мы были на море."
+    },
+    {
+      "id": "k31e14",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "вчера",
+          "me": "juče"
+        },
+        {
+          "ru": "раньше",
+          "me": "ranije"
+        },
+        {
+          "ru": "на прошлой неделе",
+          "me": "prošle nedjelje"
+        },
+        {
+          "ru": "сейчас",
+          "me": "sada"
+        }
+      ]
+    },
+    {
+      "id": "k31e15",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "petak",
+      "hint": "petak — пятница",
+      "options": [
+        "пятница",
+        "суббота",
+        "неделя"
+      ],
+      "answer": "пятница"
+    },
+    {
+      "id": "k31e16",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "subota",
+      "hint": "subota — суббота",
+      "options": [
+        "суббота",
+        "пятница",
+        "неделя"
+      ],
+      "answer": "суббота"
+    },
+    {
+      "id": "k31e17",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "U petak sam bila kod babe.",
+      "hint": "U petak sam bila kod babe. — В пятницу я была у бабушки.",
+      "options": [
+        "В пятницу я была у бабушки.",
+        "В субботу я была у бабушки.",
+        "В пятницу я была дома."
+      ],
+      "answer": "В пятницу я была у бабушки.",
+      "explanation": "«В пятницу» — u petak, «в субботу» — u subotu: subota → subotu, как kafa → kafu. petak не меняется."
+    },
+    {
+      "id": "k31e18",
+      "type": "choice",
+      "prompt": "В субботу — u ___",
+      "options": [
+        "subotu",
+        "subota",
+        "suboti"
+      ],
+      "answer": "subotu",
+      "explanation": "«В пятницу» — u petak, «в субботу» — u subotu: subota → subotu, как kafa → kafu. petak не меняется.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k31e19",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "пятница",
+          "me": "petak"
+        },
+        {
+          "ru": "суббота",
+          "me": "subota"
+        },
+        {
+          "ru": "в пятницу",
+          "me": "u petak"
+        },
+        {
+          "ru": "в субботу",
+          "me": "u subotu"
+        }
+      ]
+    },
+    {
+      "id": "k31e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kao i obično.",
+      "hint": "Kao i obično. — Как обычно.",
+      "options": [
+        "Как обычно.",
+        "Как всегда?",
+        "Как дела?"
+      ],
+      "answer": "Как обычно.",
+      "explanation": "kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično."
+    },
+    {
+      "id": "k31e21",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "U subotu smo bili kod babe, kao i obično.",
+      "hint": "U subotu smo bili kod babe, kao i obično. — В субботу мы были у бабушки, как обычно.",
+      "options": [
+        "В субботу мы были у бабушки, как обычно.",
+        "В пятницу мы были у бабушки, как обычно.",
+        "В субботу мы идём к бабушке, как обычно."
+      ],
+      "answer": "В субботу мы были у бабушки, как обычно."
+    },
+    {
+      "id": "k31e22",
+      "type": "choice",
+      "prompt": "В пятницу ты была дома, как всегда.",
+      "options": [
+        "U petak sam bila kod kuće, kao i obično.",
+        "U petak sam kod kuće.",
+        "U petak idem kući."
+      ],
+      "answer": "U petak sam bila kod kuće, kao i obično.",
+      "explanation": "kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k31e23",
+      "type": "choice",
+      "prompt": "Juče sam bio kod kuće, kao i obično.",
+      "options": [
+        "Вчера я был дома, как обычно.",
+        "Раньше я был дома, как обычно.",
+        "Вчера я был в городе."
+      ],
+      "answer": "Вчера я был дома, как обычно.",
+      "byEar": true
+    },
+    {
+      "id": "k31e24",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "poslati",
+      "hint": "poslati — послать, отправить",
+      "options": [
+        "послать, отправить",
+        "показать",
+        "писать"
+      ],
+      "answer": "послать, отправить",
+      "explanation": "poslati — послать, отправить. Просьба: Pošalji! (ты), Pošaljite! (вы). После da: pošaljem, pošalješ, pošalje, pošaljemo, pošaljete, pošalju — как sjesti → sjednem."
+    },
+    {
+      "id": "k31e25",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "pošaljem"
+        },
+        {
+          "ru": "ti",
+          "me": "pošalješ"
+        },
+        {
+          "ru": "on / ona",
+          "me": "pošalje"
+        },
+        {
+          "ru": "mi",
+          "me": "pošaljemo"
+        },
+        {
+          "ru": "vi",
+          "me": "pošaljete"
+        },
+        {
+          "ru": "oni",
+          "me": "pošalju"
+        }
+      ]
+    },
+    {
+      "id": "k31e26",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moram da pošaljem pismo.",
+      "hint": "Moram da pošaljem pismo. — Мне надо отправить письмо.",
+      "options": [
+        "Мне надо отправить письмо.",
+        "Мне надо написать письмо.",
+        "Отправь письмо."
+      ],
+      "answer": "Мне надо отправить письмо.",
+      "explanation": "poslati — послать, отправить. Просьба: Pošalji! (ты), Pošaljite! (вы). После da: pošaljem, pošalješ, pošalje, pošaljemo, pošaljete, pošalju — как sjesti → sjednem."
+    },
+    {
+      "id": "k31e27",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "lokacija",
+      "hint": "lokacija — геопозиция, местоположение",
+      "options": [
+        "геопозиция, местоположение",
+        "карта",
+        "место"
+      ],
+      "answer": "геопозиция, местоположение"
+    },
+    {
+      "id": "k31e28",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Pošalji mi svoju lokaciju.",
+      "hint": "Pošalji mi svoju lokaciju. — Отправь мне свою геопозицию.",
+      "options": [
+        "Отправь мне свою геопозицию.",
+        "Покажи мне это место на карте.",
+        "Я отправлю тебе свою геопозицию."
+      ],
+      "answer": "Отправь мне свою геопозицию.",
+      "explanation": "Так и пишут в Viber и WhatsApp. svoju — «свою»: svoja → svoju, как moja → moju. На «вы»: Pošaljite mi svoju lokaciju."
+    },
+    {
+      "id": "k31e29",
+      "type": "choice",
+      "prompt": "Ты ищешь подругу в городе и не знаешь, где она. Что напишешь?",
+      "options": [
+        "Pošalji mi svoju lokaciju.",
+        "Hajde da ti pokažem to mjesto na mapi.",
+        "Moram da pošaljem pismo."
+      ],
+      "answer": "Pošalji mi svoju lokaciju.",
+      "explanation": "Так и пишут в Viber и WhatsApp. svoju — «свою»: svoja → svoju, как moja → moju. На «вы»: Pošaljite mi svoju lokaciju.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k31e30",
+      "type": "choice",
+      "prompt": "На «вы»: «Отправьте мне свою геопозицию». — ___ mi svoju lokaciju.",
+      "options": [
+        "Pošaljite",
+        "Pošalji",
+        "Pošaljem"
+      ],
+      "answer": "Pošaljite",
+      "explanation": "poslati — послать, отправить. Просьба: Pošalji! (ты), Pošaljite! (вы). После da: pošaljem, pošalješ, pošalje, pošaljemo, pošaljete, pošalju — как sjesti → sjednem.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k31e31",
+      "type": "word_bank",
+      "prompt": "Отправь мне свою геопозицию.",
+      "answer": "Pošalji mi svoju lokaciju.",
+      "bank": [
+        "lokaciju",
+        "mi",
+        "svoju",
+        "pošalji"
+      ]
+    },
+    {
+      "id": "k31e32",
+      "type": "word_bank",
+      "prompt": "На прошлой неделе мы были на море.",
+      "answer": "Prošle nedjelje smo bili na moru.",
+      "bank": [
+        "moru",
+        "smo",
+        "prošle",
+        "bili",
+        "na",
+        "nedjelje"
+      ]
+    },
+    {
+      "id": "k31e33",
+      "type": "word_bank",
+      "prompt": "В пятницу я была у бабушки, как обычно.",
+      "answer": "U petak sam bila kod babe, kao i obično.",
+      "bank": [
+        "obično",
+        "sam",
+        "kod",
+        "u",
+        "kao",
+        "bila",
+        "petak",
+        "i",
+        "babe"
+      ]
+    },
+    {
+      "id": "k31e34",
+      "type": "speaking",
+      "phrase": "Pošalji mi svoju lokaciju.",
+      "translation": "Отправь мне свою геопозицию."
+    },
+    {
+      "id": "k31e35",
+      "type": "repeat",
+      "phrase": "U subotu smo bili kod babe, kao i obično.",
+      "translation": "В субботу мы были у бабушки, как обычно."
+    },
+    {
+      "id": "k31e36",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Отправь мне свою геопозицию.",
+          "me": "Pošalji mi svoju lokaciju."
+        },
+        {
+          "ru": "Вчера я была в городе.",
+          "me": "Juče sam bila u gradu."
+        },
+        {
+          "ru": "Мы (женщины) были у бабушки.",
+          "me": "Mi smo bile kod babe."
+        },
+        {
+          "ru": "Собака и кошка были голодными.",
+          "me": "Pas i mačka su bili gladni."
+        },
+        {
+          "ru": "как обычно",
+          "me": "kao i obično"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "juče",
+      "ru": "вчера"
+    },
+    {
+      "me": "ranije",
+      "ru": "раньше"
+    },
+    {
+      "me": "prošle nedjelje",
+      "ru": "на прошлой неделе"
+    },
+    {
+      "me": "petak",
+      "ru": "пятница"
+    },
+    {
+      "me": "subota",
+      "ru": "суббота"
+    },
+    {
+      "me": "kao i obično",
+      "ru": "как обычно"
+    },
+    {
+      "me": "poslati",
+      "ru": "послать, отправить"
+    },
+    {
+      "me": "lokacija",
+      "ru": "геопозиция, местоположение"
+    },
+    {
+      "me": "svoj",
+      "ru": "свой"
+    }
+  ]
+}
