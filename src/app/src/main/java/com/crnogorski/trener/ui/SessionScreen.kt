@@ -445,7 +445,7 @@ private fun ExerciseBody(
         )
 
         is Exercise.WordBank ->
-            WordBankAnswer(ex, state.glossary.ru, sayHint, enabled, onSubmit)
+            WordBankAnswer(ex, state.glossary.ru, sayHint, speaker, enabled, onSubmit)
 
         is Exercise.Listening -> ListeningAnswer(ex, speaker, enabled, onSubmit)
 
@@ -758,8 +758,13 @@ private fun ChoiceAnswer(
     // Звучит только черногорское: голос у нас sr-RS, и русская строка вышла бы
     // кашей. Условие Катиных заданий бывает и русским («собака»).
     val sayPrompt = !hasCyrillic(ex.prompt)
+    // Новое слово и новая фраза звучат сами, как только задание открылось (Катя,
+    // 14.10.2026; заметки 231, 233): услышать слово надо раньше, чем разбирать.
+    // Признак — подсказка плюс метка «Новое…/Новая…/Новый…»: подсказка бывает и
+    // у заданий теста, а там озвучка подсказывала бы ответ.
+    val fresh = sayPrompt && ex.hint.isNotBlank() && ex.label.startsWith("Нов")
 
-    if (ex.byEar) {
+    if (ex.byEar || fresh) {
         LaunchedEffect(ex.id) { if (enabled) speaker.speak(ex.prompt) }
     }
 
@@ -792,7 +797,7 @@ private fun ChoiceAnswer(
         Spacer(Modifier.height(8.dp))
         Text(ex.hint, style = MaterialTheme.typography.bodyLarge, color = Muted)
     }
-    if (ex.byEar) {
+    if (ex.byEar || fresh) {
         Spacer(Modifier.height(12.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             SmallAction("Прослушать") { speaker.speak(ex.prompt) }
@@ -810,12 +815,10 @@ private fun ChoiceAnswer(
                     .clip(RoundedCornerShape(12.dp))
                     .background(Surface1)
                     .border(1.dp, Surface2, RoundedCornerShape(12.dp))
-                    // Вариант проговаривается вслух: выбор глазами не даёт
-                    // услышать, как выбранное звучит.
+                    // После выбора звучит черногорское: выбор глазами не даёт
+                    // услышать, как оно звучит. См. spokenAfterChoice.
                     .clickable(enabled = enabled) {
-                        // Русский вариант не зачитывается: голос sr-RS
-                        // прочёл бы его кашей.
-                        if (!hasCyrillic(option)) speaker.speak(option)
+                        spokenAfterChoice(ex.prompt, option)?.let { speaker.speak(it) }
                         onSubmit(option)
                     }
                     .padding(16.dp)
@@ -824,6 +827,31 @@ private fun ChoiceAnswer(
             }
         }
     }
+}
+
+/**
+ * Что сказать вслух, когда вариант выбран (заметки 279, 280).
+ *
+ * * Пропуск в черногорской фразе («Volim ___ .») — звучит **вся фраза** с
+ *   выбранным словом, а не одно слово: падеж слышен в связке.
+ * * Вариант черногорский — звучит он.
+ * * Вариант русский, а условие черногорское («htjeti» → «хотеть») — звучит
+ *   условие: иначе черногорское слово так и не прозвучало бы.
+ *
+ * Русское не звучит никогда: голос sr-RS прочёл бы его кашей.
+ */
+private fun spokenAfterChoice(prompt: String, option: String): String? {
+    if (!hasCyrillic(option)) {
+        val part = prompt.split('\n', '—').firstOrNull { "___" in it }
+        if (part != null && !hasCyrillic(part)) {
+            return part.replace("___", option)
+                .replace(Regex("\\s+"), " ")
+                .replace(Regex(" ([.,!?…])"), "$1")
+                .trim()
+        }
+        return option
+    }
+    return if (hasCyrillic(prompt)) null else prompt
 }
 
 /** Есть ли в строке кириллица — то есть русский ли это текст. */
@@ -1016,6 +1044,7 @@ private fun WordBankAnswer(
     gloss: Map<String, String>,
     /** Условие русское: по нажатию звучит слово из подсказки. */
     onWord: (String) -> Unit,
+    speaker: Speaker,
     enabled: Boolean,
     onSubmit: (String) -> Unit
 ) {
@@ -1061,13 +1090,19 @@ private fun WordBankAnswer(
     Spacer(Modifier.height(16.dp))
     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         remaining.forEach { word ->
-            Chip(word, filled = false, enabled = enabled) { picked = picked + word }
+            // Нажатая плашка звучит (заметка 232): слово слышно, пока его кладут.
+            Chip(word, filled = false, enabled = enabled) {
+                speaker.speak(word)
+                picked = picked + word
+            }
         }
     }
 
     if (enabled) {
         Spacer(Modifier.height(20.dp))
         PrimaryButton("Проверить", enabled = picked.isNotEmpty()) {
+            // Звучит верная фраза, а не собранная: ошибочную слушать незачем.
+            speaker.speak(ex.answer)
             onSubmit(picked.joinToString(" "))
         }
     }
