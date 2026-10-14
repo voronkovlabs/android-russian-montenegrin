@@ -1,0 +1,451 @@
+{
+  "id": "k32",
+  "title": "Gdje si bila? Kod kuće, kao i obično",
+  "exercises": [
+    {
+      "id": "k32e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Gdje si bio?",
+      "hint": "Gdje si bio? — Где ты был?",
+      "options": [
+        "Где ты был?",
+        "Где ты?",
+        "Где он был?"
+      ],
+      "answer": "Где ты был?",
+      "explanation": "Gdje si bio? — мужчине, Gdje si bila? — женщине. si встаёт сразу за gdje, как sam за kad."
+    },
+    {
+      "id": "k32e02",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Gdje si bila?",
+      "hint": "Gdje si bila? — Где ты была?",
+      "options": [
+        "Где ты была?",
+        "Где ты был?",
+        "Где она была?"
+      ],
+      "answer": "Где ты была?",
+      "explanation": "Gdje si bio? — мужчине, Gdje si bila? — женщине. si встаёт сразу за gdje, как sam за kad."
+    },
+    {
+      "id": "k32e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Gdje ste bili?",
+      "hint": "Gdje ste bili? — Где вы были?",
+      "options": [
+        "Где вы были?",
+        "Где вы?",
+        "Где мы были?"
+      ],
+      "answer": "Где вы были?",
+      "explanation": "На «вы» — всегда bili, даже к одной женщине: Gdje ste bili?"
+    },
+    {
+      "id": "k32e04",
+      "type": "choice",
+      "prompt": "Вежливо, к пожилой соседке: «Где вы были?» — Gdje ste ___ ?",
+      "options": [
+        "bili",
+        "bila",
+        "bile"
+      ],
+      "answer": "bili",
+      "explanation": "На «вы» — всегда bili, даже к одной женщине: Gdje ste bili?",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k32e05",
+      "type": "choice",
+      "prompt": "Спроси подругу: «Где ты была?»",
+      "options": [
+        "Gdje si bila?",
+        "Gdje si bio?",
+        "Gdje ste bile?"
+      ],
+      "answer": "Gdje si bila?",
+      "explanation": "Gdje si bio? — мужчине, Gdje si bila? — женщине. si встаёт сразу за gdje, как sam за kad.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k32e06",
+      "type": "choice",
+      "prompt": "Gdje si bio juče?",
+      "options": [
+        "Где ты был вчера?",
+        "Где ты был в пятницу?",
+        "Где ты сейчас?"
+      ],
+      "answer": "Где ты был вчера?",
+      "byEar": true
+    },
+    {
+      "id": "k32e07",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kao i obično.",
+      "hint": "Kao i obično. — Как обычно.",
+      "options": [
+        "Как обычно.",
+        "Как всегда?",
+        "Как дела?"
+      ],
+      "answer": "Как обычно.",
+      "explanation": "kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično."
+    },
+    {
+      "id": "k32e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "U subotu smo bili kod babe, kao i obično.",
+      "hint": "U subotu smo bili kod babe, kao i obično. — В субботу мы были у бабушки, как обычно.",
+      "options": [
+        "В субботу мы были у бабушки, как обычно.",
+        "В пятницу мы были у бабушки, как обычно.",
+        "В субботу мы идём к бабушке, как обычно."
+      ],
+      "answer": "В субботу мы были у бабушки, как обычно."
+    },
+    {
+      "id": "k32e09",
+      "type": "choice",
+      "prompt": "— Gdje si bila u petak?\n— ___",
+      "options": [
+        "Kod kuće, kao i obično.",
+        "Idem kući.",
+        "Kod kuće sam."
+      ],
+      "answer": "Kod kuće, kao i obično.",
+      "explanation": "kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k32e10",
+      "type": "choice",
+      "prompt": "Juče sam bio kod kuće, kao i obično.",
+      "options": [
+        "Вчера я был дома, как обычно.",
+        "Раньше я был дома, как обычно.",
+        "Вчера я был в городе."
+      ],
+      "answer": "Вчера я был дома, как обычно.",
+      "byEar": true
+    },
+    {
+      "id": "k32e11",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Где ты был?",
+          "me": "Gdje si bio?"
+        },
+        {
+          "ru": "Где ты была?",
+          "me": "Gdje si bila?"
+        },
+        {
+          "ru": "Где вы были?",
+          "me": "Gdje ste bili?"
+        },
+        {
+          "ru": "как обычно",
+          "me": "kao i obično"
+        }
+      ]
+    },
+    {
+      "id": "k32e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Živio sam u Rusiji.",
+      "hint": "Živio sam u Rusiji. — Я жил в России.",
+      "options": [
+        "Я жил в России.",
+        "Я живу в России.",
+        "Я был в России."
+      ],
+      "answer": "Я жил в России.",
+      "explanation": "živjeti — жить. Прошедшее, как у biti → bio: živio (мужчина), živjela (женщина), živjeli (несколько). В мужском роде -je- пропадает: živio."
+    },
+    {
+      "id": "k32e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Živjela sam u Rusiji.",
+      "hint": "Živjela sam u Rusiji. — Я жила в России.",
+      "options": [
+        "Я жила в России.",
+        "Я живу в России.",
+        "Она жила в России."
+      ],
+      "answer": "Я жила в России.",
+      "explanation": "živjeti — жить. Прошедшее, как у biti → bio: živio (мужчина), živjela (женщина), živjeli (несколько). В мужском роде -je- пропадает: živio."
+    },
+    {
+      "id": "k32e14",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я жил",
+          "me": "ja sam živio"
+        },
+        {
+          "ru": "я жила",
+          "me": "ja sam živjela"
+        },
+        {
+          "ru": "он жил",
+          "me": "on je živio"
+        },
+        {
+          "ru": "она жила",
+          "me": "ona je živjela"
+        },
+        {
+          "ru": "они жили",
+          "me": "oni su živjeli"
+        }
+      ]
+    },
+    {
+      "id": "k32e15",
+      "type": "choice",
+      "prompt": "Она жила в городе. — Ona je ___ u gradu.",
+      "options": [
+        "živjela",
+        "živio",
+        "živjeli"
+      ],
+      "answer": "živjela",
+      "explanation": "živjeti — жить. Прошедшее, как у biti → bio: živio (мужчина), živjela (женщина), živjeli (несколько). В мужском роде -je- пропадает: živio.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k32e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ranije sam živjela u Rusiji, a sada živim u Crnoj Gori.",
+      "hint": "Ranije sam živjela u Rusiji, a sada živim u Crnoj Gori. — Раньше я жила в России, а теперь живу в Черногории.",
+      "options": [
+        "Раньше я жила в России, а теперь живу в Черногории.",
+        "Раньше я жила в Черногории, а теперь живу в России.",
+        "Я живу в России и в Черногории."
+      ],
+      "answer": "Раньше я жила в России, а теперь живу в Черногории.",
+      "explanation": "Ranije…, a sada… — «раньше…, а теперь…». В первой половине прошедшее, во второй настоящее. u Crnoj Gori — в Черногории; u Crnu Goru — в Черногорию."
+    },
+    {
+      "id": "k32e17",
+      "type": "choice",
+      "prompt": "Раньше я жил в городе (говорит мужчина). — Ranije sam ___ u gradu.",
+      "options": [
+        "živio",
+        "živjela",
+        "živim"
+      ],
+      "answer": "živio",
+      "explanation": "živjeti — жить. Прошедшее, как у biti → bio: živio (мужчина), živjela (женщина), živjeli (несколько). В мужском роде -je- пропадает: živio.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k32e18",
+      "type": "choice",
+      "prompt": "Теперь я живу в Черногории. — Sada ___ u Crnoj Gori.",
+      "options": [
+        "živim",
+        "živio sam",
+        "živjela sam"
+      ],
+      "answer": "živim",
+      "explanation": "Ranije…, a sada… — «раньше…, а теперь…». В первой половине прошедшее, во второй настоящее. u Crnoj Gori — в Черногории; u Crnu Goru — в Черногорию.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k32e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "baka",
+      "hint": "baka — бабуля",
+      "options": [
+        "бабуля",
+        "дедуля",
+        "сестрёнка"
+      ],
+      "answer": "бабуля",
+      "explanation": "baba — бабушка, baka — ласково, «бабуля». djed — дедушка, deka — ласково, «дедуля». Внуки так и говорят: baka i deka."
+    },
+    {
+      "id": "k32e20",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "deka",
+      "hint": "deka — дедуля",
+      "options": [
+        "дедуля",
+        "бабуля",
+        "папа"
+      ],
+      "answer": "дедуля",
+      "explanation": "baba — бабушка, baka — ласково, «бабуля». djed — дедушка, deka — ласково, «дедуля». Внуки так и говорят: baka i deka."
+    },
+    {
+      "id": "k32e21",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "бабушка",
+          "me": "baba"
+        },
+        {
+          "ru": "бабуля",
+          "me": "baka"
+        },
+        {
+          "ru": "дедушка",
+          "me": "djed"
+        },
+        {
+          "ru": "дедуля",
+          "me": "deka"
+        }
+      ]
+    },
+    {
+      "id": "k32e22",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ranije su baka i deka živjeli u stanu, a sada žive u svojoj kući.",
+      "hint": "Ranije su baka i deka živjeli u stanu, a sada žive u svojoj kući. — Раньше бабушка и дедушка жили в квартире, а теперь живут в своём доме.",
+      "options": [
+        "Раньше бабушка и дедушка жили в квартире, а теперь живут в своём доме.",
+        "Раньше бабушка и дедушка жили в своём доме, а теперь живут в квартире.",
+        "Бабушка и дедушка живут в квартире."
+      ],
+      "answer": "Раньше бабушка и дедушка жили в квартире, а теперь живут в своём доме.",
+      "explanation": "svojoj kući — «в своём доме»: kuća женского рода, поэтому svojoj, как u kući. živjeli — бабушка и дедушка вместе: есть мужчина, значит -li."
+    },
+    {
+      "id": "k32e23",
+      "type": "choice",
+      "prompt": "Бабушка и дедушка жили в квартире. — Baka i deka su ___ u stanu.",
+      "options": [
+        "živjeli",
+        "živjele",
+        "živio"
+      ],
+      "answer": "živjeli",
+      "explanation": "svojoj kući — «в своём доме»: kuća женского рода, поэтому svojoj, как u kući. živjeli — бабушка и дедушка вместе: есть мужчина, значит -li.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k32e24",
+      "type": "choice",
+      "prompt": "— Gdje žive baka i deka?\n— Ranije su živjeli u stanu, a sada žive u svojoj kući.\n\nГде они живут теперь?",
+      "options": [
+        "В своём доме.",
+        "В квартире.",
+        "У моря."
+      ],
+      "answer": "В своём доме.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k32e25",
+      "type": "word_bank",
+      "prompt": "Раньше я жила в России, а теперь живу в Черногории.",
+      "answer": "Ranije sam živjela u Rusiji, a sada živim u Crnoj Gori.",
+      "bank": [
+        "Gori",
+        "sam",
+        "a",
+        "u",
+        "ranije",
+        "živim",
+        "Rusiji",
+        "sada",
+        "živjela",
+        "Crnoj",
+        "u"
+      ]
+    },
+    {
+      "id": "k32e26",
+      "type": "word_bank",
+      "prompt": "Где ты была вчера?",
+      "answer": "Gdje si bila juče?",
+      "bank": [
+        "juče",
+        "si",
+        "gdje",
+        "bila"
+      ]
+    },
+    {
+      "id": "k32e27",
+      "type": "speaking",
+      "phrase": "Ranije sam živjela u Rusiji, a sada živim u Crnoj Gori.",
+      "translation": "Раньше я жила в России, а теперь живу в Черногории."
+    },
+    {
+      "id": "k32e28",
+      "type": "repeat",
+      "phrase": "Gdje si bio u subotu?",
+      "translation": "Где ты был в субботу?"
+    },
+    {
+      "id": "k32e29",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Где ты была?",
+          "me": "Gdje si bila?"
+        },
+        {
+          "ru": "как обычно",
+          "me": "kao i obično"
+        },
+        {
+          "ru": "Я жила в России.",
+          "me": "Živjela sam u Rusiji."
+        },
+        {
+          "ru": "бабуля",
+          "me": "baka"
+        },
+        {
+          "ru": "дедуля",
+          "me": "deka"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "gdje si bio / bila",
+      "ru": "где ты был / была"
+    },
+    {
+      "me": "kao i obično",
+      "ru": "как обычно"
+    },
+    {
+      "me": "živio / živjela / živjeli",
+      "ru": "жил / жила / жили"
+    },
+    {
+      "me": "ranije…, a sada…",
+      "ru": "раньше…, а теперь…"
+    },
+    {
+      "me": "baka",
+      "ru": "бабуля"
+    },
+    {
+      "me": "deka",
+      "ru": "дедуля"
+    }
+  ]
+}

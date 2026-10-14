@@ -2356,6 +2356,93 @@ L.append(dict(id='k31', title='Juče, u petak. Pošalji mi lokaciju!', section=S
           ('в пятницу', 'u petak')),
 ]))
 
+# --- Урок 32 ---
+# Gdje si bio / bila / ste bili; kao i obično (запись Кати 241, отложено из 31);
+# прошедшее от živjeti: «Ranije sam živjela u Rusiji, a sada živim u Crnoj Gori»;
+# baka i deka — ласково.
+GDJE = 'Gdje si bio? — мужчине, Gdje si bila? — женщине. si встаёт сразу за gdje, как sam за kad.'
+VI_BILI = 'На «вы» — всегда bili, даже к одной женщине: Gdje ste bili?'
+OBICNO = ('kao i obično — «как обычно», буквально «как и обычно». Ставится в начало или в '
+          'конец: Kao i obično, bio sam kod kuće. Bio sam kod kuće, kao i obično.')
+ZIVIO = ('živjeti — жить. Прошедшее, как у biti → bio: živio (мужчина), živjela (женщина), '
+         'živjeli (несколько). В мужском роде -je- пропадает: živio.')
+RANIJE_SADA = ('Ranije…, a sada… — «раньше…, а теперь…». В первой половине прошедшее, во второй '
+               'настоящее. u Crnoj Gori — в Черногории; u Crnu Goru — в Черногорию.')
+BAKA = ('baba — бабушка, baka — ласково, «бабуля». djed — дедушка, deka — ласково, «дедуля». '
+        'Внуки так и говорят: baka i deka.')
+SVOJOJ = ('svojoj kući — «в своём доме»: kuća женского рода, поэтому svojoj, как u kući. '
+          'živjeli — бабушка и дедушка вместе: есть мужчина, значит -li.')
+L.append(dict(id='k32', title='Gdje si bila? Kod kuće, kao i obično', section=S3, words=[
+    ('gdje si bio / bila', 'где ты был / была'), ('kao i obično', 'как обычно'),
+    ('živio / živjela / živjeli', 'жил / жила / жили'), ('ranije…, a sada…', 'раньше…, а теперь…'),
+    ('baka', 'бабуля'), ('deka', 'дедуля')],
+    ex=[
+    dict(phrase('Gdje si bio?', 'Где ты был?', ['Где ты был?', 'Где ты?', 'Где он был?']),
+         explanation=GDJE),
+    dict(phrase('Gdje si bila?', 'Где ты была?', ['Где ты была?', 'Где ты был?', 'Где она была?']),
+         explanation=GDJE),
+    dict(phrase('Gdje ste bili?', 'Где вы были?', ['Где вы были?', 'Где вы?', 'Где мы были?']),
+         explanation=VI_BILI),
+    pick('Вежливо, к пожилой соседке: «Где вы были?» — Gdje ste ___ ?', ['bili', 'bila', 'bile'],
+         'bili', explanation=VI_BILI, label='Вставь слово'),
+    pick('Спроси подругу: «Где ты была?»', ['Gdje si bila?', 'Gdje si bio?', 'Gdje ste bile?'],
+         'Gdje si bila?', explanation=GDJE, label='Что скажешь?'),
+    ear('Gdje si bio juče?', ['Где ты был вчера?', 'Где ты был в пятницу?', 'Где ты сейчас?'],
+        'Где ты был вчера?'),
+    dict(phrase('Kao i obično.', 'Как обычно.', ['Как обычно.', 'Как всегда?', 'Как дела?']),
+         explanation=OBICNO),
+    phrase('U subotu smo bili kod babe, kao i obično.', 'В субботу мы были у бабушки, как обычно.',
+           ['В субботу мы были у бабушки, как обычно.', 'В пятницу мы были у бабушки, как обычно.',
+            'В субботу мы идём к бабушке, как обычно.']),
+    pick('— Gdje si bila u petak?\n— ___', ['Kod kuće, kao i obično.', 'Idem kući.', 'Kod kuće sam.'],
+         'Kod kuće, kao i obično.', explanation=OBICNO, label='Мини-диалог'),
+    ear('Juče sam bio kod kuće, kao i obično.',
+        ['Вчера я был дома, как обычно.', 'Раньше я был дома, как обычно.', 'Вчера я был в городе.'],
+        'Вчера я был дома, как обычно.'),
+    pairs(('Где ты был?', 'Gdje si bio?'), ('Где ты была?', 'Gdje si bila?'),
+          ('Где вы были?', 'Gdje ste bili?'), ('как обычно', 'kao i obično')),
+    dict(phrase('Živio sam u Rusiji.', 'Я жил в России.',
+                ['Я жил в России.', 'Я живу в России.', 'Я был в России.']), explanation=ZIVIO),
+    dict(phrase('Živjela sam u Rusiji.', 'Я жила в России.',
+                ['Я жила в России.', 'Я живу в России.', 'Она жила в России.']), explanation=ZIVIO),
+    pairs(('я жил', 'ja sam živio'), ('я жила', 'ja sam živjela'), ('он жил', 'on je živio'),
+          ('она жила', 'ona je živjela'), ('они жили', 'oni su živjeli')),
+    pick('Она жила в городе. — Ona je ___ u gradu.', ['živjela', 'živio', 'živjeli'], 'živjela',
+         explanation=ZIVIO, label='Вставь слово'),
+    dict(phrase('Ranije sam živjela u Rusiji, a sada živim u Crnoj Gori.',
+                'Раньше я жила в России, а теперь живу в Черногории.',
+                ['Раньше я жила в России, а теперь живу в Черногории.',
+                 'Раньше я жила в Черногории, а теперь живу в России.',
+                 'Я живу в России и в Черногории.']), explanation=RANIJE_SADA),
+    pick('Раньше я жил в городе (говорит мужчина). — Ranije sam ___ u gradu.',
+         ['živio', 'živjela', 'živim'], 'živio', explanation=ZIVIO, label='Вставь слово'),
+    pick('Теперь я живу в Черногории. — Sada ___ u Crnoj Gori.',
+         ['živim', 'živio sam', 'živjela sam'], 'živim', explanation=RANIJE_SADA,
+         label='Вставь слово'),
+    dict(new('baka', 'бабуля', ['бабуля', 'дедуля', 'сестрёнка']), explanation=BAKA),
+    dict(new('deka', 'дедуля', ['дедуля', 'бабуля', 'папа']), explanation=BAKA),
+    pairs(('бабушка', 'baba'), ('бабуля', 'baka'), ('дедушка', 'djed'), ('дедуля', 'deka')),
+    dict(phrase('Ranije su baka i deka živjeli u stanu, a sada žive u svojoj kući.',
+                'Раньше бабушка и дедушка жили в квартире, а теперь живут в своём доме.',
+                ['Раньше бабушка и дедушка жили в квартире, а теперь живут в своём доме.',
+                 'Раньше бабушка и дедушка жили в своём доме, а теперь живут в квартире.',
+                 'Бабушка и дедушка живут в квартире.']), explanation=SVOJOJ),
+    pick('Бабушка и дедушка жили в квартире. — Baka i deka su ___ u stanu.',
+         ['živjeli', 'živjele', 'živio'], 'živjeli', explanation=SVOJOJ, label='Вставь слово'),
+    pick('— Gdje žive baka i deka?\n— Ranije su živjeli u stanu, a sada žive u svojoj kući.\n\n'
+         'Где они живут теперь?', ['В своём доме.', 'В квартире.', 'У моря.'], 'В своём доме.',
+         label='Мини-диалог'),
+    bank('Раньше я жила в России, а теперь живу в Черногории.',
+         'Ranije sam živjela u Rusiji, a sada živim u Crnoj Gori.',
+         ['Gori', 'sam', 'a', 'u', 'ranije', 'živim', 'Rusiji', 'sada', 'živjela', 'Crnoj', 'u']),
+    bank('Где ты была вчера?', 'Gdje si bila juče?', ['juče', 'si', 'gdje', 'bila']),
+    say('Ranije sam živjela u Rusiji, a sada živim u Crnoj Gori.',
+        'Раньше я жила в России, а теперь живу в Черногории.'),
+    echo('Gdje si bio u subotu?', 'Где ты был в субботу?'),
+    pairs(('Где ты была?', 'Gdje si bila?'), ('как обычно', 'kao i obično'),
+          ('Я жила в России.', 'Živjela sam u Rusiji.'), ('бабуля', 'baka'), ('дедуля', 'deka')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
