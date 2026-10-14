@@ -297,6 +297,11 @@ private fun SessionHeader(
             // У бесконечного захода «из скольких» нет: показываем, сколько
             // пройдено, а полосу оставляем пустой — её высота держит место,
             // чтобы шапка не прыгала.
+            // Повтор ошибки помечен: иначе задание, которое уже было, читалось бы
+            // как сбой, а растущий счётчик «из скольких» — как ошибка в нём.
+            if (state.items[state.index].retry) {
+                Text("повтор ошибки · ", style = MaterialTheme.typography.labelSmall, color = Accent)
+            }
             Text(
                 if (state.endless) "${state.index + 1}" else "${state.index + 1} / ${state.items.size}",
                 style = MaterialTheme.typography.labelSmall,
@@ -2384,7 +2389,7 @@ private fun FinishedView(state: SessionState, onExit: () -> Unit) {
                     "или пройти уроки раздела по порядку."
                 state.strict -> "Ошибок: ${state.mistakes}. Следующий раздел открыт, " +
                     "слова пропущенных уроков появились в словаре."
-                else -> "${state.correct} из ${state.items.size} с первого раза. " +
+                else -> "${state.correct} из ${state.firstTotal} с первого раза. " +
                     "Ошибки вернутся в повторении."
             },
             style = MaterialTheme.typography.bodyLarge,

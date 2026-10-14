@@ -384,7 +384,16 @@ data class SettingsState(
     val notice: String? = null
 )
 
-data class SessionItem(val lessonId: String, val exercise: Exercise)
+data class SessionItem(
+    val lessonId: String,
+    val exercise: Exercise,
+    /**
+     * Повтор задания, отвеченного неверно, в конце урока (Катя, 14.10.2026;
+     * заметка 278). Расписания и счёта урока не трогает: вердикт по заданию
+     * вынесен первым ответом, а повтор — чтобы уйти из урока с верным.
+     */
+    val retry: Boolean = false
+)
 
 /** Строка раздела «Истории» на главном экране. */
 data class StoryCard(
@@ -603,9 +612,16 @@ data class SessionState(
     /** На текущее задание уже пожаловались — второй раз не предлагаем. */
     val complaintFiled: Boolean = false,
     /** Словарь подсказок по нажатию на слово; пустой — значит подсказок нет. */
-    val glossary: Glossary = Glossary()
+    val glossary: Glossary = Glossary(),
+    /**
+     * Ошибки возвращаются в конец, пока не будут отвечены верно (урок,
+     * открытый с вкладки; см. [SessionItem.retry]).
+     */
+    val retryWrong: Boolean = false
 ) {
     val current: Exercise get() = items[index].exercise
+    /** Сколько заданий в уроке без повторов ошибок: из этого и считается счёт. */
+    val firstTotal: Int get() = items.count { !it.retry }
     val progress: Float get() = if (items.isEmpty()) 0f else index.toFloat() / items.size
 }
 
@@ -1486,7 +1502,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 note = lesson.note,
                 items = items,
                 shownAt = System.currentTimeMillis(),
-                glossary = repo.glossary()
+                glossary = repo.glossary(),
+                retryWrong = true
             )
             guardNetwork(items)
         }
@@ -4157,7 +4174,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 } else note,
                 "", expected, answer
             ),
-            correct = state.correct + if (correct) 1 else 0,
+            correct = state.correct + if (correct && !state.items[state.index].retry) 1 else 0,
             mistakes = mistakes
         )
     }
@@ -4302,6 +4319,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Строгий тест — тоже проверка, а не занятие: в повторения не пишет.
         if (state.strict) return
         val item = state.items[state.index]
+        // Повтор ошибки: время занятия идёт, расписание и счёт дня — нет.
+        if (item.retry) {
+            noteTime(state, item.exercise)
+            cardBeforeAnswer = null
+            return
+        }
         // Сырые секунды снимаются **до** noteTime: тот отдаёт уже списанное,
         // а списанное у ответа быстрее полутора секунд равно нулю — то есть
         // ровно самый уверенный ответ выглядел бы как «времени не было».
@@ -4428,7 +4451,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun next() {
-        val state = _session.value ?: return
+        val state = _session.value?.let(::requeueWrong) ?: return
         // Строгий тест обрывается на четвёртой ошибке: попытка кончилась, раздел
         // не открывается, в базу не пишется ничего.
         if (state.strict && state.mistakes > STRICT_MISTAKES) {
@@ -4447,6 +4470,18 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 complaintFiled = false
             )
         }
+    }
+
+    /**
+     * Неверно отвеченное уходит в конец урока и возвращается, пока не будет
+     * отвечено верно (Катя, 14.10.2026; заметка 278). Пропуск ошибкой не
+     * считается. Задание, на которое пожаловались, не возвращается: если оно
+     * сломано, урок иначе не закончить никогда.
+     */
+    private fun requeueWrong(state: SessionState): SessionState {
+        val result = state.phase as? Phase.Result ?: return state
+        if (!state.retryWrong || result.correct || state.complaintFiled) return state
+        return state.copy(items = state.items + state.items[state.index].copy(retry = true))
     }
 
     /** Добор порции идёт сейчас: второе нажатие «Дальше» не должно звать его снова. */
@@ -4516,7 +4551,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                         lessonId = lessonId,
                         completedAt = System.currentTimeMillis(),
                         correct = state.correct,
-                        total = state.items.size
+                        total = state.firstTotal
                     )
                 )
             }
