@@ -1125,9 +1125,10 @@ private fun MatchAnswer(
     val ear = remember(ex.id) { QuietEar(Listener(context)) { micAllowed(context) } }
     DisposableEffect(ear) { onDispose { ear.stop() } }
     val scope = rememberCoroutineScope()
-    // Голос нужен, только когда слева русское: в парах «ja — sjednem» говорить
-    // нечего, и микрофон лишь мешал (заметка 316).
-    val voice = remember(ex.id) { left.any { hasCyrillic(it.ru) } }
+    // Голос в парах выключен совсем (Катя, 16.10.2026): заметка 311 его
+    // завела, 316 показала, что он мешает. Механизм оставлен — включается
+    // одной этой строкой.
+    val voice = false
 
     fun tap(pair: MatchPair, isLeft: Boolean) {
         val wasLive = ear.live
