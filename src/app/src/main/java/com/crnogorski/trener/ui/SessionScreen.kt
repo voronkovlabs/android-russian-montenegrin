@@ -1256,20 +1256,15 @@ private fun WordBankAnswer(
     enabled: Boolean,
     onSubmit: (String) -> Unit
 ) {
-    var picked by remember(ex.id) { mutableStateOf(listOf<String>()) }
+    // Номера плашек в куче, а не сами слова: одинаковых слов бывает два
+    // («bio … bio»), и вернуться каждое должно на своё место.
+    var picked by remember(ex.id) { mutableStateOf(listOf<Int>()) }
     // Слова тасуются, а не идут как в файле: там верный ответ стоит первым по
     // порядку, и задание решалось нажатием слева направо. Тасуем один раз на
     // задание — иначе плашки прыгали бы под пальцем при каждой перерисовке, —
     // но при каждом новом появлении заново: порядок, выученный на повторении,
     // такое же решение по памяти.
     val bank = remember(ex.id) { (ex.bank + extra).shuffled() }
-    val remaining = remember(picked, bank) {
-        val counts = picked.groupingBy { it }.eachCount().toMutableMap()
-        bank.filter { word ->
-            val left = counts[word] ?: 0
-            if (left > 0) { counts[word] = left - 1; false } else true
-        }
-    }
 
     Label("Собери фразу")
     Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = false)
@@ -1286,8 +1281,8 @@ private fun WordBankAnswer(
             Text("Нажимай на слова ниже", color = Muted, style = MaterialTheme.typography.bodyMedium)
         } else {
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                picked.forEachIndexed { i, word ->
-                    Chip(word, filled = true, enabled = enabled) {
+                picked.forEachIndexed { i, at ->
+                    Chip(bank[at], filled = true, enabled = enabled) {
                         picked = picked.toMutableList().also { it.removeAt(i) }
                     }
                 }
@@ -1296,12 +1291,19 @@ private fun WordBankAnswer(
     }
 
     Spacer(Modifier.height(16.dp))
+    // Плашки в куче стоят на своих местах (заметка 301): взятая оставляет
+    // пустое место своего размера, остальные не сдвигаются, а вернувшаяся
+    // встаёт туда же, откуда ушла. Иначе куча перестраивалась после каждого
+    // нажатия, и нужное слово приходилось искать заново.
     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        remaining.forEach { word ->
-            // Нажатая плашка звучит (заметка 232): слово слышно, пока его кладут.
-            Chip(word, filled = false, enabled = enabled) {
-                speaker.speak(word)
-                picked = picked + word
+        bank.forEachIndexed { at, word ->
+            val taken = at in picked
+            Box(Modifier.alpha(if (taken) 0f else 1f)) {
+                // Нажатая плашка звучит (заметка 232): слово слышно, пока его кладут.
+                Chip(word, filled = false, enabled = enabled && !taken) {
+                    speaker.speak(word)
+                    picked = picked + at
+                }
             }
         }
     }
@@ -1311,7 +1313,7 @@ private fun WordBankAnswer(
         PrimaryButton("Проверить", enabled = picked.isNotEmpty()) {
             // Звучит верная фраза, а не собранная: ошибочную слушать незачем.
             speaker.speak(ex.answer)
-            onSubmit(picked.joinToString(" "))
+            onSubmit(picked.joinToString(" ") { bank[it] })
         }
     }
 }

@@ -3719,7 +3719,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 answer
             )
             is Exercise.WordBank -> localResult(
-                LocalCheck.matches(answer, ex.answer),
+                LocalCheck.matches(answer, ex.answer) || ex.also.any { LocalCheck.matches(answer, it) },
                 ex.explanation,
                 ex.answer,
                 answer
