@@ -1684,7 +1684,22 @@
   "pivo": "пиво",
   "pljeskavicu": "котлету (вин. п.)",
   "pomfrit": "картошка фри",
-  "puž": "улитка"
+  "puž": "улитка",
+  "božić": "Рождество",
+  "hristos": "Христос",
+  "ljetu": "лету (дат. п.)",
+  "raduje": "радуется",
+  "radujem": "радуюсь (radujem se)",
+  "radujemo": "радуемся",
+  "radujete": "радуетесь",
+  "raduješ": "радуешься",
+  "raduju": "радуются",
+  "rodi": "родился (Hristos se rodi!)",
+  "slava": "слава — семейный праздник",
+  "srećna": "счастливая (Srećna Nova godina!)",
+  "srećno": "счастливое; удачи!",
+  "tebi": "тебе",
+  "vaistinu": "воистину"
  },
  "ru": {
   "а": "a",
@@ -2203,6 +2218,19 @@
   "улитка": "puž",
   "пиво": "pivo",
   "творишь": "radiš (Šta radiš, bre!)",
-  "компьютером": "kompjuterom (na kompjuteru)"
+  "компьютером": "kompjuterom (na kompjuteru)",
+  "воистину": "vaistinu",
+  "годом": "godinom (Srećna Nova godina! — С Новым годом!)",
+  "лету": "ljetu",
+  "морю": "moru",
+  "рада": "radujem se (рада, что… — radujem se što…)",
+  "радуемся": "radujemo se",
+  "радуюсь": "radujem se",
+  "радуются": "raduju se",
+  "родился": "se rodi (Hristos se rodi!)",
+  "рождеством": "Božić (Srećan Božić! — С Рождеством!)",
+  "рождество": "Božić",
+  "славой": "slava (Srećna slava!)",
+  "христос": "Hristos"
  }
 }

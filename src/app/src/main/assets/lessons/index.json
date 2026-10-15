@@ -223,6 +223,12 @@
       "title": "Šta radiš, bre?! Ajkula je išla u kupovinu",
       "file": "k35.json",
       "section": "Раздел 3"
+    },
+    {
+      "id": "k36",
+      "title": "Srećan rođendan! Radujem se",
+      "file": "k36.json",
+      "section": "Раздел 3"
     }
   ]
 }

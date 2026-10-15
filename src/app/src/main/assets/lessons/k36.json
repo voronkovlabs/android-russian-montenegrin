@@ -1,0 +1,460 @@
+{
+  "id": "k36",
+  "title": "Srećan rođendan! Radujem se",
+  "exercises": [
+    {
+      "id": "k36e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Radujem se!",
+      "hint": "Radujem se! — Я радуюсь!",
+      "options": [
+        "Я радуюсь!",
+        "Я устал!",
+        "Я голоден!"
+      ],
+      "answer": "Я радуюсь!",
+      "explanation": "radovati se — радоваться: radujem se, raduješ se, raduje se, radujemo se, radujete se, raduju se. se не отпадает: Radujem se!"
+    },
+    {
+      "id": "k36e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "radujem se"
+        },
+        {
+          "ru": "ti",
+          "me": "raduješ se"
+        },
+        {
+          "ru": "on / ona",
+          "me": "raduje se"
+        },
+        {
+          "ru": "mi",
+          "me": "radujemo se"
+        },
+        {
+          "ru": "vi",
+          "me": "radujete se"
+        },
+        {
+          "ru": "oni",
+          "me": "raduju se"
+        }
+      ],
+      "explanation": "radovati se — радоваться: radujem se, raduješ se, raduje se, radujemo se, radujete se, raduju se. se не отпадает: Radujem se!"
+    },
+    {
+      "id": "k36e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "rođendan",
+      "hint": "rođendan — день рождения",
+      "options": [
+        "день рождения",
+        "Рождество",
+        "Новый год"
+      ],
+      "answer": "день рождения"
+    },
+    {
+      "id": "k36e04",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Radujem se, sjutra mi je rođendan.",
+      "hint": "Radujem se, sjutra mi je rođendan. — Я радуюсь, у меня завтра день рождения.",
+      "options": [
+        "Я радуюсь, у меня завтра день рождения.",
+        "Я радуюсь, у тебя завтра день рождения.",
+        "Я радуюсь, у меня вчера был день рождения."
+      ],
+      "answer": "Я радуюсь, у меня завтра день рождения.",
+      "explanation": "sjutra mi je rođendan — «завтра у меня день рождения», буквально «завтра мне день рождения». mi — «мне»."
+    },
+    {
+      "id": "k36e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Radujem se što si ovdje.",
+      "hint": "Radujem se što si ovdje. — Я рада, что ты здесь.",
+      "options": [
+        "Я рада, что ты здесь.",
+        "Я рада, что ты дома.",
+        "Я здесь, и я рада."
+      ],
+      "answer": "Я рада, что ты здесь."
+    },
+    {
+      "id": "k36e06",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Radujemo se moru.",
+      "hint": "Radujemo se moru. — Мы радуемся морю.",
+      "options": [
+        "Мы радуемся морю.",
+        "Мы радуемся лету.",
+        "Мы идём на море."
+      ],
+      "answer": "Мы радуемся морю.",
+      "explanation": "Чему радуются — дательный, как «к кому»: radujem se moru, ljetu, Novoj godini. У слов на -o и согласную — -u, у слов на -a — -i."
+    },
+    {
+      "id": "k36e07",
+      "type": "choice",
+      "prompt": "Мы радуемся. — Mi se ___ .",
+      "options": [
+        "radujemo",
+        "raduju",
+        "raduje"
+      ],
+      "answer": "radujemo",
+      "explanation": "radovati se — радоваться: radujem se, raduješ se, raduje se, radujemo se, radujete se, raduju se. se не отпадает: Radujem se!",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k36e08",
+      "type": "choice",
+      "prompt": "Они радуются лету. — Oni se ___ ljetu.",
+      "options": [
+        "raduju",
+        "raduje",
+        "radujemo"
+      ],
+      "answer": "raduju",
+      "explanation": "radovati se — радоваться: radujem se, raduješ se, raduje se, radujemo se, radujete se, raduju se. se не отпадает: Radujem se!",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k36e09",
+      "type": "choice",
+      "label": "Новое выражение",
+      "prompt": "Čestitam!",
+      "hint": "Čestitam! — Поздравляю!",
+      "options": [
+        "Поздравляю!",
+        "Спасибо!",
+        "Привет!"
+      ],
+      "answer": "Поздравляю!",
+      "explanation": "Čestitam! — «Поздравляю!» Годится к любому празднику."
+    },
+    {
+      "id": "k36e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Srećan rođendan!",
+      "hint": "Srećan rođendan! — С днём рождения!",
+      "options": [
+        "С днём рождения!",
+        "С Новым годом!",
+        "С Рождеством!"
+      ],
+      "answer": "С днём рождения!",
+      "explanation": "srećan — «счастливый». Поздравляют прилагательным, как по-русски «счастливого пути»: Srećan rođendan! — С днём рождения! Отвечают: Hvala!"
+    },
+    {
+      "id": "k36e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Srećna Nova godina!",
+      "hint": "Srećna Nova godina! — С Новым годом!",
+      "options": [
+        "С Новым годом!",
+        "С днём рождения!",
+        "Счастливого пути!"
+      ],
+      "answer": "С Новым годом!",
+      "explanation": "godina — женского рода, поэтому srećna: Srećna Nova godina! Отвечают: I tebi! («И тебе!») или I vama! («И вам!»)."
+    },
+    {
+      "id": "k36e12",
+      "type": "choice",
+      "prompt": "— Srećna Nova godina!\n— ___",
+      "options": [
+        "I tebi!",
+        "Hristos se rodi!",
+        "Laku noć!"
+      ],
+      "answer": "I tebi!",
+      "explanation": "godina — женского рода, поэтому srećna: Srećna Nova godina! Отвечают: I tebi! («И тебе!») или I vama! («И вам!»).",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k36e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Srećan Božić!",
+      "hint": "Srećan Božić! — С Рождеством!",
+      "options": [
+        "С Рождеством!",
+        "С Новым годом!",
+        "С днём рождения!"
+      ],
+      "answer": "С Рождеством!",
+      "explanation": "Božić — Рождество. Srećan Božić! — С Рождеством! Православное Рождество в Черногории — 7 января."
+    },
+    {
+      "id": "k36e14",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Hristos se rodi!",
+      "hint": "Hristos se rodi! — Христос родился!",
+      "options": [
+        "Христос родился!",
+        "С Новым годом!",
+        "Воистину родился!"
+      ],
+      "answer": "Христос родился!",
+      "explanation": "На Рождество так здороваются: Hristos se rodi! — «Христос родился!» Отвечают: Vaistinu se rodi! — «Воистину родился!»"
+    },
+    {
+      "id": "k36e15",
+      "type": "choice",
+      "prompt": "— Hristos se rodi!\n— ___",
+      "options": [
+        "Vaistinu se rodi!",
+        "Srećan rođendan!",
+        "I tebi!"
+      ],
+      "answer": "Vaistinu se rodi!",
+      "explanation": "На Рождество так здороваются: Hristos se rodi! — «Христос родился!» Отвечают: Vaistinu se rodi! — «Воистину родился!»",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k36e16",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "slava",
+      "hint": "slava — слава (семейный праздник)",
+      "options": [
+        "слава (семейный праздник)",
+        "Рождество",
+        "день рождения"
+      ],
+      "answer": "слава (семейный праздник)",
+      "explanation": "slava (krsna slava) — главный семейный праздник: день святого покровителя рода. Хозяева зовут гостей, гости поздравляют: Srećna slava! slava женского рода, поэтому srećna."
+    },
+    {
+      "id": "k36e17",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Srećna slava!",
+      "hint": "Srećna slava! — Со Славой!",
+      "options": [
+        "Со Славой!",
+        "С Рождеством!",
+        "С Новым годом!"
+      ],
+      "answer": "Со Славой!",
+      "explanation": "slava (krsna slava) — главный семейный праздник: день святого покровителя рода. Хозяева зовут гостей, гости поздравляют: Srećna slava! slava женского рода, поэтому srećna."
+    },
+    {
+      "id": "k36e18",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "С днём рождения!",
+          "me": "Srećan rođendan!"
+        },
+        {
+          "ru": "С Новым годом!",
+          "me": "Srećna Nova godina!"
+        },
+        {
+          "ru": "С Рождеством!",
+          "me": "Srećan Božić!"
+        },
+        {
+          "ru": "Со Славой!",
+          "me": "Srećna slava!"
+        }
+      ]
+    },
+    {
+      "id": "k36e19",
+      "type": "choice",
+      "prompt": "___ rođendan!",
+      "options": [
+        "Srećan",
+        "Srećna",
+        "Srećno"
+      ],
+      "answer": "Srećan",
+      "explanation": "srećan — «счастливый». Поздравляют прилагательным, как по-русски «счастливого пути»: Srećan rođendan! — С днём рождения! Отвечают: Hvala!",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k36e20",
+      "type": "choice",
+      "prompt": "___ slava!",
+      "options": [
+        "Srećna",
+        "Srećan",
+        "Srećno"
+      ],
+      "answer": "Srećna",
+      "explanation": "slava (krsna slava) — главный семейный праздник: день святого покровителя рода. Хозяева зовут гостей, гости поздравляют: Srećna slava! slava женского рода, поэтому srećna.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k36e21",
+      "type": "choice",
+      "prompt": "У подруги сегодня день рождения.",
+      "options": [
+        "Srećan rođendan!",
+        "Srećna Nova godina!",
+        "Laku noć!"
+      ],
+      "answer": "Srećan rođendan!",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k36e22",
+      "type": "choice",
+      "prompt": "Ты пришла в гости к соседям на их семейный праздник.",
+      "options": [
+        "Srećna slava!",
+        "Srećan rođendan!",
+        "Dobro jutro!"
+      ],
+      "answer": "Srećna slava!",
+      "explanation": "slava (krsna slava) — главный семейный праздник: день святого покровителя рода. Хозяева зовут гостей, гости поздравляют: Srećna slava! slava женского рода, поэтому srećna.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k36e23",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Čestitam! Srećan ti rođendan!",
+      "hint": "Čestitam! Srećan ti rođendan! — Поздравляю! С днём рождения тебя!",
+      "options": [
+        "Поздравляю! С днём рождения тебя!",
+        "Спасибо! И тебе!",
+        "Поздравляю! С Новым годом!"
+      ],
+      "answer": "Поздравляю! С днём рождения тебя!",
+      "explanation": "Srećan ti rođendan! — «С днём рождения тебя!», буквально «счастливый тебе день рождения». ti — «тебе». Так говорят чаще всего."
+    },
+    {
+      "id": "k36e24",
+      "type": "choice",
+      "prompt": "Radujem se, sjutra mi je rođendan.",
+      "options": [
+        "Я радуюсь, у меня завтра день рождения.",
+        "Я радуюсь, у меня сегодня день рождения.",
+        "Я рада, что ты здесь."
+      ],
+      "answer": "Я радуюсь, у меня завтра день рождения.",
+      "byEar": true
+    },
+    {
+      "id": "k36e25",
+      "type": "word_bank",
+      "prompt": "Я радуюсь, у меня завтра день рождения.",
+      "answer": "Radujem se, sjutra mi je rođendan.",
+      "bank": [
+        "rođendan",
+        "se",
+        "sjutra",
+        "radujem",
+        "je",
+        "mi"
+      ]
+    },
+    {
+      "id": "k36e26",
+      "type": "word_bank",
+      "prompt": "Поздравляю! С днём рождения тебя!",
+      "answer": "Čestitam! Srećan ti rođendan!",
+      "bank": [
+        "rođendan",
+        "čestitam",
+        "ti",
+        "srećan"
+      ]
+    },
+    {
+      "id": "k36e27",
+      "type": "speaking",
+      "phrase": "Srećna Nova godina!",
+      "translation": "С Новым годом!"
+    },
+    {
+      "id": "k36e28",
+      "type": "repeat",
+      "phrase": "Hristos se rodi!",
+      "translation": "Христос родился!"
+    },
+    {
+      "id": "k36e29",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Поздравляю!",
+          "me": "Čestitam!"
+        },
+        {
+          "ru": "Я радуюсь!",
+          "me": "Radujem se!"
+        },
+        {
+          "ru": "И тебе!",
+          "me": "I tebi!"
+        },
+        {
+          "ru": "Христос родился!",
+          "me": "Hristos se rodi!"
+        },
+        {
+          "ru": "Воистину родился!",
+          "me": "Vaistinu se rodi!"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "radovati se",
+      "ru": "радоваться"
+    },
+    {
+      "me": "rođendan",
+      "ru": "день рождения"
+    },
+    {
+      "me": "Čestitam!",
+      "ru": "Поздравляю!"
+    },
+    {
+      "me": "srećan",
+      "ru": "счастливый"
+    },
+    {
+      "me": "Srećan rođendan!",
+      "ru": "С днём рождения!"
+    },
+    {
+      "me": "Srećna Nova godina!",
+      "ru": "С Новым годом!"
+    },
+    {
+      "me": "I tebi!",
+      "ru": "И тебе!"
+    },
+    {
+      "me": "Božić",
+      "ru": "Рождество"
+    },
+    {
+      "me": "Hristos se rodi!",
+      "ru": "Христос родился!"
+    },
+    {
+      "me": "slava",
+      "ru": "слава (семейный праздник)"
+    }
+  ]
+}

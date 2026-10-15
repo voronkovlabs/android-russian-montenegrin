@@ -2704,6 +2704,98 @@ L.append(dict(id='k35', title='Šta radiš, bre?! Ajkula je išla u kupovinu', s
           ('Я ходила в город.', 'Išla sam u grad.')),
 ]))
 
+# --- Урок 36 ---
+# По идеям Кати 308 и 310: радоваться (radovati se — с урока 26 была одна фраза
+# «Radujem se!») и поздравления: день рождения, Новый год, Рождество, слава.
+RADOVATI = ('radovati se — радоваться: radujem se, raduješ se, raduje se, radujemo se, '
+            'radujete se, raduju se. se не отпадает: Radujem se!')
+MI_JE = ('sjutra mi je rođendan — «завтра у меня день рождения», буквально «завтра мне день '
+         'рождения». mi — «мне».')
+CEMU = ('Чему радуются — дательный, как «к кому»: radujem se moru, ljetu, Novoj godini. '
+        'У слов на -o и согласную — -u, у слов на -a — -i.')
+SRECAN = ('srećan — «счастливый». Поздравляют прилагательным, как по-русски «счастливого пути»: '
+          'Srećan rođendan! — С днём рождения! Отвечают: Hvala!')
+SRECNA = ('godina — женского рода, поэтому srećna: Srećna Nova godina! Отвечают: I tebi! '
+          '(«И тебе!») или I vama! («И вам!»).')
+BOZIC = ('Božić — Рождество. Srećan Božić! — С Рождеством! Православное Рождество в Черногории '
+         '— 7 января.')
+HRISTOS = ('На Рождество так здороваются: Hristos se rodi! — «Христос родился!» Отвечают: '
+           'Vaistinu se rodi! — «Воистину родился!»')
+SLAVA = ('slava (krsna slava) — главный семейный праздник: день святого покровителя рода. '
+         'Хозяева зовут гостей, гости поздравляют: Srećna slava! slava женского рода, поэтому '
+         'srećna.')
+TI = ('Srećan ti rođendan! — «С днём рождения тебя!», буквально «счастливый тебе день рождения». '
+      'ti — «тебе». Так говорят чаще всего.')
+L.append(dict(id='k36', title='Srećan rođendan! Radujem se', section=S3, words=[
+    ('radovati se', 'радоваться'), ('rođendan', 'день рождения'), ('Čestitam!', 'Поздравляю!'),
+    ('srećan', 'счастливый'), ('Srećan rođendan!', 'С днём рождения!'),
+    ('Srećna Nova godina!', 'С Новым годом!'), ('I tebi!', 'И тебе!'),
+    ('Božić', 'Рождество'), ('Hristos se rodi!', 'Христос родился!'),
+    ('slava', 'слава (семейный праздник)')],
+    ex=[
+    dict(phrase('Radujem se!', 'Я радуюсь!', ['Я радуюсь!', 'Я устал!', 'Я голоден!']),
+         explanation=RADOVATI),
+    dict(pairs(('ja', 'radujem se'), ('ti', 'raduješ se'), ('on / ona', 'raduje se'),
+               ('mi', 'radujemo se'), ('vi', 'radujete se'), ('oni', 'raduju se')),
+         explanation=RADOVATI),
+    new('rođendan', 'день рождения', ['день рождения', 'Рождество', 'Новый год']),
+    dict(phrase('Radujem se, sjutra mi je rođendan.', 'Я радуюсь, у меня завтра день рождения.',
+                ['Я радуюсь, у меня завтра день рождения.', 'Я радуюсь, у тебя завтра день рождения.',
+                 'Я радуюсь, у меня вчера был день рождения.']), explanation=MI_JE),
+    phrase('Radujem se što si ovdje.', 'Я рада, что ты здесь.',
+           ['Я рада, что ты здесь.', 'Я рада, что ты дома.', 'Я здесь, и я рада.']),
+    dict(phrase('Radujemo se moru.', 'Мы радуемся морю.',
+                ['Мы радуемся морю.', 'Мы радуемся лету.', 'Мы идём на море.']), explanation=CEMU),
+    pick('Мы радуемся. — Mi se ___ .', ['radujemo', 'raduju', 'raduje'], 'radujemo',
+         explanation=RADOVATI, label='Вставь слово'),
+    pick('Они радуются лету. — Oni se ___ ljetu.', ['raduju', 'raduje', 'radujemo'], 'raduju',
+         explanation=RADOVATI, label='Вставь слово'),
+    dict(new('Čestitam!', 'Поздравляю!', ['Поздравляю!', 'Спасибо!', 'Привет!'],
+             label='Новое выражение'), explanation='Čestitam! — «Поздравляю!» Годится к любому празднику.'),
+    dict(phrase('Srećan rođendan!', 'С днём рождения!',
+                ['С днём рождения!', 'С Новым годом!', 'С Рождеством!']), explanation=SRECAN),
+    dict(phrase('Srećna Nova godina!', 'С Новым годом!',
+                ['С Новым годом!', 'С днём рождения!', 'Счастливого пути!']), explanation=SRECNA),
+    pick('— Srećna Nova godina!\n— ___', ['I tebi!', 'Hristos se rodi!', 'Laku noć!'], 'I tebi!',
+         explanation=SRECNA, label='Мини-диалог'),
+    dict(phrase('Srećan Božić!', 'С Рождеством!', ['С Рождеством!', 'С Новым годом!',
+                                                  'С днём рождения!']), explanation=BOZIC),
+    dict(phrase('Hristos se rodi!', 'Христос родился!',
+                ['Христос родился!', 'С Новым годом!', 'Воистину родился!']), explanation=HRISTOS),
+    pick('— Hristos se rodi!\n— ___', ['Vaistinu se rodi!', 'Srećan rođendan!', 'I tebi!'],
+         'Vaistinu se rodi!', explanation=HRISTOS, label='Мини-диалог'),
+    dict(new('slava', 'слава (семейный праздник)',
+             ['слава (семейный праздник)', 'Рождество', 'день рождения']), explanation=SLAVA),
+    dict(phrase('Srećna slava!', 'Со Славой!', ['Со Славой!', 'С Рождеством!', 'С Новым годом!']),
+         explanation=SLAVA),
+    pairs(('С днём рождения!', 'Srećan rođendan!'), ('С Новым годом!', 'Srećna Nova godina!'),
+          ('С Рождеством!', 'Srećan Božić!'), ('Со Славой!', 'Srećna slava!')),
+    pick('___ rođendan!', ['Srećan', 'Srećna', 'Srećno'], 'Srećan', explanation=SRECAN,
+         label='Выбери форму'),
+    pick('___ slava!', ['Srećna', 'Srećan', 'Srećno'], 'Srećna', explanation=SLAVA,
+         label='Выбери форму'),
+    pick('У подруги сегодня день рождения.',
+         ['Srećan rođendan!', 'Srećna Nova godina!', 'Laku noć!'], 'Srećan rođendan!',
+         label='Что скажешь?'),
+    pick('Ты пришла в гости к соседям на их семейный праздник.',
+         ['Srećna slava!', 'Srećan rođendan!', 'Dobro jutro!'], 'Srećna slava!',
+         explanation=SLAVA, label='Что скажешь?'),
+    dict(phrase('Čestitam! Srećan ti rođendan!', 'Поздравляю! С днём рождения тебя!',
+                ['Поздравляю! С днём рождения тебя!', 'Спасибо! И тебе!',
+                 'Поздравляю! С Новым годом!']), explanation=TI),
+    ear('Radujem se, sjutra mi je rođendan.',
+        ['Я радуюсь, у меня завтра день рождения.', 'Я радуюсь, у меня сегодня день рождения.',
+         'Я рада, что ты здесь.'], 'Я радуюсь, у меня завтра день рождения.'),
+    bank('Я радуюсь, у меня завтра день рождения.', 'Radujem se, sjutra mi je rođendan.',
+         ['rođendan', 'se', 'sjutra', 'radujem', 'je', 'mi']),
+    bank('Поздравляю! С днём рождения тебя!', 'Čestitam! Srećan ti rođendan!',
+         ['rođendan', 'čestitam', 'ti', 'srećan']),
+    say('Srećna Nova godina!', 'С Новым годом!'),
+    echo('Hristos se rodi!', 'Христос родился!'),
+    pairs(('Поздравляю!', 'Čestitam!'), ('Я радуюсь!', 'Radujem se!'), ('И тебе!', 'I tebi!'),
+          ('Христос родился!', 'Hristos se rodi!'), ('Воистину родился!', 'Vaistinu se rodi!')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
