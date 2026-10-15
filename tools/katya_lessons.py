@@ -2523,6 +2523,90 @@ L.append(dict(id='k33', title='Dođi kod mene sjutra ujutru', section=S3, words=
           ('вечером', 'uveče')),
 ]))
 
+# --- Урок 34 ---
+# slati и mrzjeti в настоящем; остальное — тренировка прошедшего от biti и
+# živjeti на пройденных существительных всех трёх родов и обоих чисел.
+SLATI = ('slati — посылать (обычно, много раз). Формы: šaljem, šalješ, šalje, šaljemo, '
+         'šaljete, šalju — s меняется на š, l на lj. poslati (урок 31) — послать один раз: '
+         'Pošalji mi lokaciju!')
+U_RUSIJU = 'u Rusiju — в Россию (куда?), как Idem u grad. А u Rusiji — в России (где?).'
+MRZJETI = ('mrzjeti — ненавидеть. Формы как у voljeti: mrzim, mrziš, mrzi, mrzimo, mrzite, '
+           'mrze. Volim ljeto, a mrzim zimu.')
+ROD = ('Окончание — по тому, кто был: мужской род -o (pas je bio), женский -la (mačka je '
+       'bila), средний -lo (sunce je bilo).')
+MNOZ = ('Много: мужской род -li (psi su bili), женский -le (mačke su bile), средний -la '
+        '(piva su bila).')
+ZIVIO = 'živjeti → živio (м. р.), živjela (ж. р.), živjeli (мн. ч.), živjele (ж. р. мн. ч.).'
+L.append(dict(id='k34', title='Šaljem pismo, mrzim zimu', section=S3, words=[
+    ('slati', 'посылать'), ('mrzjeti', 'ненавидеть')],
+    ex=[
+    dict(new('slati', 'посылать', ['посылать', 'писать', 'спать'], label='Новый глагол'),
+         explanation=SLATI),
+    pairs(('ja', 'šaljem'), ('ti', 'šalješ'), ('on / ona', 'šalje'), ('mi', 'šaljemo'),
+          ('vi', 'šaljete'), ('oni', 'šalju')),
+    phrase('Šaljem pismo.', 'Я посылаю письмо.',
+           ['Я посылаю письмо.', 'Я пишу письмо.', 'Я читаю письмо.']),
+    dict(phrase('Moja sestra šalje pismo u Rusiju.', 'Моя сестра посылает письмо в Россию.',
+                ['Моя сестра посылает письмо в Россию.', 'Моя сестра пишет письмо в России.',
+                 'Моя сестра живёт в России.']), explanation=U_RUSIJU),
+    pick('Мы посылаем письмо. — Mi ___ pismo.', ['šaljemo', 'šalju', 'šaljem'], 'šaljemo',
+         explanation=SLATI, label='Вставь слово'),
+    pick('Они посылают геопозицию. — Oni ___ lokaciju.', ['šalju', 'šalje', 'šaljete'], 'šalju',
+         explanation=SLATI, label='Вставь слово'),
+    dict(new('mrzjeti', 'ненавидеть', ['ненавидеть', 'любить', 'жить'], label='Новый глагол'),
+         explanation=MRZJETI),
+    pairs(('ja', 'mrzim'), ('ti', 'mrziš'), ('on / ona', 'mrzi'), ('mi', 'mrzimo'),
+          ('vi', 'mrzite'), ('oni', 'mrze')),
+    phrase('Mrzim zimu.', 'Я ненавижу зиму.', ['Я ненавижу зиму.', 'Я люблю зиму.',
+                                              'Я ненавижу лето.']),
+    phrase('Mačka mrzi vodu.', 'Кошка ненавидит воду.',
+           ['Кошка ненавидит воду.', 'Кошка любит воду.', 'Собака ненавидит воду.']),
+    pick('Я люблю лето, а ненавижу зиму. — Volim ljeto, a ___ zimu.',
+         ['mrzim', 'mrzi', 'mrze'], 'mrzim', explanation=MRZJETI, label='Вставь слово'),
+    pairs(('люблю', 'volim'), ('ненавижу', 'mrzim'), ('любит', 'voli'), ('ненавидит', 'mrzi')),
+    phrase('Ajkula mrzi suši.', 'Акула ненавидит суши.',
+           ['Акула ненавидит суши.', 'Акула любит суши.', 'Черепаха ненавидит суши.']),
+    pick('Pas je ___ gladan.', ['bio', 'bila', 'bilo'], 'bio', explanation=ROD,
+         label='Вставь слово'),
+    pick('Mačka je ___ na krevetu.', ['bila', 'bio', 'bilo'], 'bila', explanation=ROD,
+         label='Вставь слово'),
+    pick('Sunce je ___ veliko.', ['bilo', 'bio', 'bila'], 'bilo', explanation=ROD,
+         label='Вставь слово'),
+    pick('Lisica je ___ riđa.', ['bila', 'bio', 'bilo'], 'bila', explanation=ROD,
+         label='Вставь слово'),
+    pick('Psi su ___ kod kuće.', ['bili', 'bile', 'bila'], 'bili', explanation=MNOZ,
+         label='Вставь слово'),
+    pick('Mačke su ___ na drvetu.', ['bile', 'bili', 'bila'], 'bile', explanation=MNOZ,
+         label='Вставь слово'),
+    pick('Piva su ___ skupa.', ['bila', 'bile', 'bili'], 'bila', explanation=MNOZ,
+         label='Вставь слово'),
+    pick('Kornjača je živjela u moru.', ['Черепаха жила в море.', 'Черепаха живёт в море.',
+                                         'Акула жила в море.'], 'Черепаха жила в море.',
+         label='Выбери перевод'),
+    pick('Мой дедушка жил в России. — Moj djed je ___ u Rusiji.',
+         ['živio', 'živjela', 'živjeli'], 'živio', explanation=ZIVIO, label='Вставь слово'),
+    pick('Акулы жили в море. — Ajkule su ___ u moru.', ['živjele', 'živjeli', 'živjela'],
+         'živjele', explanation=ZIVIO, label='Вставь слово'),
+    pick('Мы жили в квартире. — Mi smo ___ u stanu.', ['živjeli', 'živio', 'živjela'],
+         'živjeli', explanation=ZIVIO, label='Вставь слово'),
+    ear('Vuk je bio gladan, a lisica je bila riđa.',
+        ['Волк был голоден, а лиса была рыжей.', 'Волк был рыжим, а лиса голодной.',
+         'Волк голоден, а лиса рыжая.'], 'Волк был голоден, а лиса была рыжей.'),
+    pairs(('собака была', 'pas je bio'), ('кошка была', 'mačka je bila'),
+          ('солнце было', 'sunce je bilo'), ('черепахи жили', 'kornjače su živjele'),
+          ('дедушка жил', 'djed je živio')),
+    bank('Моя сестра посылает письмо в Россию.', 'Moja sestra šalje pismo u Rusiju.',
+         ['Rusiju', 'šalje', 'moja', 'u', 'pismo', 'sestra']),
+    bank('Черепаха жила в море.', 'Kornjača je živjela u moru.',
+         ['moru', 'je', 'kornjača', 'u', 'živjela']),
+    say('Volim ljeto, a mrzim zimu.', 'Я люблю лето, а ненавижу зиму.'),
+    echo('Moj djed je živio u Rusiji.', 'Мой дедушка жил в России.'),
+    pairs(('Я посылаю письмо.', 'Šaljem pismo.'), ('Я ненавижу зиму.', 'Mrzim zimu.'),
+          ('Кошки были на дереве.', 'Mačke su bile na drvetu.'),
+          ('Солнце было большим.', 'Sunce je bilo veliko.'),
+          ('Черепаха жила в море.', 'Kornjača je živjela u moru.')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

@@ -1,0 +1,476 @@
+{
+  "id": "k34",
+  "title": "Šaljem pismo, mrzim zimu",
+  "exercises": [
+    {
+      "id": "k34e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "slati",
+      "hint": "slati — посылать",
+      "options": [
+        "посылать",
+        "писать",
+        "спать"
+      ],
+      "answer": "посылать",
+      "explanation": "slati — посылать (обычно, много раз). Формы: šaljem, šalješ, šalje, šaljemo, šaljete, šalju — s меняется на š, l на lj. poslati (урок 31) — послать один раз: Pošalji mi lokaciju!"
+    },
+    {
+      "id": "k34e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "šaljem"
+        },
+        {
+          "ru": "ti",
+          "me": "šalješ"
+        },
+        {
+          "ru": "on / ona",
+          "me": "šalje"
+        },
+        {
+          "ru": "mi",
+          "me": "šaljemo"
+        },
+        {
+          "ru": "vi",
+          "me": "šaljete"
+        },
+        {
+          "ru": "oni",
+          "me": "šalju"
+        }
+      ]
+    },
+    {
+      "id": "k34e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šaljem pismo.",
+      "hint": "Šaljem pismo. — Я посылаю письмо.",
+      "options": [
+        "Я посылаю письмо.",
+        "Я пишу письмо.",
+        "Я читаю письмо."
+      ],
+      "answer": "Я посылаю письмо."
+    },
+    {
+      "id": "k34e04",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moja sestra šalje pismo u Rusiju.",
+      "hint": "Moja sestra šalje pismo u Rusiju. — Моя сестра посылает письмо в Россию.",
+      "options": [
+        "Моя сестра посылает письмо в Россию.",
+        "Моя сестра пишет письмо в России.",
+        "Моя сестра живёт в России."
+      ],
+      "answer": "Моя сестра посылает письмо в Россию.",
+      "explanation": "u Rusiju — в Россию (куда?), как Idem u grad. А u Rusiji — в России (где?)."
+    },
+    {
+      "id": "k34e05",
+      "type": "choice",
+      "prompt": "Мы посылаем письмо. — Mi ___ pismo.",
+      "options": [
+        "šaljemo",
+        "šalju",
+        "šaljem"
+      ],
+      "answer": "šaljemo",
+      "explanation": "slati — посылать (обычно, много раз). Формы: šaljem, šalješ, šalje, šaljemo, šaljete, šalju — s меняется на š, l на lj. poslati (урок 31) — послать один раз: Pošalji mi lokaciju!",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e06",
+      "type": "choice",
+      "prompt": "Они посылают геопозицию. — Oni ___ lokaciju.",
+      "options": [
+        "šalju",
+        "šalje",
+        "šaljete"
+      ],
+      "answer": "šalju",
+      "explanation": "slati — посылать (обычно, много раз). Формы: šaljem, šalješ, šalje, šaljemo, šaljete, šalju — s меняется на š, l на lj. poslati (урок 31) — послать один раз: Pošalji mi lokaciju!",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e07",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "mrzjeti",
+      "hint": "mrzjeti — ненавидеть",
+      "options": [
+        "ненавидеть",
+        "любить",
+        "жить"
+      ],
+      "answer": "ненавидеть",
+      "explanation": "mrzjeti — ненавидеть. Формы как у voljeti: mrzim, mrziš, mrzi, mrzimo, mrzite, mrze. Volim ljeto, a mrzim zimu."
+    },
+    {
+      "id": "k34e08",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "mrzim"
+        },
+        {
+          "ru": "ti",
+          "me": "mrziš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "mrzi"
+        },
+        {
+          "ru": "mi",
+          "me": "mrzimo"
+        },
+        {
+          "ru": "vi",
+          "me": "mrzite"
+        },
+        {
+          "ru": "oni",
+          "me": "mrze"
+        }
+      ]
+    },
+    {
+      "id": "k34e09",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mrzim zimu.",
+      "hint": "Mrzim zimu. — Я ненавижу зиму.",
+      "options": [
+        "Я ненавижу зиму.",
+        "Я люблю зиму.",
+        "Я ненавижу лето."
+      ],
+      "answer": "Я ненавижу зиму."
+    },
+    {
+      "id": "k34e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mačka mrzi vodu.",
+      "hint": "Mačka mrzi vodu. — Кошка ненавидит воду.",
+      "options": [
+        "Кошка ненавидит воду.",
+        "Кошка любит воду.",
+        "Собака ненавидит воду."
+      ],
+      "answer": "Кошка ненавидит воду."
+    },
+    {
+      "id": "k34e11",
+      "type": "choice",
+      "prompt": "Я люблю лето, а ненавижу зиму. — Volim ljeto, a ___ zimu.",
+      "options": [
+        "mrzim",
+        "mrzi",
+        "mrze"
+      ],
+      "answer": "mrzim",
+      "explanation": "mrzjeti — ненавидеть. Формы как у voljeti: mrzim, mrziš, mrzi, mrzimo, mrzite, mrze. Volim ljeto, a mrzim zimu.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e12",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "люблю",
+          "me": "volim"
+        },
+        {
+          "ru": "ненавижу",
+          "me": "mrzim"
+        },
+        {
+          "ru": "любит",
+          "me": "voli"
+        },
+        {
+          "ru": "ненавидит",
+          "me": "mrzi"
+        }
+      ]
+    },
+    {
+      "id": "k34e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ajkula mrzi suši.",
+      "hint": "Ajkula mrzi suši. — Акула ненавидит суши.",
+      "options": [
+        "Акула ненавидит суши.",
+        "Акула любит суши.",
+        "Черепаха ненавидит суши."
+      ],
+      "answer": "Акула ненавидит суши."
+    },
+    {
+      "id": "k34e14",
+      "type": "choice",
+      "prompt": "Pas je ___ gladan.",
+      "options": [
+        "bio",
+        "bila",
+        "bilo"
+      ],
+      "answer": "bio",
+      "explanation": "Окончание — по тому, кто был: мужской род -o (pas je bio), женский -la (mačka je bila), средний -lo (sunce je bilo).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e15",
+      "type": "choice",
+      "prompt": "Mačka je ___ na krevetu.",
+      "options": [
+        "bila",
+        "bio",
+        "bilo"
+      ],
+      "answer": "bila",
+      "explanation": "Окончание — по тому, кто был: мужской род -o (pas je bio), женский -la (mačka je bila), средний -lo (sunce je bilo).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e16",
+      "type": "choice",
+      "prompt": "Sunce je ___ veliko.",
+      "options": [
+        "bilo",
+        "bio",
+        "bila"
+      ],
+      "answer": "bilo",
+      "explanation": "Окончание — по тому, кто был: мужской род -o (pas je bio), женский -la (mačka je bila), средний -lo (sunce je bilo).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e17",
+      "type": "choice",
+      "prompt": "Lisica je ___ riđa.",
+      "options": [
+        "bila",
+        "bio",
+        "bilo"
+      ],
+      "answer": "bila",
+      "explanation": "Окончание — по тому, кто был: мужской род -o (pas je bio), женский -la (mačka je bila), средний -lo (sunce je bilo).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e18",
+      "type": "choice",
+      "prompt": "Psi su ___ kod kuće.",
+      "options": [
+        "bili",
+        "bile",
+        "bila"
+      ],
+      "answer": "bili",
+      "explanation": "Много: мужской род -li (psi su bili), женский -le (mačke su bile), средний -la (piva su bila).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e19",
+      "type": "choice",
+      "prompt": "Mačke su ___ na drvetu.",
+      "options": [
+        "bile",
+        "bili",
+        "bila"
+      ],
+      "answer": "bile",
+      "explanation": "Много: мужской род -li (psi su bili), женский -le (mačke su bile), средний -la (piva su bila).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e20",
+      "type": "choice",
+      "prompt": "Piva su ___ skupa.",
+      "options": [
+        "bila",
+        "bile",
+        "bili"
+      ],
+      "answer": "bila",
+      "explanation": "Много: мужской род -li (psi su bili), женский -le (mačke su bile), средний -la (piva su bila).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e21",
+      "type": "choice",
+      "prompt": "Kornjača je živjela u moru.",
+      "options": [
+        "Черепаха жила в море.",
+        "Черепаха живёт в море.",
+        "Акула жила в море."
+      ],
+      "answer": "Черепаха жила в море.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k34e22",
+      "type": "choice",
+      "prompt": "Мой дедушка жил в России. — Moj djed je ___ u Rusiji.",
+      "options": [
+        "živio",
+        "živjela",
+        "živjeli"
+      ],
+      "answer": "živio",
+      "explanation": "živjeti → živio (м. р.), živjela (ж. р.), živjeli (мн. ч.), živjele (ж. р. мн. ч.).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e23",
+      "type": "choice",
+      "prompt": "Акулы жили в море. — Ajkule su ___ u moru.",
+      "options": [
+        "živjele",
+        "živjeli",
+        "živjela"
+      ],
+      "answer": "živjele",
+      "explanation": "živjeti → živio (м. р.), živjela (ж. р.), živjeli (мн. ч.), živjele (ж. р. мн. ч.).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e24",
+      "type": "choice",
+      "prompt": "Мы жили в квартире. — Mi smo ___ u stanu.",
+      "options": [
+        "živjeli",
+        "živio",
+        "živjela"
+      ],
+      "answer": "živjeli",
+      "explanation": "živjeti → živio (м. р.), živjela (ж. р.), živjeli (мн. ч.), živjele (ж. р. мн. ч.).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k34e25",
+      "type": "choice",
+      "prompt": "Vuk je bio gladan, a lisica je bila riđa.",
+      "options": [
+        "Волк был голоден, а лиса была рыжей.",
+        "Волк был рыжим, а лиса голодной.",
+        "Волк голоден, а лиса рыжая."
+      ],
+      "answer": "Волк был голоден, а лиса была рыжей.",
+      "byEar": true
+    },
+    {
+      "id": "k34e26",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "собака была",
+          "me": "pas je bio"
+        },
+        {
+          "ru": "кошка была",
+          "me": "mačka je bila"
+        },
+        {
+          "ru": "солнце было",
+          "me": "sunce je bilo"
+        },
+        {
+          "ru": "черепахи жили",
+          "me": "kornjače su živjele"
+        },
+        {
+          "ru": "дедушка жил",
+          "me": "djed je živio"
+        }
+      ]
+    },
+    {
+      "id": "k34e27",
+      "type": "word_bank",
+      "prompt": "Моя сестра посылает письмо в Россию.",
+      "answer": "Moja sestra šalje pismo u Rusiju.",
+      "bank": [
+        "Rusiju",
+        "šalje",
+        "moja",
+        "u",
+        "pismo",
+        "sestra"
+      ]
+    },
+    {
+      "id": "k34e28",
+      "type": "word_bank",
+      "prompt": "Черепаха жила в море.",
+      "answer": "Kornjača je živjela u moru.",
+      "bank": [
+        "moru",
+        "je",
+        "kornjača",
+        "u",
+        "živjela"
+      ]
+    },
+    {
+      "id": "k34e29",
+      "type": "speaking",
+      "phrase": "Volim ljeto, a mrzim zimu.",
+      "translation": "Я люблю лето, а ненавижу зиму."
+    },
+    {
+      "id": "k34e30",
+      "type": "repeat",
+      "phrase": "Moj djed je živio u Rusiji.",
+      "translation": "Мой дедушка жил в России."
+    },
+    {
+      "id": "k34e31",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Я посылаю письмо.",
+          "me": "Šaljem pismo."
+        },
+        {
+          "ru": "Я ненавижу зиму.",
+          "me": "Mrzim zimu."
+        },
+        {
+          "ru": "Кошки были на дереве.",
+          "me": "Mačke su bile na drvetu."
+        },
+        {
+          "ru": "Солнце было большим.",
+          "me": "Sunce je bilo veliko."
+        },
+        {
+          "ru": "Черепаха жила в море.",
+          "me": "Kornjača je živjela u moru."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "slati",
+      "ru": "посылать"
+    },
+    {
+      "me": "mrzjeti",
+      "ru": "ненавидеть"
+    }
+  ]
+}
