@@ -118,7 +118,7 @@
         "Он ел котлету."
       ],
       "answer": "Я ела котлету.",
-      "explanation": "jesti → jeo (он), jela (она), jelo (оно), jeli (они). Мужская форма короткая: jeo."
+      "explanation": "jesti → jeo (он), jela (она), jelo (оно), jeli (они)."
     },
     {
       "id": "k35e09",
@@ -211,7 +211,7 @@
         "Я была дома."
       ],
       "answer": "Я ходила в город.",
-      "explanation": "ići → išao (он), išla (она), išlo (оно), išli (они). Išla sam u grad — я ходила (шла) в город. «Пошла» скажем позже, другим глаголом."
+      "explanation": "ići → išao (он), išla (она), išlo (оно), išli (они). Išla sam u grad — я ходила (шла) в город."
     },
     {
       "id": "k35e16",
@@ -230,14 +230,14 @@
     {
       "id": "k35e17",
       "type": "choice",
-      "prompt": "Улитка шла быстро, как самолёт. — Puž je ___ brzo kao avion.",
+      "prompt": "Улитка шла быстро, как поезд. — Puž je ___ brzo kao voz.",
       "options": [
         "išao",
         "išla",
         "išlo"
       ],
       "answer": "išao",
-      "explanation": "ići → išao (он), išla (она), išlo (оно), išli (они). Išla sam u grad — я ходила (шла) в город. «Пошла» скажем позже, другим глаголом.",
+      "explanation": "ići → išao (он), išla (она), išlo (оно), išli (они). Išla sam u grad — я ходила (шла) в город.",
       "label": "Вставь слово"
     },
     {
@@ -310,7 +310,7 @@
         "jela"
       ],
       "answer": "jeli",
-      "explanation": "jesti → jeo (он), jela (она), jelo (оно), jeli (они). Мужская форма короткая: jeo.",
+      "explanation": "jesti → jeo (он), jela (она), jelo (оно), jeli (они).",
       "label": "Вставь слово"
     },
     {

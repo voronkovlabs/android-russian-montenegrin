@@ -2620,12 +2620,12 @@ BRE = ('bre — разговорное словечко для усиления,
        'только своим: детям, друзьям, кошке.')
 PROSLO = ('Прошедшее у всех глаголов как у biti: sam / si / je + форма на -o, -la, -li. '
           'raditi → radio, radila, radili. Šta si radila? — Что ты делала?')
-JEO = 'jesti → jeo (он), jela (она), jelo (оно), jeli (они). Мужская форма короткая: jeo.'
+JEO = 'jesti → jeo (он), jela (она), jelo (оно), jeli (они).'
 OBE = 'Лиса и черепаха — обе женского рода, поэтому jele и pile, а не jeli и pili.'
 JELO = 'prase — среднего рода, поэтому jelo: Prase je jelo pomfrit.'
 PIO = 'piti → pio (он), pila (она), pilo (оно), pili (они).'
 ISAO = ('ići → išao (он), išla (она), išlo (оно), išli (они). Išla sam u grad — я ходила '
-        '(шла) в город. «Пошла» скажем позже, другим глаголом.')
+        '(шла) в город.')
 KUPOVINA = 'u kupovinu — за покупками: Idem u kupovinu. — Иду за покупками.'
 L.append(dict(id='k35', title='Šta radiš, bre?! Ajkula je išla u kupovinu', section=S3, words=[
     ('raditi', 'делать; работать'), ('Šta radiš?', 'Что делаешь?'),
@@ -2672,7 +2672,7 @@ L.append(dict(id='k35', title='Šta radiš, bre?! Ajkula je išla u kupovinu', s
                 'Акула ходила в магазин за покупками.',
                 ['Акула ходила в магазин за покупками.', 'Акула идёт в магазин за покупками.',
                  'Акула работала в магазине.']), explanation=KUPOVINA),
-    pick('Улитка шла быстро, как самолёт. — Puž je ___ brzo kao avion.',
+    pick('Улитка шла быстро, как поезд. — Puž je ___ brzo kao voz.',
          ['išao', 'išla', 'išlo'], 'išao', explanation=ISAO, label='Вставь слово'),
     pairs(('raditi', 'radio'), ('jesti', 'jeo'), ('piti', 'pio'), ('ići', 'išao'),
           ('biti', 'bio')),
