@@ -100,6 +100,9 @@ fun HomeScreen(
     // приходилось искать прокруткой. Ключ — сам следующий урок: вернулись из
     // урока, пересобрался экран, переключили вкладку — список едет к нему.
     val list = rememberLazyListState()
+    // Следующий урок — первый не пройденный и не запертый: его строка помечена.
+    val nextId = state.groups.asSequence().flatMap { it.cards }
+        .firstOrNull { !it.done && it.gate == null }?.ref?.id
     val next = if (state.tab == HomeTab.Lessons) nextLessonRow(state) else null
     LaunchedEffect(state.tab, next) {
         if (next == null) return@LaunchedEffect
@@ -227,6 +230,7 @@ fun HomeScreen(
                             items(group.cards, key = { it.ref.id }) { card ->
                                 LessonRow(
                                     card,
+                                    next = card.ref.id == nextId,
                                     onClick = { onLesson(card.ref.id) },
                                     onJump = { card.gate?.let { onGate(it.id) } }
                                 )
@@ -667,7 +671,9 @@ private fun SectionHeader(
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp)
+            // Отступ только снизу: сверху в зазор между шапкой и прилипшим
+            // заголовком выглядывали бы уехавшие строки.
+            .padding(bottom = 4.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(GlassHeader)
             // Тёплая подложка поверх стекла: в тёмной теме заголовок уходит в
@@ -897,7 +903,13 @@ private fun ReviewCard(count: Int, onClick: () -> Unit) {
 }
 
 @Composable
-private fun LessonRow(card: LessonCard, onClick: () -> Unit, onJump: () -> Unit) {
+private fun LessonRow(
+    card: LessonCard,
+    /** Следующий урок: справа, где у пройденных счёт, стоит «‹‹» (Катя, 15.10.2026). */
+    next: Boolean = false,
+    onClick: () -> Unit,
+    onJump: () -> Unit
+) {
     // Запертый урок (за непройденным тестом раздела) виден, но не открывается:
     // видно, что впереди, а войти можно только тестом — кнопкой «Перейти
     // сюда» у первого урока раздела.
@@ -926,9 +938,23 @@ private fun LessonRow(card: LessonCard, onClick: () -> Unit, onJump: () -> Unit)
         Text(
             card.ref.title,
             style = MaterialTheme.typography.bodyLarge,
-            color = if (locked) Muted else Paper,
+            // Пройденный — чуть бледнее: глаз скользит по нему к ещё не
+            // пройденным (Катя, 15.10.2026).
+            color = when {
+                locked -> Muted
+                card.done -> Paper.copy(alpha = 0.7f)
+                else -> Paper
+            },
             modifier = Modifier.weight(1f)
         )
+        if (next) {
+            Text(
+                "‹‹",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = Accent
+            )
+        }
         if (card.jumpHere) {
             SmallAction("Перейти сюда", onJump)
         }
