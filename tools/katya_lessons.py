@@ -2443,6 +2443,86 @@ L.append(dict(id='k32', title='Gdje si bila? Kod kuće, kao i obično', section=
           ('Я жила в России.', 'Živjela sam u Rusiji.'), ('бабуля', 'baka'), ('дедуля', 'deka')),
 ]))
 
+# --- Урок 33 ---
+# Медленно: много повторения bio/bila. Новое — время дня (ujutru, danju, uveče,
+# noću — от знакомых Dobro jutro, Dobar dan, Dobro veče, Laku noć), «не был» и
+# шаблон «Dođi kod mene sjutra ujutru».
+UJUTRU = 'ujutru — утром. От jutro: Dobro jutro! — Доброе утро!'
+DANJU = 'danju — днём. От dan: Dobar dan! Ещё говорят preko dana — в течение дня.'
+UVECE = 'uveče — вечером. От veče: Dobro veče! — Добрый вечер!'
+NOCU = 'noću — ночью. От noć: Laku noć! — Спокойной ночи!'
+NISAM_BIO = ('Не был — nisam bio, nisi bio, nije bio, nismo bili, niste bili, nisu bili. '
+             'То же nisam, что в настоящем (урок 14): Nisam kod kuće → Nisam bio kod kuće.')
+MENE_NIJE = ('По-русски «меня не было дома», а по-черногорски «я не была дома»: '
+             'Nisam bila kod kuće.')
+DODJI = ('Dođi! — приходи! На «вы»: Dođite! kod mene — ко мне (буквально «у меня»): так '
+         'зовут в гости. sjutra — завтра.')
+L.append(dict(id='k33', title='Dođi kod mene sjutra ujutru', section=S3, words=[
+    ('ujutru', 'утром'), ('danju', 'днём'), ('uveče', 'вечером'), ('noću', 'ночью'),
+    ('nisam bio / bila', 'я не был / не была'), ('sjutra', 'завтра'),
+    ('Dođi kod mene!', 'Приходи ко мне!')],
+    ex=[
+    dict(new('ujutru', 'утром', ['утром', 'вечером', 'ночью']), explanation=UJUTRU),
+    dict(new('uveče', 'вечером', ['вечером', 'утром', 'днём']), explanation=UVECE),
+    dict(new('noću', 'ночью', ['ночью', 'днём', 'утром']), explanation=NOCU),
+    dict(new('danju', 'днём', ['днём', 'ночью', 'вечером']), explanation=DANJU),
+    pairs(('утром', 'ujutru'), ('днём', 'danju'), ('вечером', 'uveče'), ('ночью', 'noću')),
+    pairs(('Доброе утро!', 'Dobro jutro!'), ('утром', 'ujutru'),
+          ('Добрый вечер!', 'Dobro veče!'), ('вечером', 'uveče')),
+    phrase('Ujutru pijem kafu.', 'Утром я пью кофе.',
+           ['Утром я пью кофе.', 'Вечером я пью кофе.', 'Утром я пью воду.']),
+    phrase('Noću spavam.', 'Ночью я сплю.', ['Ночью я сплю.', 'Днём я сплю.', 'Ночью я ем.']),
+    pick('Вечером я дома. — ___ sam kod kuće.', ['Uveče', 'Ujutru', 'Noću'], 'Uveče',
+         explanation=UVECE, label='Вставь слово'),
+    ear('Danju sam u gradu, a uveče sam kod kuće.',
+        ['Днём я в городе, а вечером дома.', 'Утром я в городе, а вечером дома.',
+         'Днём я дома, а вечером в городе.'], 'Днём я в городе, а вечером дома.'),
+    pick('Ujutru sam bila na moru.', ['Утром я была на море.', 'Вечером я была на море.',
+                                      'Утром я на море.'], 'Утром я была на море.',
+         label='Выбери перевод'),
+    pick('Вчера вечером мы были у бабушки. — Juče uveče smo ___ kod babe.',
+         ['bili', 'bio', 'bila'], 'bili', label='Вставь слово'),
+    dict(phrase('Nisam bio kod kuće.', 'Я не был дома.',
+                ['Я не был дома.', 'Я дома.', 'Я был дома.']), explanation=NISAM_BIO),
+    dict(phrase('Nisam bila kod kuće.', 'Я не была дома.',
+                ['Я не была дома.', 'Я не дома.', 'Она не была дома.']), explanation=MENE_NIJE),
+    pairs(('я не был', 'nisam bio'), ('я не была', 'nisam bila'), ('он не был', 'nije bio'),
+          ('мы не были', 'nismo bili'), ('они не были', 'nisu bili')),
+    pick('Она не была в городе. — Ona ___ bila u gradu.', ['nije', 'nisam', 'ne je'], 'nije',
+         explanation=NISAM_BIO, label='Вставь слово'),
+    pick('Мы не были на море. — Mi ___ bili na moru.', ['nismo', 'nisu', 'ne smo'], 'nismo',
+         explanation=NISAM_BIO, label='Вставь слово'),
+    dict(phrase('Juče uveče nisam bila kod kuće.', 'Вчера вечером меня не было дома.',
+                ['Вчера вечером меня не было дома.', 'Вчера вечером я была дома.',
+                 'Вчера утром меня не было дома.']), explanation=MENE_NIJE),
+    pick('— Gdje si bio u subotu uveče?\n— Nisam bio kod kuće, bio sam kod babe.\n\nГде он был?',
+         ['У бабушки.', 'Дома.', 'В городе.'], 'У бабушки.', label='Мини-диалог'),
+    pick('— Jesi li bila kod kuće juče?\n— ___',
+         ['Nisam, bila sam u gradu.', 'Nije, bila sam u gradu.', 'Nisam, bio sam u gradu.'],
+         'Nisam, bila sam u gradu.', explanation=NISAM_BIO, label='Мини-диалог'),
+    new('sjutra', 'завтра', ['завтра', 'вчера', 'сейчас']),
+    pairs(('вчера', 'juče'), ('завтра', 'sjutra'), ('сейчас', 'sada'), ('раньше', 'ranije')),
+    dict(phrase('Dođi kod mene sjutra ujutru.', 'Приходи ко мне завтра утром.',
+                ['Приходи ко мне завтра утром.', 'Приходи ко мне завтра вечером.',
+                 'Я приду к тебе завтра утром.']), explanation=DODJI),
+    pick('Позови подругу к себе завтра утром.',
+         ['Dođi kod mene sjutra ujutru.', 'Bila sam kod babe juče.', 'Idem kući sjutra.'],
+         'Dođi kod mene sjutra ujutru.', explanation=DODJI, label='Что скажешь?'),
+    pick('Приходи ко мне завтра вечером. — Dođi kod mene sjutra ___ .',
+         ['uveče', 'ujutru', 'noću'], 'uveče', label='Вставь слово'),
+    pick('На «вы»: «Приходите ко мне завтра». — ___ kod mene sjutra.',
+         ['Dođite', 'Dođi', 'Dođem'], 'Dođite', explanation=DODJI, label='Вставь слово'),
+    bank('Приходи ко мне завтра утром.', 'Dođi kod mene sjutra ujutru.',
+         ['ujutru', 'kod', 'dođi', 'sjutra', 'mene']),
+    bank('Вчера вечером меня не было дома.', 'Juče uveče nisam bila kod kuće.',
+         ['kuće', 'nisam', 'juče', 'kod', 'uveče', 'bila']),
+    say('Dođi kod mene sjutra ujutru.', 'Приходи ко мне завтра утром.'),
+    echo('Juče uveče nisam bio kod kuće.', 'Вчера вечером меня не было дома.'),
+    pairs(('утром', 'ujutru'), ('ночью', 'noću'), ('Я не был дома.', 'Nisam bio kod kuće.'),
+          ('Приходи ко мне завтра утром.', 'Dođi kod mene sjutra ujutru.'),
+          ('вечером', 'uveče')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

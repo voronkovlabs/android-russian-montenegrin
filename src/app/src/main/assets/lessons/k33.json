@@ -1,0 +1,482 @@
+{
+  "id": "k33",
+  "title": "Dođi kod mene sjutra ujutru",
+  "exercises": [
+    {
+      "id": "k33e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ujutru",
+      "hint": "ujutru — утром",
+      "options": [
+        "утром",
+        "вечером",
+        "ночью"
+      ],
+      "answer": "утром",
+      "explanation": "ujutru — утром. От jutro: Dobro jutro! — Доброе утро!"
+    },
+    {
+      "id": "k33e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "uveče",
+      "hint": "uveče — вечером",
+      "options": [
+        "вечером",
+        "утром",
+        "днём"
+      ],
+      "answer": "вечером",
+      "explanation": "uveče — вечером. От veče: Dobro veče! — Добрый вечер!"
+    },
+    {
+      "id": "k33e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "noću",
+      "hint": "noću — ночью",
+      "options": [
+        "ночью",
+        "днём",
+        "утром"
+      ],
+      "answer": "ночью",
+      "explanation": "noću — ночью. От noć: Laku noć! — Спокойной ночи!"
+    },
+    {
+      "id": "k33e04",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "danju",
+      "hint": "danju — днём",
+      "options": [
+        "днём",
+        "ночью",
+        "вечером"
+      ],
+      "answer": "днём",
+      "explanation": "danju — днём. От dan: Dobar dan! Ещё говорят preko dana — в течение дня."
+    },
+    {
+      "id": "k33e05",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "утром",
+          "me": "ujutru"
+        },
+        {
+          "ru": "днём",
+          "me": "danju"
+        },
+        {
+          "ru": "вечером",
+          "me": "uveče"
+        },
+        {
+          "ru": "ночью",
+          "me": "noću"
+        }
+      ]
+    },
+    {
+      "id": "k33e06",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Доброе утро!",
+          "me": "Dobro jutro!"
+        },
+        {
+          "ru": "утром",
+          "me": "ujutru"
+        },
+        {
+          "ru": "Добрый вечер!",
+          "me": "Dobro veče!"
+        },
+        {
+          "ru": "вечером",
+          "me": "uveče"
+        }
+      ]
+    },
+    {
+      "id": "k33e07",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ujutru pijem kafu.",
+      "hint": "Ujutru pijem kafu. — Утром я пью кофе.",
+      "options": [
+        "Утром я пью кофе.",
+        "Вечером я пью кофе.",
+        "Утром я пью воду."
+      ],
+      "answer": "Утром я пью кофе."
+    },
+    {
+      "id": "k33e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Noću spavam.",
+      "hint": "Noću spavam. — Ночью я сплю.",
+      "options": [
+        "Ночью я сплю.",
+        "Днём я сплю.",
+        "Ночью я ем."
+      ],
+      "answer": "Ночью я сплю."
+    },
+    {
+      "id": "k33e09",
+      "type": "choice",
+      "prompt": "Вечером я дома. — ___ sam kod kuće.",
+      "options": [
+        "Uveče",
+        "Ujutru",
+        "Noću"
+      ],
+      "answer": "Uveče",
+      "explanation": "uveče — вечером. От veče: Dobro veče! — Добрый вечер!",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k33e10",
+      "type": "choice",
+      "prompt": "Danju sam u gradu, a uveče sam kod kuće.",
+      "options": [
+        "Днём я в городе, а вечером дома.",
+        "Утром я в городе, а вечером дома.",
+        "Днём я дома, а вечером в городе."
+      ],
+      "answer": "Днём я в городе, а вечером дома.",
+      "byEar": true
+    },
+    {
+      "id": "k33e11",
+      "type": "choice",
+      "prompt": "Ujutru sam bila na moru.",
+      "options": [
+        "Утром я была на море.",
+        "Вечером я была на море.",
+        "Утром я на море."
+      ],
+      "answer": "Утром я была на море.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k33e12",
+      "type": "choice",
+      "prompt": "Вчера вечером мы были у бабушки. — Juče uveče smo ___ kod babe.",
+      "options": [
+        "bili",
+        "bio",
+        "bila"
+      ],
+      "answer": "bili",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k33e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nisam bio kod kuće.",
+      "hint": "Nisam bio kod kuće. — Я не был дома.",
+      "options": [
+        "Я не был дома.",
+        "Я дома.",
+        "Я был дома."
+      ],
+      "answer": "Я не был дома.",
+      "explanation": "Не был — nisam bio, nisi bio, nije bio, nismo bili, niste bili, nisu bili. То же nisam, что в настоящем (урок 14): Nisam kod kuće → Nisam bio kod kuće."
+    },
+    {
+      "id": "k33e14",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nisam bila kod kuće.",
+      "hint": "Nisam bila kod kuće. — Я не была дома.",
+      "options": [
+        "Я не была дома.",
+        "Я не дома.",
+        "Она не была дома."
+      ],
+      "answer": "Я не была дома.",
+      "explanation": "По-русски «меня не было дома», а по-черногорски «я не была дома»: Nisam bila kod kuće."
+    },
+    {
+      "id": "k33e15",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я не был",
+          "me": "nisam bio"
+        },
+        {
+          "ru": "я не была",
+          "me": "nisam bila"
+        },
+        {
+          "ru": "он не был",
+          "me": "nije bio"
+        },
+        {
+          "ru": "мы не были",
+          "me": "nismo bili"
+        },
+        {
+          "ru": "они не были",
+          "me": "nisu bili"
+        }
+      ]
+    },
+    {
+      "id": "k33e16",
+      "type": "choice",
+      "prompt": "Она не была в городе. — Ona ___ bila u gradu.",
+      "options": [
+        "nije",
+        "nisam",
+        "ne je"
+      ],
+      "answer": "nije",
+      "explanation": "Не был — nisam bio, nisi bio, nije bio, nismo bili, niste bili, nisu bili. То же nisam, что в настоящем (урок 14): Nisam kod kuće → Nisam bio kod kuće.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k33e17",
+      "type": "choice",
+      "prompt": "Мы не были на море. — Mi ___ bili na moru.",
+      "options": [
+        "nismo",
+        "nisu",
+        "ne smo"
+      ],
+      "answer": "nismo",
+      "explanation": "Не был — nisam bio, nisi bio, nije bio, nismo bili, niste bili, nisu bili. То же nisam, что в настоящем (урок 14): Nisam kod kuće → Nisam bio kod kuće.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k33e18",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Juče uveče nisam bila kod kuće.",
+      "hint": "Juče uveče nisam bila kod kuće. — Вчера вечером меня не было дома.",
+      "options": [
+        "Вчера вечером меня не было дома.",
+        "Вчера вечером я была дома.",
+        "Вчера утром меня не было дома."
+      ],
+      "answer": "Вчера вечером меня не было дома.",
+      "explanation": "По-русски «меня не было дома», а по-черногорски «я не была дома»: Nisam bila kod kuće."
+    },
+    {
+      "id": "k33e19",
+      "type": "choice",
+      "prompt": "— Gdje si bio u subotu uveče?\n— Nisam bio kod kuće, bio sam kod babe.\n\nГде он был?",
+      "options": [
+        "У бабушки.",
+        "Дома.",
+        "В городе."
+      ],
+      "answer": "У бабушки.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k33e20",
+      "type": "choice",
+      "prompt": "— Jesi li bila kod kuće juče?\n— ___",
+      "options": [
+        "Nisam, bila sam u gradu.",
+        "Nije, bila sam u gradu.",
+        "Nisam, bio sam u gradu."
+      ],
+      "answer": "Nisam, bila sam u gradu.",
+      "explanation": "Не был — nisam bio, nisi bio, nije bio, nismo bili, niste bili, nisu bili. То же nisam, что в настоящем (урок 14): Nisam kod kuće → Nisam bio kod kuće.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k33e21",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "sjutra",
+      "hint": "sjutra — завтра",
+      "options": [
+        "завтра",
+        "вчера",
+        "сейчас"
+      ],
+      "answer": "завтра"
+    },
+    {
+      "id": "k33e22",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "вчера",
+          "me": "juče"
+        },
+        {
+          "ru": "завтра",
+          "me": "sjutra"
+        },
+        {
+          "ru": "сейчас",
+          "me": "sada"
+        },
+        {
+          "ru": "раньше",
+          "me": "ranije"
+        }
+      ]
+    },
+    {
+      "id": "k33e23",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Dođi kod mene sjutra ujutru.",
+      "hint": "Dođi kod mene sjutra ujutru. — Приходи ко мне завтра утром.",
+      "options": [
+        "Приходи ко мне завтра утром.",
+        "Приходи ко мне завтра вечером.",
+        "Я приду к тебе завтра утром."
+      ],
+      "answer": "Приходи ко мне завтра утром.",
+      "explanation": "Dođi! — приходи! На «вы»: Dođite! kod mene — ко мне (буквально «у меня»): так зовут в гости. sjutra — завтра."
+    },
+    {
+      "id": "k33e24",
+      "type": "choice",
+      "prompt": "Позови подругу к себе завтра утром.",
+      "options": [
+        "Dođi kod mene sjutra ujutru.",
+        "Bila sam kod babe juče.",
+        "Idem kući sjutra."
+      ],
+      "answer": "Dođi kod mene sjutra ujutru.",
+      "explanation": "Dođi! — приходи! На «вы»: Dođite! kod mene — ко мне (буквально «у меня»): так зовут в гости. sjutra — завтра.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k33e25",
+      "type": "choice",
+      "prompt": "Приходи ко мне завтра вечером. — Dođi kod mene sjutra ___ .",
+      "options": [
+        "uveče",
+        "ujutru",
+        "noću"
+      ],
+      "answer": "uveče",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k33e26",
+      "type": "choice",
+      "prompt": "На «вы»: «Приходите ко мне завтра». — ___ kod mene sjutra.",
+      "options": [
+        "Dođite",
+        "Dođi",
+        "Dođem"
+      ],
+      "answer": "Dođite",
+      "explanation": "Dođi! — приходи! На «вы»: Dođite! kod mene — ко мне (буквально «у меня»): так зовут в гости. sjutra — завтра.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k33e27",
+      "type": "word_bank",
+      "prompt": "Приходи ко мне завтра утром.",
+      "answer": "Dođi kod mene sjutra ujutru.",
+      "bank": [
+        "ujutru",
+        "kod",
+        "dođi",
+        "sjutra",
+        "mene"
+      ]
+    },
+    {
+      "id": "k33e28",
+      "type": "word_bank",
+      "prompt": "Вчера вечером меня не было дома.",
+      "answer": "Juče uveče nisam bila kod kuće.",
+      "bank": [
+        "kuće",
+        "nisam",
+        "juče",
+        "kod",
+        "uveče",
+        "bila"
+      ]
+    },
+    {
+      "id": "k33e29",
+      "type": "speaking",
+      "phrase": "Dođi kod mene sjutra ujutru.",
+      "translation": "Приходи ко мне завтра утром."
+    },
+    {
+      "id": "k33e30",
+      "type": "repeat",
+      "phrase": "Juče uveče nisam bio kod kuće.",
+      "translation": "Вчера вечером меня не было дома."
+    },
+    {
+      "id": "k33e31",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "утром",
+          "me": "ujutru"
+        },
+        {
+          "ru": "ночью",
+          "me": "noću"
+        },
+        {
+          "ru": "Я не был дома.",
+          "me": "Nisam bio kod kuće."
+        },
+        {
+          "ru": "Приходи ко мне завтра утром.",
+          "me": "Dođi kod mene sjutra ujutru."
+        },
+        {
+          "ru": "вечером",
+          "me": "uveče"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "ujutru",
+      "ru": "утром"
+    },
+    {
+      "me": "danju",
+      "ru": "днём"
+    },
+    {
+      "me": "uveče",
+      "ru": "вечером"
+    },
+    {
+      "me": "noću",
+      "ru": "ночью"
+    },
+    {
+      "me": "nisam bio / bila",
+      "ru": "я не был / не была"
+    },
+    {
+      "me": "sjutra",
+      "ru": "завтра"
+    },
+    {
+      "me": "Dođi kod mene!",
+      "ru": "Приходи ко мне!"
+    }
+  ]
+}
