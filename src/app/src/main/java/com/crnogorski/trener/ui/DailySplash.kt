@@ -41,8 +41,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.DeviceFontFamilyName
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -135,15 +133,14 @@ fun DailySplash(state: SplashState, onClose: () -> Unit) {
             Text(
                 state.gloss,
                 style = MaterialTheme.typography.bodyLarge,
-                fontFamily = FontFamily.Serif,
                 color = SplashMuted
             )
 
             Spacer(Modifier.height(18.dp))
-            Text(state.streak.toString(), style = condensed(58.sp), color = SplashGold)
+            Text(state.streak.toString(), style = big(58.sp), color = SplashGold)
             Text(
                 plural(state.streak, "ДЕНЬ ПОДРЯД", "ДНЯ ПОДРЯД", "ДНЕЙ ПОДРЯД"),
-                style = condensed(20.sp),
+                style = big(20.sp),
                 letterSpacing = 4.sp,
                 color = SplashPaper
             )
@@ -197,19 +194,10 @@ private fun RowScope.Stat(value: String, caption: String) {
     }
 }
 
-/**
- * Узкий гротеск — системный `sans-serif-condensed`.
- *
- * Своего файла шрифта в приложении нет и заводить его ради одного экрана не
- * стоило: Roboto Condensed есть в Android с незапамятных времён, а по духу он
- * ровно то, что нужно плакату. Если гарнитуры на прошивке не окажется, система
- * молча подставит обычный гротеск — экран от этого не сломается.
- */
+/** Крупное плакатное число — тот же гротеск, что везде, только жирный (4.63). */
 @Composable
-private fun condensed(size: TextUnit): TextStyle = TextStyle(
-    fontFamily = FontFamily(
-        Font(DeviceFontFamilyName("sans-serif-condensed"), weight = FontWeight.Bold)
-    ),
+private fun big(size: TextUnit): TextStyle = TextStyle(
+    fontFamily = FontFamily.SansSerif,
     fontWeight = FontWeight.Bold,
     fontSize = size
 )

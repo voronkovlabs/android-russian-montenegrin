@@ -179,15 +179,18 @@ private fun schemeOf(p: Palette) = if (p.dark) {
     )
 }
 
+// Гарнитура одна на всё приложение — системный гротеск (4.63, владелец: «пусть
+// отличаются размером, жирностью и цветом, но не стилями»). Засечки в заголовках
+// и моноширинные подписи ушли.
 private val typography = Typography(
     displaySmall = TextStyle(
-        fontFamily = FontFamily.Serif,
-        fontWeight = FontWeight.Normal,
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Medium,
         fontSize = 30.sp,
         lineHeight = 36.sp
     ),
     headlineSmall = TextStyle(
-        fontFamily = FontFamily.Serif,
+        fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
         lineHeight = 30.sp
@@ -208,9 +211,10 @@ private val typography = Typography(
         lineHeight = 22.sp
     ),
     labelSmall = TextStyle(
-        fontFamily = FontFamily.Monospace,
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
-        letterSpacing = 1.5.sp
+        letterSpacing = 1.sp
     )
 )
 
