@@ -2608,6 +2608,103 @@ L.append(dict(id='k34', title='Šaljem pismo, mrzim zimu', section=S3, words=[
           ('Черепаха жила в море.', 'Kornjača je živjela u moru.')),
 ]))
 
+# --- Урок 35 (абсурдный) ---
+# Прошедшее от raditi, jesti, piti, ići: radio, jeo, pio, išao. «Šta radiš?»
+# против «Šta radiš, bre!». Слово sok из истории kd02.
+RADITI = ('raditi — делать и работать: radim, radiš, radi, radimo, radite, rade. '
+          'Šta radiš? — Что делаешь? Radim — работаю.')
+STA_RADIS = ('Šta radiš? — обычный вопрос: «что делаешь?», «чем занят?». Так спрашивают по '
+             'телефону или при встрече.')
+BRE = ('bre — разговорное словечко для усиления, как русское «ну» или «да». Šta radiš, bre! — '
+       'уже не вопрос, а возглас: «Ты что творишь?!» — удивление или упрёк. Так говорят '
+       'только своим: детям, друзьям, кошке. В Черногории вместо bre часто говорят more: '
+       'Šta radiš, more!')
+PROSLO = ('Прошедшее у всех глаголов как у biti: sam / si / je + форма на -o, -la, -li. '
+          'raditi → radio, radila, radili. Šta si radila? — Что ты делала?')
+JEO = 'jesti → jeo (он), jela (она), jelo (оно), jeli (они). Мужская форма короткая: jeo.'
+OBE = 'Лиса и черепаха — обе женского рода, поэтому jele и pile, а не jeli и pili.'
+JELO = 'prase — среднего рода, поэтому jelo: Prase je jelo pomfrit.'
+PIO = 'piti → pio (он), pila (она), pilo (оно), pili (они).'
+ISAO = ('ići → išao (он), išla (она), išlo (оно), išli (они). Išla sam u grad — я ходила '
+        '(шла) в город. «Пошла» скажем позже, другим глаголом.')
+KUPOVINA = 'u kupovinu — за покупками: Idem u kupovinu. — Иду за покупками.'
+L.append(dict(id='k35', title='Šta radiš, bre?! Ajkula je išla u kupovinu', section=S3, words=[
+    ('raditi', 'делать; работать'), ('Šta radiš?', 'Что делаешь?'),
+    ('Šta radiš, bre!', 'Ты что творишь?!'), ('radio / jeo / pio / išao', 'делал / ел / пил / шёл'),
+    ('sok', 'сок'), ('u kupovinu', 'за покупками')],
+    ex=[
+    dict(new('raditi', 'делать; работать', ['делать; работать', 'говорить', 'жить'],
+             label='Новый глагол'), explanation=RADITI),
+    dict(phrase('Šta radiš?', 'Что ты делаешь?', ['Что ты делаешь?', 'Где ты?', 'Как дела?']),
+         explanation=STA_RADIS),
+    dict(phrase('Šta radiš, bre!', 'Ты что творишь?!',
+                ['Ты что творишь?!', 'Что ты делаешь сегодня?', 'Где ты был?']),
+         explanation=BRE),
+    pick('Звонишь подруге и спрашиваешь, чем она занята.',
+         ['Šta radiš?', 'Šta radiš, bre!', 'Gdje si bila?'], 'Šta radiš?',
+         explanation=STA_RADIS, label='Что скажешь?'),
+    pick('Кошка залезла на стол и пьёт твой кофе!',
+         ['Šta radiš, bre!', 'Šta radiš?', 'Dobro jutro!'], 'Šta radiš, bre!',
+         explanation=BRE, label='Что скажешь?'),
+    dict(phrase('Šta si radila juče?', 'Что ты делала вчера?',
+                ['Что ты делала вчера?', 'Что ты делаешь сегодня?', 'Где ты была вчера?']),
+         explanation=PROSLO),
+    pairs(('я делал', 'radio sam'), ('я делала', 'radila sam'), ('он делал', 'radio je'),
+          ('они делали', 'radili su')),
+    dict(phrase('Jela sam pljeskavicu.', 'Я ела котлету.',
+                ['Я ела котлету.', 'Я ем котлету.', 'Он ел котлету.']), explanation=JEO),
+    new('sok', 'сок', ['сок', 'суп', 'соль']),
+    dict(phrase('Lisica i kornjača su jele suši i pile sok.',
+                'Лиса с черепахой ели суши и пили сок.',
+                ['Лиса с черепахой ели суши и пили сок.', 'Лиса с черепахой едят суши и пьют сок.',
+                 'Лиса с акулой ели суши и пили пиво.']), explanation=OBE),
+    pick('Поросёнок ел картошку фри. — Prase je ___ pomfrit.', ['jelo', 'jeo', 'jela'], 'jelo',
+         explanation=JELO, label='Вставь слово'),
+    dict(phrase('Pio sam kafu.', 'Я пил кофе.', ['Я пил кофе.', 'Я пью кофе.', 'Она пила кофе.']),
+         explanation=PIO),
+    pick('Кошки пили пиво. — Mačke su ___ pivo.', ['pile', 'pili', 'pila'], 'pile',
+         explanation=PIO, label='Вставь слово'),
+    ear('Psi su jeli pomfrit i pili kafu.',
+        ['Собаки ели картошку фри и пили кофе.', 'Собаки едят картошку фри и пьют кофе.',
+         'Кошки ели картошку фри и пили кофе.'], 'Собаки ели картошку фри и пили кофе.'),
+    dict(phrase('Išla sam u grad.', 'Я ходила в город.',
+                ['Я ходила в город.', 'Я иду в город.', 'Я была дома.']), explanation=ISAO),
+    dict(phrase('Ajkula je išla u prodavnicu u kupovinu.',
+                'Акула ходила в магазин за покупками.',
+                ['Акула ходила в магазин за покупками.', 'Акула идёт в магазин за покупками.',
+                 'Акула работала в магазине.']), explanation=KUPOVINA),
+    pick('Улитка шла быстро, как самолёт. — Puž je ___ brzo kao avion.',
+         ['išao', 'išla', 'išlo'], 'išao', explanation=ISAO, label='Вставь слово'),
+    pairs(('raditi', 'radio'), ('jesti', 'jeo'), ('piti', 'pio'), ('ići', 'išao'),
+          ('biti', 'bio')),
+    pairs(('она делала', 'radila'), ('она ела', 'jela'), ('она пила', 'pila'),
+          ('она шла', 'išla')),
+    pick('— Šta si radila juče?\n— Išla sam u kupovinu, a uveče sam jela suši.\n\n'
+         'Что она делала вечером?', ['Ела суши.', 'Ходила за покупками.', 'Спала.'],
+         'Ела суши.', label='Мини-диалог'),
+    pick('Мы ели суши. — Mi smo ___ suši.', ['jeli', 'jeo', 'jela'], 'jeli', explanation=JEO,
+         label='Вставь слово'),
+    pick('Другу, строго: «Что ты пил вчера?!» — Šta si ___ juče, bre?!',
+         ['pio', 'pila', 'pili'], 'pio', explanation=PIO, label='Вставь слово'),
+    phrase('Kornjača je pila kafu i radila na kompjuteru.',
+           'Черепаха пила кофе и работала за компьютером.',
+           ['Черепаха пила кофе и работала за компьютером.',
+            'Черепаха пьёт кофе и играет на компьютере.',
+            'Акула пила кофе и работала за компьютером.']),
+    ear('Vuk i lisica su išli u kupovinu.',
+        ['Волк и лиса ходили за покупками.', 'Волк и лиса идут за покупками.',
+         'Волк и лиса ели суши.'], 'Волк и лиса ходили за покупками.'),
+    bank('Лиса с черепахой ели суши и пили сок.', 'Lisica i kornjača su jele suši i pile sok.',
+         ['sok', 'jele', 'lisica', 'su', 'i', 'suši', 'kornjača', 'pile', 'i']),
+    bank('Акула ходила в магазин за покупками.', 'Ajkula je išla u prodavnicu u kupovinu.',
+         ['kupovinu', 'je', 'ajkula', 'u', 'išla', 'prodavnicu', 'u']),
+    say('Šta radiš, bre!', 'Ты что творишь?!'),
+    echo('Ajkula je išla u prodavnicu u kupovinu.', 'Акула ходила в магазин за покупками.'),
+    pairs(('Что ты делаешь?', 'Šta radiš?'), ('Ты что творишь?!', 'Šta radiš, bre!'),
+          ('Я ела котлету.', 'Jela sam pljeskavicu.'), ('Я пил кофе.', 'Pio sam kafu.'),
+          ('Я ходила в город.', 'Išla sam u grad.')),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

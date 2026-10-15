@@ -1,0 +1,451 @@
+{
+  "id": "k35",
+  "title": "Šta radiš, bre?! Ajkula je išla u kupovinu",
+  "exercises": [
+    {
+      "id": "k35e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "raditi",
+      "hint": "raditi — делать; работать",
+      "options": [
+        "делать; работать",
+        "говорить",
+        "жить"
+      ],
+      "answer": "делать; работать",
+      "explanation": "raditi — делать и работать: radim, radiš, radi, radimo, radite, rade. Šta radiš? — Что делаешь? Radim — работаю."
+    },
+    {
+      "id": "k35e02",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šta radiš?",
+      "hint": "Šta radiš? — Что ты делаешь?",
+      "options": [
+        "Что ты делаешь?",
+        "Где ты?",
+        "Как дела?"
+      ],
+      "answer": "Что ты делаешь?",
+      "explanation": "Šta radiš? — обычный вопрос: «что делаешь?», «чем занят?». Так спрашивают по телефону или при встрече."
+    },
+    {
+      "id": "k35e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šta radiš, bre!",
+      "hint": "Šta radiš, bre! — Ты что творишь?!",
+      "options": [
+        "Ты что творишь?!",
+        "Что ты делаешь сегодня?",
+        "Где ты был?"
+      ],
+      "answer": "Ты что творишь?!",
+      "explanation": "bre — разговорное словечко для усиления, как русское «ну» или «да». Šta radiš, bre! — уже не вопрос, а возглас: «Ты что творишь?!» — удивление или упрёк. Так говорят только своим: детям, друзьям, кошке. В Черногории вместо bre часто говорят more: Šta radiš, more!"
+    },
+    {
+      "id": "k35e04",
+      "type": "choice",
+      "prompt": "Звонишь подруге и спрашиваешь, чем она занята.",
+      "options": [
+        "Šta radiš?",
+        "Šta radiš, bre!",
+        "Gdje si bila?"
+      ],
+      "answer": "Šta radiš?",
+      "explanation": "Šta radiš? — обычный вопрос: «что делаешь?», «чем занят?». Так спрашивают по телефону или при встрече.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k35e05",
+      "type": "choice",
+      "prompt": "Кошка залезла на стол и пьёт твой кофе!",
+      "options": [
+        "Šta radiš, bre!",
+        "Šta radiš?",
+        "Dobro jutro!"
+      ],
+      "answer": "Šta radiš, bre!",
+      "explanation": "bre — разговорное словечко для усиления, как русское «ну» или «да». Šta radiš, bre! — уже не вопрос, а возглас: «Ты что творишь?!» — удивление или упрёк. Так говорят только своим: детям, друзьям, кошке. В Черногории вместо bre часто говорят more: Šta radiš, more!",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k35e06",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šta si radila juče?",
+      "hint": "Šta si radila juče? — Что ты делала вчера?",
+      "options": [
+        "Что ты делала вчера?",
+        "Что ты делаешь сегодня?",
+        "Где ты была вчера?"
+      ],
+      "answer": "Что ты делала вчера?",
+      "explanation": "Прошедшее у всех глаголов как у biti: sam / si / je + форма на -o, -la, -li. raditi → radio, radila, radili. Šta si radila? — Что ты делала?"
+    },
+    {
+      "id": "k35e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я делал",
+          "me": "radio sam"
+        },
+        {
+          "ru": "я делала",
+          "me": "radila sam"
+        },
+        {
+          "ru": "он делал",
+          "me": "radio je"
+        },
+        {
+          "ru": "они делали",
+          "me": "radili su"
+        }
+      ]
+    },
+    {
+      "id": "k35e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Jela sam pljeskavicu.",
+      "hint": "Jela sam pljeskavicu. — Я ела котлету.",
+      "options": [
+        "Я ела котлету.",
+        "Я ем котлету.",
+        "Он ел котлету."
+      ],
+      "answer": "Я ела котлету.",
+      "explanation": "jesti → jeo (он), jela (она), jelo (оно), jeli (они). Мужская форма короткая: jeo."
+    },
+    {
+      "id": "k35e09",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "sok",
+      "hint": "sok — сок",
+      "options": [
+        "сок",
+        "суп",
+        "соль"
+      ],
+      "answer": "сок"
+    },
+    {
+      "id": "k35e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Lisica i kornjača su jele suši i pile sok.",
+      "hint": "Lisica i kornjača su jele suši i pile sok. — Лиса с черепахой ели суши и пили сок.",
+      "options": [
+        "Лиса с черепахой ели суши и пили сок.",
+        "Лиса с черепахой едят суши и пьют сок.",
+        "Лиса с акулой ели суши и пили пиво."
+      ],
+      "answer": "Лиса с черепахой ели суши и пили сок.",
+      "explanation": "Лиса и черепаха — обе женского рода, поэтому jele и pile, а не jeli и pili."
+    },
+    {
+      "id": "k35e11",
+      "type": "choice",
+      "prompt": "Поросёнок ел картошку фри. — Prase je ___ pomfrit.",
+      "options": [
+        "jelo",
+        "jeo",
+        "jela"
+      ],
+      "answer": "jelo",
+      "explanation": "prase — среднего рода, поэтому jelo: Prase je jelo pomfrit.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k35e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Pio sam kafu.",
+      "hint": "Pio sam kafu. — Я пил кофе.",
+      "options": [
+        "Я пил кофе.",
+        "Я пью кофе.",
+        "Она пила кофе."
+      ],
+      "answer": "Я пил кофе.",
+      "explanation": "piti → pio (он), pila (она), pilo (оно), pili (они)."
+    },
+    {
+      "id": "k35e13",
+      "type": "choice",
+      "prompt": "Кошки пили пиво. — Mačke su ___ pivo.",
+      "options": [
+        "pile",
+        "pili",
+        "pila"
+      ],
+      "answer": "pile",
+      "explanation": "piti → pio (он), pila (она), pilo (оно), pili (они).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k35e14",
+      "type": "choice",
+      "prompt": "Psi su jeli pomfrit i pili kafu.",
+      "options": [
+        "Собаки ели картошку фри и пили кофе.",
+        "Собаки едят картошку фри и пьют кофе.",
+        "Кошки ели картошку фри и пили кофе."
+      ],
+      "answer": "Собаки ели картошку фри и пили кофе.",
+      "byEar": true
+    },
+    {
+      "id": "k35e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Išla sam u grad.",
+      "hint": "Išla sam u grad. — Я ходила в город.",
+      "options": [
+        "Я ходила в город.",
+        "Я иду в город.",
+        "Я была дома."
+      ],
+      "answer": "Я ходила в город.",
+      "explanation": "ići → išao (он), išla (она), išlo (оно), išli (они). Išla sam u grad — я ходила (шла) в город. «Пошла» скажем позже, другим глаголом."
+    },
+    {
+      "id": "k35e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ajkula je išla u prodavnicu u kupovinu.",
+      "hint": "Ajkula je išla u prodavnicu u kupovinu. — Акула ходила в магазин за покупками.",
+      "options": [
+        "Акула ходила в магазин за покупками.",
+        "Акула идёт в магазин за покупками.",
+        "Акула работала в магазине."
+      ],
+      "answer": "Акула ходила в магазин за покупками.",
+      "explanation": "u kupovinu — за покупками: Idem u kupovinu. — Иду за покупками."
+    },
+    {
+      "id": "k35e17",
+      "type": "choice",
+      "prompt": "Улитка шла быстро, как самолёт. — Puž je ___ brzo kao avion.",
+      "options": [
+        "išao",
+        "išla",
+        "išlo"
+      ],
+      "answer": "išao",
+      "explanation": "ići → išao (он), išla (она), išlo (оно), išli (они). Išla sam u grad — я ходила (шла) в город. «Пошла» скажем позже, другим глаголом.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k35e18",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "raditi",
+          "me": "radio"
+        },
+        {
+          "ru": "jesti",
+          "me": "jeo"
+        },
+        {
+          "ru": "piti",
+          "me": "pio"
+        },
+        {
+          "ru": "ići",
+          "me": "išao"
+        },
+        {
+          "ru": "biti",
+          "me": "bio"
+        }
+      ]
+    },
+    {
+      "id": "k35e19",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "она делала",
+          "me": "radila"
+        },
+        {
+          "ru": "она ела",
+          "me": "jela"
+        },
+        {
+          "ru": "она пила",
+          "me": "pila"
+        },
+        {
+          "ru": "она шла",
+          "me": "išla"
+        }
+      ]
+    },
+    {
+      "id": "k35e20",
+      "type": "choice",
+      "prompt": "— Šta si radila juče?\n— Išla sam u kupovinu, a uveče sam jela suši.\n\nЧто она делала вечером?",
+      "options": [
+        "Ела суши.",
+        "Ходила за покупками.",
+        "Спала."
+      ],
+      "answer": "Ела суши.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k35e21",
+      "type": "choice",
+      "prompt": "Мы ели суши. — Mi smo ___ suši.",
+      "options": [
+        "jeli",
+        "jeo",
+        "jela"
+      ],
+      "answer": "jeli",
+      "explanation": "jesti → jeo (он), jela (она), jelo (оно), jeli (они). Мужская форма короткая: jeo.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k35e22",
+      "type": "choice",
+      "prompt": "Другу, строго: «Что ты пил вчера?!» — Šta si ___ juče, bre?!",
+      "options": [
+        "pio",
+        "pila",
+        "pili"
+      ],
+      "answer": "pio",
+      "explanation": "piti → pio (он), pila (она), pilo (оно), pili (они).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k35e23",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kornjača je pila kafu i radila na kompjuteru.",
+      "hint": "Kornjača je pila kafu i radila na kompjuteru. — Черепаха пила кофе и работала за компьютером.",
+      "options": [
+        "Черепаха пила кофе и работала за компьютером.",
+        "Черепаха пьёт кофе и играет на компьютере.",
+        "Акула пила кофе и работала за компьютером."
+      ],
+      "answer": "Черепаха пила кофе и работала за компьютером."
+    },
+    {
+      "id": "k35e24",
+      "type": "choice",
+      "prompt": "Vuk i lisica su išli u kupovinu.",
+      "options": [
+        "Волк и лиса ходили за покупками.",
+        "Волк и лиса идут за покупками.",
+        "Волк и лиса ели суши."
+      ],
+      "answer": "Волк и лиса ходили за покупками.",
+      "byEar": true
+    },
+    {
+      "id": "k35e25",
+      "type": "word_bank",
+      "prompt": "Лиса с черепахой ели суши и пили сок.",
+      "answer": "Lisica i kornjača su jele suši i pile sok.",
+      "bank": [
+        "sok",
+        "jele",
+        "lisica",
+        "su",
+        "i",
+        "suši",
+        "kornjača",
+        "pile",
+        "i"
+      ]
+    },
+    {
+      "id": "k35e26",
+      "type": "word_bank",
+      "prompt": "Акула ходила в магазин за покупками.",
+      "answer": "Ajkula je išla u prodavnicu u kupovinu.",
+      "bank": [
+        "kupovinu",
+        "je",
+        "ajkula",
+        "u",
+        "išla",
+        "prodavnicu",
+        "u"
+      ]
+    },
+    {
+      "id": "k35e27",
+      "type": "speaking",
+      "phrase": "Šta radiš, bre!",
+      "translation": "Ты что творишь?!"
+    },
+    {
+      "id": "k35e28",
+      "type": "repeat",
+      "phrase": "Ajkula je išla u prodavnicu u kupovinu.",
+      "translation": "Акула ходила в магазин за покупками."
+    },
+    {
+      "id": "k35e29",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "Что ты делаешь?",
+          "me": "Šta radiš?"
+        },
+        {
+          "ru": "Ты что творишь?!",
+          "me": "Šta radiš, bre!"
+        },
+        {
+          "ru": "Я ела котлету.",
+          "me": "Jela sam pljeskavicu."
+        },
+        {
+          "ru": "Я пил кофе.",
+          "me": "Pio sam kafu."
+        },
+        {
+          "ru": "Я ходила в город.",
+          "me": "Išla sam u grad."
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "me": "raditi",
+      "ru": "делать; работать"
+    },
+    {
+      "me": "Šta radiš?",
+      "ru": "Что делаешь?"
+    },
+    {
+      "me": "Šta radiš, bre!",
+      "ru": "Ты что творишь?!"
+    },
+    {
+      "me": "radio / jeo / pio / išao",
+      "ru": "делал / ел / пил / шёл"
+    },
+    {
+      "me": "sok",
+      "ru": "сок"
+    },
+    {
+      "me": "u kupovinu",
+      "ru": "за покупками"
+    }
+  ]
+}
