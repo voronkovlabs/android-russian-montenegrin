@@ -53,6 +53,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -95,6 +96,7 @@ import com.crnogorski.trener.speech.AnswerLanguage
 import com.crnogorski.trener.speech.Listener
 import com.crnogorski.trener.speech.Speaker
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Сколько длится поворот карточки-перевёртыша.
@@ -805,6 +807,7 @@ private fun ChoiceAnswer(
     val context = LocalContext.current
     val ear = remember(ex.id) { QuietEar(Listener(context)) { micAllowed(context) } }
     DisposableEffect(ear) { onDispose { ear.stop() } }
+    val scope = rememberCoroutineScope()
     val dialog = !sayPrompt && ex.prompt.contains('\n') && montenegrinPart(ex.prompt).isNotBlank()
     val listens = enabled && (fresh || ex.byEar || dialog)
     val green = remember(ex.id, ear.heard) {
@@ -883,8 +886,14 @@ private fun ChoiceAnswer(
                     // После выбора звучит черногорское: выбор глазами не даёт
                     // услышать, как оно звучит. См. spokenAfterChoice.
                     .clickable(enabled = enabled) {
-                        ear.close()
-                        spokenAfterChoice(ex.prompt, option)?.let { speaker.speak(it) }
+                        val wasLive = ear.close()
+                        spokenAfterChoice(ex.prompt, option)?.let { said ->
+                            if (wasLive) {
+                                scope.launch { delay(QuietEar.BEEP_GAP_MS); speaker.speak(said) }
+                            } else {
+                                speaker.speak(said)
+                            }
+                        }
                         onSubmit(option)
                     }
                     .padding(16.dp)
@@ -972,7 +981,9 @@ private class QuietEar(private val listener: Listener, private val allowed: () -
     var heard by mutableStateOf("")
         private set
     private var tries = 0
-    private var live = false
+    /** Слушает ли сейчас — тогда за обрывом последует гудок, и речь стоит придержать. */
+    var live = false
+        private set
     /** Ответ дан — больше не слушать, даже если фраза договорится позже. */
     private var closed = false
 
@@ -1002,9 +1013,12 @@ private class QuietEar(private val listener: Listener, private val allowed: () -
         listener.cancel()
     }
 
-    fun close() {
+    /** Закрыть насовсем. Отвечает, слушало ли оно в этот миг. */
+    fun close(): Boolean {
+        val was = live
         closed = true
         cancel()
+        return was
     }
 
     fun stop() {
@@ -1014,6 +1028,12 @@ private class QuietEar(private val listener: Listener, private val allowed: () -
 
     companion object {
         const val TRIES = 3
+
+        /**
+         * Сколько молчать после обрыва, прежде чем заговорить: гудок оборванной
+         * записи должен отыграть в заглушённый поток, а синтезатор заглушку снимает.
+         */
+        const val BEEP_GAP_MS = 350L
     }
 }
 
@@ -1079,7 +1099,11 @@ private fun MatchAnswer(
     // только из разных столбцов.
     var picked by remember(ex.id) { mutableStateOf<MatchPair?>(null) }
     var pickedLeft by remember(ex.id) { mutableStateOf(false) }
-    var solved by remember(ex.id) { mutableStateOf(setOf<String>()) }
+    // Сложенное считается по сторонам отдельно (заметка 314): одинаковые
+    // плашки справа («mogu» у «ja» и у «oni») взаимозаменяемы, и «ja» можно
+    // сложить с любой из них — тогда погаснуть должна именно нажатая.
+    var solvedL by remember(ex.id) { mutableStateOf(setOf<String>()) }
+    var solvedR by remember(ex.id) { mutableStateOf(setOf<String>()) }
     var wrong by remember(ex.id) { mutableStateOf(setOf<String>()) }
     // Ровно две плашки, которые сейчас краснеют, — по ключу «сторона + слово»:
     // ошиблись именно этими двумя, а не всеми плашками этих слов.
@@ -1100,15 +1124,20 @@ private fun MatchAnswer(
     val context = LocalContext.current
     val ear = remember(ex.id) { QuietEar(Listener(context)) { micAllowed(context) } }
     DisposableEffect(ear) { onDispose { ear.stop() } }
+    val scope = rememberCoroutineScope()
+    // Голос нужен, только когда слева русское: в парах «ja — sjednem» говорить
+    // нечего, и микрофон лишь мешал (заметка 316).
+    val voice = remember(ex.id) { left.any { hasCyrillic(it.ru) } }
 
     fun tap(pair: MatchPair, isLeft: Boolean) {
+        val wasLive = ear.live
         ear.cancel()
         // Нажатие во время красной подсветки не теряется, а гасит её и
         // засчитывается как обычное (Катя, жалоба 172). Раньше экран его молча
         // глотал: при быстрой игре первое нажатие после ошибки пропадало,
         // второе становилось первым, и следующая пара складывалась со сдвигом —
         // одна ошибка тянула за собой ещё.
-        if (!enabled || pair.cardId in solved) return
+        if (!enabled || pair.cardId in (if (isLeft) solvedL else solvedR)) return
         if (flash.isNotEmpty()) flash = emptySet()
         val chosen = picked
         if (chosen == null || pickedLeft == isLeft) {
@@ -1116,9 +1145,9 @@ private fun MatchAnswer(
             // уметь, не складывая заведомо неверную пару.
             picked = if (chosen?.cardId == pair.cardId && pickedLeft == isLeft) null else pair
             pickedLeft = isLeft
-            if (isLeft && picked != null && enabled) {
+            if (isLeft && picked != null && enabled && voice) {
                 ear.listen { said ->
-                    val hit = right.filter { it.cardId !in solved }
+                    val hit = right.filter { it.cardId !in solvedR }
                         .map { it to LocalCheck.spokenScore(said, it.me) }
                         .filter { it.second.passed }
                         .maxByOrNull { it.second.matched.toFloat() / it.second.total }
@@ -1132,11 +1161,17 @@ private fun MatchAnswer(
             return
         }
         picked = null
-        if (chosen.cardId == pair.cardId) {
-            speaker.speak(pair.me)
-            val next = solved + pair.cardId
-            solved = next
-            if (next.size == ex.pairs.size) {
+        val l = if (isLeft) pair else chosen
+        val r = if (isLeft) chosen else pair
+        if (l.cardId == r.cardId || l.me == r.me || l.ru == r.ru) {
+            if (wasLive) {
+                scope.launch { delay(QuietEar.BEEP_GAP_MS); speaker.speak(r.me) }
+            } else {
+                speaker.speak(r.me)
+            }
+            solvedL = solvedL + l.cardId
+            solvedR = solvedR + r.cardId
+            if (solvedL.size == ex.pairs.size) {
                 ear.close()
                 onDone(wrong)
             }
@@ -1165,7 +1200,7 @@ private fun MatchAnswer(
                 Box(Modifier.weight(1f).fillMaxHeight()) {
                     MatchTile(
                         text = AnnotatedString(l.ru),
-                        done = l.cardId in solved,
+                        done = l.cardId in solvedL,
                         chosen = picked?.cardId == l.cardId && pickedLeft,
                         failed = key(l, true) in flash
                     ) { tap(l, true) }
@@ -1173,7 +1208,7 @@ private fun MatchAnswer(
                 Box(Modifier.weight(1f).fillMaxHeight()) {
                     MatchTile(
                         text = stressed(r.me),
-                        done = r.cardId in solved,
+                        done = r.cardId in solvedR,
                         chosen = picked?.cardId == r.cardId && !pickedLeft,
                         failed = key(r, false) in flash
                     ) { tap(r, false) }

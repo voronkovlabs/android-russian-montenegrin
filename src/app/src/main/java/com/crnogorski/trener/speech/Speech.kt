@@ -658,9 +658,13 @@ class Listener(private val context: Context) {
     fun cancel() {
         session++
         main.removeCallbacksAndMessages(null)
-        // Здесь снимаем сразу: слушать больше не собираемся, ждать гудка нечего.
-        unmute()
+        // Сперва обрываем, потом снимаем заглушку — и не сразу. Оборванный заход
+        // движок провожает гудком неудачи, и снятая заранее заглушка пускала
+        // его в динамик: «при нажатии на ответ слышен звук, как будто микрофон
+        // ничего не распознал» (заметки 315, 317).
         runCatching { recognizer?.cancel() }
+        val closed = session
+        main.postDelayed({ if (session == closed) unmute() }, MUTE_TAIL_MS)
     }
 
     /** Отпустить сервис, уходя с экрана. */

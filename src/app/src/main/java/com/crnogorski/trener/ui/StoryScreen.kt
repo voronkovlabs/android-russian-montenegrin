@@ -50,6 +50,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.crnogorski.trener.data.StoryMode
@@ -513,6 +514,11 @@ fun StoryScreen(
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(state.title, style = MaterialTheme.typography.displaySmall, color = Paper)
+                // Вводная по-русски — кто и где (жалоба 298). Носителю не нужна.
+                if (state.intro.isNotBlank() && !state.native) {
+                    Spacer(Modifier.height(8.dp))
+                    Text(state.intro, style = MaterialTheme.typography.bodyMedium, color = Muted)
+                }
                 Spacer(Modifier.height(24.dp))
             }
 
@@ -522,7 +528,11 @@ fun StoryScreen(
               val dialog = chunk.who.isNotBlank()
               Column(Modifier.fillMaxWidth()) {
                 if (dialog && chunk.theirs) {
-                    SpeakerName(state.speaker)
+                    SpeakerName(chunk.name.ifBlank { state.speaker })
+                } else if (dialog && chunk.name.isNotBlank()) {
+                    // Своих бывает двое (мама и сын) — тогда подписаны и они,
+                    // у правого края, над своим пузырём.
+                    SpeakerName(chunk.name, end = true)
                 }
                 when {
                     i < state.index -> {
@@ -830,11 +840,13 @@ fun StoryScreen(
  * иначе не отличить, глядя на середину списка.
  */
 @Composable
-private fun SpeakerName(speaker: String) {
+private fun SpeakerName(speaker: String, end: Boolean = false) {
     Text(
         speaker.ifBlank { "Собеседник" },
         style = MaterialTheme.typography.labelSmall,
-        color = Accent
+        color = Accent,
+        textAlign = if (end) TextAlign.End else TextAlign.Start,
+        modifier = Modifier.fillMaxWidth()
     )
     Spacer(Modifier.height(5.dp))
 }
