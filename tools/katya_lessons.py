@@ -2792,7 +2792,8 @@ L.append(dict(id='k36', title='Srećan rođendan! Radujem se', section=S3, words
          ['rođendan', 'čestitam', 'ti', 'srećan']),
     say('Srećna Nova godina!', 'С Новым годом!'),
     echo('Hristos se rodi!', 'Христос родился!'),
-    pairs(('Поздравляю!', 'Čestitam!'), ('Я радуюсь!', 'Radujem se!'), ('И тебе!', 'I tebi!'),
+    pairs(('Поздравляю!', 'Čestitam!'), ('Я радуюсь!', 'Radujem se!'),
+          ('С днём рождения!', 'Srećan rođendan!'),
           ('Христос родился!', 'Hristos se rodi!'), ('Воистину родился!', 'Vaistinu se rodi!')),
 ]))
 
