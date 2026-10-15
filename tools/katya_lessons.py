@@ -21,8 +21,10 @@ def pick(prompt, opts, answer, explanation='', label=''):
 def ear(me, opts, answer):
     return dict(type='choice', prompt=me, options=opts, answer=answer, byEar=True)
 
-def bank(ru, answer, tiles):
-    return dict(type='word_bank', prompt=ru, answer=answer, bank=tiles)
+def bank(ru, answer, tiles, also=None):
+    d = dict(type='word_bank', prompt=ru, answer=answer, bank=tiles)
+    if also: d['also'] = also  # другие верные сборки из тех же плашек
+    return d
 
 def pairs(*ps):
     return dict(type='match', pairs=[dict(ru=r, me=m) for r, m in ps])
@@ -1704,7 +1706,8 @@ L.append(dict(id='k25', title='Zovem se Tiburon', section=S2, words=[
          'Почему Тортуге стоит волноваться?',
          ['Акула голодна.', 'Акула устала.', 'Акула в кафе.'], 'Акула голодна.',
          label='Мини-диалог'),
-    bank('Меня зовут Тортуга.', 'Ja se zovem Tortuga.', ['Tortuga', 'zovem', 'ja', 'se']),
+    bank('Меня зовут Тортуга.', 'Ja se zovem Tortuga.', ['Tortuga', 'zovem', 'ja', 'se'],
+         also=['Zovem se Tortuga.']),
     say('Kako se vi zovete?', 'Как вас зовут?'),
     dict(new('živjeti', 'жить', ['жить', 'лежать', 'сидеть'], label='Новый глагол'),
          explanation=ZIVJETI),
