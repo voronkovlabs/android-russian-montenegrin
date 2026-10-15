@@ -2642,7 +2642,7 @@ L.append(dict(id='k35', title='Šta radiš, bre?! Ajkula je išla u kupovinu', s
     pick('Звонишь подруге и спрашиваешь, чем она занята.',
          ['Šta radiš?', 'Šta radiš, bre!', 'Gdje si bila?'], 'Šta radiš?',
          explanation=STA_RADIS, label='Что скажешь?'),
-    pick('Кошка залезла на стол и пьёт твой кофе!',
+    pick('Кошка залезла на стол и пьёт твой чай!',
          ['Šta radiš, bre!', 'Šta radiš?', 'Dobro jutro!'], 'Šta radiš, bre!',
          explanation=BRE, label='Что скажешь?'),
     dict(phrase('Šta si radila juče?', 'Что ты делала вчера?',
