@@ -809,7 +809,10 @@ private fun ChoiceAnswer(
     DisposableEffect(ear) { onDispose { ear.stop() } }
     val scope = rememberCoroutineScope()
     val dialog = !sayPrompt && ex.prompt.contains('\n') && montenegrinPart(ex.prompt).isNotBlank()
-    val listens = enabled && (fresh || ex.byEar || dialog)
+    // Черногорское условие слушается всегда (заметка 320): «Выбери перевод» и
+    // задания теста читают вслух так же, как мини-диалог, — сами, без голоса.
+    val quiet = sayPrompt && !fresh && !ex.byEar
+    val listens = enabled && (fresh || ex.byEar || dialog || quiet)
     val green = remember(ex.id, ear.heard) {
         if (ear.heard.isBlank()) emptySet() else LocalCheck.matchedWords(ear.heard, ex.prompt)
     }
@@ -832,7 +835,7 @@ private fun ChoiceAnswer(
         if (!enabled) return@LaunchedEffect
         when {
             ex.byEar || fresh -> say()
-            dialog -> listen()
+            dialog || quiet -> listen()
         }
     }
 
@@ -1313,6 +1316,13 @@ private fun WordBankAnswer(
             .background(Surface1)
             .padding(14.dp)
     ) {
+        // Высота поля заранее равна собранному ответу (заметки 321, 324):
+        // под собираемой фразой лежит невидимая копия всех нужных слов. Иначе
+        // поле росло с первым словом и с каждой новой строкой, и куча ниже
+        // уезжала из-под пальца.
+        FlowRow(Modifier.alpha(0f), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ex.bank.forEach { Chip(it, filled = true, enabled = false) {} }
+        }
         if (picked.isEmpty()) {
             Text("Нажимай на слова ниже", color = Muted, style = MaterialTheme.typography.bodyMedium)
         } else {
