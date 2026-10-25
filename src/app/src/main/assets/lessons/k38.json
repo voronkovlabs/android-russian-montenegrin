@@ -1,0 +1,371 @@
+{
+  "id": "k38",
+  "title": "Narudžbina i dostava",
+  "exercises": [
+    {
+      "id": "k38e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "narudžbina",
+      "hint": "narudžbina — заказ",
+      "options": [
+        "заказ",
+        "доставка",
+        "сообщение"
+      ],
+      "answer": "заказ",
+      "explanation": "narudžbina — заказ. В Черногории и Сербии говорят так, реже porudžbina и narudžba. Склоняется как krava: Kurir je donio narudžbinu."
+    },
+    {
+      "id": "k38e02",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "naručiti",
+      "hint": "naručiti — заказать",
+      "options": [
+        "заказать",
+        "получить",
+        "отменить"
+      ],
+      "answer": "заказать",
+      "explanation": "naručiti — заказать. Прошедшее как у всех: naručio sam (он), naručila sam (она). Naručila sam picu — я заказала пиццу."
+    },
+    {
+      "id": "k38e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Naručila sam picu.",
+      "hint": "Naručila sam picu. — Я заказала пиццу.",
+      "options": [
+        "Я заказала пиццу.",
+        "Я получила пиццу.",
+        "Я ем пиццу."
+      ],
+      "answer": "Я заказала пиццу.",
+      "explanation": "naručiti — заказать. Прошедшее как у всех: naručio sam (он), naručila sam (она). Naručila sam picu — я заказала пиццу."
+    },
+    {
+      "id": "k38e04",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "dostava",
+      "hint": "dostava — доставка",
+      "options": [
+        "доставка",
+        "заказ",
+        "оплата"
+      ],
+      "answer": "доставка"
+    },
+    {
+      "id": "k38e05",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kurir",
+      "hint": "kurir — курьер",
+      "options": [
+        "курьер",
+        "продавец",
+        "водитель"
+      ],
+      "answer": "курьер"
+    },
+    {
+      "id": "k38e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "poruka",
+      "hint": "poruka — сообщение",
+      "options": [
+        "сообщение",
+        "письмо",
+        "заказ"
+      ],
+      "answer": "сообщение"
+    },
+    {
+      "id": "k38e07",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "proizvod",
+      "hint": "proizvod — товар",
+      "options": [
+        "товар",
+        "магазин",
+        "курьер"
+      ],
+      "answer": "товар",
+      "explanation": "proizvod — товар, продукт (одна вещь в заказе). Товары вообще — roba."
+    },
+    {
+      "id": "k38e08",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "plaćanje",
+      "hint": "plaćanje — оплата",
+      "options": [
+        "оплата",
+        "доставка",
+        "покупка"
+      ],
+      "answer": "оплата",
+      "explanation": "plaćanje — оплата. Plaćanje pouzećem — оплата при получении, курьеру. Так в Черногории платят чаще всего."
+    },
+    {
+      "id": "k38e09",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "заказ",
+          "me": "narudžbina"
+        },
+        {
+          "ru": "доставка",
+          "me": "dostava"
+        },
+        {
+          "ru": "курьер",
+          "me": "kurir"
+        },
+        {
+          "ru": "сообщение",
+          "me": "poruka"
+        },
+        {
+          "ru": "товар",
+          "me": "proizvod"
+        },
+        {
+          "ru": "оплата",
+          "me": "plaćanje"
+        }
+      ]
+    },
+    {
+      "id": "k38e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kurir je donio narudžbinu.",
+      "hint": "Kurir je donio narudžbinu. — Курьер привёз заказ.",
+      "options": [
+        "Курьер привёз заказ.",
+        "Курьер отменил заказ.",
+        "Курьер ждёт заказ."
+      ],
+      "answer": "Курьер привёз заказ.",
+      "explanation": "donijeti — принести, привезти (урок 11). Прошедшее: donio (он), donijela (она). Kurir je donio narudžbinu."
+    },
+    {
+      "id": "k38e11",
+      "type": "choice",
+      "prompt": "Я получила сообщение. — ___ sam poruku.",
+      "options": [
+        "Dobila",
+        "Dobio",
+        "Dobili"
+      ],
+      "answer": "Dobila",
+      "explanation": "dobiti — получить (урок 5): dobio sam (он), dobila sam (она). Dobila sam poruku.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k38e12",
+      "type": "word_bank",
+      "prompt": "Я заказал пиццу.",
+      "answer": "Naručio sam picu.",
+      "bank": [
+        "picu",
+        "sam",
+        "naručio"
+      ]
+    },
+    {
+      "id": "k38e13",
+      "type": "word_bank",
+      "prompt": "Курьер привёз заказ.",
+      "answer": "Kurir je donio narudžbinu.",
+      "bank": [
+        "narudžbinu",
+        "je",
+        "kurir",
+        "donio"
+      ]
+    },
+    {
+      "id": "k38e14",
+      "type": "word_bank",
+      "prompt": "Я получила сообщение.",
+      "answer": "Dobila sam poruku.",
+      "bank": [
+        "poruku",
+        "sam",
+        "dobila"
+      ]
+    },
+    {
+      "id": "k38e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Plaćanje pouzećem.",
+      "hint": "Plaćanje pouzećem. — Оплата при получении.",
+      "options": [
+        "Оплата при получении.",
+        "Оплата картой.",
+        "Бесплатная доставка."
+      ],
+      "answer": "Оплата при получении.",
+      "explanation": "plaćanje — оплата. Plaćanje pouzećem — оплата при получении, курьеру. Так в Черногории платят чаще всего."
+    },
+    {
+      "id": "k38e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nažalost, proizvoda nema na stanju.",
+      "hint": "Nažalost, proizvoda nema na stanju. — К сожалению, товара нет в наличии.",
+      "options": [
+        "К сожалению, товара нет в наличии.",
+        "К сожалению, курьер не приехал.",
+        "К сожалению, магазин закрыт."
+      ],
+      "answer": "К сожалению, товара нет в наличии.",
+      "explanation": "nema na stanju — нет в наличии. После nema — «кого? чего?»: proizvoda, как по-русски «нет товара»."
+    },
+    {
+      "id": "k38e17",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Možete li da čekate nedjelju dana?",
+      "hint": "Možete li da čekate nedjelju dana? — Вы можете подождать неделю?",
+      "options": [
+        "Вы можете подождать неделю?",
+        "Вы можете прийти через неделю?",
+        "Вы ждали неделю?"
+      ],
+      "answer": "Вы можете подождать неделю?",
+      "explanation": "čekati — ждать: čekam, čekaš, čeka. Možete li da čekate? — Можете подождать? nedjelju dana — неделю, буквально «неделю дней». dana добавляют, когда говорят, сколько длится: nedjelja — это ещё и воскресенье, а nedjelju dana — только «целую неделю». Так же mjesec dana — месяц, godinu dana — год."
+    },
+    {
+      "id": "k38e18",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Otkažite narudžbinu, molim vas.",
+      "hint": "Otkažite narudžbinu, molim vas. — Отмените заказ, пожалуйста.",
+      "options": [
+        "Отмените заказ, пожалуйста.",
+        "Привезите заказ, пожалуйста.",
+        "Подождите, пожалуйста."
+      ],
+      "answer": "Отмените заказ, пожалуйста.",
+      "explanation": "otkazati — отменить. Otkažite! — просьба на «вы», как Izvinite! Otkažite narudžbinu — отмените заказ."
+    },
+    {
+      "id": "k38e19",
+      "type": "choice",
+      "prompt": "— Nažalost, proizvoda nema na stanju. Možete li da čekate nedjelju dana?\n— Mogu.\n\nЧто решил покупатель?",
+      "options": [
+        "Подождать.",
+        "Отменить заказ.",
+        "Заказать другой товар."
+      ],
+      "answer": "Подождать.",
+      "explanation": "čekati — ждать: čekam, čekaš, čeka. Možete li da čekate? — Можете подождать? nedjelju dana — неделю, буквально «неделю дней». dana добавляют, когда говорят, сколько длится: nedjelja — это ещё и воскресенье, а nedjelju dana — только «целую неделю». Так же mjesec dana — месяц, godinu dana — год.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k38e20",
+      "type": "choice",
+      "prompt": "Otkažite narudžbinu, molim vas.",
+      "options": [
+        "Отмените заказ, пожалуйста.",
+        "Подождите неделю, пожалуйста.",
+        "Привезите заказ, пожалуйста."
+      ],
+      "answer": "Отмените заказ, пожалуйста.",
+      "byEar": true
+    },
+    {
+      "id": "k38e21",
+      "type": "word_bank",
+      "prompt": "Отмените заказ, пожалуйста.",
+      "answer": "Otkažite narudžbinu, molim vas.",
+      "bank": [
+        "narudžbinu",
+        "vas",
+        "otkažite",
+        "molim"
+      ]
+    },
+    {
+      "id": "k38e22",
+      "type": "word_bank",
+      "prompt": "Товара нет в наличии.",
+      "answer": "Proizvoda nema na stanju.",
+      "bank": [
+        "stanju",
+        "nema",
+        "proizvoda",
+        "na"
+      ]
+    },
+    {
+      "id": "k38e23",
+      "type": "speaking",
+      "phrase": "Kurir je donio narudžbinu.",
+      "translation": "Курьер привёз заказ."
+    },
+    {
+      "id": "k38e24",
+      "type": "speaking",
+      "phrase": "Otkažite narudžbinu, molim vas.",
+      "translation": "Отмените заказ, пожалуйста."
+    },
+    {
+      "id": "k38e25",
+      "type": "repeat",
+      "phrase": "Možete li da čekate nedjelju dana?",
+      "translation": "Вы можете подождать неделю?"
+    }
+  ],
+  "words": [
+    {
+      "me": "narudžbina",
+      "ru": "заказ"
+    },
+    {
+      "me": "naručiti",
+      "ru": "заказать"
+    },
+    {
+      "me": "dostava",
+      "ru": "доставка"
+    },
+    {
+      "me": "kurir",
+      "ru": "курьер"
+    },
+    {
+      "me": "poruka",
+      "ru": "сообщение"
+    },
+    {
+      "me": "proizvod",
+      "ru": "товар"
+    },
+    {
+      "me": "plaćanje",
+      "ru": "оплата"
+    },
+    {
+      "me": "nema na stanju",
+      "ru": "нет в наличии"
+    },
+    {
+      "me": "čekati",
+      "ru": "ждать"
+    },
+    {
+      "me": "Otkažite narudžbinu!",
+      "ru": "Отмените заказ!"
+    }
+  ]
+}

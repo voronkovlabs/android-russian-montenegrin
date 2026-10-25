@@ -1,0 +1,31 @@
+{
+  "id": "kd03",
+  "title": "Poziv iz prodavnice",
+  "note": "Третья история Катиного курса: звонок из интернет-магазина о доставке компьютера. Слова урока 38 (narudžbina, kurir, plaćanje pouzećem, nema na stanju, čekati) плюс nedjelju dana и sat vremena. Реплики магазина — «чужие», покупательницы — «свои».",
+  "speaker": "Prodavnica",
+  "intro": "Звонят из интернет-магазина: заказанного компьютера нет в наличии. Nedjelju dana, sat vremena — dana и vremena говорят, что речь о том, сколько длится, а не о воскресенье или часах.",
+  "chunks": [
+    { "who": "them", "sr": "Dobar dan, zovem iz internet prodavnice.", "ru": "Добрый день, звоню из интернет-магазина." },
+    { "who": "you", "sr": "Dobar dan!", "ru": "Добрый день!" },
+    { "who": "them", "sr": "Vi ste juče naručili kompjuter?", "ru": "Вы вчера заказали компьютер?" },
+    { "who": "you", "sr": "Da, naručila sam kompjuter.", "ru": "Да, я заказала компьютер." },
+    { "who": "them", "sr": "Zovem zbog dostave.", "ru": "Звоню насчёт доставки." },
+    { "who": "them", "sr": "Nažalost, vašeg kompjutera nema na stanju.", "ru": "К сожалению, вашего компьютера нет в наличии." },
+    { "who": "them", "sr": "Možete li da čekate nedjelju dana?", "ru": "Вы можете подождать неделю?" },
+    { "who": "you", "sr": "Nedjelju dana je dugo.", "ru": "Неделя — это долго." },
+    { "who": "you", "sr": "Imate li neki sličan kompjuter?", "ru": "У вас есть какой-то похожий компьютер?" },
+    { "who": "them", "sr": "Imamo jedan sličan, ima malo bolju grafičku karticu.", "ru": "Есть один похожий, у него немного лучше видеокарта." },
+    { "who": "them", "sr": "Zato je malo skuplji.", "ru": "Поэтому он немного дороже." },
+    { "who": "you", "sr": "Koliko košta?", "ru": "Сколько он стоит?" },
+    { "who": "them", "sr": "Košta petsto evra.", "ru": "Он стоит пятьсот евро." },
+    { "who": "you", "sr": "Dobro, hoću taj.", "ru": "Хорошо, я хочу этот." },
+    { "who": "them", "sr": "Odlično!", "ru": "Отлично!" },
+    { "who": "them", "sr": "Onda kurir može da dođe za sat vremena.", "ru": "Тогда курьер может приехать через час." },
+    { "who": "you", "sr": "Za sat vremena, super!", "ru": "Через час — супер!" },
+    { "who": "them", "sr": "Plaćate pouzećem ili karticom?", "ru": "Платите при получении или картой?" },
+    { "who": "you", "sr": "Pouzećem, gotovinom.", "ru": "При получении, наличными." },
+    { "who": "them", "sr": "U redu, kurir će vas zvati.", "ru": "Хорошо, курьер вам позвонит." },
+    { "who": "you", "sr": "Hvala vam puno!", "ru": "Большое вам спасибо!" },
+    { "who": "them", "sr": "Hvala vama, prijatno!", "ru": "Вам спасибо, всего доброго!" }
+  ]
+}

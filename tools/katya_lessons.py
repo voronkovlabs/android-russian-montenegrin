@@ -2881,6 +2881,80 @@ L.append(dict(id='k37', title='Krave su bile gladne. Šta nam možete preporuči
     echo('Medvjedi su jeli jaja.', 'Медведи ели яйца.'),
 ]))
 
+# --- Урок 38 ---
+# Заказ на дом: narudžbina, naručiti, dobiti (с урока 5), kurir, proizvod, plaćanje,
+# dostava, poruka. Короткий разговор с магазином: товара нет, подождёте или отменить.
+NARUDZBA = ('narudžbina — заказ. В Черногории и Сербии говорят так, реже porudžbina и narudžba. '
+            'Склоняется как krava: Kurir je donio narudžbinu.')
+NARUCITI = ('naručiti — заказать. Прошедшее как у всех: naručio sam (он), naručila sam (она). '
+            'Naručila sam picu — я заказала пиццу.')
+PROIZVOD = 'proizvod — товар, продукт (одна вещь в заказе). Товары вообще — roba.'
+PLACANJE = ('plaćanje — оплата. Plaćanje pouzećem — оплата при получении, курьеру. Так в '
+            'Черногории платят чаще всего.')
+DONIO = ('donijeti — принести, привезти (урок 11). Прошедшее: donio (он), donijela (она). '
+         'Kurir je donio narudžbinu.')
+DOBILA = 'dobiti — получить (урок 5): dobio sam (он), dobila sam (она). Dobila sam poruku.'
+NEMA = ('nema na stanju — нет в наличии. После nema — «кого? чего?»: proizvoda, как по-русски '
+        '«нет товара».')
+CEKATI = ('čekati — ждать: čekam, čekaš, čeka. Možete li da čekate? — Можете подождать? '
+          'nedjelju dana — неделю, буквально «неделю дней». dana добавляют, когда говорят, '
+          'сколько длится: nedjelja — это ещё и воскресенье, а nedjelju dana — только «целую '
+          'неделю». Так же mjesec dana — месяц, godinu dana — год.')
+OTKAZATI = ('otkazati — отменить. Otkažite! — просьба на «вы», как Izvinite! '
+            'Otkažite narudžbinu — отмените заказ.')
+L.append(dict(id='k38', title='Narudžbina i dostava', section=S3, words=[
+    ('narudžbina', 'заказ'), ('naručiti', 'заказать'), ('dostava', 'доставка'),
+    ('kurir', 'курьер'), ('poruka', 'сообщение'), ('proizvod', 'товар'),
+    ('plaćanje', 'оплата'), ('nema na stanju', 'нет в наличии'), ('čekati', 'ждать'),
+    ('Otkažite narudžbinu!', 'Отмените заказ!')],
+    ex=[
+    dict(new('narudžbina', 'заказ', ['заказ', 'доставка', 'сообщение']), explanation=NARUDZBA),
+    dict(new('naručiti', 'заказать', ['заказать', 'получить', 'отменить'], label='Новый глагол'),
+         explanation=NARUCITI),
+    dict(phrase('Naručila sam picu.', 'Я заказала пиццу.',
+                ['Я заказала пиццу.', 'Я получила пиццу.', 'Я ем пиццу.']), explanation=NARUCITI),
+    new('dostava', 'доставка', ['доставка', 'заказ', 'оплата']),
+    new('kurir', 'курьер', ['курьер', 'продавец', 'водитель']),
+    new('poruka', 'сообщение', ['сообщение', 'письмо', 'заказ']),
+    dict(new('proizvod', 'товар', ['товар', 'магазин', 'курьер']), explanation=PROIZVOD),
+    dict(new('plaćanje', 'оплата', ['оплата', 'доставка', 'покупка']), explanation=PLACANJE),
+    pairs(('заказ', 'narudžbina'), ('доставка', 'dostava'), ('курьер', 'kurir'),
+          ('сообщение', 'poruka'), ('товар', 'proizvod'), ('оплата', 'plaćanje')),
+    dict(phrase('Kurir je donio narudžbinu.', 'Курьер привёз заказ.',
+                ['Курьер привёз заказ.', 'Курьер отменил заказ.', 'Курьер ждёт заказ.']),
+         explanation=DONIO),
+    pick('Я получила сообщение. — ___ sam poruku.', ['Dobila', 'Dobio', 'Dobili'], 'Dobila',
+         explanation=DOBILA, label='Вставь слово'),
+    bank('Я заказал пиццу.', 'Naručio sam picu.', ['picu', 'sam', 'naručio']),
+    bank('Курьер привёз заказ.', 'Kurir je donio narudžbinu.', ['narudžbinu', 'je', 'kurir', 'donio']),
+    bank('Я получила сообщение.', 'Dobila sam poruku.', ['poruku', 'sam', 'dobila']),
+    dict(phrase('Plaćanje pouzećem.', 'Оплата при получении.',
+                ['Оплата при получении.', 'Оплата картой.', 'Бесплатная доставка.']),
+         explanation=PLACANJE),
+    dict(phrase('Nažalost, proizvoda nema na stanju.', 'К сожалению, товара нет в наличии.',
+                ['К сожалению, товара нет в наличии.', 'К сожалению, курьер не приехал.',
+                 'К сожалению, магазин закрыт.']), explanation=NEMA),
+    dict(phrase('Možete li da čekate nedjelju dana?', 'Вы можете подождать неделю?',
+                ['Вы можете подождать неделю?', 'Вы можете прийти через неделю?',
+                 'Вы ждали неделю?']), explanation=CEKATI),
+    dict(phrase('Otkažite narudžbinu, molim vas.', 'Отмените заказ, пожалуйста.',
+                ['Отмените заказ, пожалуйста.', 'Привезите заказ, пожалуйста.',
+                 'Подождите, пожалуйста.']), explanation=OTKAZATI),
+    pick('— Nažalost, proizvoda nema na stanju. Možete li da čekate nedjelju dana?\n— Mogu.\n\n'
+         'Что решил покупатель?', ['Подождать.', 'Отменить заказ.', 'Заказать другой товар.'],
+         'Подождать.', explanation=CEKATI, label='Мини-диалог'),
+    ear('Otkažite narudžbinu, molim vas.',
+        ['Отмените заказ, пожалуйста.', 'Подождите неделю, пожалуйста.',
+         'Привезите заказ, пожалуйста.'], 'Отмените заказ, пожалуйста.'),
+    bank('Отмените заказ, пожалуйста.', 'Otkažite narudžbinu, molim vas.',
+         ['narudžbinu', 'vas', 'otkažite', 'molim']),
+    bank('Товара нет в наличии.', 'Proizvoda nema na stanju.',
+         ['stanju', 'nema', 'proizvoda', 'na']),
+    say('Kurir je donio narudžbinu.', 'Курьер привёз заказ.'),
+    say('Otkažite narudžbinu, molim vas.', 'Отмените заказ, пожалуйста.'),
+    echo('Možete li da čekate nedjelju dana?', 'Вы можете подождать неделю?'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
