@@ -229,6 +229,12 @@
       "title": "Srećan rođendan! Radujem se",
       "file": "k36.json",
       "section": "Раздел 3"
+    },
+    {
+      "id": "k37",
+      "title": "Krave su bile gladne. Šta nam možete preporučiti?",
+      "file": "k37.json",
+      "section": "Раздел 3"
     }
   ]
 }

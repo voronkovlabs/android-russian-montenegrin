@@ -2800,6 +2800,87 @@ L.append(dict(id='k36', title='Srećan rođendan! Radujem se', section=S3, words
           ('Христос родился!', 'Hristos se rodi!'), ('Воистину родился!', 'Vaistinu se rodi!')),
 ]))
 
+# --- Урок 37 ---
+# Повтор «они есть / они были» во всех трёх родах на новых существительных
+# medvjed, krava, jaje. Живая фраза Кати 216: «Что вы можете нам посоветовать?»
+# С этого урока 25±2 задания, не меньше трёх на произношение (Катя, 25.10.2026).
+MNOGO = ('Много: medvjed → medvjedi (мужской род, -i), krava → krave (женский, -e), '
+         'jaje → jaja (средний, -a, как pivo → piva).')
+SU = ('Сейчас: su одно на всех — medvjedi su, krave su, jaja su. Меняется прилагательное: '
+      'gladni (м. р.), gladne (ж. р.), gladna (ср. р.).')
+ONI = ('Местоимение — по роду: medvjedi → oni, krave → one, jaja → ona. '
+       'Krave su gladne → One su gladne.')
+BILI = ('Было: su + bili (м. р.), bile (ж. р.), bila (ср. р.). Medvjedi su bili, krave su '
+        'bile, jaja su bila. Прилагательное — так же, как сейчас.')
+MEDVJED = ('medvjed — медведь, много: medvjedi. В Черногории часто говорят и međed — '
+           'через đ («дж»): međed, međedi.')
+MJESTA = ('polje — поле, gnijezdo — гнездо: похожи на русские. šuma — лес. Где? — u polju, '
+          'u šumi, u gnijezdu.')
+JELI = ('jesti → jeli, piti → pili; у женского рода jele, pile. Medvjedi su jeli jaja — '
+        'медведи ели яйца.')
+PREPORUCITI = ('Šta nam možete preporučiti? — «Что вы можете нам посоветовать?» preporučiti — '
+               'посоветовать, порекомендовать; nam — «нам». Так спрашивают официанта или '
+               'продавца.')
+L.append(dict(id='k37', title='Krave su bile gladne. Šta nam možete preporučiti?', section=S3,
+              words=[('medvjed', 'медведь'), ('krava', 'корова'), ('jaje', 'яйцо'),
+                     ('polje', 'поле'), ('šuma', 'лес'), ('gnijezdo', 'гнездо'),
+                     ('Šta nam možete preporučiti?', 'Что вы можете нам посоветовать?')],
+    ex=[
+    dict(new('medvjed', 'медведь', ['медведь', 'волк', 'лиса']), explanation=MEDVJED),
+    new('krava', 'корова', ['корова', 'кошка', 'курица']),
+    new('jaje', 'яйцо', ['яйцо', 'яблоко', 'сок']),
+    dict(pairs(('медведь', 'medvjed'), ('медведи', 'medvjedi'), ('корова', 'krava'),
+               ('коровы', 'krave'), ('яйцо', 'jaje'), ('яйца', 'jaja')), explanation=MNOGO),
+    dict(phrase('Medvjedi su gladni.', 'Медведи голодные.',
+                ['Медведи голодные.', 'Медведи были голодными.', 'Медведь голодный.']),
+         explanation=SU),
+    pick('Коровы большие. — Krave su ___ .', ['velike', 'veliki', 'velika'], 'velike',
+         explanation=SU, label='Вставь слово'),
+    pick('Krave su lijepe. → ___ su lijepe.', ['One', 'Oni', 'Ona'], 'One',
+         explanation=ONI, label='Замени местоимением'),
+    pick('Jaja su mala. → ___ su mala.', ['Ona', 'One', 'Oni'], 'Ona',
+         explanation=ONI, label='Замени местоимением'),
+    bank('Медведи голодные.', 'Medvjedi su gladni.', ['gladni', 'su', 'medvjedi']),
+    bank('Коровы рыжие и большие.', 'Krave su riđe i velike.',
+         ['velike', 'su', 'krave', 'i', 'riđe']),
+    dict(pairs(('поле', 'polje'), ('лес', 'šuma'), ('гнездо', 'gnijezdo')), explanation=MJESTA),
+    dict(phrase('Medvjedi su bili u šumi.', 'Медведи были в лесу.',
+                ['Медведи были в лесу.', 'Медведи в лесу.', 'Коровы были в лесу.']),
+         explanation=BILI),
+    dict(pairs(('медведи голодные', 'medvjedi su gladni'),
+               ('медведи были голодными', 'medvjedi su bili gladni'),
+               ('коровы голодные', 'krave su gladne'),
+               ('коровы были голодными', 'krave su bile gladne'),
+               ('яйца большие', 'jaja su velika'),
+               ('яйца были большими', 'jaja su bila velika')), explanation=BILI),
+    pick('Коровы были в поле. — Krave su ___ u polju.', ['bile', 'bili', 'bila'], 'bile',
+         explanation=BILI, label='Вставь слово'),
+    pick('Яйца были в гнезде. — Jaja su ___ u gnijezdu.', ['bila', 'bile', 'bili'], 'bila',
+         explanation=BILI, label='Вставь слово'),
+    ear('Krave su bile gladne, a medvjedi su bili žedni.',
+        ['Коровы были голодными, а медведи хотели пить.',
+         'Коровы голодные, а медведи хотят пить.',
+         'Медведи были голодными, а коровы хотели пить.'],
+        'Коровы были голодными, а медведи хотели пить.'),
+    bank('Яйца были большими и белыми.', 'Jaja su bila velika i bijela.',
+         ['bijela', 'bila', 'jaja', 'i', 'su', 'velika']),
+    dict(bank('Медведи ели яйца.', 'Medvjedi su jeli jaja.', ['jaja', 'su', 'medvjedi', 'jeli']),
+         explanation=JELI),
+    pick('Коровы пили воду. — Krave su ___ vodu.', ['pile', 'pili', 'pila'], 'pile',
+         explanation=JELI, label='Вставь слово'),
+    dict(new('Šta nam možete preporučiti?', 'Что вы можете нам посоветовать?',
+             ['Что вы можете нам посоветовать?', 'Что вы будете заказывать?',
+              'Сколько это стоит?'], label='Новая фраза'), explanation=PREPORUCITI),
+    pick('— Šta nam možete preporučiti?\n— Ribu i čorbu. Jako su ukusne.\n\n'
+         'Что советует официант?', ['Рыбу и суп.', 'Котлету и картошку фри.', 'Суши и сок.'],
+         'Рыбу и суп.', label='Мини-диалог'),
+    bank('Что вы можете нам посоветовать?', 'Šta nam možete preporučiti?',
+         ['preporučiti', 'nam', 'šta', 'možete']),
+    say('Krave su bile gladne.', 'Коровы были голодными.'),
+    say('Šta nam možete preporučiti?', 'Что вы можете нам посоветовать?'),
+    echo('Medvjedi su jeli jaja.', 'Медведи ели яйца.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

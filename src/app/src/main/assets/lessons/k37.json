@@ -1,0 +1,382 @@
+{
+  "id": "k37",
+  "title": "Krave su bile gladne. Šta nam možete preporučiti?",
+  "exercises": [
+    {
+      "id": "k37e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "medvjed",
+      "hint": "medvjed — медведь",
+      "options": [
+        "медведь",
+        "волк",
+        "лиса"
+      ],
+      "answer": "медведь",
+      "explanation": "medvjed — медведь, много: medvjedi. В Черногории часто говорят и međed — через đ («дж»): međed, međedi."
+    },
+    {
+      "id": "k37e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "krava",
+      "hint": "krava — корова",
+      "options": [
+        "корова",
+        "кошка",
+        "курица"
+      ],
+      "answer": "корова"
+    },
+    {
+      "id": "k37e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "jaje",
+      "hint": "jaje — яйцо",
+      "options": [
+        "яйцо",
+        "яблоко",
+        "сок"
+      ],
+      "answer": "яйцо"
+    },
+    {
+      "id": "k37e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "медведь",
+          "me": "medvjed"
+        },
+        {
+          "ru": "медведи",
+          "me": "medvjedi"
+        },
+        {
+          "ru": "корова",
+          "me": "krava"
+        },
+        {
+          "ru": "коровы",
+          "me": "krave"
+        },
+        {
+          "ru": "яйцо",
+          "me": "jaje"
+        },
+        {
+          "ru": "яйца",
+          "me": "jaja"
+        }
+      ],
+      "explanation": "Много: medvjed → medvjedi (мужской род, -i), krava → krave (женский, -e), jaje → jaja (средний, -a, как pivo → piva)."
+    },
+    {
+      "id": "k37e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Medvjedi su gladni.",
+      "hint": "Medvjedi su gladni. — Медведи голодные.",
+      "options": [
+        "Медведи голодные.",
+        "Медведи были голодными.",
+        "Медведь голодный."
+      ],
+      "answer": "Медведи голодные.",
+      "explanation": "Сейчас: su одно на всех — medvjedi su, krave su, jaja su. Меняется прилагательное: gladni (м. р.), gladne (ж. р.), gladna (ср. р.)."
+    },
+    {
+      "id": "k37e06",
+      "type": "choice",
+      "prompt": "Коровы большие. — Krave su ___ .",
+      "options": [
+        "velike",
+        "veliki",
+        "velika"
+      ],
+      "answer": "velike",
+      "explanation": "Сейчас: su одно на всех — medvjedi su, krave su, jaja su. Меняется прилагательное: gladni (м. р.), gladne (ж. р.), gladna (ср. р.).",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k37e07",
+      "type": "choice",
+      "prompt": "Krave su lijepe. → ___ su lijepe.",
+      "options": [
+        "One",
+        "Oni",
+        "Ona"
+      ],
+      "answer": "One",
+      "explanation": "Местоимение — по роду: medvjedi → oni, krave → one, jaja → ona. Krave su gladne → One su gladne.",
+      "label": "Замени местоимением"
+    },
+    {
+      "id": "k37e08",
+      "type": "choice",
+      "prompt": "Jaja su mala. → ___ su mala.",
+      "options": [
+        "Ona",
+        "One",
+        "Oni"
+      ],
+      "answer": "Ona",
+      "explanation": "Местоимение — по роду: medvjedi → oni, krave → one, jaja → ona. Krave su gladne → One su gladne.",
+      "label": "Замени местоимением"
+    },
+    {
+      "id": "k37e09",
+      "type": "word_bank",
+      "prompt": "Медведи голодные.",
+      "answer": "Medvjedi su gladni.",
+      "bank": [
+        "gladni",
+        "su",
+        "medvjedi"
+      ]
+    },
+    {
+      "id": "k37e10",
+      "type": "word_bank",
+      "prompt": "Коровы рыжие и большие.",
+      "answer": "Krave su riđe i velike.",
+      "bank": [
+        "velike",
+        "su",
+        "krave",
+        "i",
+        "riđe"
+      ]
+    },
+    {
+      "id": "k37e11",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "поле",
+          "me": "polje"
+        },
+        {
+          "ru": "лес",
+          "me": "šuma"
+        },
+        {
+          "ru": "гнездо",
+          "me": "gnijezdo"
+        }
+      ],
+      "explanation": "polje — поле, gnijezdo — гнездо: похожи на русские. šuma — лес. Где? — u polju, u šumi, u gnijezdu."
+    },
+    {
+      "id": "k37e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Medvjedi su bili u šumi.",
+      "hint": "Medvjedi su bili u šumi. — Медведи были в лесу.",
+      "options": [
+        "Медведи были в лесу.",
+        "Медведи в лесу.",
+        "Коровы были в лесу."
+      ],
+      "answer": "Медведи были в лесу.",
+      "explanation": "Было: su + bili (м. р.), bile (ж. р.), bila (ср. р.). Medvjedi su bili, krave su bile, jaja su bila. Прилагательное — так же, как сейчас."
+    },
+    {
+      "id": "k37e13",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "медведи голодные",
+          "me": "medvjedi su gladni"
+        },
+        {
+          "ru": "медведи были голодными",
+          "me": "medvjedi su bili gladni"
+        },
+        {
+          "ru": "коровы голодные",
+          "me": "krave su gladne"
+        },
+        {
+          "ru": "коровы были голодными",
+          "me": "krave su bile gladne"
+        },
+        {
+          "ru": "яйца большие",
+          "me": "jaja su velika"
+        },
+        {
+          "ru": "яйца были большими",
+          "me": "jaja su bila velika"
+        }
+      ],
+      "explanation": "Было: su + bili (м. р.), bile (ж. р.), bila (ср. р.). Medvjedi su bili, krave su bile, jaja su bila. Прилагательное — так же, как сейчас."
+    },
+    {
+      "id": "k37e14",
+      "type": "choice",
+      "prompt": "Коровы были в поле. — Krave su ___ u polju.",
+      "options": [
+        "bile",
+        "bili",
+        "bila"
+      ],
+      "answer": "bile",
+      "explanation": "Было: su + bili (м. р.), bile (ж. р.), bila (ср. р.). Medvjedi su bili, krave su bile, jaja su bila. Прилагательное — так же, как сейчас.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k37e15",
+      "type": "choice",
+      "prompt": "Яйца были в гнезде. — Jaja su ___ u gnijezdu.",
+      "options": [
+        "bila",
+        "bile",
+        "bili"
+      ],
+      "answer": "bila",
+      "explanation": "Было: su + bili (м. р.), bile (ж. р.), bila (ср. р.). Medvjedi su bili, krave su bile, jaja su bila. Прилагательное — так же, как сейчас.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k37e16",
+      "type": "choice",
+      "prompt": "Krave su bile gladne, a medvjedi su bili žedni.",
+      "options": [
+        "Коровы были голодными, а медведи хотели пить.",
+        "Коровы голодные, а медведи хотят пить.",
+        "Медведи были голодными, а коровы хотели пить."
+      ],
+      "answer": "Коровы были голодными, а медведи хотели пить.",
+      "byEar": true
+    },
+    {
+      "id": "k37e17",
+      "type": "word_bank",
+      "prompt": "Яйца были большими и белыми.",
+      "answer": "Jaja su bila velika i bijela.",
+      "bank": [
+        "bijela",
+        "bila",
+        "jaja",
+        "i",
+        "su",
+        "velika"
+      ]
+    },
+    {
+      "id": "k37e18",
+      "type": "word_bank",
+      "prompt": "Медведи ели яйца.",
+      "answer": "Medvjedi su jeli jaja.",
+      "bank": [
+        "jaja",
+        "su",
+        "medvjedi",
+        "jeli"
+      ],
+      "explanation": "jesti → jeli, piti → pili; у женского рода jele, pile. Medvjedi su jeli jaja — медведи ели яйца."
+    },
+    {
+      "id": "k37e19",
+      "type": "choice",
+      "prompt": "Коровы пили воду. — Krave su ___ vodu.",
+      "options": [
+        "pile",
+        "pili",
+        "pila"
+      ],
+      "answer": "pile",
+      "explanation": "jesti → jeli, piti → pili; у женского рода jele, pile. Medvjedi su jeli jaja — медведи ели яйца.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k37e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šta nam možete preporučiti?",
+      "hint": "Šta nam možete preporučiti? — Что вы можете нам посоветовать?",
+      "options": [
+        "Что вы можете нам посоветовать?",
+        "Что вы будете заказывать?",
+        "Сколько это стоит?"
+      ],
+      "answer": "Что вы можете нам посоветовать?",
+      "explanation": "Šta nam možete preporučiti? — «Что вы можете нам посоветовать?» preporučiti — посоветовать, порекомендовать; nam — «нам». Так спрашивают официанта или продавца."
+    },
+    {
+      "id": "k37e21",
+      "type": "choice",
+      "prompt": "— Šta nam možete preporučiti?\n— Ribu i čorbu. Jako su ukusne.\n\nЧто советует официант?",
+      "options": [
+        "Рыбу и суп.",
+        "Котлету и картошку фри.",
+        "Суши и сок."
+      ],
+      "answer": "Рыбу и суп.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k37e22",
+      "type": "word_bank",
+      "prompt": "Что вы можете нам посоветовать?",
+      "answer": "Šta nam možete preporučiti?",
+      "bank": [
+        "preporučiti",
+        "nam",
+        "šta",
+        "možete"
+      ]
+    },
+    {
+      "id": "k37e23",
+      "type": "speaking",
+      "phrase": "Krave su bile gladne.",
+      "translation": "Коровы были голодными."
+    },
+    {
+      "id": "k37e24",
+      "type": "speaking",
+      "phrase": "Šta nam možete preporučiti?",
+      "translation": "Что вы можете нам посоветовать?"
+    },
+    {
+      "id": "k37e25",
+      "type": "repeat",
+      "phrase": "Medvjedi su jeli jaja.",
+      "translation": "Медведи ели яйца."
+    }
+  ],
+  "words": [
+    {
+      "me": "medvjed",
+      "ru": "медведь"
+    },
+    {
+      "me": "krava",
+      "ru": "корова"
+    },
+    {
+      "me": "jaje",
+      "ru": "яйцо"
+    },
+    {
+      "me": "polje",
+      "ru": "поле"
+    },
+    {
+      "me": "šuma",
+      "ru": "лес"
+    },
+    {
+      "me": "gnijezdo",
+      "ru": "гнездо"
+    },
+    {
+      "me": "Šta nam možete preporučiti?",
+      "ru": "Что вы можете нам посоветовать?"
+    }
+  ]
+}
