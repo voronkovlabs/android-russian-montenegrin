@@ -309,7 +309,13 @@ sealed class Exercise {
         val prompt: String,
         val answer: String,
         val bank: List<String>,
-        val explanation: String = ""
+        val explanation: String = "",
+        /**
+         * Другие верные сборки из тех же плашек (заметка 307): «Zovem se
+         * Tortuga» без «ja» — тоже правильно, и «неверно» за неё учило бы
+         * неправде.
+         */
+        val also: List<String> = emptyList()
     ) : Exercise()
 
     /** Подстановка формы слова: падеж, спряжение. Одно-два слова, строгая проверка. */
