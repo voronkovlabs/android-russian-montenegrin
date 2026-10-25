@@ -275,6 +275,7 @@ class MainActivity : ComponentActivity() {
                                 onKnown = vm::markKnown,
                                 onMatch = vm::submitMatch,
                                 onParadigm = vm::submitParadigm,
+                                onPeek = vm::peekCurrent,
                                 onRate = vm::rateCurrent,
                                 onNext = vm::next,
                                 onRetryBlock = vm::retryAfterBlock,
