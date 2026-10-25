@@ -40,6 +40,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withTimeoutOrNull
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -100,8 +104,13 @@ fun HomeScreen(
     LaunchedEffect(state.tab, next) {
         if (next == null) return@LaunchedEffect
         list.scrollToItem(next)
-        val row = list.layoutInfo.visibleItemsInfo.firstOrNull { it.index == next }
-            ?: return@LaunchedEffect
+        // При первом показе список ещё не разложен: ждём, пока строка
+        // появится на экране, иначе центровать не по чему.
+        val row = withTimeoutOrNull(1000) {
+            snapshotFlow { list.layoutInfo.visibleItemsInfo.firstOrNull { it.index == next } }
+                .filterNotNull()
+                .first()
+        } ?: return@LaunchedEffect
         val view = list.layoutInfo.viewportEndOffset - list.layoutInfo.viewportStartOffset
         list.scrollBy(row.offset + row.size / 2f - view / 2f)
     }

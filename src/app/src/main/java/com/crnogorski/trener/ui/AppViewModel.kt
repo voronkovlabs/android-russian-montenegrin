@@ -333,7 +333,7 @@ data class HomeState(
     val stats: StatsBrief = StatsBrief(),
     /** Свежий релиз, если он есть: строка появляется только тогда. */
     val update: Release? = null,
-    val tab: HomeTab = HomeTab.Today,
+    val tab: HomeTab = HomeTab.Lessons,
     /** Заголовки развёрнутых разделов. По умолчанию свёрнуты все. */
     val expandedGroups: Set<String> = emptySet(),
     val loading: Boolean = true,
@@ -900,8 +900,17 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * HomeState пересобирается целиком после каждого урока, и то, что человек
      * открыл руками, схлопывалось бы у него на глазах при каждом возвращении.
      */
-    private var tab: HomeTab = HomeTab.Today
+    // Приложение открывается на «Уроках» (Катя, 14.10.2026): курс с нуля, и
+    // следующий урок — главное, что ученику нужно увидеть.
+    private var tab: HomeTab = HomeTab.Lessons
     private var expanded: Set<String> = emptySet()
+
+    /**
+     * Раздел, который раскрыли сами, потому что в нём следующий урок. Помним,
+     * чтобы раскрывать его один раз: свернул руками — остаётся свёрнутым, пока
+     * следующий урок не переедет в другой раздел.
+     */
+    private var autoOpened: String? = null
 
     private val _session = MutableStateFlow<SessionState?>(null)
     val session: StateFlow<SessionState?> = _session.asStateFlow()
@@ -1057,6 +1066,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                         }
                     }
                 }
+                // Текущий раздел — тот, где есть непройденный и незапертый урок
+                // или тест, — раскрывается сам (Катя, 14.10.2026).
+                groups.firstOrNull { g -> g.cards.any { !it.done && it.gate == null } }
+                    ?.title?.takeIf { it.isNotBlank() && it != autoOpened }
+                    ?.let { title ->
+                        autoOpened = title
+                        expanded = expanded + title
+                    }
                 val storyDone = Trace.span("база: прогресс историй") { dao.storyProgress() }
                     .associateBy { it.storyId to it.mode }
                 val storyRefs = repo.stories().stories
