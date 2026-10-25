@@ -422,6 +422,8 @@ data class StoryGroup(
 data class StoryState(
     val id: String,
     val title: String,
+    /** Вводная истории по-русски — см. Story.intro. */
+    val intro: String = "",
     val chunks: List<StoryChunk>,
     val mode: StoryMode = StoryMode.Read,
     val index: Int = 0,
@@ -3166,6 +3168,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 title = story.title,
                 chunks = story.chunks,
                 speaker = story.speaker,
+                intro = story.intro,
                 mode = mode,
                 // Режим носителя — только для чтения вслух: на слух и в
                 // переводе записывать нечего, там говорит приложение или
