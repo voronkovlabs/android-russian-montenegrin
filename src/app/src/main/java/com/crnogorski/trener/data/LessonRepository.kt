@@ -235,9 +235,15 @@ object LocalCheck {
      *
      * Сравниваются разобранные слова, а не строки: по пути числительные и
      * единицы измерения приводятся к одному виду — см. [words].
+     *
+     * Пробелы при этом не в счёт (заметка 290): движок склеивает «Dobro
+     * došli» в «dobrodošli» и разлепляет обратно как придётся, а звуки те же.
      */
-    fun matchesSpoken(heard: String, expected: String): Boolean =
-        words(heard) == words(expected)
+    fun matchesSpoken(heard: String, expected: String): Boolean {
+        val h = words(heard)
+        val e = words(expected)
+        return h == e || h.joinToString("") == e.joinToString("")
+    }
 
     /**
      * Сказанное — с двойной скидкой на слух.

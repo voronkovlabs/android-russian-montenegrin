@@ -50,6 +50,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -161,6 +162,13 @@ fun SessionScreen(
     Column(Modifier.fillMaxSize().imePadding()) {
         SessionHeader(state, onNote, onIdea, onExit)
 
+        val phase = state.phase
+        // Всё ниже шапки заводится заново на каждом показе — по номеру в
+        // очереди, а не по заданию (заметка 289). Повтор ошибки — то же самое
+        // задание, и с ключом по нему экран пар оставался со сложенными,
+        // погашенными плашками: нажать нечего, урок не закончить. Заодно
+        // прокрутка каждого задания начинается сверху.
+        key(state.index) {
         Column(
             Modifier
                 .weight(1f)
@@ -195,7 +203,6 @@ fun SessionScreen(
             // фраза рассыпалась обратно в кучу, набранный текст исчезал, а
             // сложенные пары показывались несложенными. Теперь место одно, и
             // ответ остаётся на экране рядом с вердиктом.
-            val phase = state.phase
             val live = phase is Phase.Input || phase is Phase.Retry
             ExerciseBody(
                 state, speaker,
@@ -254,12 +261,12 @@ fun SessionScreen(
                 is Phase.Result -> {
                     Spacer(Modifier.height(20.dp))
                     ResultView(phase, state.current, speaker, state.glossary.me)
-                    AnswerTail(state, onNext, onComplain)
+                    AnswerTail(state, onComplain)
                 }
                 is Phase.Skipped -> {
                     Spacer(Modifier.height(20.dp))
                     SkippedView(phase)
-                    AnswerTail(state, onNext, onComplain)
+                    AnswerTail(state, onComplain)
                 }
                 // Задание остаётся живым: кнопка записи работает, эталон не
                 // показан. Вердикта ещё нет, поэтому нет и хвоста с жалобой —
@@ -272,6 +279,22 @@ fun SessionScreen(
             }
 
             Spacer(Modifier.height(40.dp))
+        }
+        }
+
+        // «Дальше» прибита к низу экрана (заметка 288): на длинном задании —
+        // пары из пяти фраз, разбор ошибки — она уезжала за край, и её
+        // приходилось искать прокруткой.
+        if (phase is Phase.Result || phase is Phase.Skipped) {
+            Button(
+                onClick = onNext,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp, vertical = 12.dp)
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Accent, contentColor = Ink)
+            ) { Text("Дальше", style = MaterialTheme.typography.titleMedium) }
         }
     }
 }
@@ -448,8 +471,10 @@ private fun ExerciseBody(
             if (state.strict) ex.copy(hint = "") else ex, speaker, enabled, onSubmit, onPeek
         )
 
-        is Exercise.WordBank ->
-            WordBankAnswer(ex, state.glossary.ru, sayHint, speaker, enabled, onSubmit)
+        is Exercise.WordBank -> {
+            val extra = remember(state.index) { decoys(state, ex) }
+            WordBankAnswer(ex, extra, state.glossary.ru, sayHint, speaker, enabled, onSubmit)
+        }
 
         is Exercise.Listening -> ListeningAnswer(ex, speaker, enabled, onSubmit)
 
@@ -756,6 +781,10 @@ private fun ChoiceAnswer(
 ) {
     var peeked by remember(ex.id) { mutableStateOf(false) }
     var revealed by remember(ex.id) { mutableStateOf(false) }
+    // Варианты тасуются (заметки 285, 287): в Катиных уроках верный стоит
+    // первым, и ответить можно было, не читая. Тасуются один раз на показ —
+    // иначе прыгали бы под пальцем при перерисовке.
+    val options = remember(ex.id) { ex.options.shuffled() }
     // На слух текст закрыт, пока его не открыли кнопкой; после ответа он
     // открывается сам — иначе не с чем сверить услышанное.
     val showText = !ex.byEar || revealed || !enabled
@@ -812,7 +841,7 @@ private fun ChoiceAnswer(
     Spacer(Modifier.height(20.dp))
 
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        ex.options.forEach { option ->
+        options.forEach { option ->
             Box(
                 Modifier
                     .fillMaxWidth()
@@ -856,6 +885,46 @@ private fun spokenAfterChoice(prompt: String, option: String): String? {
         return option
     }
     return if (hasCyrillic(prompt)) null else prompt
+}
+
+/**
+ * Три-четыре лишних слова в «собери фразу» (Катя, 14.10.2026; заметки 281,
+ * 284): без них фраза собиралась из того, что дали, — все плашки в дело, и
+ * думать было не о чем.
+ *
+ * Берутся из этого же занятия — плашки других «собери фразу» и черногорские
+ * слова из условий и вариантов, — то есть знакомые: незнакомое слово
+ * отсеивается глазом и ничего не проверяет. Слова, которые уже есть среди
+ * нужных, не берутся. Слова с заглавной из середины фразы — имена — тоже.
+ */
+private fun decoys(state: SessionState, ex: Exercise.WordBank): List<String> {
+    val own = ex.bank.mapTo(mutableSetOf()) { it.lowercase() }
+    val pool = linkedSetOf<String>()
+    fun take(word: String) {
+        val w = word.trim { !it.isLetter() }
+        if (w.isEmpty() || hasCyrillic(w) || w.lowercase() in own) return
+        pool += w
+    }
+    fun takeText(text: String) {
+        if (hasCyrillic(text)) return
+        text.split(' ', '\n').forEachIndexed { i, word ->
+            val w = word.trim { !it.isLetter() }
+            if (w.isEmpty()) return@forEachIndexed
+            if (w.first().isUpperCase() && i > 0) return@forEachIndexed
+            take(w.lowercase())
+        }
+    }
+    state.items.forEach { item ->
+        when (val other = item.exercise) {
+            ex -> Unit
+            is Exercise.WordBank -> other.bank.forEach(::take)
+            is Exercise.Choice -> (other.options + other.prompt).forEach(::takeText)
+            is Exercise.Speaking -> takeText(other.phrase)
+            is Exercise.Repeat -> takeText(other.phrase)
+            else -> Unit
+        }
+    }
+    return pool.shuffled().take((3..4).random())
 }
 
 /** Есть ли в строке кириллица — то есть русский ли это текст. */
@@ -1044,6 +1113,8 @@ private const val FLASH_MS = 700L
 @Composable
 private fun WordBankAnswer(
     ex: Exercise.WordBank,
+    /** Лишние плашки сверх нужных — см. [decoys]. */
+    extra: List<String>,
     gloss: Map<String, String>,
     /** Условие русское: по нажатию звучит слово из подсказки. */
     onWord: (String) -> Unit,
@@ -1057,7 +1128,7 @@ private fun WordBankAnswer(
     // задание — иначе плашки прыгали бы под пальцем при каждой перерисовке, —
     // но при каждом новом появлении заново: порядок, выученный на повторении,
     // такое же решение по памяти.
-    val bank = remember(ex.id) { ex.bank.shuffled() }
+    val bank = remember(ex.id) { (ex.bank + extra).shuffled() }
     val remaining = remember(picked, bank) {
         val counts = picked.groupingBy { it }.eachCount().toMutableMap()
         bank.filter { word ->
@@ -2370,17 +2441,10 @@ private fun ReadingAnswer(
 @Composable
 private fun AnswerTail(
     state: SessionState,
-    onNext: () -> Unit,
     onComplain: (ComplaintReason, String) -> Unit
 ) {
-    Spacer(Modifier.height(20.dp))
-    Button(
-        onClick = onNext,
-        modifier = Modifier.fillMaxWidth().height(52.dp),
-        shape = RoundedCornerShape(12.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Accent, contentColor = Ink)
-    ) { Text("Дальше", style = MaterialTheme.typography.titleMedium) }
-    Spacer(Modifier.height(4.dp))
+    // Сама «Дальше» — внизу экрана, вне прокрутки (см. SessionScreen).
+    Spacer(Modifier.height(12.dp))
     ComplaintBlock(
         exerciseId = state.current.id,
         filed = state.complaintFiled,
