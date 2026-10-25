@@ -30,6 +30,9 @@ import java.util.concurrent.TimeUnit
  */
 private const val NEWS_MARK = "<!--news-->"
 
+/** Метка релизов Катиной сборки; двойник `TAG_PREFIX` в `tools/release.py`. */
+private const val TAG_PREFIX = "katya-v"
+
 data class Release(
     val version: String,
     val assetId: Long,
@@ -91,7 +94,7 @@ class Updater(private val context: Context) {
         }
         runCatching {
             val request = Request.Builder()
-                .url("https://api.github.com/repos/${BuildConfig.GITHUB_REPO}/releases/latest")
+                .url("https://api.github.com/repos/${BuildConfig.GITHUB_REPO}/releases?per_page=30")
                 .addHeader("Authorization", "Bearer ${BuildConfig.GITHUB_TOKEN}")
                 .addHeader("Accept", "application/vnd.github+json")
                 .addHeader("X-GitHub-Api-Version", "2022-11-28")
@@ -101,8 +104,15 @@ class Updater(private val context: Context) {
                 if (!response.isSuccessful) {
                     error("GitHub ${response.code}: ${message(text)}")
                 }
-                val json = JSONObject(text)
-                val version = json.optString("tag_name").removePrefix("v")
+                // Катина сборка ищет свои релизы среди всех: они выходят как
+                // pre-release с меткой `katya-v…`, а `releases/latest` отдаёт
+                // только основные. Основное приложение, наоборот, Катиных
+                // не видит — ради этого они и pre-release.
+                val list = org.json.JSONArray(text)
+                val json = (0 until list.length()).map { list.getJSONObject(it) }
+                    .firstOrNull { it.optString("tag_name").startsWith(TAG_PREFIX) }
+                    ?: error("релизов Катиной сборки ещё нет")
+                val version = json.optString("tag_name").removePrefix(TAG_PREFIX)
                 val assets = json.optJSONArray("assets")
                     ?: error("в релизе нет вложений")
                 var apk: JSONObject? = null

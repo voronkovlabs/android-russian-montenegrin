@@ -249,7 +249,7 @@ class VoiceRecorder(private val context: Context) {
     }
 
     companion object {
-        private const val ROOT = "Crnogorski/zapisi"
+        private const val ROOT = "Crnogorski-Katya/zapisi"
         private const val MANIFEST = "zapis.json"
 
         /**
@@ -392,7 +392,7 @@ class VoiceRecorder(private val context: Context) {
             DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmm")
 
         /** Путь для строки в настройках: человеку надо знать, где искать. */
-        const val HUMAN_PATH = "Документы/Crnogorski/zapisi"
+        const val HUMAN_PATH = "Документы/Crnogorski-Katya/zapisi"
 
         private const val PREFS = "crnogorski"
         private const val KEY_ON = "native_mode"

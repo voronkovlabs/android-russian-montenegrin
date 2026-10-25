@@ -91,7 +91,7 @@ class GithubIssues(
      * той же причине, что и у идей.
      */
     suspend fun diagnostics(title: String, body: String, person: String? = null): Result<Int> =
-        post(title, body, listOf("диагностика") + person(person))
+        post(title, body, listOf(EXPERIMENT) + person(person))
 
     /**
      * Журнал прохождений — своя метка, отдельно от диагностики.
@@ -100,7 +100,7 @@ class GithubIssues(
      * диагностику — когда приложение подвисает, журнал — перед выпуском.
      */
     suspend fun journal(title: String, body: String, person: String? = null): Result<Int> =
-        post(title, body, listOf("журнал") + person(person))
+        post(title, body, listOf(EXPERIMENT) + person(person))
 
     /**
      * Метка с именем человека, если мы знаем, чей это телефон.
@@ -397,8 +397,19 @@ class GithubIssues(
             IDEA_REASON -> listOf("идея")
             PHRASE_REASON -> listOf("идея", "живая фраза")
             MY_PHRASE_REASON -> listOf("идея", "мои фразы")
-            else -> listOf("жалоба", reasonTag(c.reason))
-        }
+            else -> listOf(reasonTag(c.reason))
+        } + EXPERIMENT
+
+    /**
+     * Метка Катиной экспериментальной сборки — на **каждой** её issue.
+     *
+     * Репозиторий у двух сборок общий, а разбор в `main` идёт по меткам:
+     * `/address-complaints` берёт «жалоба», `/address-diag` — «диагностика»,
+     * сверка журнала в `release.py` — «журнал». Поэтому этих трёх меток здесь
+     * нет вовсе, а вместо них одна своя: Катины записи не должны уезжать в
+     * чужой разбор. Идеи оставляют ещё и «идея» — так идеи и собираются.
+     */
+    private val EXPERIMENT = "катя-эксперимент"
 
     private fun reasonTag(code: String): String = when (code) {
         "reference_wrong" -> "эталон неверен"
