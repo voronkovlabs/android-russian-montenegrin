@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit
 private const val NEWS_MARK = "<!--news-->"
 
 /** Метка релизов Катиной сборки; двойник `TAG_PREFIX` в `tools/release.py`. */
-private const val TAG_PREFIX = "katya-v"
+private const val TAG_PREFIX = "osnova-v"
 
 data class Release(
     val version: String,
@@ -105,7 +105,7 @@ class Updater(private val context: Context) {
                     error("GitHub ${response.code}: ${message(text)}")
                 }
                 // Катина сборка ищет свои релизы среди всех: они выходят как
-                // pre-release с меткой `katya-v…`, а `releases/latest` отдаёт
+                // pre-release с меткой `osnova-v…`, а `releases/latest` отдаёт
                 // только основные. Основное приложение, наоборот, Катиных
                 // не видит — ради этого они и pre-release.
                 val list = org.json.JSONArray(text)

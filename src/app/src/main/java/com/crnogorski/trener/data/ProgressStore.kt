@@ -355,7 +355,7 @@ class ProgressStore(private val context: Context, private val dao: AppDao) {
     }
 
     companion object {
-        const val FILE_NAME = "crnogorski-katya-progress.json"
+        const val FILE_NAME = "crnogorski-osnova-progress.json"
         private const val PREFS = "crnogorski"
         private const val KEY_FOLDER = "progress_folder"
         private const val KEY_LAST = "progress_last_save"

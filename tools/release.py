@@ -29,10 +29,10 @@ REPO = 'voronkovlabs/android-russian-montenegrin'
 APK = 'src/app/build/outputs/apk/debug/app-debug.apk'
 GRADLE = 'src/app/build.gradle.kts'
 
-# Катина экспериментальная сборка (ветка katya). Её релизы — pre-release с
+# Сборка-основа без контента (ветка osnova). Её релизы — pre-release с
 # этой меткой: `releases/latest` их не отдаёт, и основное приложение их не
 # видит. Двойник `TAG_PREFIX` в net/Updater.kt.
-TAG_PREFIX = 'katya-v'
+TAG_PREFIX = 'osnova-v'
 
 # Сколько релизов оставлять: нынешний и два предыдущих.
 KEEP = 3
@@ -63,9 +63,9 @@ def publish(tag, title, notes, apk):
         print('релиз', tag, 'уже есть — обновляю вложение')
         r = run('release', 'upload', tag, apk, '--clobber', '--repo', REPO)
     else:
-        # --target katya: без него метка встаёт на последний коммит main, и у
-        # всех Катиных релизов оказывалась одна дата — порядок по дате врал.
-        r = run('release', 'create', tag, apk, '--prerelease', '--target', 'katya',
+        # --target osnova: без него метка встаёт на последний коммит main, и у
+        # всех релизов основы оказывалась одна дата — порядок по дате врал.
+        r = run('release', 'create', tag, apk, '--prerelease', '--target', 'osnova',
                 '--repo', REPO, '--title', title, '--notes', notes)
     if r.returncode != 0:
         sys.exit((r.stderr or r.stdout).strip())
@@ -80,7 +80,7 @@ def prune(keep):
     сортируются как текст неправильно, и прополка выкосила бы свежее.
 
     **Трогаем только свои релизы** — с меткой `v<число>…`. С 30.09.2026 в тех
-    же релизах живёт Катина экспериментальная сборка (`katya-v0.1`, отдельное
+    же релизах живёт Катина сборка (`katya-v…`) и основа (`osnova-v…`, отдельные
     приложение), и прополка, считавшая всё подряд, в первый же раз удалила
     вместо одного нашего релиза два, а через пару выпусков удалила бы и её.
     Чужое здесь не наше дело: ни считать его, ни удалять.
@@ -225,7 +225,7 @@ def main():
 
     # Имя вложения с версией: «app-debug.apk» в папке загрузок телефона не
     # говорит ничего, а по «crnogorski-1.59.apk» сразу видно, что ставишь.
-    tmp = os.path.join(tempfile.gettempdir(), 'crnogorski-katya-%s.apk' % name)
+    tmp = os.path.join(tempfile.gettempdir(), 'crnogorski-osnova-%s.apk' % name)
     shutil.copyfile(APK, tmp)
 
     # Раньше здесь по умолчанию бралась строка последнего коммита — и это
@@ -242,7 +242,7 @@ def main():
     # Сверка журнала прохождений — до выпуска, пока метка прошлого релиза
     # ещё последняя. Печатает подсказку и ничего не запрещает.
     # Сверки журнала в Катиной сборке нет: её журнал уезжает под меткой
-    # «катя-эксперимент», а не «журнал», и сверять тут не с чем.
+    # «основа-эксперимент», а не «журнал», и сверять тут не с чем.
 
     url = publish(tag, name, notes, tmp)
     os.remove(tmp)

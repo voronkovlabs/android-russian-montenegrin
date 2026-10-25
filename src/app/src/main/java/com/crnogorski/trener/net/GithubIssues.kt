@@ -409,7 +409,7 @@ class GithubIssues(
      * нет вовсе, а вместо них одна своя: Катины записи не должны уезжать в
      * чужой разбор. Идеи оставляют ещё и «идея» — так идеи и собираются.
      */
-    private val EXPERIMENT = "катя-эксперимент"
+    private val EXPERIMENT = "основа-эксперимент"
 
     private fun reasonTag(code: String): String = when (code) {
         "reference_wrong" -> "эталон неверен"

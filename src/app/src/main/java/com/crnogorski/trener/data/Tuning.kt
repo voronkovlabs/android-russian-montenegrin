@@ -526,6 +526,6 @@ object Config {
      * Ветка обязана лежать на GitHub, иначе файл не найдётся и останутся
      * последние скачанные настройки.
      */
-    private const val BRANCH = "katya"
+    private const val BRANCH = "osnova"
     private const val LOCAL_NAME = "tuning.json"
 }

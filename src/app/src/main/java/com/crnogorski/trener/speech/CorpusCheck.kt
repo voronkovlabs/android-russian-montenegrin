@@ -810,8 +810,8 @@ class CorpusCheck(
         private const val WAV_HEADER = 44L
         const val AUDIO_PATH = "Android/data/…/files/korpus-audio"
 
-        private const val ROOT = "Crnogorski-Katya"
-        const val HUMAN_PATH = "Документы/Crnogorski-Katya"
+        private const val ROOT = "Crnogorski-Osnova"
+        const val HUMAN_PATH = "Документы/Crnogorski-Osnova"
 
         private val STAMP: DateTimeFormatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmm")
