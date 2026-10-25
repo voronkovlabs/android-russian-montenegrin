@@ -797,8 +797,39 @@ private fun ChoiceAnswer(
     // у заданий теста, а там озвучка подсказывала бы ответ.
     val fresh = sayPrompt && ex.hint.isNotBlank() && ex.label.startsWith("Нов")
 
-    if (ex.byEar || fresh) {
-        LaunchedEffect(ex.id) { if (enabled) speaker.speak(ex.prompt) }
+    // Тихое ухо (заметки 303, 304, 306, 309): после того как фраза прозвучала,
+    // микрофон слушает сам, и правильно повторённые слова зеленеют. Больше
+    // ничего — ни зачёта, ни ошибки. В мини-диалоге фраза не звучит, а слушать
+    // начинаем сразу: её читают вслух сами.
+    val context = LocalContext.current
+    val ear = remember(ex.id) { QuietEar(Listener(context)) { micAllowed(context) } }
+    DisposableEffect(ear) { onDispose { ear.stop() } }
+    val dialog = !sayPrompt && ex.prompt.contains('\n') && montenegrinPart(ex.prompt).isNotBlank()
+    val listens = enabled && (fresh || ex.byEar || dialog)
+    val green = remember(ex.id, ear.heard) {
+        if (ear.heard.isBlank()) emptySet() else LocalCheck.matchedWords(ear.heard, ex.prompt)
+    }
+    fun listen() {
+        if (!listens) return
+        ear.listen { heard ->
+            // «На слух»: повторил верно — текст открывается сам (заметка 309).
+            if (ex.byEar && LocalCheck.spokenScore(heard, ex.prompt).passed) {
+                revealed = true
+                ear.cancel()
+            }
+        }
+    }
+    fun say(slow: Boolean = false) {
+        ear.cancel()
+        speaker.speak(ex.prompt, slow = slow, onDone = { listen() })
+    }
+
+    LaunchedEffect(ex.id) {
+        if (!enabled) return@LaunchedEffect
+        when {
+            ex.byEar || fresh -> say()
+            dialog -> listen()
+        }
     }
 
     Label(ex.label.ifBlank { if (ex.byEar) "Выбери, что прозвучало" else "Выбери вариант" })
@@ -811,7 +842,7 @@ private fun ChoiceAnswer(
         // Условие с подсказкой подчёркнуто целиком и нажимается целиком: это
         // одно новое слово или одна готовая фраза, делить её на слова незачем.
         ex.hint.isNotBlank() -> Text(
-            stressedPhrase(ex.prompt),
+            withGreen(stressedPhrase(ex.prompt), green, Jade),
             style = MaterialTheme.typography.headlineSmall.copy(
                 textDecoration = TextDecoration.Underline
             ),
@@ -821,10 +852,10 @@ private fun ChoiceAnswer(
                     peeked = true
                     if (enabled) onPeek()
                 }
-                if (sayPrompt) speaker.speak(ex.prompt)
+                if (sayPrompt) say()
             }
         )
-        else -> Prompt(ex.prompt)
+        else -> Prompt(ex.prompt, green = green)
     }
     if (showText && ex.hint.isNotBlank() && (peeked || !enabled)) {
         Spacer(Modifier.height(8.dp))
@@ -833,8 +864,8 @@ private fun ChoiceAnswer(
     if (ex.byEar || fresh) {
         Spacer(Modifier.height(12.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            SmallAction("Прослушать") { speaker.speak(ex.prompt) }
-            SmallAction("Медленнее") { speaker.speak(ex.prompt, slow = true) }
+            SmallAction("Прослушать") { say() }
+            SmallAction("Медленнее") { say(slow = true) }
             if (!showText) SmallAction("Показать текст") { revealed = true }
         }
     }
@@ -851,6 +882,7 @@ private fun ChoiceAnswer(
                     // После выбора звучит черногорское: выбор глазами не даёт
                     // услышать, как оно звучит. См. spokenAfterChoice.
                     .clickable(enabled = enabled) {
+                        ear.close()
                         spokenAfterChoice(ex.prompt, option)?.let { speaker.speak(it) }
                         onSubmit(option)
                     }
@@ -927,6 +959,83 @@ private fun decoys(state: SessionState, ex: Exercise.WordBank): List<String> {
     return pool.shuffled().take((3..4).random())
 }
 
+/**
+ * Тихое ухо: слушает без кнопки и без вердикта (заметки 303, 304, 306, 309, 311).
+ *
+ * Заходов до [TRIES] подряд: движок теряет слова, а человек не обязан успеть
+ * с первого раза. Расслышанное копится за весь показ — зелень, однажды
+ * загоревшаяся, не гаснет. Без доступа к микрофону молчит: разрешение отсюда
+ * не спрашивается, диалог выскочил бы посреди задания сам.
+ */
+private class QuietEar(private val listener: Listener, private val allowed: () -> Boolean) {
+    var heard by mutableStateOf("")
+        private set
+    private var tries = 0
+    private var live = false
+    /** Ответ дан — больше не слушать, даже если фраза договорится позже. */
+    private var closed = false
+
+    fun listen(onHeard: (String) -> Unit = {}) {
+        if (closed || !allowed()) return
+        tries = 0
+        live = true
+        next(onHeard)
+    }
+
+    private fun next(onHeard: (String) -> Unit) {
+        if (!live || tries >= TRIES) return
+        tries++
+        listener.listen(
+            onResult = { said ->
+                heard = (heard + " " + said).trim()
+                onHeard(said)
+                next(onHeard)
+            },
+            onError = { live = false },
+            onSilence = { next(onHeard) }
+        )
+    }
+
+    fun cancel() {
+        live = false
+        listener.cancel()
+    }
+
+    fun close() {
+        closed = true
+        cancel()
+    }
+
+    fun stop() {
+        live = false
+        listener.stop()
+    }
+
+    companion object {
+        const val TRIES = 3
+    }
+}
+
+private fun micAllowed(context: android.content.Context) = ContextCompat.checkSelfPermission(
+    context, Manifest.permission.RECORD_AUDIO
+) == PackageManager.PERMISSION_GRANTED
+
+/** Черногорские строки условия — то, что можно прочитать вслух, без русского вопроса. */
+private fun montenegrinPart(prompt: String): String =
+    prompt.lines().filter { it.isNotBlank() && !hasCyrillic(it) }
+        .joinToString(" ") { it.trim().trimStart('—', ' ') }
+
+/** Покрасить расслышанные слова, не трогая прочего оформления (ударений). */
+private fun withGreen(base: AnnotatedString, green: Set<Int>, color: Color): AnnotatedString {
+    if (green.isEmpty()) return base
+    return buildAnnotatedString {
+        append(base)
+        LocalCheck.SHOWN_WORD.findAll(base.text).forEachIndexed { i, word ->
+            if (i in green) addStyle(SpanStyle(color = color), word.range.first, word.range.last + 1)
+        }
+    }
+}
+
 /** Есть ли в строке кириллица — то есть русский ли это текст. */
 private fun hasCyrillic(text: String): Boolean = text.any { it in 'Ѐ'..'ӿ' }
 
@@ -985,7 +1094,14 @@ private fun MatchAnswer(
         }
     }
 
+    // Голосом (заметка 311): нажал русскую плашку и сказал по-черногорски —
+    // пара складывается сама, как если бы нажал нужную справа.
+    val context = LocalContext.current
+    val ear = remember(ex.id) { QuietEar(Listener(context)) { micAllowed(context) } }
+    DisposableEffect(ear) { onDispose { ear.stop() } }
+
     fun tap(pair: MatchPair, isLeft: Boolean) {
+        ear.cancel()
         // Нажатие во время красной подсветки не теряется, а гасит её и
         // засчитывается как обычное (Катя, жалоба 172). Раньше экран его молча
         // глотал: при быстрой игре первое нажатие после ошибки пропадало,
@@ -999,6 +1115,19 @@ private fun MatchAnswer(
             // уметь, не складывая заведомо неверную пару.
             picked = if (chosen?.cardId == pair.cardId && pickedLeft == isLeft) null else pair
             pickedLeft = isLeft
+            if (isLeft && picked != null && enabled) {
+                ear.listen { said ->
+                    val hit = right.filter { it.cardId !in solved }
+                        .map { it to LocalCheck.spokenScore(said, it.me) }
+                        .filter { it.second.passed }
+                        .maxByOrNull { it.second.matched.toFloat() / it.second.total }
+                        ?.first
+                    if (hit != null && picked?.cardId == pair.cardId && pickedLeft) {
+                        ear.cancel()
+                        tap(hit, false)
+                    }
+                }
+            }
             return
         }
         picked = null
@@ -1006,7 +1135,10 @@ private fun MatchAnswer(
             speaker.speak(pair.me)
             val next = solved + pair.cardId
             solved = next
-            if (next.size == ex.pairs.size) onDone(wrong)
+            if (next.size == ex.pairs.size) {
+                ear.close()
+                onDone(wrong)
+            }
         } else {
             wrong = wrong + chosen.cardId + pair.cardId
             flash = setOf(key(chosen, !isLeft), key(pair, isLeft))
