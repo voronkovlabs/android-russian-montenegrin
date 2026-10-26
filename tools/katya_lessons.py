@@ -3293,6 +3293,83 @@ L.append(dict(id='k42', title='Nisam znala. Nije ti hladno?', section=S3, words=
     echo('Nisam znala da si ovdje.', 'Я не знала, что ты здесь.'),
 ]))
 
+# --- Урок 43 ---
+# Прошедшее с se — одной схемой, только утвердительные и всегда с глагола:
+# глагол → sam/si/smo/ste/su → se; у «он/она/оно» просто глагол → se.
+# kupati se, šaliti se (новые), radovati se, zvati se (знакомые).
+KUPATI = 'kupati se — купаться: kupam se, kupaš se, kupa se, kupamo se, kupate se, kupaju se.'
+SALITI = ('šaliti se — шутить: šalim se, šališ se, šali se, šalimo se, šalite se, šale se. '
+          'Šališ se! — Шутишь!')
+SHEMA = ('Одна схема: сначала глагол, потом sam / si / smo / ste / su, в конце se. '
+         'Kupala sam se — я купалась. Kupali smo se — мы купались.')
+ON = ('Для «он, она, оно» схема короче: глагол, потом se. Kupao se — он купался, kupala se — '
+      'она купалась. Только у он/она/оно: во множественном su остаётся — kupali su se.')
+ZVAO = ('zvati se — тоже с se: Zovem se Ana — меня зовут Ана. Прошедшее по той же схеме: '
+        'Zvao se Marko — его звали Марко, zvala se Ana — её звали Ана.')
+L.append(dict(id='k43', title='Kupala sam se. Šališ se!', section=S3, words=[
+    ('kupati se', 'купаться'), ('šaliti se', 'шутить'), ('Šališ se!', 'Шутишь!')],
+    ex=[
+    dict(new('kupati se', 'купаться', ['купаться', 'шутить', 'радоваться'], label='Новый глагол'),
+         explanation=KUPATI),
+    dict(new('šaliti se', 'шутить', ['шутить', 'купаться', 'спать'], label='Новый глагол'),
+         explanation=SALITI),
+    phrase('Šališ se!', 'Шутишь!', ['Шутишь!', 'Купаешься!', 'Радуешься!']),
+    pick('Мы купаемся в море. — ___ se u moru.', ['Kupamo', 'Kupam', 'Kupaju'], 'Kupamo',
+         explanation='Мы — kupamo: kupamo se.', label='Вставь слово'),
+    dict(phrase('Kupala sam se.', 'Я купалась.', ['Я купалась.', 'Я купаюсь.', 'Я шутила.']),
+         explanation=SHEMA),
+    dict(pairs(('я купался', 'kupao sam se'), ('ты купался', 'kupao si se'),
+               ('мы купались', 'kupali smo se'), ('вы купались', 'kupali ste se'),
+               ('они купались', 'kupali su se')), explanation=SHEMA),
+    dict(phrase('Kupao se.', 'Он купался.', ['Он купался.', 'Я купался.', 'Он купается.']),
+         explanation=ON),
+    pick('Она купалась. — Kupala ___ .', ['se', 'je se', 'sam se'], 'se',
+         explanation='Ona — значит просто глагол и se: kupala se.', label='Вставь слово'),
+    pick('Мы шутили. — Šalili ___ .', ['smo se', 'se smo', 'se'], 'smo se',
+         explanation='Mi — значит smo, потом se: šalili smo se.', label='Вставь слово'),
+    pick('Он шутил. — Šalio ___ .', ['se', 'je se', 'sam se'], 'se',
+         explanation='On — значит просто глагол и se: šalio se.', label='Вставь слово'),
+    pick('Поросёнок радовался. — Prase ___ radovalo.', ['se', 'je se', 'su se'], 'se',
+         explanation='Prase — средний род, это «оно», поэтому просто se. se встаёт вторым: '
+                     'если первым стоит prase — prase se radovalo; если глагол — radovalo se '
+                     'prase. Правильно и так, и так.', label='Вставь слово'),
+    dict(bank('Ребёнок шутил.', 'Šalilo se dijete.', ['dijete', 'se', 'šalilo'],
+              also=['Dijete se šalilo.']),
+         explanation='Dijete — средний род, значит šalilo, и просто se: šalilo se dijete. '
+                     'Можно и Dijete se šalilo — se всё равно вторым.'),
+    dict(bank('Мы купались в море.', 'Kupali smo se u moru.', ['moru', 'se', 'kupali', 'u', 'smo'],
+              also=['U moru smo se kupali.']),
+         explanation='Mi — kupali, потом smo, потом se: kupali smo se.'),
+    dict(bank('Я радовалась лету.', 'Radovala sam se ljetu.', ['ljetu', 'se', 'radovala', 'sam'],
+              also=['Ljetu sam se radovala.']),
+         explanation='Говорит женщина — radovala sam se. Мужчина сказал бы radovao sam se.'),
+    dict(phrase('Radovali su se.', 'Они радовались.',
+                ['Они радовались.', 'Мы радовались.', 'Они шутили.']),
+         explanation='Oni — su остаётся: radovali su se.'),
+    pairs(('я купаюсь', 'kupam se'), ('я купался', 'kupao sam se'), ('я шучу', 'šalim se'),
+          ('я шутил', 'šalio sam se'), ('я радуюсь', 'radujem se'), ('я радовался', 'radovao sam se')),
+    dict(phrase('Zvao se Marko.', 'Его звали Марко.',
+                ['Его звали Марко.', 'Его зовут Марко.', 'Меня зовут Марко.']), explanation=ZVAO),
+    pick('Её звали Ана. — ___ se Ana.', ['Zvala', 'Zvao', 'Zvali'], 'Zvala',
+         explanation='Она — zvala: zvala se Ana.', label='Вставь слово'),
+    pick('Я радовался. — Radovao ___ .', ['sam se', 'se', 'se sam'], 'sam se',
+         explanation='Я — sam, потом se: radovao sam se.', label='Вставь слово'),
+    pick('Вы купались? — Kupali ___ ?', ['ste se', 'se ste', 'se'], 'ste se',
+         explanation='Vi — ste, потом se: kupali ste se.', label='Вставь слово'),
+    earbank('Kupali su se u moru.', 'Они купались в море.', ['moru', 'su', 'kupali', 'u', 'se']),
+    dict(rubank('Radovali smo se ljetu.', 'Мы радовались лету.', ['лету', 'радовались', 'мы']),
+         also=['Радовались лету.', 'Мы лету радовались.'],
+         explanation='Mi — radovali smo se.'),
+    dict(bank('Он купался в море.', 'Kupao se u moru.', ['moru', 'se', 'kupao', 'u'],
+              also=['U moru se kupao.']),
+         explanation='On — просто глагол и se: kupao se.'),
+    pick('Друг рассказывает что-то невероятное, а ты не веришь. Что скажешь?',
+         ['Šališ se!', 'Kupao sam se.', 'Srećan rođendan!'], 'Šališ se!', label='Что скажешь?'),
+    say('Kupala sam se u moru.', 'Я купалась в море.'),
+    say('Šališ se!', 'Шутишь!'),
+    echo('Kupali smo se u moru.', 'Мы купались в море.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

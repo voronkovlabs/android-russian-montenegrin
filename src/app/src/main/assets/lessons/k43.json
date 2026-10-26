@@ -1,0 +1,404 @@
+{
+  "id": "k43",
+  "title": "Kupala sam se. Šališ se!",
+  "exercises": [
+    {
+      "id": "k43e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "kupati se",
+      "hint": "kupati se — купаться",
+      "options": [
+        "купаться",
+        "шутить",
+        "радоваться"
+      ],
+      "answer": "купаться",
+      "explanation": "kupati se — купаться: kupam se, kupaš se, kupa se, kupamo se, kupate se, kupaju se.",
+      "example": "Psi se kupaju. — Собаки купаются."
+    },
+    {
+      "id": "k43e02",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "šaliti se",
+      "hint": "šaliti se — шутить",
+      "options": [
+        "шутить",
+        "купаться",
+        "спать"
+      ],
+      "answer": "шутить",
+      "explanation": "šaliti se — шутить: šalim se, šališ se, šali se, šalimo se, šalite se, šale se. Šališ se! — Шутишь!",
+      "example": "Šalio sam se. — Я пошутил."
+    },
+    {
+      "id": "k43e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šališ se!",
+      "hint": "Šališ se! — Шутишь!",
+      "options": [
+        "Шутишь!",
+        "Купаешься!",
+        "Радуешься!"
+      ],
+      "answer": "Шутишь!"
+    },
+    {
+      "id": "k43e04",
+      "type": "choice",
+      "prompt": "Мы купаемся в море. — ___ se u moru.",
+      "options": [
+        "Kupamo",
+        "Kupam",
+        "Kupaju"
+      ],
+      "answer": "Kupamo",
+      "explanation": "Мы — kupamo: kupamo se.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k43e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kupala sam se.",
+      "hint": "Kupala sam se. — Я купалась.",
+      "options": [
+        "Я купалась.",
+        "Я купаюсь.",
+        "Я шутила."
+      ],
+      "answer": "Я купалась.",
+      "explanation": "Одна схема: сначала глагол, потом sam / si / smo / ste / su, в конце se. Kupala sam se — я купалась. Kupali smo se — мы купались."
+    },
+    {
+      "id": "k43e06",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я купался",
+          "me": "kupao sam se"
+        },
+        {
+          "ru": "ты купался",
+          "me": "kupao si se"
+        },
+        {
+          "ru": "мы купались",
+          "me": "kupali smo se"
+        },
+        {
+          "ru": "вы купались",
+          "me": "kupali ste se"
+        },
+        {
+          "ru": "они купались",
+          "me": "kupali su se"
+        }
+      ],
+      "explanation": "Одна схема: сначала глагол, потом sam / si / smo / ste / su, в конце se. Kupala sam se — я купалась. Kupali smo se — мы купались."
+    },
+    {
+      "id": "k43e07",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kupao se.",
+      "hint": "Kupao se. — Он купался.",
+      "options": [
+        "Он купался.",
+        "Я купался.",
+        "Он купается."
+      ],
+      "answer": "Он купался.",
+      "explanation": "Для «он, она, оно» схема короче: глагол, потом se. Kupao se — он купался, kupala se — она купалась. Только у он/она/оно: во множественном su остаётся — kupali su se."
+    },
+    {
+      "id": "k43e08",
+      "type": "choice",
+      "prompt": "Она купалась. — Kupala ___ .",
+      "options": [
+        "se",
+        "je se",
+        "sam se"
+      ],
+      "answer": "se",
+      "explanation": "Ona — значит просто глагол и se: kupala se.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k43e09",
+      "type": "choice",
+      "prompt": "Мы шутили. — Šalili ___ .",
+      "options": [
+        "smo se",
+        "se smo",
+        "se"
+      ],
+      "answer": "smo se",
+      "explanation": "Mi — значит smo, потом se: šalili smo se.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k43e10",
+      "type": "choice",
+      "prompt": "Он шутил. — Šalio ___ .",
+      "options": [
+        "se",
+        "je se",
+        "sam se"
+      ],
+      "answer": "se",
+      "explanation": "On — значит просто глагол и se: šalio se.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k43e11",
+      "type": "choice",
+      "prompt": "Поросёнок радовался. — Prase ___ radovalo.",
+      "options": [
+        "se",
+        "je se",
+        "su se"
+      ],
+      "answer": "se",
+      "explanation": "Prase — средний род, это «оно», поэтому просто se. se встаёт вторым: если первым стоит prase — prase se radovalo; если глагол — radovalo se prase. Правильно и так, и так.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k43e12",
+      "type": "word_bank",
+      "prompt": "Ребёнок шутил.",
+      "answer": "Šalilo se dijete.",
+      "bank": [
+        "dijete",
+        "se",
+        "šalilo"
+      ],
+      "also": [
+        "Dijete se šalilo."
+      ],
+      "explanation": "Dijete — средний род, значит šalilo, и просто se: šalilo se dijete. Можно и Dijete se šalilo — se всё равно вторым."
+    },
+    {
+      "id": "k43e13",
+      "type": "word_bank",
+      "prompt": "Мы купались в море.",
+      "answer": "Kupali smo se u moru.",
+      "bank": [
+        "moru",
+        "se",
+        "kupali",
+        "u",
+        "smo"
+      ],
+      "also": [
+        "U moru smo se kupali."
+      ],
+      "explanation": "Mi — kupali, потом smo, потом se: kupali smo se."
+    },
+    {
+      "id": "k43e14",
+      "type": "word_bank",
+      "prompt": "Я радовалась лету.",
+      "answer": "Radovala sam se ljetu.",
+      "bank": [
+        "ljetu",
+        "se",
+        "radovala",
+        "sam"
+      ],
+      "also": [
+        "Ljetu sam se radovala."
+      ],
+      "explanation": "Говорит женщина — radovala sam se. Мужчина сказал бы radovao sam se."
+    },
+    {
+      "id": "k43e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Radovali su se.",
+      "hint": "Radovali su se. — Они радовались.",
+      "options": [
+        "Они радовались.",
+        "Мы радовались.",
+        "Они шутили."
+      ],
+      "answer": "Они радовались.",
+      "explanation": "Oni — su остаётся: radovali su se."
+    },
+    {
+      "id": "k43e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я купаюсь",
+          "me": "kupam se"
+        },
+        {
+          "ru": "я купался",
+          "me": "kupao sam se"
+        },
+        {
+          "ru": "я шучу",
+          "me": "šalim se"
+        },
+        {
+          "ru": "я шутил",
+          "me": "šalio sam se"
+        },
+        {
+          "ru": "я радуюсь",
+          "me": "radujem se"
+        },
+        {
+          "ru": "я радовался",
+          "me": "radovao sam se"
+        }
+      ]
+    },
+    {
+      "id": "k43e17",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Zvao se Marko.",
+      "hint": "Zvao se Marko. — Его звали Марко.",
+      "options": [
+        "Его звали Марко.",
+        "Его зовут Марко.",
+        "Меня зовут Марко."
+      ],
+      "answer": "Его звали Марко.",
+      "explanation": "zvati se — тоже с se: Zovem se Ana — меня зовут Ана. Прошедшее по той же схеме: Zvao se Marko — его звали Марко, zvala se Ana — её звали Ана."
+    },
+    {
+      "id": "k43e18",
+      "type": "choice",
+      "prompt": "Её звали Ана. — ___ se Ana.",
+      "options": [
+        "Zvala",
+        "Zvao",
+        "Zvali"
+      ],
+      "answer": "Zvala",
+      "explanation": "Она — zvala: zvala se Ana.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k43e19",
+      "type": "choice",
+      "prompt": "Я радовался. — Radovao ___ .",
+      "options": [
+        "sam se",
+        "se",
+        "se sam"
+      ],
+      "answer": "sam se",
+      "explanation": "Я — sam, потом se: radovao sam se.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k43e20",
+      "type": "choice",
+      "prompt": "Вы купались? — Kupali ___ ?",
+      "options": [
+        "ste se",
+        "se ste",
+        "se"
+      ],
+      "answer": "ste se",
+      "explanation": "Vi — ste, потом se: kupali ste se.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k43e21",
+      "type": "word_bank",
+      "prompt": "Они купались в море.",
+      "answer": "Kupali su se u moru.",
+      "bank": [
+        "moru",
+        "su",
+        "kupali",
+        "u",
+        "se"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k43e22",
+      "type": "word_bank",
+      "prompt": "Radovali smo se ljetu.",
+      "answer": "Мы радовались лету.",
+      "bank": [
+        "лету",
+        "радовались",
+        "мы"
+      ],
+      "also": [
+        "Радовались лету.",
+        "Мы лету радовались."
+      ],
+      "explanation": "Mi — radovali smo se."
+    },
+    {
+      "id": "k43e23",
+      "type": "word_bank",
+      "prompt": "Он купался в море.",
+      "answer": "Kupao se u moru.",
+      "bank": [
+        "moru",
+        "se",
+        "kupao",
+        "u"
+      ],
+      "also": [
+        "U moru se kupao."
+      ],
+      "explanation": "On — просто глагол и se: kupao se."
+    },
+    {
+      "id": "k43e24",
+      "type": "choice",
+      "prompt": "Друг рассказывает что-то невероятное, а ты не веришь. Что скажешь?",
+      "options": [
+        "Šališ se!",
+        "Kupao sam se.",
+        "Srećan rođendan!"
+      ],
+      "answer": "Šališ se!",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k43e25",
+      "type": "speaking",
+      "phrase": "Kupala sam se u moru.",
+      "translation": "Я купалась в море."
+    },
+    {
+      "id": "k43e26",
+      "type": "speaking",
+      "phrase": "Šališ se!",
+      "translation": "Шутишь!"
+    },
+    {
+      "id": "k43e27",
+      "type": "repeat",
+      "phrase": "Kupali smo se u moru.",
+      "translation": "Мы купались в море."
+    }
+  ],
+  "words": [
+    {
+      "me": "kupati se",
+      "ru": "купаться"
+    },
+    {
+      "me": "šaliti se",
+      "ru": "шутить"
+    },
+    {
+      "me": "Šališ se!",
+      "ru": "Шутишь!"
+    }
+  ]
+}

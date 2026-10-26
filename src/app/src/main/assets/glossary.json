@@ -1831,7 +1831,26 @@
   "tom": "этом (u tom kaputu — в этом пальто)",
   "takvim": "таких (u takvim pantalonama)",
   "znali": "знали — от znati",
-  "znaš": "знаешь — от znati"
+  "znaš": "знаешь — от znati",
+  "kupala": "купалась — от kupati se",
+  "kupali": "купались — от kupati se",
+  "kupam": "купаюсь (kupam se)",
+  "kupamo": "купаемся (kupamo se)",
+  "kupao": "купался — от kupati se",
+  "kupati": "kupati se — купаться",
+  "kupa": "купается (kupa se)",
+  "radovala": "радовалась — от radovati se",
+  "radovali": "радовались — от radovati se",
+  "radovao": "радовался — от radovati se",
+  "radovalo": "радовалось — от radovati se",
+  "zvala": "звали её (zvala se) — от zvati se",
+  "šalilo": "шутило (šalilo se) — от šaliti se",
+  "šalim": "шучу (šalim se)",
+  "šalio": "шутил — от šaliti se",
+  "šalila": "шутила — от šaliti se",
+  "šalili": "шутили — от šaliti se",
+  "šaliti": "šaliti se — шутить",
+  "šališ": "шутишь (šališ se)"
  },
  "ru": {
   "а": "a",
@@ -2479,6 +2498,14 @@
   "могли": "mogli",
   "тепло": "toplo",
   "улице": "napolju (на улице)",
-  "этом": "tome, tom"
+  "этом": "tome, tom",
+  "купаться": "kupati se",
+  "шутить": "šaliti se",
+  "шутишь": "šališ se",
+  "купался": "kupao se",
+  "купалась": "kupala se",
+  "шутил": "šalio se",
+  "радовался": "radovao se",
+  "звали": "zvao se, zvala se"
  }
 }
