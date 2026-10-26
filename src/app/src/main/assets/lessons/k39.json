@@ -1,0 +1,386 @@
+{
+  "id": "k39",
+  "title": "Ponavljanje. Nemoj da bacaš tegle!",
+  "exercises": [
+    {
+      "id": "k39e01",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "medvjedi",
+          "me": "oni su"
+        },
+        {
+          "ru": "kuriri",
+          "me": "oni su"
+        },
+        {
+          "ru": "krave",
+          "me": "one su"
+        },
+        {
+          "ru": "poruke",
+          "me": "one su"
+        },
+        {
+          "ru": "jaja",
+          "me": "ona su"
+        },
+        {
+          "ru": "pisma",
+          "me": "ona su"
+        }
+      ],
+      "explanation": "По роду: мужской — oni su (medvjedi, kuriri, sokovi), женский — one su (krave, poruke, mape), средний — ona su (jaja, pisma, polja)."
+    },
+    {
+      "id": "k39e02",
+      "type": "choice",
+      "prompt": "Вчера я была дома. — Juče sam ___ kod kuće.",
+      "options": [
+        "bila",
+        "bio",
+        "bilo"
+      ],
+      "answer": "bila",
+      "explanation": "Говорит женщина — значит bila: ja sam bila. Мужчина сказал бы bio.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k39e03",
+      "type": "word_bank",
+      "prompt": "Где ты была вчера?",
+      "answer": "Gdje si bila juče?",
+      "bank": [
+        "juče",
+        "si",
+        "gdje",
+        "bila"
+      ]
+    },
+    {
+      "id": "k39e04",
+      "type": "choice",
+      "prompt": "Мы не были дома. — Nismo ___ kod kuće.",
+      "options": [
+        "bili",
+        "bio",
+        "bila"
+      ],
+      "answer": "bili",
+      "explanation": "Mi — несколько человек, значит bili: nismo bili. Если все женщины — nismo bile.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k39e05",
+      "type": "word_bank",
+      "prompt": "Мы не были дома.",
+      "answer": "Nismo bili kod kuće.",
+      "bank": [
+        "kuće",
+        "bili",
+        "nismo",
+        "kod"
+      ],
+      "explanation": "Не были: nisam bio / nisi bio / nije bio / nismo bili / niste bili / nisu bili."
+    },
+    {
+      "id": "k39e06",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "proizvodi",
+          "me": "oni su"
+        },
+        {
+          "ru": "rođendani",
+          "me": "oni su"
+        },
+        {
+          "ru": "mape",
+          "me": "one su"
+        },
+        {
+          "ru": "šume",
+          "me": "one su"
+        },
+        {
+          "ru": "polja",
+          "me": "ona su"
+        },
+        {
+          "ru": "gnijezda",
+          "me": "ona su"
+        }
+      ],
+      "explanation": "По роду: мужской — oni su (medvjedi, kuriri, sokovi), женский — one su (krave, poruke, mape), средний — ona su (jaja, pisma, polja)."
+    },
+    {
+      "id": "k39e07",
+      "type": "choice",
+      "prompt": "Kao i obično, pio sam kafu ujutru.",
+      "options": [
+        "Как обычно, я пил кофе утром.",
+        "Как обычно, я пью кофе утром.",
+        "Как обычно, я пил чай вечером."
+      ],
+      "answer": "Как обычно, я пил кофе утром.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k39e08",
+      "type": "word_bank",
+      "prompt": "Как обычно, я пила чай утром.",
+      "answer": "Kao i obično, pila sam čaj ujutru.",
+      "bank": [
+        "ujutru",
+        "obično",
+        "sam",
+        "kao",
+        "čaj",
+        "i",
+        "pila"
+      ],
+      "explanation": "Говорит женщина — pila sam. Мужчина сказал бы pio sam."
+    },
+    {
+      "id": "k39e09",
+      "type": "choice",
+      "prompt": "Курьер привёз заказ. — Kurir je ___ narudžbinu.",
+      "options": [
+        "donio",
+        "donijela",
+        "donijeli"
+      ],
+      "answer": "donio",
+      "explanation": "Kurir — он, мужской род, значит donio: kurir je donio. Она — donijela.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k39e10",
+      "type": "choice",
+      "prompt": "Лисы ели яйца. — Lisice su ___ jaja.",
+      "options": [
+        "jele",
+        "jeli",
+        "jela"
+      ],
+      "answer": "jele",
+      "explanation": "Lisice — множественное число слова lisica, это женский род, значит jele: lisice su jele.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k39e11",
+      "type": "word_bank",
+      "prompt": "Вчера вечером мы были у бабули и дедули.",
+      "answer": "Juče uveče smo bili kod bake i deke.",
+      "bank": [
+        "deke",
+        "uveče",
+        "smo",
+        "kod",
+        "juče",
+        "i",
+        "bili",
+        "bake"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k39e12",
+      "type": "choice",
+      "prompt": "— Šta si radila juče?\n— Ujutru sam bila kod kuće, a uveče sam išla u kafić.\n\nГде она была вечером?",
+      "options": [
+        "В кафе.",
+        "Дома.",
+        "В магазине."
+      ],
+      "answer": "В кафе.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k39e13",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "sokovi",
+          "me": "oni su"
+        },
+        {
+          "ru": "psi",
+          "me": "oni su"
+        },
+        {
+          "ru": "narudžbine",
+          "me": "one su"
+        },
+        {
+          "ru": "mačke",
+          "me": "one su"
+        },
+        {
+          "ru": "mjesta",
+          "me": "ona su"
+        },
+        {
+          "ru": "piva",
+          "me": "ona su"
+        }
+      ],
+      "explanation": "По роду: мужской — oni su (medvjedi, kuriri, sokovi), женский — one su (krave, poruke, mape), средний — ona su (jaja, pisma, polja)."
+    },
+    {
+      "id": "k39e14",
+      "type": "choice",
+      "prompt": "Pisma su bila duga. → ___ su bila duga.",
+      "options": [
+        "Ona",
+        "One",
+        "Oni"
+      ],
+      "answer": "Ona",
+      "explanation": "Слово pisma — множественное число слова pismo, это средний род, значит ona su (jaja, pisma, polja).",
+      "label": "Замени местоимением"
+    },
+    {
+      "id": "k39e15",
+      "type": "word_bank",
+      "prompt": "Медведи были в лесу.",
+      "answer": "Medvjedi su bili u šumi.",
+      "bank": [
+        "šumi",
+        "bili",
+        "medvjedi",
+        "u",
+        "su"
+      ],
+      "explanation": "Medvjedi — мужской род, значит bili: medvjedi su bili."
+    },
+    {
+      "id": "k39e16",
+      "type": "word_bank",
+      "prompt": "Мы жили в России, а сейчас живём здесь.",
+      "answer": "Mi smo živjeli u Rusiji, a sada živimo ovdje.",
+      "bank": [
+        "ovdje",
+        "živjeli",
+        "a",
+        "mi",
+        "Rusiji",
+        "sada",
+        "smo",
+        "živimo",
+        "u"
+      ],
+      "byEar": true,
+      "explanation": "Раньше — smo živjeli (прошедшее), сейчас — živimo (настоящее)."
+    },
+    {
+      "id": "k39e17",
+      "type": "choice",
+      "prompt": "Соседи позвали тебя на семейный праздник.",
+      "options": [
+        "Srećna slava!",
+        "Srećan rođendan!",
+        "Laku noć!"
+      ],
+      "answer": "Srećna slava!",
+      "explanation": "Slava — женского рода, поэтому srećna slava. Srećan rođendan — на день рождения.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k39e18",
+      "type": "choice",
+      "prompt": "Я посылаю сообщение. — ___ poruku.",
+      "options": [
+        "Šaljem",
+        "Šalje",
+        "Šalju"
+      ],
+      "answer": "Šaljem",
+      "explanation": "Я — ja, значит šaljem: ja šaljem poruku. Он — šalje, они — šalju.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k39e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "tegla",
+      "hint": "tegla — банка (стеклянная)",
+      "options": [
+        "банка (стеклянная)",
+        "бутылка",
+        "чашка"
+      ],
+      "answer": "банка (стеклянная)",
+      "explanation": "tegla — стеклянная банка, много: tegle. Консервная банка — konzerva."
+    },
+    {
+      "id": "k39e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nemoj da bacaš tegle!",
+      "hint": "Nemoj da bacaš tegle! — Не выбрасывай банки!",
+      "options": [
+        "Не выбрасывай банки!",
+        "Не покупай банки!",
+        "Не открывай банки!"
+      ],
+      "answer": "Не выбрасывай банки!",
+      "explanation": "Nemoj da + глагол — «не надо», мягкий запрет на «ты»: Nemoj da bacaš! — Не выбрасывай! bacati — бросать, выбрасывать; tegla — стеклянная банка, tegle — банки. Соседки собирают банки для zimnice — заготовок на зиму."
+    },
+    {
+      "id": "k39e21",
+      "type": "choice",
+      "prompt": "Соседка делает заготовки на зиму и собирает пустые банки. Что она тебе скажет?",
+      "options": [
+        "Nemoj da bacaš tegle!",
+        "Pošalji mi lokaciju!",
+        "Šta radiš, bre!"
+      ],
+      "answer": "Nemoj da bacaš tegle!",
+      "explanation": "Nemoj da + глагол — «не надо», мягкий запрет на «ты»: Nemoj da bacaš! — Не выбрасывай! bacati — бросать, выбрасывать; tegla — стеклянная банка, tegle — банки. Соседки собирают банки для zimnice — заготовок на зиму.",
+      "label": "Выбери фразу"
+    },
+    {
+      "id": "k39e22",
+      "type": "word_bank",
+      "prompt": "Не выбрасывай банки!",
+      "answer": "Nemoj da bacaš tegle!",
+      "bank": [
+        "tegle",
+        "da",
+        "nemoj",
+        "bacaš"
+      ]
+    },
+    {
+      "id": "k39e23",
+      "type": "speaking",
+      "phrase": "Gdje si bio juče?",
+      "translation": "Где ты был вчера?"
+    },
+    {
+      "id": "k39e24",
+      "type": "speaking",
+      "phrase": "Kao i obično, pio sam kafu ujutru.",
+      "translation": "Как обычно, я пил кофе утром."
+    },
+    {
+      "id": "k39e25",
+      "type": "repeat",
+      "phrase": "Nemoj da bacaš tegle!",
+      "translation": "Не выбрасывай банки!"
+    }
+  ],
+  "words": [
+    {
+      "me": "Nemoj da bacaš tegle!",
+      "ru": "Не выбрасывай банки!"
+    },
+    {
+      "me": "tegla",
+      "ru": "стеклянная банка"
+    }
+  ]
+}

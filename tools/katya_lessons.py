@@ -26,6 +26,10 @@ def bank(ru, answer, tiles, also=None):
     if also: d['also'] = also  # другие верные сборки из тех же плашек
     return d
 
+def earbank(me, ru, tiles):
+    """Собери на слух: фраза me звучит, перевод ru открывается после ответа."""
+    return dict(type='word_bank', prompt=ru, answer=me, bank=tiles, byEar=True)
+
 def pairs(*ps):
     return dict(type='match', pairs=[dict(ru=r, me=m) for r, m in ps])
 
@@ -2953,6 +2957,84 @@ L.append(dict(id='k38', title='Narudžbina i dostava', section=S3, words=[
     say('Kurir je donio narudžbinu.', 'Курьер привёз заказ.'),
     say('Otkažite narudžbinu, molim vas.', 'Отмените заказ, пожалуйста.'),
     echo('Možete li da čekate nedjelju dana?', 'Вы можете подождать неделю?'),
+]))
+
+# --- Урок 39 (повторение) ---
+# Повтор раздела 3: прошедшее, «три они», nisam bio, kao i obično, живио, jeo/pio,
+# slati, slava, narudžbina. Три экрана пар «существительное — oni/one/ona su» на
+# словах раздела. Живая фраза Кати 210: «Nemoj da bacaš tegle!»
+ONI_SU = ('По роду: мужской — oni su (medvjedi, kuriri, sokovi), женский — one su (krave, '
+          'poruke, mape), средний — ona su (jaja, pisma, polja).')
+NISMO = 'Не были: nisam bio / nisi bio / nije bio / nismo bili / niste bili / nisu bili.'
+JELE = 'Лисы — женский род: jele, pile, bile. Lisice su jele jaja.'
+TEGLE = ('Nemoj da + глагол — «не надо», мягкий запрет на «ты»: Nemoj da bacaš! — Не выбрасывай! '
+         'bacati — бросать, выбрасывать; tegla — стеклянная банка, tegle — банки. Соседки '
+         'собирают банки для zimnice — заготовок на зиму.')
+L.append(dict(id='k39', title='Ponavljanje. Nemoj da bacaš tegle!', section=S3, words=[
+    ('Nemoj da bacaš tegle!', 'Не выбрасывай банки!'), ('tegla', 'стеклянная банка')],
+    ex=[
+    dict(pairs(('medvjedi', 'oni su'), ('kuriri', 'oni su'), ('krave', 'one su'),
+               ('poruke', 'one su'), ('jaja', 'ona su'), ('pisma', 'ona su')), explanation=ONI_SU),
+    pick('Вчера я была дома. — Juče sam ___ kod kuće.', ['bila', 'bio', 'bilo'], 'bila',
+         explanation='Говорит женщина — значит bila: ja sam bila. Мужчина сказал бы bio.',
+         label='Вставь слово'),
+    bank('Где ты была вчера?', 'Gdje si bila juče?', ['juče', 'si', 'gdje', 'bila']),
+    pick('Мы не были дома. — Nismo ___ kod kuće.', ['bili', 'bio', 'bila'], 'bili',
+         explanation='Mi — несколько человек, значит bili: nismo bili. Если все женщины — nismo bile.',
+         label='Вставь слово'),
+    dict(bank('Мы не были дома.', 'Nismo bili kod kuće.', ['kuće', 'bili', 'nismo', 'kod']),
+         explanation=NISMO),
+    dict(pairs(('proizvodi', 'oni su'), ('rođendani', 'oni su'), ('mape', 'one su'),
+               ('šume', 'one su'), ('polja', 'ona su'), ('gnijezda', 'ona su')), explanation=ONI_SU),
+    pick('Kao i obično, pio sam kafu ujutru.',
+         ['Как обычно, я пил кофе утром.', 'Как обычно, я пью кофе утром.',
+          'Как обычно, я пил чай вечером.'], 'Как обычно, я пил кофе утром.',
+         label='Выбери перевод'),
+    dict(bank('Как обычно, я пила чай утром.', 'Kao i obično, pila sam čaj ujutru.',
+         ['ujutru', 'obično', 'sam', 'kao', 'čaj', 'i', 'pila']),
+         explanation='Говорит женщина — pila sam. Мужчина сказал бы pio sam.'),
+    pick('Курьер привёз заказ. — Kurir je ___ narudžbinu.', ['donio', 'donijela', 'donijeli'],
+         'donio', explanation='Kurir — он, мужской род, значит donio: kurir je donio. Она — donijela.',
+         label='Вставь слово'),
+    pick('Лисы ели яйца. — Lisice su ___ jaja.', ['jele', 'jeli', 'jela'], 'jele', explanation='Lisice — множественное число слова lisica, это женский род, значит jele: '
+         'lisice su jele.',
+         label='Вставь слово'),
+    earbank('Juče uveče smo bili kod bake i deke.', 'Вчера вечером мы были у бабули и дедули.',
+            ['deke', 'uveče', 'smo', 'kod', 'juče', 'i', 'bili', 'bake']),
+    pick('— Šta si radila juče?\n— Ujutru sam bila kod kuće, a uveče sam išla u kafić.\n\n'
+         'Где она была вечером?', ['В кафе.', 'Дома.', 'В магазине.'], 'В кафе.',
+         label='Мини-диалог'),
+    dict(pairs(('sokovi', 'oni su'), ('psi', 'oni su'), ('narudžbine', 'one su'),
+               ('mačke', 'one su'), ('mjesta', 'ona su'), ('piva', 'ona su')), explanation=ONI_SU),
+    pick('Pisma su bila duga. → ___ su bila duga.', ['Ona', 'One', 'Oni'], 'Ona',
+         explanation='Слово pisma — множественное число слова pismo, это средний род, значит '
+                     'ona su (jaja, pisma, polja).', label='Замени местоимением'),
+    dict(bank('Медведи были в лесу.', 'Medvjedi su bili u šumi.',
+              ['šumi', 'bili', 'medvjedi', 'u', 'su']),
+         explanation='Medvjedi — мужской род, значит bili: medvjedi su bili.'),
+    dict(earbank('Mi smo živjeli u Rusiji, a sada živimo ovdje.',
+                 'Мы жили в России, а сейчас живём здесь.',
+                 ['ovdje', 'živjeli', 'a', 'mi', 'Rusiji', 'sada', 'smo', 'živimo', 'u']),
+         explanation='Раньше — smo živjeli (прошедшее), сейчас — živimo (настоящее).'),
+    pick('Соседи позвали тебя на семейный праздник.', ['Srećna slava!', 'Srećan rođendan!',
+                                                       'Laku noć!'], 'Srećna slava!',
+         explanation='Slava — женского рода, поэтому srećna slava. Srećan rođendan — на день рождения.',
+         label='Что скажешь?'),
+    pick('Я посылаю сообщение. — ___ poruku.', ['Šaljem', 'Šalje', 'Šalju'], 'Šaljem',
+         explanation='Я — ja, значит šaljem: ja šaljem poruku. Он — šalje, они — šalju.',
+         label='Вставь слово'),
+    dict(new('tegla', 'банка (стеклянная)', ['банка (стеклянная)', 'бутылка', 'чашка']),
+         explanation='tegla — стеклянная банка, много: tegle. Консервная банка — konzerva.'),
+    dict(phrase('Nemoj da bacaš tegle!', 'Не выбрасывай банки!',
+                ['Не выбрасывай банки!', 'Не покупай банки!', 'Не открывай банки!']),
+         explanation=TEGLE),
+    pick('Соседка делает заготовки на зиму и собирает пустые банки. Что она тебе скажет?',
+         ['Nemoj da bacaš tegle!', 'Pošalji mi lokaciju!', 'Šta radiš, bre!'],
+         'Nemoj da bacaš tegle!', explanation=TEGLE, label='Выбери фразу'),
+    bank('Не выбрасывай банки!', 'Nemoj da bacaš tegle!', ['tegle', 'da', 'nemoj', 'bacaš']),
+    say('Gdje si bio juče?', 'Где ты был вчера?'),
+    say('Kao i obično, pio sam kafu ujutru.', 'Как обычно, я пил кофе утром.'),
+    echo('Nemoj da bacaš tegle!', 'Не выбрасывай банки!'),
 ]))
 
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу

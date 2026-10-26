@@ -1751,7 +1751,23 @@
   "taj": "этот, тот",
   "vama": "вам",
   "vašeg": "вашего — от vaš",
-  "zvati": "звонить, звать"
+  "zvati": "звонить, звать",
+  "bacaš": "выбрасываешь, бросаешь — от bacati",
+  "bake": "бабули (kod bake — у бабули) — от baka",
+  "deke": "дедули (kod deke — у дедули) — от deka",
+  "donijela": "принесла, привезла — от donijeti",
+  "gnijezda": "гнёзда — от gnijezdo",
+  "kuriri": "курьеры — от kurir",
+  "mape": "карты — от mapa",
+  "narudžbine": "заказы — от narudžbina",
+  "polja": "поля — от polje",
+  "poruke": "сообщения — от poruka",
+  "proizvodi": "товары — от proizvod",
+  "rođendani": "дни рождения — от rođendan",
+  "sokovi": "соки — от sok",
+  "tegla": "стеклянная банка",
+  "tegle": "банки — от tegla",
+  "šume": "леса — от šuma"
  },
  "ru": {
   "а": "a",
@@ -2327,6 +2343,16 @@
   "товара": "proizvoda",
   "через": "za (za sat vremena — через час)",
   "другой": "drugi",
-  "отменить": "otkazati"
+  "отменить": "otkazati",
+  "бабули": "bake (kod bake)",
+  "банки": "tegle",
+  "выбрасывай": "Nemoj da bacaš! — не выбрасывай!",
+  "дедули": "deke (kod deke)",
+  "заготовки": "zimnica",
+  "кафе": "kafić",
+  "лисы": "lisice",
+  "стеклянная": "staklena",
+  "соседка": "komšinica",
+  "праздник": "praznik, slava"
  }
 }

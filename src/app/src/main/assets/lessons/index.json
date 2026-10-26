@@ -241,6 +241,12 @@
       "title": "Narudžbina i dostava",
       "file": "k38.json",
       "section": "Раздел 3"
+    },
+    {
+      "id": "k39",
+      "title": "Ponavljanje. Nemoj da bacaš tegle!",
+      "file": "k39.json",
+      "section": "Раздел 3"
     }
   ]
 }
