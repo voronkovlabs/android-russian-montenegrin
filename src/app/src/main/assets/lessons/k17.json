@@ -146,7 +146,8 @@
         "иметь"
       ],
       "answer": "любить",
-      "explanation": "Новый образец, на -im: volim, voliš, voli, volimo, volite, vole. Volim te — я тебя люблю."
+      "explanation": "Новый образец, на -im: volim, voliš, voli, volimo, volite, vole. Volim te — я тебя люблю.",
+      "example": "Volim hljeb. — Я люблю хлеб."
     },
     {
       "id": "k17e12",
@@ -213,7 +214,8 @@
         "окно"
       ],
       "answer": "здание",
-      "explanation": "kuća — свой дом, частный, на одну семью. zgrada — большое здание, многоэтажка, в том числе жилая."
+      "explanation": "kuća — свой дом, частный, на одну семью. zgrada — большое здание, многоэтажка, в том числе жилая.",
+      "example": "Zgrada je bijela. — Здание белое."
     },
     {
       "id": "k17e17",
@@ -227,7 +229,8 @@
         "стена"
       ],
       "answer": "дверь",
-      "explanation": "vrata бывает только во множественном числе, как русские «ворота»: vrata su velika — «дверь большая»."
+      "explanation": "vrata бывает только во множественном числе, как русские «ворота»: vrata su velika — «дверь большая».",
+      "example": "Vrata su bijela. — Дверь белая."
     },
     {
       "id": "k17e18",
@@ -241,7 +244,8 @@
         "свинья"
       ],
       "answer": "курица",
-      "explanation": "kokoška — живая курица. Курица на тарелке — piletina."
+      "explanation": "kokoška — живая курица. Курица на тарелке — piletina.",
+      "example": "Kokoška jede hljeb. — Курица ест хлеб."
     },
     {
       "id": "k17e19",
@@ -254,7 +258,8 @@
         "низкий",
         "быстрый"
       ],
-      "answer": "высокий"
+      "answer": "высокий",
+      "example": "Moj otac je visok. — Мой папа высокий."
     },
     {
       "id": "k17e20",
@@ -268,7 +273,8 @@
         "маленький"
       ],
       "answer": "низкий",
-      "explanation": "В женском роде a выпадает: nizak, niska."
+      "explanation": "В женском роде a выпадает: nizak, niska.",
+      "example": "Moj brat je nizak. — Мой брат низкий."
     },
     {
       "id": "k17e21",

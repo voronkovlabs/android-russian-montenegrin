@@ -13,7 +13,8 @@
         "лето",
         "осень"
       ],
-      "answer": "весна"
+      "answer": "весна",
+      "example": "Proljeće je lijepo. — Весна красивая."
     },
     {
       "id": "k22e02",
@@ -26,7 +27,8 @@
         "зима",
         "весна"
       ],
-      "answer": "лето"
+      "answer": "лето",
+      "example": "Ljeto je vruće. — Лето жаркое."
     },
     {
       "id": "k22e03",
@@ -40,7 +42,8 @@
         "лето"
       ],
       "answer": "осень",
-      "explanation": "jesen — женского рода, хотя кончается на согласную: jesen je lijepa."
+      "explanation": "jesen — женского рода, хотя кончается на согласную: jesen je lijepa.",
+      "example": "Ne volim jesen. — Я не люблю осень."
     },
     {
       "id": "k22e04",
@@ -53,7 +56,8 @@
         "осень",
         "весна"
       ],
-      "answer": "зима"
+      "answer": "зима",
+      "example": "Zima je bijela. — Зима белая."
     },
     {
       "id": "k22e05",
@@ -139,7 +143,8 @@
         "куда",
         "где"
       ],
-      "answer": "откуда"
+      "answer": "откуда",
+      "example": "Odakle je tvoj prijatelj? — Откуда твой друг?"
     },
     {
       "id": "k22e11",
@@ -261,7 +266,8 @@
         "сидеть"
       ],
       "answer": "лежать",
-      "explanation": "Формы как у voljeti: ležim, ležiš, leži, ležimo, ležite, leže."
+      "explanation": "Формы как у voljeti: ležim, ležiš, leži, ležimo, ležite, leže.",
+      "example": "Pas leži kod kuće. — Собака лежит дома."
     },
     {
       "id": "k22e20",
@@ -353,7 +359,8 @@
         "играть"
       ],
       "answer": "ловить рыбу (удочкой)",
-      "explanation": "pecati — ловить рыбу удочкой, одним словом. Формы как у kuvati: pecam, pecaš, peca."
+      "explanation": "pecati — ловить рыбу удочкой, одним словом. Формы как у kuvati: pecam, pecaš, peca.",
+      "example": "Djed peca na moru. — Дедушка ловит рыбу на море."
     },
     {
       "id": "k22e27",
@@ -392,7 +399,8 @@
         "горячий"
       ],
       "answer": "куриный",
-      "explanation": "pileći — «куриный», от pile — цыплёнок. pileća supa — куриный суп. Варит что — supu, как хочу что — kafu."
+      "explanation": "pileći — «куриный», от pile — цыплёнок. pileća supa — куриный суп. Варит что — supu, как хочу что — kafu.",
+      "example": "Volim pileću supu. — Я люблю куриный суп."
     },
     {
       "id": "k22e30",

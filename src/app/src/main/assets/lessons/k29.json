@@ -168,7 +168,8 @@
         "как"
       ],
       "answer": "когда",
-      "explanation": "kad (или kada) — «когда». Kad sam bila mlada… — Когда я была молодой…"
+      "explanation": "kad (или kada) — «когда». Kad sam bila mlada… — Когда я была молодой…",
+      "example": "Kad sam bila mala, bila sam kod babe. — Когда я была маленькой, я была у бабушки."
     },
     {
       "id": "k29e12",
@@ -195,7 +196,8 @@
         "маленький",
         "голодный"
       ],
-      "answer": "молодой"
+      "answer": "молодой",
+      "example": "Moj djed je bio mlad. — Мой дедушка был молодым."
     },
     {
       "id": "k29e14",
@@ -335,7 +337,8 @@
         "море"
       ],
       "answer": "карта (географическая)",
-      "explanation": "mapa — карта местности, так и говорят: na mapi, na Google mapi. karta чаще значит «билет» (karta za autobus) или игральную карту; карта местности как karta звучит книжно — geografska karta."
+      "explanation": "mapa — карта местности, так и говорят: na mapi, na Google mapi. karta чаще значит «билет» (karta za autobus) или игральную карту; карта местности как karta звучит книжно — geografska karta.",
+      "example": "Mapa je velika. — Карта большая."
     },
     {
       "id": "k29e25",
@@ -360,7 +363,8 @@
         "море",
         "город"
       ],
-      "answer": "место"
+      "answer": "место",
+      "example": "Ovo mjesto je lijepo. — Это место красивое."
     },
     {
       "id": "k29e27",

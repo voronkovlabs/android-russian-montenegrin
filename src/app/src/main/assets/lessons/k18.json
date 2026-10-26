@@ -14,7 +14,8 @@
         "иметь"
       ],
       "answer": "хотеть",
-      "explanation": "Формы неправильные: hoću, hoćeš, hoće, hoćemo, hoćete, hoće. «Он хочет» и «они хотят» звучат одинаково — hoće."
+      "explanation": "Формы неправильные: hoću, hoćeš, hoće, hoćemo, hoćete, hoće. «Он хочет» и «они хотят» звучат одинаково — hoće.",
+      "example": "Hoću pivo. — Я хочу пива."
     },
     {
       "id": "k18e02",
@@ -99,7 +100,8 @@
         "хлеб",
         "яблоко"
       ],
-      "answer": "картофель"
+      "answer": "картофель",
+      "example": "Volim krompir. — Я люблю картошку."
     },
     {
       "id": "k18e07",
@@ -112,7 +114,8 @@
         "паста",
         "похлёбка"
       ],
-      "answer": "паста"
+      "answer": "паста",
+      "example": "Pasta je ukusna. — Паста вкусная."
     },
     {
       "id": "k18e08",
@@ -126,7 +129,8 @@
         "паста"
       ],
       "answer": "суши",
-      "explanation": "suši не меняется: volim suši, hoću suši."
+      "explanation": "suši не меняется: volim suši, hoću suši.",
+      "example": "Ajkula hoće suši. — Акула хочет суши."
     },
     {
       "id": "k18e09",

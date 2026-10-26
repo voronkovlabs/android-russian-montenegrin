@@ -13,7 +13,8 @@
         "вода",
         "кофе"
       ],
-      "answer": "пиво"
+      "answer": "пиво",
+      "example": "Moje pivo je zeleno. — Моё пиво зелёное."
     },
     {
       "id": "k11e02",
@@ -27,7 +28,8 @@
         "кот"
       ],
       "answer": "поросёнок",
-      "explanation": "Prase — среднего рода, как drvo. А «prase na ražnju» — поросёнок на вертеле, частое праздничное блюдо."
+      "explanation": "Prase — среднего рода, как drvo. А «prase na ražnju» — поросёнок на вертеле, частое праздничное блюдо.",
+      "example": "Prase je malo. — Поросёнок маленький."
     },
     {
       "id": "k11e03",
@@ -199,7 +201,8 @@
         "ваш",
         "их"
       ],
-      "answer": "наш"
+      "answer": "наш",
+      "example": "Naš pas je velik. — Наш пёс большой."
     },
     {
       "id": "k11e14",
@@ -212,7 +215,8 @@
         "ваш",
         "мой"
       ],
-      "answer": "ваш"
+      "answer": "ваш",
+      "example": "Vaš sin je pametan. — Ваш сын умный."
     },
     {
       "id": "k11e15",
@@ -225,7 +229,8 @@
         "их",
         "ваш"
       ],
-      "answer": "их"
+      "answer": "их",
+      "example": "Njihov brat spava. — Их брат спит."
     },
     {
       "id": "k11e16",

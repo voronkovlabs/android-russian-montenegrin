@@ -13,7 +13,8 @@
         "котёнок",
         "собака"
       ],
-      "answer": "щенок"
+      "answer": "щенок",
+      "example": "Štene je malo. — Щенок маленький."
     },
     {
       "id": "k23e02",
@@ -26,7 +27,8 @@
         "кошка",
         "щенок"
       ],
-      "answer": "котёнок"
+      "answer": "котёнок",
+      "example": "Mače spava. — Котёнок спит."
     },
     {
       "id": "k23e03",
@@ -40,7 +42,8 @@
         "поросёнок"
       ],
       "answer": "цыплёнок",
-      "explanation": "pile — отсюда pileći, «куриный»: pileća supa."
+      "explanation": "pile — отсюда pileći, «куриный»: pileća supa.",
+      "example": "Pile jede hljeb. — Цыплёнок ест хлеб."
     },
     {
       "id": "k23e04",
@@ -130,7 +133,8 @@
         "четыре",
         "семь"
       ],
-      "answer": "пять"
+      "answer": "пять",
+      "example": "Imam pet mačaka. — У меня пять кошек."
     },
     {
       "id": "k23e09",
@@ -143,7 +147,8 @@
         "семь",
         "три"
       ],
-      "answer": "шесть"
+      "answer": "шесть",
+      "example": "Imam šest pasa. — У меня шесть собак."
     },
     {
       "id": "k23e10",
@@ -156,7 +161,8 @@
         "шесть",
         "пять"
       ],
-      "answer": "семь"
+      "answer": "семь",
+      "example": "Imam sedam godina. — Мне семь лет."
     },
     {
       "id": "k23e11",
@@ -195,7 +201,8 @@
         "стол",
         "дом"
       ],
-      "answer": "кровать"
+      "answer": "кровать",
+      "example": "Krevet je velik. — Кровать большая."
     },
     {
       "id": "k23e13",
@@ -208,7 +215,8 @@
         "окно",
         "чашка"
       ],
-      "answer": "рисунок, картина"
+      "answer": "рисунок, картина",
+      "example": "Slika je lijepa. — Картина красивая."
     },
     {
       "id": "k23e14",
@@ -221,7 +229,8 @@
         "здание",
         "дом"
       ],
-      "answer": "квартира"
+      "answer": "квартира",
+      "example": "Naš stan je mali. — Наша квартира маленькая."
     },
     {
       "id": "k23e15",
@@ -382,7 +391,8 @@
         "играть"
       ],
       "answer": "трогать",
-      "explanation": "Формы как у kuvati: diram, diraš, dira."
+      "explanation": "Формы как у kuvati: diram, diraš, dira.",
+      "example": "Ne diraj psa! — Не трогай собаку!"
     },
     {
       "id": "k23e27",

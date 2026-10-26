@@ -14,7 +14,8 @@
         "должен"
       ],
       "answer": "мочь",
-      "explanation": "Неправильный: mogu, možeš, može, možemo, možete, mogu. g меняется на ž, а «я могу» и «они могут» звучат одинаково — mogu."
+      "explanation": "Неправильный: mogu, možeš, može, možemo, možete, mogu. g меняется на ž, а «я могу» и «они могут» звучат одинаково — mogu.",
+      "example": "Mogu li dobiti vodu? — Можно мне воды?"
     },
     {
       "id": "k27e02",
@@ -136,7 +137,8 @@
         "диван",
         "стол"
       ],
-      "answer": "стул"
+      "answer": "стул",
+      "example": "Stolica je mala. — Стул маленький."
     },
     {
       "id": "k27e10",
@@ -149,7 +151,8 @@
         "кровать",
         "стул"
       ],
-      "answer": "диван"
+      "answer": "диван",
+      "example": "Kauč je velik. — Диван большой."
     },
     {
       "id": "k27e11",
@@ -281,7 +284,8 @@
         "путешествовать"
       ],
       "answer": "тронуться, отправиться",
-      "explanation": "krenuti — тронуться, отправиться. Тот же образец -nem: krenem, kreneš, krene, krenemo, krenete, krenu."
+      "explanation": "krenuti — тронуться, отправиться. Тот же образец -nem: krenem, kreneš, krene, krenemo, krenete, krenu.",
+      "example": "Možemo krenuti. — Можем ехать."
     },
     {
       "id": "k27e19",

@@ -3057,17 +3057,21 @@ CITATI = 'čitati — читать: čitam, čitaš, čita. knjiga — книг�
 L.append(dict(id='k40', title='Konj u kaputu. Sviđa mi se!', section=S3, words=[
     ('glup', 'глупый'), ('veseo', 'весёлый'), ('tužan', 'грустный'), ('konj', 'конь'),
     ('haljina', 'платье'), ('pantalone', 'брюки'), ('košulja', 'рубашка'), ('kaput', 'пальто'), ('crven', 'красный'),
-    ('sviđa mi se', 'мне нравится'), ('Volim da plivam.', 'Мне нравится плавать.'),
-    ('čitati', 'читать'), ('knjiga', 'книга')],
+    ('sviđa mi se', 'мне нравится')],
     ex=[
     dict(new('glup', 'глупый', ['глупый', 'весёлый', 'грустный']), explanation=GLUP),
     dict(new('veseo', 'весёлый', ['весёлый', 'грустный', 'глупый']), explanation=VESEO),
     dict(new('tužan', 'грустный', ['грустный', 'глупый', 'весёлый']), explanation=TUZAN),
-    dict(pairs(('pametan', 'glup'), ('pametna', 'glupa'), ('veseo', 'tužan'), ('vesela', 'tužna')),
-         explanation='Противоположности: pametan — glup (умный — глупый), veseo — tužan '
-                     '(весёлый — грустный). Она: pametna — glupa, vesela — tužna. '
-                     'Оно: pametno — glupo, veselo — tužno.'),
+    pairs(('умный', 'pametan'), ('глупый', 'glup'), ('весёлый', 'veseo'), ('грустный', 'tužan')),
     new('konj', 'конь', ['конь', 'корова', 'волк']),
+    new('haljina', 'платье', ['платье', 'рубашка', 'пальто']),
+    dict(new('pantalone', 'брюки', ['брюки', 'платье', 'рубашка']),
+         explanation='pantalone — брюки. Как и по-русски, бывают только во множественном числе: '
+                     'pantalone su nove — брюки новые.'),
+    new('košulja', 'рубашка', ['рубашка', 'брюки', 'платье']),
+    dict(new('kaput', 'пальто', ['пальто', 'рубашка', 'брюки']),
+         explanation='kaput — пальто. Мужского рода, хотя «пальто» по-русски среднего: '
+                     'moj kaput, bijeli kaput.'),
     pairs(('платье', 'haljina'), ('брюки', 'pantalone'), ('рубашка', 'košulja'),
           ('пальто', 'kaput')),
     dict(phrase('Konj je u kaputu.', 'Конь в пальто.',
@@ -3086,6 +3090,8 @@ L.append(dict(id='k40', title='Konj u kaputu. Sviđa mi se!', section=S3, words=
     dict(pairs(('мне нравится', 'sviđa mi se'), ('тебе нравится', 'sviđa ti se'),
                ('ему нравится', 'sviđa mu se'), ('ей нравится', 'sviđa joj se')),
          explanation=SVIDJA),
+    dict(new('crven', 'красный', ['красный', 'белый', 'розовый']),
+         explanation='crven — красный: crven kaput, crvena haljina, crveno jaje.'),
     pick('Ей нравится красная рубашка. — Sviđa ___ se crvena košulja.', ['joj', 'mu', 'mi'], 'joj',
          explanation='Ей — joj: sviđa joj se. Ему было бы mu, мне — mi. crvena — красная: '
                      'crven, crvena, crveno.', label='Вставь слово'),
@@ -3099,26 +3105,17 @@ L.append(dict(id='k40', title='Konj u kaputu. Sviđa mi se!', section=S3, words=
     dict(bank('Мне нравится твоя красная рубашка.', 'Sviđa mi se tvoja crvena košulja.',
               ['košulja', 'mi', 'crvena', 'tvoja', 'sviđa', 'se']),
          explanation='košulja — женский род, поэтому tvoja crvena.'),
-    dict(phrase('Volim da plivam.', 'Мне нравится плавать.',
-                ['Мне нравится плавать.', 'Мне нравится читать.', 'Я умею плавать.']),
-         explanation=VOLIM_DA),
-    dict(bank('Мне нравится плавать.', 'Volim da plivam.', ['plivam', 'da', 'volim']),
-         explanation=VOLIM_DA),
-    dict(phrase('Medvjed voli da čita knjige.', 'Медведю нравится читать книги.',
-                ['Медведю нравится читать книги.', 'Медведь пишет книги.',
-                 'Медведю нравятся книги про мёд.']), explanation=CITATI),
-    pick('Ему нравится читать. — On voli da ___ .', ['čita', 'čitam', 'čitaju'], 'čita',
-         explanation='On — значит čita: on voli da čita. Я — volim da čitam.',
-         label='Вставь слово'),
-    earbank('Glupa ajkula voli da pliva u supi.', 'Глупой акуле нравится плавать в супе.',
-            ['supi', 'voli', 'ajkula', 'u', 'pliva', 'glupa', 'da']),
+    dict(earbank('Psu se sviđaju roze pantalone.', 'Собаке нравятся розовые брюки.',
+                 ['pantalone', 'se', 'psu', 'roze', 'sviđaju']),
+         explanation='pantalone — множественное число, поэтому sviđaju.'),
     pick('— Sviđa li ti se moj bijeli kaput?\n— Ne, ali sviđa mi se tvoja crvena haljina.\n\nЧто нравится?',
          ['Красное платье.', 'Белое пальто.', 'Красная рубашка.'], 'Красное платье.',
          explanation='Sviđa li ti se…? — Тебе нравится…? li делает вопрос, как в Imate li…?',
          label='Мини-диалог'),
-    dict(bank('Грустная корова читает книгу.', 'Tužna krava čita knjigu.',
-              ['knjigu', 'krava', 'čita', 'tužna']),
-         explanation='Krava — женский род, значит tužna. knjiga → knjigu: «что читает?»'),
+    dict(bank('Свинье нравится красное платье.', 'Svinji se sviđa crvena haljina.',
+              ['haljina', 'se', 'svinji', 'crvena', 'sviđa']),
+         explanation='svinja → svinji — «свинье», как krava → kravi. haljina — женский род, '
+                     'поэтому crvena.'),
     say('Konj u kaputu je veseo.', 'Конь в пальто весёлый.'),
     say('Sviđa mi se tvoja crvena haljina.', 'Мне нравится твоё красное платье.'),
     echo('Psu se sviđa nova haljina.', 'Собаке нравится новое платье.'),
@@ -3129,6 +3126,22 @@ L.append(dict(id='k40', title='Konj u kaputu. Sviđa mi se!', section=S3, words=
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
 REMOVED = {'k01e12', 'k01e14', 'k01e22', 'k01e24', 'k02e03', 'k02e07',
            'k03e04', 'k03e05', 'k05e05', 'k05e10', 'k05e13'}
+
+# Пример к каждому новому слову (Катя, 26.10.2026): одно предложение с
+# переводом, только из уже знакомых слов и не повторяющее фраз урока.
+# Лежит отдельным файлом: урок|слово|пример|перевод.
+NEW_LABELS = ('Новое слово', 'Новый глагол', 'Новое выражение')
+EXAMPLES = {}
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'katya_examples.tsv'),
+          encoding='utf-8') as f:
+    for line in f:
+        if line.strip():
+            l, w, me, ru = line.rstrip('\n').split('|')
+            EXAMPLES[(l, w)] = '%s — %s' % (me, ru)
+for les in L:
+    for e in les['ex']:
+        if e.get('label') in NEW_LABELS:
+            e['example'] = EXAMPLES[(les['id'], e['prompt'])]
 
 index = []
 for les in L:

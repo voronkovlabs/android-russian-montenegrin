@@ -13,7 +13,8 @@
         "дешёвый",
         "высокий"
       ],
-      "answer": "дорогой"
+      "answer": "дорогой",
+      "example": "Auto je skup. — Машина дорогая."
     },
     {
       "id": "k19e02",
@@ -26,7 +27,8 @@
         "дешёвый",
         "вкусный"
       ],
-      "answer": "дешёвый"
+      "answer": "дешёвый",
+      "example": "Hljeb je jeftin. — Хлеб дешёвый."
     },
     {
       "id": "k19e03",
@@ -215,7 +217,8 @@
         "дверь"
       ],
       "answer": "чашка",
-      "explanation": "šolja — чашка. Маленькая кофейная чашечка — šoljica: šoljica kafe — чашка кофе."
+      "explanation": "šolja — чашка. Маленькая кофейная чашечка — šoljica: šoljica kafe — чашка кофе.",
+      "example": "Moja šolja je velika. — Моя чашка большая."
     },
     {
       "id": "k19e16",
@@ -229,7 +232,8 @@
         "вода"
       ],
       "answer": "стакан",
-      "explanation": "čaša vode — стакан воды."
+      "explanation": "čaša vode — стакан воды.",
+      "example": "Čaša je mala. — Стакан маленький."
     },
     {
       "id": "k19e17",
@@ -243,7 +247,8 @@
         "зелёный"
       ],
       "answer": "коричневый",
-      "explanation": "braon не меняется: braon pas, braon mačka, braon šolja."
+      "explanation": "braon не меняется: braon pas, braon mačka, braon šolja.",
+      "example": "Moj pas je braon. — Мой пёс коричневый."
     },
     {
       "id": "k19e18",
@@ -270,7 +275,8 @@
         "мало",
         "быстро"
       ],
-      "answer": "много"
+      "answer": "много",
+      "example": "Puno jedem. — Я много ем."
     },
     {
       "id": "k19e20",
@@ -284,7 +290,8 @@
         "медленно"
       ],
       "answer": "мало, немного",
-      "explanation": "malo — и «мало», и «маленькое» (средний род от mali): malo prase."
+      "explanation": "malo — и «мало», и «маленькое» (средний род от mali): malo prase.",
+      "example": "Malo spavam. — Я мало сплю."
     },
     {
       "id": "k19e21",

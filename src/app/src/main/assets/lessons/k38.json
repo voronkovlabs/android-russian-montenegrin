@@ -14,7 +14,8 @@
         "сообщение"
       ],
       "answer": "заказ",
-      "explanation": "narudžbina — заказ. В Черногории и Сербии говорят так, реже porudžbina и narudžba. Склоняется как krava: Kurir je donio narudžbinu."
+      "explanation": "narudžbina — заказ. В Черногории и Сербии говорят так, реже porudžbina и narudžba. Склоняется как krava: Kurir je donio narudžbinu.",
+      "example": "Moja narudžbina je velika. — Мой заказ большой."
     },
     {
       "id": "k38e02",
@@ -28,7 +29,8 @@
         "отменить"
       ],
       "answer": "заказать",
-      "explanation": "naručiti — заказать. Прошедшее как у всех: naručio sam (он), naručila sam (она). Naručila sam picu — я заказала пиццу."
+      "explanation": "naručiti — заказать. Прошедшее как у всех: naručio sam (он), naručila sam (она). Naručila sam picu — я заказала пиццу.",
+      "example": "Naručila sam kafu. — Я заказала кофе."
     },
     {
       "id": "k38e03",
@@ -55,7 +57,8 @@
         "заказ",
         "оплата"
       ],
-      "answer": "доставка"
+      "answer": "доставка",
+      "example": "Dostava je skupa. — Доставка дорогая."
     },
     {
       "id": "k38e05",
@@ -68,7 +71,8 @@
         "продавец",
         "водитель"
       ],
-      "answer": "курьер"
+      "answer": "курьер",
+      "example": "Kurir je brz. — Курьер быстрый."
     },
     {
       "id": "k38e06",
@@ -81,7 +85,8 @@
         "письмо",
         "заказ"
       ],
-      "answer": "сообщение"
+      "answer": "сообщение",
+      "example": "Poruka je duga. — Сообщение длинное."
     },
     {
       "id": "k38e07",
@@ -95,7 +100,8 @@
         "курьер"
       ],
       "answer": "товар",
-      "explanation": "proizvod — товар, продукт (одна вещь в заказе). Товары вообще — roba."
+      "explanation": "proizvod — товар, продукт (одна вещь в заказе). Товары вообще — roba.",
+      "example": "Proizvod je jeftin. — Товар дешёвый."
     },
     {
       "id": "k38e08",
@@ -109,7 +115,8 @@
         "покупка"
       ],
       "answer": "оплата",
-      "explanation": "plaćanje — оплата. Plaćanje pouzećem — оплата при получении, курьеру. Так в Черногории платят чаще всего."
+      "explanation": "plaćanje — оплата. Plaćanje pouzećem — оплата при получении, курьеру. Так в Черногории платят чаще всего.",
+      "example": "Plaćanje karticom, molim. — Оплата картой, пожалуйста."
     },
     {
       "id": "k38e09",

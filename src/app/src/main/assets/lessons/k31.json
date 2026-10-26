@@ -121,7 +121,8 @@
         "уже"
       ],
       "answer": "вчера",
-      "explanation": "juče — вчера. Ставится в начало, а sam сразу за ним: Juče sam bila u gradu."
+      "explanation": "juče — вчера. Ставится в начало, а sam сразу за ним: Juče sam bila u gradu.",
+      "example": "Juče sam bio kod kuće. — Вчера я был дома."
     },
     {
       "id": "k31e09",
@@ -147,7 +148,8 @@
         "вчера",
         "уже"
       ],
-      "answer": "раньше"
+      "answer": "раньше",
+      "example": "Ranije je bilo lijepo. — Раньше было красиво."
     },
     {
       "id": "k31e11",
@@ -174,7 +176,8 @@
         "вчера"
       ],
       "answer": "на прошлой неделе",
-      "explanation": "nedjelja — и «неделя», и «воскресенье». prošle nedjelje — «на прошлой неделе». Так говорят чаще всего; ещё можно prošle sedmice."
+      "explanation": "nedjelja — и «неделя», и «воскресенье». prošle nedjelje — «на прошлой неделе». Так говорят чаще всего; ещё можно prošle sedmice.",
+      "example": "Prošle nedjelje sam bila na moru. — На прошлой неделе я была на море."
     },
     {
       "id": "k31e13",
@@ -222,7 +225,8 @@
         "суббота",
         "неделя"
       ],
-      "answer": "пятница"
+      "answer": "пятница",
+      "example": "U petak sam bila u gradu. — В пятницу я была в городе."
     },
     {
       "id": "k31e16",
@@ -235,7 +239,8 @@
         "пятница",
         "неделя"
       ],
-      "answer": "суббота"
+      "answer": "суббота",
+      "example": "Subota je dobar dan. — Суббота — хороший день."
     },
     {
       "id": "k31e17",
@@ -298,7 +303,8 @@
         "писать"
       ],
       "answer": "послать, отправить",
-      "explanation": "poslati — послать, отправить. Просьба: Pošalji! (ты), Pošaljite! (вы). После da: pošaljem, pošalješ, pošalje, pošaljemo, pošaljete, pošalju — как sjesti → sjednem."
+      "explanation": "poslati — послать, отправить. Просьба: Pošalji! (ты), Pošaljite! (вы). После da: pošaljem, pošalješ, pošalje, pošaljemo, pošaljete, pošalju — как sjesti → sjednem.",
+      "example": "Pošalji mi pismo! — Пошли мне письмо!"
     },
     {
       "id": "k31e21",
@@ -355,7 +361,8 @@
         "карта",
         "место"
       ],
-      "answer": "геопозиция, местоположение"
+      "answer": "геопозиция, местоположение",
+      "example": "Ovo je moja lokacija. — Это моё местоположение."
     },
     {
       "id": "k31e24",

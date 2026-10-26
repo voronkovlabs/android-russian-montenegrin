@@ -13,7 +13,8 @@
         "хорошо",
         "спасибо"
       ],
-      "answer": "плохо"
+      "answer": "плохо",
+      "example": "Loše spavam. — Я плохо сплю."
     },
     {
       "id": "k09e02",
@@ -60,7 +61,8 @@
         "твой",
         "его"
       ],
-      "answer": "мой"
+      "answer": "мой",
+      "example": "Moj pas je mali. — Мой пёс маленький."
     },
     {
       "id": "k09e05",
@@ -86,7 +88,8 @@
         "твой",
         "её"
       ],
-      "answer": "твой"
+      "answer": "твой",
+      "example": "Tvoj brat je pametan. — Твой брат умный."
     },
     {
       "id": "k09e07",
@@ -143,7 +146,8 @@
         "её",
         "мой"
       ],
-      "answer": "его"
+      "answer": "его",
+      "example": "Njegov sin je velik. — Его сын большой."
     },
     {
       "id": "k09e11",
@@ -156,7 +160,8 @@
         "твой",
         "её"
       ],
-      "answer": "её"
+      "answer": "её",
+      "example": "Njen pas spava. — Её пёс спит."
     },
     {
       "id": "k09e12",
@@ -221,7 +226,8 @@
         "два",
         "три"
       ],
-      "answer": "один"
+      "answer": "один",
+      "example": "Jedan pas spava. — Одна собака спит."
     },
     {
       "id": "k09e17",
@@ -234,7 +240,8 @@
         "два",
         "четыре"
       ],
-      "answer": "два"
+      "answer": "два",
+      "example": "Dva brata jedu pomfrit. — Два брата едят картошку фри."
     },
     {
       "id": "k09e18",
@@ -247,7 +254,8 @@
         "два",
         "четыре"
       ],
-      "answer": "три"
+      "answer": "три",
+      "example": "Tri dječaka spavaju. — Три мальчика спят."
     },
     {
       "id": "k09e19",
@@ -260,7 +268,8 @@
         "три",
         "четыре"
       ],
-      "answer": "четыре"
+      "answer": "четыре",
+      "example": "Četiri brata spavaju. — Четыре брата спят."
     },
     {
       "id": "k09e20",

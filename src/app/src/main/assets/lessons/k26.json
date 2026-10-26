@@ -14,7 +14,8 @@
         "путешествовать"
       ],
       "answer": "покупать",
-      "explanation": "-ovati → -ujem: kupovati — kupujem, kupuješ, kupuje, kupujemo, kupujete, kupuju. По инфинитиву не угадать, запоминаем образец."
+      "explanation": "-ovati → -ujem: kupovati — kupujem, kupuješ, kupuje, kupujemo, kupujete, kupuju. По инфинитиву не угадать, запоминаем образец.",
+      "example": "Kupujem hljeb. — Я покупаю хлеб."
     },
     {
       "id": "k26e02",
@@ -84,7 +85,8 @@
         "идти"
       ],
       "answer": "путешествовать",
-      "explanation": "Тот же образец: putovati — putujem, putuješ, putuje, putujemo, putujete, putuju."
+      "explanation": "Тот же образец: putovati — putujem, putuješ, putuje, putujemo, putujete, putuju.",
+      "example": "Putujem autobusom. — Я еду на автобусе."
     },
     {
       "id": "k26e06",
@@ -97,7 +99,8 @@
         "поезд",
         "машина"
       ],
-      "answer": "автобус"
+      "answer": "автобус",
+      "example": "Autobus je spor. — Автобус медленный."
     },
     {
       "id": "k26e07",
@@ -110,7 +113,8 @@
         "автобус",
         "самолёт"
       ],
-      "answer": "поезд"
+      "answer": "поезд",
+      "example": "Voz je brz. — Поезд быстрый."
     },
     {
       "id": "k26e08",
@@ -173,7 +177,8 @@
         "играть"
       ],
       "answer": "радоваться",
-      "explanation": "Тот же образец, только с se: radujem se, raduješ se, raduje se. Radujem se! — «Я рад!»"
+      "explanation": "Тот же образец, только с se: radujem se, raduješ se, raduje se. Radujem se! — «Я рад!»",
+      "example": "I ja se radujem. — И я радуюсь."
     },
     {
       "id": "k26e12",
@@ -200,7 +205,8 @@
         "варить"
       ],
       "answer": "пить",
-      "explanation": "-jem: piti — pijem, piješ, pije, pijemo, pijete, piju."
+      "explanation": "-jem: piti — pijem, piješ, pije, pijemo, pijete, piju.",
+      "example": "Pijem vodu. — Я пью воду."
     },
     {
       "id": "k26e14",
@@ -270,7 +276,8 @@
         "пить"
       ],
       "answer": "слышать",
-      "explanation": "Тот же образец -jem: čujem, čuješ, čuje, čujemo, čujete, čuju."
+      "explanation": "Тот же образец -jem: čujem, čuješ, čuje, čujemo, čujete, čuju.",
+      "example": "Čuješ li me? — Ты меня слышишь?"
     },
     {
       "id": "k26e18",
@@ -283,7 +290,8 @@
         "музыка",
         "голос"
       ],
-      "answer": "звук"
+      "answer": "звук",
+      "example": "Čujem zvuk. — Я слышу звук."
     },
     {
       "id": "k26e19",
@@ -296,7 +304,8 @@
         "звук",
         "игра"
       ],
-      "answer": "музыка"
+      "answer": "музыка",
+      "example": "Volim muziku. — Я люблю музыку."
     },
     {
       "id": "k26e20",

@@ -111,7 +111,8 @@
         "сидеть"
       ],
       "answer": "жить",
-      "explanation": "Формы как у voljeti: živim, živiš, živi, živimo, živite, žive."
+      "explanation": "Формы как у voljeti: živim, živiš, živi, živimo, živite, žive.",
+      "example": "Živim u gradu. — Я живу в городе."
     },
     {
       "id": "k25e09",
@@ -181,7 +182,8 @@
         "где",
         "сейчас"
       ],
-      "answer": "здесь"
+      "answer": "здесь",
+      "example": "Ovdje je lijepo. — Здесь красиво."
     },
     {
       "id": "k25e13",
@@ -194,7 +196,8 @@
         "ещё",
         "очень"
       ],
-      "answer": "уже"
+      "answer": "уже",
+      "example": "Sin već spava. — Сын уже спит."
     },
     {
       "id": "k25e14",
@@ -234,7 +237,8 @@
         "лежать"
       ],
       "answer": "сидеть",
-      "explanation": "Сидеть — sjedjeti: sjedim, sjediš, sjedi. А сесть — sjesti."
+      "explanation": "Сидеть — sjedjeti: sjedim, sjediš, sjedi. А сесть — sjesti.",
+      "example": "Sjedim kod kuće. — Я сижу дома."
     },
     {
       "id": "k25e17",
@@ -261,7 +265,8 @@
         "встать"
       ],
       "answer": "сесть",
-      "explanation": "sjesti — сесть, один раз. Просьба на «ты»: Sjedi! На «вы»: Sjedite!"
+      "explanation": "sjesti — сесть, один раз. Просьба на «ты»: Sjedi! На «вы»: Sjedite!",
+      "example": "Sjedite, molim. — Садитесь, пожалуйста."
     },
     {
       "id": "k25e19",
@@ -323,7 +328,8 @@
         "чашечка"
       ],
       "answer": "пакетик",
-      "explanation": "-ica делает слово маленьким и ласковым: kesa — kesica, пакет — пакетик. Так говорят очень часто, особенно про еду и посуду."
+      "explanation": "-ica делает слово маленьким и ласковым: kesa — kesica, пакет — пакетик. Так говорят очень часто, особенно про еду и посуду.",
+      "example": "Treba li vam kesica? — Вам нужен пакетик?"
     },
     {
       "id": "k25e23",
@@ -337,7 +343,8 @@
         "стакан"
       ],
       "answer": "чашечка",
-      "explanation": "šolja — šoljica: šoljica kafe — чашечка кофе."
+      "explanation": "šolja — šoljica: šoljica kafe — чашечка кофе.",
+      "example": "Šoljica kafe, molim. — Чашечку кофе, пожалуйста."
     },
     {
       "id": "k25e24",
@@ -372,7 +379,8 @@
         "кофе",
         "вода"
       ],
-      "answer": "чай"
+      "answer": "чай",
+      "example": "Volim čaj. — Я люблю чай."
     },
     {
       "id": "k25e26",

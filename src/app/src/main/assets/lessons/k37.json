@@ -14,7 +14,8 @@
         "лиса"
       ],
       "answer": "медведь",
-      "explanation": "medvjed — медведь, много: medvjedi. В Черногории часто говорят и međed — через đ («дж»): međed, međedi."
+      "explanation": "medvjed — медведь, много: medvjedi. В Черногории часто говорят и međed — через đ («дж»): međed, međedi.",
+      "example": "Medvjed je velik. — Медведь большой."
     },
     {
       "id": "k37e02",
@@ -27,7 +28,8 @@
         "кошка",
         "курица"
       ],
-      "answer": "корова"
+      "answer": "корова",
+      "example": "Krava pije vodu. — Корова пьёт воду."
     },
     {
       "id": "k37e03",
@@ -40,7 +42,8 @@
         "яблоко",
         "сок"
       ],
-      "answer": "яйцо"
+      "answer": "яйцо",
+      "example": "Jaje je bijelo. — Яйцо белое."
     },
     {
       "id": "k37e04",

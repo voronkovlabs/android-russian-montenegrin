@@ -14,7 +14,8 @@
         "говорить"
       ],
       "answer": "писать",
-      "explanation": "s меняется на š: pišem, pišeš, piše, pišemo, pišete, pišu."
+      "explanation": "s меняется на š: pišem, pišeš, piše, pišemo, pišete, pišu.",
+      "example": "Sin piše bajku. — Сын пишет сказку."
     },
     {
       "id": "k28e02",
@@ -57,7 +58,8 @@
         "сказка",
         "рисунок"
       ],
-      "answer": "письмо"
+      "answer": "письмо",
+      "example": "Pismo je dugo. — Письмо длинное."
     },
     {
       "id": "k28e04",
@@ -83,7 +85,8 @@
         "легенда",
         "письмо"
       ],
-      "answer": "сказка"
+      "answer": "сказка",
+      "example": "Volim bajke. — Я люблю сказки."
     },
     {
       "id": "k28e06",
@@ -96,7 +99,8 @@
         "сказка",
         "музыка"
       ],
-      "answer": "легенда"
+      "answer": "легенда",
+      "example": "Ovo je legenda. — Это легенда."
     },
     {
       "id": "k28e07",
@@ -172,7 +176,8 @@
         "слышать"
       ],
       "answer": "сказать, говорить",
-      "explanation": "z меняется на ž: kažem, kažeš, kaže, kažemo, kažete, kažu. Тот же приём, что pisati — pišem."
+      "explanation": "z меняется на ž: kažem, kažeš, kaže, kažemo, kažete, kažu. Тот же приём, что pisati — pišem.",
+      "example": "Šta kaže tvoj otac? — Что говорит твой отец?"
     },
     {
       "id": "k28e12",
@@ -269,7 +274,8 @@
         "жить"
       ],
       "answer": "говорить",
-      "explanation": "-iti → -im, как živjeti: govorim, govoriš, govori, govorimo, govorite, govore. На -iti кончается очень много глаголов."
+      "explanation": "-iti → -im, как živjeti: govorim, govoriš, govori, govorimo, govorite, govore. На -iti кончается очень много глаголов.",
+      "example": "Govorim ruski. — Я говорю по-русски."
     },
     {
       "id": "k28e18",
@@ -352,7 +358,8 @@
         "уже",
         "здесь"
       ],
-      "answer": "очень"
+      "answer": "очень",
+      "example": "Jako je lijepo. — Очень красиво."
     },
     {
       "id": "k28e23",

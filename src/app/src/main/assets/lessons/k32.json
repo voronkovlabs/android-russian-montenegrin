@@ -275,7 +275,8 @@
         "сестрёнка"
       ],
       "answer": "бабуля",
-      "explanation": "baba — бабушка, baka — ласково, «бабуля». djed — дедушка, deka — ласково, «дедуля». Внуки так и говорят: baka i deka."
+      "explanation": "baba — бабушка, baka — ласково, «бабуля». djed — дедушка, deka — ласково, «дедуля». Внуки так и говорят: baka i deka.",
+      "example": "Baka kuva supu. — Бабуля варит суп."
     },
     {
       "id": "k32e20",
@@ -289,7 +290,8 @@
         "папа"
       ],
       "answer": "дедуля",
-      "explanation": "baba — бабушка, baka — ласково, «бабуля». djed — дедушка, deka — ласково, «дедуля». Внуки так и говорят: baka i deka."
+      "explanation": "baba — бабушка, baka — ласково, «бабуля». djed — дедушка, deka — ласково, «дедуля». Внуки так и говорят: baka i deka.",
+      "example": "Deka voli pivo. — Дедуля любит пиво."
     },
     {
       "id": "k32e21",

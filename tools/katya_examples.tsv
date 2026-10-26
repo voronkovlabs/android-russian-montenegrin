@@ -1,0 +1,226 @@
+k01|ja|Ja sam dijete.|Я ребёнок.
+k01|ti|Treba li ti hljeb?|Тебе нужен хлеб?
+k01|žena|Ja sam žena, ti si muškarac.|Я женщина, ты мужчина.
+k01|muškarac|Ti si muškarac?|Ты мужчина?
+k01|dijete|Ti si dijete?|Ты ребёнок?
+k01|dobro|Dobro sam.|У меня всё хорошо.
+k01|voda|Treba li ti voda?|Тебе нужна вода?
+k01|hljeb|Hljeb, molim.|Хлеба, пожалуйста.
+k01|kafa|Treba li ti kafa?|Тебе нужен кофе?
+k01|da|Da, hljeb, molim.|Да, хлеба, пожалуйста.
+k01|ne|Ne, ja sam žena.|Нет, я женщина.
+k01|kesa|Kesa, molim.|Пакет, пожалуйста.
+k02|dječak|Ja sam dječak.|Я мальчик.
+k02|djevojčica|Ja sam djevojčica.|Я девочка.
+k02|pas|On je pas, ona je mačka.|Он пёс, она кошка.
+k02|mačka|Ja sam mačka.|Я кошка.
+k02|on|On je dijete.|Он ребёнок.
+k02|ona|Ona je dobro.|У неё всё хорошо.
+k03|majka|Ona je majka.|Она мать.
+k03|otac|On je otac.|Он отец.
+k03|mi|Mi smo mačke.|Мы кошки.
+k03|ljudi|Mi smo ljudi, ne psi.|Мы люди, а не собаки.
+k03|vi|Vi ste otac?|Вы отец?
+k03|žene|Ne, mi smo žene.|Нет, мы женщины.
+k03|muškarci|Mi smo muškarci.|Мы мужчины.
+k04|odrasla osoba|Ja sam odrasla osoba.|Я взрослый человек.
+k04|odrasli|Mi smo odrasli.|Мы взрослые.
+k04|životinja|Pas je životinja.|Собака — животное.
+k04|životinje|Mačke su životinje.|Кошки — животные.
+k04|oni|Oni su psi.|Они собаки.
+k04|lijep|Pas je lijep.|Пёс красивый.
+k04|lijepa|Majka je lijepa.|Мама красивая.
+k04|pametan|Otac je pametan.|Отец умный.
+k04|pametna|Majka je pametna.|Мама умная.
+k05|ajkula|Ajkula je životinja.|Акула — животное.
+k05|jabuka|Jabuka je bijela.|Яблоко белое.
+k05|kornjača|Kornjača je pametna.|Черепаха умная.
+k05|jede|Pas jede hljeb.|Собака ест хлеб.
+k05|zelen|On je zelen.|Он зелёный.
+k05|zelena|Ajkula je zelena.|Акула зелёная.
+k05|bijel|Pas je bijel.|Пёс белый.
+k05|bijela|Mačka je bijela.|Кошка белая.
+k05|ne|Ajkula ne jede jabuku.|Акула не ест яблоко.
+k06|pomfrit|Dijete jede pomfrit.|Ребёнок ест картошку фри.
+k06|pljeskavica|Pas jede pljeskavicu.|Собака ест котлету.
+k06|puž|Puž jede pomfrit.|Улитка ест картошку фри.
+k06|sestra|Sestra jede jabuku.|Сестра ест яблоко.
+k07|brat|Brat jede pljeskavicu.|Брат ест котлету.
+k07|sin|On je sin.|Он сын.
+k07|ćerka|Ona je ćerka.|Она дочь.
+k07|velik|Pas je velik.|Пёс большой.
+k07|mali|Puž je mali.|Улитка маленькая.
+k07|hvala|Hvala, dobro sam.|Спасибо, у меня всё хорошо.
+k08|drvo|Drvo je zeleno.|Дерево зелёное.
+k08|sunce|Sunce je veliko.|Солнце большое.
+k08|spavati|Pas spava.|Пёс спит.
+k08|rasti|Dijete raste.|Ребёнок растёт.
+k08|kuća|Kuća je mala.|Дом маленький.
+k08|zid|Zid je velik.|Стена большая.
+k09|loše|Loše spavam.|Я плохо сплю.
+k09|moj|Moj pas je mali.|Мой пёс маленький.
+k09|tvoj|Tvoj brat je pametan.|Твой брат умный.
+k09|njegov|Njegov sin je velik.|Его сын большой.
+k09|njen|Njen pas spava.|Её пёс спит.
+k09|jedan|Jedan pas spava.|Одна собака спит.
+k09|dva|Dva brata jedu pomfrit.|Два брата едят картошку фри.
+k09|tri|Tri dječaka spavaju.|Три мальчика спят.
+k09|četiri|Četiri brata spavaju.|Четыре брата спят.
+k10|kao|Ajkula je velika kao kuća.|Акула большая, как дом.
+k11|pivo|Moje pivo je zeleno.|Моё пиво зелёное.
+k11|prase|Prase je malo.|Поросёнок маленький.
+k11|naš|Naš pas je velik.|Наш пёс большой.
+k11|vaš|Vaš sin je pametan.|Ваш сын умный.
+k11|njihov|Njihov brat spava.|Их брат спит.
+k12|prozor|Prozor je velik.|Окно большое.
+k12|godina|Imam tri godine.|Мне три года.
+k12|svinja|Svinja jede jabuku.|Свинья ест яблоко.
+k12|koliko|Koliko imaš svinja?|Сколько у тебя свиней?
+k13|šta|Šta jede pas?|Что ест собака?
+k13|ko|Ko jede?|Кто ест?
+k13|kako|Kako je tvoj pas?|Как твой пёс?
+k14|brz|Pas je brz.|Пёс быстрый.
+k14|spor|Moj brat je spor.|Мой брат медленный.
+k14|avion|Avion je velik.|Самолёт большой.
+k14|auto|Moj auto je mali.|Моя машина маленькая.
+k14|polako|Kornjača jede polako.|Черепаха ест медленно.
+k15|kuvati|Majka dobro kuva.|Мама хорошо готовит.
+k15|riba|Riba je ukusna.|Рыба вкусная.
+k15|supa|Supa je vruća.|Суп горячий.
+k15|čorba|Otac kuva čorbu.|Папа варит похлёбку.
+k15|ukusan|Pomfrit je ukusan.|Картошка фри вкусная.
+k15|vruć|Hljeb je vruć.|Хлеб горячий.
+k16|igra|Moja igra je velika.|Моя игра большая.
+k16|kompjuter|Imam kompjuter.|У меня есть компьютер.
+k16|igrati|Mačka igra.|Кошка играет.
+k16|drug|On je moj drug.|Он мой товарищ.
+k16|prijatelj|Ti si moj prijatelj.|Ты мой друг.
+k17|voljeti|Volim hljeb.|Я люблю хлеб.
+k17|zgrada|Zgrada je bijela.|Здание белое.
+k17|vrata|Vrata su bijela.|Дверь белая.
+k17|kokoška|Kokoška jede hljeb.|Курица ест хлеб.
+k17|visok|Moj otac je visok.|Мой папа высокий.
+k17|nizak|Moj brat je nizak.|Мой брат низкий.
+k18|htjeti|Hoću pivo.|Я хочу пива.
+k18|krompir|Volim krompir.|Я люблю картошку.
+k18|pasta|Pasta je ukusna.|Паста вкусная.
+k18|suši|Ajkula hoće suši.|Акула хочет суши.
+k19|skup|Auto je skup.|Машина дорогая.
+k19|jeftin|Hljeb je jeftin.|Хлеб дешёвый.
+k19|šolja|Moja šolja je velika.|Моя чашка большая.
+k19|čaša|Čaša je mala.|Стакан маленький.
+k19|braon|Moj pas je braon.|Мой пёс коричневый.
+k19|puno|Puno jedem.|Я много ем.
+k19|malo|Malo spavam.|Я мало сплю.
+k20|grad|Grad je velik.|Город большой.
+k20|more|More je lijepo.|Море красивое.
+k20|prodavnica|Prodavnica je mala.|Магазин маленький.
+k20|Kuda?|Kuda ide tvoj brat?|Куда идёт твой брат?
+k21|baba|Moja baba kuva čorbu.|Моя бабушка варит похлёбку.
+k21|djed|Moj djed je visok.|Мой дедушка высокий.
+k21|pomoć|Treba mi pomoć.|Мне нужна помощь.
+k22|proljeće|Proljeće je lijepo.|Весна красивая.
+k22|ljeto|Ljeto je vruće.|Лето жаркое.
+k22|jesen|Ne volim jesen.|Я не люблю осень.
+k22|zima|Zima je bijela.|Зима белая.
+k22|odakle|Odakle je tvoj prijatelj?|Откуда твой друг?
+k22|ležati|Pas leži kod kuće.|Собака лежит дома.
+k22|pecati|Djed peca na moru.|Дедушка ловит рыбу на море.
+k22|pileći|Volim pileću supu.|Я люблю куриный суп.
+k23|štene|Štene je malo.|Щенок маленький.
+k23|mače|Mače spava.|Котёнок спит.
+k23|pile|Pile jede hljeb.|Цыплёнок ест хлеб.
+k23|pet|Imam pet mačaka.|У меня пять кошек.
+k23|šest|Imam šest pasa.|У меня шесть собак.
+k23|sedam|Imam sedam godina.|Мне семь лет.
+k23|krevet|Krevet je velik.|Кровать большая.
+k23|slika|Slika je lijepa.|Картина красивая.
+k23|stan|Naš stan je mali.|Наша квартира маленькая.
+k23|dirati|Ne diraj psa!|Не трогай собаку!
+k24|rep|Moj pas ima rep.|У моего пса есть хвост.
+k24|lisica|Lisica jede pile.|Лиса ест цыплёнка.
+k24|vuk|Vuk je velik.|Волк большой.
+k24|dug|Rep je dug.|Хвост длинный.
+k24|kratak|Moj rep je kratak.|Мой хвост короткий.
+k24|crn|Moj pas je crn.|Мой пёс чёрный.
+k24|riđ|Pas je riđ.|Пёс рыжий.
+k24|roze|Svinja je roze.|Свинья розовая.
+k24|gladan|Vuk je gladan.|Волк голоден.
+k24|žedan|Pas je žedan.|Собака хочет пить.
+k25|živjeti|Živim u gradu.|Я живу в городе.
+k25|ovdje|Ovdje je lijepo.|Здесь красиво.
+k25|već|Sin već spava.|Сын уже спит.
+k25|sjedjeti|Sjedim kod kuće.|Я сижу дома.
+k25|sjesti|Sjedite, molim.|Садитесь, пожалуйста.
+k25|kesica|Treba li vam kesica?|Вам нужен пакетик?
+k25|šoljica|Šoljica kafe, molim.|Чашечку кофе, пожалуйста.
+k25|čaj|Volim čaj.|Я люблю чай.
+k26|kupovati|Kupujem hljeb.|Я покупаю хлеб.
+k26|putovati|Putujem autobusom.|Я еду на автобусе.
+k26|autobus|Autobus je spor.|Автобус медленный.
+k26|voz|Voz je brz.|Поезд быстрый.
+k26|radovati se|I ja se radujem.|И я радуюсь.
+k26|piti|Pijem vodu.|Я пью воду.
+k26|čuti|Čuješ li me?|Ты меня слышишь?
+k26|zvuk|Čujem zvuk.|Я слышу звук.
+k26|muzika|Volim muziku.|Я люблю музыку.
+k27|moći|Mogu li dobiti vodu?|Можно мне воды?
+k27|stolica|Stolica je mala.|Стул маленький.
+k27|kauč|Kauč je velik.|Диван большой.
+k27|krenuti|Možemo krenuti.|Можем ехать.
+k28|pisati|Sin piše bajku.|Сын пишет сказку.
+k28|pismo|Pismo je dugo.|Письмо длинное.
+k28|bajka|Volim bajke.|Я люблю сказки.
+k28|legenda|Ovo je legenda.|Это легенда.
+k28|kazati|Šta kaže tvoj otac?|Что говорит твой отец?
+k28|govoriti|Govorim ruski.|Я говорю по-русски.
+k28|jako|Jako je lijepo.|Очень красиво.
+k29|kad|Kad sam bila mala, bila sam kod babe.|Когда я была маленькой, я была у бабушки.
+k29|mlad|Moj djed je bio mlad.|Мой дедушка был молодым.
+k29|mapa|Mapa je velika.|Карта большая.
+k29|mjesto|Ovo mjesto je lijepo.|Это место красивое.
+k30|ono|Ono je malo.|Оно маленькое.
+k30|oni|Oni su bili kod kuće.|Они были дома.
+k30|one|One su bile gladne.|Они (женщины) были голодными.
+k30|ona|Ona su bila velika.|Они (средний род) были большими.
+k31|juče|Juče sam bio kod kuće.|Вчера я был дома.
+k31|ranije|Ranije je bilo lijepo.|Раньше было красиво.
+k31|prošle nedjelje|Prošle nedjelje sam bila na moru.|На прошлой неделе я была на море.
+k31|petak|U petak sam bila u gradu.|В пятницу я была в городе.
+k31|subota|Subota je dobar dan.|Суббота — хороший день.
+k31|poslati|Pošalji mi pismo!|Пошли мне письмо!
+k31|lokacija|Ovo je moja lokacija.|Это моё местоположение.
+k32|baka|Baka kuva supu.|Бабуля варит суп.
+k32|deka|Deka voli pivo.|Дедуля любит пиво.
+k33|ujutru|Ujutru pijem čaj.|Утром я пью чай.
+k33|uveče|Uveče sam kod kuće.|Вечером я дома.
+k33|noću|Noću pas spava.|Ночью пёс спит.
+k33|danju|Danju sam u gradu.|Днём я в городе.
+k33|sjutra|Sjutra idem u grad.|Завтра я иду в город.
+k34|slati|Baka šalje pismo.|Бабуля посылает письмо.
+k34|mrzjeti|Moj brat mrzi supu.|Мой брат ненавидит суп.
+k35|raditi|Radila sam kod kuće.|Я работала дома.
+k35|sok|Pijem sok.|Я пью сок.
+k36|rođendan|Sjutra je moj rođendan.|Завтра мой день рождения.
+k36|Čestitam!|Čestitam rođendan!|Поздравляю с днём рождения!
+k36|slava|Sjutra je naša slava.|Завтра наша слава.
+k37|medvjed|Medvjed je velik.|Медведь большой.
+k37|krava|Krava pije vodu.|Корова пьёт воду.
+k37|jaje|Jaje je bijelo.|Яйцо белое.
+k38|narudžbina|Moja narudžbina je velika.|Мой заказ большой.
+k38|naručiti|Naručila sam kafu.|Я заказала кофе.
+k38|dostava|Dostava je skupa.|Доставка дорогая.
+k38|kurir|Kurir je brz.|Курьер быстрый.
+k38|poruka|Poruka je duga.|Сообщение длинное.
+k38|proizvod|Proizvod je jeftin.|Товар дешёвый.
+k38|plaćanje|Plaćanje karticom, molim.|Оплата картой, пожалуйста.
+k39|tegla|Tegla je velika.|Банка большая.
+k40|glup|Vuk je glup.|Волк глупый.
+k40|veseo|Moj brat je veseo.|Мой брат весёлый.
+k40|tužan|Pas je tužan.|Пёс грустный.
+k40|konj|Konj je brz.|Конь быстрый.
+k40|haljina|Haljina je lijepa.|Платье красивое.
+k40|pantalone|Moje pantalone su velike.|Мои брюки большие.
+k40|košulja|Košulja je bijela.|Рубашка белая.
+k40|kaput|Kaput je dug.|Пальто длинное.
+k40|crven|Auto je crven.|Машина красная.

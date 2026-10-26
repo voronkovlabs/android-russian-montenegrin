@@ -14,7 +14,8 @@
         "спать"
       ],
       "answer": "посылать",
-      "explanation": "slati — посылать (обычно, много раз). Формы: šaljem, šalješ, šalje, šaljemo, šaljete, šalju — s меняется на š, l на lj. poslati (урок 31) — послать один раз: Pošalji mi lokaciju!"
+      "explanation": "slati — посылать (обычно, много раз). Формы: šaljem, šalješ, šalje, šaljemo, šaljete, šalju — s меняется на š, l на lj. poslati (урок 31) — послать один раз: Pošalji mi lokaciju!",
+      "example": "Baka šalje pismo. — Бабуля посылает письмо."
     },
     {
       "id": "k34e02",
@@ -111,7 +112,8 @@
         "жить"
       ],
       "answer": "ненавидеть",
-      "explanation": "mrzjeti — ненавидеть. Формы как у voljeti: mrzim, mrziš, mrzi, mrzimo, mrzite, mrze. Volim ljeto, a mrzim zimu."
+      "explanation": "mrzjeti — ненавидеть. Формы как у voljeti: mrzim, mrziš, mrzi, mrzimo, mrzite, mrze. Volim ljeto, a mrzim zimu.",
+      "example": "Moj brat mrzi supu. — Мой брат ненавидит суп."
     },
     {
       "id": "k34e08",

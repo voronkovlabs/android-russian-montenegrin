@@ -14,7 +14,8 @@
         "лапа"
       ],
       "answer": "хвост",
-      "explanation": "rep — мужского рода, как pas: dug rep, kratak rep."
+      "explanation": "rep — мужского рода, как pas: dug rep, kratak rep.",
+      "example": "Moj pas ima rep. — У моего пса есть хвост."
     },
     {
       "id": "k24e02",
@@ -27,7 +28,8 @@
         "кошка",
         "волк"
       ],
-      "answer": "лиса"
+      "answer": "лиса",
+      "example": "Lisica jede pile. — Лиса ест цыплёнка."
     },
     {
       "id": "k24e03",
@@ -40,7 +42,8 @@
         "собака",
         "лиса"
       ],
-      "answer": "волк"
+      "answer": "волк",
+      "example": "Vuk je velik. — Волк большой."
     },
     {
       "id": "k24e04",
@@ -75,7 +78,8 @@
         "короткий",
         "высокий"
       ],
-      "answer": "длинный"
+      "answer": "длинный",
+      "example": "Rep je dug. — Хвост длинный."
     },
     {
       "id": "k24e06",
@@ -89,7 +93,8 @@
         "низкий"
       ],
       "answer": "короткий",
-      "explanation": "В женском роде a выпадает, как у nizak: kratak, kratka, kratko."
+      "explanation": "В женском роде a выпадает, как у nizak: kratak, kratka, kratko.",
+      "example": "Moj rep je kratak. — Мой хвост короткий."
     },
     {
       "id": "k24e07",
@@ -163,7 +168,8 @@
         "белый",
         "коричневый"
       ],
-      "answer": "чёрный"
+      "answer": "чёрный",
+      "example": "Moj pas je crn. — Мой пёс чёрный."
     },
     {
       "id": "k24e12",
@@ -177,7 +183,8 @@
         "розовый"
       ],
       "answer": "рыжий",
-      "explanation": "riđ — рыжий, про шерсть и волосы. Красный — crven."
+      "explanation": "riđ — рыжий, про шерсть и волосы. Красный — crven.",
+      "example": "Pas je riđ. — Пёс рыжий."
     },
     {
       "id": "k24e13",
@@ -191,7 +198,8 @@
         "зелёный"
       ],
       "answer": "розовый",
-      "explanation": "roze не меняется, как braon: roze prase, roze mačka."
+      "explanation": "roze не меняется, как braon: roze prase, roze mačka.",
+      "example": "Svinja je roze. — Свинья розовая."
     },
     {
       "id": "k24e14",
@@ -298,7 +306,8 @@
         "горячий",
         "вкусный"
       ],
-      "answer": "голодный"
+      "answer": "голодный",
+      "example": "Vuk je gladan. — Волк голоден."
     },
     {
       "id": "k24e22",
@@ -339,7 +348,8 @@
         "горячий"
       ],
       "answer": "жаждущий, хочет пить",
-      "explanation": "Žedan sam — «я хочу пить», буквально «я жаждущий». О себе-женщине — Žedna sam."
+      "explanation": "Žedan sam — «я хочу пить», буквально «я жаждущий». О себе-женщине — Žedna sam.",
+      "example": "Pas je žedan. — Собака хочет пить."
     },
     {
       "id": "k24e25",

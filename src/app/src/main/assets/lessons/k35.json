@@ -14,7 +14,8 @@
         "жить"
       ],
       "answer": "делать; работать",
-      "explanation": "raditi — делать и работать: radim, radiš, radi, radimo, radite, rade. Šta radiš? — Что делаешь? Radim — работаю."
+      "explanation": "raditi — делать и работать: radim, radiš, radi, radimo, radite, rade. Šta radiš? — Что делаешь? Radim — работаю.",
+      "example": "Radila sam kod kuće. — Я работала дома."
     },
     {
       "id": "k35e02",
@@ -131,7 +132,8 @@
         "суп",
         "соль"
       ],
-      "answer": "сок"
+      "answer": "сок",
+      "example": "Pijem sok. — Я пью сок."
     },
     {
       "id": "k35e10",

@@ -14,7 +14,8 @@
         "он"
       ],
       "answer": "оно",
-      "explanation": "ono — «оно». Про него — bilo: ono je bilo. Средний род: drvo, sunce, pivo, prase, mače."
+      "explanation": "ono — «оно». Про него — bilo: ono je bilo. Средний род: drvo, sunce, pivo, prase, mače.",
+      "example": "Ono je malo. — Оно маленькое."
     },
     {
       "id": "k30e02",
@@ -174,7 +175,8 @@
         "он"
       ],
       "answer": "они (мужской род)",
-      "explanation": "oni — «они» для слов мужского рода: psi, dječaci."
+      "explanation": "oni — «они» для слов мужского рода: psi, dječaci.",
+      "example": "Oni su bili kod kuće. — Они были дома."
     },
     {
       "id": "k30e12",
@@ -188,7 +190,8 @@
         "она"
       ],
       "answer": "они (женский род)",
-      "explanation": "one — «они» для слов женского рода: mačke, sestre."
+      "explanation": "one — «они» для слов женского рода: mačke, sestre.",
+      "example": "One su bile gladne. — Они (женщины) были голодными."
     },
     {
       "id": "k30e13",
@@ -202,7 +205,8 @@
         "оно"
       ],
       "answer": "они (средний род)",
-      "explanation": "ona — «они» для слов среднего рода: pisma, piva. Пишется так же, как ona «она», различаются по смыслу и глаголу: ona je — она, ona su — они."
+      "explanation": "ona — «они» для слов среднего рода: pisma, piva. Пишется так же, как ona «она», различаются по смыслу и глаголу: ona je — она, ona su — они.",
+      "example": "Ona su bila velika. — Они (средний род) были большими."
     },
     {
       "id": "k30e14",

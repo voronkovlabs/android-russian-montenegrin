@@ -14,7 +14,8 @@
         "ночью"
       ],
       "answer": "утром",
-      "explanation": "ujutru — утром. От jutro: Dobro jutro! — Доброе утро!"
+      "explanation": "ujutru — утром. От jutro: Dobro jutro! — Доброе утро!",
+      "example": "Ujutru pijem čaj. — Утром я пью чай."
     },
     {
       "id": "k33e02",
@@ -28,7 +29,8 @@
         "днём"
       ],
       "answer": "вечером",
-      "explanation": "uveče — вечером. От veče: Dobro veče! — Добрый вечер!"
+      "explanation": "uveče — вечером. От veče: Dobro veče! — Добрый вечер!",
+      "example": "Uveče sam kod kuće. — Вечером я дома."
     },
     {
       "id": "k33e03",
@@ -42,7 +44,8 @@
         "утром"
       ],
       "answer": "ночью",
-      "explanation": "noću — ночью. От noć: Laku noć! — Спокойной ночи!"
+      "explanation": "noću — ночью. От noć: Laku noć! — Спокойной ночи!",
+      "example": "Noću pas spava. — Ночью пёс спит."
     },
     {
       "id": "k33e04",
@@ -56,7 +59,8 @@
         "вечером"
       ],
       "answer": "днём",
-      "explanation": "danju — днём. От dan: Dobar dan! Ещё говорят preko dana — в течение дня."
+      "explanation": "danju — днём. От dan: Dobar dan! Ещё говорят preko dana — в течение дня.",
+      "example": "Danju sam u gradu. — Днём я в городе."
     },
     {
       "id": "k33e05",
@@ -307,7 +311,8 @@
         "вчера",
         "сейчас"
       ],
-      "answer": "завтра"
+      "answer": "завтра",
+      "example": "Sjutra idem u grad. — Завтра я иду в город."
     },
     {
       "id": "k33e22",
