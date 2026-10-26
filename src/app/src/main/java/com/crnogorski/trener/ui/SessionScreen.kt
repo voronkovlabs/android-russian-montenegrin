@@ -2304,6 +2304,17 @@ private fun ResultView(
         if (phase.feedback.isNotBlank()) {
             Text(phase.feedback, style = MaterialTheme.typography.bodyMedium, color = Muted)
         }
+        // Пример с новым словом — своим абзацем и жирным: его читают, а не
+        // пробегают глазами, как пояснение.
+        val example = (exercise as? Exercise.Choice)?.example.orEmpty()
+        if (example.isNotBlank()) {
+            Spacer(Modifier.height(10.dp))
+            Text(
+                example,
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                color = Paper
+            )
+        }
         if (phase.better.isNotBlank()) {
             Spacer(Modifier.height(8.dp))
             Text("Естественнее: ${phase.better}", style = MaterialTheme.typography.bodyMedium, color = Accent)
