@@ -1,0 +1,422 @@
+{
+  "id": "k42",
+  "title": "Nisam znala. Nije ti hladno?",
+  "exercises": [
+    {
+      "id": "k42e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "znati",
+      "hint": "znati — знать",
+      "options": [
+        "знать",
+        "видеть",
+        "иметь"
+      ],
+      "answer": "знать",
+      "explanation": "znati — знать: znam, znaš, zna, znamo, znate, znaju. Как imati: imam — znam.",
+      "example": "Znam ruski. — Я знаю русский."
+    },
+    {
+      "id": "k42e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "znam"
+        },
+        {
+          "ru": "ti",
+          "me": "znaš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "zna"
+        },
+        {
+          "ru": "mi",
+          "me": "znamo"
+        },
+        {
+          "ru": "vi",
+          "me": "znate"
+        },
+        {
+          "ru": "oni",
+          "me": "znaju"
+        }
+      ],
+      "explanation": "znati — знать: znam, znaš, zna, znamo, znate, znaju. Как imati: imam — znam."
+    },
+    {
+      "id": "k42e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ne znam.",
+      "hint": "Ne znam. — Я не знаю.",
+      "options": [
+        "Я не знаю.",
+        "Я не могу.",
+        "Я не вижу."
+      ],
+      "answer": "Я не знаю."
+    },
+    {
+      "id": "k42e04",
+      "type": "choice",
+      "prompt": "Ты знаешь, где моя кошка? — ___ li gdje je moja mačka?",
+      "options": [
+        "Znaš",
+        "Znam",
+        "Znaju"
+      ],
+      "answer": "Znaš",
+      "explanation": "Ti — значит znaš: znaš li? Я — znam, они — znaju.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k42e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nisam znala.",
+      "hint": "Nisam znala. — Я не знала.",
+      "options": [
+        "Я не знала.",
+        "Я не знаю.",
+        "Я не могла."
+      ],
+      "answer": "Я не знала.",
+      "explanation": "Прошедшее: znao (он), znala (она), znali (они). Nisam znala — я не знала, как nisam bila."
+    },
+    {
+      "id": "k42e06",
+      "type": "choice",
+      "prompt": "Он не знал. — Nije ___ .",
+      "options": [
+        "znao",
+        "znala",
+        "znali"
+      ],
+      "answer": "znao",
+      "explanation": "On — мужской род, значит znao: nije znao. Она — nije znala.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k42e07",
+      "type": "word_bank",
+      "prompt": "Мы не знали, где он.",
+      "answer": "Nismo znali gdje je on.",
+      "bank": [
+        "on",
+        "znali",
+        "je",
+        "nismo",
+        "gdje"
+      ],
+      "explanation": "Mi — значит nismo znali."
+    },
+    {
+      "id": "k42e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Imao sam psa.",
+      "hint": "Imao sam psa. — У меня была собака.",
+      "options": [
+        "У меня была собака.",
+        "У меня есть собака.",
+        "Я видел собаку."
+      ],
+      "answer": "У меня была собака.",
+      "explanation": "imati → imao (он), imala (она), imali (они). «У меня была собака» по-черногорски «я имел собаку»: Imao sam psa."
+    },
+    {
+      "id": "k42e09",
+      "type": "choice",
+      "prompt": "У неё была кошка. — Ona je ___ mačku.",
+      "options": [
+        "imala",
+        "imao",
+        "imali"
+      ],
+      "answer": "imala",
+      "explanation": "Ona — женский род, значит imala. Он — imao.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k42e10",
+      "type": "word_bank",
+      "prompt": "Когда я была маленькой, у меня была кошка.",
+      "answer": "Kad sam bila mala, imala sam mačku.",
+      "bank": [
+        "mačku",
+        "bila",
+        "kad",
+        "imala",
+        "sam",
+        "mala",
+        "sam"
+      ],
+      "explanation": "Говорит женщина — bila, mala, imala. Мужчина сказал бы: Kad sam bio mali, imao sam mačku."
+    },
+    {
+      "id": "k42e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nisam mogla spavati.",
+      "hint": "Nisam mogla spavati. — Я не могла спать.",
+      "options": [
+        "Я не могла спать.",
+        "Я не хотела спать.",
+        "Я не могу спать."
+      ],
+      "answer": "Я не могла спать.",
+      "explanation": "moći → mogao (он), mogla (она), mogli (они). g остаётся, как в mogu. Nisam mogla spavati — я не могла спать."
+    },
+    {
+      "id": "k42e12",
+      "type": "choice",
+      "prompt": "Мы не могли спать. — Nismo ___ spavati.",
+      "options": [
+        "mogli",
+        "mogao",
+        "mogla"
+      ],
+      "answer": "mogli",
+      "explanation": "Mi — несколько человек, значит mogli: nismo mogli.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k42e13",
+      "type": "choice",
+      "prompt": "Он не мог есть. — Nije ___ jesti.",
+      "options": [
+        "mogao",
+        "mogla",
+        "mogli"
+      ],
+      "answer": "mogao",
+      "explanation": "On — мужской род, значит mogao. Она — mogla.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k42e14",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я знаю",
+          "me": "znam"
+        },
+        {
+          "ru": "я знала",
+          "me": "znala sam"
+        },
+        {
+          "ru": "у меня есть",
+          "me": "imam"
+        },
+        {
+          "ru": "у меня был",
+          "me": "imao sam"
+        },
+        {
+          "ru": "я могу",
+          "me": "mogu"
+        },
+        {
+          "ru": "я мог",
+          "me": "mogao sam"
+        }
+      ]
+    },
+    {
+      "id": "k42e15",
+      "type": "word_bank",
+      "prompt": "Nisam znala da si ovdje.",
+      "answer": "Я не знала, что ты здесь.",
+      "bank": [
+        "здесь",
+        "не",
+        "я",
+        "что",
+        "знала",
+        "ты"
+      ],
+      "also": [
+        "Не знала, что ты здесь."
+      ],
+      "explanation": "da здесь — «что», как в «я не знала, что…»: Nisam znala da si ovdje — я не знала, что ты здесь."
+    },
+    {
+      "id": "k42e16",
+      "type": "word_bank",
+      "prompt": "У нас был маленький дом.",
+      "answer": "Imali smo malu kuću.",
+      "bank": [
+        "kuću",
+        "smo",
+        "malu",
+        "imali"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k42e17",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "napolju",
+      "hint": "napolju — на улице",
+      "options": [
+        "на улице",
+        "дома",
+        "в городе"
+      ],
+      "answer": "на улице",
+      "explanation": "napolju — на улице, снаружи. Дома — kod kuće.",
+      "example": "Napolju je lijepo. — На улице красиво."
+    },
+    {
+      "id": "k42e18",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "hladno",
+      "hint": "hladno — холодно",
+      "options": [
+        "холодно",
+        "тепло",
+        "жарко"
+      ],
+      "answer": "холодно",
+      "explanation": "hladno — холодно, toplo — тепло. Hladno mi je — мне холодно.",
+      "example": "Noću je hladno. — Ночью холодно."
+    },
+    {
+      "id": "k42e19",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Napolju je hladno.",
+      "hint": "Napolju je hladno. — На улице холодно.",
+      "options": [
+        "На улице холодно.",
+        "На улице тепло.",
+        "Дома холодно."
+      ],
+      "answer": "На улице холодно."
+    },
+    {
+      "id": "k42e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nije ti hladno u tome?",
+      "hint": "Nije ti hladno u tome? — Тебе не холодно в этом?",
+      "options": [
+        "Тебе не холодно в этом?",
+        "Тебе нравится это?",
+        "Ты был на улице?"
+      ],
+      "answer": "Тебе не холодно в этом?",
+      "explanation": "Nije ti hladno u tome? — «тебе не холодно в этом?» ti — «тебе», как в sviđa ti se. u tome — «в этом», об одежде. Так заботливо спрашивают, когда человек легко одет."
+    },
+    {
+      "id": "k42e21",
+      "type": "choice",
+      "prompt": "Подруга собирается на улицу в лёгкой рубашке, а там холодно. Что скажешь?",
+      "options": [
+        "Nije ti hladno u tome?",
+        "Nikad nisam čuo za to.",
+        "Srećan rođendan!"
+      ],
+      "answer": "Nije ti hladno u tome?",
+      "explanation": "Nije ti hladno u tome? — «тебе не холодно в этом?» ti — «тебе», как в sviđa ti se. u tome — «в этом», об одежде. Так заботливо спрашивают, когда человек легко одет.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k42e22",
+      "type": "word_bank",
+      "prompt": "Ему холодно в этом пальто.",
+      "answer": "Hladno mu je u tom kaputu.",
+      "bank": [
+        "kaputu",
+        "je",
+        "hladno",
+        "u",
+        "mu",
+        "tom"
+      ],
+      "explanation": "Ему — mu: hladno mu je. u tom kaputu — «в этом пальто»: tome → tom, kaput → u kaputu."
+    },
+    {
+      "id": "k42e23",
+      "type": "choice",
+      "prompt": "Им не холодно в таких брюках? — Nije ___ hladno u takvim pantalonama?",
+      "options": [
+        "im",
+        "mu",
+        "ti"
+      ],
+      "answer": "im",
+      "explanation": "Им — im: nije im hladno. Кому холодно: mi — мне, ti — тебе, mu — ему, joj — ей, im — им.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k42e24",
+      "type": "choice",
+      "prompt": "— Nije joj hladno u toj haljini?\n— Ne, ima kaput.\n\nПочему ей не холодно?",
+      "options": [
+        "У неё есть пальто.",
+        "На улице тепло.",
+        "Она дома."
+      ],
+      "answer": "У неё есть пальто.",
+      "explanation": "Ей — joj: nije joj hladno. u toj haljini — «в этом платье».",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k42e25",
+      "type": "speaking",
+      "phrase": "Napolju je hladno.",
+      "translation": "На улице холодно."
+    },
+    {
+      "id": "k42e26",
+      "type": "speaking",
+      "phrase": "Hladno mu je u tom kaputu.",
+      "translation": "Ему холодно в этом пальто."
+    },
+    {
+      "id": "k42e27",
+      "type": "repeat",
+      "phrase": "Nisam znala da si ovdje.",
+      "translation": "Я не знала, что ты здесь."
+    }
+  ],
+  "words": [
+    {
+      "me": "znati",
+      "ru": "знать"
+    },
+    {
+      "me": "znao / znala",
+      "ru": "знал / знала"
+    },
+    {
+      "me": "imao / imala",
+      "ru": "имел / имела"
+    },
+    {
+      "me": "mogao / mogla",
+      "ru": "мог / могла"
+    },
+    {
+      "me": "napolju",
+      "ru": "на улице"
+    },
+    {
+      "me": "hladno",
+      "ru": "холодно"
+    },
+    {
+      "me": "Nije ti hladno u tome?",
+      "ru": "Тебе не холодно в этом?"
+    }
+  ]
+}

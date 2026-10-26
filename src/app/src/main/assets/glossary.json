@@ -1822,7 +1822,16 @@
   "čuli": "слышали — от čuti",
   "čuo": "слышал — от čuti",
   "vuka": "волка — от vuk",
-  "medvjeda": "медведя — от medvjed"
+  "medvjeda": "медведя — от medvjed",
+  "im": "им (nije im hladno — им не холодно)",
+  "imala": "имела, у неё была — от imati",
+  "imali": "имели, у них был — от imati",
+  "mačku": "кошку — от mačka",
+  "mogli": "могли — от moći",
+  "tom": "этом (u tom kaputu — в этом пальто)",
+  "takvim": "таких (u takvim pantalonama)",
+  "znali": "знали — от znati",
+  "znaš": "знаешь — от znati"
  },
  "ru": {
   "а": "a",
@@ -2455,6 +2464,21 @@
   "собаку": "psa",
   "такой": "takav",
   "такую": "takvu",
-  "об": "za (čuti za to — слышать об этом)"
+  "об": "za (čuti za to — слышать об этом)",
+  "брюках": "pantalonama (u pantalonama)",
+  "знаешь": "znaš",
+  "знала": "znala",
+  "знали": "znali",
+  "знать": "znati",
+  "знаю": "znam",
+  "им": "im",
+  "иметь": "imati",
+  "маленький": "mali",
+  "мог": "mogao",
+  "могла": "mogla",
+  "могли": "mogli",
+  "тепло": "toplo",
+  "улице": "napolju (на улице)",
+  "этом": "tome, tom"
  }
 }

@@ -3208,6 +3208,91 @@ L.append(dict(id='k41', title='Nikad nisam vidjela takvu ljepotu', section=S3, w
     echo('Nikad nisam čuo za to.', 'Я никогда об этом не слышал.'),
 ]))
 
+# --- Урок 42 ---
+# znati в настоящем и прошедшем, imao, mogao. Фраза Кати: «Не замёрзнешь в
+# этом?» — Nije ti hladno u tome? и Napolju je hladno.
+ZNATI = 'znati — знать: znam, znaš, zna, znamo, znate, znaju. Как imati: imam — znam.'
+ZNAO = ('Прошедшее: znao (он), znala (она), znali (они). Nisam znala — я не знала, как '
+        'nisam bila.')
+IMAO = ('imati → imao (он), imala (она), imali (они). «У меня была собака» по-черногорски '
+        '«я имел собаку»: Imao sam psa.')
+MOGAO = ('moći → mogao (он), mogla (она), mogli (они). g остаётся, как в mogu. '
+         'Nisam mogla spavati — я не могла спать.')
+DA = ('da здесь — «что», как в «я не знала, что…»: Nisam znala da si ovdje — я не знала, '
+      'что ты здесь.')
+HLADNO = 'hladno — холодно, toplo — тепло. Hladno mi je — мне холодно.'
+NECE = ('Nije ti hladno u tome? — «тебе не холодно в этом?» ti — «тебе», как в sviđa ti se. '
+        'u tome — «в этом», об одежде. Так заботливо спрашивают, когда человек легко одет.')
+L.append(dict(id='k42', title='Nisam znala. Nije ti hladno?', section=S3, words=[
+    ('znati', 'знать'), ('znao / znala', 'знал / знала'), ('imao / imala', 'имел / имела'),
+    ('mogao / mogla', 'мог / могла'), ('napolju', 'на улице'), ('hladno', 'холодно'),
+    ('Nije ti hladno u tome?', 'Тебе не холодно в этом?')],
+    ex=[
+    dict(new('znati', 'знать', ['знать', 'видеть', 'иметь'], label='Новый глагол'),
+         explanation=ZNATI),
+    dict(pairs(('ja', 'znam'), ('ti', 'znaš'), ('on / ona', 'zna'), ('mi', 'znamo'),
+               ('vi', 'znate'), ('oni', 'znaju')), explanation=ZNATI),
+    phrase('Ne znam.', 'Я не знаю.', ['Я не знаю.', 'Я не могу.', 'Я не вижу.']),
+    pick('Ты знаешь, где моя кошка? — ___ li gdje je moja mačka?', ['Znaš', 'Znam', 'Znaju'],
+         'Znaš', explanation='Ti — значит znaš: znaš li? Я — znam, они — znaju.',
+         label='Вставь слово'),
+    dict(phrase('Nisam znala.', 'Я не знала.', ['Я не знала.', 'Я не знаю.', 'Я не могла.']),
+         explanation=ZNAO),
+    pick('Он не знал. — Nije ___ .', ['znao', 'znala', 'znali'], 'znao',
+         explanation='On — мужской род, значит znao: nije znao. Она — nije znala.',
+         label='Вставь слово'),
+    dict(bank('Мы не знали, где он.', 'Nismo znali gdje je on.', ['on', 'znali', 'je', 'nismo', 'gdje']),
+         explanation='Mi — значит nismo znali.'),
+    dict(phrase('Imao sam psa.', 'У меня была собака.',
+                ['У меня была собака.', 'У меня есть собака.', 'Я видел собаку.']), explanation=IMAO),
+    pick('У неё была кошка. — Ona je ___ mačku.', ['imala', 'imao', 'imali'], 'imala',
+         explanation='Ona — женский род, значит imala. Он — imao.', label='Вставь слово'),
+    dict(bank('Когда я была маленькой, у меня была кошка.', 'Kad sam bila mala, imala sam mačku.',
+              ['mačku', 'bila', 'kad', 'imala', 'sam', 'mala', 'sam']),
+         explanation='Говорит женщина — bila, mala, imala. Мужчина сказал бы: Kad sam bio mali, '
+                     'imao sam mačku.'),
+    dict(phrase('Nisam mogla spavati.', 'Я не могла спать.',
+                ['Я не могла спать.', 'Я не хотела спать.', 'Я не могу спать.']), explanation=MOGAO),
+    pick('Мы не могли спать. — Nismo ___ spavati.', ['mogli', 'mogao', 'mogla'], 'mogli',
+         explanation='Mi — несколько человек, значит mogli: nismo mogli.', label='Вставь слово'),
+    pick('Он не мог есть. — Nije ___ jesti.', ['mogao', 'mogla', 'mogli'], 'mogao',
+         explanation='On — мужской род, значит mogao. Она — mogla.', label='Вставь слово'),
+    pairs(('я знаю', 'znam'), ('я знала', 'znala sam'), ('у меня есть', 'imam'),
+          ('у меня был', 'imao sam'), ('я могу', 'mogu'), ('я мог', 'mogao sam')),
+    dict(rubank('Nisam znala da si ovdje.', 'Я не знала, что ты здесь.',
+                ['здесь', 'не', 'я', 'что', 'знала', 'ты']),
+         also=['Не знала, что ты здесь.'], explanation=DA),
+    earbank('Imali smo malu kuću.', 'У нас был маленький дом.',
+            ['kuću', 'smo', 'malu', 'imali']),
+    dict(new('napolju', 'на улице', ['на улице', 'дома', 'в городе']),
+         explanation='napolju — на улице, снаружи. Дома — kod kuće.'),
+    dict(new('hladno', 'холодно', ['холодно', 'тепло', 'жарко']), explanation=HLADNO),
+    phrase('Napolju je hladno.', 'На улице холодно.',
+           ['На улице холодно.', 'На улице тепло.', 'Дома холодно.']),
+    dict(phrase('Nije ti hladno u tome?', 'Тебе не холодно в этом?',
+                ['Тебе не холодно в этом?', 'Тебе нравится это?', 'Ты был на улице?']),
+         explanation=NECE),
+    pick('Подруга собирается на улицу в лёгкой рубашке, а там холодно. Что скажешь?',
+         ['Nije ti hladno u tome?', 'Nikad nisam čuo za to.', 'Srećan rođendan!'],
+         'Nije ti hladno u tome?', explanation=NECE, label='Что скажешь?'),
+    dict(bank('Ему холодно в этом пальто.', 'Hladno mu je u tom kaputu.',
+              ['kaputu', 'je', 'hladno', 'u', 'mu', 'tom']),
+         explanation='Ему — mu: hladno mu je. u tom kaputu — «в этом пальто»: tome → tom, '
+                     'kaput → u kaputu.'),
+    pick('Им не холодно в таких брюках? — Nije ___ hladno u takvim pantalonama?',
+         ['im', 'mu', 'ti'], 'im',
+         explanation='Им — im: nije im hladno. Кому холодно: mi — мне, ti — тебе, mu — ему, '
+                     'joj — ей, im — им.', label='Вставь слово'),
+    pick('— Nije joj hladno u toj haljini?\n— Ne, ima kaput.\n\n'
+         'Почему ей не холодно?', ['У неё есть пальто.', 'На улице тепло.', 'Она дома.'],
+         'У неё есть пальто.',
+         explanation='Ей — joj: nije joj hladno. u toj haljini — «в этом платье».',
+         label='Мини-диалог'),
+    say('Napolju je hladno.', 'На улице холодно.'),
+    say('Hladno mu je u tom kaputu.', 'Ему холодно в этом пальто.'),
+    echo('Nisam znala da si ovdje.', 'Я не знала, что ты здесь.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
