@@ -1305,8 +1305,25 @@ private fun WordBankAnswer(
     // такое же решение по памяти.
     val bank = remember(ex.id) { (ex.bank + extra).shuffled() }
 
-    Label("Собери фразу")
-    Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = false)
+    if (ex.byEar) {
+        // На слух: фраза звучит сама, перевод открывается после ответа — иначе
+        // собирали бы по русскому, а не по услышанному.
+        LaunchedEffect(ex.id) { if (enabled) speaker.speak(ex.answer) }
+        Label("Собери то, что услышишь")
+        if (enabled) {
+            Text("Текст закрыт — слушай.", style = MaterialTheme.typography.headlineSmall, color = Muted)
+        } else {
+            Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = false)
+        }
+        Spacer(Modifier.height(12.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            SmallAction("Прослушать") { speaker.speak(ex.answer) }
+            SmallAction("Медленнее") { speaker.speak(ex.answer, slow = true) }
+        }
+    } else {
+        Label("Собери фразу")
+        Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = false)
+    }
     Spacer(Modifier.height(20.dp))
 
     Box(
