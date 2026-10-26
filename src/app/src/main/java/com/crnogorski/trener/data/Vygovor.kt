@@ -63,9 +63,13 @@ object Vygovor {
      * незнакомое написание с заглавной он читает иначе, чем со строчной.
      */
     fun say(text: String): String {
+        // Значки разметки заданий движок читает словами (Катя, 26.10.2026):
+        // «Krave su lijepe. → ___ su lijepe.» звучало со «стрелкой вправо».
+        // Стрелка и пропуск — это пауза, а не текст.
+        val clean = MARKS.replace(text, ", ")
         val m = map
-        if (m.isEmpty()) return text
-        return WORD.replace(text) { found ->
+        if (m.isEmpty()) return clean
+        return WORD.replace(clean) { found ->
             val word = found.value
             val to = m[word.lowercase()] ?: return@replace word
             if (word.first().isUpperCase() && to.isNotEmpty()) {
@@ -75,4 +79,7 @@ object Vygovor {
             }
         }
     }
+
+    /** Стрелки и пропуски «___» вместе с пробелами вокруг. */
+    private val MARKS = Regex("""\s*(?:[→←⇒⇐↔]|_{2,})\s*""")
 }
