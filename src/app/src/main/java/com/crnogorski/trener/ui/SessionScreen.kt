@@ -476,7 +476,15 @@ private fun ExerciseBody(
 
         is Exercise.WordBank -> {
             val extra = remember(state.index) { decoys(state, ex) }
-            WordBankAnswer(ex, extra, state.glossary.ru, sayHint, speaker, enabled, onSubmit)
+            // Перевод на русский (Катя, 26.10.2026): условие черногорское, плашки
+            // русские. Подсказки тогда черногорские, а нажатое слово звучит само.
+            val native = hasCyrillic(ex.answer)
+            WordBankAnswer(
+                ex, extra,
+                if (native) state.glossary.me else state.glossary.ru,
+                if (native) { w -> speaker.speak(w) } else sayHint,
+                speaker, enabled, onSubmit
+            )
         }
 
         is Exercise.Listening -> ListeningAnswer(ex, speaker, enabled, onSubmit)
@@ -950,13 +958,15 @@ private fun spokenAfterChoice(prompt: String, option: String): String? {
 private fun decoys(state: SessionState, ex: Exercise.WordBank): List<String> {
     val own = ex.bank.mapTo(mutableSetOf()) { it.lowercase() }
     val pool = linkedSetOf<String>()
+    // Плашки русские — значит и лишние русские, из русских строк того же занятия.
+    val ru = hasCyrillic(ex.answer)
     fun take(word: String) {
         val w = word.trim { !it.isLetter() }
-        if (w.isEmpty() || hasCyrillic(w) || w.lowercase() in own) return
+        if (w.isEmpty() || hasCyrillic(w) != ru || w.lowercase() in own) return
         pool += w
     }
     fun takeText(text: String) {
-        if (hasCyrillic(text)) return
+        if (hasCyrillic(text) != ru) return
         text.split(' ', '\n').forEachIndexed { i, word ->
             val w = word.trim { !it.isLetter() }
             if (w.isEmpty()) return@forEachIndexed
@@ -967,10 +977,10 @@ private fun decoys(state: SessionState, ex: Exercise.WordBank): List<String> {
     state.items.forEach { item ->
         when (val other = item.exercise) {
             ex -> Unit
-            is Exercise.WordBank -> other.bank.forEach(::take)
+            is Exercise.WordBank -> if (ru) takeText(other.prompt) else other.bank.forEach(::take)
             is Exercise.Choice -> (other.options + other.prompt).forEach(::takeText)
-            is Exercise.Speaking -> takeText(other.phrase)
-            is Exercise.Repeat -> takeText(other.phrase)
+            is Exercise.Speaking -> takeText(if (ru) other.translation else other.phrase)
+            is Exercise.Repeat -> takeText(if (ru) other.translation else other.phrase)
             else -> Unit
         }
     }
@@ -1309,6 +1319,8 @@ private fun WordBankAnswer(
     // но при каждом новом появлении заново: порядок, выученный на повторении,
     // такое же решение по памяти.
     val bank = remember(ex.id) { (ex.bank + extra).shuffled() }
+    // Плашки русские: голос sr-RS прочёл бы их кашей, поэтому молчат.
+    val native = hasCyrillic(ex.answer)
 
     if (ex.byEar) {
         // На слух: фраза звучит сама, перевод открывается после ответа — иначе
@@ -1324,6 +1336,16 @@ private fun WordBankAnswer(
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             SmallAction("Прослушать") { speaker.speak(ex.answer) }
             SmallAction("Медленнее") { speaker.speak(ex.answer, slow = true) }
+        }
+    } else if (native) {
+        // Черногорская фраза звучит сама — её переводят, а не читают глазами.
+        LaunchedEffect(ex.id) { if (enabled) speaker.speak(ex.prompt) }
+        Label("Переведи на русский")
+        Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = true)
+        Spacer(Modifier.height(12.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            SmallAction("Прослушать") { speaker.speak(ex.prompt) }
+            SmallAction("Медленнее") { speaker.speak(ex.prompt, slow = true) }
         }
     } else {
         Label("Собери фразу")
@@ -1369,7 +1391,7 @@ private fun WordBankAnswer(
             Box(Modifier.alpha(if (taken) 0f else 1f)) {
                 // Нажатая плашка звучит (заметка 232): слово слышно, пока его кладут.
                 Chip(word, filled = false, enabled = enabled && !taken) {
-                    speaker.speak(word)
+                    if (!native) speaker.speak(word)
                     picked = picked + at
                 }
             }
@@ -1380,7 +1402,8 @@ private fun WordBankAnswer(
         Spacer(Modifier.height(20.dp))
         PrimaryButton("Проверить", enabled = picked.isNotEmpty()) {
             // Звучит верная фраза, а не собранная: ошибочную слушать незачем.
-            speaker.speak(ex.answer)
+            // У перевода на русский звучит черногорское условие.
+            speaker.speak(if (native) ex.prompt else ex.answer)
             onSubmit(picked.joinToString(" ") { bank[it] })
         }
     }
@@ -2266,6 +2289,8 @@ private fun ResultView(
     val target = when (exercise) {
         is Exercise.TranslateToNative -> false
         is Exercise.Word -> !exercise.native
+        // Собранный перевод на русский: эталон русский, звучать ему незачем.
+        is Exercise.WordBank -> !hasCyrillic(exercise.answer)
         else -> true
     }
 
