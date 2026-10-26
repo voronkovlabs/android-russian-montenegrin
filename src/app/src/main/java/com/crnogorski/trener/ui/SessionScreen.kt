@@ -828,7 +828,10 @@ private fun ChoiceAnswer(
     }
     fun say(slow: Boolean = false) {
         ear.cancel()
-        speaker.speak(ex.prompt, slow = slow, onDone = { listen() })
+        // В мини-диалоге звучат только черногорские строки: русский вопрос
+        // голос sr-RS прочёл бы кашей.
+        val text = if (dialog) montenegrinPart(ex.prompt) else ex.prompt
+        speaker.speak(text, slow = slow, onDone = { listen() })
     }
 
     LaunchedEffect(ex.id) {
@@ -868,7 +871,9 @@ private fun ChoiceAnswer(
         Spacer(Modifier.height(8.dp))
         Text(ex.hint, style = MaterialTheme.typography.bodyLarge, color = Muted)
     }
-    if (ex.byEar || fresh) {
+    // Черногорское условие можно послушать (Катя, 26.10.2026): само оно не
+    // звучит — читают глазами, — но кнопки есть всегда.
+    if (ex.byEar || fresh || quiet || dialog) {
         Spacer(Modifier.height(12.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             SmallAction("Прослушать") { say() }
