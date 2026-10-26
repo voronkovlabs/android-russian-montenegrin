@@ -247,6 +247,12 @@
       "title": "Ponavljanje. Nemoj da bacaš tegle!",
       "file": "k39.json",
       "section": "Раздел 3"
+    },
+    {
+      "id": "k40",
+      "title": "Konj u kaputu. Sviđa mi se!",
+      "file": "k40.json",
+      "section": "Раздел 3"
     }
   ]
 }

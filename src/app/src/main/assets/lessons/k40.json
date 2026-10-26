@@ -1,0 +1,419 @@
+{
+  "id": "k40",
+  "title": "Konj u kaputu. Sviđa mi se!",
+  "exercises": [
+    {
+      "id": "k40e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "glup",
+      "hint": "glup — глупый",
+      "options": [
+        "глупый",
+        "весёлый",
+        "грустный"
+      ],
+      "answer": "глупый",
+      "explanation": "glup — глупый: on je glup, ona je glupa, ono je glupo."
+    },
+    {
+      "id": "k40e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "veseo",
+      "hint": "veseo — весёлый",
+      "options": [
+        "весёлый",
+        "грустный",
+        "глупый"
+      ],
+      "answer": "весёлый",
+      "explanation": "veseo — весёлый: on je veseo, ona je vesela, ono je veselo. В женском и среднем роде появляется l: vesela, veselo."
+    },
+    {
+      "id": "k40e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "tužan",
+      "hint": "tužan — грустный",
+      "options": [
+        "грустный",
+        "глупый",
+        "весёлый"
+      ],
+      "answer": "грустный",
+      "explanation": "tužan — грустный: on je tužan, ona je tužna, ono je tužno. В женском и среднем роде a выпадает, как pametan → pametna."
+    },
+    {
+      "id": "k40e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "pametan",
+          "me": "glup"
+        },
+        {
+          "ru": "pametna",
+          "me": "glupa"
+        },
+        {
+          "ru": "veseo",
+          "me": "tužan"
+        },
+        {
+          "ru": "vesela",
+          "me": "tužna"
+        }
+      ],
+      "explanation": "Противоположности: pametan — glup (умный — глупый), veseo — tužan (весёлый — грустный). Она: pametna — glupa, vesela — tužna. Оно: pametno — glupo, veselo — tužno."
+    },
+    {
+      "id": "k40e05",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "konj",
+      "hint": "konj — конь",
+      "options": [
+        "конь",
+        "корова",
+        "волк"
+      ],
+      "answer": "конь"
+    },
+    {
+      "id": "k40e06",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "платье",
+          "me": "haljina"
+        },
+        {
+          "ru": "брюки",
+          "me": "pantalone"
+        },
+        {
+          "ru": "рубашка",
+          "me": "košulja"
+        },
+        {
+          "ru": "пальто",
+          "me": "kaput"
+        }
+      ]
+    },
+    {
+      "id": "k40e07",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Konj je u kaputu.",
+      "hint": "Konj je u kaputu. — Конь в пальто.",
+      "options": [
+        "Конь в пальто.",
+        "Конь в рубашке.",
+        "Корова в пальто."
+      ],
+      "answer": "Конь в пальто.",
+      "explanation": "u kaputu — в пальто: kaput → u kaputu. Так же u haljini, u košulji, u pantalonama. Konj u kaputu — конь в пальто."
+    },
+    {
+      "id": "k40e08",
+      "type": "choice",
+      "prompt": "Свинья в платье. — Svinja je u ___ .",
+      "options": [
+        "haljini",
+        "haljina",
+        "haljinu"
+      ],
+      "answer": "haljini",
+      "explanation": "haljina → u haljini: «в чём?» у слов на -a — окончание -i.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k40e09",
+      "type": "choice",
+      "prompt": "Корова была весёлой. — Krava je bila ___ .",
+      "options": [
+        "vesela",
+        "veseo",
+        "veselo"
+      ],
+      "answer": "vesela",
+      "explanation": "Krava — женский род, значит vesela: krava je bila vesela.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k40e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Sviđa mi se.",
+      "hint": "Sviđa mi se. — Мне нравится.",
+      "options": [
+        "Мне нравится.",
+        "Мне грустно.",
+        "Мне весело."
+      ],
+      "answer": "Мне нравится.",
+      "explanation": "sviđa mi se — мне нравится. Устроено как по-русски: кому нравится. mi — мне, ti — тебе, mu — ему, joj — ей. Sviđa mi se kaput."
+    },
+    {
+      "id": "k40e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Psu se sviđa nova haljina.",
+      "hint": "Psu se sviđa nova haljina. — Собаке нравится новое платье.",
+      "options": [
+        "Собаке нравится новое платье.",
+        "Собака купила новое платье.",
+        "Кошке нравится новое платье."
+      ],
+      "answer": "Собаке нравится новое платье.",
+      "explanation": "psu — «собаке», от pas. Кому нравится: psu, konju, medvjedu (мужской род: -u), mački, kravi (женский: -i). Psu se sviđa haljina."
+    },
+    {
+      "id": "k40e12",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "мне нравится",
+          "me": "sviđa mi se"
+        },
+        {
+          "ru": "тебе нравится",
+          "me": "sviđa ti se"
+        },
+        {
+          "ru": "ему нравится",
+          "me": "sviđa mu se"
+        },
+        {
+          "ru": "ей нравится",
+          "me": "sviđa joj se"
+        }
+      ],
+      "explanation": "sviđa mi se — мне нравится. Устроено как по-русски: кому нравится. mi — мне, ti — тебе, mu — ему, joj — ей. Sviđa mi se kaput."
+    },
+    {
+      "id": "k40e13",
+      "type": "choice",
+      "prompt": "Ей нравится красная рубашка. — Sviđa ___ se crvena košulja.",
+      "options": [
+        "joj",
+        "mu",
+        "mi"
+      ],
+      "answer": "joj",
+      "explanation": "Ей — joj: sviđa joj se. Ему было бы mu, мне — mi. crvena — красная: crven, crvena, crveno.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k40e14",
+      "type": "choice",
+      "prompt": "Медведю нравятся розовые брюки. — Medvjedu se ___ roze pantalone.",
+      "options": [
+        "sviđaju",
+        "sviđa",
+        "sviđam"
+      ],
+      "answer": "sviđaju",
+      "explanation": "pantalone — множественное число, как «брюки», поэтому sviđaju: medvjedu se sviđaju roze pantalone.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k40e15",
+      "type": "word_bank",
+      "prompt": "Коню нравится белое пальто.",
+      "answer": "Konju se sviđa bijeli kaput.",
+      "bank": [
+        "kaput",
+        "se",
+        "konju",
+        "bijeli",
+        "sviđa"
+      ],
+      "explanation": "konj → konju — «коню», как pas → psu. kaput — мужского рода, поэтому bijeli, хотя «пальто» по-русски среднего."
+    },
+    {
+      "id": "k40e16",
+      "type": "word_bank",
+      "prompt": "Мне нравится твоя красная рубашка.",
+      "answer": "Sviđa mi se tvoja crvena košulja.",
+      "bank": [
+        "košulja",
+        "mi",
+        "crvena",
+        "tvoja",
+        "sviđa",
+        "se"
+      ],
+      "explanation": "košulja — женский род, поэтому tvoja crvena."
+    },
+    {
+      "id": "k40e17",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Volim da plivam.",
+      "hint": "Volim da plivam. — Мне нравится плавать.",
+      "options": [
+        "Мне нравится плавать.",
+        "Мне нравится читать.",
+        "Я умею плавать."
+      ],
+      "answer": "Мне нравится плавать.",
+      "explanation": "О занятиях говорят volim da + глагол: Volim da plivam — мне нравится плавать, буквально «люблю плавать». sviđa mi se — чаще о вещах и людях."
+    },
+    {
+      "id": "k40e18",
+      "type": "word_bank",
+      "prompt": "Мне нравится плавать.",
+      "answer": "Volim da plivam.",
+      "bank": [
+        "plivam",
+        "da",
+        "volim"
+      ],
+      "explanation": "О занятиях говорят volim da + глагол: Volim da plivam — мне нравится плавать, буквально «люблю плавать». sviđa mi se — чаще о вещах и людях."
+    },
+    {
+      "id": "k40e19",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Medvjed voli da čita knjige.",
+      "hint": "Medvjed voli da čita knjige. — Медведю нравится читать книги.",
+      "options": [
+        "Медведю нравится читать книги.",
+        "Медведь пишет книги.",
+        "Медведю нравятся книги про мёд."
+      ],
+      "answer": "Медведю нравится читать книги.",
+      "explanation": "čitati — читать: čitam, čitaš, čita. knjiga — книга, много: knjige."
+    },
+    {
+      "id": "k40e20",
+      "type": "choice",
+      "prompt": "Ему нравится читать. — On voli da ___ .",
+      "options": [
+        "čita",
+        "čitam",
+        "čitaju"
+      ],
+      "answer": "čita",
+      "explanation": "On — значит čita: on voli da čita. Я — volim da čitam.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k40e21",
+      "type": "word_bank",
+      "prompt": "Глупой акуле нравится плавать в супе.",
+      "answer": "Glupa ajkula voli da pliva u supi.",
+      "bank": [
+        "supi",
+        "voli",
+        "ajkula",
+        "u",
+        "pliva",
+        "glupa",
+        "da"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k40e22",
+      "type": "choice",
+      "prompt": "— Sviđa li ti se moj bijeli kaput?\n— Ne, ali sviđa mi se tvoja crvena haljina.\n\nЧто нравится?",
+      "options": [
+        "Красное платье.",
+        "Белое пальто.",
+        "Красная рубашка."
+      ],
+      "answer": "Красное платье.",
+      "explanation": "Sviđa li ti se…? — Тебе нравится…? li делает вопрос, как в Imate li…?",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k40e23",
+      "type": "word_bank",
+      "prompt": "Грустная корова читает книгу.",
+      "answer": "Tužna krava čita knjigu.",
+      "bank": [
+        "knjigu",
+        "krava",
+        "čita",
+        "tužna"
+      ],
+      "explanation": "Krava — женский род, значит tužna. knjiga → knjigu: «что читает?»"
+    },
+    {
+      "id": "k40e24",
+      "type": "speaking",
+      "phrase": "Konj u kaputu je veseo.",
+      "translation": "Конь в пальто весёлый."
+    },
+    {
+      "id": "k40e25",
+      "type": "speaking",
+      "phrase": "Sviđa mi se tvoja crvena haljina.",
+      "translation": "Мне нравится твоё красное платье."
+    },
+    {
+      "id": "k40e26",
+      "type": "repeat",
+      "phrase": "Psu se sviđa nova haljina.",
+      "translation": "Собаке нравится новое платье."
+    }
+  ],
+  "words": [
+    {
+      "me": "glup",
+      "ru": "глупый"
+    },
+    {
+      "me": "veseo",
+      "ru": "весёлый"
+    },
+    {
+      "me": "tužan",
+      "ru": "грустный"
+    },
+    {
+      "me": "konj",
+      "ru": "конь"
+    },
+    {
+      "me": "haljina",
+      "ru": "платье"
+    },
+    {
+      "me": "pantalone",
+      "ru": "брюки"
+    },
+    {
+      "me": "košulja",
+      "ru": "рубашка"
+    },
+    {
+      "me": "kaput",
+      "ru": "пальто"
+    },
+    {
+      "me": "crven",
+      "ru": "красный"
+    },
+    {
+      "me": "sviđa mi se",
+      "ru": "мне нравится"
+    },
+    {
+      "me": "Volim da plivam.",
+      "ru": "Мне нравится плавать."
+    },
+    {
+      "me": "čitati",
+      "ru": "читать"
+    },
+    {
+      "me": "knjiga",
+      "ru": "книга"
+    }
+  ]
+}

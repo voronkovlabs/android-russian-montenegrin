@@ -3037,6 +3037,93 @@ L.append(dict(id='k39', title='Ponavljanje. Nemoj da bacaš tegle!', section=S3,
     echo('Nemoj da bacaš tegle!', 'Не выбрасывай банки!'),
 ]))
 
+# --- Урок 40 (абсурдный) ---
+# Черты характера glup, veseo, tužan; одежда парами (haljina, pantalone, košulja,
+# kaput); «нравится» о вещах (sviđa mi se) и о занятиях (volim da…). Конь в пальто.
+GLUP = 'glup — глупый: on je glup, ona je glupa, ono je glupo.'
+VESEO = ('veseo — весёлый: on je veseo, ona je vesela, ono je veselo. В женском и среднем роде '
+         'появляется l: vesela, veselo.')
+TUZAN = ('tužan — грустный: on je tužan, ona je tužna, ono je tužno. В женском и среднем роде a '
+         'выпадает, как pametan → pametna.')
+U_KAPUTU = ('u kaputu — в пальто: kaput → u kaputu. Так же u haljini, u košulji, u pantalonama. '
+            'Konj u kaputu — конь в пальто.')
+SVIDJA = ('sviđa mi se — мне нравится. Устроено как по-русски: кому нравится. mi — мне, '
+          'ti — тебе, mu — ему, joj — ей. Sviđa mi se kaput.')
+PSU = ('psu — «собаке», от pas. Кому нравится: psu, konju, medvjedu (мужской род: -u), '
+       'mački, kravi (женский: -i). Psu se sviđa haljina.')
+VOLIM_DA = ('О занятиях говорят volim da + глагол: Volim da plivam — мне нравится плавать, '
+            'буквально «люблю плавать». sviđa mi se — чаще о вещах и людях.')
+CITATI = 'čitati — читать: čitam, čitaš, čita. knjiga — книга, много: knjige.'
+L.append(dict(id='k40', title='Konj u kaputu. Sviđa mi se!', section=S3, words=[
+    ('glup', 'глупый'), ('veseo', 'весёлый'), ('tužan', 'грустный'), ('konj', 'конь'),
+    ('haljina', 'платье'), ('pantalone', 'брюки'), ('košulja', 'рубашка'), ('kaput', 'пальто'), ('crven', 'красный'),
+    ('sviđa mi se', 'мне нравится'), ('Volim da plivam.', 'Мне нравится плавать.'),
+    ('čitati', 'читать'), ('knjiga', 'книга')],
+    ex=[
+    dict(new('glup', 'глупый', ['глупый', 'весёлый', 'грустный']), explanation=GLUP),
+    dict(new('veseo', 'весёлый', ['весёлый', 'грустный', 'глупый']), explanation=VESEO),
+    dict(new('tužan', 'грустный', ['грустный', 'глупый', 'весёлый']), explanation=TUZAN),
+    dict(pairs(('pametan', 'glup'), ('pametna', 'glupa'), ('veseo', 'tužan'), ('vesela', 'tužna')),
+         explanation='Противоположности: pametan — glup (умный — глупый), veseo — tužan '
+                     '(весёлый — грустный). Она: pametna — glupa, vesela — tužna. '
+                     'Оно: pametno — glupo, veselo — tužno.'),
+    new('konj', 'конь', ['конь', 'корова', 'волк']),
+    pairs(('платье', 'haljina'), ('брюки', 'pantalone'), ('рубашка', 'košulja'),
+          ('пальто', 'kaput')),
+    dict(phrase('Konj je u kaputu.', 'Конь в пальто.',
+                ['Конь в пальто.', 'Конь в рубашке.', 'Корова в пальто.']), explanation=U_KAPUTU),
+    pick('Свинья в платье. — Svinja je u ___ .', ['haljini', 'haljina', 'haljinu'], 'haljini',
+         explanation='haljina → u haljini: «в чём?» у слов на -a — окончание -i.',
+         label='Вставь слово'),
+    pick('Корова была весёлой. — Krava je bila ___ .', ['vesela', 'veseo', 'veselo'], 'vesela',
+         explanation='Krava — женский род, значит vesela: krava je bila vesela.',
+         label='Вставь слово'),
+    dict(phrase('Sviđa mi se.', 'Мне нравится.', ['Мне нравится.', 'Мне грустно.', 'Мне весело.']),
+         explanation=SVIDJA),
+    dict(phrase('Psu se sviđa nova haljina.', 'Собаке нравится новое платье.',
+                ['Собаке нравится новое платье.', 'Собака купила новое платье.',
+                 'Кошке нравится новое платье.']), explanation=PSU),
+    dict(pairs(('мне нравится', 'sviđa mi se'), ('тебе нравится', 'sviđa ti se'),
+               ('ему нравится', 'sviđa mu se'), ('ей нравится', 'sviđa joj se')),
+         explanation=SVIDJA),
+    pick('Ей нравится красная рубашка. — Sviđa ___ se crvena košulja.', ['joj', 'mu', 'mi'], 'joj',
+         explanation='Ей — joj: sviđa joj se. Ему было бы mu, мне — mi. crvena — красная: '
+                     'crven, crvena, crveno.', label='Вставь слово'),
+    pick('Медведю нравятся розовые брюки. — Medvjedu se ___ roze pantalone.', ['sviđaju', 'sviđa', 'sviđam'],
+         'sviđaju', explanation='pantalone — множественное число, как «брюки», поэтому '
+         'sviđaju: medvjedu se sviđaju roze pantalone.', label='Вставь слово'),
+    dict(bank('Коню нравится белое пальто.', 'Konju se sviđa bijeli kaput.',
+              ['kaput', 'se', 'konju', 'bijeli', 'sviđa']),
+         explanation='konj → konju — «коню», как pas → psu. kaput — мужского рода, поэтому '
+                     'bijeli, хотя «пальто» по-русски среднего.'),
+    dict(bank('Мне нравится твоя красная рубашка.', 'Sviđa mi se tvoja crvena košulja.',
+              ['košulja', 'mi', 'crvena', 'tvoja', 'sviđa', 'se']),
+         explanation='košulja — женский род, поэтому tvoja crvena.'),
+    dict(phrase('Volim da plivam.', 'Мне нравится плавать.',
+                ['Мне нравится плавать.', 'Мне нравится читать.', 'Я умею плавать.']),
+         explanation=VOLIM_DA),
+    dict(bank('Мне нравится плавать.', 'Volim da plivam.', ['plivam', 'da', 'volim']),
+         explanation=VOLIM_DA),
+    dict(phrase('Medvjed voli da čita knjige.', 'Медведю нравится читать книги.',
+                ['Медведю нравится читать книги.', 'Медведь пишет книги.',
+                 'Медведю нравятся книги про мёд.']), explanation=CITATI),
+    pick('Ему нравится читать. — On voli da ___ .', ['čita', 'čitam', 'čitaju'], 'čita',
+         explanation='On — значит čita: on voli da čita. Я — volim da čitam.',
+         label='Вставь слово'),
+    earbank('Glupa ajkula voli da pliva u supi.', 'Глупой акуле нравится плавать в супе.',
+            ['supi', 'voli', 'ajkula', 'u', 'pliva', 'glupa', 'da']),
+    pick('— Sviđa li ti se moj bijeli kaput?\n— Ne, ali sviđa mi se tvoja crvena haljina.\n\nЧто нравится?',
+         ['Красное платье.', 'Белое пальто.', 'Красная рубашка.'], 'Красное платье.',
+         explanation='Sviđa li ti se…? — Тебе нравится…? li делает вопрос, как в Imate li…?',
+         label='Мини-диалог'),
+    dict(bank('Грустная корова читает книгу.', 'Tužna krava čita knjigu.',
+              ['knjigu', 'krava', 'čita', 'tužna']),
+         explanation='Krava — женский род, значит tužna. knjiga → knjigu: «что читает?»'),
+    say('Konj u kaputu je veseo.', 'Конь в пальто весёлый.'),
+    say('Sviđa mi se tvoja crvena haljina.', 'Мне нравится твоё красное платье.'),
+    echo('Psu se sviđa nova haljina.', 'Собаке нравится новое платье.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
