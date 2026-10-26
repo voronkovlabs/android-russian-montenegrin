@@ -1,0 +1,411 @@
+{
+  "id": "k41",
+  "title": "Nikad nisam vidjela takvu ljepotu",
+  "exercises": [
+    {
+      "id": "k41e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "vidjeti",
+      "hint": "vidjeti — видеть",
+      "options": [
+        "видеть",
+        "слышать",
+        "спать"
+      ],
+      "answer": "видеть",
+      "explanation": "vidjeti — видеть: vidim, vidiš, vidi, vidimo, vidite, vide. Формы как у voljeti: volim — vidim.",
+      "example": "Vidim tvoj stan. — Я вижу твою квартиру."
+    },
+    {
+      "id": "k41e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja",
+          "me": "vidim"
+        },
+        {
+          "ru": "ti",
+          "me": "vidiš"
+        },
+        {
+          "ru": "on / ona",
+          "me": "vidi"
+        },
+        {
+          "ru": "mi",
+          "me": "vidimo"
+        },
+        {
+          "ru": "vi",
+          "me": "vidite"
+        },
+        {
+          "ru": "oni",
+          "me": "vide"
+        }
+      ],
+      "explanation": "vidjeti — видеть: vidim, vidiš, vidi, vidimo, vidite, vide. Формы как у voljeti: volim — vidim."
+    },
+    {
+      "id": "k41e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Vidim more.",
+      "hint": "Vidim more. — Я вижу море.",
+      "options": [
+        "Я вижу море.",
+        "Я слышу море.",
+        "Я люблю море."
+      ],
+      "answer": "Я вижу море."
+    },
+    {
+      "id": "k41e04",
+      "type": "choice",
+      "prompt": "Мы видим поле. — Mi ___ polje.",
+      "options": [
+        "vidimo",
+        "vide",
+        "vidim"
+      ],
+      "answer": "vidimo",
+      "explanation": "Mi — значит vidimo: mi vidimo. Они — vide.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k41e05",
+      "type": "choice",
+      "prompt": "Ты слышишь музыку? — ___ li muziku?",
+      "options": [
+        "Čuješ",
+        "Čujem",
+        "Čuju"
+      ],
+      "answer": "Čuješ",
+      "explanation": "Ti — значит čuješ: čuješ li? čuti: čujem, čuješ, čuje, čujemo, čujete, čuju.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k41e06",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Vidjela sam more.",
+      "hint": "Vidjela sam more. — Я видела море.",
+      "options": [
+        "Я видела море.",
+        "Я вижу море.",
+        "Я слышала море."
+      ],
+      "answer": "Я видела море.",
+      "explanation": "Прошедшее: vidio (он), vidjela (она), vidjeli (они). В женском роде снова je: vidjeti → vidjela. Vidjela sam more — я видела море."
+    },
+    {
+      "id": "k41e07",
+      "type": "choice",
+      "prompt": "Он видел волка. — On je ___ vuka.",
+      "options": [
+        "vidio",
+        "vidjela",
+        "vidjeli"
+      ],
+      "answer": "vidio",
+      "explanation": "On — мужской род, значит vidio. Она — vidjela. vuka — «волка»: кого? у животных и людей мужского рода -a, как psa.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k41e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Čuo sam muziku.",
+      "hint": "Čuo sam muziku. — Я слышал музыку.",
+      "options": [
+        "Я слышал музыку.",
+        "Я слышу музыку.",
+        "Я видел музыку."
+      ],
+      "answer": "Я слышал музыку.",
+      "explanation": "čuti → čuo (он), čula (она), čuli (они). Čuo sam muziku — я слышал музыку."
+    },
+    {
+      "id": "k41e09",
+      "type": "choice",
+      "prompt": "Она слышала звук. — Ona je ___ zvuk.",
+      "options": [
+        "čula",
+        "čuo",
+        "čuli"
+      ],
+      "answer": "čula",
+      "explanation": "Ona — женский род, значит čula. Он — čuo.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k41e10",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я вижу",
+          "me": "vidim"
+        },
+        {
+          "ru": "я видела",
+          "me": "vidjela sam"
+        },
+        {
+          "ru": "я слышу",
+          "me": "čujem"
+        },
+        {
+          "ru": "я слышала",
+          "me": "čula sam"
+        }
+      ]
+    },
+    {
+      "id": "k41e11",
+      "type": "word_bank",
+      "prompt": "Мы видели море.",
+      "answer": "Vidjeli smo more.",
+      "bank": [
+        "more",
+        "smo",
+        "vidjeli"
+      ],
+      "explanation": "Mi — несколько человек, значит vidjeli: vidjeli smo."
+    },
+    {
+      "id": "k41e12",
+      "type": "word_bank",
+      "prompt": "Я слышала музыку.",
+      "answer": "Čula sam muziku.",
+      "bank": [
+        "muziku",
+        "sam",
+        "čula"
+      ],
+      "explanation": "Говорит женщина — čula sam. Мужчина сказал бы čuo sam."
+    },
+    {
+      "id": "k41e13",
+      "type": "word_bank",
+      "prompt": "Nisam vidjela psa.",
+      "answer": "Я не видела собаку.",
+      "bank": [
+        "собаку",
+        "не",
+        "я",
+        "видела"
+      ],
+      "also": [
+        "Не видела собаку.",
+        "Собаку я не видела."
+      ],
+      "explanation": "Не делал — nisam + форма на -o/-la, как nisam bio: nisam vidjela, nisam čuo, nismo bili. Nisam vidjela psa — я не видела собаку."
+    },
+    {
+      "id": "k41e14",
+      "type": "choice",
+      "prompt": "Мы не слышали музыку. — ___ čuli muziku.",
+      "options": [
+        "Nismo",
+        "Nisam",
+        "Nisu"
+      ],
+      "answer": "Nismo",
+      "explanation": "Mi — значит nismo: nismo čuli.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k41e15",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "nikad",
+      "hint": "nikad — никогда",
+      "options": [
+        "никогда",
+        "всегда",
+        "сейчас"
+      ],
+      "answer": "никогда",
+      "explanation": "nikad (или nikada) — никогда. Как и по-русски, нужно ещё одно «не»: Nikad nisam vidjela… — Я никогда не видела…",
+      "example": "Nikad ne pijem kafu. — Я никогда не пью кофе."
+    },
+    {
+      "id": "k41e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nikad nismo bili u Americi.",
+      "hint": "Nikad nismo bili u Americi. — Мы никогда не были в Америке.",
+      "options": [
+        "Мы никогда не были в Америке.",
+        "Мы никогда не были в России.",
+        "Мы были в Америке."
+      ],
+      "answer": "Мы никогда не были в Америке.",
+      "explanation": "Amerika — Америка. Где? — u Americi: k меняется на c."
+    },
+    {
+      "id": "k41e17",
+      "type": "word_bank",
+      "prompt": "Nikad nisam čuo za to.",
+      "answer": "Я никогда об этом не слышал.",
+      "bank": [
+        "слышал",
+        "об",
+        "никогда",
+        "этом",
+        "я",
+        "не"
+      ],
+      "also": [
+        "Я об этом никогда не слышал.",
+        "Никогда об этом не слышал."
+      ],
+      "explanation": "čuti za nešto — «слышать о чём-то», буквально «за что-то»: Nikad nisam čuo za to — я никогда об этом не слышал."
+    },
+    {
+      "id": "k41e18",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nikad nisam vidjela takvu ljepotu.",
+      "hint": "Nikad nisam vidjela takvu ljepotu. — Я никогда не видела такой красоты.",
+      "options": [
+        "Я никогда не видела такой красоты.",
+        "Я никогда не слышала такой музыки.",
+        "Я видела такую красоту вчера."
+      ],
+      "answer": "Я никогда не видела такой красоты.",
+      "explanation": "ljepota — красота, takav — такой. Что видела? — takvu ljepotu, как kuću: у слов на -a окончание -u."
+    },
+    {
+      "id": "k41e19",
+      "type": "choice",
+      "prompt": "— Jesi li bio u Americi?\n— Ne, nikad nisam bio u Americi.\n\nБыл ли он в Америке?",
+      "options": [
+        "Нет, никогда.",
+        "Да, вчера.",
+        "Да, на прошлой неделе."
+      ],
+      "answer": "Нет, никогда.",
+      "explanation": "Jesi li bio…? — Ты был…? Ответ: nikad nisam bio — никогда не был.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k41e20",
+      "type": "choice",
+      "prompt": "Я никогда не видела медведя. — Nikad ___ vidjela medvjeda.",
+      "options": [
+        "nisam",
+        "sam",
+        "nije"
+      ],
+      "answer": "nisam",
+      "explanation": "После nikad нужно второе «не», как по-русски: nikad nisam.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k41e21",
+      "type": "choice",
+      "prompt": "Ты стоишь на горе, внизу море и острова. Что скажешь?",
+      "options": [
+        "Nikad nisam vidjela takvu ljepotu!",
+        "Nikad nisam čuo za to.",
+        "Nismo bili kod kuće."
+      ],
+      "answer": "Nikad nisam vidjela takvu ljepotu!",
+      "explanation": "ljepota — красота, takav — такой. Что видела? — takvu ljepotu, как kuću: у слов на -a окончание -u.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k41e22",
+      "type": "word_bank",
+      "prompt": "Мы никогда не были в Америке.",
+      "answer": "Nikad nismo bili u Americi.",
+      "bank": [
+        "Americi",
+        "nismo",
+        "nikad",
+        "u",
+        "bili"
+      ],
+      "explanation": "Mi — значит nismo bili."
+    },
+    {
+      "id": "k41e23",
+      "type": "word_bank",
+      "prompt": "Я никогда об этом не слышал.",
+      "answer": "Nikad nisam čuo za to.",
+      "bank": [
+        "to",
+        "nisam",
+        "za",
+        "nikad",
+        "čuo"
+      ]
+    },
+    {
+      "id": "k41e24",
+      "type": "word_bank",
+      "prompt": "Я никогда не видела такой красоты.",
+      "answer": "Nikad nisam vidjela takvu ljepotu.",
+      "bank": [
+        "ljepotu",
+        "vidjela",
+        "nikad",
+        "takvu",
+        "nisam"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k41e25",
+      "type": "speaking",
+      "phrase": "Nikad nisam vidjela takvu ljepotu.",
+      "translation": "Я никогда не видела такой красоты."
+    },
+    {
+      "id": "k41e26",
+      "type": "speaking",
+      "phrase": "Nikad nismo bili u Americi.",
+      "translation": "Мы никогда не были в Америке."
+    },
+    {
+      "id": "k41e27",
+      "type": "repeat",
+      "phrase": "Nikad nisam čuo za to.",
+      "translation": "Я никогда об этом не слышал."
+    }
+  ],
+  "words": [
+    {
+      "me": "vidjeti",
+      "ru": "видеть"
+    },
+    {
+      "me": "vidio / vidjela",
+      "ru": "видел / видела"
+    },
+    {
+      "me": "čuo / čula",
+      "ru": "слышал / слышала"
+    },
+    {
+      "me": "nikad",
+      "ru": "никогда"
+    },
+    {
+      "me": "ljepota",
+      "ru": "красота"
+    },
+    {
+      "me": "takav",
+      "ru": "такой"
+    },
+    {
+      "me": "Amerika",
+      "ru": "Америка"
+    }
+  ]
+}

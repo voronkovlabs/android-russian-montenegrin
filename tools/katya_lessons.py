@@ -26,6 +26,10 @@ def bank(ru, answer, tiles, also=None):
     if also: d['also'] = also  # другие верные сборки из тех же плашек
     return d
 
+def rubank(me, ru, tiles):
+    """Переведи на русский плашками: условие me черногорское, плашки и ответ ru русские."""
+    return dict(type='word_bank', prompt=me, answer=ru, bank=tiles)
+
 def earbank(me, ru, tiles):
     """Собери на слух: фраза me звучит, перевод ru открывается после ответа."""
     return dict(type='word_bank', prompt=ru, answer=me, bank=tiles, byEar=True)
@@ -3119,6 +3123,89 @@ L.append(dict(id='k40', title='Konj u kaputu. Sviđa mi se!', section=S3, words=
     say('Konj u kaputu je veseo.', 'Конь в пальто весёлый.'),
     say('Sviđa mi se tvoja crvena haljina.', 'Мне нравится твоё красное платье.'),
     echo('Psu se sviđa nova haljina.', 'Собаке нравится новое платье.'),
+]))
+
+# --- Урок 41 ---
+# vidjeti и čuti в настоящем и прошедшем, отрицание nisam + глагол на -o/-la,
+# nikad. Фразы Кати: Nikad nisam vidjela takvu ljepotu, Nikad nisam čuo za to,
+# Nikad nismo bili u Americi.
+VIDJETI = ('vidjeti — видеть: vidim, vidiš, vidi, vidimo, vidite, vide. Формы как у voljeti: '
+           'volim — vidim.')
+VIDIO = ('Прошедшее: vidio (он), vidjela (она), vidjeli (они). В женском роде снова je: '
+         'vidjeti → vidjela. Vidjela sam more — я видела море.')
+CUO = 'čuti → čuo (он), čula (она), čuli (они). Čuo sam muziku — я слышал музыку.'
+NISAM = ('Не делал — nisam + форма на -o/-la, как nisam bio: nisam vidjela, nisam čuo, '
+         'nismo bili. Nisam vidjela psa — я не видела собаку.')
+NIKAD = ('nikad (или nikada) — никогда. Как и по-русски, нужно ещё одно «не»: '
+         'Nikad nisam vidjela… — Я никогда не видела…')
+ZA_TO = ('čuti za nešto — «слышать о чём-то», буквально «за что-то»: Nikad nisam čuo za to — '
+         'я никогда об этом не слышал.')
+LJEPOTA = ('ljepota — красота, takav — такой. Что видела? — takvu ljepotu, как kuću: '
+           'у слов на -a окончание -u.')
+AMERIKA = 'Amerika — Америка. Где? — u Americi: k меняется на c.'
+L.append(dict(id='k41', title='Nikad nisam vidjela takvu ljepotu', section=S3, words=[
+    ('vidjeti', 'видеть'), ('vidio / vidjela', 'видел / видела'), ('čuo / čula', 'слышал / слышала'),
+    ('nikad', 'никогда'), ('ljepota', 'красота'), ('takav', 'такой'), ('Amerika', 'Америка')],
+    ex=[
+    dict(new('vidjeti', 'видеть', ['видеть', 'слышать', 'спать'], label='Новый глагол'),
+         explanation=VIDJETI),
+    dict(pairs(('ja', 'vidim'), ('ti', 'vidiš'), ('on / ona', 'vidi'), ('mi', 'vidimo'),
+               ('vi', 'vidite'), ('oni', 'vide')), explanation=VIDJETI),
+    phrase('Vidim more.', 'Я вижу море.', ['Я вижу море.', 'Я слышу море.', 'Я люблю море.']),
+    pick('Мы видим поле. — Mi ___ polje.', ['vidimo', 'vide', 'vidim'], 'vidimo',
+         explanation='Mi — значит vidimo: mi vidimo. Они — vide.', label='Вставь слово'),
+    pick('Ты слышишь музыку? — ___ li muziku?', ['Čuješ', 'Čujem', 'Čuju'], 'Čuješ',
+         explanation='Ti — значит čuješ: čuješ li? čuti: čujem, čuješ, čuje, čujemo, čujete, čuju.',
+         label='Вставь слово'),
+    dict(phrase('Vidjela sam more.', 'Я видела море.',
+                ['Я видела море.', 'Я вижу море.', 'Я слышала море.']), explanation=VIDIO),
+    pick('Он видел волка. — On je ___ vuka.', ['vidio', 'vidjela', 'vidjeli'], 'vidio',
+         explanation='On — мужской род, значит vidio. Она — vidjela. vuka — «волка»: кого? '
+                     'у животных и людей мужского рода -a, как psa.', label='Вставь слово'),
+    dict(phrase('Čuo sam muziku.', 'Я слышал музыку.',
+                ['Я слышал музыку.', 'Я слышу музыку.', 'Я видел музыку.']), explanation=CUO),
+    pick('Она слышала звук. — Ona je ___ zvuk.', ['čula', 'čuo', 'čuli'], 'čula',
+         explanation='Ona — женский род, значит čula. Он — čuo.', label='Вставь слово'),
+    pairs(('я вижу', 'vidim'), ('я видела', 'vidjela sam'), ('я слышу', 'čujem'),
+          ('я слышала', 'čula sam')),
+    dict(bank('Мы видели море.', 'Vidjeli smo more.', ['more', 'smo', 'vidjeli']),
+         explanation='Mi — несколько человек, значит vidjeli: vidjeli smo.'),
+    dict(bank('Я слышала музыку.', 'Čula sam muziku.', ['muziku', 'sam', 'čula']),
+         explanation='Говорит женщина — čula sam. Мужчина сказал бы čuo sam.'),
+    dict(rubank('Nisam vidjela psa.', 'Я не видела собаку.', ['собаку', 'не', 'я', 'видела']),
+         also=['Не видела собаку.', 'Собаку я не видела.'], explanation=NISAM),
+    pick('Мы не слышали музыку. — ___ čuli muziku.', ['Nismo', 'Nisam', 'Nisu'], 'Nismo',
+         explanation='Mi — значит nismo: nismo čuli.', label='Вставь слово'),
+    dict(new('nikad', 'никогда', ['никогда', 'всегда', 'сейчас']), explanation=NIKAD),
+    dict(phrase('Nikad nismo bili u Americi.', 'Мы никогда не были в Америке.',
+                ['Мы никогда не были в Америке.', 'Мы никогда не были в России.',
+                 'Мы были в Америке.']), explanation=AMERIKA),
+    dict(rubank('Nikad nisam čuo za to.', 'Я никогда об этом не слышал.',
+                ['слышал', 'об', 'никогда', 'этом', 'я', 'не']),
+         also=['Я об этом никогда не слышал.', 'Никогда об этом не слышал.'], explanation=ZA_TO),
+    dict(phrase('Nikad nisam vidjela takvu ljepotu.', 'Я никогда не видела такой красоты.',
+                ['Я никогда не видела такой красоты.', 'Я никогда не слышала такой музыки.',
+                 'Я видела такую красоту вчера.']), explanation=LJEPOTA),
+    pick('— Jesi li bio u Americi?\n— Ne, nikad nisam bio u Americi.\n\nБыл ли он в Америке?',
+         ['Нет, никогда.', 'Да, вчера.', 'Да, на прошлой неделе.'], 'Нет, никогда.',
+         explanation='Jesi li bio…? — Ты был…? Ответ: nikad nisam bio — никогда не был.',
+         label='Мини-диалог'),
+    pick('Я никогда не видела медведя. — Nikad ___ vidjela medvjeda.', ['nisam', 'sam', 'nije'],
+         'nisam', explanation='После nikad нужно второе «не», как по-русски: nikad nisam.',
+         label='Вставь слово'),
+    pick('Ты стоишь на горе, внизу море и острова. Что скажешь?',
+         ['Nikad nisam vidjela takvu ljepotu!', 'Nikad nisam čuo za to.', 'Nismo bili kod kuće.'],
+         'Nikad nisam vidjela takvu ljepotu!', explanation=LJEPOTA, label='Что скажешь?'),
+    dict(bank('Мы никогда не были в Америке.', 'Nikad nismo bili u Americi.',
+              ['Americi', 'nismo', 'nikad', 'u', 'bili']),
+         explanation='Mi — значит nismo bili.'),
+    bank('Я никогда об этом не слышал.', 'Nikad nisam čuo za to.',
+         ['to', 'nisam', 'za', 'nikad', 'čuo']),
+    earbank('Nikad nisam vidjela takvu ljepotu.', 'Я никогда не видела такой красоты.',
+            ['ljepotu', 'vidjela', 'nikad', 'takvu', 'nisam']),
+    say('Nikad nisam vidjela takvu ljepotu.', 'Я никогда не видела такой красоты.'),
+    say('Nikad nismo bili u Americi.', 'Мы никогда не были в Америке.'),
+    echo('Nikad nisam čuo za to.', 'Я никогда об этом не слышал.'),
 ]))
 
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
