@@ -3523,6 +3523,84 @@ L.append(dict(id='k45', title='Ajkuli se sviđala nova šminka', section=S3, wor
     echo('Medvjedu su se sviđale naočare.', 'Медведю нравились очки.'),
 ]))
 
+# --- Урок 46 ---
+# Отрицание с se: nisam / nije / nismo → se → глагол. Цвета plav, žut, narandžast.
+# Живая фраза Кати 358: Kako mi se sviđa ovaj pas!
+PLAV = ('plav — синий и голубой, одно слово: plav kaput, plava haljina, plavo more. '
+        'Если надо уточнить: svijetloplav — голубой, tamnoplav — тёмно-синий.')
+ZUT = 'žut — жёлтый: žut kaput, žuta haljina, žuto jaje.'
+NARANDZAST = ('narandžast — оранжевый, от narandža — апельсин: narandžast kaput, '
+              'narandžasta haljina, narandžasto sunce.')
+NE_SE = ('Отрицание: сначала nisam / nisi / nije / nismo / niste / nisu, сразу за ним se, '
+         'потом глагол. Nisam se kupala — я не купалась.')
+NIJE = ('Он: nije se šalio. nije здесь не пропадает — это «не», а пропадает только je '
+        'в «on se kupao».')
+KOME = ('Если есть «кому» (mi, ti, joj, mu), оно встаёт перед se: nije mi se sviđala, '
+        'nije joj se sviđala. Ей не нравилось — nije joj se sviđala.')
+KAKO = ('Kako…! — «как!», восклицание. ovaj — «этот»: ovaj pas, ova mačka, ovo štene. '
+        'mi перед se, как в sviđa mi se.')
+L.append(dict(id='k46', title='Nisam se kupala. Kako mi se sviđa ovaj pas!', section=S3, words=[
+    ('plav', 'синий, голубой'), ('žut', 'жёлтый'), ('narandžast', 'оранжевый'),
+    ('ovaj / ova / ovo', 'этот / эта / это'),
+    ('Kako mi se sviđa ovaj pas!', 'Как мне нравится эта собака!')],
+    ex=[
+    dict(new('plav', 'синий, голубой', ['синий, голубой', 'жёлтый', 'оранжевый']), explanation=PLAV),
+    dict(new('žut', 'жёлтый', ['жёлтый', 'синий, голубой', 'красный']), explanation=ZUT),
+    dict(new('narandžast', 'оранжевый', ['оранжевый', 'жёлтый', 'розовый']),
+         explanation=NARANDZAST),
+    pairs(('синий', 'plav'), ('жёлтый', 'žut'), ('оранжевый', 'narandžast'), ('красный', 'crven'),
+          ('зелёный', 'zelen')),
+    pick('Жёлтое платье — ___ haljina', ['žuta', 'žut', 'žuto'], 'žuta',
+         explanation='haljina — женский род, значит žuta.',
+         label='Вставь слово'),
+    pick('Синее море — ___ more', ['plavo', 'plav', 'plava'], 'plavo',
+         explanation='more — средний род, значит plavo.', label='Вставь слово'),
+    dict(phrase('Nisam se kupala.', 'Я не купалась.', ['Я не купалась.', 'Я купалась.', 'Я не шутила.']),
+         explanation=NE_SE),
+    dict(pairs(('я не купался', 'nisam se kupao'), ('ты не купался', 'nisi se kupao'),
+               ('он не купался', 'nije se kupao'), ('мы не купались', 'nismo se kupali'),
+               ('они не купались', 'nisu se kupali')), explanation=NE_SE),
+    pick('Он не шутил. — Nije ___ šalio.', ['se', 'je se', 'sam se'], 'se', explanation=NIJE,
+         label='Вставь слово'),
+    pick('Мы не радовались. — ___ se radovali.', ['Nismo', 'Nisam', 'Nisu'], 'Nismo',
+         explanation='Mi — nismo, потом se: nismo se radovali.', label='Вставь слово'),
+    dict(bank('Я не купалась в море.', 'Nisam se kupala u moru.',
+              ['moru', 'se', 'nisam', 'u', 'kupala']),
+         explanation='Говорит женщина: nisam se kupala. Мужчина — nisam se kupao.'),
+    dict(bank('Они не радовались лету.', 'Nisu se radovali ljetu.', ['ljetu', 'se', 'nisu', 'radovali']),
+         explanation='Oni — nisu, потом se: nisu se radovali.'),
+    earbank('Nismo se kupali, more je bilo hladno.', 'Мы не купались, море было холодным.',
+            ['hladno', 'kupali', 'se', 'bilo', 'nismo', 'more', 'je']),
+    dict(rubank('Nije se šalio.', 'Он не шутил.', ['шутил', 'он', 'не']), also=['Не шутил.'],
+         explanation=NIJE),
+    dict(phrase('Nije joj se sviđala plava haljina.', 'Ей не нравилось синее платье.',
+                ['Ей не нравилось синее платье.', 'Ей нравилось синее платье.',
+                 'Ей не нравились синие платья.']), explanation=KOME),
+    pick('Ей не нравились жёлтые очки. — Nisu ___ se sviđale žute naočare.', ['joj', 'mu', 'im'],
+         'joj', explanation='Ей — joj, и joj перед se: nisu joj se sviđale.', label='Вставь слово'),
+    dict(phrase('Kako mi se sviđa ovaj pas!', 'Как мне нравится эта собака!',
+                ['Как мне нравится эта собака!', 'Как мне не нравится эта собака!',
+                 'Как зовут эту собаку?']), explanation=KAKO),
+    pick('Как мне нравится эта кошка! — Kako mi se sviđa ___ mačka!', ['ova', 'ovaj', 'ovo'], 'ova',
+         explanation='mačka — женский род, значит ova.', label='Вставь слово'),
+    pick('Как мне нравится это платье! — Kako mi se sviđa ___ haljina!', ['ova', 'ovo', 'ovaj'],
+         'ova', explanation='haljina — женский род, значит ova.',
+         label='Вставь слово'),
+    pick('Ты видишь на улице очень милого щенка. Что скажешь?',
+         ['Kako mi se sviđa ovo štene!', 'Nisam se kupala.', 'Nije ti hladno u tome?'],
+         'Kako mi se sviđa ovo štene!',
+         explanation='štene — средний род, значит ovo.', label='Что скажешь?'),
+    dict(bank('Как мне нравится эта собака!', 'Kako mi se sviđa ovaj pas!',
+              ['pas', 'mi', 'kako', 'ovaj', 'se', 'sviđa']),
+         explanation='pas — мужской род, значит ovaj.'),
+    pick('Nije mi se sviđala žuta haljina, ali sviđala mi se narandžasta.\n\nКакое платье нравилось?',
+         ['Оранжевое.', 'Жёлтое.', 'Синее.'], 'Оранжевое.', explanation=KOME,
+         label='Прочитай и ответь'),
+    say('Nisam se kupala u moru.', 'Я не купалась в море.'),
+    say('Kako mi se sviđa ovaj pas!', 'Как мне нравится эта собака!'),
+    echo('Nije se šalio.', 'Он не шутил.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

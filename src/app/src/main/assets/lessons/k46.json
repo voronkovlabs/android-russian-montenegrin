@@ -1,0 +1,376 @@
+{
+  "id": "k46",
+  "title": "Nisam se kupala. Kako mi se sviđa ovaj pas!",
+  "exercises": [
+    {
+      "id": "k46e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "plav",
+      "hint": "plav — синий, голубой",
+      "options": [
+        "синий, голубой",
+        "жёлтый",
+        "оранжевый"
+      ],
+      "answer": "синий, голубой",
+      "explanation": "plav — синий и голубой, одно слово: plav kaput, plava haljina, plavo more. Если надо уточнить: svijetloplav — голубой, tamnoplav — тёмно-синий.",
+      "example": "Moj auto je plav. — Моя машина синяя."
+    },
+    {
+      "id": "k46e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "žut",
+      "hint": "žut — жёлтый",
+      "options": [
+        "жёлтый",
+        "синий, голубой",
+        "красный"
+      ],
+      "answer": "жёлтый",
+      "explanation": "žut — жёлтый: žut kaput, žuta haljina, žuto jaje.",
+      "example": "Sunce je žuto. — Солнце жёлтое."
+    },
+    {
+      "id": "k46e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "narandžast",
+      "hint": "narandžast — оранжевый",
+      "options": [
+        "оранжевый",
+        "жёлтый",
+        "розовый"
+      ],
+      "answer": "оранжевый",
+      "explanation": "narandžast — оранжевый, от narandža — апельсин: narandžast kaput, narandžasta haljina, narandžasto sunce.",
+      "example": "Moja šolja je narandžasta. — Моя чашка оранжевая."
+    },
+    {
+      "id": "k46e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "синий",
+          "me": "plav"
+        },
+        {
+          "ru": "жёлтый",
+          "me": "žut"
+        },
+        {
+          "ru": "оранжевый",
+          "me": "narandžast"
+        },
+        {
+          "ru": "красный",
+          "me": "crven"
+        },
+        {
+          "ru": "зелёный",
+          "me": "zelen"
+        }
+      ]
+    },
+    {
+      "id": "k46e05",
+      "type": "choice",
+      "prompt": "Жёлтое платье — ___ haljina",
+      "options": [
+        "žuta",
+        "žut",
+        "žuto"
+      ],
+      "answer": "žuta",
+      "explanation": "haljina — женский род, значит žuta.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k46e06",
+      "type": "choice",
+      "prompt": "Синее море — ___ more",
+      "options": [
+        "plavo",
+        "plav",
+        "plava"
+      ],
+      "answer": "plavo",
+      "explanation": "more — средний род, значит plavo.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k46e07",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nisam se kupala.",
+      "hint": "Nisam se kupala. — Я не купалась.",
+      "options": [
+        "Я не купалась.",
+        "Я купалась.",
+        "Я не шутила."
+      ],
+      "answer": "Я не купалась.",
+      "explanation": "Отрицание: сначала nisam / nisi / nije / nismo / niste / nisu, сразу за ним se, потом глагол. Nisam se kupala — я не купалась."
+    },
+    {
+      "id": "k46e08",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я не купался",
+          "me": "nisam se kupao"
+        },
+        {
+          "ru": "ты не купался",
+          "me": "nisi se kupao"
+        },
+        {
+          "ru": "он не купался",
+          "me": "nije se kupao"
+        },
+        {
+          "ru": "мы не купались",
+          "me": "nismo se kupali"
+        },
+        {
+          "ru": "они не купались",
+          "me": "nisu se kupali"
+        }
+      ],
+      "explanation": "Отрицание: сначала nisam / nisi / nije / nismo / niste / nisu, сразу за ним se, потом глагол. Nisam se kupala — я не купалась."
+    },
+    {
+      "id": "k46e09",
+      "type": "choice",
+      "prompt": "Он не шутил. — Nije ___ šalio.",
+      "options": [
+        "se",
+        "je se",
+        "sam se"
+      ],
+      "answer": "se",
+      "explanation": "Он: nije se šalio. nije здесь не пропадает — это «не», а пропадает только je в «on se kupao».",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k46e10",
+      "type": "choice",
+      "prompt": "Мы не радовались. — ___ se radovali.",
+      "options": [
+        "Nismo",
+        "Nisam",
+        "Nisu"
+      ],
+      "answer": "Nismo",
+      "explanation": "Mi — nismo, потом se: nismo se radovali.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k46e11",
+      "type": "word_bank",
+      "prompt": "Я не купалась в море.",
+      "answer": "Nisam se kupala u moru.",
+      "bank": [
+        "moru",
+        "se",
+        "nisam",
+        "u",
+        "kupala"
+      ],
+      "explanation": "Говорит женщина: nisam se kupala. Мужчина — nisam se kupao."
+    },
+    {
+      "id": "k46e12",
+      "type": "word_bank",
+      "prompt": "Они не радовались лету.",
+      "answer": "Nisu se radovali ljetu.",
+      "bank": [
+        "ljetu",
+        "se",
+        "nisu",
+        "radovali"
+      ],
+      "explanation": "Oni — nisu, потом se: nisu se radovali."
+    },
+    {
+      "id": "k46e13",
+      "type": "word_bank",
+      "prompt": "Мы не купались, море было холодным.",
+      "answer": "Nismo se kupali, more je bilo hladno.",
+      "bank": [
+        "hladno",
+        "kupali",
+        "se",
+        "bilo",
+        "nismo",
+        "more",
+        "je"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k46e14",
+      "type": "word_bank",
+      "prompt": "Nije se šalio.",
+      "answer": "Он не шутил.",
+      "bank": [
+        "шутил",
+        "он",
+        "не"
+      ],
+      "also": [
+        "Не шутил."
+      ],
+      "explanation": "Он: nije se šalio. nije здесь не пропадает — это «не», а пропадает только je в «on se kupao»."
+    },
+    {
+      "id": "k46e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nije joj se sviđala plava haljina.",
+      "hint": "Nije joj se sviđala plava haljina. — Ей не нравилось синее платье.",
+      "options": [
+        "Ей не нравилось синее платье.",
+        "Ей нравилось синее платье.",
+        "Ей не нравились синие платья."
+      ],
+      "answer": "Ей не нравилось синее платье.",
+      "explanation": "Если есть «кому» (mi, ti, joj, mu), оно встаёт перед se: nije mi se sviđala, nije joj se sviđala. Ей не нравилось — nije joj se sviđala."
+    },
+    {
+      "id": "k46e16",
+      "type": "choice",
+      "prompt": "Ей не нравились жёлтые очки. — Nisu ___ se sviđale žute naočare.",
+      "options": [
+        "joj",
+        "mu",
+        "im"
+      ],
+      "answer": "joj",
+      "explanation": "Ей — joj, и joj перед se: nisu joj se sviđale.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k46e17",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kako mi se sviđa ovaj pas!",
+      "hint": "Kako mi se sviđa ovaj pas! — Как мне нравится эта собака!",
+      "options": [
+        "Как мне нравится эта собака!",
+        "Как мне не нравится эта собака!",
+        "Как зовут эту собаку?"
+      ],
+      "answer": "Как мне нравится эта собака!",
+      "explanation": "Kako…! — «как!», восклицание. ovaj — «этот»: ovaj pas, ova mačka, ovo štene. mi перед se, как в sviđa mi se."
+    },
+    {
+      "id": "k46e18",
+      "type": "choice",
+      "prompt": "Как мне нравится эта кошка! — Kako mi se sviđa ___ mačka!",
+      "options": [
+        "ova",
+        "ovaj",
+        "ovo"
+      ],
+      "answer": "ova",
+      "explanation": "mačka — женский род, значит ova.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k46e19",
+      "type": "choice",
+      "prompt": "Как мне нравится это платье! — Kako mi se sviđa ___ haljina!",
+      "options": [
+        "ova",
+        "ovo",
+        "ovaj"
+      ],
+      "answer": "ova",
+      "explanation": "haljina — женский род, значит ova.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k46e20",
+      "type": "choice",
+      "prompt": "Ты видишь на улице очень милого щенка. Что скажешь?",
+      "options": [
+        "Kako mi se sviđa ovo štene!",
+        "Nisam se kupala.",
+        "Nije ti hladno u tome?"
+      ],
+      "answer": "Kako mi se sviđa ovo štene!",
+      "explanation": "štene — средний род, значит ovo.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k46e21",
+      "type": "word_bank",
+      "prompt": "Как мне нравится эта собака!",
+      "answer": "Kako mi se sviđa ovaj pas!",
+      "bank": [
+        "pas",
+        "mi",
+        "kako",
+        "ovaj",
+        "se",
+        "sviđa"
+      ],
+      "explanation": "pas — мужской род, значит ovaj."
+    },
+    {
+      "id": "k46e22",
+      "type": "choice",
+      "prompt": "Nije mi se sviđala žuta haljina, ali sviđala mi se narandžasta.\n\nКакое платье нравилось?",
+      "options": [
+        "Оранжевое.",
+        "Жёлтое.",
+        "Синее."
+      ],
+      "answer": "Оранжевое.",
+      "explanation": "Если есть «кому» (mi, ti, joj, mu), оно встаёт перед se: nije mi se sviđala, nije joj se sviđala. Ей не нравилось — nije joj se sviđala.",
+      "label": "Прочитай и ответь"
+    },
+    {
+      "id": "k46e23",
+      "type": "speaking",
+      "phrase": "Nisam se kupala u moru.",
+      "translation": "Я не купалась в море."
+    },
+    {
+      "id": "k46e24",
+      "type": "speaking",
+      "phrase": "Kako mi se sviđa ovaj pas!",
+      "translation": "Как мне нравится эта собака!"
+    },
+    {
+      "id": "k46e25",
+      "type": "repeat",
+      "phrase": "Nije se šalio.",
+      "translation": "Он не шутил."
+    }
+  ],
+  "words": [
+    {
+      "me": "plav",
+      "ru": "синий, голубой"
+    },
+    {
+      "me": "žut",
+      "ru": "жёлтый"
+    },
+    {
+      "me": "narandžast",
+      "ru": "оранжевый"
+    },
+    {
+      "me": "ovaj / ova / ovo",
+      "ru": "этот / эта / это"
+    },
+    {
+      "me": "Kako mi se sviđa ovaj pas!",
+      "ru": "Как мне нравится эта собака!"
+    }
+  ]
+}
