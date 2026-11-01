@@ -1854,7 +1854,21 @@
   "jesmo": "да, мы (jesmo li? — мы …?)",
   "jesu": "да, они (jesu li? — они …?)",
   "otići": "уйти, уехать",
-  "spavala": "спала — от spavati"
+  "spavala": "спала — от spavati",
+  "ajkuli": "акуле — от ajkula",
+  "crveni": "красный — от crven",
+  "haljine": "платья — от haljina",
+  "kornjači": "черепахе — от kornjača",
+  "kravi": "корове — от krava",
+  "mački": "кошке — от mačka",
+  "svinji": "свинье — от svinja",
+  "sviđala": "нравилась (sviđala se)",
+  "sviđale": "нравились (sviđale su se)",
+  "sviđali": "нравились (sviđali su se)",
+  "sviđalo": "нравилось (sviđalo se)",
+  "sviđao": "нравился (sviđao se)",
+  "vaše": "ваши, ваше — от vaš",
+  "šminka": "макияж, косметика"
  },
  "ru": {
   "а": "a",
@@ -2516,6 +2530,16 @@
   "ушёл": "otišao",
   "ушла": "otišla",
   "уехали": "otišli",
-  "уйти": "otići"
+  "уйти": "otići",
+  "макияж": "šminka",
+  "очки": "naočare",
+  "нравился": "sviđao se",
+  "нравилась": "sviđala se",
+  "нравилось": "sviđalo se",
+  "нравились": "sviđale su se, sviđali su se",
+  "акуле": "ajkuli",
+  "свинье": "svinji",
+  "корове": "kravi",
+  "кошке": "mački"
  }
 }

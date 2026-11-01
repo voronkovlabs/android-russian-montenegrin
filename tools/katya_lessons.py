@@ -3447,6 +3447,82 @@ L.append(dict(id='k44', title='Jesi li jela? Došla sam, otišla sam', section=S
     echo('Kad si došla?', 'Когда ты пришла?'),
 ]))
 
+# --- Урок 45 (абсурдный) ---
+# «Нравился» в прошедшем: кому + se + sviđao/sviđala/sviđalo; если нравилось много —
+# su se sviđale/sviđali. Новые слова šminka, naočare. Звери наряжаются.
+SMINKA = 'šminka — макияж, косметика. Женский род: nova šminka, moja šminka.'
+NAOCARE = ('naočare — очки. Бывают только во множественном числе, как pantalone. '
+           'Окончание -e, как у krave, haljine, — значит женский род: nove naočare.')
+SVIDJALA = ('«Нравился» в прошедшем: sviđao se (он), sviđala se (она), sviđalo se (оно). Род — '
+            'по тому, что нравилось: šminka — sviđala. Кому — ajkuli, как svinji, kravi.')
+MNOGO = ('Если нравилось много вещей — su se: haljine su se sviđale, kaputi su se sviđali. '
+         'su стоит перед se, как kupali su se.')
+L.append(dict(id='k45', title='Ajkuli se sviđala nova šminka', section=S3, words=[
+    ('šminka', 'макияж'), ('naočare', 'очки'), ('sviđao / sviđala se', 'нравился / нравилась')],
+    ex=[
+    dict(new('šminka', 'макияж', ['макияж', 'очки', 'платье']), explanation=SMINKA),
+    dict(new('naočare', 'очки', ['очки', 'макияж', 'брюки']), explanation=NAOCARE),
+    pairs(('макияж', 'šminka'), ('очки', 'naočare'), ('платье', 'haljina'), ('брюки', 'pantalone'),
+          ('пальто', 'kaput')),
+    dict(phrase('Ajkuli se sviđala nova šminka.', 'Акуле нравился новый макияж.',
+                ['Акуле нравился новый макияж.', 'Акуле нравятся новые очки.',
+                 'Акула купила новый макияж.']), explanation=SVIDJALA),
+    pick('Коню нравилось пальто. — Konju se ___ kaput.', ['sviđao', 'sviđala', 'sviđalo'], 'sviđao',
+         explanation='kaput — мужской род, значит sviđao.',
+         label='Вставь слово'),
+    pick('Корове нравилось море. — Kravi se ___ more.', ['sviđalo', 'sviđao', 'sviđala'], 'sviđalo',
+         explanation='more — средний род, значит sviđalo.', label='Вставь слово'),
+    pick('Акуле нравился макияж. — Ajkuli ___ sviđala šminka.', ['se', 'je se', 'su se'], 'se',
+         explanation='Нравилось одно — просто se, je пропадает: ajkuli se sviđala.',
+         label='Вставь слово'),
+    dict(phrase('Svinji su se sviđale vaše nove haljine.', 'Свинье нравились ваши новые платья.',
+                ['Свинье нравились ваши новые платья.', 'Свинье нравилось ваше новое платье.',
+                 'Свинья купила ваши новые платья.']), explanation=MNOGO),
+    pick('Медведю нравились очки. — Medvjedu su se ___ naočare.', ['sviđale', 'sviđala', 'sviđao'],
+         'sviđale', explanation='naočare — много, женский род, значит sviđale, и su se.',
+         label='Вставь слово'),
+    pick('Свинье нравились платья. — Svinji ___ sviđale haljine.', ['su se', 'se su', 'se'], 'su se',
+         explanation='Нравилось много — su se, su перед se: svinji su se sviđale.',
+         label='Вставь слово'),
+    pick('Кошке нравились очки. — ___ su se sviđale naočare.', ['Mački', 'Mačka', 'Mačku'], 'Mački',
+         explanation='Кому — mački: mačka → mački, как krava → kravi.', label='Вставь слово'),
+    pick('Собаке нравился макияж. — ___ se sviđala šminka.', ['Psu', 'Pas', 'Psa'], 'Psu',
+         explanation='Кому — psu: pas → psu.', label='Вставь слово'),
+    pick('Собаке нравились брюки. — Psu su se ___ pantalone.', ['sviđale', 'sviđali', 'sviđalo'],
+         'sviđale', explanation='pantalone — много, женский род, значит sviđale.',
+         label='Вставь слово'),
+    pairs(('нравился (он)', 'sviđao se'), ('нравилась (она)', 'sviđala se'),
+          ('нравилось (оно)', 'sviđalo se'), ('нравились (они, ж. р.)', 'sviđale su se'),
+          ('нравились (они, м. р.)', 'sviđali su se')),
+    dict(bank('Акуле нравился новый макияж.', 'Ajkuli se sviđala nova šminka.',
+              ['šminka', 'se', 'ajkuli', 'nova', 'sviđala']),
+         explanation='šminka — женский род: sviđala, nova.'),
+    dict(bank('Медведю нравились розовые очки.', 'Medvjedu su se sviđale roze naočare.',
+              ['naočare', 'su', 'medvjedu', 'roze', 'se', 'sviđale']),
+         explanation='naočare — много: su se sviđale.'),
+    dict(bank('Корове нравилось твоё платье.', 'Kravi se sviđala tvoja haljina.',
+              ['haljina', 'se', 'kravi', 'tvoja', 'sviđala']),
+         explanation='haljina — женский род, значит sviđala и tvoja, хотя «платье» по-русски '
+                     'среднего.'),
+    earbank('Konju se sviđao crveni kaput.', 'Коню нравилось красное пальто.',
+            ['kaput', 'se', 'konju', 'crveni', 'sviđao']),
+    dict(rubank('Kravi su se sviđale tvoje naočare.', 'Корове нравились твои очки.',
+                ['очки', 'корове', 'твои', 'нравились']),
+         also=['Твои очки нравились корове.'], explanation='naočare — много: su se sviđale.'),
+    pick('Ajkuli se sviđala šminka, a kornjači su se sviđale naočare.\n\n'
+         'Что нравилось черепахе?', ['Очки.', 'Макияж.', 'Платье.'], 'Очки.',
+         explanation='kornjači — «черепахе», kornjača → kornjači.', label='Прочитай и ответь'),
+    pick('Svinji se sviđao njen kaput.',
+         ['Свинье нравилось её пальто.', 'Свинье нравились её брюки.', 'Свинья носила её пальто.'],
+         'Свинье нравилось её пальто.', label='Выбери перевод'),
+    pick('Šta se sviđalo ajkuli?\n— Nova šminka!\n\nЧто это значит?',
+         ['Акуле нравился новый макияж.', 'Акула купила макияж.', 'Акуле нравились очки.'],
+         'Акуле нравился новый макияж.', label='Мини-диалог'),
+    say('Ajkuli se sviđala nova šminka.', 'Акуле нравился новый макияж.'),
+    say('Svinji su se sviđale vaše nove haljine.', 'Свинье нравились ваши новые платья.'),
+    echo('Medvjedu su se sviđale naočare.', 'Медведю нравились очки.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

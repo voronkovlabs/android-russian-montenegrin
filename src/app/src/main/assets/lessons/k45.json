@@ -1,0 +1,362 @@
+{
+  "id": "k45",
+  "title": "Ajkuli se sviđala nova šminka",
+  "exercises": [
+    {
+      "id": "k45e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "šminka",
+      "hint": "šminka — макияж",
+      "options": [
+        "макияж",
+        "очки",
+        "платье"
+      ],
+      "answer": "макияж",
+      "explanation": "šminka — макияж, косметика. Женский род: nova šminka, moja šminka.",
+      "example": "Tvoja šminka je lijepa. — У тебя красивый макияж."
+    },
+    {
+      "id": "k45e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "naočare",
+      "hint": "naočare — очки",
+      "options": [
+        "очки",
+        "макияж",
+        "брюки"
+      ],
+      "answer": "очки",
+      "explanation": "naočare — очки. Бывают только во множественном числе, как pantalone. Окончание -e, как у krave, haljine, — значит женский род: nove naočare.",
+      "example": "Moje naočare su velike. — Мои очки большие."
+    },
+    {
+      "id": "k45e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "макияж",
+          "me": "šminka"
+        },
+        {
+          "ru": "очки",
+          "me": "naočare"
+        },
+        {
+          "ru": "платье",
+          "me": "haljina"
+        },
+        {
+          "ru": "брюки",
+          "me": "pantalone"
+        },
+        {
+          "ru": "пальто",
+          "me": "kaput"
+        }
+      ]
+    },
+    {
+      "id": "k45e04",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ajkuli se sviđala nova šminka.",
+      "hint": "Ajkuli se sviđala nova šminka. — Акуле нравился новый макияж.",
+      "options": [
+        "Акуле нравился новый макияж.",
+        "Акуле нравятся новые очки.",
+        "Акула купила новый макияж."
+      ],
+      "answer": "Акуле нравился новый макияж.",
+      "explanation": "«Нравился» в прошедшем: sviđao se (он), sviđala se (она), sviđalo se (оно). Род — по тому, что нравилось: šminka — sviđala. Кому — ajkuli, как svinji, kravi."
+    },
+    {
+      "id": "k45e05",
+      "type": "choice",
+      "prompt": "Коню нравилось пальто. — Konju se ___ kaput.",
+      "options": [
+        "sviđao",
+        "sviđala",
+        "sviđalo"
+      ],
+      "answer": "sviđao",
+      "explanation": "kaput — мужской род, значит sviđao.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k45e06",
+      "type": "choice",
+      "prompt": "Корове нравилось море. — Kravi se ___ more.",
+      "options": [
+        "sviđalo",
+        "sviđao",
+        "sviđala"
+      ],
+      "answer": "sviđalo",
+      "explanation": "more — средний род, значит sviđalo.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k45e07",
+      "type": "choice",
+      "prompt": "Акуле нравился макияж. — Ajkuli ___ sviđala šminka.",
+      "options": [
+        "se",
+        "je se",
+        "su se"
+      ],
+      "answer": "se",
+      "explanation": "Нравилось одно — просто se, je пропадает: ajkuli se sviđala.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k45e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Svinji su se sviđale vaše nove haljine.",
+      "hint": "Svinji su se sviđale vaše nove haljine. — Свинье нравились ваши новые платья.",
+      "options": [
+        "Свинье нравились ваши новые платья.",
+        "Свинье нравилось ваше новое платье.",
+        "Свинья купила ваши новые платья."
+      ],
+      "answer": "Свинье нравились ваши новые платья.",
+      "explanation": "Если нравилось много вещей — su se: haljine su se sviđale, kaputi su se sviđali. su стоит перед se, как kupali su se."
+    },
+    {
+      "id": "k45e09",
+      "type": "choice",
+      "prompt": "Медведю нравились очки. — Medvjedu su se ___ naočare.",
+      "options": [
+        "sviđale",
+        "sviđala",
+        "sviđao"
+      ],
+      "answer": "sviđale",
+      "explanation": "naočare — много, женский род, значит sviđale, и su se.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k45e10",
+      "type": "choice",
+      "prompt": "Свинье нравились платья. — Svinji ___ sviđale haljine.",
+      "options": [
+        "su se",
+        "se su",
+        "se"
+      ],
+      "answer": "su se",
+      "explanation": "Нравилось много — su se, su перед se: svinji su se sviđale.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k45e11",
+      "type": "choice",
+      "prompt": "Кошке нравились очки. — ___ su se sviđale naočare.",
+      "options": [
+        "Mački",
+        "Mačka",
+        "Mačku"
+      ],
+      "answer": "Mački",
+      "explanation": "Кому — mački: mačka → mački, как krava → kravi.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k45e12",
+      "type": "choice",
+      "prompt": "Собаке нравился макияж. — ___ se sviđala šminka.",
+      "options": [
+        "Psu",
+        "Pas",
+        "Psa"
+      ],
+      "answer": "Psu",
+      "explanation": "Кому — psu: pas → psu.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k45e13",
+      "type": "choice",
+      "prompt": "Собаке нравились брюки. — Psu su se ___ pantalone.",
+      "options": [
+        "sviđale",
+        "sviđali",
+        "sviđalo"
+      ],
+      "answer": "sviđale",
+      "explanation": "pantalone — много, женский род, значит sviđale.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k45e14",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "нравился (он)",
+          "me": "sviđao se"
+        },
+        {
+          "ru": "нравилась (она)",
+          "me": "sviđala se"
+        },
+        {
+          "ru": "нравилось (оно)",
+          "me": "sviđalo se"
+        },
+        {
+          "ru": "нравились (они, ж. р.)",
+          "me": "sviđale su se"
+        },
+        {
+          "ru": "нравились (они, м. р.)",
+          "me": "sviđali su se"
+        }
+      ]
+    },
+    {
+      "id": "k45e15",
+      "type": "word_bank",
+      "prompt": "Акуле нравился новый макияж.",
+      "answer": "Ajkuli se sviđala nova šminka.",
+      "bank": [
+        "šminka",
+        "se",
+        "ajkuli",
+        "nova",
+        "sviđala"
+      ],
+      "explanation": "šminka — женский род: sviđala, nova."
+    },
+    {
+      "id": "k45e16",
+      "type": "word_bank",
+      "prompt": "Медведю нравились розовые очки.",
+      "answer": "Medvjedu su se sviđale roze naočare.",
+      "bank": [
+        "naočare",
+        "su",
+        "medvjedu",
+        "roze",
+        "se",
+        "sviđale"
+      ],
+      "explanation": "naočare — много: su se sviđale."
+    },
+    {
+      "id": "k45e17",
+      "type": "word_bank",
+      "prompt": "Корове нравилось твоё платье.",
+      "answer": "Kravi se sviđala tvoja haljina.",
+      "bank": [
+        "haljina",
+        "se",
+        "kravi",
+        "tvoja",
+        "sviđala"
+      ],
+      "explanation": "haljina — женский род, значит sviđala и tvoja, хотя «платье» по-русски среднего."
+    },
+    {
+      "id": "k45e18",
+      "type": "word_bank",
+      "prompt": "Коню нравилось красное пальто.",
+      "answer": "Konju se sviđao crveni kaput.",
+      "bank": [
+        "kaput",
+        "se",
+        "konju",
+        "crveni",
+        "sviđao"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k45e19",
+      "type": "word_bank",
+      "prompt": "Kravi su se sviđale tvoje naočare.",
+      "answer": "Корове нравились твои очки.",
+      "bank": [
+        "очки",
+        "корове",
+        "твои",
+        "нравились"
+      ],
+      "also": [
+        "Твои очки нравились корове."
+      ],
+      "explanation": "naočare — много: su se sviđale."
+    },
+    {
+      "id": "k45e20",
+      "type": "choice",
+      "prompt": "Ajkuli se sviđala šminka, a kornjači su se sviđale naočare.\n\nЧто нравилось черепахе?",
+      "options": [
+        "Очки.",
+        "Макияж.",
+        "Платье."
+      ],
+      "answer": "Очки.",
+      "explanation": "kornjači — «черепахе», kornjača → kornjači.",
+      "label": "Прочитай и ответь"
+    },
+    {
+      "id": "k45e21",
+      "type": "choice",
+      "prompt": "Svinji se sviđao njen kaput.",
+      "options": [
+        "Свинье нравилось её пальто.",
+        "Свинье нравились её брюки.",
+        "Свинья носила её пальто."
+      ],
+      "answer": "Свинье нравилось её пальто.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k45e22",
+      "type": "choice",
+      "prompt": "Šta se sviđalo ajkuli?\n— Nova šminka!\n\nЧто это значит?",
+      "options": [
+        "Акуле нравился новый макияж.",
+        "Акула купила макияж.",
+        "Акуле нравились очки."
+      ],
+      "answer": "Акуле нравился новый макияж.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k45e23",
+      "type": "speaking",
+      "phrase": "Ajkuli se sviđala nova šminka.",
+      "translation": "Акуле нравился новый макияж."
+    },
+    {
+      "id": "k45e24",
+      "type": "speaking",
+      "phrase": "Svinji su se sviđale vaše nove haljine.",
+      "translation": "Свинье нравились ваши новые платья."
+    },
+    {
+      "id": "k45e25",
+      "type": "repeat",
+      "phrase": "Medvjedu su se sviđale naočare.",
+      "translation": "Медведю нравились очки."
+    }
+  ],
+  "words": [
+    {
+      "me": "šminka",
+      "ru": "макияж"
+    },
+    {
+      "me": "naočare",
+      "ru": "очки"
+    },
+    {
+      "me": "sviđao / sviđala se",
+      "ru": "нравился / нравилась"
+    }
+  ]
+}
