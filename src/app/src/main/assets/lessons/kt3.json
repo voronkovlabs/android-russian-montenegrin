@@ -1,0 +1,412 @@
+{
+  "id": "kt3",
+  "title": "Тест: Раздел 3",
+  "exercises": [
+    {
+      "id": "kt3e01",
+      "type": "choice",
+      "prompt": "Когда я была маленькой… — Kad sam ___ mala…",
+      "options": [
+        "bila",
+        "bio",
+        "bilo"
+      ],
+      "answer": "bila",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e02",
+      "type": "choice",
+      "prompt": "Prase je ___ malo.",
+      "options": [
+        "bilo",
+        "bio",
+        "bila"
+      ],
+      "answer": "bilo",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt3e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "psi",
+          "me": "oni su"
+        },
+        {
+          "ru": "mačke",
+          "me": "one su"
+        },
+        {
+          "ru": "pisma",
+          "me": "ona su"
+        },
+        {
+          "ru": "medvjedi",
+          "me": "oni su"
+        },
+        {
+          "ru": "krave",
+          "me": "one su"
+        }
+      ]
+    },
+    {
+      "id": "kt3e04",
+      "type": "choice",
+      "prompt": "Mačke su ___ gladne.",
+      "options": [
+        "bile",
+        "bili",
+        "bila"
+      ],
+      "answer": "bile",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt3e05",
+      "type": "choice",
+      "prompt": "В субботу я была в городе. — U ___ sam bila u gradu.",
+      "options": [
+        "subotu",
+        "subota",
+        "suboti"
+      ],
+      "answer": "subotu",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e06",
+      "type": "choice",
+      "prompt": "Ты хочешь, чтобы подруга прислала, где она находится. Что скажешь?",
+      "options": [
+        "Pošalji mi lokaciju!",
+        "Pokaži mi mapu!",
+        "Šta radiš, bre!"
+      ],
+      "answer": "Pošalji mi lokaciju!",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "kt3e07",
+      "type": "word_bank",
+      "prompt": "Kao i obično, pio sam kafu ujutru.",
+      "answer": "Как обычно, утром я пил кофе.",
+      "bank": [
+        "кофе",
+        "как",
+        "утром",
+        "обычно",
+        "пил",
+        "я"
+      ],
+      "also": [
+        "Как обычно, я пил кофе утром.",
+        "Как обычно, я утром пил кофе.",
+        "Как обычно, утром пил кофе.",
+        "Как обычно, пил кофе утром."
+      ]
+    },
+    {
+      "id": "kt3e08",
+      "type": "choice",
+      "prompt": "Мы не были дома. — ___ bili kod kuće.",
+      "options": [
+        "Nismo",
+        "Nisam",
+        "Nisu"
+      ],
+      "answer": "Nismo",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e09",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "утром",
+          "me": "ujutru"
+        },
+        {
+          "ru": "днём",
+          "me": "danju"
+        },
+        {
+          "ru": "вечером",
+          "me": "uveče"
+        },
+        {
+          "ru": "ночью",
+          "me": "noću"
+        }
+      ]
+    },
+    {
+      "id": "kt3e10",
+      "type": "choice",
+      "prompt": "Моя сестра посылает письмо. — Moja sestra ___ pismo.",
+      "options": [
+        "šalje",
+        "šaljem",
+        "šalju"
+      ],
+      "answer": "šalje",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e11",
+      "type": "choice",
+      "prompt": "Лисы ели суши. — Lisice su ___ suši.",
+      "options": [
+        "jele",
+        "jeli",
+        "jela"
+      ],
+      "answer": "jele",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e12",
+      "type": "choice",
+      "prompt": "Кошка залезла на стол и ест твою котлету!",
+      "options": [
+        "Šta radiš, bre!",
+        "Šta radiš?",
+        "Srećan rođendan!"
+      ],
+      "answer": "Šta radiš, bre!",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "kt3e13",
+      "type": "choice",
+      "prompt": "___ slava!",
+      "options": [
+        "Srećna",
+        "Srećan",
+        "Srećno"
+      ],
+      "answer": "Srećna",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt3e14",
+      "type": "choice",
+      "prompt": "Jaja su ___ u gnijezdu.",
+      "options": [
+        "bila",
+        "bile",
+        "bili"
+      ],
+      "answer": "bila",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "kt3e15",
+      "type": "choice",
+      "prompt": "— Nažalost, proizvoda nema na stanju.\n\nЧто сказал магазин?",
+      "options": [
+        "Товара нет в наличии.",
+        "Курьер уже едет.",
+        "Оплата при получении."
+      ],
+      "answer": "Товара нет в наличии.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "kt3e16",
+      "type": "word_bank",
+      "prompt": "Отмените заказ, пожалуйста.",
+      "answer": "Otkažite narudžbinu, molim vas.",
+      "bank": [
+        "narudžbinu",
+        "vas",
+        "otkažite",
+        "molim"
+      ]
+    },
+    {
+      "id": "kt3e17",
+      "type": "choice",
+      "prompt": "Соседка собирает пустые банки. Что она тебе скажет?",
+      "options": [
+        "Nemoj da bacaš tegle!",
+        "Nije ti hladno u tome?",
+        "Šališ se!"
+      ],
+      "answer": "Nemoj da bacaš tegle!",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "kt3e18",
+      "type": "choice",
+      "prompt": "Свинья в платье. — Svinja je u ___ .",
+      "options": [
+        "haljini",
+        "haljina",
+        "haljinu"
+      ],
+      "answer": "haljini",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e19",
+      "type": "choice",
+      "prompt": "Ей нравится красная рубашка. — Sviđa ___ se crvena košulja.",
+      "options": [
+        "joj",
+        "mu",
+        "mi"
+      ],
+      "answer": "joj",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e20",
+      "type": "choice",
+      "prompt": "Он видел волка. — On je ___ vuka.",
+      "options": [
+        "vidio",
+        "vidjela",
+        "vidjeli"
+      ],
+      "answer": "vidio",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e21",
+      "type": "word_bank",
+      "prompt": "Мы никогда не были в Америке.",
+      "answer": "Nikad nismo bili u Americi.",
+      "bank": [
+        "Americi",
+        "nismo",
+        "nikad",
+        "u",
+        "bili"
+      ]
+    },
+    {
+      "id": "kt3e22",
+      "type": "choice",
+      "prompt": "Он не знал. — Nije ___ .",
+      "options": [
+        "znao",
+        "znala",
+        "znali"
+      ],
+      "answer": "znao",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e23",
+      "type": "choice",
+      "prompt": "У неё была кошка. — Ona je ___ mačku.",
+      "options": [
+        "imala",
+        "imao",
+        "imali"
+      ],
+      "answer": "imala",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e24",
+      "type": "choice",
+      "prompt": "Подруга выходит на улицу в лёгкой рубашке, а там холодно. Что скажешь?",
+      "options": [
+        "Nije ti hladno u tome?",
+        "Nisam znala.",
+        "Kako mi se sviđa ovaj pas!"
+      ],
+      "answer": "Nije ti hladno u tome?",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "kt3e25",
+      "type": "choice",
+      "prompt": "Она купалась. — Kupala ___ .",
+      "options": [
+        "se",
+        "je se",
+        "sam se"
+      ],
+      "answer": "se",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e26",
+      "type": "choice",
+      "prompt": "Мы шутили. — Šalili ___ .",
+      "options": [
+        "smo se",
+        "se smo",
+        "se"
+      ],
+      "answer": "smo se",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e27",
+      "type": "choice",
+      "prompt": "— Jesi li jela?\nОтветь «да»:",
+      "options": [
+        "Jesam.",
+        "Jesi.",
+        "Nisam."
+      ],
+      "answer": "Jesam.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "kt3e28",
+      "type": "choice",
+      "prompt": "Она ушла домой. — Ona je ___ kući.",
+      "options": [
+        "otišla",
+        "došla",
+        "otišao"
+      ],
+      "answer": "otišla",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e29",
+      "type": "choice",
+      "prompt": "Медведю нравились очки. — Medvjedu su se ___ naočare.",
+      "options": [
+        "sviđale",
+        "sviđala",
+        "sviđao"
+      ],
+      "answer": "sviđale",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e30",
+      "type": "choice",
+      "prompt": "Он не шутил. — Nije ___ šalio.",
+      "options": [
+        "se",
+        "je se",
+        "sam se"
+      ],
+      "answer": "se",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "kt3e31",
+      "type": "choice",
+      "prompt": "Синее море — ___ more",
+      "options": [
+        "plavo",
+        "plav",
+        "plava"
+      ],
+      "answer": "plavo",
+      "label": "Выбери форму"
+    }
+  ],
+  "words": []
+}

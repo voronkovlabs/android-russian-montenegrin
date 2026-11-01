@@ -289,6 +289,13 @@
       "title": "Nisam se kupala. Kako mi se sviđa ovaj pas!",
       "file": "k46.json",
       "section": "Раздел 3"
+    },
+    {
+      "id": "kt3",
+      "title": "Тест: Раздел 3",
+      "file": "kt3.json",
+      "section": "Раздел 3",
+      "test": true
     }
   ]
 }
