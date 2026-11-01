@@ -1,0 +1,388 @@
+{
+  "id": "k44",
+  "title": "Jesi li jela? Došla sam, otišla sam",
+  "exercises": [
+    {
+      "id": "k44e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Jesi li jela?",
+      "hint": "Jesi li jela? — Ты ела?",
+      "options": [
+        "Ты ела?",
+        "Ты ешь?",
+        "Ты была дома?"
+      ],
+      "answer": "Ты ела?",
+      "explanation": "Вопрос в прошедшем: Jesi li + глагол. Jesi li jela? — Ты ела? Можно и Da li si jela? — значит то же самое."
+    },
+    {
+      "id": "k44e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ты?",
+          "me": "jesi li"
+        },
+        {
+          "ru": "он?",
+          "me": "je li"
+        },
+        {
+          "ru": "мы?",
+          "me": "jesmo li"
+        },
+        {
+          "ru": "вы?",
+          "me": "jeste li"
+        },
+        {
+          "ru": "они?",
+          "me": "jesu li"
+        }
+      ],
+      "explanation": "Начало вопроса по лицу: jesi li (ты), je li (он, она), jesmo li (мы), jeste li (вы), jesu li (они). Je li jeo? — Он ел?"
+    },
+    {
+      "id": "k44e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Jesam.",
+      "hint": "Jesam. — Да (ела).",
+      "options": [
+        "Да (ела).",
+        "Нет (не ела).",
+        "Я есть."
+      ],
+      "answer": "Да (ела).",
+      "explanation": "Короткий ответ — без глагола: Jesam — да, Nisam — нет. Jesi li jela? — Jesam. Мы: Jesmo / Nismo."
+    },
+    {
+      "id": "k44e04",
+      "type": "choice",
+      "prompt": "Ты спала? — ___ li spavala?",
+      "options": [
+        "Jesi",
+        "Je",
+        "Jeste"
+      ],
+      "answer": "Jesi",
+      "explanation": "Ты — jesi li: jesi li spavala?",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k44e05",
+      "type": "choice",
+      "prompt": "Он ел? — ___ li jeo?",
+      "options": [
+        "Je",
+        "Jesi",
+        "Jesu"
+      ],
+      "answer": "Je",
+      "explanation": "Он — je li: je li jeo?",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k44e06",
+      "type": "choice",
+      "prompt": "Вы были в Америке? — ___ li bili u Americi?",
+      "options": [
+        "Jeste",
+        "Jesi",
+        "Je"
+      ],
+      "answer": "Jeste",
+      "explanation": "Вы — jeste li: jeste li bili?",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k44e07",
+      "type": "choice",
+      "prompt": "— Jesi li bila u gradu?\n— Nisam, bila sam kod kuće.\n\nГде она была?",
+      "options": [
+        "Дома.",
+        "В городе.",
+        "На море."
+      ],
+      "answer": "Дома.",
+      "explanation": "Короткий ответ — без глагола: Jesam — да, Nisam — нет. Jesi li jela? — Jesam. Мы: Jesmo / Nismo.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k44e08",
+      "type": "choice",
+      "prompt": "— Jeste li vidjeli more?\nОтветь «да»:",
+      "options": [
+        "Jesmo.",
+        "Nismo.",
+        "Jesam li."
+      ],
+      "answer": "Jesmo.",
+      "explanation": "Спросили «вы», отвечаешь «мы»: Jesmo — да, Nismo — нет.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k44e09",
+      "type": "word_bank",
+      "prompt": "Ты была на море?",
+      "answer": "Jesi li bila na moru?",
+      "bank": [
+        "moru",
+        "li",
+        "bila",
+        "jesi",
+        "na"
+      ],
+      "explanation": "Ты — jesi li, потом глагол: jesi li bila?"
+    },
+    {
+      "id": "k44e10",
+      "type": "word_bank",
+      "prompt": "Da li si čuo za to?",
+      "answer": "Ты слышал об этом?",
+      "bank": [
+        "этом",
+        "слышал",
+        "ты",
+        "об"
+      ],
+      "also": [
+        "Ты об этом слышал?",
+        "Слышал об этом?"
+      ],
+      "explanation": "Da li si…? — то же, что Jesi li…? Da li si čuo = Jesi li čuo."
+    },
+    {
+      "id": "k44e11",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "doći",
+      "hint": "doći — прийти, приехать",
+      "options": [
+        "прийти, приехать",
+        "уйти, уехать",
+        "спать"
+      ],
+      "answer": "прийти, приехать",
+      "explanation": "doći — прийти, приехать. Dođi! — Приходи! (урок 33). Прошедшее: došao (он), došla (она), došli (они), как išao, išla.",
+      "example": "Moj brat je došao. — Мой брат пришёл."
+    },
+    {
+      "id": "k44e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Došla sam kući.",
+      "hint": "Došla sam kući. — Я пришла домой.",
+      "options": [
+        "Я пришла домой.",
+        "Я ушла из дома.",
+        "Я дома."
+      ],
+      "answer": "Я пришла домой.",
+      "explanation": "doći — прийти, приехать. Dođi! — Приходи! (урок 33). Прошедшее: došao (он), došla (она), došli (они), как išao, išla."
+    },
+    {
+      "id": "k44e13",
+      "type": "choice",
+      "prompt": "Он пришёл. — On je ___ .",
+      "options": [
+        "došao",
+        "došla",
+        "došli"
+      ],
+      "answer": "došao",
+      "explanation": "On — мужской род, значит došao. Она — došla.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k44e14",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "otići",
+      "hint": "otići — уйти, уехать",
+      "options": [
+        "уйти, уехать",
+        "прийти, приехать",
+        "купаться"
+      ],
+      "answer": "уйти, уехать",
+      "explanation": "otići — уйти, уехать. Прошедшее: otišao (он), otišla (она), otišli (они). «Она пошла в город» тоже otišla: Otišla je u grad.",
+      "example": "Pas je otišao. — Собака ушла."
+    },
+    {
+      "id": "k44e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Otišli smo na more.",
+      "hint": "Otišli smo na more. — Мы уехали на море.",
+      "options": [
+        "Мы уехали на море.",
+        "Мы приехали с моря.",
+        "Мы купались в море."
+      ],
+      "answer": "Мы уехали на море.",
+      "explanation": "otići — уйти, уехать. Прошедшее: otišao (он), otišla (она), otišli (они). «Она пошла в город» тоже otišla: Otišla je u grad."
+    },
+    {
+      "id": "k44e16",
+      "type": "choice",
+      "prompt": "Она ушла домой. — Ona je ___ kući.",
+      "options": [
+        "otišla",
+        "otišao",
+        "otišli"
+      ],
+      "answer": "otišla",
+      "explanation": "Ona — женский род, значит otišla. Он — otišao.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k44e17",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "пришёл",
+          "me": "došao"
+        },
+        {
+          "ru": "пришла",
+          "me": "došla"
+        },
+        {
+          "ru": "ушёл",
+          "me": "otišao"
+        },
+        {
+          "ru": "ушла",
+          "me": "otišla"
+        }
+      ]
+    },
+    {
+      "id": "k44e18",
+      "type": "choice",
+      "prompt": "Когда ты пришла? — Kad si ___ ?",
+      "options": [
+        "došla",
+        "otišla",
+        "došao"
+      ],
+      "answer": "došla",
+      "explanation": "Пришла — došla. После kad сразу si: kad si došla? — так же, как gdje si bila?",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k44e19",
+      "type": "choice",
+      "prompt": "— Je li Marko došao?\n— Nije, otišao je kući.\n\nГде Марко?",
+      "options": [
+        "Ушёл домой.",
+        "Пришёл.",
+        "В городе."
+      ],
+      "answer": "Ушёл домой.",
+      "explanation": "Je li došao? — Он пришёл? Nije — нет. otišao je kući — ушёл домой.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k44e20",
+      "type": "word_bank",
+      "prompt": "Он ушёл домой.",
+      "answer": "Otišao je kući.",
+      "bank": [
+        "kući",
+        "je",
+        "otišao"
+      ],
+      "also": [
+        "On je otišao kući."
+      ],
+      "explanation": "Сначала глагол, потом je: otišao je. Можно и On je otišao kući."
+    },
+    {
+      "id": "k44e21",
+      "type": "word_bank",
+      "prompt": "Ты приехала на автобусе?",
+      "answer": "Jesi li došla autobusom?",
+      "bank": [
+        "autobusom",
+        "li",
+        "došla",
+        "jesi"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k44e22",
+      "type": "word_bank",
+      "prompt": "Мы пришли домой.",
+      "answer": "Došli smo kući.",
+      "bank": [
+        "kući",
+        "smo",
+        "došli"
+      ],
+      "also": [
+        "Mi smo došli kući."
+      ],
+      "explanation": "Mi — došli smo."
+    },
+    {
+      "id": "k44e23",
+      "type": "choice",
+      "prompt": "Подруга пришла к тебе в гости. Ты хочешь спросить, ела ли она.",
+      "options": [
+        "Jesi li jela?",
+        "Jesi li bila u Americi?",
+        "Šališ se!"
+      ],
+      "answer": "Jesi li jela?",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k44e24",
+      "type": "speaking",
+      "phrase": "Jesi li jela?",
+      "translation": "Ты ела?"
+    },
+    {
+      "id": "k44e25",
+      "type": "speaking",
+      "phrase": "Otišla sam kući.",
+      "translation": "Я ушла домой."
+    },
+    {
+      "id": "k44e26",
+      "type": "repeat",
+      "phrase": "Kad si došla?",
+      "translation": "Когда ты пришла?"
+    }
+  ],
+  "words": [
+    {
+      "me": "Jesi li…?",
+      "ru": "Ты …? (вопрос в прошедшем)"
+    },
+    {
+      "me": "Jesam. / Nisam.",
+      "ru": "Да. / Нет."
+    },
+    {
+      "me": "doći",
+      "ru": "прийти, приехать"
+    },
+    {
+      "me": "došao / došla",
+      "ru": "пришёл / пришла"
+    },
+    {
+      "me": "otići",
+      "ru": "уйти, уехать"
+    },
+    {
+      "me": "otišao / otišla",
+      "ru": "ушёл / ушла"
+    }
+  ]
+}

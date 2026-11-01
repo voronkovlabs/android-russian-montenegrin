@@ -3370,6 +3370,83 @@ L.append(dict(id='k43', title='Kupala sam se. Šališ se!', section=S3, words=[
     echo('Kupali smo se u moru.', 'Мы купались в море.'),
 ]))
 
+# --- Урок 44 ---
+# Вопросы в прошедшем: Jesi li jela? и короткие ответы Jesam / Nisam.
+# doći и otići в прошедшем: došao, došla; otišao, otišla («пошла» из k35).
+JESI = ('Вопрос в прошедшем: Jesi li + глагол. Jesi li jela? — Ты ела? Можно и Da li si '
+        'jela? — значит то же самое.')
+JE_LI = ('Начало вопроса по лицу: jesi li (ты), je li (он, она), jesmo li (мы), jeste li (вы), '
+         'jesu li (они). Je li jeo? — Он ел?')
+JESAM = ('Короткий ответ — без глагола: Jesam — да, Nisam — нет. Jesi li jela? — Jesam. '
+         'Мы: Jesmo / Nismo.')
+DOCI = ('doći — прийти, приехать. Dođi! — Приходи! (урок 33). Прошедшее: došao (он), došla '
+        '(она), došli (они), как išao, išla.')
+OTICI = ('otići — уйти, уехать. Прошедшее: otišao (он), otišla (она), otišli (они). «Она пошла '
+         'в город» тоже otišla: Otišla je u grad.')
+L.append(dict(id='k44', title='Jesi li jela? Došla sam, otišla sam', section=S3, words=[
+    ('Jesi li…?', 'Ты …? (вопрос в прошедшем)'), ('Jesam. / Nisam.', 'Да. / Нет.'),
+    ('doći', 'прийти, приехать'), ('došao / došla', 'пришёл / пришла'),
+    ('otići', 'уйти, уехать'), ('otišao / otišla', 'ушёл / ушла')],
+    ex=[
+    dict(phrase('Jesi li jela?', 'Ты ела?', ['Ты ела?', 'Ты ешь?', 'Ты была дома?']),
+         explanation=JESI),
+    dict(pairs(('ты?', 'jesi li'), ('он?', 'je li'), ('мы?', 'jesmo li'), ('вы?', 'jeste li'),
+               ('они?', 'jesu li')), explanation=JE_LI),
+    dict(phrase('Jesam.', 'Да (ела).', ['Да (ела).', 'Нет (не ела).', 'Я есть.']),
+         explanation=JESAM),
+    pick('Ты спала? — ___ li spavala?', ['Jesi', 'Je', 'Jeste'], 'Jesi',
+         explanation='Ты — jesi li: jesi li spavala?', label='Вставь слово'),
+    pick('Он ел? — ___ li jeo?', ['Je', 'Jesi', 'Jesu'], 'Je',
+         explanation='Он — je li: je li jeo?', label='Вставь слово'),
+    pick('Вы были в Америке? — ___ li bili u Americi?', ['Jeste', 'Jesi', 'Je'], 'Jeste',
+         explanation='Вы — jeste li: jeste li bili?', label='Вставь слово'),
+    pick('— Jesi li bila u gradu?\n— Nisam, bila sam kod kuće.\n\nГде она была?',
+         ['Дома.', 'В городе.', 'На море.'], 'Дома.', explanation=JESAM, label='Мини-диалог'),
+    pick('— Jeste li vidjeli more?\nОтветь «да»:', ['Jesmo.', 'Nismo.', 'Jesam li.'], 'Jesmo.',
+         explanation='Спросили «вы», отвечаешь «мы»: Jesmo — да, Nismo — нет.',
+         label='Мини-диалог'),
+    dict(bank('Ты была на море?', 'Jesi li bila na moru?', ['moru', 'li', 'bila', 'jesi', 'na']),
+         explanation='Ты — jesi li, потом глагол: jesi li bila?'),
+    dict(rubank('Da li si čuo za to?', 'Ты слышал об этом?', ['этом', 'слышал', 'ты', 'об']),
+         also=['Ты об этом слышал?', 'Слышал об этом?'],
+         explanation='Da li si…? — то же, что Jesi li…? Da li si čuo = Jesi li čuo.'),
+    dict(new('doći', 'прийти, приехать', ['прийти, приехать', 'уйти, уехать', 'спать'],
+             label='Новый глагол'), explanation=DOCI),
+    dict(phrase('Došla sam kući.', 'Я пришла домой.',
+                ['Я пришла домой.', 'Я ушла из дома.', 'Я дома.']), explanation=DOCI),
+    pick('Он пришёл. — On je ___ .', ['došao', 'došla', 'došli'], 'došao',
+         explanation='On — мужской род, значит došao. Она — došla.', label='Вставь слово'),
+    dict(new('otići', 'уйти, уехать', ['уйти, уехать', 'прийти, приехать', 'купаться'],
+             label='Новый глагол'), explanation=OTICI),
+    dict(phrase('Otišli smo na more.', 'Мы уехали на море.',
+                ['Мы уехали на море.', 'Мы приехали с моря.', 'Мы купались в море.']),
+         explanation=OTICI),
+    pick('Она ушла домой. — Ona je ___ kući.', ['otišla', 'otišao', 'otišli'], 'otišla',
+         explanation='Ona — женский род, значит otišla. Он — otišao.', label='Вставь слово'),
+    pairs(('пришёл', 'došao'), ('пришла', 'došla'), ('ушёл', 'otišao'), ('ушла', 'otišla')),
+    pick('Когда ты пришла? — Kad si ___ ?', ['došla', 'otišla', 'došao'], 'došla',
+         explanation='Пришла — došla. После kad сразу si: kad si došla? — так же, как '
+                     'gdje si bila?', label='Вставь слово'),
+    pick('— Je li Marko došao?\n— Nije, otišao je kući.\n\nГде Марко?',
+         ['Ушёл домой.', 'Пришёл.', 'В городе.'], 'Ушёл домой.',
+         explanation='Je li došao? — Он пришёл? Nije — нет. otišao je kući — ушёл домой.',
+         label='Мини-диалог'),
+    dict(bank('Он ушёл домой.', 'Otišao je kući.', ['kući', 'je', 'otišao'],
+              also=['On je otišao kući.']),
+         explanation='Сначала глагол, потом je: otišao je. Можно и On je otišao kući.'),
+    earbank('Jesi li došla autobusom?', 'Ты приехала на автобусе?',
+            ['autobusom', 'li', 'došla', 'jesi']),
+    dict(bank('Мы пришли домой.', 'Došli smo kući.', ['kući', 'smo', 'došli'],
+              also=['Mi smo došli kući.']),
+         explanation='Mi — došli smo.'),
+    pick('Подруга пришла к тебе в гости. Ты хочешь спросить, ела ли она.',
+         ['Jesi li jela?', 'Jesi li bila u Americi?', 'Šališ se!'], 'Jesi li jela?',
+         label='Что скажешь?'),
+    say('Jesi li jela?', 'Ты ела?'),
+    say('Otišla sam kući.', 'Я ушла домой.'),
+    echo('Kad si došla?', 'Когда ты пришла?'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

@@ -1850,7 +1850,11 @@
   "šalila": "шутила — от šaliti se",
   "šalili": "шутили — от šaliti se",
   "šaliti": "šaliti se — шутить",
-  "šališ": "шутишь (šališ se)"
+  "šališ": "шутишь (šališ se)",
+  "jesmo": "да, мы (jesmo li? — мы …?)",
+  "jesu": "да, они (jesu li? — они …?)",
+  "otići": "уйти, уехать",
+  "spavala": "спала — от spavati"
  },
  "ru": {
   "а": "a",
@@ -2506,6 +2510,12 @@
   "купалась": "kupala se",
   "шутил": "šalio se",
   "радовался": "radovao se",
-  "звали": "zvao se, zvala se"
+  "звали": "zvao se, zvala se",
+  "пришла": "došla",
+  "пришли": "došli",
+  "ушёл": "otišao",
+  "ушла": "otišla",
+  "уехали": "otišli",
+  "уйти": "otići"
  }
 }
