@@ -56,6 +56,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -142,8 +143,13 @@ fun SessionScreen(
     // Выход из приложения остаётся только на главном экране, где BackHandler-а нет.
     BackHandler { onExit() }
 
+    // Начало урока — для «Время прохождения» на заставке в конце. Считается
+    // по часам, а не по списанному в норму: человек видит, сколько просидел.
+    val startedAt = rememberSaveable(state.title, state.items.firstOrNull()?.exercise?.id) {
+        System.currentTimeMillis()
+    }
     if (state.finished) {
-        FinishedView(state, onExit)
+        FinishedView(state, startedAt, onExit)
         return
     }
 
@@ -2650,32 +2656,45 @@ private fun BlockedView(message: String, onRetry: () -> Unit, onExit: () -> Unit
     }
 }
 
+/** Восклицание вместо «Готово» — одно из, на каждый урок своё. */
+private val CHEERS = listOf(
+    "Супер!", "Отлично!", "Замечательно!", "Потрясающе!", "Прекрасно!", "Не останавливайтесь!"
+)
+
 @Composable
-private fun FinishedView(state: SessionState, onExit: () -> Unit) {
+private fun FinishedView(state: SessionState, startedAt: Long, onExit: () -> Unit) {
+    val cheer = rememberSaveable { CHEERS.random() }
+    val seconds = rememberSaveable { ((System.currentTimeMillis() - startedAt) / 1000).coerceAtLeast(0) }
     Column(
         Modifier.fillMaxSize().padding(28.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            when {
-                state.failed -> "ТЕСТ НЕ СДАН"
-                state.strict -> "ТЕСТ СДАН"
-                else -> "ГОТОВО"
-            },
-            style = MaterialTheme.typography.labelSmall,
-            color = if (state.failed) Crimson else Accent
-        )
+        if (state.strict) {
+            Text(
+                if (state.failed) "ТЕСТ НЕ СДАН" else "ТЕСТ СДАН",
+                style = MaterialTheme.typography.labelSmall,
+                color = if (state.failed) Crimson else Accent
+            )
+        } else {
+            Text(cheer, style = MaterialTheme.typography.displaySmall, color = Accent)
+        }
         Spacer(Modifier.height(12.dp))
-        Text(state.title, style = MaterialTheme.typography.displaySmall, color = Paper)
+        Text(state.title, style = MaterialTheme.typography.titleLarge, color = Paper)
         Spacer(Modifier.height(16.dp))
+        val time = "%d:%02d".format(seconds / 60, seconds % 60)
         Text(
             when {
                 state.failed -> "Больше $STRICT_MISTAKES ошибок. Можно попробовать ещё раз " +
                     "или пройти уроки раздела по порядку."
                 state.strict -> "Ошибок: ${state.mistakes}. Следующий раздел открыт, " +
                     "слова пропущенных уроков появились в словаре."
-                else -> "${state.correct} из ${state.firstTotal} с первого раза. " +
-                    "Ошибки вернутся в повторении."
+                else -> {
+                    val pct = if (state.firstTotal > 0) {
+                        Math.round(state.correct * 100.0 / state.firstTotal)
+                    } else 0
+                    "${state.correct} из ${state.firstTotal} с первого раза ($pct%). " +
+                        "Время прохождения $time."
+                }
             },
             style = MaterialTheme.typography.bodyLarge,
             color = Muted
