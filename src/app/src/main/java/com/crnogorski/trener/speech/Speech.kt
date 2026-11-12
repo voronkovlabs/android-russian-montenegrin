@@ -21,6 +21,9 @@ import android.media.AudioFormat
 import android.os.ParcelFileDescriptor
 import java.io.File
 import java.util.Locale
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 /**
  * В Android нет локали «черногорский», используем sr-RS с латиницей.
@@ -126,6 +129,14 @@ class Speaker(context: Context) {
     private var currentId: String? = null
     private var whenDone: (() -> Unit)? = null
 
+    /**
+     * Звучит ли сейчас фраза (заметка Сергея 338): «Дальше» ждёт, пока фраза
+     * договорится, чтобы ученик дослушал до конца. Наблюдаемое состояние
+     * Compose, меняется только на главном потоке.
+     */
+    var speaking by mutableStateOf(false)
+        private set
+
     private val progress = object : UtteranceProgressListener() {
         override fun onStart(utteranceId: String?) {}
 
@@ -141,6 +152,7 @@ class Speaker(context: Context) {
             if (utteranceId == currentId) {
                 whenDone = null
                 currentId = null
+                main.post { speaking = false }
             }
         }
     }
@@ -256,6 +268,7 @@ class Speaker(context: Context) {
         val id = (++utterance).toString()
         currentId = id
         whenDone = onDone
+        speaking = true
         engine.setSpeechRate(if (slow) SLOW_RATE else NORMAL_RATE)
         engine.setPitch(if (low) LOW_PITCH else NORMAL_PITCH)
 
@@ -271,6 +284,7 @@ class Speaker(context: Context) {
             // навсегда. См. revive().
             currentId = null
             whenDone = null
+            speaking = false
             revive(text, slow, low, onDone)
         }
     }
@@ -344,6 +358,7 @@ class Speaker(context: Context) {
     fun silence() {
         whenDone = null
         currentId = null
+        speaking = false
         tts?.stop()
     }
 
@@ -353,6 +368,7 @@ class Speaker(context: Context) {
             val done = whenDone
             whenDone = null
             currentId = null
+            speaking = false
             done?.invoke()
         }
     }

@@ -80,6 +80,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
@@ -284,8 +287,16 @@ fun SessionScreen(
         // пары из пяти фраз, разбор ошибки — она уезжала за край, и её
         // приходилось искать прокруткой.
         if (phase is Phase.Result || phase is Phase.Skipped) {
+            // Пока звучит фраза после ответа, «Дальше» ждёт (заметка Сергея 338):
+            // ученик должен дослушать. Сторож на восемь секунд — если движок
+            // так и не сообщит о конце, кнопка всё равно оживёт.
+            var stuck by remember(state.index) { mutableStateOf(false) }
+            LaunchedEffect(state.index, speaker.speaking) {
+                if (speaker.speaking) { delay(8_000); stuck = true }
+            }
             Button(
                 onClick = onNext,
+                enabled = !speaker.speaking || stuck,
                 modifier = Modifier
                     .padding(horizontal = 20.dp, vertical = 12.dp)
                     .fillMaxWidth()
@@ -1207,11 +1218,11 @@ private fun MatchAnswer(
         left.indices.forEach { row ->
             val l = left[row]
             val r = right[row]
-            Row(
-                Modifier.height(IntrinsicSize.Min),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Box(Modifier.weight(1f).fillMaxHeight()) {
+            // Своя раскладка, а не Row с IntrinsicSize (заметка Кати 370): с
+            // весами Row считал высоту строки по ширине без деления пополам, и
+            // двухстрочная плашка срезалась снизу.
+            EqualPair(12.dp) {
+                Box {
                     MatchTile(
                         text = AnnotatedString(l.ru),
                         done = l.cardId in solvedL,
@@ -1219,7 +1230,7 @@ private fun MatchAnswer(
                         failed = key(l, true) in flash
                     ) { tap(l, true) }
                 }
-                Box(Modifier.weight(1f).fillMaxHeight()) {
+                Box {
                     MatchTile(
                         text = stressed(r.me),
                         done = r.cardId in solvedR,
@@ -1228,6 +1239,24 @@ private fun MatchAnswer(
                     ) { tap(r, false) }
                 }
             }
+        }
+    }
+}
+
+/**
+ * Две плашки рядом, по половине ширины, высотой по более высокой. Высота
+ * берётся у каждой плашки при её настоящей ширине, а потом обе меряются ровно
+ * в эту высоту.
+ */
+@Composable
+private fun EqualPair(gap: Dp, content: @Composable () -> Unit) {
+    Layout(content) { ms, c ->
+        val g = gap.roundToPx()
+        val w = (c.maxWidth - g) / 2
+        val h = ms.maxOf { it.minIntrinsicHeight(w) }
+        val ps = ms.map { it.measure(Constraints.fixed(w, h)) }
+        layout(c.maxWidth, h) {
+            ps.forEachIndexed { i, p -> p.place(i * (w + g), 0) }
         }
     }
 }
