@@ -4124,6 +4124,80 @@ L.append(dict(id='k52', title='Pada kiša, obući ću kaput', section=S4, words=
     echo('Neću izaći, duva vjetar.', 'Я не выйду, дует ветер.'),
 ]))
 
+# --- Урок 53 ---
+# snijeg, mjesec, moći ću (на -ći — раздельно) и вопросы в будущем для всех лиц:
+# hoću li / hoćeš li / hoće li / hoćemo li / hoćete li + глагол целиком.
+SNIJEG = 'snijeg — снег, мужской род. Pada snijeg — идёт снег, как pada kiša.'
+MJESEC = ('mjesec — луна и месяц: mjesec dana — месяц (срок). Что имеется в виду, видно по '
+          'фразе.')
+MOCI = ('moći — тоже на -ći, поэтому всегда раздельно: moći ću, moći ćeš. Moći ću ti pomoći — '
+        'я смогу тебе помочь.')
+NECEMO = 'nećemo moći — не сможем: nećemo + moći + глагол целиком.'
+HOCE_LI = ('Вопрос в будущем: hoću li, hoćeš li, hoće li, hoćemo li, hoćete li, hoće li — и '
+           'глагол целиком. Hoćemo li ići na more? — Мы пойдём на море?')
+HOCU_LI = ('Hoću li…? — когда спрашиваешь о себе: Hoću li moći doći? — Смогу ли я прийти? '
+           'Как по-русски «а я смогу?».')
+ODGOVOR = ('Короткий ответ — тем же словом без li: Hoćemo — да, Nećemo — нет. Hoću / Neću, '
+           'Hoće / Neće.')
+L.append(dict(id='k53', title='Pada snijeg. Hoćemo li ići na more?', section=S4, words=[
+    ('snijeg', 'снег'), ('mjesec', 'луна; месяц'), ('moći ću', 'я смогу'),
+    ('Hoćemo li…?', 'Мы будем…? (вопрос в будущем)')],
+    ex=[
+    dict(new('snijeg', 'снег', ['снег', 'дождь', 'ветер']), explanation=SNIJEG),
+    dict(phrase('Sjutra će padati snijeg.', 'Завтра пойдёт снег.',
+                ['Завтра пойдёт снег.', 'Завтра пойдёт дождь.', 'Вчера шёл снег.']), explanation=SNIJEG),
+    dict(new('mjesec', 'луна', ['луна', 'солнце', 'звезда']), explanation=MJESEC),
+    pairs(('снег', 'snijeg'), ('луна', 'mjesec'), ('дождь', 'kiša'), ('ветер', 'vjetar'),
+          ('солнце', 'sunce')),
+    dict(phrase('Moći ću ti pomoći.', 'Я смогу тебе помочь.',
+                ['Я смогу тебе помочь.', 'Я могу тебе помочь.', 'Я не смогу тебе помочь.']),
+         explanation=MOCI),
+    dict(phrase('Nećemo moći ići na more.', 'Мы не сможем пойти на море.',
+                ['Мы не сможем пойти на море.', 'Мы не пойдём на море.', 'Мы не могли пойти на море.']),
+         explanation=NECEMO),
+    pick('Я не смогу прийти. — Neću ___ doći.', ['moći', 'mogu', 'moćiću'], 'moći',
+         explanation='Neću + moći целиком: neću moći doći.', label='Вставь слово'),
+    dict(phrase('Hoćemo li ići na more?', 'Мы пойдём на море?',
+                ['Мы пойдём на море?', 'Мы были на море?', 'Мы хотим на море?']), explanation=HOCE_LI),
+    dict(pairs(('я …?', 'hoću li'), ('ты …?', 'hoćeš li'), ('он …?', 'hoće li'),
+               ('мы …?', 'hoćemo li'), ('вы …?', 'hoćete li')), explanation=HOCE_LI),
+    pick('Вы придёте завтра? — ___ li sjutra doći?', ['Hoćete', 'Hoćeš', 'Hoćemo'], 'Hoćete',
+         explanation='Вы — hoćete li.', label='Вставь слово'),
+    pick('Он придёт? — ___ li doći?', ['Hoće', 'Hoćeš', 'Hoću'], 'Hoće',
+         explanation='Он — hoće li. Они — тоже hoće li.', label='Вставь слово'),
+    dict(phrase('Hoću li moći doći?', 'Я смогу прийти?',
+                ['Я смогу прийти?', 'Ты сможешь прийти?', 'Я хочу прийти.']), explanation=HOCU_LI),
+    pick('— Hoćete li doći?\nОтветь «да» за вас двоих:', ['Hoćemo.', 'Hoćete.', 'Hoću li.'], 'Hoćemo.',
+         explanation=ODGOVOR, label='Выбери ответ'),
+    pick('— Hoće li sjutra padati snijeg?\n— Neće, biće sunčano.\n\nКакая будет погода?',
+         ['Солнечно.', 'Пойдёт снег.', 'Пойдёт дождь.'], 'Солнечно.', explanation=ODGOVOR,
+         label='Мини-диалог'),
+    pick('Ты хочешь спросить друзей, пойдут ли они на море. Что скажешь?',
+         ['Hoćete li ići na more?', 'Hoćemo li ići na more?', 'Hoću li ići na more?'],
+         'Hoćete li ići na more?', explanation='Друзей спрашиваешь на «вы» (их несколько): hoćete li.',
+         label='Что скажешь?'),
+    dict(bank('Мы пойдём на море?', 'Hoćemo li ići na more?', ['more', 'li', 'ići', 'hoćemo', 'na']),
+         explanation=HOCE_LI),
+    dict(bank('Я смогу тебе помочь.', 'Moći ću ti pomoći.', ['pomoći', 'ti', 'moći', 'ću']),
+         explanation=MOCI),
+    dict(bank('Завтра пойдёт снег.', 'Sjutra će padati snijeg.', ['snijeg', 'padati', 'sjutra', 'će']),
+         explanation='Впереди sjutra — раздельно: sjutra će padati.'),
+    dict(bank('Вы придёте завтра?', 'Hoćete li doći sjutra?', ['sjutra', 'li', 'doći', 'hoćete'],
+              also=['Hoćete li sjutra doći?']), explanation='Вы — hoćete li.'),
+    earbank('Nećemo moći ići na more.', 'Мы не сможем пойти на море.', ['more', 'moći', 'na', 'nećemo', 'ići']),
+    dict(rubank('Hoće li padati kiša?', 'Пойдёт ли дождь?', ['пойдёт', 'ли', 'дождь']),
+         also=['Пойдёт дождь?', 'Дождь пойдёт?'], explanation=HOCE_LI),
+    dict(rubank('Hoćeš li moći doći?', 'Ты сможешь прийти?', ['прийти', 'ты', 'сможешь']),
+         also=['Сможешь прийти?'], explanation='Ti — hoćeš li, потом moći и doći целиком.'),
+    pick('Я надену пальто. — ___ kaput.', ['Obući ću', 'Obućiću', 'Ću obući'], 'Obući ću',
+         explanation='obući — на -ći, всегда раздельно.', label='Повторение'),
+    pick('___ kafu. (в начале фразы)', ['Piću', 'Ću piti'], 'Piću',
+         explanation='Впереди ничего — слитно: piću.', label='Повторение'),
+    say('Hoćemo li ići na more?', 'Мы пойдём на море?'),
+    say('Moći ću ti pomoći.', 'Я смогу тебе помочь.'),
+    echo('Pada snijeg.', 'Идёт снег.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

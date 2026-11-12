@@ -1,0 +1,399 @@
+{
+  "id": "k53",
+  "title": "Pada snijeg. Hoćemo li ići na more?",
+  "exercises": [
+    {
+      "id": "k53e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "snijeg",
+      "hint": "snijeg — снег",
+      "options": [
+        "снег",
+        "дождь",
+        "ветер"
+      ],
+      "answer": "снег",
+      "explanation": "snijeg — снег, мужской род. Pada snijeg — идёт снег, как pada kiša.",
+      "example": "Snijeg je bijel. — Снег белый."
+    },
+    {
+      "id": "k53e02",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Sjutra će padati snijeg.",
+      "hint": "Sjutra će padati snijeg. — Завтра пойдёт снег.",
+      "options": [
+        "Завтра пойдёт снег.",
+        "Завтра пойдёт дождь.",
+        "Вчера шёл снег."
+      ],
+      "answer": "Завтра пойдёт снег.",
+      "explanation": "snijeg — снег, мужской род. Pada snijeg — идёт снег, как pada kiša."
+    },
+    {
+      "id": "k53e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "mjesec",
+      "hint": "mjesec — луна",
+      "options": [
+        "луна",
+        "солнце",
+        "звезда"
+      ],
+      "answer": "луна",
+      "explanation": "mjesec — луна и месяц: mjesec dana — месяц (срок). Что имеется в виду, видно по фразе.",
+      "example": "Mjesec je velik. — Луна большая."
+    },
+    {
+      "id": "k53e04",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "снег",
+          "me": "snijeg"
+        },
+        {
+          "ru": "луна",
+          "me": "mjesec"
+        },
+        {
+          "ru": "дождь",
+          "me": "kiša"
+        },
+        {
+          "ru": "ветер",
+          "me": "vjetar"
+        },
+        {
+          "ru": "солнце",
+          "me": "sunce"
+        }
+      ]
+    },
+    {
+      "id": "k53e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Moći ću ti pomoći.",
+      "hint": "Moći ću ti pomoći. — Я смогу тебе помочь.",
+      "options": [
+        "Я смогу тебе помочь.",
+        "Я могу тебе помочь.",
+        "Я не смогу тебе помочь."
+      ],
+      "answer": "Я смогу тебе помочь.",
+      "explanation": "moći — тоже на -ći, поэтому всегда раздельно: moći ću, moći ćeš. Moći ću ti pomoći — я смогу тебе помочь."
+    },
+    {
+      "id": "k53e06",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Nećemo moći ići na more.",
+      "hint": "Nećemo moći ići na more. — Мы не сможем пойти на море.",
+      "options": [
+        "Мы не сможем пойти на море.",
+        "Мы не пойдём на море.",
+        "Мы не могли пойти на море."
+      ],
+      "answer": "Мы не сможем пойти на море.",
+      "explanation": "nećemo moći — не сможем: nećemo + moći + глагол целиком."
+    },
+    {
+      "id": "k53e07",
+      "type": "choice",
+      "prompt": "Я не смогу прийти. — Neću ___ doći.",
+      "options": [
+        "moći",
+        "mogu",
+        "moćiću"
+      ],
+      "answer": "moći",
+      "explanation": "Neću + moći целиком: neću moći doći.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k53e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Hoćemo li ići na more?",
+      "hint": "Hoćemo li ići na more? — Мы пойдём на море?",
+      "options": [
+        "Мы пойдём на море?",
+        "Мы были на море?",
+        "Мы хотим на море?"
+      ],
+      "answer": "Мы пойдём на море?",
+      "explanation": "Вопрос в будущем: hoću li, hoćeš li, hoće li, hoćemo li, hoćete li, hoće li — и глагол целиком. Hoćemo li ići na more? — Мы пойдём на море?"
+    },
+    {
+      "id": "k53e09",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я …?",
+          "me": "hoću li"
+        },
+        {
+          "ru": "ты …?",
+          "me": "hoćeš li"
+        },
+        {
+          "ru": "он …?",
+          "me": "hoće li"
+        },
+        {
+          "ru": "мы …?",
+          "me": "hoćemo li"
+        },
+        {
+          "ru": "вы …?",
+          "me": "hoćete li"
+        }
+      ],
+      "explanation": "Вопрос в будущем: hoću li, hoćeš li, hoće li, hoćemo li, hoćete li, hoće li — и глагол целиком. Hoćemo li ići na more? — Мы пойдём на море?"
+    },
+    {
+      "id": "k53e10",
+      "type": "choice",
+      "prompt": "Вы придёте завтра? — ___ li sjutra doći?",
+      "options": [
+        "Hoćete",
+        "Hoćeš",
+        "Hoćemo"
+      ],
+      "answer": "Hoćete",
+      "explanation": "Вы — hoćete li.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k53e11",
+      "type": "choice",
+      "prompt": "Он придёт? — ___ li doći?",
+      "options": [
+        "Hoće",
+        "Hoćeš",
+        "Hoću"
+      ],
+      "answer": "Hoće",
+      "explanation": "Он — hoće li. Они — тоже hoće li.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k53e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Hoću li moći doći?",
+      "hint": "Hoću li moći doći? — Я смогу прийти?",
+      "options": [
+        "Я смогу прийти?",
+        "Ты сможешь прийти?",
+        "Я хочу прийти."
+      ],
+      "answer": "Я смогу прийти?",
+      "explanation": "Hoću li…? — когда спрашиваешь о себе: Hoću li moći doći? — Смогу ли я прийти? Как по-русски «а я смогу?»."
+    },
+    {
+      "id": "k53e13",
+      "type": "choice",
+      "prompt": "— Hoćete li doći?\nОтветь «да» за вас двоих:",
+      "options": [
+        "Hoćemo.",
+        "Hoćete.",
+        "Hoću li."
+      ],
+      "answer": "Hoćemo.",
+      "explanation": "Короткий ответ — тем же словом без li: Hoćemo — да, Nećemo — нет. Hoću / Neću, Hoće / Neće.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "k53e14",
+      "type": "choice",
+      "prompt": "— Hoće li sjutra padati snijeg?\n— Neće, biće sunčano.\n\nКакая будет погода?",
+      "options": [
+        "Солнечно.",
+        "Пойдёт снег.",
+        "Пойдёт дождь."
+      ],
+      "answer": "Солнечно.",
+      "explanation": "Короткий ответ — тем же словом без li: Hoćemo — да, Nećemo — нет. Hoću / Neću, Hoće / Neće.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k53e15",
+      "type": "choice",
+      "prompt": "Ты хочешь спросить друзей, пойдут ли они на море. Что скажешь?",
+      "options": [
+        "Hoćete li ići na more?",
+        "Hoćemo li ići na more?",
+        "Hoću li ići na more?"
+      ],
+      "answer": "Hoćete li ići na more?",
+      "explanation": "Друзей спрашиваешь на «вы» (их несколько): hoćete li.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k53e16",
+      "type": "word_bank",
+      "prompt": "Мы пойдём на море?",
+      "answer": "Hoćemo li ići na more?",
+      "bank": [
+        "more",
+        "li",
+        "ići",
+        "hoćemo",
+        "na"
+      ],
+      "explanation": "Вопрос в будущем: hoću li, hoćeš li, hoće li, hoćemo li, hoćete li, hoće li — и глагол целиком. Hoćemo li ići na more? — Мы пойдём на море?"
+    },
+    {
+      "id": "k53e17",
+      "type": "word_bank",
+      "prompt": "Я смогу тебе помочь.",
+      "answer": "Moći ću ti pomoći.",
+      "bank": [
+        "pomoći",
+        "ti",
+        "moći",
+        "ću"
+      ],
+      "explanation": "moći — тоже на -ći, поэтому всегда раздельно: moći ću, moći ćeš. Moći ću ti pomoći — я смогу тебе помочь."
+    },
+    {
+      "id": "k53e18",
+      "type": "word_bank",
+      "prompt": "Завтра пойдёт снег.",
+      "answer": "Sjutra će padati snijeg.",
+      "bank": [
+        "snijeg",
+        "padati",
+        "sjutra",
+        "će"
+      ],
+      "explanation": "Впереди sjutra — раздельно: sjutra će padati."
+    },
+    {
+      "id": "k53e19",
+      "type": "word_bank",
+      "prompt": "Вы придёте завтра?",
+      "answer": "Hoćete li doći sjutra?",
+      "bank": [
+        "sjutra",
+        "li",
+        "doći",
+        "hoćete"
+      ],
+      "also": [
+        "Hoćete li sjutra doći?"
+      ],
+      "explanation": "Вы — hoćete li."
+    },
+    {
+      "id": "k53e20",
+      "type": "word_bank",
+      "prompt": "Мы не сможем пойти на море.",
+      "answer": "Nećemo moći ići na more.",
+      "bank": [
+        "more",
+        "moći",
+        "na",
+        "nećemo",
+        "ići"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k53e21",
+      "type": "word_bank",
+      "prompt": "Hoće li padati kiša?",
+      "answer": "Пойдёт ли дождь?",
+      "bank": [
+        "пойдёт",
+        "ли",
+        "дождь"
+      ],
+      "also": [
+        "Пойдёт дождь?",
+        "Дождь пойдёт?"
+      ],
+      "explanation": "Вопрос в будущем: hoću li, hoćeš li, hoće li, hoćemo li, hoćete li, hoće li — и глагол целиком. Hoćemo li ići na more? — Мы пойдём на море?"
+    },
+    {
+      "id": "k53e22",
+      "type": "word_bank",
+      "prompt": "Hoćeš li moći doći?",
+      "answer": "Ты сможешь прийти?",
+      "bank": [
+        "прийти",
+        "ты",
+        "сможешь"
+      ],
+      "also": [
+        "Сможешь прийти?"
+      ],
+      "explanation": "Ti — hoćeš li, потом moći и doći целиком."
+    },
+    {
+      "id": "k53e23",
+      "type": "choice",
+      "prompt": "Я надену пальто. — ___ kaput.",
+      "options": [
+        "Obući ću",
+        "Obućiću",
+        "Ću obući"
+      ],
+      "answer": "Obući ću",
+      "explanation": "obući — на -ći, всегда раздельно.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k53e24",
+      "type": "choice",
+      "prompt": "___ kafu. (в начале фразы)",
+      "options": [
+        "Piću",
+        "Ću piti"
+      ],
+      "answer": "Piću",
+      "explanation": "Впереди ничего — слитно: piću.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k53e25",
+      "type": "speaking",
+      "phrase": "Hoćemo li ići na more?",
+      "translation": "Мы пойдём на море?"
+    },
+    {
+      "id": "k53e26",
+      "type": "speaking",
+      "phrase": "Moći ću ti pomoći.",
+      "translation": "Я смогу тебе помочь."
+    },
+    {
+      "id": "k53e27",
+      "type": "repeat",
+      "phrase": "Pada snijeg.",
+      "translation": "Идёт снег."
+    }
+  ],
+  "words": [
+    {
+      "me": "snijeg",
+      "ru": "снег"
+    },
+    {
+      "me": "mjesec",
+      "ru": "луна; месяц"
+    },
+    {
+      "me": "moći ću",
+      "ru": "я смогу"
+    },
+    {
+      "me": "Hoćemo li…?",
+      "ru": "Мы будем…? (вопрос в будущем)"
+    }
+  ]
+}
