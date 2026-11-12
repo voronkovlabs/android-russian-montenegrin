@@ -1,0 +1,385 @@
+{
+  "id": "k54",
+  "title": "Neću spavati. Sjutra neće padati kiša",
+  "exercises": [
+    {
+      "id": "k54e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Neću spavati.",
+      "hint": "Neću spavati. — Я не буду спать.",
+      "options": [
+        "Я не буду спать.",
+        "Я буду спать.",
+        "Я не сплю."
+      ],
+      "answer": "Я не буду спать.",
+      "explanation": "Не буду — neću, nećeš, neće, nećemo, nećete, neće + глагол целиком. Слитной формы у отрицания нет никогда: только neću spavati, neću piti, neću ići."
+    },
+    {
+      "id": "k54e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я не буду",
+          "me": "neću"
+        },
+        {
+          "ru": "ты не будешь",
+          "me": "nećeš"
+        },
+        {
+          "ru": "он не будет",
+          "me": "neće"
+        },
+        {
+          "ru": "мы не будем",
+          "me": "nećemo"
+        },
+        {
+          "ru": "вы не будете",
+          "me": "nećete"
+        }
+      ],
+      "explanation": "Не буду — neću, nećeš, neće, nećemo, nećete, neće + глагол целиком. Слитной формы у отрицания нет никогда: только neću spavati, neću piti, neću ići. Они — тоже neće."
+    },
+    {
+      "id": "k54e03",
+      "type": "choice",
+      "prompt": "Мы не будем пить кофе. — ___ piti kafu.",
+      "options": [
+        "Nećemo",
+        "Neću",
+        "Nećete"
+      ],
+      "answer": "Nećemo",
+      "explanation": "Mi — nećemo.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k54e04",
+      "type": "choice",
+      "prompt": "Ты не будешь есть рис. — ___ jesti pirinač.",
+      "options": [
+        "Nećeš",
+        "Neće",
+        "Nećemo"
+      ],
+      "answer": "Nećeš",
+      "explanation": "Ti — nećeš.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k54e05",
+      "type": "choice",
+      "prompt": "Они не пойдут в лес. — ___ ići u šumu.",
+      "options": [
+        "Neće",
+        "Nećemo",
+        "Nećete"
+      ],
+      "answer": "Neće",
+      "explanation": "Oni — neće, как и он.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k54e06",
+      "type": "choice",
+      "prompt": "Вы не будете дома. — ___ biti kod kuće.",
+      "options": [
+        "Nećete",
+        "Nećemo",
+        "Neću"
+      ],
+      "answer": "Nećete",
+      "explanation": "Vi — nećete.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k54e07",
+      "type": "choice",
+      "prompt": "Как правильно сказать «Я не буду пить»?",
+      "options": [
+        "Neću piti.",
+        "Nepiću.",
+        "Ne piću."
+      ],
+      "answer": "Neću piti.",
+      "explanation": "Не буду — neću, nećeš, neće, nećemo, nećete, neće + глагол целиком. Слитной формы у отрицания нет никогда: только neću spavati, neću piti, neću ići.",
+      "label": "Выбери верное"
+    },
+    {
+      "id": "k54e08",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Neću se kupati.",
+      "hint": "Neću se kupati. — Я не буду купаться.",
+      "options": [
+        "Я не буду купаться.",
+        "Я буду купаться.",
+        "Я не купалась."
+      ],
+      "answer": "Я не буду купаться.",
+      "explanation": "С se: neću, потом se, потом глагол — neću se kupati. Как ja ću se šminkati."
+    },
+    {
+      "id": "k54e09",
+      "type": "choice",
+      "prompt": "Она не будет краситься. — Neće ___ šminkati.",
+      "options": [
+        "se",
+        "je",
+        "sam"
+      ],
+      "answer": "se",
+      "explanation": "neće, потом se: neće se šminkati.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k54e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Neće biti hladno.",
+      "hint": "Neće biti hladno. — Не будет холодно.",
+      "options": [
+        "Не будет холодно.",
+        "Будет холодно.",
+        "Не было холодно."
+      ],
+      "answer": "Не будет холодно.",
+      "explanation": "Погода: neće biti hladno — не будет холодно, neće padati kiša — дождя не будет. Впереди sjutra — neće сразу за ним: sjutra neće padati kiša."
+    },
+    {
+      "id": "k54e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Sjutra neće padati kiša.",
+      "hint": "Sjutra neće padati kiša. — Завтра не будет дождя.",
+      "options": [
+        "Завтра не будет дождя.",
+        "Завтра пойдёт дождь.",
+        "Вчера не было дождя."
+      ],
+      "answer": "Завтра не будет дождя.",
+      "explanation": "Погода: neće biti hladno — не будет холодно, neće padati kiša — дождя не будет. Впереди sjutra — neće сразу за ним: sjutra neće padati kiša."
+    },
+    {
+      "id": "k54e12",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "spavaću",
+          "me": "neću spavati"
+        },
+        {
+          "ru": "piću",
+          "me": "neću piti"
+        },
+        {
+          "ru": "ješću",
+          "me": "neću jesti"
+        },
+        {
+          "ru": "ići ću",
+          "me": "neću ići"
+        },
+        {
+          "ru": "biću",
+          "me": "neću biti"
+        }
+      ],
+      "explanation": "Да — слитно или раздельно, нет — всегда раздельно: neću + глагол."
+    },
+    {
+      "id": "k54e13",
+      "type": "choice",
+      "prompt": "Мы не сможем прийти. — Nećemo ___ doći.",
+      "options": [
+        "moći",
+        "mogu",
+        "moćićemo"
+      ],
+      "answer": "moći",
+      "explanation": "nećemo + moći целиком.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k54e14",
+      "type": "choice",
+      "prompt": "— Hoćeš li jesti pirinač?\n— Neću, ješću supu.\n\nЧто она будет есть?",
+      "options": [
+        "Суп.",
+        "Рис.",
+        "Ничего."
+      ],
+      "answer": "Суп.",
+      "explanation": "Neću — не буду (рис). Ješću supu — буду есть суп: да — слитно.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k54e15",
+      "type": "choice",
+      "prompt": "— Hoćete li se kupati u moru?\n— Nećemo, voda je hladna.\n\nПочему они не будут купаться?",
+      "options": [
+        "Вода холодная.",
+        "Идёт дождь.",
+        "Им не нравится море."
+      ],
+      "answer": "Вода холодная.",
+      "explanation": "Nećemo — не будем. Короткий ответ, глагол не повторяют.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k54e16",
+      "type": "word_bank",
+      "prompt": "Сегодня вечером я не буду дома.",
+      "answer": "Večeras neću biti kod kuće.",
+      "bank": [
+        "kuće",
+        "biti",
+        "večeras",
+        "kod",
+        "neću"
+      ],
+      "explanation": "Не буду — neću, nećeš, neće, nećemo, nećete, neće + глагол целиком. Слитной формы у отрицания нет никогда: только neću spavati, neću piti, neću ići."
+    },
+    {
+      "id": "k54e17",
+      "type": "word_bank",
+      "prompt": "Мы не пойдём на море.",
+      "answer": "Nećemo ići na more.",
+      "bank": [
+        "more",
+        "ići",
+        "nećemo",
+        "na"
+      ],
+      "explanation": "Mi — nećemo ići."
+    },
+    {
+      "id": "k54e18",
+      "type": "word_bank",
+      "prompt": "Завтра не будет дождя.",
+      "answer": "Sjutra neće padati kiša.",
+      "bank": [
+        "kiša",
+        "padati",
+        "sjutra",
+        "neće"
+      ],
+      "explanation": "Погода: neće biti hladno — не будет холодно, neće padati kiša — дождя не будет. Впереди sjutra — neće сразу за ним: sjutra neće padati kiša."
+    },
+    {
+      "id": "k54e19",
+      "type": "word_bank",
+      "prompt": "Он не будет купаться.",
+      "answer": "Neće se kupati.",
+      "bank": [
+        "kupati",
+        "se",
+        "neće"
+      ],
+      "explanation": "С se: neću, потом se, потом глагол — neću se kupati. Как ja ću se šminkati."
+    },
+    {
+      "id": "k54e20",
+      "type": "word_bank",
+      "prompt": "Вы не будете есть рис.",
+      "answer": "Nećete jesti pirinač.",
+      "bank": [
+        "pirinač",
+        "jesti",
+        "nećete"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k54e21",
+      "type": "word_bank",
+      "prompt": "Neću piti kafu.",
+      "answer": "Я не буду пить кофе.",
+      "bank": [
+        "кофе",
+        "не",
+        "я",
+        "пить",
+        "буду"
+      ],
+      "also": [
+        "Не буду пить кофе.",
+        "Я кофе не буду пить."
+      ],
+      "explanation": "Не буду — neću, nećeš, neće, nećemo, nećete, neće + глагол целиком. Слитной формы у отрицания нет никогда: только neću spavati, neću piti, neću ići."
+    },
+    {
+      "id": "k54e22",
+      "type": "word_bank",
+      "prompt": "Nećemo biti kod kuće.",
+      "answer": "Мы не будем дома.",
+      "bank": [
+        "дома",
+        "мы",
+        "будем",
+        "не"
+      ],
+      "also": [
+        "Не будем дома."
+      ],
+      "explanation": "Mi — nećemo biti."
+    },
+    {
+      "id": "k54e23",
+      "type": "choice",
+      "prompt": "Идёт дождь. — ___ kiša.",
+      "options": [
+        "Pada",
+        "Padaće",
+        "Padala"
+      ],
+      "answer": "Pada",
+      "explanation": "Сейчас — pada kiša.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k54e24",
+      "type": "choice",
+      "prompt": "Мне нравятся эти очки. — ___ mi se ove naočare.",
+      "options": [
+        "Sviđaju",
+        "Sviđa",
+        "Sviđam"
+      ],
+      "answer": "Sviđaju",
+      "explanation": "naočare — много: sviđaju.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k54e25",
+      "type": "speaking",
+      "phrase": "Sjutra neće padati kiša.",
+      "translation": "Завтра не будет дождя."
+    },
+    {
+      "id": "k54e26",
+      "type": "speaking",
+      "phrase": "Nećemo ići na more.",
+      "translation": "Мы не пойдём на море."
+    },
+    {
+      "id": "k54e27",
+      "type": "repeat",
+      "phrase": "Neću se kupati.",
+      "translation": "Я не буду купаться."
+    }
+  ],
+  "words": [
+    {
+      "me": "neću / nećeš / neće",
+      "ru": "не буду / не будешь / не будет"
+    },
+    {
+      "me": "nećemo / nećete / neće",
+      "ru": "не будем / не будете / не будут"
+    }
+  ]
+}

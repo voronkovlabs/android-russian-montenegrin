@@ -4198,6 +4198,74 @@ L.append(dict(id='k53', title='Pada snijeg. Hoćemo li ići na more?', section=S
     echo('Pada snijeg.', 'Идёт снег.'),
 ]))
 
+# --- Урок 54 ---
+# Отрицание в будущем для всех лиц и всех видов глаголов: обычные (spavati, piti),
+# jesti, на -ći (ići), biti, с se (kupati se). Главное: у отрицания слитной формы
+# нет никогда — всегда neću + глагол целиком.
+NEG = ('Не буду — neću, nećeš, neće, nećemo, nećete, neće + глагол целиком. Слитной формы у '
+       'отрицания нет никогда: только neću spavati, neću piti, neću ići.')
+NE_SE = 'С se: neću, потом se, потом глагол — neću se kupati. Как ja ću se šminkati.'
+POGODA = ('Погода: neće biti hladno — не будет холодно, neće padati kiša — дождя не будет. '
+          'Впереди sjutra — neće сразу за ним: sjutra neće padati kiša.')
+L.append(dict(id='k54', title='Neću spavati. Sjutra neće padati kiša', section=S4, words=[
+    ('neću / nećeš / neće', 'не буду / не будешь / не будет'), ('nećemo / nećete / neće', 'не будем / не будете / не будут')],
+    ex=[
+    dict(phrase('Neću spavati.', 'Я не буду спать.', ['Я не буду спать.', 'Я буду спать.', 'Я не сплю.']),
+         explanation=NEG),
+    dict(pairs(('я не буду', 'neću'), ('ты не будешь', 'nećeš'), ('он не будет', 'neće'),
+               ('мы не будем', 'nećemo'), ('вы не будете', 'nećete')),
+         explanation=NEG + ' Они — тоже neće.'),
+    pick('Мы не будем пить кофе. — ___ piti kafu.', ['Nećemo', 'Neću', 'Nećete'], 'Nećemo',
+         explanation='Mi — nećemo.', label='Вставь слово'),
+    pick('Ты не будешь есть рис. — ___ jesti pirinač.', ['Nećeš', 'Neće', 'Nećemo'], 'Nećeš',
+         explanation='Ti — nećeš.', label='Вставь слово'),
+    pick('Они не пойдут в лес. — ___ ići u šumu.', ['Neće', 'Nećemo', 'Nećete'], 'Neće',
+         explanation='Oni — neće, как и он.', label='Вставь слово'),
+    pick('Вы не будете дома. — ___ biti kod kuće.', ['Nećete', 'Nećemo', 'Neću'], 'Nećete',
+         explanation='Vi — nećete.', label='Вставь слово'),
+    pick('Как правильно сказать «Я не буду пить»?', ['Neću piti.', 'Nepiću.', 'Ne piću.'], 'Neću piti.',
+         explanation=NEG, label='Выбери верное'),
+    dict(phrase('Neću se kupati.', 'Я не буду купаться.',
+                ['Я не буду купаться.', 'Я буду купаться.', 'Я не купалась.']), explanation=NE_SE),
+    pick('Она не будет краситься. — Neće ___ šminkati.', ['se', 'je', 'sam'], 'se',
+         explanation='neće, потом se: neće se šminkati.', label='Вставь слово'),
+    dict(phrase('Neće biti hladno.', 'Не будет холодно.',
+                ['Не будет холодно.', 'Будет холодно.', 'Не было холодно.']), explanation=POGODA),
+    dict(phrase('Sjutra neće padati kiša.', 'Завтра не будет дождя.',
+                ['Завтра не будет дождя.', 'Завтра пойдёт дождь.', 'Вчера не было дождя.']),
+         explanation=POGODA),
+    dict(pairs(('spavaću', 'neću spavati'), ('piću', 'neću piti'), ('ješću', 'neću jesti'),
+               ('ići ću', 'neću ići'), ('biću', 'neću biti')),
+         explanation='Да — слитно или раздельно, нет — всегда раздельно: neću + глагол.'),
+    pick('Мы не сможем прийти. — Nećemo ___ doći.', ['moći', 'mogu', 'moćićemo'], 'moći',
+         explanation='nećemo + moći целиком.', label='Вставь слово'),
+    pick('— Hoćeš li jesti pirinač?\n— Neću, ješću supu.\n\nЧто она будет есть?',
+         ['Суп.', 'Рис.', 'Ничего.'], 'Суп.',
+         explanation='Neću — не буду (рис). Ješću supu — буду есть суп: да — слитно.', label='Мини-диалог'),
+    pick('— Hoćete li se kupati u moru?\n— Nećemo, voda je hladna.\n\nПочему они не будут купаться?',
+         ['Вода холодная.', 'Идёт дождь.', 'Им не нравится море.'], 'Вода холодная.',
+         explanation='Nećemo — не будем. Короткий ответ, глагол не повторяют.', label='Мини-диалог'),
+    dict(bank('Сегодня вечером я не буду дома.', 'Večeras neću biti kod kuće.',
+              ['kuće', 'biti', 'večeras', 'kod', 'neću']), explanation=NEG),
+    dict(bank('Мы не пойдём на море.', 'Nećemo ići na more.', ['more', 'ići', 'nećemo', 'na']),
+         explanation='Mi — nećemo ići.'),
+    dict(bank('Завтра не будет дождя.', 'Sjutra neće padati kiša.', ['kiša', 'padati', 'sjutra', 'neće']),
+         explanation=POGODA),
+    dict(bank('Он не будет купаться.', 'Neće se kupati.', ['kupati', 'se', 'neće']), explanation=NE_SE),
+    earbank('Nećete jesti pirinač.', 'Вы не будете есть рис.', ['pirinač', 'jesti', 'nećete']),
+    dict(rubank('Neću piti kafu.', 'Я не буду пить кофе.', ['кофе', 'не', 'я', 'пить', 'буду']),
+         also=['Не буду пить кофе.', 'Я кофе не буду пить.'], explanation=NEG),
+    dict(rubank('Nećemo biti kod kuće.', 'Мы не будем дома.', ['дома', 'мы', 'будем', 'не']),
+         also=['Не будем дома.'], explanation='Mi — nećemo biti.'),
+    pick('Идёт дождь. — ___ kiša.', ['Pada', 'Padaće', 'Padala'], 'Pada',
+         explanation='Сейчас — pada kiša.', label='Повторение'),
+    pick('Мне нравятся эти очки. — ___ mi se ove naočare.', ['Sviđaju', 'Sviđa', 'Sviđam'], 'Sviđaju',
+         explanation='naočare — много: sviđaju.', label='Повторение'),
+    say('Sjutra neće padati kiša.', 'Завтра не будет дождя.'),
+    say('Nećemo ići na more.', 'Мы не пойдём на море.'),
+    echo('Neću se kupati.', 'Я не буду купаться.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
