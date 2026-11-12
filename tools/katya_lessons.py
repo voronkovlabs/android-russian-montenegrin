@@ -3970,6 +3970,85 @@ L.append(dict(id='k50', title='Mačka će se šminkati. Neću, ne pijem kafu!', 
     echo('Ići ću u šumu.', 'Я пойду в лес.'),
 ]))
 
+# --- Урок 51 ---
+# Будущее от biti: ja ću biti / biću; погода (biće sunčano, biće hladno), sljedeće
+# nedjelje, večeras, u centru grada. Вопрос Hoćeš li…? и ответ Hoću / Neću.
+BITI = ('biti — так же: ja ću biti, ti ćeš biti, on će biti. Слитно: biću, bićeš, biće, '
+        'bićemo, bićete, biće.')
+POGODA = ('Погоду говорят без «он», как по-русски: biće sunčano — будет солнечно, '
+          'biće hladno — будет холодно.')
+SUNCANO = 'sunčano — солнечно, от sunce. Biće sunčano — будет солнце.'
+SLJEDECE = ('sljedeće nedjelje — на следующей неделе. Пара к prošle nedjelje — на прошлой '
+            'неделе.')
+VECERAS = 'večeras — сегодня вечером, одним словом. От veče: Dobro veče!'
+CENTAR = 'centar — центр. centar grada — центр города, u centru grada — в центре города.'
+HOCES = ('Hoćeš li…? — «будешь ли…?»: Hoćeš li sjutra biti kod kuće? — Ты будешь завтра дома? '
+         'Можно и Bićeš li sjutra kod kuće?')
+HOCU = ('Короткий ответ в будущем: Hoću — да, буду. Neću — нет, не буду. Как Jesam / Nisam '
+        'в прошедшем.')
+RAZDELNO = 'Впереди есть слово — раздельно: sjutra će biti. Впереди ничего — слитно: biće.'
+L.append(dict(id='k51', title='Biće sunčano. Večeras ću biti u gradu', section=S4, words=[
+    ('ja ću biti / biću', 'я буду'), ('sunčano', 'солнечно'), ('sljedeće nedjelje', 'на следующей неделе'),
+    ('večeras', 'сегодня вечером'), ('centar', 'центр'), ('Hoću. / Neću.', 'Да, буду. / Нет, не буду.')],
+    ex=[
+    dict(phrase('Ja ću biti kod kuće.', 'Я буду дома.', ['Я буду дома.', 'Я была дома.', 'Я дома.']),
+         explanation=BITI),
+    dict(pairs(('ja ću biti', 'biću'), ('ti ćeš biti', 'bićeš'), ('on će biti', 'biće'),
+               ('mi ćemo biti', 'bićemo'), ('vi ćete biti', 'bićete')), explanation=BITI),
+    dict(new('sunčano', 'солнечно', ['солнечно', 'холодно', 'красиво']), explanation=SUNCANO),
+    dict(phrase('Sjutra će biti sunčano.', 'Завтра будет солнце.',
+                ['Завтра будет солнце.', 'Вчера было солнечно.', 'Завтра будет холодно.']),
+         explanation=POGODA),
+    pick('Завтра будет холодно. — Sjutra ___ biti hladno.', ['će', 'ću', 'ćemo'], 'će',
+         explanation='Погода — «оно»: će. Sjutra će biti hladno.', label='Вставь слово'),
+    dict(new('sljedeće nedjelje', 'на следующей неделе', ['на следующей неделе', 'на прошлой неделе', 'сегодня вечером'],
+             label='Новое выражение'), explanation=SLJEDECE),
+    dict(rubank('Sljedeće nedjelje će biti hladno.', 'На следующей неделе будет холодно.',
+                ['неделе', 'на', 'холодно', 'следующей', 'будет']),
+         also=['Холодно будет на следующей неделе.', 'На следующей неделе холодно будет.'],
+         explanation=RAZDELNO),
+    pick('Будет холодно. — ___ hladno.', ['Biće', 'Će biti', 'Bit će'], 'Biće',
+         explanation='Впереди ничего — слитно: biće. Bit će так пишут в Хорватии.', label='Вставь слово'),
+    dict(new('večeras', 'сегодня вечером', ['сегодня вечером', 'вчера вечером', 'утром']),
+         explanation=VECERAS),
+    dict(new('centar', 'центр', ['центр', 'город', 'магазин']), explanation=CENTAR),
+    dict(phrase('Večeras ću biti u centru grada.', 'Сегодня вечером я буду в центре города.',
+                ['Сегодня вечером я буду в центре города.', 'Вчера вечером я была в центре города.',
+                 'Сегодня вечером я буду дома.']), explanation=CENTAR),
+    dict(bank('Мы будем в центре города.', 'Bićemo u centru grada.', ['grada', 'centru', 'u', 'bićemo']),
+         explanation='Mi — bićemo. Впереди ничего — слитно.'),
+    dict(phrase('Hoćeš li sjutra biti kod kuće?', 'Ты будешь завтра дома?',
+                ['Ты будешь завтра дома?', 'Ты была вчера дома?', 'Ты хочешь домой?']), explanation=HOCES),
+    pick('— Hoćeš li biti kod kuće?\nОтветь «да»:', ['Hoću.', 'Jesam.', 'Biću li.'], 'Hoću.',
+         explanation=HOCU, label='Выбери ответ'),
+    pick('— Hoćeš li sjutra biti kod kuće?\n— Neću, biću kod babe.\n\nГде она будет завтра?',
+         ['У бабушки.', 'Дома.', 'В центре города.'], 'У бабушки.', explanation=HOCU,
+         label='Мини-диалог'),
+    pairs(('я был', 'bio sam'), ('я буду', 'biću'), ('мы были', 'bili smo'), ('мы будем', 'bićemo')),
+    pick('Как правильно сказать «Завтра будет холодно»?',
+         ['Sjutra će biti hladno.', 'Sjutra biće hladno.', 'Će biti hladno sjutra.'], 'Sjutra će biti hladno.',
+         explanation=RAZDELNO, label='Выбери верное'),
+    dict(bank('Завтра будет солнце.', 'Sjutra će biti sunčano.', ['sunčano', 'biti', 'sjutra', 'će']),
+         explanation=RAZDELNO),
+    dict(bank('Сегодня вечером я буду в центре города.', 'Večeras ću biti u centru grada.',
+              ['grada', 'biti', 'večeras', 'u', 'centru', 'ću']),
+         explanation='Впереди večeras — раздельно: večeras ću biti.'),
+    dict(bank('Ты будешь дома завтра?', 'Hoćeš li sjutra biti kod kuće?',
+              ['kuće', 'li', 'sjutra', 'kod', 'hoćeš', 'biti'],
+              also=['Hoćeš li biti kod kuće sjutra?']), explanation=HOCES),
+    earbank('Biće hladno sljedeće nedjelje.', 'На следующей неделе будет холодно.',
+            ['nedjelje', 'hladno', 'sljedeće', 'biće']),
+    dict(rubank('Bićeš li kod kuće?', 'Ты будешь дома?', ['дома', 'ты', 'будешь']),
+         also=['Будешь дома?'], explanation='Bićeš li…? — то же, что Hoćeš li biti…?'),
+    pick('Она купалась. — Kupala ___ .', ['se', 'je se', 'sam se'], 'se',
+         explanation='Она — просто глагол и se: kupala se.', label='Повторение'),
+    pick('Он видел волка. — On je ___ vuka.', ['vidio', 'vidjela', 'vidjeli'], 'vidio',
+         explanation='On — vidio.', label='Повторение'),
+    say('Sjutra će biti sunčano.', 'Завтра будет солнце.'),
+    say('Večeras ću biti u centru grada.', 'Сегодня вечером я буду в центре города.'),
+    echo('Hoćeš li sjutra biti kod kuće?', 'Ты будешь завтра дома?'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

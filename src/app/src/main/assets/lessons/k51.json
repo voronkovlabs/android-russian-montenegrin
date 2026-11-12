@@ -1,0 +1,411 @@
+{
+  "id": "k51",
+  "title": "Biće sunčano. Večeras ću biti u gradu",
+  "exercises": [
+    {
+      "id": "k51e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ja ću biti kod kuće.",
+      "hint": "Ja ću biti kod kuće. — Я буду дома.",
+      "options": [
+        "Я буду дома.",
+        "Я была дома.",
+        "Я дома."
+      ],
+      "answer": "Я буду дома.",
+      "explanation": "biti — так же: ja ću biti, ti ćeš biti, on će biti. Слитно: biću, bićeš, biće, bićemo, bićete, biće."
+    },
+    {
+      "id": "k51e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja ću biti",
+          "me": "biću"
+        },
+        {
+          "ru": "ti ćeš biti",
+          "me": "bićeš"
+        },
+        {
+          "ru": "on će biti",
+          "me": "biće"
+        },
+        {
+          "ru": "mi ćemo biti",
+          "me": "bićemo"
+        },
+        {
+          "ru": "vi ćete biti",
+          "me": "bićete"
+        }
+      ],
+      "explanation": "biti — так же: ja ću biti, ti ćeš biti, on će biti. Слитно: biću, bićeš, biće, bićemo, bićete, biće."
+    },
+    {
+      "id": "k51e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "sunčano",
+      "hint": "sunčano — солнечно",
+      "options": [
+        "солнечно",
+        "холодно",
+        "красиво"
+      ],
+      "answer": "солнечно",
+      "explanation": "sunčano — солнечно, от sunce. Biće sunčano — будет солнце.",
+      "example": "Na moru je sunčano. — На море солнечно."
+    },
+    {
+      "id": "k51e04",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Sjutra će biti sunčano.",
+      "hint": "Sjutra će biti sunčano. — Завтра будет солнце.",
+      "options": [
+        "Завтра будет солнце.",
+        "Вчера было солнечно.",
+        "Завтра будет холодно."
+      ],
+      "answer": "Завтра будет солнце.",
+      "explanation": "Погоду говорят без «он», как по-русски: biće sunčano — будет солнечно, biće hladno — будет холодно."
+    },
+    {
+      "id": "k51e05",
+      "type": "choice",
+      "prompt": "Завтра будет холодно. — Sjutra ___ biti hladno.",
+      "options": [
+        "će",
+        "ću",
+        "ćemo"
+      ],
+      "answer": "će",
+      "explanation": "Погода — «оно»: će. Sjutra će biti hladno.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k51e06",
+      "type": "choice",
+      "label": "Новое выражение",
+      "prompt": "sljedeće nedjelje",
+      "hint": "sljedeće nedjelje — на следующей неделе",
+      "options": [
+        "на следующей неделе",
+        "на прошлой неделе",
+        "сегодня вечером"
+      ],
+      "answer": "на следующей неделе",
+      "explanation": "sljedeće nedjelje — на следующей неделе. Пара к prošle nedjelje — на прошлой неделе.",
+      "example": "Sljedeće nedjelje idem na more. — На следующей неделе я еду на море."
+    },
+    {
+      "id": "k51e07",
+      "type": "word_bank",
+      "prompt": "Sljedeće nedjelje će biti hladno.",
+      "answer": "На следующей неделе будет холодно.",
+      "bank": [
+        "неделе",
+        "на",
+        "холодно",
+        "следующей",
+        "будет"
+      ],
+      "also": [
+        "Холодно будет на следующей неделе.",
+        "На следующей неделе холодно будет."
+      ],
+      "explanation": "Впереди есть слово — раздельно: sjutra će biti. Впереди ничего — слитно: biće."
+    },
+    {
+      "id": "k51e08",
+      "type": "choice",
+      "prompt": "Будет холодно. — ___ hladno.",
+      "options": [
+        "Biće",
+        "Će biti",
+        "Bit će"
+      ],
+      "answer": "Biće",
+      "explanation": "Впереди ничего — слитно: biće. Bit će так пишут в Хорватии.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k51e09",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "večeras",
+      "hint": "večeras — сегодня вечером",
+      "options": [
+        "сегодня вечером",
+        "вчера вечером",
+        "утром"
+      ],
+      "answer": "сегодня вечером",
+      "explanation": "večeras — сегодня вечером, одним словом. От veče: Dobro veče!",
+      "example": "Večeras sam kod kuće. — Сегодня вечером я дома."
+    },
+    {
+      "id": "k51e10",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "centar",
+      "hint": "centar — центр",
+      "options": [
+        "центр",
+        "город",
+        "магазин"
+      ],
+      "answer": "центр",
+      "explanation": "centar — центр. centar grada — центр города, u centru grada — в центре города.",
+      "example": "Centar grada je lijep. — Центр города красивый."
+    },
+    {
+      "id": "k51e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Večeras ću biti u centru grada.",
+      "hint": "Večeras ću biti u centru grada. — Сегодня вечером я буду в центре города.",
+      "options": [
+        "Сегодня вечером я буду в центре города.",
+        "Вчера вечером я была в центре города.",
+        "Сегодня вечером я буду дома."
+      ],
+      "answer": "Сегодня вечером я буду в центре города.",
+      "explanation": "centar — центр. centar grada — центр города, u centru grada — в центре города."
+    },
+    {
+      "id": "k51e12",
+      "type": "word_bank",
+      "prompt": "Мы будем в центре города.",
+      "answer": "Bićemo u centru grada.",
+      "bank": [
+        "grada",
+        "centru",
+        "u",
+        "bićemo"
+      ],
+      "explanation": "Mi — bićemo. Впереди ничего — слитно."
+    },
+    {
+      "id": "k51e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Hoćeš li sjutra biti kod kuće?",
+      "hint": "Hoćeš li sjutra biti kod kuće? — Ты будешь завтра дома?",
+      "options": [
+        "Ты будешь завтра дома?",
+        "Ты была вчера дома?",
+        "Ты хочешь домой?"
+      ],
+      "answer": "Ты будешь завтра дома?",
+      "explanation": "Hoćeš li…? — «будешь ли…?»: Hoćeš li sjutra biti kod kuće? — Ты будешь завтра дома? Можно и Bićeš li sjutra kod kuće?"
+    },
+    {
+      "id": "k51e14",
+      "type": "choice",
+      "prompt": "— Hoćeš li biti kod kuće?\nОтветь «да»:",
+      "options": [
+        "Hoću.",
+        "Jesam.",
+        "Biću li."
+      ],
+      "answer": "Hoću.",
+      "explanation": "Короткий ответ в будущем: Hoću — да, буду. Neću — нет, не буду. Как Jesam / Nisam в прошедшем.",
+      "label": "Выбери ответ"
+    },
+    {
+      "id": "k51e15",
+      "type": "choice",
+      "prompt": "— Hoćeš li sjutra biti kod kuće?\n— Neću, biću kod babe.\n\nГде она будет завтра?",
+      "options": [
+        "У бабушки.",
+        "Дома.",
+        "В центре города."
+      ],
+      "answer": "У бабушки.",
+      "explanation": "Короткий ответ в будущем: Hoću — да, буду. Neću — нет, не буду. Как Jesam / Nisam в прошедшем.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k51e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я был",
+          "me": "bio sam"
+        },
+        {
+          "ru": "я буду",
+          "me": "biću"
+        },
+        {
+          "ru": "мы были",
+          "me": "bili smo"
+        },
+        {
+          "ru": "мы будем",
+          "me": "bićemo"
+        }
+      ]
+    },
+    {
+      "id": "k51e17",
+      "type": "choice",
+      "prompt": "Как правильно сказать «Завтра будет холодно»?",
+      "options": [
+        "Sjutra će biti hladno.",
+        "Sjutra biće hladno.",
+        "Će biti hladno sjutra."
+      ],
+      "answer": "Sjutra će biti hladno.",
+      "explanation": "Впереди есть слово — раздельно: sjutra će biti. Впереди ничего — слитно: biće.",
+      "label": "Выбери верное"
+    },
+    {
+      "id": "k51e18",
+      "type": "word_bank",
+      "prompt": "Завтра будет солнце.",
+      "answer": "Sjutra će biti sunčano.",
+      "bank": [
+        "sunčano",
+        "biti",
+        "sjutra",
+        "će"
+      ],
+      "explanation": "Впереди есть слово — раздельно: sjutra će biti. Впереди ничего — слитно: biće."
+    },
+    {
+      "id": "k51e19",
+      "type": "word_bank",
+      "prompt": "Сегодня вечером я буду в центре города.",
+      "answer": "Večeras ću biti u centru grada.",
+      "bank": [
+        "grada",
+        "biti",
+        "večeras",
+        "u",
+        "centru",
+        "ću"
+      ],
+      "explanation": "Впереди večeras — раздельно: večeras ću biti."
+    },
+    {
+      "id": "k51e20",
+      "type": "word_bank",
+      "prompt": "Ты будешь дома завтра?",
+      "answer": "Hoćeš li sjutra biti kod kuće?",
+      "bank": [
+        "kuće",
+        "li",
+        "sjutra",
+        "kod",
+        "hoćeš",
+        "biti"
+      ],
+      "also": [
+        "Hoćeš li biti kod kuće sjutra?"
+      ],
+      "explanation": "Hoćeš li…? — «будешь ли…?»: Hoćeš li sjutra biti kod kuće? — Ты будешь завтра дома? Можно и Bićeš li sjutra kod kuće?"
+    },
+    {
+      "id": "k51e21",
+      "type": "word_bank",
+      "prompt": "На следующей неделе будет холодно.",
+      "answer": "Biće hladno sljedeće nedjelje.",
+      "bank": [
+        "nedjelje",
+        "hladno",
+        "sljedeće",
+        "biće"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k51e22",
+      "type": "word_bank",
+      "prompt": "Bićeš li kod kuće?",
+      "answer": "Ты будешь дома?",
+      "bank": [
+        "дома",
+        "ты",
+        "будешь"
+      ],
+      "also": [
+        "Будешь дома?"
+      ],
+      "explanation": "Bićeš li…? — то же, что Hoćeš li biti…?"
+    },
+    {
+      "id": "k51e23",
+      "type": "choice",
+      "prompt": "Она купалась. — Kupala ___ .",
+      "options": [
+        "se",
+        "je se",
+        "sam se"
+      ],
+      "answer": "se",
+      "explanation": "Она — просто глагол и se: kupala se.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k51e24",
+      "type": "choice",
+      "prompt": "Он видел волка. — On je ___ vuka.",
+      "options": [
+        "vidio",
+        "vidjela",
+        "vidjeli"
+      ],
+      "answer": "vidio",
+      "explanation": "On — vidio.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k51e25",
+      "type": "speaking",
+      "phrase": "Sjutra će biti sunčano.",
+      "translation": "Завтра будет солнце."
+    },
+    {
+      "id": "k51e26",
+      "type": "speaking",
+      "phrase": "Večeras ću biti u centru grada.",
+      "translation": "Сегодня вечером я буду в центре города."
+    },
+    {
+      "id": "k51e27",
+      "type": "repeat",
+      "phrase": "Hoćeš li sjutra biti kod kuće?",
+      "translation": "Ты будешь завтра дома?"
+    }
+  ],
+  "words": [
+    {
+      "me": "ja ću biti / biću",
+      "ru": "я буду"
+    },
+    {
+      "me": "sunčano",
+      "ru": "солнечно"
+    },
+    {
+      "me": "sljedeće nedjelje",
+      "ru": "на следующей неделе"
+    },
+    {
+      "me": "večeras",
+      "ru": "сегодня вечером"
+    },
+    {
+      "me": "centar",
+      "ru": "центр"
+    },
+    {
+      "me": "Hoću. / Neću.",
+      "ru": "Да, буду. / Нет, не буду."
+    }
+  ]
+}

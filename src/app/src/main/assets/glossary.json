@@ -1912,7 +1912,13 @@
   "svinja": "свинья",
   "svog": "своего (kod svog druga)",
   "šminkati": "šminkati se — краситься",
-  "šminkaću": "буду краситься (šminkaću se)"
+  "šminkaću": "буду краситься (šminkaću se)",
+  "bićemo": "будем (= mi ćemo biti)",
+  "bićete": "будете (= vi ćete biti)",
+  "bićeš": "будешь (= ti ćeš biti)",
+  "biću": "буду (= ja ću biti)",
+  "grada": "города — от grad",
+  "sljedeće": "следующей (sljedeće nedjelje — на следующей неделе)"
  },
  "ru": {
   "а": "a",
@@ -2604,6 +2610,8 @@
   "овощи": "povrće",
   "крокодил": "krokodil",
   "краситься": "šminkati se",
-  "со мной": "sa mnom"
+  "со мной": "sa mnom",
+  "солнечно": "sunčano",
+  "следующей": "sljedeće (sljedeće nedjelje)"
  }
 }
