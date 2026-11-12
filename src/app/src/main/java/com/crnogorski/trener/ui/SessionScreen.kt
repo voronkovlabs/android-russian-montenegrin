@@ -143,13 +143,8 @@ fun SessionScreen(
     // Выход из приложения остаётся только на главном экране, где BackHandler-а нет.
     BackHandler { onExit() }
 
-    // Начало урока — для «Время прохождения» на заставке в конце. Считается
-    // по часам, а не по списанному в норму: человек видит, сколько просидел.
-    val startedAt = rememberSaveable(state.title, state.items.firstOrNull()?.exercise?.id) {
-        System.currentTimeMillis()
-    }
     if (state.finished) {
-        FinishedView(state, startedAt, onExit)
+        FinishedView(state, onExit)
         return
     }
 
@@ -2662,9 +2657,10 @@ private val CHEERS = listOf(
 )
 
 @Composable
-private fun FinishedView(state: SessionState, startedAt: Long, onExit: () -> Unit) {
+private fun FinishedView(state: SessionState, onExit: () -> Unit) {
     val cheer = rememberSaveable { CHEERS.random() }
-    val seconds = rememberSaveable { ((System.currentTimeMillis() - startedAt) / 1000).coerceAtLeast(0) }
+    // Время то же, что в отчёте занятий: простой дольше порога не считается.
+    val seconds = state.spentSeconds
     Column(
         Modifier.fillMaxSize().padding(28.dp),
         verticalArrangement = Arrangement.Center

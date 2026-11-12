@@ -610,6 +610,12 @@ data class SessionState(
      * пятнадцать минут (`Pace`).
      */
     val shownAt: Long = 0L,
+    /**
+     * Время урока для заставки в конце — сумма того же списанного, что идёт
+     * в отчёт занятий: простой дольше порога не считается. Заполняется в
+     * момент `finished`, до того ноль.
+     */
+    val spentSeconds: Int = 0,
     val finished: Boolean = false,
     /** На текущее задание уже пожаловались — второй раз не предлагаем. */
     val complaintFiled: Boolean = false,
@@ -4330,7 +4336,30 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * замеры сделали бы тип вдвое быстрее, чем он есть. Время при этом всё
      * равно списывается — оно потрачено.
      */
+    /**
+     * Сколько списано за нынешний урок. Счёт живёт здесь, а не в
+     * [SessionState]: после [noteTime] вызывающие пишут в сессию копию своего
+     * `state`, и прибавка в самой сессии затиралась бы. Урок опознаётся по
+     * названию и первому заданию — сменился, счёт начинается заново.
+     */
+    private var spentKey: String? = null
+    private var spentSum = 0
+
+    private fun lessonKey(state: SessionState) =
+        state.title + "|" + state.items.firstOrNull()?.exercise?.id
+
+    private fun spentFor(state: SessionState): Int =
+        if (spentKey == lessonKey(state)) spentSum else 0
+
     private fun noteTime(state: SessionState, ex: Exercise, measure: Boolean = true): Int {
+        val spent = noteTimeRaw(state, ex, measure)
+        val key = lessonKey(state)
+        if (key != spentKey) { spentKey = key; spentSum = 0 }
+        spentSum += spent
+        return spent
+    }
+
+    private fun noteTimeRaw(state: SessionState, ex: Exercise, measure: Boolean): Int {
         if (state.shownAt <= 0L) return 0
         // Время, когда человека не было, не идёт ни в темп, ни в отчёт, ни в
         // дневную норму — см. [Touch]. Вычитается до всего остального, иначе
@@ -4490,7 +4519,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         // Строгий тест обрывается на четвёртой ошибке: попытка кончилась, раздел
         // не открывается, в базу не пишется ничего.
         if (state.strict && state.mistakes > STRICT_MISTAKES) {
-            _session.value = state.copy(finished = true, failed = true)
+            _session.value = state.copy(spentSeconds = spentFor(state), finished = true, failed = true)
             return
         }
         if (state.endless && state.index + 1 >= state.items.size) {
@@ -4571,7 +4600,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                         )
                     )
                 }
-                _session.value = state.copy(finished = true)
+                _session.value = state.copy(spentSeconds = spentFor(state), finished = true)
                 autoSaveProgress()
                 return@launch
             }
@@ -4601,12 +4630,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                         seconds = ((now - (checkupStartedAt.takeIf { it > 0 } ?: now)) / 1000).toInt()
                     )
                 )
-                _session.value = state.copy(finished = true)
+                _session.value = state.copy(spentSeconds = spentFor(state), finished = true)
                 return@launch
             }
             if (state.daily) closed += closePortionedLessons(state)
             bump(sessions = 1, lessons = closed)
-            _session.value = state.copy(finished = true)
+            _session.value = state.copy(spentSeconds = spentFor(state), finished = true)
             maybeCelebrate(state)
             autoSaveProgress()
         }
