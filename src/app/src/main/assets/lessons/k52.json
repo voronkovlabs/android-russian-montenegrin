@@ -1,0 +1,425 @@
+{
+  "id": "k52",
+  "title": "Pada kiša, obući ću kaput",
+  "exercises": [
+    {
+      "id": "k52e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "kiša",
+      "hint": "kiša — дождь",
+      "options": [
+        "дождь",
+        "ветер",
+        "снег"
+      ],
+      "answer": "дождь",
+      "explanation": "kiša — дождь, женский род. Pada kiša — идёт дождь, буквально «падает дождь» (padati — падать).",
+      "example": "Noću pada kiša. — Ночью идёт дождь."
+    },
+    {
+      "id": "k52e02",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Pada kiša.",
+      "hint": "Pada kiša. — Идёт дождь.",
+      "options": [
+        "Идёт дождь.",
+        "Дует ветер.",
+        "Будет дождь."
+      ],
+      "answer": "Идёт дождь.",
+      "explanation": "kiša — дождь, женский род. Pada kiša — идёт дождь, буквально «падает дождь» (padati — падать)."
+    },
+    {
+      "id": "k52e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Sjutra će padati kiša.",
+      "hint": "Sjutra će padati kiša. — Завтра пойдёт дождь.",
+      "options": [
+        "Завтра пойдёт дождь.",
+        "Вчера шёл дождь.",
+        "Завтра будет солнечно."
+      ],
+      "answer": "Завтра пойдёт дождь.",
+      "explanation": "Будущее от padati: sjutra će padati kiša — завтра пойдёт дождь. Слитно: padaće kiša."
+    },
+    {
+      "id": "k52e04",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "vjetar",
+      "hint": "vjetar — ветер",
+      "options": [
+        "ветер",
+        "дождь",
+        "солнце"
+      ],
+      "answer": "ветер",
+      "explanation": "vjetar — ветер, мужской род. Duva vjetar — дует ветер (duvati — дуть).",
+      "example": "Na moru je vjetar. — На море ветер."
+    },
+    {
+      "id": "k52e05",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "oblačno",
+      "hint": "oblačno — облачно",
+      "options": [
+        "облачно",
+        "солнечно",
+        "холодно"
+      ],
+      "answer": "облачно",
+      "explanation": "oblačno — облачно, пара к sunčano — солнечно.",
+      "example": "Napolju je oblačno. — На улице облачно."
+    },
+    {
+      "id": "k52e06",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "toplo",
+      "hint": "toplo — тепло",
+      "options": [
+        "тепло",
+        "холодно",
+        "облачно"
+      ],
+      "answer": "тепло",
+      "explanation": "toplo — тепло, пара к hladno — холодно.",
+      "example": "Na moru je toplo. — На море тепло."
+    },
+    {
+      "id": "k52e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "дождь",
+          "me": "kiša"
+        },
+        {
+          "ru": "ветер",
+          "me": "vjetar"
+        },
+        {
+          "ru": "облачно",
+          "me": "oblačno"
+        },
+        {
+          "ru": "тепло",
+          "me": "toplo"
+        },
+        {
+          "ru": "холодно",
+          "me": "hladno"
+        },
+        {
+          "ru": "солнечно",
+          "me": "sunčano"
+        }
+      ]
+    },
+    {
+      "id": "k52e08",
+      "type": "choice",
+      "prompt": "Завтра будет облачно. — Sjutra ___ biti oblačno.",
+      "options": [
+        "će",
+        "ću",
+        "ćemo"
+      ],
+      "answer": "će",
+      "explanation": "Погода — «оно»: će. Sjutra će biti oblačno.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k52e09",
+      "type": "word_bank",
+      "prompt": "Sjutra će padati kiša.",
+      "answer": "Завтра пойдёт дождь.",
+      "bank": [
+        "дождь",
+        "завтра",
+        "пойдёт",
+        "будет"
+      ],
+      "also": [
+        "Завтра будет дождь.",
+        "Дождь пойдёт завтра."
+      ],
+      "explanation": "Будущее от padati: sjutra će padati kiša — завтра пойдёт дождь. Слитно: padaće kiša."
+    },
+    {
+      "id": "k52e10",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "obući",
+      "hint": "obući — надеть",
+      "options": [
+        "надеть",
+        "выйти",
+        "купить"
+      ],
+      "answer": "надеть",
+      "explanation": "obući — надеть: obući ću kaput — я надену пальто. Глагол на -ći, как ići и doći: всегда раздельно, даже в начале фразы.",
+      "example": "Obući ću haljinu. — Я надену платье."
+    },
+    {
+      "id": "k52e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Obući ću kaput, pada kiša.",
+      "hint": "Obući ću kaput, pada kiša. — Я надену пальто, идёт дождь.",
+      "options": [
+        "Я надену пальто, идёт дождь.",
+        "Я купила пальто, идёт дождь.",
+        "Я надену платье, светит солнце."
+      ],
+      "answer": "Я надену пальто, идёт дождь.",
+      "explanation": "obući — надеть: obući ću kaput — я надену пальто. Глагол на -ći, как ići и doći: всегда раздельно, даже в начале фразы."
+    },
+    {
+      "id": "k52e12",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "izaći",
+      "hint": "izaći — выйти",
+      "options": [
+        "выйти",
+        "войти",
+        "надеть"
+      ],
+      "answer": "выйти",
+      "explanation": "izaći — выйти: izaći ću — выйду. Тоже на -ći — раздельно. Neću izaći — не выйду: neću + глагол целиком.",
+      "example": "Izaći ću iz kuće. — Я выйду из дома."
+    },
+    {
+      "id": "k52e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Neću izaći, duva vjetar.",
+      "hint": "Neću izaći, duva vjetar. — Я не выйду, дует ветер.",
+      "options": [
+        "Я не выйду, дует ветер.",
+        "Я выйду, дует ветер.",
+        "Я не выйду, идёт дождь."
+      ],
+      "answer": "Я не выйду, дует ветер.",
+      "explanation": "izaći — выйти: izaći ću — выйду. Тоже на -ći — раздельно. Neću izaći — не выйду: neću + глагол целиком."
+    },
+    {
+      "id": "k52e14",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Doći ću sjutra.",
+      "hint": "Doći ću sjutra. — Я приду завтра.",
+      "options": [
+        "Я приду завтра.",
+        "Я пришла вчера.",
+        "Я уйду завтра."
+      ],
+      "answer": "Я приду завтра.",
+      "explanation": "doći — прийти: doći ću — приду. На -ći — раздельно: Doći ću sjutra."
+    },
+    {
+      "id": "k52e15",
+      "type": "choice",
+      "prompt": "Ты придёшь завтра? — Hoćeš li sjutra ___ ?",
+      "options": [
+        "doći",
+        "doćiću",
+        "dođeš"
+      ],
+      "answer": "doći",
+      "explanation": "После hoćeš li — глагол целиком: hoćeš li doći?",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k52e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я пойду",
+          "me": "ići ću"
+        },
+        {
+          "ru": "я приду",
+          "me": "doći ću"
+        },
+        {
+          "ru": "я выйду",
+          "me": "izaći ću"
+        },
+        {
+          "ru": "я надену",
+          "me": "obući ću"
+        }
+      ],
+      "explanation": "Все на -ći, поэтому всегда раздельно: ići ću, doći ću, izaći ću, obući ću."
+    },
+    {
+      "id": "k52e17",
+      "type": "word_bank",
+      "prompt": "Идёт дождь, я надену пальто.",
+      "answer": "Pada kiša, obući ću kaput.",
+      "bank": [
+        "kaput",
+        "kiša",
+        "ću",
+        "pada",
+        "obući"
+      ],
+      "explanation": "obući — надеть: obući ću kaput — я надену пальто. Глагол на -ći, как ići и doći: всегда раздельно, даже в начале фразы."
+    },
+    {
+      "id": "k52e18",
+      "type": "word_bank",
+      "prompt": "Завтра будет тепло.",
+      "answer": "Sjutra će biti toplo.",
+      "bank": [
+        "toplo",
+        "biti",
+        "sjutra",
+        "će"
+      ],
+      "explanation": "Впереди sjutra — раздельно: sjutra će biti."
+    },
+    {
+      "id": "k52e19",
+      "type": "word_bank",
+      "prompt": "Я приду завтра.",
+      "answer": "Doći ću sjutra.",
+      "bank": [
+        "sjutra",
+        "ću",
+        "doći"
+      ],
+      "also": [
+        "Sjutra ću doći."
+      ],
+      "explanation": "Doći ću sjutra и Sjutra ću doći — оба верные."
+    },
+    {
+      "id": "k52e20",
+      "type": "word_bank",
+      "prompt": "Я не выйду, на улице холодно.",
+      "answer": "Neću izaći, napolju je hladno.",
+      "bank": [
+        "hladno",
+        "izaći",
+        "napolju",
+        "je",
+        "neću"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k52e21",
+      "type": "word_bank",
+      "prompt": "Duva vjetar i pada kiša.",
+      "answer": "Дует ветер и идёт дождь.",
+      "bank": [
+        "идёт",
+        "и",
+        "ветер",
+        "дождь",
+        "дует"
+      ],
+      "also": [
+        "Идёт дождь и дует ветер."
+      ],
+      "explanation": "vjetar — ветер, мужской род. Duva vjetar — дует ветер (duvati — дуть)."
+    },
+    {
+      "id": "k52e22",
+      "type": "choice",
+      "prompt": "— Hoćeš li izaći?\n— Neću, pada kiša.\n\nПочему она не выйдет?",
+      "options": [
+        "Идёт дождь.",
+        "Дует ветер.",
+        "Ей холодно."
+      ],
+      "answer": "Идёт дождь.",
+      "explanation": "Hoćeš li izaći? — Ты выйдешь? Neću — не выйду.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k52e23",
+      "type": "choice",
+      "prompt": "Он пришёл. — On je ___ .",
+      "options": [
+        "došao",
+        "došla",
+        "došli"
+      ],
+      "answer": "došao",
+      "explanation": "Прошедшее от doći: došao (он), došla (она).",
+      "label": "Повторение"
+    },
+    {
+      "id": "k52e24",
+      "type": "choice",
+      "prompt": "Подруга выходит на улицу в лёгкой рубашке, а там холодно. Что скажешь?",
+      "options": [
+        "Nije ti hladno u tome?",
+        "Doći ću sjutra.",
+        "Pada kiša."
+      ],
+      "answer": "Nije ti hladno u tome?",
+      "label": "Повторение"
+    },
+    {
+      "id": "k52e25",
+      "type": "speaking",
+      "phrase": "Pada kiša.",
+      "translation": "Идёт дождь."
+    },
+    {
+      "id": "k52e26",
+      "type": "speaking",
+      "phrase": "Obući ću kaput.",
+      "translation": "Я надену пальто."
+    },
+    {
+      "id": "k52e27",
+      "type": "repeat",
+      "phrase": "Neću izaći, duva vjetar.",
+      "translation": "Я не выйду, дует ветер."
+    }
+  ],
+  "words": [
+    {
+      "me": "kiša",
+      "ru": "дождь"
+    },
+    {
+      "me": "Pada kiša.",
+      "ru": "Идёт дождь."
+    },
+    {
+      "me": "vjetar",
+      "ru": "ветер"
+    },
+    {
+      "me": "Duva vjetar.",
+      "ru": "Дует ветер."
+    },
+    {
+      "me": "oblačno",
+      "ru": "облачно"
+    },
+    {
+      "me": "toplo",
+      "ru": "тепло"
+    },
+    {
+      "me": "obući",
+      "ru": "надеть"
+    },
+    {
+      "me": "izaći",
+      "ru": "выйти"
+    }
+  ]
+}

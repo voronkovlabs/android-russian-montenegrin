@@ -4052,6 +4052,78 @@ L.append(dict(id='k51', title='Biće sunčano. Večeras ću biti u gradu', secti
     echo('Hoćeš li sjutra biti kod kuće?', 'Ты будешь завтра дома?'),
 ]))
 
+# --- Урок 52 ---
+# Погода: kiša (pada kiša), vjetar (duva vjetar), oblačno, toplo. Глаголы на -ći в
+# будущем — всегда раздельно: obući ću, izaći ću, doći ću. Повторение прошлых уроков.
+KISA = ('kiša — дождь, женский род. Pada kiša — идёт дождь, буквально «падает дождь» '
+        '(padati — падать).')
+PADACE = ('Будущее от padati: sjutra će padati kiša — завтра пойдёт дождь. Слитно: '
+          'padaće kiša.')
+VJETAR = ('vjetar — ветер, мужской род. Duva vjetar — дует ветер (duvati — дуть).')
+OBLACNO = 'oblačno — облачно, пара к sunčano — солнечно.'
+TOPLO = 'toplo — тепло, пара к hladno — холодно.'
+OBUCI = ('obući — надеть: obući ću kaput — я надену пальто. Глагол на -ći, как ići и doći: '
+         'всегда раздельно, даже в начале фразы.')
+IZACI = ('izaći — выйти: izaći ću — выйду. Тоже на -ći — раздельно. Neću izaći — не выйду: '
+         'neću + глагол целиком.')
+DOCI = 'doći — прийти: doći ću — приду. На -ći — раздельно: Doći ću sjutra.'
+L.append(dict(id='k52', title='Pada kiša, obući ću kaput', section=S4, words=[
+    ('kiša', 'дождь'), ('Pada kiša.', 'Идёт дождь.'), ('vjetar', 'ветер'), ('Duva vjetar.', 'Дует ветер.'),
+    ('oblačno', 'облачно'), ('toplo', 'тепло'), ('obući', 'надеть'), ('izaći', 'выйти')],
+    ex=[
+    dict(new('kiša', 'дождь', ['дождь', 'ветер', 'снег']), explanation=KISA),
+    dict(phrase('Pada kiša.', 'Идёт дождь.', ['Идёт дождь.', 'Дует ветер.', 'Будет дождь.']),
+         explanation=KISA),
+    dict(phrase('Sjutra će padati kiša.', 'Завтра пойдёт дождь.',
+                ['Завтра пойдёт дождь.', 'Вчера шёл дождь.', 'Завтра будет солнечно.']), explanation=PADACE),
+    dict(new('vjetar', 'ветер', ['ветер', 'дождь', 'солнце']), explanation=VJETAR),
+    dict(new('oblačno', 'облачно', ['облачно', 'солнечно', 'холодно']), explanation=OBLACNO),
+    dict(new('toplo', 'тепло', ['тепло', 'холодно', 'облачно']), explanation=TOPLO),
+    pairs(('дождь', 'kiša'), ('ветер', 'vjetar'), ('облачно', 'oblačno'), ('тепло', 'toplo'),
+          ('холодно', 'hladno'), ('солнечно', 'sunčano')),
+    pick('Завтра будет облачно. — Sjutra ___ biti oblačno.', ['će', 'ću', 'ćemo'], 'će',
+         explanation='Погода — «оно»: će. Sjutra će biti oblačno.', label='Вставь слово'),
+    dict(rubank('Sjutra će padati kiša.', 'Завтра пойдёт дождь.', ['дождь', 'завтра', 'пойдёт', 'будет']),
+         also=['Завтра будет дождь.', 'Дождь пойдёт завтра.'], explanation=PADACE),
+    dict(new('obući', 'надеть', ['надеть', 'выйти', 'купить'], label='Новый глагол'), explanation=OBUCI),
+    dict(phrase('Obući ću kaput, pada kiša.', 'Я надену пальто, идёт дождь.',
+                ['Я надену пальто, идёт дождь.', 'Я купила пальто, идёт дождь.',
+                 'Я надену платье, светит солнце.']), explanation=OBUCI),
+    dict(new('izaći', 'выйти', ['выйти', 'войти', 'надеть'], label='Новый глагол'), explanation=IZACI),
+    dict(phrase('Neću izaći, duva vjetar.', 'Я не выйду, дует ветер.',
+                ['Я не выйду, дует ветер.', 'Я выйду, дует ветер.', 'Я не выйду, идёт дождь.']),
+         explanation=IZACI),
+    dict(phrase('Doći ću sjutra.', 'Я приду завтра.', ['Я приду завтра.', 'Я пришла вчера.', 'Я уйду завтра.']),
+         explanation=DOCI),
+    pick('Ты придёшь завтра? — Hoćeš li sjutra ___ ?', ['doći', 'doćiću', 'dođeš'], 'doći',
+         explanation='После hoćeš li — глагол целиком: hoćeš li doći?', label='Вставь слово'),
+    dict(pairs(('я пойду', 'ići ću'), ('я приду', 'doći ću'), ('я выйду', 'izaći ću'),
+               ('я надену', 'obući ću')),
+         explanation='Все на -ći, поэтому всегда раздельно: ići ću, doći ću, izaći ću, obući ću.'),
+    dict(bank('Идёт дождь, я надену пальто.', 'Pada kiša, obući ću kaput.',
+              ['kaput', 'kiša', 'ću', 'pada', 'obući']), explanation=OBUCI),
+    dict(bank('Завтра будет тепло.', 'Sjutra će biti toplo.', ['toplo', 'biti', 'sjutra', 'će']),
+         explanation='Впереди sjutra — раздельно: sjutra će biti.'),
+    dict(bank('Я приду завтра.', 'Doći ću sjutra.', ['sjutra', 'ću', 'doći'], also=['Sjutra ću doći.']),
+         explanation='Doći ću sjutra и Sjutra ću doći — оба верные.'),
+    earbank('Neću izaći, napolju je hladno.', 'Я не выйду, на улице холодно.',
+            ['hladno', 'izaći', 'napolju', 'je', 'neću']),
+    dict(rubank('Duva vjetar i pada kiša.', 'Дует ветер и идёт дождь.',
+                ['идёт', 'и', 'ветер', 'дождь', 'дует']),
+         also=['Идёт дождь и дует ветер.'], explanation=VJETAR),
+    pick('— Hoćeš li izaći?\n— Neću, pada kiša.\n\nПочему она не выйдет?',
+         ['Идёт дождь.', 'Дует ветер.', 'Ей холодно.'], 'Идёт дождь.',
+         explanation='Hoćeš li izaći? — Ты выйдешь? Neću — не выйду.', label='Мини-диалог'),
+    pick('Он пришёл. — On je ___ .', ['došao', 'došla', 'došli'], 'došao',
+         explanation='Прошедшее от doći: došao (он), došla (она).', label='Повторение'),
+    pick('Подруга выходит на улицу в лёгкой рубашке, а там холодно. Что скажешь?',
+         ['Nije ti hladno u tome?', 'Doći ću sjutra.', 'Pada kiša.'], 'Nije ti hladno u tome?',
+         label='Повторение'),
+    say('Pada kiša.', 'Идёт дождь.'),
+    say('Obući ću kaput.', 'Я надену пальто.'),
+    echo('Neću izaći, duva vjetar.', 'Я не выйду, дует ветер.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

@@ -326,6 +326,12 @@
       "title": "Biće sunčano. Večeras ću biti u gradu",
       "file": "k51.json",
       "section": "Раздел 4"
+    },
+    {
+      "id": "k52",
+      "title": "Pada kiša, obući ću kaput",
+      "file": "k52.json",
+      "section": "Раздел 4"
     }
   ]
 }

@@ -1918,7 +1918,10 @@
   "bićeš": "будешь (= ti ćeš biti)",
   "biću": "буду (= ja ću biti)",
   "grada": "города — от grad",
-  "sljedeće": "следующей (sljedeće nedjelje — на следующей неделе)"
+  "sljedeće": "следующей (sljedeće nedjelje — на следующей неделе)",
+  "duva": "дует (duva vjetar — дует ветер)",
+  "izaći": "выйти",
+  "obući": "надеть"
  },
  "ru": {
   "а": "a",
@@ -2612,6 +2615,13 @@
   "краситься": "šminkati se",
   "со мной": "sa mnom",
   "солнечно": "sunčano",
-  "следующей": "sljedeće (sljedeće nedjelje)"
+  "следующей": "sljedeće (sljedeće nedjelje)",
+  "ветер": "vjetar",
+  "облачно": "oblačno",
+  "надеть": "obući",
+  "выйти": "izaći",
+  "надену": "obući ću",
+  "выйду": "izaći ću",
+  "дует": "duva"
  }
 }
