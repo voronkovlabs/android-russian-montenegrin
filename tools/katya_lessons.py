@@ -3817,6 +3817,78 @@ L.append(dict(id='k48', title='Ja ću piti kafu. Piću kafu!', section=S4, words
     echo('Šta ćeš piti?', 'Что ты будешь пить?'),
 ]))
 
+# --- Урок 49 ---
+# Третий способ будущего: ja ću da pijem; «Šta ću da radim?». piće — напиток (рядом с
+# piće — «будет пить»), flaša, led. Повторение прошлых уроков.
+DA = ('Третий способ, его очень часто слышно в Черногории: ću da + глагол как сейчас. '
+      'Ja ću da pijem = ja ću piti = piću — я буду пить. ću и тут не первым.')
+STA_CU = ('Šta ću da radim? — «Что мне делать?», буквально «что я буду делать?». Так говорят, '
+          'когда не знают, как быть. radim — от raditi.')
+PICE = ('piće — напиток, средний род: hladno piće. Совпадает с piće — «будет пить»; что '
+        'имеется в виду, видно по фразе.')
+NEKO = ('Hoćeš li neko piće? — «Хочешь что-нибудь выпить?», буквально «хочешь какой-нибудь '
+        'напиток?». Так спрашивают в гостях и в кафе.')
+LED = 'led — лёд. sa ledom — со льдом: piće sa ledom.'
+L.append(dict(id='k49', title='Ja ću da pijem. Hoćeš li neko piće?', section=S4, words=[
+    ('ja ću da pijem', 'я буду пить'), ('Šta ću da radim?', 'Что мне делать?'),
+    ('piće', 'напиток'), ('flaša', 'бутылка'), ('led', 'лёд'),
+    ('Hoćeš li neko piće?', 'Хочешь что-нибудь выпить?')],
+    ex=[
+    dict(phrase('Ja ću da pijem kafu.', 'Я буду пить кофе.',
+                ['Я буду пить кофе.', 'Я хочу пить кофе.', 'Я пью кофе.']), explanation=DA),
+    dict(pairs(('ja ću piti', 'ja ću da pijem'), ('ti ćeš piti', 'ti ćeš da piješ'),
+               ('mi ćemo piti', 'mi ćemo da pijemo'), ('oni će piti', 'oni će da piju')),
+         explanation=DA),
+    pick('Ja ću da ___ kafu.', ['pijem', 'piti', 'piću'], 'pijem',
+         explanation='После da — глагол как сейчас: da pijem, da spavam. Ja ću da pijem.',
+         label='Вставь слово'),
+    pick('Какой вариант неправильный?', ['Ću piti čaj.', 'Piću čaj.', 'Ja ću da pijem čaj.'],
+         'Ću piti čaj.', explanation='Piću čaj, Ja ću piti čaj и Ja ću da pijem čaj — все три верные и '
+         'значат одно. Неверно только ću первым словом.', label='Выбери'),
+    dict(phrase('Šta ću da radim?', 'Что мне делать?',
+                ['Что мне делать?', 'Что ты делаешь?', 'Что я делала?']), explanation=STA_CU),
+    dict(bank('Что мне делать?', 'Šta ću da radim?', ['radim', 'ću', 'šta', 'da']),
+         explanation=STA_CU),
+    dict(new('piće', 'напиток', ['напиток', 'бутылка', 'лёд']), explanation=PICE),
+    dict(new('flaša', 'бутылка', ['бутылка', 'стакан', 'чашка']),
+         explanation='flaša — бутылка: flaša vode — бутылка воды.'),
+    dict(new('led', 'лёд', ['лёд', 'вода', 'снег']), explanation=LED),
+    pairs(('напиток', 'piće'), ('бутылка', 'flaša'), ('лёд', 'led'), ('чашка', 'šolja'),
+          ('стакан', 'čaša')),
+    dict(phrase('Hoćeš li neko piće?', 'Хочешь что-нибудь выпить?',
+                ['Хочешь что-нибудь выпить?', 'Ты будешь пить?', 'Где мой напиток?']),
+         explanation=NEKO),
+    pick('Piće je hladno.', ['Напиток холодный.', 'Он будет пить холодное.', 'На улице холодно.'],
+         'Напиток холодный.', explanation='Здесь piće — напиток: piće je hladno.',
+         label='Выбери перевод'),
+    pick('Бутылка воды — ___ vode', ['flaša', 'flašu', 'flaši'], 'flaša',
+         explanation='flaša vode — бутылка воды: vode — «чего?».', label='Вставь слово'),
+    dict(bank('Бутылку воды, пожалуйста.', 'Flašu vode, molim.', ['vode', 'molim', 'flašu']),
+         explanation='Просим что — flašu: flaša → flašu, как kafa → kafu.'),
+    dict(phrase('Piću sok sa ledom.', 'Я буду пить сок со льдом.',
+                ['Я буду пить сок со льдом.', 'Я пью сок со льдом.', 'Я буду пить сок без льда.']),
+         explanation=LED),
+    dict(bank('Я буду пить воду со льдом.', 'Piću vodu sa ledom.', ['ledom', 'vodu', 'sa', 'piću']),
+         explanation='Впереди ничего — слитно: piću.'),
+    dict(rubank('Hoćeš li neko piće?', 'Хочешь что-нибудь выпить?',
+                ['выпить', 'хочешь', 'что-нибудь']), explanation=NEKO),
+    earbank('Ja ću da pijem čaj sa ledom.', 'Я буду пить чай со льдом.',
+            ['ledom', 'da', 'čaj', 'ja', 'sa', 'pijem', 'ću']),
+    pick('— Hoćeš li neko piće?\n— Hoću, piću vodu sa ledom.\n\nЧто она будет пить?',
+         ['Воду со льдом.', 'Сок.', 'Кофе.'], 'Воду со льдом.', label='Мини-диалог'),
+    pick('Как ещё сказать «Piću kafu»?', ['Ja ću da pijem kafu.', 'Ja pijem kafu.', 'Ja sam pila kafu.'],
+         'Ja ću da pijem kafu.', explanation=DA, label='Выбери'),
+    pick('Он ушёл домой. — Otišao ___ kući.', ['je', 'sam', 'se'], 'je',
+         explanation='On — je: otišao je.', label='Повторение'),
+    pick('Ты была на море? — ___ li bila na moru?', ['Jesi', 'Je', 'Jeste'], 'Jesi',
+         explanation='Ты — jesi li.', label='Повторение'),
+    pick('Корове нравилось море. — Kravi se ___ more.', ['sviđalo', 'sviđao', 'sviđala'], 'sviđalo',
+         explanation='more — средний род: sviđalo.', label='Повторение'),
+    say('Hoćeš li neko piće?', 'Хочешь что-нибудь выпить?'),
+    say('Ja ću da pijem kafu.', 'Я буду пить кофе.'),
+    echo('Šta ću da radim?', 'Что мне делать?'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

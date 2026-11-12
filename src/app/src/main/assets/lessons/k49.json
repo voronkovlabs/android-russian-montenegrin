@@ -1,0 +1,382 @@
+{
+  "id": "k49",
+  "title": "Ja ću da pijem. Hoćeš li neko piće?",
+  "exercises": [
+    {
+      "id": "k49e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ja ću da pijem kafu.",
+      "hint": "Ja ću da pijem kafu. — Я буду пить кофе.",
+      "options": [
+        "Я буду пить кофе.",
+        "Я хочу пить кофе.",
+        "Я пью кофе."
+      ],
+      "answer": "Я буду пить кофе.",
+      "explanation": "Третий способ, его очень часто слышно в Черногории: ću da + глагол как сейчас. Ja ću da pijem = ja ću piti = piću — я буду пить. ću и тут не первым."
+    },
+    {
+      "id": "k49e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja ću piti",
+          "me": "ja ću da pijem"
+        },
+        {
+          "ru": "ti ćeš piti",
+          "me": "ti ćeš da piješ"
+        },
+        {
+          "ru": "mi ćemo piti",
+          "me": "mi ćemo da pijemo"
+        },
+        {
+          "ru": "oni će piti",
+          "me": "oni će da piju"
+        }
+      ],
+      "explanation": "Третий способ, его очень часто слышно в Черногории: ću da + глагол как сейчас. Ja ću da pijem = ja ću piti = piću — я буду пить. ću и тут не первым."
+    },
+    {
+      "id": "k49e03",
+      "type": "choice",
+      "prompt": "Ja ću da ___ kafu.",
+      "options": [
+        "pijem",
+        "piti",
+        "piću"
+      ],
+      "answer": "pijem",
+      "explanation": "После da — глагол как сейчас: da pijem, da spavam. Ja ću da pijem.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k49e04",
+      "type": "choice",
+      "prompt": "Какой вариант неправильный?",
+      "options": [
+        "Ću piti čaj.",
+        "Piću čaj.",
+        "Ja ću da pijem čaj."
+      ],
+      "answer": "Ću piti čaj.",
+      "explanation": "Piću čaj, Ja ću piti čaj и Ja ću da pijem čaj — все три верные и значат одно. Неверно только ću первым словом.",
+      "label": "Выбери"
+    },
+    {
+      "id": "k49e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šta ću da radim?",
+      "hint": "Šta ću da radim? — Что мне делать?",
+      "options": [
+        "Что мне делать?",
+        "Что ты делаешь?",
+        "Что я делала?"
+      ],
+      "answer": "Что мне делать?",
+      "explanation": "Šta ću da radim? — «Что мне делать?», буквально «что я буду делать?». Так говорят, когда не знают, как быть. radim — от raditi."
+    },
+    {
+      "id": "k49e06",
+      "type": "word_bank",
+      "prompt": "Что мне делать?",
+      "answer": "Šta ću da radim?",
+      "bank": [
+        "radim",
+        "ću",
+        "šta",
+        "da"
+      ],
+      "explanation": "Šta ću da radim? — «Что мне делать?», буквально «что я буду делать?». Так говорят, когда не знают, как быть. radim — от raditi."
+    },
+    {
+      "id": "k49e07",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "piće",
+      "hint": "piće — напиток",
+      "options": [
+        "напиток",
+        "бутылка",
+        "лёд"
+      ],
+      "answer": "напиток",
+      "explanation": "piće — напиток, средний род: hladno piće. Совпадает с piće — «будет пить»; что имеется в виду, видно по фразе.",
+      "example": "Ovo piće je hladno. — Этот напиток холодный."
+    },
+    {
+      "id": "k49e08",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "flaša",
+      "hint": "flaša — бутылка",
+      "options": [
+        "бутылка",
+        "стакан",
+        "чашка"
+      ],
+      "answer": "бутылка",
+      "explanation": "flaša — бутылка: flaša vode — бутылка воды.",
+      "example": "Flaša je velika. — Бутылка большая."
+    },
+    {
+      "id": "k49e09",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "led",
+      "hint": "led — лёд",
+      "options": [
+        "лёд",
+        "вода",
+        "снег"
+      ],
+      "answer": "лёд",
+      "explanation": "led — лёд. sa ledom — со льдом: piće sa ledom.",
+      "example": "Led je bijel. — Лёд белый."
+    },
+    {
+      "id": "k49e10",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "напиток",
+          "me": "piće"
+        },
+        {
+          "ru": "бутылка",
+          "me": "flaša"
+        },
+        {
+          "ru": "лёд",
+          "me": "led"
+        },
+        {
+          "ru": "чашка",
+          "me": "šolja"
+        },
+        {
+          "ru": "стакан",
+          "me": "čaša"
+        }
+      ]
+    },
+    {
+      "id": "k49e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Hoćeš li neko piće?",
+      "hint": "Hoćeš li neko piće? — Хочешь что-нибудь выпить?",
+      "options": [
+        "Хочешь что-нибудь выпить?",
+        "Ты будешь пить?",
+        "Где мой напиток?"
+      ],
+      "answer": "Хочешь что-нибудь выпить?",
+      "explanation": "Hoćeš li neko piće? — «Хочешь что-нибудь выпить?», буквально «хочешь какой-нибудь напиток?». Так спрашивают в гостях и в кафе."
+    },
+    {
+      "id": "k49e12",
+      "type": "choice",
+      "prompt": "Piće je hladno.",
+      "options": [
+        "Напиток холодный.",
+        "Он будет пить холодное.",
+        "На улице холодно."
+      ],
+      "answer": "Напиток холодный.",
+      "explanation": "Здесь piće — напиток: piće je hladno.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k49e13",
+      "type": "choice",
+      "prompt": "Бутылка воды — ___ vode",
+      "options": [
+        "flaša",
+        "flašu",
+        "flaši"
+      ],
+      "answer": "flaša",
+      "explanation": "flaša vode — бутылка воды: vode — «чего?».",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k49e14",
+      "type": "word_bank",
+      "prompt": "Бутылку воды, пожалуйста.",
+      "answer": "Flašu vode, molim.",
+      "bank": [
+        "vode",
+        "molim",
+        "flašu"
+      ],
+      "explanation": "Просим что — flašu: flaša → flašu, как kafa → kafu."
+    },
+    {
+      "id": "k49e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Piću sok sa ledom.",
+      "hint": "Piću sok sa ledom. — Я буду пить сок со льдом.",
+      "options": [
+        "Я буду пить сок со льдом.",
+        "Я пью сок со льдом.",
+        "Я буду пить сок без льда."
+      ],
+      "answer": "Я буду пить сок со льдом.",
+      "explanation": "led — лёд. sa ledom — со льдом: piće sa ledom."
+    },
+    {
+      "id": "k49e16",
+      "type": "word_bank",
+      "prompt": "Я буду пить воду со льдом.",
+      "answer": "Piću vodu sa ledom.",
+      "bank": [
+        "ledom",
+        "vodu",
+        "sa",
+        "piću"
+      ],
+      "explanation": "Впереди ничего — слитно: piću."
+    },
+    {
+      "id": "k49e17",
+      "type": "word_bank",
+      "prompt": "Hoćeš li neko piće?",
+      "answer": "Хочешь что-нибудь выпить?",
+      "bank": [
+        "выпить",
+        "хочешь",
+        "что-нибудь"
+      ],
+      "explanation": "Hoćeš li neko piće? — «Хочешь что-нибудь выпить?», буквально «хочешь какой-нибудь напиток?». Так спрашивают в гостях и в кафе."
+    },
+    {
+      "id": "k49e18",
+      "type": "word_bank",
+      "prompt": "Я буду пить чай со льдом.",
+      "answer": "Ja ću da pijem čaj sa ledom.",
+      "bank": [
+        "ledom",
+        "da",
+        "čaj",
+        "ja",
+        "sa",
+        "pijem",
+        "ću"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k49e19",
+      "type": "choice",
+      "prompt": "— Hoćeš li neko piće?\n— Hoću, piću vodu sa ledom.\n\nЧто она будет пить?",
+      "options": [
+        "Воду со льдом.",
+        "Сок.",
+        "Кофе."
+      ],
+      "answer": "Воду со льдом.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k49e20",
+      "type": "choice",
+      "prompt": "Как ещё сказать «Piću kafu»?",
+      "options": [
+        "Ja ću da pijem kafu.",
+        "Ja pijem kafu.",
+        "Ja sam pila kafu."
+      ],
+      "answer": "Ja ću da pijem kafu.",
+      "explanation": "Третий способ, его очень часто слышно в Черногории: ću da + глагол как сейчас. Ja ću da pijem = ja ću piti = piću — я буду пить. ću и тут не первым.",
+      "label": "Выбери"
+    },
+    {
+      "id": "k49e21",
+      "type": "choice",
+      "prompt": "Он ушёл домой. — Otišao ___ kući.",
+      "options": [
+        "je",
+        "sam",
+        "se"
+      ],
+      "answer": "je",
+      "explanation": "On — je: otišao je.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k49e22",
+      "type": "choice",
+      "prompt": "Ты была на море? — ___ li bila na moru?",
+      "options": [
+        "Jesi",
+        "Je",
+        "Jeste"
+      ],
+      "answer": "Jesi",
+      "explanation": "Ты — jesi li.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k49e23",
+      "type": "choice",
+      "prompt": "Корове нравилось море. — Kravi se ___ more.",
+      "options": [
+        "sviđalo",
+        "sviđao",
+        "sviđala"
+      ],
+      "answer": "sviđalo",
+      "explanation": "more — средний род: sviđalo.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k49e24",
+      "type": "speaking",
+      "phrase": "Hoćeš li neko piće?",
+      "translation": "Хочешь что-нибудь выпить?"
+    },
+    {
+      "id": "k49e25",
+      "type": "speaking",
+      "phrase": "Ja ću da pijem kafu.",
+      "translation": "Я буду пить кофе."
+    },
+    {
+      "id": "k49e26",
+      "type": "repeat",
+      "phrase": "Šta ću da radim?",
+      "translation": "Что мне делать?"
+    }
+  ],
+  "words": [
+    {
+      "me": "ja ću da pijem",
+      "ru": "я буду пить"
+    },
+    {
+      "me": "Šta ću da radim?",
+      "ru": "Что мне делать?"
+    },
+    {
+      "me": "piće",
+      "ru": "напиток"
+    },
+    {
+      "me": "flaša",
+      "ru": "бутылка"
+    },
+    {
+      "me": "led",
+      "ru": "лёд"
+    },
+    {
+      "me": "Hoćeš li neko piće?",
+      "ru": "Хочешь что-нибудь выпить?"
+    }
+  ]
+}
