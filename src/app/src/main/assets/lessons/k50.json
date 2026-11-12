@@ -1,0 +1,380 @@
+{
+  "id": "k50",
+  "title": "Mačka će se šminkati. Neću, ne pijem kafu!",
+  "exercises": [
+    {
+      "id": "k50e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "šminkati se",
+      "hint": "šminkati se — краситься, делать макияж",
+      "options": [
+        "краситься, делать макияж",
+        "купаться",
+        "шутить"
+      ],
+      "answer": "краситься, делать макияж",
+      "explanation": "šminkati se — краситься, делать макияж (от šminka): šminkam se, šminkaš se, šminka se. Глагол с se, как kupati se.",
+      "example": "Moja sestra se šminka. — Моя сестра красится."
+    },
+    {
+      "id": "k50e02",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Mačka će se šminkati.",
+      "hint": "Mačka će se šminkati. — Кошка будет краситься.",
+      "options": [
+        "Кошка будет краситься.",
+        "Кошка красится.",
+        "Кошка будет купаться."
+      ],
+      "answer": "Кошка будет краситься.",
+      "explanation": "Будущее с se: će стоит перед se, как su перед se. Mačka će se šminkati — кошка будет краситься. Ja ću se šminkati."
+    },
+    {
+      "id": "k50e03",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "pirinač",
+      "hint": "pirinač — рис",
+      "options": [
+        "рис",
+        "хлеб",
+        "суп"
+      ],
+      "answer": "рис",
+      "explanation": "pirinač — рис. В Хорватии и на побережье говорят ещё riža.",
+      "example": "Pirinač je bijel. — Рис белый."
+    },
+    {
+      "id": "k50e04",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "povrće",
+      "hint": "povrće — овощи",
+      "options": [
+        "овощи",
+        "фрукты",
+        "рис"
+      ],
+      "answer": "овощи",
+      "explanation": "povrće — овощи: одно слово на все овощи, среднего рода. sa povrćem — с овощами.",
+      "example": "Volim povrće. — Я люблю овощи."
+    },
+    {
+      "id": "k50e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Svinja će jesti pirinač sa povrćem.",
+      "hint": "Svinja će jesti pirinač sa povrćem. — Свинья будет есть рис с овощами.",
+      "options": [
+        "Свинья будет есть рис с овощами.",
+        "Свинья ест рис с овощами.",
+        "Свинья будет есть суп с овощами."
+      ],
+      "answer": "Свинья будет есть рис с овощами.",
+      "explanation": "sa povrćem — «с овощами», как sa ledom: povrće → povrćem."
+    },
+    {
+      "id": "k50e06",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ješću pirinač.",
+      "hint": "Ješću pirinač. — Я буду есть рис.",
+      "options": [
+        "Я буду есть рис.",
+        "Я ем рис.",
+        "Я ела рис."
+      ],
+      "answer": "Я буду есть рис.",
+      "explanation": "jesti слитно: jes(ti) + ću → ješću — s превращается в š. ješću, ješćeš, ješće, ješćemo, ješćete."
+    },
+    {
+      "id": "k50e07",
+      "type": "choice",
+      "prompt": "Мы будем есть рис с овощами. — ___ pirinač sa povrćem.",
+      "options": [
+        "Ješćemo",
+        "Jestćemo",
+        "Ćemo jesti"
+      ],
+      "answer": "Ješćemo",
+      "explanation": "Впереди ничего — слитно, и s → š: ješćemo.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k50e08",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "krokodil",
+      "hint": "krokodil — крокодил",
+      "options": [
+        "крокодил",
+        "волк",
+        "медведь"
+      ],
+      "answer": "крокодил",
+      "explanation": "krokodil — крокодил, мужской род: veliki krokodil.",
+      "example": "Krokodil je zelen. — Крокодил зелёный."
+    },
+    {
+      "id": "k50e09",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Krokodil će ići u šumu kod svog druga vuka.",
+      "hint": "Krokodil će ići u šumu kod svog druga vuka. — Крокодил пойдёт в лес к своему другу волку.",
+      "options": [
+        "Крокодил пойдёт в лес к своему другу волку.",
+        "Крокодил был в лесу у своего друга волка.",
+        "Волк пойдёт в лес к своему другу крокодилу."
+      ],
+      "answer": "Крокодил пойдёт в лес к своему другу волку.",
+      "explanation": "kod svog druga vuka — «к своему другу волку»: kod + «кого?» — druga, vuka, как kod babe. svog — «своего», как svoju lokaciju."
+    },
+    {
+      "id": "k50e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ići ću u grad.",
+      "hint": "Ići ću u grad. — Я пойду в город.",
+      "options": [
+        "Я пойду в город.",
+        "Я иду в город.",
+        "Я ходила в город."
+      ],
+      "answer": "Я пойду в город.",
+      "explanation": "У ići слитной формы нет: даже в начале фразы говорят и пишут раздельно — Ići ću, ići ćeš. Так у всех глаголов на -ći."
+    },
+    {
+      "id": "k50e11",
+      "type": "choice",
+      "prompt": "Я пойду в лес. — ___ u šumu.",
+      "options": [
+        "Ići ću",
+        "Ićiću",
+        "Ću ići"
+      ],
+      "answer": "Ići ću",
+      "explanation": "У ići слитной формы нет: даже в начале фразы говорят и пишут раздельно — Ići ću, ići ćeš. Так у всех глаголов на -ći.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k50e12",
+      "type": "choice",
+      "prompt": "Рыбы будут пить воду со льдом. — Ribe će ___ vodu sa ledom.",
+      "options": [
+        "piti",
+        "pijem",
+        "piću"
+      ],
+      "answer": "piti",
+      "explanation": "После će — глагол целиком: ribe će piti.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k50e13",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я буду есть",
+          "me": "ješću"
+        },
+        {
+          "ru": "я буду пить",
+          "me": "piću"
+        },
+        {
+          "ru": "я пойду",
+          "me": "ići ću"
+        },
+        {
+          "ru": "я буду краситься",
+          "me": "šminkaću se"
+        }
+      ],
+      "explanation": "Слитно: ješću, piću, šminkaću se. А ići — всегда раздельно: ići ću."
+    },
+    {
+      "id": "k50e14",
+      "type": "word_bank",
+      "prompt": "Свинья будет есть рис с овощами.",
+      "answer": "Svinja će jesti pirinač sa povrćem.",
+      "bank": [
+        "povrćem",
+        "jesti",
+        "svinja",
+        "sa",
+        "pirinač",
+        "će"
+      ],
+      "explanation": "Впереди svinja — раздельно: svinja će jesti."
+    },
+    {
+      "id": "k50e15",
+      "type": "word_bank",
+      "prompt": "Кошка будет краситься.",
+      "answer": "Mačka će se šminkati.",
+      "bank": [
+        "šminkati",
+        "se",
+        "mačka",
+        "će"
+      ],
+      "explanation": "Будущее с se: će стоит перед se, как su перед se. Mačka će se šminkati — кошка будет краситься. Ja ću se šminkati."
+    },
+    {
+      "id": "k50e16",
+      "type": "word_bank",
+      "prompt": "Рыбы будут пить воду со льдом.",
+      "answer": "Ribe će piti vodu sa ledom.",
+      "bank": [
+        "ledom",
+        "piti",
+        "ribe",
+        "sa",
+        "vodu",
+        "će"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k50e17",
+      "type": "word_bank",
+      "prompt": "Ješćemo pirinač.",
+      "answer": "Мы будем есть рис.",
+      "bank": [
+        "рис",
+        "будем",
+        "мы",
+        "есть"
+      ],
+      "also": [
+        "Будем есть рис."
+      ],
+      "explanation": "jesti слитно: jes(ti) + ću → ješću — s превращается в š. ješću, ješćeš, ješće, ješćemo, ješćete."
+    },
+    {
+      "id": "k50e18",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Neću ići.",
+      "hint": "Neću ići. — Я не пойду.",
+      "options": [
+        "Я не пойду.",
+        "Я не иду.",
+        "Я не ходила."
+      ],
+      "answer": "Я не пойду.",
+      "explanation": "neću — «не буду, не пойду»: та же ću, только с «не», как neću kafu — «не хочу кофе». Neću ići — я не пойду. Neću piti — я не буду пить."
+    },
+    {
+      "id": "k50e19",
+      "type": "choice",
+      "prompt": "— Pile, hoćeš li ići sa mnom na kafu?\n— Neću, ne pijem kafu.\n\nВолк зовёт цыплёнка. Почему цыплёнок не пойдёт?",
+      "options": [
+        "Он не пьёт кофе.",
+        "Он будет спать.",
+        "Он пойдёт в лес."
+      ],
+      "answer": "Он не пьёт кофе.",
+      "explanation": "Pile! — так обращаются к цыплёнку, слово не меняется. sa mnom — «со мной». Neću — «не пойду». Ne pijem kafu — «я не пью кофе».",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k50e20",
+      "type": "choice",
+      "prompt": "Волк зовёт цыплёнка на кофе. Что ответит цыплёнок, если не пьёт кофе?",
+      "options": [
+        "Neću, ne pijem kafu.",
+        "Ići ću u šumu.",
+        "Ješću pirinač."
+      ],
+      "answer": "Neću, ne pijem kafu.",
+      "explanation": "neću — «не буду, не пойду»: та же ću, только с «не», как neću kafu — «не хочу кофе». Neću ići — я не пойду. Neću piti — я не буду пить.",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k50e21",
+      "type": "word_bank",
+      "prompt": "Я не пойду, я не пью кофе.",
+      "answer": "Neću ići, ne pijem kafu.",
+      "bank": [
+        "kafu",
+        "ići",
+        "ne",
+        "neću",
+        "pijem"
+      ],
+      "explanation": "neću ići — не пойду (будущее), ne pijem — не пью (сейчас)."
+    },
+    {
+      "id": "k50e22",
+      "type": "choice",
+      "prompt": "Sjutra ___ kafu.",
+      "options": [
+        "ću piti",
+        "piću"
+      ],
+      "answer": "ću piti",
+      "explanation": "Впереди sjutra — раздельно: sjutra ću piti.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k50e23",
+      "type": "choice",
+      "prompt": "Ей не нравилось платье. — Nije joj ___ sviđala haljina.",
+      "options": [
+        "se",
+        "je",
+        "su"
+      ],
+      "answer": "se",
+      "explanation": "nije, потом joj, потом se: nije joj se sviđala.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k50e24",
+      "type": "speaking",
+      "phrase": "Mačka će se šminkati.",
+      "translation": "Кошка будет краситься."
+    },
+    {
+      "id": "k50e25",
+      "type": "speaking",
+      "phrase": "Neću, ne pijem kafu.",
+      "translation": "Не пойду, я не пью кофе."
+    },
+    {
+      "id": "k50e26",
+      "type": "repeat",
+      "phrase": "Ići ću u šumu.",
+      "translation": "Я пойду в лес."
+    }
+  ],
+  "words": [
+    {
+      "me": "šminkati se",
+      "ru": "краситься"
+    },
+    {
+      "me": "pirinač",
+      "ru": "рис"
+    },
+    {
+      "me": "povrće",
+      "ru": "овощи"
+    },
+    {
+      "me": "krokodil",
+      "ru": "крокодил"
+    },
+    {
+      "me": "neću",
+      "ru": "не буду, не пойду"
+    },
+    {
+      "me": "sa mnom",
+      "ru": "со мной"
+    }
+  ]
+}

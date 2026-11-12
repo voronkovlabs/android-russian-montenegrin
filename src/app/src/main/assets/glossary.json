@@ -1899,7 +1899,20 @@
   "pijemo": "пьём — от piti",
   "piješ": "пьёшь — от piti",
   "piju": "пьют — от piti",
-  "šolja": "чашка"
+  "šolja": "чашка",
+  "druga": "друга (kod druga — к другу) — от drug",
+  "ješćemo": "будем есть (= mi ćemo jesti)",
+  "ješću": "буду есть (= ja ću jesti)",
+  "ješćeš": "будешь есть",
+  "krokodil": "крокодил",
+  "mnom": "мной (sa mnom — со мной)",
+  "pirinač": "рис",
+  "povrće": "овощи",
+  "povrćem": "овощами (sa povrćem)",
+  "svinja": "свинья",
+  "svog": "своего (kod svog druga)",
+  "šminkati": "šminkati se — краситься",
+  "šminkaću": "буду краситься (šminkaću se)"
  },
  "ru": {
   "а": "a",
@@ -2586,6 +2599,11 @@
   "бутылка": "flaša",
   "лёд": "led",
   "льдом": "sa ledom",
-  "выпить": "piti (neko piće — что-нибудь выпить)"
+  "выпить": "piti (neko piće — что-нибудь выпить)",
+  "рис": "pirinač",
+  "овощи": "povrće",
+  "крокодил": "krokodil",
+  "краситься": "šminkati se",
+  "со мной": "sa mnom"
  }
 }

@@ -3889,6 +3889,87 @@ L.append(dict(id='k49', title='Ja ću da pijem. Hoćeš li neko piće?', section
     echo('Šta ću da radim?', 'Что мне делать?'),
 ]))
 
+# --- Урок 50 (абсурдный) ---
+# Будущее на трёх глаголах: šminkati se (новый), jesti (ješću), ići (ići ću — слитно
+# не бывает). Neću — «не буду, не пойду». Мини-диалог Кати: волк зовёт цыплёнка на
+# кофе, а тот не пьёт кофе. Новые слова по одному: krokodil, pirinač, povrće.
+SMINKATI = ('šminkati se — краситься, делать макияж (от šminka): šminkam se, šminkaš se, '
+            'šminka se. Глагол с se, как kupati se.')
+CE_SE = ('Будущее с se: će стоит перед se, как su перед se. Mačka će se šminkati — кошка будет '
+         'краситься. Ja ću se šminkati.')
+PIRINAC = 'sa povrćem — «с овощами», как sa ledom: povrće → povrćem.'
+JESCU = ('jesti слитно: jes(ti) + ću → ješću — s превращается в š. ješću, ješćeš, ješće, '
+         'ješćemo, ješćete.')
+KOD_DRUGA = ('kod svog druga vuka — «к своему другу волку»: kod + «кого?» — druga, vuka, как '
+             'kod babe. svog — «своего», как svoju lokaciju.')
+ICI = ('У ići слитной формы нет: даже в начале фразы говорят и пишут раздельно — Ići ću, '
+       'ići ćeš. Так у всех глаголов на -ći.')
+NECU = ('neću — «не буду, не пойду»: та же ću, только с «не», как neću kafu — «не хочу кофе». '
+        'Neću ići — я не пойду. Neću piti — я не буду пить.')
+PILE = ('Pile! — так обращаются к цыплёнку, слово не меняется. sa mnom — «со мной». '
+        'Neću — «не пойду». Ne pijem kafu — «я не пью кофе».')
+L.append(dict(id='k50', title='Mačka će se šminkati. Neću, ne pijem kafu!', section=S4, words=[
+    ('šminkati se', 'краситься'), ('pirinač', 'рис'), ('povrće', 'овощи'), ('krokodil', 'крокодил'),
+    ('neću', 'не буду, не пойду'), ('sa mnom', 'со мной')],
+    ex=[
+    dict(new('šminkati se', 'краситься, делать макияж', ['краситься, делать макияж', 'купаться', 'шутить'],
+             label='Новый глагол'), explanation=SMINKATI),
+    dict(phrase('Mačka će se šminkati.', 'Кошка будет краситься.',
+                ['Кошка будет краситься.', 'Кошка красится.', 'Кошка будет купаться.']),
+         explanation=CE_SE),
+    dict(new('pirinač', 'рис', ['рис', 'хлеб', 'суп']), explanation='pirinač — рис. В Хорватии и на побережье говорят ещё riža.'),
+    dict(new('povrće', 'овощи', ['овощи', 'фрукты', 'рис']),
+         explanation='povrće — овощи: одно слово на все овощи, среднего рода. sa povrćem — с овощами.'),
+    dict(phrase('Svinja će jesti pirinač sa povrćem.', 'Свинья будет есть рис с овощами.',
+                ['Свинья будет есть рис с овощами.', 'Свинья ест рис с овощами.',
+                 'Свинья будет есть суп с овощами.']), explanation=PIRINAC),
+    dict(phrase('Ješću pirinač.', 'Я буду есть рис.', ['Я буду есть рис.', 'Я ем рис.', 'Я ела рис.']),
+         explanation=JESCU),
+    pick('Мы будем есть рис с овощами. — ___ pirinač sa povrćem.', ['Ješćemo', 'Jestćemo', 'Ćemo jesti'],
+         'Ješćemo', explanation='Впереди ничего — слитно, и s → š: ješćemo.', label='Вставь слово'),
+    dict(new('krokodil', 'крокодил', ['крокодил', 'волк', 'медведь']),
+         explanation='krokodil — крокодил, мужской род: veliki krokodil.'),
+    dict(phrase('Krokodil će ići u šumu kod svog druga vuka.', 'Крокодил пойдёт в лес к своему другу волку.',
+                ['Крокодил пойдёт в лес к своему другу волку.', 'Крокодил был в лесу у своего друга волка.',
+                 'Волк пойдёт в лес к своему другу крокодилу.']), explanation=KOD_DRUGA),
+    dict(phrase('Ići ću u grad.', 'Я пойду в город.', ['Я пойду в город.', 'Я иду в город.', 'Я ходила в город.']),
+         explanation=ICI),
+    pick('Я пойду в лес. — ___ u šumu.', ['Ići ću', 'Ićiću', 'Ću ići'], 'Ići ću', explanation=ICI,
+         label='Вставь слово'),
+    pick('Рыбы будут пить воду со льдом. — Ribe će ___ vodu sa ledom.', ['piti', 'pijem', 'piću'], 'piti',
+         explanation='После će — глагол целиком: ribe će piti.', label='Вставь слово'),
+    dict(pairs(('я буду есть', 'ješću'), ('я буду пить', 'piću'), ('я пойду', 'ići ću'),
+               ('я буду краситься', 'šminkaću se')),
+         explanation='Слитно: ješću, piću, šminkaću se. А ići — всегда раздельно: ići ću.'),
+    dict(bank('Свинья будет есть рис с овощами.', 'Svinja će jesti pirinač sa povrćem.',
+              ['povrćem', 'jesti', 'svinja', 'sa', 'pirinač', 'će']),
+         explanation='Впереди svinja — раздельно: svinja će jesti.'),
+    dict(bank('Кошка будет краситься.', 'Mačka će se šminkati.', ['šminkati', 'se', 'mačka', 'će']),
+         explanation=CE_SE),
+    earbank('Ribe će piti vodu sa ledom.', 'Рыбы будут пить воду со льдом.',
+            ['ledom', 'piti', 'ribe', 'sa', 'vodu', 'će']),
+    dict(rubank('Ješćemo pirinač.', 'Мы будем есть рис.', ['рис', 'будем', 'мы', 'есть']),
+         also=['Будем есть рис.'], explanation=JESCU),
+    dict(phrase('Neću ići.', 'Я не пойду.', ['Я не пойду.', 'Я не иду.', 'Я не ходила.']),
+         explanation=NECU),
+    pick('— Pile, hoćeš li ići sa mnom na kafu?\n— Neću, ne pijem kafu.\n\nВолк зовёт цыплёнка. Почему цыплёнок не пойдёт?',
+         ['Он не пьёт кофе.', 'Он будет спать.', 'Он пойдёт в лес.'], 'Он не пьёт кофе.',
+         explanation=PILE, label='Мини-диалог'),
+    pick('Волк зовёт цыплёнка на кофе. Что ответит цыплёнок, если не пьёт кофе?',
+         ['Neću, ne pijem kafu.', 'Ići ću u šumu.', 'Ješću pirinač.'], 'Neću, ne pijem kafu.',
+         explanation=NECU, label='Что скажешь?'),
+    dict(bank('Я не пойду, я не пью кофе.', 'Neću ići, ne pijem kafu.',
+              ['kafu', 'ići', 'ne', 'neću', 'pijem']),
+         explanation='neću ići — не пойду (будущее), ne pijem — не пью (сейчас).'),
+    pick('Sjutra ___ kafu.', ['ću piti', 'piću'], 'ću piti',
+         explanation='Впереди sjutra — раздельно: sjutra ću piti.', label='Повторение'),
+    pick('Ей не нравилось платье. — Nije joj ___ sviđala haljina.', ['se', 'je', 'su'], 'se',
+         explanation='nije, потом joj, потом se: nije joj se sviđala.', label='Повторение'),
+    say('Mačka će se šminkati.', 'Кошка будет краситься.'),
+    say('Neću, ne pijem kafu.', 'Не пойду, я не пью кофе.'),
+    echo('Ići ću u šumu.', 'Я пойду в лес.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
