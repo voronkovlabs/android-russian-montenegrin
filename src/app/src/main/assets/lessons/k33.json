@@ -413,7 +413,12 @@
         "kod",
         "uveče",
         "bila"
-      ]
+      ],
+      "also": [
+        "Nisam bila kod kuće juče uveče.",
+        "Uveče juče nisam bila kod kuće."
+      ],
+      "explanation": "«Вечером» в задании есть, поэтому uveče нужно: juče uveče — вчера вечером. Без него вышло бы просто «вчера меня не было дома»."
     },
     {
       "id": "k33e29",

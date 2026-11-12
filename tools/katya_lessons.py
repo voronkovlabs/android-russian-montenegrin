@@ -284,7 +284,7 @@ L.append(dict(id='k05', title='Акула, черепаха и яблоко', wo
 
 # --- Урок 6 ---
 L.append(dict(id='k06', title='Мы едим: pomfrit и pljeskavica', words=[
-    ('pomfrit', 'картошка фри'), ('pljeskavica', 'котлета (плескавица)'),
+    ('pomfrit', 'картошка фри'), ('pljeskavica', 'котлета'),
     ('puž', 'улитка'), ('sestra', 'сестра'),
     ('Dobro došli', 'добро пожаловать'), ('Crna Gora', 'Черногория')],
     ex=[
@@ -2525,8 +2525,11 @@ L.append(dict(id='k33', title='Dođi kod mene sjutra ujutru', section=S3, words=
          ['Dođite', 'Dođi', 'Dođem'], 'Dođite', explanation=DODJI, label='Вставь слово'),
     bank('Приходи ко мне завтра утром.', 'Dođi kod mene sjutra ujutru.',
          ['ujutru', 'kod', 'dođi', 'sjutra', 'mene']),
-    bank('Вчера вечером меня не было дома.', 'Juče uveče nisam bila kod kuće.',
-         ['kuće', 'nisam', 'juče', 'kod', 'uveče', 'bila']),
+    dict(bank('Вчера вечером меня не было дома.', 'Juče uveče nisam bila kod kuće.',
+              ['kuće', 'nisam', 'juče', 'kod', 'uveče', 'bila'],
+              also=['Nisam bila kod kuće juče uveče.', 'Uveče juče nisam bila kod kuće.']),
+         explanation='«Вечером» в задании есть, поэтому uveče нужно: juče uveče — вчера вечером. '
+                     'Без него вышло бы просто «вчера меня не было дома».'),
     say('Dođi kod mene sjutra ujutru.', 'Приходи ко мне завтра утром.'),
     echo('Juče uveče nisam bio kod kuće.', 'Вчера вечером меня не было дома.'),
     pairs(('утром', 'ujutru'), ('ночью', 'noću'), ('Я не был дома.', 'Nisam bio kod kuće.'),
