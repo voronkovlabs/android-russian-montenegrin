@@ -1881,7 +1881,16 @@
   "žute": "жёлтые",
   "žuto": "жёлтое",
   "spavamo": "спим — от spavati",
-  "tvoj": "твой"
+  "tvoj": "твой",
+  "pićemo": "будем пить (= mi ćemo piti)",
+  "pićete": "будете пить (= vi ćete piti)",
+  "pićeš": "будешь пить (= ti ćeš piti)",
+  "piću": "буду пить (= ja ću piti)",
+  "spavaćemo": "будем спать (= mi ćemo spavati)",
+  "spavaćeš": "будешь спать (= ti ćeš spavati)",
+  "spavaću": "буду спать (= ja ću spavati)",
+  "spavaćete": "будете спать (= vi ćete spavati)",
+  "spavaće": "будет спать, будут спать"
  },
  "ru": {
   "а": "a",

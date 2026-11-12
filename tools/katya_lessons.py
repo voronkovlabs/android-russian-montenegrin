@@ -3745,6 +3745,78 @@ L.append(dict(id='k47', title='Sviđaju mi se. Ja ću spavati!', section=S4, wor
     echo('Sviđaju mi se ove naočare.', 'Мне нравятся эти очки.'),
 ]))
 
+# --- Урок 48 ---
+# Будущее на piti: сначала раздельно (ja ću piti), потом слитная форма на двух
+# глаголах (piću, spavaću) и когда какая: слитно — только если перед ću ничего нет.
+PITI = 'piti — то же будущее: ja ću piti, ti ćeš piti, on će piti. Ja ću piti kafu — я буду пить кофе.'
+SLITNO = ('Если перед ću ничего нет, ću не может стоять первым и прилипает к глаголу. От глагола '
+          'отпадает -ti: piti → pi + ću = piću; spavati → spava + ću = spavaću.')
+KAKO = ('Правило одно: перед ću есть слово (ja, sjutra, uveče, šta) — раздельно: ja ću piti, '
+        'sjutra ću piti. Перед ću ничего — слитно: piću. Значат обе одно и то же.')
+NIKAD_PRVO = 'ću (ćemo, ćeš…) никогда не стоит первым словом во фразе.'
+L.append(dict(id='k48', title='Ja ću piti kafu. Piću kafu!', section=S4, words=[
+    ('ja ću piti', 'я буду пить'), ('piću', 'буду пить (слитно)'),
+    ('spavaću', 'буду спать (слитно)')],
+    ex=[
+    dict(phrase('Ja ću piti kafu.', 'Я буду пить кофе.',
+                ['Я буду пить кофе.', 'Я пью кофе.', 'Я пила кофе.']), explanation=PITI),
+    pairs(('я буду пить', 'ja ću piti'), ('ты будешь пить', 'ti ćeš piti'), ('он будет пить', 'on će piti'),
+          ('мы будем пить', 'mi ćemo piti'), ('они будут пить', 'oni će piti')),
+    pick('Мы будем пить чай. — Mi ___ piti čaj.', ['ćemo', 'će', 'ću'], 'ćemo',
+         explanation='Mi — ćemo: mi ćemo piti.', label='Вставь слово'),
+    pick('Он будет пить сок. — On ___ piti sok.', ['će', 'ćeš', 'ćemo'], 'će',
+         explanation='On — će: on će piti.', label='Вставь слово'),
+    dict(bank('Вечером я буду пить чай.', 'Uveče ću piti čaj.', ['čaj', 'piti', 'uveče', 'ću']),
+         explanation='Впереди uveče, ću вторым: uveče ću piti.'),
+    dict(phrase('Piću kafu.', 'Я буду пить кофе.', ['Я буду пить кофе.', 'Я пью кофе.', 'Я пила кофе.']),
+         explanation=SLITNO),
+    dict(pairs(('ja ću piti', 'piću'), ('ja ću spavati', 'spavaću'), ('mi ćemo piti', 'pićemo'),
+               ('mi ćemo spavati', 'spavaćemo')), explanation=SLITNO),
+    dict(pairs(('я буду пить', 'piću'), ('ты будешь пить', 'pićeš'), ('он будет пить', 'piće'),
+               ('мы будем пить', 'pićemo'), ('вы будете пить', 'pićete')),
+         explanation='piće — и он, и они: он будет пить и они будут пить. Уточнить можно '
+                     'местоимением: on će piti, oni će piti.'),
+    dict(phrase('Spavaću kod babe.', 'Я буду спать у бабушки.',
+                ['Я буду спать у бабушки.', 'Я сплю у бабушки.', 'Я спала у бабушки.']),
+         explanation='Впереди ничего нет — слитно: spavaću. С ja было бы раздельно: ja ću spavati.'),
+    pick('Sjutra ___ kafu.', ['ću piti', 'piću', 'pijem ću'], 'ću piti',
+         explanation='Впереди sjutra — значит раздельно: sjutra ću piti.', label='Вставь слово'),
+    pick('___ kafu. (в начале фразы)', ['Piću', 'Ću piti', 'Pijem ću'], 'Piću',
+         explanation='Впереди ничего — слитно: piću. ' + NIKAD_PRVO, label='Вставь слово'),
+    pick('Ja ___ čaj.', ['ću piti', 'piću'], 'ću piti',
+         explanation='Впереди ja — значит раздельно: ja ću piti.', label='Вставь слово'),
+    pick('Мы будем спать дома. — ___ kod kuće.', ['Spavaćemo', 'Ćemo spavati'], 'Spavaćemo',
+         explanation='Впереди ничего — слитно: spavaćemo. ' + NIKAD_PRVO, label='Вставь слово'),
+    pick('Как правильно сказать «Завтра я буду спать»?',
+         ['Sjutra ću spavati.', 'Sjutra spavaću.', 'Ću spavati sjutra.'], 'Sjutra ću spavati.',
+         explanation=KAKO, label='Выбери верное'),
+    pick('Как правильно сказать «Я буду пить сок»?',
+         ['Piću sok.', 'Ću piti sok.', 'Piti ću sok.'], 'Piću sok.',
+         explanation='Впереди ничего — слитно: piću sok. Можно и с ja: Ja ću piti sok. '
+                     + NIKAD_PRVO, label='Выбери верное'),
+    dict(bank('Мы будем пить кофе у бабушки.', 'Pićemo kafu kod babe.',
+              ['babe', 'kafu', 'kod', 'pićemo']),
+         explanation='Впереди ничего — слитно: pićemo.'),
+    dict(bank('Что ты будешь пить?', 'Šta ćeš piti?', ['piti', 'šta', 'ćeš']),
+         explanation='Впереди šta — значит раздельно: šta ćeš piti?'),
+    earbank('Sjutra ćemo piti sok.', 'Завтра мы будем пить сок.', ['sok', 'piti', 'sjutra', 'ćemo']),
+    dict(rubank('Spavaćeš kod mene.', 'Ты будешь спать у меня.',
+                ['спать', 'у', 'ты', 'меня', 'будешь']), also=['Будешь спать у меня.'],
+         explanation='Слитно: spavaćeš = ti ćeš spavati.'),
+    pick('— Šta ćeš piti?\n— Piću čaj.\n\nЧто она будет пить?', ['Чай.', 'Кофе.', 'Сок.'], 'Чай.',
+         explanation='В вопросе впереди šta — раздельно: šta ćeš piti. В ответе впереди ничего — '
+                     'слитно: piću.', label='Мини-диалог'),
+    pick('Мы купались в море. — Kupali ___ u moru.', ['smo se', 'se smo', 'se'], 'smo se',
+         explanation='Mi — smo, потом se: kupali smo se.', label='Повторение'),
+    pick('Кошке нравились очки. — Mački su se ___ naočare.', ['sviđale', 'sviđala', 'sviđao'],
+         'sviđale', explanation='naočare — много, женский род: sviđale.', label='Повторение'),
+    pick('Он не мог спать. — Nije ___ spavati.', ['mogao', 'mogla', 'mogli'], 'mogao',
+         explanation='On — mogao.', label='Повторение'),
+    say('Piću kafu.', 'Я буду пить кофе.'),
+    say('Sjutra ću piti čaj.', 'Завтра я буду пить чай.'),
+    echo('Šta ćeš piti?', 'Что ты будешь пить?'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

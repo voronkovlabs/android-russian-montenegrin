@@ -1,0 +1,378 @@
+{
+  "id": "k48",
+  "title": "Ja ću piti kafu. Piću kafu!",
+  "exercises": [
+    {
+      "id": "k48e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ja ću piti kafu.",
+      "hint": "Ja ću piti kafu. — Я буду пить кофе.",
+      "options": [
+        "Я буду пить кофе.",
+        "Я пью кофе.",
+        "Я пила кофе."
+      ],
+      "answer": "Я буду пить кофе.",
+      "explanation": "piti — то же будущее: ja ću piti, ti ćeš piti, on će piti. Ja ću piti kafu — я буду пить кофе."
+    },
+    {
+      "id": "k48e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я буду пить",
+          "me": "ja ću piti"
+        },
+        {
+          "ru": "ты будешь пить",
+          "me": "ti ćeš piti"
+        },
+        {
+          "ru": "он будет пить",
+          "me": "on će piti"
+        },
+        {
+          "ru": "мы будем пить",
+          "me": "mi ćemo piti"
+        },
+        {
+          "ru": "они будут пить",
+          "me": "oni će piti"
+        }
+      ]
+    },
+    {
+      "id": "k48e03",
+      "type": "choice",
+      "prompt": "Мы будем пить чай. — Mi ___ piti čaj.",
+      "options": [
+        "ćemo",
+        "će",
+        "ću"
+      ],
+      "answer": "ćemo",
+      "explanation": "Mi — ćemo: mi ćemo piti.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k48e04",
+      "type": "choice",
+      "prompt": "Он будет пить сок. — On ___ piti sok.",
+      "options": [
+        "će",
+        "ćeš",
+        "ćemo"
+      ],
+      "answer": "će",
+      "explanation": "On — će: on će piti.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k48e05",
+      "type": "word_bank",
+      "prompt": "Вечером я буду пить чай.",
+      "answer": "Uveče ću piti čaj.",
+      "bank": [
+        "čaj",
+        "piti",
+        "uveče",
+        "ću"
+      ],
+      "explanation": "Впереди uveče, ću вторым: uveče ću piti."
+    },
+    {
+      "id": "k48e06",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Piću kafu.",
+      "hint": "Piću kafu. — Я буду пить кофе.",
+      "options": [
+        "Я буду пить кофе.",
+        "Я пью кофе.",
+        "Я пила кофе."
+      ],
+      "answer": "Я буду пить кофе.",
+      "explanation": "Если перед ću ничего нет, ću не может стоять первым и прилипает к глаголу. От глагола отпадает -ti: piti → pi + ću = piću; spavati → spava + ću = spavaću."
+    },
+    {
+      "id": "k48e07",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja ću piti",
+          "me": "piću"
+        },
+        {
+          "ru": "ja ću spavati",
+          "me": "spavaću"
+        },
+        {
+          "ru": "mi ćemo piti",
+          "me": "pićemo"
+        },
+        {
+          "ru": "mi ćemo spavati",
+          "me": "spavaćemo"
+        }
+      ],
+      "explanation": "Если перед ću ничего нет, ću не может стоять первым и прилипает к глаголу. От глагола отпадает -ti: piti → pi + ću = piću; spavati → spava + ću = spavaću."
+    },
+    {
+      "id": "k48e08",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я буду пить",
+          "me": "piću"
+        },
+        {
+          "ru": "ты будешь пить",
+          "me": "pićeš"
+        },
+        {
+          "ru": "он будет пить",
+          "me": "piće"
+        },
+        {
+          "ru": "мы будем пить",
+          "me": "pićemo"
+        },
+        {
+          "ru": "вы будете пить",
+          "me": "pićete"
+        }
+      ],
+      "explanation": "piće — и он, и они: он будет пить и они будут пить. Уточнить можно местоимением: on će piti, oni će piti."
+    },
+    {
+      "id": "k48e09",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Spavaću kod babe.",
+      "hint": "Spavaću kod babe. — Я буду спать у бабушки.",
+      "options": [
+        "Я буду спать у бабушки.",
+        "Я сплю у бабушки.",
+        "Я спала у бабушки."
+      ],
+      "answer": "Я буду спать у бабушки.",
+      "explanation": "Впереди ничего нет — слитно: spavaću. С ja было бы раздельно: ja ću spavati."
+    },
+    {
+      "id": "k48e10",
+      "type": "choice",
+      "prompt": "Sjutra ___ kafu.",
+      "options": [
+        "ću piti",
+        "piću",
+        "pijem ću"
+      ],
+      "answer": "ću piti",
+      "explanation": "Впереди sjutra — значит раздельно: sjutra ću piti.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k48e11",
+      "type": "choice",
+      "prompt": "___ kafu. (в начале фразы)",
+      "options": [
+        "Piću",
+        "Ću piti",
+        "Pijem ću"
+      ],
+      "answer": "Piću",
+      "explanation": "Впереди ничего — слитно: piću. ću (ćemo, ćeš…) никогда не стоит первым словом во фразе.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k48e12",
+      "type": "choice",
+      "prompt": "Ja ___ čaj.",
+      "options": [
+        "ću piti",
+        "piću"
+      ],
+      "answer": "ću piti",
+      "explanation": "Впереди ja — значит раздельно: ja ću piti.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k48e13",
+      "type": "choice",
+      "prompt": "Мы будем спать дома. — ___ kod kuće.",
+      "options": [
+        "Spavaćemo",
+        "Ćemo spavati"
+      ],
+      "answer": "Spavaćemo",
+      "explanation": "Впереди ничего — слитно: spavaćemo. ću (ćemo, ćeš…) никогда не стоит первым словом во фразе.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k48e14",
+      "type": "choice",
+      "prompt": "Как правильно сказать «Завтра я буду спать»?",
+      "options": [
+        "Sjutra ću spavati.",
+        "Sjutra spavaću.",
+        "Ću spavati sjutra."
+      ],
+      "answer": "Sjutra ću spavati.",
+      "explanation": "Правило одно: перед ću есть слово (ja, sjutra, uveče, šta) — раздельно: ja ću piti, sjutra ću piti. Перед ću ничего — слитно: piću. Значат обе одно и то же.",
+      "label": "Выбери верное"
+    },
+    {
+      "id": "k48e15",
+      "type": "choice",
+      "prompt": "Как правильно сказать «Я буду пить сок»?",
+      "options": [
+        "Piću sok.",
+        "Ću piti sok.",
+        "Piti ću sok."
+      ],
+      "answer": "Piću sok.",
+      "explanation": "Впереди ничего — слитно: piću sok. Можно и с ja: Ja ću piti sok. ću (ćemo, ćeš…) никогда не стоит первым словом во фразе.",
+      "label": "Выбери верное"
+    },
+    {
+      "id": "k48e16",
+      "type": "word_bank",
+      "prompt": "Мы будем пить кофе у бабушки.",
+      "answer": "Pićemo kafu kod babe.",
+      "bank": [
+        "babe",
+        "kafu",
+        "kod",
+        "pićemo"
+      ],
+      "explanation": "Впереди ничего — слитно: pićemo."
+    },
+    {
+      "id": "k48e17",
+      "type": "word_bank",
+      "prompt": "Что ты будешь пить?",
+      "answer": "Šta ćeš piti?",
+      "bank": [
+        "piti",
+        "šta",
+        "ćeš"
+      ],
+      "explanation": "Впереди šta — значит раздельно: šta ćeš piti?"
+    },
+    {
+      "id": "k48e18",
+      "type": "word_bank",
+      "prompt": "Завтра мы будем пить сок.",
+      "answer": "Sjutra ćemo piti sok.",
+      "bank": [
+        "sok",
+        "piti",
+        "sjutra",
+        "ćemo"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k48e19",
+      "type": "word_bank",
+      "prompt": "Spavaćeš kod mene.",
+      "answer": "Ты будешь спать у меня.",
+      "bank": [
+        "спать",
+        "у",
+        "ты",
+        "меня",
+        "будешь"
+      ],
+      "also": [
+        "Будешь спать у меня."
+      ],
+      "explanation": "Слитно: spavaćeš = ti ćeš spavati."
+    },
+    {
+      "id": "k48e20",
+      "type": "choice",
+      "prompt": "— Šta ćeš piti?\n— Piću čaj.\n\nЧто она будет пить?",
+      "options": [
+        "Чай.",
+        "Кофе.",
+        "Сок."
+      ],
+      "answer": "Чай.",
+      "explanation": "В вопросе впереди šta — раздельно: šta ćeš piti. В ответе впереди ничего — слитно: piću.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k48e21",
+      "type": "choice",
+      "prompt": "Мы купались в море. — Kupali ___ u moru.",
+      "options": [
+        "smo se",
+        "se smo",
+        "se"
+      ],
+      "answer": "smo se",
+      "explanation": "Mi — smo, потом se: kupali smo se.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k48e22",
+      "type": "choice",
+      "prompt": "Кошке нравились очки. — Mački su se ___ naočare.",
+      "options": [
+        "sviđale",
+        "sviđala",
+        "sviđao"
+      ],
+      "answer": "sviđale",
+      "explanation": "naočare — много, женский род: sviđale.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k48e23",
+      "type": "choice",
+      "prompt": "Он не мог спать. — Nije ___ spavati.",
+      "options": [
+        "mogao",
+        "mogla",
+        "mogli"
+      ],
+      "answer": "mogao",
+      "explanation": "On — mogao.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k48e24",
+      "type": "speaking",
+      "phrase": "Piću kafu.",
+      "translation": "Я буду пить кофе."
+    },
+    {
+      "id": "k48e25",
+      "type": "speaking",
+      "phrase": "Sjutra ću piti čaj.",
+      "translation": "Завтра я буду пить чай."
+    },
+    {
+      "id": "k48e26",
+      "type": "repeat",
+      "phrase": "Šta ćeš piti?",
+      "translation": "Что ты будешь пить?"
+    }
+  ],
+  "words": [
+    {
+      "me": "ja ću piti",
+      "ru": "я буду пить"
+    },
+    {
+      "me": "piću",
+      "ru": "буду пить (слитно)"
+    },
+    {
+      "me": "spavaću",
+      "ru": "буду спать (слитно)"
+    }
+  ]
+}
