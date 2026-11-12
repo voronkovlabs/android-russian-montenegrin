@@ -1,0 +1,395 @@
+{
+  "id": "k47",
+  "title": "Sviđaju mi se. Ja ću spavati!",
+  "exercises": [
+    {
+      "id": "k47e01",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Sviđa mi se ovaj kaput.",
+      "hint": "Sviđa mi se ovaj kaput. — Мне нравится это пальто.",
+      "options": [
+        "Мне нравится это пальто.",
+        "Мне нравятся эти пальто.",
+        "Мне нравилось это пальто."
+      ],
+      "answer": "Мне нравится это пальто.",
+      "explanation": "Нравится одно — sviđa: sviđa mi se kaput. Нравится много — sviđaju: sviđaju mi se naočare. Как по-русски: нравится — нравятся."
+    },
+    {
+      "id": "k47e02",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Sviđaju mi se ove naočare.",
+      "hint": "Sviđaju mi se ove naočare. — Мне нравятся эти очки.",
+      "options": [
+        "Мне нравятся эти очки.",
+        "Мне нравятся эти брюки.",
+        "Мне нравились эти очки."
+      ],
+      "answer": "Мне нравятся эти очки.",
+      "explanation": "Нравится одно — sviđa: sviđa mi se kaput. Нравится много — sviđaju: sviđaju mi se naočare. Как по-русски: нравится — нравятся. ove — «эти», как ova — «эта»."
+    },
+    {
+      "id": "k47e03",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "мне нравится",
+          "me": "sviđa mi se"
+        },
+        {
+          "ru": "мне нравятся",
+          "me": "sviđaju mi se"
+        },
+        {
+          "ru": "ему нравится",
+          "me": "sviđa mu se"
+        },
+        {
+          "ru": "ему нравятся",
+          "me": "sviđaju mu se"
+        }
+      ]
+    },
+    {
+      "id": "k47e04",
+      "type": "choice",
+      "prompt": "Мне нравятся твои брюки. — ___ mi se tvoje pantalone.",
+      "options": [
+        "Sviđaju",
+        "Sviđa",
+        "Sviđam"
+      ],
+      "answer": "Sviđaju",
+      "explanation": "pantalone — много, значит sviđaju.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k47e05",
+      "type": "choice",
+      "prompt": "Ей нравится это море. — ___ joj se ovo more.",
+      "options": [
+        "Sviđa",
+        "Sviđaju",
+        "Sviđam"
+      ],
+      "answer": "Sviđa",
+      "explanation": "more — одно, значит sviđa.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k47e06",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "On mi se sviđa.",
+      "hint": "On mi se sviđa. — Он мне нравится.",
+      "options": [
+        "Он мне нравится.",
+        "Они мне нравятся.",
+        "Я ему нравлюсь."
+      ],
+      "answer": "Он мне нравится.",
+      "explanation": "Если первым стоит on или oni, mi se встают сразу за ним: on mi se sviđa, oni mi se sviđaju. Если первым глагол — sviđa mi se. Значит одно и то же."
+    },
+    {
+      "id": "k47e07",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Oni mi se sviđaju.",
+      "hint": "Oni mi se sviđaju. — Они мне нравятся.",
+      "options": [
+        "Они мне нравятся.",
+        "Он мне нравится.",
+        "Они мне не нравятся."
+      ],
+      "answer": "Они мне нравятся.",
+      "explanation": "Если первым стоит on или oni, mi se встают сразу за ним: on mi se sviđa, oni mi se sviđaju. Если первым глагол — sviđa mi se. Значит одно и то же."
+    },
+    {
+      "id": "k47e08",
+      "type": "choice",
+      "prompt": "Они мне нравятся. — Oni mi se ___ .",
+      "options": [
+        "sviđaju",
+        "sviđa",
+        "sviđam"
+      ],
+      "answer": "sviđaju",
+      "explanation": "Oni — много, значит sviđaju.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k47e09",
+      "type": "word_bank",
+      "prompt": "Мне нравятся эти очки.",
+      "answer": "Sviđaju mi se ove naočare.",
+      "bank": [
+        "naočare",
+        "mi",
+        "ove",
+        "sviđaju",
+        "se"
+      ],
+      "also": [
+        "Ove naočare mi se sviđaju."
+      ],
+      "explanation": "naočare — много: sviđaju."
+    },
+    {
+      "id": "k47e10",
+      "type": "word_bank",
+      "prompt": "Sviđa mi se tvoj kaput.",
+      "answer": "Мне нравится твоё пальто.",
+      "bank": [
+        "пальто",
+        "мне",
+        "твоё",
+        "нравится"
+      ],
+      "also": [
+        "Твоё пальто мне нравится."
+      ],
+      "explanation": "kaput — одно: sviđa."
+    },
+    {
+      "id": "k47e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ja ću spavati.",
+      "hint": "Ja ću spavati. — Я буду спать.",
+      "options": [
+        "Я буду спать.",
+        "Я сплю.",
+        "Я спала."
+      ],
+      "answer": "Я буду спать.",
+      "explanation": "Будущее — ću + глагол целиком: ja ću spavati — я буду спать. ću — это короткое hoću, «хочу»: буквально «я хочу спать»."
+    },
+    {
+      "id": "k47e12",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я буду",
+          "me": "ja ću"
+        },
+        {
+          "ru": "ты будешь",
+          "me": "ti ćeš"
+        },
+        {
+          "ru": "он будет",
+          "me": "on će"
+        },
+        {
+          "ru": "мы будем",
+          "me": "mi ćemo"
+        },
+        {
+          "ru": "вы будете",
+          "me": "vi ćete"
+        },
+        {
+          "ru": "они будут",
+          "me": "oni će"
+        }
+      ],
+      "explanation": "По лицам меняется только ću: ja ću, ti ćeš, on će, mi ćemo, vi ćete, oni će — и spavati. Как hoću, hoćeš, hoće — без ho-."
+    },
+    {
+      "id": "k47e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Sjutra ću spavati kod babe.",
+      "hint": "Sjutra ću spavati kod babe. — Завтра я буду спать у бабушки.",
+      "options": [
+        "Завтра я буду спать у бабушки.",
+        "Вчера я спала у бабушки.",
+        "Завтра я буду у бабушки."
+      ],
+      "answer": "Завтра я буду спать у бабушки.",
+      "explanation": "ću стоит вторым, как sam: Ja ću spavati, Sjutra ću spavati. Так же, как Ja sam bila, Juče sam bila."
+    },
+    {
+      "id": "k47e14",
+      "type": "choice",
+      "prompt": "Мы будем спать дома. — Mi ___ spavati kod kuće.",
+      "options": [
+        "ćemo",
+        "ću",
+        "će"
+      ],
+      "answer": "ćemo",
+      "explanation": "Mi — ćemo: mi ćemo spavati.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k47e15",
+      "type": "choice",
+      "prompt": "Они будут спать на кровати. — Oni ___ spavati na krevetu.",
+      "options": [
+        "će",
+        "ćemo",
+        "ću"
+      ],
+      "answer": "će",
+      "explanation": "Oni — će. Он — тоже će: on će spavati, oni će spavati.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k47e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "я сплю",
+          "me": "spavam"
+        },
+        {
+          "ru": "я буду спать",
+          "me": "ja ću spavati"
+        },
+        {
+          "ru": "мы спим",
+          "me": "spavamo"
+        },
+        {
+          "ru": "мы будем спать",
+          "me": "mi ćemo spavati"
+        }
+      ]
+    },
+    {
+      "id": "k47e17",
+      "type": "word_bank",
+      "prompt": "Завтра я буду спать у бабушки.",
+      "answer": "Sjutra ću spavati kod babe.",
+      "bank": [
+        "babe",
+        "spavati",
+        "sjutra",
+        "kod",
+        "ću"
+      ],
+      "also": [
+        "Ja ću sjutra spavati kod babe."
+      ],
+      "explanation": "ću стоит вторым, как sam: Ja ću spavati, Sjutra ću spavati. Так же, как Ja sam bila, Juče sam bila."
+    },
+    {
+      "id": "k47e18",
+      "type": "word_bank",
+      "prompt": "Вы будете спать в квартире.",
+      "answer": "Vi ćete spavati u stanu.",
+      "bank": [
+        "stanu",
+        "spavati",
+        "vi",
+        "u",
+        "ćete"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k47e19",
+      "type": "word_bank",
+      "prompt": "Ti ćeš spavati kod mene.",
+      "answer": "Ты будешь спать у меня.",
+      "bank": [
+        "спать",
+        "у",
+        "ты",
+        "меня",
+        "будешь"
+      ],
+      "also": [
+        "Будешь спать у меня."
+      ],
+      "explanation": "Ti — ćeš: ti ćeš spavati."
+    },
+    {
+      "id": "k47e20",
+      "type": "choice",
+      "prompt": "— Hoćeš li spavati kod nas?\n— Ne, ja ću spavati kod babe.\n\nГде она будет спать?",
+      "options": [
+        "У бабушки.",
+        "У нас.",
+        "Дома."
+      ],
+      "answer": "У бабушки.",
+      "explanation": "Hoćeš li spavati…? — Ты будешь спать…? Ответ: ja ću spavati.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k47e21",
+      "type": "choice",
+      "prompt": "Мы не радовались. — ___ se radovali.",
+      "options": [
+        "Nismo",
+        "Nisam",
+        "Nisu"
+      ],
+      "answer": "Nismo",
+      "explanation": "Mi — nismo, потом se: nismo se radovali.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k47e22",
+      "type": "choice",
+      "prompt": "— Jesi li jela?\nОтветь «нет»:",
+      "options": [
+        "Nisam.",
+        "Jesam.",
+        "Nije."
+      ],
+      "answer": "Nisam.",
+      "explanation": "Короткий ответ: Jesam — да, Nisam — нет.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k47e23",
+      "type": "choice",
+      "prompt": "Я никогда не видела медведя. — Nikad ___ vidjela medvjeda.",
+      "options": [
+        "nisam",
+        "sam",
+        "nije"
+      ],
+      "answer": "nisam",
+      "explanation": "После nikad нужно второе «не»: nikad nisam.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k47e24",
+      "type": "speaking",
+      "phrase": "Oni mi se sviđaju.",
+      "translation": "Они мне нравятся."
+    },
+    {
+      "id": "k47e25",
+      "type": "speaking",
+      "phrase": "Sjutra ću spavati kod babe.",
+      "translation": "Завтра я буду спать у бабушки."
+    },
+    {
+      "id": "k47e26",
+      "type": "repeat",
+      "phrase": "Sviđaju mi se ove naočare.",
+      "translation": "Мне нравятся эти очки."
+    }
+  ],
+  "words": [
+    {
+      "me": "sviđa mi se / sviđaju mi se",
+      "ru": "мне нравится / мне нравятся"
+    },
+    {
+      "me": "ove",
+      "ru": "эти (ж. р.)"
+    },
+    {
+      "me": "ja ću spavati",
+      "ru": "я буду спать"
+    }
+  ]
+}

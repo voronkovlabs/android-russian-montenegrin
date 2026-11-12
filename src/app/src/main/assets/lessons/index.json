@@ -296,6 +296,12 @@
       "file": "kt3.json",
       "section": "Раздел 3",
       "test": true
+    },
+    {
+      "id": "k47",
+      "title": "Sviđaju mi se. Ja ću spavati!",
+      "file": "k47.json",
+      "section": "Раздел 4"
     }
   ]
 }

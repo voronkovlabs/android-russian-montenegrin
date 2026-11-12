@@ -3666,6 +3666,85 @@ L.append(dict(id='kt3', title='Тест: Раздел 3', section=S3, test=True,
     pick('Синее море — ___ more', ['plavo', 'plav', 'plava'], 'plavo', label='Выбери форму'),
 ]))
 
+S4 = 'Раздел 4'
+
+# --- Урок 47 ---
+# Раздел 4 начинается с будущего времени. Сначала повтор «нравится / нравятся»,
+# потом будущее раздельной формой, как в учебниках: ja ću spavati, sjutra ću… Плюс три
+# задания на повтор прошлых уроков (решение Кати: в каждом уроке раздела 4).
+JEDNO = ('Нравится одно — sviđa: sviđa mi se kaput. Нравится много — sviđaju: sviđaju mi se '
+         'naočare. Как по-русски: нравится — нравятся.')
+ON_MI = ('Если первым стоит on или oni, mi se встают сразу за ним: on mi se sviđa, oni mi se '
+         'sviđaju. Если первым глагол — sviđa mi se. Значит одно и то же.')
+FUT = ('Будущее — ću + глагол целиком: ja ću spavati — я буду спать. ću — это короткое '
+       'hoću, «хочу»: буквально «я хочу спать».')
+FUT_LICA = ('По лицам меняется только ću: ja ću, ti ćeš, on će, mi ćemo, vi ćete, oni će — '
+            'и spavati. Как hoću, hoćeš, hoće — без ho-.')
+SJUTRA = ('ću стоит вторым, как sam: Ja ću spavati, Sjutra ću spavati. Так же, как '
+          'Ja sam bila, Juče sam bila.')
+L.append(dict(id='k47', title='Sviđaju mi se. Ja ću spavati!', section=S4, words=[
+    ('sviđa mi se / sviđaju mi se', 'мне нравится / мне нравятся'), ('ove', 'эти (ж. р.)'),
+    ('ja ću spavati', 'я буду спать')],
+    ex=[
+    dict(phrase('Sviđa mi se ovaj kaput.', 'Мне нравится это пальто.',
+                ['Мне нравится это пальто.', 'Мне нравятся эти пальто.', 'Мне нравилось это пальто.']),
+         explanation=JEDNO),
+    dict(phrase('Sviđaju mi se ove naočare.', 'Мне нравятся эти очки.',
+                ['Мне нравятся эти очки.', 'Мне нравятся эти брюки.', 'Мне нравились эти очки.']),
+         explanation=JEDNO + ' ove — «эти», как ova — «эта».'),
+    pairs(('мне нравится', 'sviđa mi se'), ('мне нравятся', 'sviđaju mi se'),
+          ('ему нравится', 'sviđa mu se'), ('ему нравятся', 'sviđaju mu se')),
+    pick('Мне нравятся твои брюки. — ___ mi se tvoje pantalone.', ['Sviđaju', 'Sviđa', 'Sviđam'],
+         'Sviđaju', explanation='pantalone — много, значит sviđaju.', label='Вставь слово'),
+    pick('Ей нравится это море. — ___ joj se ovo more.', ['Sviđa', 'Sviđaju', 'Sviđam'], 'Sviđa',
+         explanation='more — одно, значит sviđa.', label='Вставь слово'),
+    dict(phrase('On mi se sviđa.', 'Он мне нравится.',
+                ['Он мне нравится.', 'Они мне нравятся.', 'Я ему нравлюсь.']), explanation=ON_MI),
+    dict(phrase('Oni mi se sviđaju.', 'Они мне нравятся.',
+                ['Они мне нравятся.', 'Он мне нравится.', 'Они мне не нравятся.']), explanation=ON_MI),
+    pick('Они мне нравятся. — Oni mi se ___ .', ['sviđaju', 'sviđa', 'sviđam'], 'sviđaju',
+         explanation='Oni — много, значит sviđaju.', label='Вставь слово'),
+    dict(bank('Мне нравятся эти очки.', 'Sviđaju mi se ove naočare.',
+              ['naočare', 'mi', 'ove', 'sviđaju', 'se'], also=['Ove naočare mi se sviđaju.']),
+         explanation='naočare — много: sviđaju.'),
+    dict(rubank('Sviđa mi se tvoj kaput.', 'Мне нравится твоё пальто.',
+                ['пальто', 'мне', 'твоё', 'нравится']), also=['Твоё пальто мне нравится.'],
+         explanation='kaput — одно: sviđa.'),
+    dict(phrase('Ja ću spavati.', 'Я буду спать.', ['Я буду спать.', 'Я сплю.', 'Я спала.']),
+         explanation=FUT),
+    dict(pairs(('я буду', 'ja ću'), ('ты будешь', 'ti ćeš'), ('он будет', 'on će'), ('мы будем', 'mi ćemo'),
+               ('вы будете', 'vi ćete'), ('они будут', 'oni će')), explanation=FUT_LICA),
+    dict(phrase('Sjutra ću spavati kod babe.', 'Завтра я буду спать у бабушки.',
+                ['Завтра я буду спать у бабушки.', 'Вчера я спала у бабушки.',
+                 'Завтра я буду у бабушки.']), explanation=SJUTRA),
+    pick('Мы будем спать дома. — Mi ___ spavati kod kuće.', ['ćemo', 'ću', 'će'], 'ćemo',
+         explanation='Mi — ćemo: mi ćemo spavati.', label='Вставь слово'),
+    pick('Они будут спать на кровати. — Oni ___ spavati na krevetu.', ['će', 'ćemo', 'ću'], 'će',
+         explanation='Oni — će. Он — тоже će: on će spavati, oni će spavati.', label='Вставь слово'),
+    pairs(('я сплю', 'spavam'), ('я буду спать', 'ja ću spavati'), ('мы спим', 'spavamo'),
+          ('мы будем спать', 'mi ćemo spavati')),
+    dict(bank('Завтра я буду спать у бабушки.', 'Sjutra ću spavati kod babe.',
+              ['babe', 'spavati', 'sjutra', 'kod', 'ću'], also=['Ja ću sjutra spavati kod babe.']),
+         explanation=SJUTRA),
+    earbank('Vi ćete spavati u stanu.', 'Вы будете спать в квартире.', ['stanu', 'spavati', 'vi', 'u', 'ćete']),
+    dict(rubank('Ti ćeš spavati kod mene.', 'Ты будешь спать у меня.',
+                ['спать', 'у', 'ты', 'меня', 'будешь']), also=['Будешь спать у меня.'],
+         explanation='Ti — ćeš: ti ćeš spavati.'),
+    pick('— Hoćeš li spavati kod nas?\n— Ne, ja ću spavati kod babe.\n\nГде она будет спать?',
+         ['У бабушки.', 'У нас.', 'Дома.'], 'У бабушки.',
+         explanation='Hoćeš li spavati…? — Ты будешь спать…? Ответ: ja ću spavati.',
+         label='Мини-диалог'),
+    pick('Мы не радовались. — ___ se radovali.', ['Nismo', 'Nisam', 'Nisu'], 'Nismo',
+         explanation='Mi — nismo, потом se: nismo se radovali.', label='Повторение'),
+    pick('— Jesi li jela?\nОтветь «нет»:', ['Nisam.', 'Jesam.', 'Nije.'], 'Nisam.',
+         explanation='Короткий ответ: Jesam — да, Nisam — нет.', label='Повторение'),
+    pick('Я никогда не видела медведя. — Nikad ___ vidjela medvjeda.', ['nisam', 'sam', 'nije'],
+         'nisam', explanation='После nikad нужно второе «не»: nikad nisam.', label='Повторение'),
+    say('Oni mi se sviđaju.', 'Они мне нравятся.'),
+    say('Sjutra ću spavati kod babe.', 'Завтра я буду спать у бабушки.'),
+    echo('Sviđaju mi se ove naočare.', 'Мне нравятся эти очки.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
