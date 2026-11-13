@@ -1468,6 +1468,12 @@ private fun GapsAnswer(
         val mine = (first until at).map { slots[it]?.let(bank::get) ?: "" }
         val rowOk = mine.zip(row.answers).all { (a, b) -> LocalCheck.matches(a, b) }
         val parts = row.text.split(Regex("_{3,}"))
+        // Перевод — над строкой, а не под ней (Катя): сперва видно, что надо
+        // сказать, потом — куда.
+        if (row.ru.isNotBlank()) {
+            Text(row.ru, style = MaterialTheme.typography.bodyMedium, color = Muted)
+            Spacer(Modifier.height(4.dp))
+        }
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp)
@@ -1505,10 +1511,6 @@ private fun GapsAnswer(
                     }
                 }
             }
-        }
-        if (row.ru.isNotBlank()) {
-            Spacer(Modifier.height(3.dp))
-            Text(row.ru, style = MaterialTheme.typography.bodyMedium, color = Muted)
         }
         Spacer(Modifier.height(14.dp))
     }
