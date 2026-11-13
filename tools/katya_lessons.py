@@ -4362,11 +4362,12 @@ L.append(dict(id='k55', title='Zašto će krokodil piti kafu?', section=S4, word
 
 # --- Урок 56 ---
 # Тренировка глагола по временам (идея Кати): один глагол, одно лицо, три строки —
-# danas (сейчас), juče (прошедшее), sjutra (будущее). Лица по порядку ja → oni,
-# потом следующий глагол. Перевод под строкой задаёт род, поэтому верна одна форма.
-AUX = {'ja': ('sam', 'ću'), 'ti': ('si', 'ćeš'), 'on': ('je', 'će'), 'ona': ('je', 'će'),
-       'mi': ('smo', 'ćemo'), 'vi': ('ste', 'ćete'), 'oni': ('su', 'će'), 'one': ('su', 'će')}
-RU_WHO = {'ja': 'я', 'ti': 'ты', 'on': 'он', 'ona': 'она', 'mi': 'мы', 'vi': 'вы', 'oni': 'они', 'one': 'они'}
+# danas (сейчас), juče (прошедшее), sjutra (будущее). Лица по порядку ja → oni.
+# Четыре глагола в одном уроке оказались тяжелы (Катя, 13.11.2026): по одному
+# глаголу в начале уроков 56–59. Третье лицо — средний род (ono); перевод над
+# строкой задаёт род, поэтому верна одна форма.
+AUX = {'ja': ('sam', 'ću'), 'ti': ('si', 'ćeš'), 'ono': ('je', 'će'),
+       'mi': ('smo', 'ćemo'), 'vi': ('ste', 'ćete'), 'oni': ('su', 'će')}
 def tenses(verb, ru_verb, who, now, past, tail, ru, decoys, note=''):
     """ru — три русские строки; tail — что идёт после глагола («čaj», «u grad»)."""
     s, c = AUX[who]
@@ -4380,21 +4381,18 @@ def tenses(verb, ru_verb, who, now, past, tail, ru, decoys, note=''):
         ('Sjutra ___ ___%s.' % t, [c, verb], ru[2]),
     ], decoys, expl)
 DANAS = 'danas — сегодня. Пара к juče — вчера и sjutra — завтра.'
-ISAO = 'Прошедшее от ići меняет основу: išao, išla, išli. Как došao от doći.'
-JEO = 'Прошедшее от jesti: jeo, jela, jeli — без s.'
-L.append(dict(id='k56', title='Danas, juče, sjutra', section=S4, words=[('danas', 'сегодня')],
-    ex=[
-    dict(new('danas', 'сегодня', ['сегодня', 'вчера', 'завтра']), explanation=DANAS),
-    # spavati
+ISAO = 'Прошедшее от ići меняет основу: išao, išla, išlo, išli. Как došao от doći.'
+JEO = 'Прошедшее от jesti: jeo, jela, jelo, jeli — без s.'
+TENSES_SPAVATI = [
     tenses('spavati', 'спать', 'ja', 'spavam', 'spavala', '',
            ['Сегодня я сплю.', 'Вчера я спала.', 'Завтра я буду спать.'],
            ['spavao', 'si', 'ćeš', 'spavaš']),
     tenses('spavati', 'спать', 'ti', 'spavaš', 'spavao', '',
            ['Сегодня ты спишь.', 'Вчера ты спал.', 'Завтра ты будешь спать.'],
            ['spavala', 'sam', 'ću', 'spava']),
-    tenses('spavati', 'спать', 'on', 'spava', 'spavao', '',
-           ['Сегодня он спит.', 'Вчера он спал.', 'Завтра он будет спать.'],
-           ['spavala', 'su', 'ćemo', 'spavaju']),
+    tenses('spavati', 'спать', 'ono', 'spava', 'spavalo', '',
+           ['Сегодня оно спит.', 'Вчера оно спало.', 'Завтра оно будет спать.'],
+           ['spavao', 'su', 'ćemo', 'spavaju'], 'ono — средний род: spavalo.'),
     tenses('spavati', 'спать', 'mi', 'spavamo', 'spavali', '',
            ['Сегодня мы спим.', 'Вчера мы спали.', 'Завтра мы будем спать.'],
            ['spavao', 'ste', 'ćete', 'spavate']),
@@ -4404,17 +4402,18 @@ L.append(dict(id='k56', title='Danas, juče, sjutra', section=S4, words=[('danas
     tenses('spavati', 'спать', 'oni', 'spavaju', 'spavali', '',
            ['Сегодня они спят.', 'Вчера они спали.', 'Завтра они будут спать.'],
            ['spavao', 'je', 'ćemo', 'spava']),
-    say('Juče sam spavala, a sjutra ću spavati.', 'Вчера я спала, а завтра буду спать.'),
-    # piti
+]
+# Для уроков 57–59 — в начало, по одному глаголу.
+TENSES_PITI = [
     tenses('piti', 'пить', 'ja', 'pijem', 'pio', 'čaj',
            ['Сегодня я пью чай.', 'Вчера я пил чай.', 'Завтра я буду пить чай.'],
            ['pila', 'si', 'ćeš', 'piju']),
     tenses('piti', 'пить', 'ti', 'piješ', 'pila', 'čaj',
            ['Сегодня ты пьёшь чай.', 'Вчера ты пила чай.', 'Завтра ты будешь пить чай.'],
            ['pio', 'sam', 'ću', 'pije']),
-    tenses('piti', 'пить', 'ona', 'pije', 'pila', 'čaj',
-           ['Сегодня она пьёт чай.', 'Вчера она пила чай.', 'Завтра она будет пить чай.'],
-           ['pio', 'su', 'ću', 'piju']),
+    tenses('piti', 'пить', 'ono', 'pije', 'pilo', 'čaj',
+           ['Сегодня оно пьёт чай.', 'Вчера оно пило чай.', 'Завтра оно будет пить чай.'],
+           ['pio', 'su', 'ćemo', 'piju'], 'ono — средний род: pilo.'),
     tenses('piti', 'пить', 'mi', 'pijemo', 'pili', 'čaj',
            ['Сегодня мы пьём чай.', 'Вчера мы пили чай.', 'Завтра мы будем пить чай.'],
            ['pio', 'ste', 'ćete', 'pijete']),
@@ -4424,16 +4423,17 @@ L.append(dict(id='k56', title='Danas, juče, sjutra', section=S4, words=[('danas
     tenses('piti', 'пить', 'oni', 'piju', 'pili', 'čaj',
            ['Сегодня они пьют чай.', 'Вчера они пили чай.', 'Завтра они будут пить чай.'],
            ['pio', 'je', 'ćemo', 'pije']),
-    # jesti
+]
+TENSES_JESTI = [
     tenses('jesti', 'есть', 'ja', 'jedem', 'jela', 'supu',
            ['Сегодня я ем суп.', 'Вчера я ела суп.', 'Завтра я буду есть суп.'],
            ['jeo', 'si', 'ćeš', 'jedeš'], JEO),
     tenses('jesti', 'есть', 'ti', 'jedeš', 'jeo', 'supu',
            ['Сегодня ты ешь суп.', 'Вчера ты ел суп.', 'Завтра ты будешь есть суп.'],
            ['jela', 'sam', 'ću', 'jede'], JEO),
-    tenses('jesti', 'есть', 'on', 'jede', 'jeo', 'supu',
-           ['Сегодня он ест суп.', 'Вчера он ел суп.', 'Завтра он будет есть суп.'],
-           ['jela', 'su', 'ćemo', 'jedu'], JEO),
+    tenses('jesti', 'есть', 'ono', 'jede', 'jelo', 'supu',
+           ['Сегодня оно ест суп.', 'Вчера оно ело суп.', 'Завтра оно будет есть суп.'],
+           ['jeo', 'su', 'ćemo', 'jedu'], JEO),
     tenses('jesti', 'есть', 'mi', 'jedemo', 'jeli', 'supu',
            ['Сегодня мы едим суп.', 'Вчера мы ели суп.', 'Завтра мы будем есть суп.'],
            ['jeo', 'ste', 'ćete', 'jedete'], JEO),
@@ -4443,17 +4443,17 @@ L.append(dict(id='k56', title='Danas, juče, sjutra', section=S4, words=[('danas
     tenses('jesti', 'есть', 'oni', 'jedu', 'jeli', 'supu',
            ['Сегодня они едят суп.', 'Вчера они ели суп.', 'Завтра они будут есть суп.'],
            ['jeo', 'je', 'ćemo', 'jede'], JEO),
-    say('Danas jedem supu, a juče sam jela pirinač.', 'Сегодня я ем суп, а вчера ела рис.'),
-    # ići
+]
+TENSES_ICI = [
     tenses('ići', 'идти', 'ja', 'idem', 'išao', 'u grad',
            ['Сегодня я иду в город.', 'Вчера я ходил в город.', 'Завтра я пойду в город.'],
            ['išla', 'si', 'ćeš', 'ideš'], ISAO),
     tenses('ići', 'идти', 'ti', 'ideš', 'išla', 'u grad',
            ['Сегодня ты идёшь в город.', 'Вчера ты ходила в город.', 'Завтра ты пойдёшь в город.'],
            ['išao', 'sam', 'ću', 'ide'], ISAO),
-    tenses('ići', 'идти', 'on', 'ide', 'išao', 'u grad',
-           ['Сегодня он идёт в город.', 'Вчера он ходил в город.', 'Завтра он пойдёт в город.'],
-           ['išla', 'su', 'ćemo', 'idu'], ISAO),
+    tenses('ići', 'идти', 'ono', 'ide', 'išlo', 'u grad',
+           ['Сегодня оно идёт в город.', 'Вчера оно ходило в город.', 'Завтра оно пойдёт в город.'],
+           ['išao', 'su', 'ćemo', 'idu'], ISAO),
     tenses('ići', 'идти', 'mi', 'idemo', 'išli', 'u grad',
            ['Сегодня мы идём в город.', 'Вчера мы ходили в город.', 'Завтра мы пойдём в город.'],
            ['išao', 'ste', 'ćete', 'idete'], ISAO),
@@ -4463,7 +4463,12 @@ L.append(dict(id='k56', title='Danas, juče, sjutra', section=S4, words=[('danas
     tenses('ići', 'идти', 'oni', 'idu', 'išli', 'u grad',
            ['Сегодня они идут в город.', 'Вчера они ходили в город.', 'Завтра они пойдут в город.'],
            ['išao', 'je', 'ćemo', 'ide'], ISAO),
-    echo('Sjutra ćemo ići u grad.', 'Завтра мы пойдём в город.'),
+]
+L.append(dict(id='k56', title='Danas, juče, sjutra', section=S4, words=[('danas', 'сегодня')],
+    ex=[
+    dict(new('danas', 'сегодня', ['сегодня', 'вчера', 'завтра']), explanation=DANAS),
+    *TENSES_SPAVATI,
+    say('Juče sam spavala, a sjutra ću spavati.', 'Вчера я спала, а завтра буду спать.'),
 ]))
 
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
