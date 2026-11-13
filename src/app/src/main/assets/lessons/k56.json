@@ -1,0 +1,933 @@
+{
+  "id": "k56",
+  "title": "Danas, juče, sjutra",
+  "exercises": [
+    {
+      "id": "k56e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "danas",
+      "hint": "danas — сегодня",
+      "options": [
+        "сегодня",
+        "вчера",
+        "завтра"
+      ],
+      "answer": "сегодня",
+      "explanation": "danas — сегодня. Пара к juče — вчера и sjutra — завтра.",
+      "example": "Danas je hladno. — Сегодня холодно."
+    },
+    {
+      "id": "k56e02",
+      "type": "gaps",
+      "title": "spavati — спать · ja",
+      "rows": [
+        {
+          "text": "Danas ___.",
+          "answers": [
+            "spavam"
+          ],
+          "ru": "Сегодня я сплю."
+        },
+        {
+          "text": "Juče ___ ___.",
+          "answers": [
+            "sam",
+            "spavala"
+          ],
+          "ru": "Вчера я спала."
+        },
+        {
+          "text": "Sjutra ___ ___.",
+          "answers": [
+            "ću",
+            "spavati"
+          ],
+          "ru": "Завтра я буду спать."
+        }
+      ],
+      "decoys": [
+        "spavao",
+        "si",
+        "ćeš",
+        "spavaš"
+      ],
+      "explanation": "ja: spavam — sam spavala — ću spavati. sam и ću встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e03",
+      "type": "gaps",
+      "title": "spavati — спать · ti",
+      "rows": [
+        {
+          "text": "Danas ___.",
+          "answers": [
+            "spavaš"
+          ],
+          "ru": "Сегодня ты спишь."
+        },
+        {
+          "text": "Juče ___ ___.",
+          "answers": [
+            "si",
+            "spavao"
+          ],
+          "ru": "Вчера ты спал."
+        },
+        {
+          "text": "Sjutra ___ ___.",
+          "answers": [
+            "ćeš",
+            "spavati"
+          ],
+          "ru": "Завтра ты будешь спать."
+        }
+      ],
+      "decoys": [
+        "spavala",
+        "sam",
+        "ću",
+        "spava"
+      ],
+      "explanation": "ti: spavaš — si spavao — ćeš spavati. si и ćeš встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e04",
+      "type": "gaps",
+      "title": "spavati — спать · on",
+      "rows": [
+        {
+          "text": "Danas ___.",
+          "answers": [
+            "spava"
+          ],
+          "ru": "Сегодня он спит."
+        },
+        {
+          "text": "Juče ___ ___.",
+          "answers": [
+            "je",
+            "spavao"
+          ],
+          "ru": "Вчера он спал."
+        },
+        {
+          "text": "Sjutra ___ ___.",
+          "answers": [
+            "će",
+            "spavati"
+          ],
+          "ru": "Завтра он будет спать."
+        }
+      ],
+      "decoys": [
+        "spavala",
+        "su",
+        "ćemo",
+        "spavaju"
+      ],
+      "explanation": "on: spava — je spavao — će spavati. je и će встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e05",
+      "type": "gaps",
+      "title": "spavati — спать · mi",
+      "rows": [
+        {
+          "text": "Danas ___.",
+          "answers": [
+            "spavamo"
+          ],
+          "ru": "Сегодня мы спим."
+        },
+        {
+          "text": "Juče ___ ___.",
+          "answers": [
+            "smo",
+            "spavali"
+          ],
+          "ru": "Вчера мы спали."
+        },
+        {
+          "text": "Sjutra ___ ___.",
+          "answers": [
+            "ćemo",
+            "spavati"
+          ],
+          "ru": "Завтра мы будем спать."
+        }
+      ],
+      "decoys": [
+        "spavao",
+        "ste",
+        "ćete",
+        "spavate"
+      ],
+      "explanation": "mi: spavamo — smo spavali — ćemo spavati. smo и ćemo встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e06",
+      "type": "gaps",
+      "title": "spavati — спать · vi",
+      "rows": [
+        {
+          "text": "Danas ___.",
+          "answers": [
+            "spavate"
+          ],
+          "ru": "Сегодня вы спите."
+        },
+        {
+          "text": "Juče ___ ___.",
+          "answers": [
+            "ste",
+            "spavali"
+          ],
+          "ru": "Вчера вы спали."
+        },
+        {
+          "text": "Sjutra ___ ___.",
+          "answers": [
+            "ćete",
+            "spavati"
+          ],
+          "ru": "Завтра вы будете спать."
+        }
+      ],
+      "decoys": [
+        "spavala",
+        "smo",
+        "ćemo",
+        "spavamo"
+      ],
+      "explanation": "vi: spavate — ste spavali — ćete spavati. ste и ćete встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e07",
+      "type": "gaps",
+      "title": "spavati — спать · oni",
+      "rows": [
+        {
+          "text": "Danas ___.",
+          "answers": [
+            "spavaju"
+          ],
+          "ru": "Сегодня они спят."
+        },
+        {
+          "text": "Juče ___ ___.",
+          "answers": [
+            "su",
+            "spavali"
+          ],
+          "ru": "Вчера они спали."
+        },
+        {
+          "text": "Sjutra ___ ___.",
+          "answers": [
+            "će",
+            "spavati"
+          ],
+          "ru": "Завтра они будут спать."
+        }
+      ],
+      "decoys": [
+        "spavao",
+        "je",
+        "ćemo",
+        "spava"
+      ],
+      "explanation": "oni: spavaju — su spavali — će spavati. su и će встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e08",
+      "type": "speaking",
+      "phrase": "Juče sam spavala, a sjutra ću spavati.",
+      "translation": "Вчера я спала, а завтра буду спать."
+    },
+    {
+      "id": "k56e09",
+      "type": "gaps",
+      "title": "piti — пить · ja",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "pijem"
+          ],
+          "ru": "Сегодня я пью чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "sam",
+            "pio"
+          ],
+          "ru": "Вчера я пил чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "ću",
+            "piti"
+          ],
+          "ru": "Завтра я буду пить чай."
+        }
+      ],
+      "decoys": [
+        "pila",
+        "si",
+        "ćeš",
+        "piju"
+      ],
+      "explanation": "ja: pijem — sam pio — ću piti. sam и ću встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e10",
+      "type": "gaps",
+      "title": "piti — пить · ti",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "piješ"
+          ],
+          "ru": "Сегодня ты пьёшь чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "si",
+            "pila"
+          ],
+          "ru": "Вчера ты пила чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "ćeš",
+            "piti"
+          ],
+          "ru": "Завтра ты будешь пить чай."
+        }
+      ],
+      "decoys": [
+        "pio",
+        "sam",
+        "ću",
+        "pije"
+      ],
+      "explanation": "ti: piješ — si pila — ćeš piti. si и ćeš встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e11",
+      "type": "gaps",
+      "title": "piti — пить · ona",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "pije"
+          ],
+          "ru": "Сегодня она пьёт чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "je",
+            "pila"
+          ],
+          "ru": "Вчера она пила чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "će",
+            "piti"
+          ],
+          "ru": "Завтра она будет пить чай."
+        }
+      ],
+      "decoys": [
+        "pio",
+        "su",
+        "ću",
+        "piju"
+      ],
+      "explanation": "ona: pije — je pila — će piti. je и će встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e12",
+      "type": "gaps",
+      "title": "piti — пить · mi",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "pijemo"
+          ],
+          "ru": "Сегодня мы пьём чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "smo",
+            "pili"
+          ],
+          "ru": "Вчера мы пили чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "ćemo",
+            "piti"
+          ],
+          "ru": "Завтра мы будем пить чай."
+        }
+      ],
+      "decoys": [
+        "pio",
+        "ste",
+        "ćete",
+        "pijete"
+      ],
+      "explanation": "mi: pijemo — smo pili — ćemo piti. smo и ćemo встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e13",
+      "type": "gaps",
+      "title": "piti — пить · vi",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "pijete"
+          ],
+          "ru": "Сегодня вы пьёте чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "ste",
+            "pili"
+          ],
+          "ru": "Вчера вы пили чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "ćete",
+            "piti"
+          ],
+          "ru": "Завтра вы будете пить чай."
+        }
+      ],
+      "decoys": [
+        "pila",
+        "smo",
+        "ćemo",
+        "pijemo"
+      ],
+      "explanation": "vi: pijete — ste pili — ćete piti. ste и ćete встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e14",
+      "type": "gaps",
+      "title": "piti — пить · oni",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "piju"
+          ],
+          "ru": "Сегодня они пьют чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "su",
+            "pili"
+          ],
+          "ru": "Вчера они пили чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "će",
+            "piti"
+          ],
+          "ru": "Завтра они будут пить чай."
+        }
+      ],
+      "decoys": [
+        "pio",
+        "je",
+        "ćemo",
+        "pije"
+      ],
+      "explanation": "oni: piju — su pili — će piti. su и će встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k56e15",
+      "type": "gaps",
+      "title": "jesti — есть · ja",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jedem"
+          ],
+          "ru": "Сегодня я ем суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "sam",
+            "jela"
+          ],
+          "ru": "Вчера я ела суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "ću",
+            "jesti"
+          ],
+          "ru": "Завтра я буду есть суп."
+        }
+      ],
+      "decoys": [
+        "jeo",
+        "si",
+        "ćeš",
+        "jedeš"
+      ],
+      "explanation": "ja: jedem — sam jela — ću jesti. sam и ću встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jeli — без s."
+    },
+    {
+      "id": "k56e16",
+      "type": "gaps",
+      "title": "jesti — есть · ti",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jedeš"
+          ],
+          "ru": "Сегодня ты ешь суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "si",
+            "jeo"
+          ],
+          "ru": "Вчера ты ел суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "ćeš",
+            "jesti"
+          ],
+          "ru": "Завтра ты будешь есть суп."
+        }
+      ],
+      "decoys": [
+        "jela",
+        "sam",
+        "ću",
+        "jede"
+      ],
+      "explanation": "ti: jedeš — si jeo — ćeš jesti. si и ćeš встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jeli — без s."
+    },
+    {
+      "id": "k56e17",
+      "type": "gaps",
+      "title": "jesti — есть · on",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jede"
+          ],
+          "ru": "Сегодня он ест суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "je",
+            "jeo"
+          ],
+          "ru": "Вчера он ел суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "će",
+            "jesti"
+          ],
+          "ru": "Завтра он будет есть суп."
+        }
+      ],
+      "decoys": [
+        "jela",
+        "su",
+        "ćemo",
+        "jedu"
+      ],
+      "explanation": "on: jede — je jeo — će jesti. je и će встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jeli — без s."
+    },
+    {
+      "id": "k56e18",
+      "type": "gaps",
+      "title": "jesti — есть · mi",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jedemo"
+          ],
+          "ru": "Сегодня мы едим суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "smo",
+            "jeli"
+          ],
+          "ru": "Вчера мы ели суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "ćemo",
+            "jesti"
+          ],
+          "ru": "Завтра мы будем есть суп."
+        }
+      ],
+      "decoys": [
+        "jeo",
+        "ste",
+        "ćete",
+        "jedete"
+      ],
+      "explanation": "mi: jedemo — smo jeli — ćemo jesti. smo и ćemo встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jeli — без s."
+    },
+    {
+      "id": "k56e19",
+      "type": "gaps",
+      "title": "jesti — есть · vi",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jedete"
+          ],
+          "ru": "Сегодня вы едите суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "ste",
+            "jeli"
+          ],
+          "ru": "Вчера вы ели суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "ćete",
+            "jesti"
+          ],
+          "ru": "Завтра вы будете есть суп."
+        }
+      ],
+      "decoys": [
+        "jela",
+        "smo",
+        "ćemo",
+        "jedemo"
+      ],
+      "explanation": "vi: jedete — ste jeli — ćete jesti. ste и ćete встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jeli — без s."
+    },
+    {
+      "id": "k56e20",
+      "type": "gaps",
+      "title": "jesti — есть · oni",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jedu"
+          ],
+          "ru": "Сегодня они едят суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "su",
+            "jeli"
+          ],
+          "ru": "Вчера они ели суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "će",
+            "jesti"
+          ],
+          "ru": "Завтра они будут есть суп."
+        }
+      ],
+      "decoys": [
+        "jeo",
+        "je",
+        "ćemo",
+        "jede"
+      ],
+      "explanation": "oni: jedu — su jeli — će jesti. su и će встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jeli — без s."
+    },
+    {
+      "id": "k56e21",
+      "type": "speaking",
+      "phrase": "Danas jedem supu, a juče sam jela pirinač.",
+      "translation": "Сегодня я ем суп, а вчера ела рис."
+    },
+    {
+      "id": "k56e22",
+      "type": "gaps",
+      "title": "ići — идти · ja",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "idem"
+          ],
+          "ru": "Сегодня я иду в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "sam",
+            "išao"
+          ],
+          "ru": "Вчера я ходил в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "ću",
+            "ići"
+          ],
+          "ru": "Завтра я пойду в город."
+        }
+      ],
+      "decoys": [
+        "išla",
+        "si",
+        "ćeš",
+        "ideš"
+      ],
+      "explanation": "ja: idem — sam išao — ću ići. sam и ću встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išli. Как došao от doći."
+    },
+    {
+      "id": "k56e23",
+      "type": "gaps",
+      "title": "ići — идти · ti",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "ideš"
+          ],
+          "ru": "Сегодня ты идёшь в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "si",
+            "išla"
+          ],
+          "ru": "Вчера ты ходила в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "ćeš",
+            "ići"
+          ],
+          "ru": "Завтра ты пойдёшь в город."
+        }
+      ],
+      "decoys": [
+        "išao",
+        "sam",
+        "ću",
+        "ide"
+      ],
+      "explanation": "ti: ideš — si išla — ćeš ići. si и ćeš встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išli. Как došao от doći."
+    },
+    {
+      "id": "k56e24",
+      "type": "gaps",
+      "title": "ići — идти · on",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "ide"
+          ],
+          "ru": "Сегодня он идёт в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "je",
+            "išao"
+          ],
+          "ru": "Вчера он ходил в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "će",
+            "ići"
+          ],
+          "ru": "Завтра он пойдёт в город."
+        }
+      ],
+      "decoys": [
+        "išla",
+        "su",
+        "ćemo",
+        "idu"
+      ],
+      "explanation": "on: ide — je išao — će ići. je и će встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išli. Как došao от doći."
+    },
+    {
+      "id": "k56e25",
+      "type": "gaps",
+      "title": "ići — идти · mi",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "idemo"
+          ],
+          "ru": "Сегодня мы идём в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "smo",
+            "išli"
+          ],
+          "ru": "Вчера мы ходили в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "ćemo",
+            "ići"
+          ],
+          "ru": "Завтра мы пойдём в город."
+        }
+      ],
+      "decoys": [
+        "išao",
+        "ste",
+        "ćete",
+        "idete"
+      ],
+      "explanation": "mi: idemo — smo išli — ćemo ići. smo и ćemo встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išli. Как došao от doći."
+    },
+    {
+      "id": "k56e26",
+      "type": "gaps",
+      "title": "ići — идти · vi",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "idete"
+          ],
+          "ru": "Сегодня вы идёте в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "ste",
+            "išli"
+          ],
+          "ru": "Вчера вы ходили в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "ćete",
+            "ići"
+          ],
+          "ru": "Завтра вы пойдёте в город."
+        }
+      ],
+      "decoys": [
+        "išla",
+        "smo",
+        "ćemo",
+        "idemo"
+      ],
+      "explanation": "vi: idete — ste išli — ćete ići. ste и ćete встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išli. Как došao от doći."
+    },
+    {
+      "id": "k56e27",
+      "type": "gaps",
+      "title": "ići — идти · oni",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "idu"
+          ],
+          "ru": "Сегодня они идут в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "su",
+            "išli"
+          ],
+          "ru": "Вчера они ходили в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "će",
+            "ići"
+          ],
+          "ru": "Завтра они пойдут в город."
+        }
+      ],
+      "decoys": [
+        "išao",
+        "je",
+        "ćemo",
+        "ide"
+      ],
+      "explanation": "oni: idu — su išli — će ići. su и će встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išli. Как došao от doći."
+    },
+    {
+      "id": "k56e28",
+      "type": "repeat",
+      "phrase": "Sjutra ćemo ići u grad.",
+      "translation": "Завтра мы пойдём в город."
+    }
+  ],
+  "words": [
+    {
+      "me": "danas",
+      "ru": "сегодня"
+    }
+  ]
+}
