@@ -1,5 +1,14 @@
 package com.crnogorski.trener.ui
 
+import kotlin.math.roundToInt
+import androidx.compose.foundation.layout.offset
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectDragGestures
 import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.compose.BackHandler
@@ -1325,6 +1334,93 @@ private fun MatchTile(
  */
 private const val FLASH_MS = 700L
 
+/**
+ * Перетаскивание плашек (Катя, 13.11.2026): нажатие работает как раньше, а
+ * сверх него плашку можно взять пальцем и положить на нужное место — во
+ * фразу между словами, в конкретный пропуск, или переставить внутри фразы.
+ *
+ * Плашка под пальцем рисуется поверх всего в корневом Box задания; на своём
+ * месте она на время становится невидимой, но место держит — иначе соседи
+ * разъезжались бы, и цель сдвигалась бы из-под пальца.
+ */
+private class TileDrag {
+    /** Корень задания: все координаты — в нём. */
+    var root: LayoutCoordinates? = null
+    /** Номер плашки в куче, которую тащат. */
+    var item by mutableStateOf<Int?>(null)
+    /** Откуда взята: место во фразе или номер пропуска; null — из кучи. */
+    var from by mutableStateOf<Int?>(null)
+    var pos by mutableStateOf(Offset.Zero)
+    var grab by mutableStateOf(Offset.Zero)
+    /** Где лежат плашки и поля — живые координаты, не состояние. */
+    val places = mutableMapOf<String, LayoutCoordinates>()
+
+    fun rect(key: String): Rect? {
+        val c = places[key]?.takeIf { it.isAttached } ?: return null
+        val r = root?.takeIf { it.isAttached } ?: return null
+        return r.localBoundingBoxOf(c)
+    }
+
+    fun clear() {
+        item = null
+        from = null
+    }
+}
+
+/** Запомнить, где лежит элемент, — для расчёта, куда бросили. */
+private fun Modifier.place(drag: TileDrag, key: String) =
+    onGloballyPositioned { drag.places[key] = it }
+
+/**
+ * Плашку можно тащить. Нажатие (без сдвига пальца) по-прежнему ловит
+ * `clickable` самой плашки: жест перехватывается только после порога сдвига.
+ */
+private fun Modifier.draggableTile(
+    drag: TileDrag,
+    key: String,
+    item: Int,
+    from: Int?,
+    enabled: Boolean,
+    onDrop: (Offset) -> Unit
+): Modifier = place(drag, key).then(
+    if (!enabled) Modifier else Modifier.pointerInput(key, item, from) {
+        detectDragGestures(
+            onDragStart = { o ->
+                val c = drag.places[key]
+                val r = drag.root
+                if (c != null && r != null && c.isAttached && r.isAttached) {
+                    drag.grab = o
+                    drag.pos = r.localPositionOf(c, o)
+                    drag.item = item
+                    drag.from = from
+                }
+            },
+            onDrag = { change, amount ->
+                change.consume()
+                drag.pos += amount
+            },
+            onDragEnd = {
+                if (drag.item != null) onDrop(drag.pos)
+                drag.clear()
+            },
+            onDragCancel = { drag.clear() }
+        )
+    }
+)
+
+/** Плашка под пальцем — поверх всего, в корневом Box задания. */
+@Composable
+private fun DraggedTile(drag: TileDrag, text: (Int) -> String) {
+    val i = drag.item ?: return
+    Box(
+        Modifier.offset {
+            IntOffset((drag.pos.x - drag.grab.x).roundToInt(), (drag.pos.y - drag.grab.y).roundToInt())
+        }
+    ) {
+        Chip(text(i), filled = true, enabled = false) {}
+    }
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun WordBankAnswer(
@@ -1349,98 +1445,176 @@ private fun WordBankAnswer(
     val bank = remember(ex.id) { (ex.bank + extra).shuffled() }
     // Плашки русские: голос sr-RS прочёл бы их кашей, поэтому молчат.
     val native = hasCyrillic(ex.answer)
+    val drag = remember(ex.id) { TileDrag() }
 
-    if (ex.byEar) {
-        // На слух: фраза звучит сама, перевод открывается после ответа — иначе
-        // собирали бы по русскому, а не по услышанному.
-        LaunchedEffect(ex.id) { if (enabled) speaker.speak(ex.answer) }
-        Label("Собери то, что услышишь")
-        if (enabled) {
-            Text("Текст закрыт — слушай.", style = MaterialTheme.typography.headlineSmall, color = Muted)
-        } else {
-            Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = false)
+    // Куда встанет плашка, отпущенная в точке p: номер места во фразе, или
+    // null — отпустили мимо поля. Место — перед первым словом, которое
+    // правее пальца в его строке или ниже его строки.
+    fun target(p: Offset): Int? {
+        val box = drag.rect("answer") ?: return null
+        if (!box.inflate(24f).contains(p)) return null
+        picked.forEachIndexed { n, at ->
+            val r = drag.rect("p$at") ?: return@forEachIndexed
+            if (p.y < r.top || (p.y <= r.bottom && p.x < r.center.x)) return n
         }
-        Spacer(Modifier.height(12.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            SmallAction("Прослушать") { speaker.speak(ex.answer) }
-            SmallAction("Медленнее") { speaker.speak(ex.answer, slow = true) }
-        }
-    } else if (native) {
-        // Черногорская фраза звучит сама — её переводят, а не читают глазами.
-        LaunchedEffect(ex.id) { if (enabled) speaker.speak(ex.prompt) }
-        Label("Переведи на русский")
-        Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = true)
-        Spacer(Modifier.height(12.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            SmallAction("Прослушать") { speaker.speak(ex.prompt) }
-            SmallAction("Медленнее") { speaker.speak(ex.prompt, slow = true) }
-        }
-    } else {
-        Label("Собери фразу")
-        Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = false)
+        return picked.size
     }
-    Spacer(Modifier.height(20.dp))
 
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(Surface1)
-            .padding(14.dp)
-    ) {
-        // Высота поля заранее равна собранному ответу (заметки 321, 324):
-        // под собираемой фразой лежит невидимая копия всех нужных слов. Иначе
-        // поле росло с первым словом и с каждой новой строкой, и куча ниже
-        // уезжала из-под пальца.
-        FlowRow(Modifier.alpha(0f), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            ex.bank.forEach { Chip(it, filled = true, enabled = false) {} }
-        }
-        if (picked.isEmpty()) {
-            Text("Нажимай на слова ниже", color = Muted, style = MaterialTheme.typography.bodyMedium)
+    fun drop(p: Offset) {
+        val at = drag.item ?: return
+        val from = drag.from
+        val t = target(p)
+        val list = picked.toMutableList()
+        if (t == null) {
+            // Слово из фразы, брошенное мимо, возвращается в кучу.
+            if (from != null) list.removeAt(from)
         } else {
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                picked.forEachIndexed { i, at ->
-                    Chip(bank[at], filled = true, enabled = enabled) {
-                        picked = picked.toMutableList().also { it.removeAt(i) }
+            var tt = t
+            if (from != null) {
+                list.removeAt(from)
+                if (tt > from) tt--
+            } else if (!native) {
+                speaker.speak(bank[at])
+            }
+            list.add(tt.coerceIn(0, list.size), at)
+        }
+        picked = list
+    }
+
+    Box(Modifier.fillMaxWidth().onGloballyPositioned { drag.root = it }) {
+        Column {
+            if (ex.byEar) {
+                // На слух: фраза звучит сама, перевод открывается после ответа — иначе
+                // собирали бы по русскому, а не по услышанному.
+                LaunchedEffect(ex.id) { if (enabled) speaker.speak(ex.answer) }
+                Label("Собери то, что услышишь")
+                if (enabled) {
+                    Text("Текст закрыт — слушай.", style = MaterialTheme.typography.headlineSmall, color = Muted)
+                } else {
+                    Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = false)
+                }
+                Spacer(Modifier.height(12.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    SmallAction("Прослушать") { speaker.speak(ex.answer) }
+                    SmallAction("Медленнее") { speaker.speak(ex.answer, slow = true) }
+                }
+            } else if (native) {
+                // Черногорская фраза звучит сама — её переводят, а не читают глазами.
+                LaunchedEffect(ex.id) { if (enabled) speaker.speak(ex.prompt) }
+                Label("Переведи на русский")
+                Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = true)
+                Spacer(Modifier.height(12.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    SmallAction("Прослушать") { speaker.speak(ex.prompt) }
+                    SmallAction("Медленнее") { speaker.speak(ex.prompt, slow = true) }
+                }
+            } else {
+                Label("Собери фразу")
+                Prompt(ex.prompt, gloss, onWord = onWord, tapUnknown = false)
+            }
+            Spacer(Modifier.height(20.dp))
+
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .place(drag, "answer")
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Surface1)
+                    .padding(14.dp)
+            ) {
+                // Высота поля заранее равна собранному ответу (заметки 321, 324):
+                // под собираемой фразой лежит невидимая копия всех нужных слов. Иначе
+                // поле росло с первым словом и с каждой новой строкой, и куча ниже
+                // уезжала из-под пальца.
+                FlowRow(Modifier.alpha(0f), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    ex.bank.forEach { Chip(it, filled = true, enabled = false) {} }
+                }
+                if (picked.isEmpty()) {
+                    Text(
+                        "Нажимай на слова ниже или перетаскивай их сюда",
+                        color = Muted,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                } else {
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        picked.forEachIndexed { i, at ->
+                            key(at) {
+                                Box(
+                                    Modifier
+                                        .alpha(if (drag.item == at) 0f else 1f)
+                                        .draggableTile(drag, "p$at", at, i, enabled, ::drop)
+                                ) {
+                                    Chip(bank[at], filled = true, enabled = enabled) {
+                                        picked = picked.toMutableList().also { it.removeAt(i) }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
 
-    Spacer(Modifier.height(16.dp))
-    // Плашки в куче стоят на своих местах (заметка 301): взятая оставляет
-    // пустое место своего размера, остальные не сдвигаются, а вернувшаяся
-    // встаёт туда же, откуда ушла. Иначе куча перестраивалась после каждого
-    // нажатия, и нужное слово приходилось искать заново.
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        bank.forEachIndexed { at, word ->
-            val taken = at in picked
-            Box(Modifier.alpha(if (taken) 0f else 1f)) {
-                // Нажатая плашка звучит (заметка 232): слово слышно, пока его кладут.
-                Chip(word, filled = false, enabled = enabled && !taken) {
-                    if (!native) speaker.speak(word)
-                    picked = picked + at
+            Spacer(Modifier.height(16.dp))
+            // Плашки в куче стоят на своих местах (заметка 301): взятая оставляет
+            // пустое место своего размера, остальные не сдвигаются, а вернувшаяся
+            // встаёт туда же, откуда ушла. Иначе куча перестраивалась после каждого
+            // нажатия, и нужное слово приходилось искать заново.
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                bank.forEachIndexed { at, word ->
+                    val taken = at in picked
+                    Box(
+                        Modifier
+                            .alpha(if (taken || drag.item == at) 0f else 1f)
+                            .draggableTile(drag, "b$at", at, null, enabled && !taken, ::drop)
+                    ) {
+                        // Нажатая плашка звучит (заметка 232): слово слышно, пока его кладут.
+                        Chip(word, filled = false, enabled = enabled && !taken) {
+                            if (!native) speaker.speak(word)
+                            picked = picked + at
+                        }
+                    }
+                }
+            }
+
+            if (enabled) {
+                Spacer(Modifier.height(20.dp))
+                PrimaryButton("Проверить", enabled = picked.isNotEmpty()) {
+                    // Звучит верная фраза, а не собранная: ошибочную слушать незачем.
+                    // У перевода на русский звучит черногорское условие.
+                    speaker.speak(if (native) ex.prompt else ex.answer)
+                    onSubmit(picked.joinToString(" ") { bank[it] })
                 }
             }
         }
-    }
 
-    if (enabled) {
-        Spacer(Modifier.height(20.dp))
-        PrimaryButton("Проверить", enabled = picked.isNotEmpty()) {
-            // Звучит верная фраза, а не собранная: ошибочную слушать незачем.
-            // У перевода на русский звучит черногорское условие.
-            speaker.speak(if (native) ex.prompt else ex.answer)
-            onSubmit(picked.joinToString(" ") { bank[it] })
+        // Черта там, куда встанет плашка, если её отпустить сейчас.
+        if (drag.item != null) {
+            val t = target(drag.pos)
+            val mark = when {
+                t == null -> null
+                t < picked.size -> drag.rect("p${picked[t]}")?.let { Offset(it.left - 5f, it.top) to it.height }
+                picked.isNotEmpty() -> drag.rect("p${picked.last()}")?.let { Offset(it.right + 2f, it.top) to it.height }
+                else -> drag.rect("answer")?.let { Offset(it.left + 30f, it.top + 24f) to 90f }
+            }
+            if (mark != null) {
+                val density = androidx.compose.ui.platform.LocalDensity.current
+                Box(
+                    Modifier
+                        .offset { IntOffset(mark.first.x.roundToInt(), mark.first.y.roundToInt()) }
+                        .size(width = 3.dp, height = with(density) { mark.second.toDp() })
+                        .background(Accent)
+                )
+            }
         }
+        DraggedTile(drag) { bank[it] }
     }
 }
 
 /**
  * Столбец строк с пропусками (см. [Exercise.Gaps]). Плашка встаёт в первый
- * пустой пропуск, нажатие на вставленное слово возвращает его вниз. После
- * проверки слова в строке краснеют или зеленеют — строка целиком, как у
+ * пустой пропуск, нажатие на вставленное слово возвращает его вниз; плашку
+ * можно и перетащить — в нужный пропуск или из одного пропуска в другой.
+ * После проверки слова в строке краснеют или зеленеют — строка целиком, как у
  * таблицы падежей: видно, где именно ошибка.
  */
 @OptIn(ExperimentalLayoutApi::class)
@@ -1456,92 +1630,145 @@ private fun GapsAnswer(
     // две (sam … sam), и вернуться каждая должна на своё место.
     var slots by remember(ex.id) { mutableStateOf(List<Int?>(need.size) { null }) }
     val bank = remember(ex.id) { (need + ex.decoys).shuffled() }
+    val drag = remember(ex.id) { TileDrag() }
 
-    Label("Заполни пропуски")
-    Text(ex.title, style = MaterialTheme.typography.headlineSmall, color = Paper)
-    Spacer(Modifier.height(18.dp))
+    // Пропуск под пальцем, если он есть.
+    fun target(p: Offset): Int? =
+        need.indices.firstOrNull { drag.rect("g$it")?.inflate(16f)?.contains(p) == true }
 
-    var at = 0
-    ex.rows.forEach { row ->
-        val first = at
-        at += row.answers.size
-        val mine = (first until at).map { slots[it]?.let(bank::get) ?: "" }
-        val rowOk = mine.zip(row.answers).all { (a, b) -> LocalCheck.matches(a, b) }
-        val parts = row.text.split(Regex("_{3,}"))
-        // Перевод — над строкой, а не под ней (Катя): сперва видно, что надо
-        // сказать, потом — куда.
-        if (row.ru.isNotBlank()) {
-            Text(row.ru, style = MaterialTheme.typography.bodyMedium, color = Muted)
-            Spacer(Modifier.height(4.dp))
+    fun drop(p: Offset) {
+        val item = drag.item ?: return
+        val from = drag.from
+        val g = target(p)
+        slots = slots.toMutableList().also { s ->
+            if (g == null) {
+                // Слово из пропуска, брошенное мимо, возвращается в кучу.
+                if (from != null) s[from] = null
+            } else if (g != from) {
+                // Занятый пропуск отдаёт своё слово: из кучи — обратно в кучу,
+                // из другого пропуска — туда, откуда пришло новое.
+                val old = s[g]
+                s[g] = item
+                if (from != null) s[from] = old else speaker.speak(bank[item])
+            }
         }
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            parts.forEachIndexed { i, part ->
-                if (part.isNotBlank()) {
-                    Text(
-                        part.trim(),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Paper,
-                        modifier = Modifier.align(Alignment.CenterVertically)
-                    )
+    }
+
+    Box(Modifier.fillMaxWidth().onGloballyPositioned { drag.root = it }) {
+        Column {
+            Label("Заполни пропуски")
+            Text(ex.title, style = MaterialTheme.typography.headlineSmall, color = Paper)
+            Spacer(Modifier.height(18.dp))
+
+            var at = 0
+            val over = drag.item?.let { target(drag.pos) }
+            ex.rows.forEach { row ->
+                val first = at
+                at += row.answers.size
+                val mine = (first until at).map { slots[it]?.let(bank::get) ?: "" }
+                val rowOk = mine.zip(row.answers).all { (a, b) -> LocalCheck.matches(a, b) }
+                val parts = row.text.split(Regex("_{3,}"))
+                // Перевод — над строкой, а не под ней (Катя): сперва видно, что надо
+                // сказать, потом — куда.
+                if (row.ru.isNotBlank()) {
+                    Text(row.ru, style = MaterialTheme.typography.bodyMedium, color = Muted)
+                    Spacer(Modifier.height(4.dp))
                 }
-                if (i < parts.size - 1) {
-                    val gap = first + i
-                    val word = slots.getOrNull(gap)?.let(bank::get)
-                    val tint = when {
-                        enabled -> Accent
-                        rowOk -> Jade
-                        else -> Crimson
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    parts.forEachIndexed { i, part ->
+                        if (part.isNotBlank()) {
+                            Text(
+                                part.trim(),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = Paper,
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
+                        }
+                        if (i < parts.size - 1) {
+                            val gap = first + i
+                            val item = slots.getOrNull(gap)
+                            val word = item?.let(bank::get)
+                            val tint = when {
+                                enabled -> Accent
+                                rowOk -> Jade
+                                else -> Crimson
+                            }
+                            val dragged = item != null && drag.item == item
+                            Box(
+                                Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .place(drag, "g$gap")
+                                    .then(
+                                        if (item != null) {
+                                            Modifier.draggableTile(drag, "w$gap", item, gap, enabled, ::drop)
+                                        } else Modifier
+                                    )
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(if (word != null && !dragged) tint.copy(alpha = 0.18f) else Surface1)
+                                    .border(
+                                        if (over == gap) 2.dp else 1.dp,
+                                        when {
+                                            over == gap -> Accent
+                                            word != null && !dragged -> tint.copy(alpha = 0.6f)
+                                            else -> Muted.copy(alpha = 0.5f)
+                                        },
+                                        RoundedCornerShape(10.dp)
+                                    )
+                                    .clickable(enabled = enabled && word != null) {
+                                        slots = slots.toMutableList().also { it[gap] = null }
+                                    }
+                                    .widthIn(min = 64.dp)
+                                    .padding(horizontal = 12.dp, vertical = 7.dp)
+                            ) {
+                                Text(
+                                    if (dragged) " " else word ?: " ",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = Paper
+                                )
+                            }
+                        }
                     }
+                }
+                Spacer(Modifier.height(14.dp))
+            }
+
+            Spacer(Modifier.height(6.dp))
+            // Куча стоит на своих местах, как у word_bank: взятая плашка оставляет
+            // пустое место, и нужное слово не приходится искать заново.
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                bank.forEachIndexed { i, word ->
+                    val taken = i in slots
                     Box(
                         Modifier
-                            .align(Alignment.CenterVertically)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(if (word != null) tint.copy(alpha = 0.18f) else Surface1)
-                            .border(1.dp, if (word != null) tint.copy(alpha = 0.6f) else Muted.copy(alpha = 0.5f), RoundedCornerShape(10.dp))
-                            .clickable(enabled = enabled && word != null) {
-                                slots = slots.toMutableList().also { it[gap] = null }
-                            }
-                            .widthIn(min = 64.dp)
-                            .padding(horizontal = 12.dp, vertical = 7.dp)
+                            .alpha(if (taken || (drag.item == i && drag.from == null)) 0f else 1f)
+                            .draggableTile(drag, "b$i", i, null, enabled && !taken, ::drop)
                     ) {
-                        Text(word ?: " ", style = MaterialTheme.typography.bodyLarge, color = Paper)
+                        Chip(word, filled = false, enabled = enabled && !taken) {
+                            val free = slots.indexOf(null)
+                            if (free >= 0) {
+                                speaker.speak(word)
+                                slots = slots.toMutableList().also { it[free] = i }
+                            }
+                        }
                     }
                 }
             }
-        }
-        Spacer(Modifier.height(14.dp))
-    }
 
-    Spacer(Modifier.height(6.dp))
-    // Куча стоит на своих местах, как у word_bank: взятая плашка оставляет
-    // пустое место, и нужное слово не приходится искать заново.
-    FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        bank.forEachIndexed { i, word ->
-            val taken = i in slots
-            Box(Modifier.alpha(if (taken) 0f else 1f)) {
-                Chip(word, filled = false, enabled = enabled && !taken) {
-                    val free = slots.indexOf(null)
-                    if (free >= 0) {
-                        speaker.speak(word)
-                        slots = slots.toMutableList().also { it[free] = i }
-                    }
+            if (enabled) {
+                Spacer(Modifier.height(20.dp))
+                PrimaryButton("Проверить", enabled = null !in slots) {
+                    speaker.speak(ex.filled.joinToString(" "))
+                    onSubmit(slots.map { it?.let(bank::get) ?: "" })
                 }
             }
         }
-    }
-
-    if (enabled) {
-        Spacer(Modifier.height(20.dp))
-        PrimaryButton("Проверить", enabled = null !in slots) {
-            speaker.speak(ex.filled.joinToString(" "))
-            onSubmit(slots.map { it?.let(bank::get) ?: "" })
-        }
+        DraggedTile(drag) { bank[it] }
     }
 }
 
