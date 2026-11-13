@@ -3750,6 +3750,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             is Exercise.Match -> Unit
             // У таблицы свой путь: ответов несколько, и приходят они списком.
             is Exercise.Table -> Unit
+            // У пропусков тоже: submitGaps.
+            is Exercise.Gaps -> Unit
             is Exercise.Reading -> {
                 val score = LocalCheck.readingScore(answer, ex.text)
                 localResult(
@@ -3800,6 +3802,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     fun submitParadigm(answers: List<String>) {
         val state = _session.value ?: return
+        if (state.current is Exercise.Gaps) return submitGaps(answers)
         val ex = state.current as? Exercise.Table ?: return
         if (state.phase != Phase.Input) return
 
@@ -3824,6 +3827,37 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 ""
             },
             answer = if (ex.ask) lastAnswer else ""
+        )
+    }
+
+    /**
+     * Ответ на столбец с пропусками: слова по всем пропускам подряд.
+     *
+     * Сверка строгая, как у `word_bank`: слово выбирают из показанных, и
+     * `spavao` против `spavala` — ровно то, что задание спрашивает. Строка
+     * засчитана, если сошлись все её пропуски; задание — если все строки.
+     */
+    private fun submitGaps(words: List<String>) {
+        val state = _session.value ?: return
+        val ex = state.current as? Exercise.Gaps ?: return
+        if (state.phase != Phase.Input) return
+        var at = 0
+        val wrong = ex.rows.mapIndexedNotNull { i, row ->
+            val got = words.drop(at).take(row.answers.size)
+            at += row.answers.size
+            val ok = got.size == row.answers.size &&
+                got.zip(row.answers).all { (a, b) -> LocalCheck.matches(a, b) }
+            if (ok) null else i + 1
+        }
+        lastAnswer = words.joinToString(" ")
+        localResult(
+            correct = wrong.isEmpty(),
+            note = listOfNotNull(
+                if (wrong.isEmpty()) null else wrong.joinToString(", ", prefix = "Не сошлось в строке ") { "$it" } + ".",
+                ex.explanation.ifBlank { null }
+            ).joinToString(" "),
+            expected = if (wrong.isEmpty()) "" else ex.filled.joinToString("\n"),
+            answer = lastAnswer
         )
     }
 

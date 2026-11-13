@@ -235,6 +235,17 @@ data class ParadigmCell(
     val form: String
 )
 
+/**
+ * Строка задания [Exercise.Gaps]: «Juče ___ ___.» и слова в пропуски по
+ * порядку. Перевод задаёт лицо, время и род — поэтому верна ровно одна форма.
+ */
+@Serializable
+data class GapRow(
+    val text: String,
+    val answers: List<String>,
+    val ru: String = ""
+)
+
 @Serializable
 data class Lesson(
     val id: String,
@@ -513,6 +524,28 @@ sealed class Exercise {
         val ask: Boolean = true
     ) : Exercise()
 
+    /**
+     * Столбец строк с пропусками и плашки внизу (Катя, 13.11.2026): один
+     * глагол во всех временах для одного лица — «Danas ___. Juče ___ ___.
+     * Sjutra ___ ___.». Пропусков в строке может быть два, чтобы собирать и
+     * sam, и ću на их месте. Плашка ставится в первый пустой пропуск.
+     */
+    @Serializable
+    @SerialName("gaps")
+    data class Gaps(
+        override val id: String,
+        val title: String,
+        val rows: List<GapRow>,
+        /** Ловушки сверх нужных слов: другой род, другое лицо, слитная форма. */
+        val decoys: List<String> = emptyList(),
+        val explanation: String = ""
+    ) : Exercise() {
+        /** Все пропуски подряд, по строкам. */
+        val answers: List<String> get() = rows.flatMap { it.answers }
+        /** Строки с подставленными верными словами. */
+        val filled: List<String> get() = rows.map { fill(it, it.answers) }
+    }
+
     @Serializable
     @SerialName("listening")
     data class Listening(
@@ -584,6 +617,7 @@ val Exercise.typeName: String
         // прикидка времени, а посмотреть таблицу и заполнить её — разное
         // время в разы.
         is Exercise.Table -> if (ask) "paradigm" else "paradigm_show"
+        is Exercise.Gaps -> "gaps"
         is Exercise.Listening -> "listening"
         is Exercise.Speaking -> "speaking"
         is Exercise.Repeat -> "repeat"
@@ -609,8 +643,15 @@ val Exercise.referenceAnswer: String
         // пятёрка слов оказалась вместе.
         is Exercise.Match -> pairs.joinToString("; ") { "${it.me} — ${it.ru}" }
         is Exercise.Table -> cells.joinToString("; ") { "${it.label}: ${it.form}" }
+        is Exercise.Gaps -> filled.joinToString(" ")
         is Exercise.Listening -> audioText
         is Exercise.Speaking -> phrase
         is Exercise.Repeat -> phrase
         is Exercise.Reading -> text
     }
+
+/** Строка с подставленными словами: пропуск `___` по очереди, лишние пропуски — как есть. */
+fun fill(row: GapRow, words: List<String>): String {
+    var i = 0
+    return Regex("_{3,}").replace(row.text) { m -> words.getOrNull(i++)?.takeIf { it.isNotEmpty() } ?: m.value }
+}

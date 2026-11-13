@@ -208,6 +208,8 @@ class Pace(context: Context) {
             "paradigm" to 45.0,
             // Показ ничего не спрашивает: посмотреть и нажать «Понятно».
             "paradigm_show" to 12.0,
+            // Три строки по одному-два пропуска, слова ищут в плашках.
+            "gaps" to 35.0,
             "listening" to 26.0,
             "speaking" to 18.0,
             "repeat" to 16.0,

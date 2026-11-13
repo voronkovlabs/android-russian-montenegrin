@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -475,6 +476,8 @@ private fun ExerciseBody(
         is Exercise.Match -> MatchAnswer(ex, speaker, enabled, onMatch)
 
         is Exercise.Table -> ParadigmAnswer(ex, speaker, enabled, onParadigm)
+
+        is Exercise.Gaps -> GapsAnswer(ex, speaker, enabled, onParadigm)
 
         // Строгий тест раздела идёт без подсказок: подчёркивания нет вовсе.
         is Exercise.Choice -> ChoiceAnswer(
@@ -1430,6 +1433,112 @@ private fun WordBankAnswer(
             // У перевода на русский звучит черногорское условие.
             speaker.speak(if (native) ex.prompt else ex.answer)
             onSubmit(picked.joinToString(" ") { bank[it] })
+        }
+    }
+}
+
+/**
+ * Столбец строк с пропусками (см. [Exercise.Gaps]). Плашка встаёт в первый
+ * пустой пропуск, нажатие на вставленное слово возвращает его вниз. После
+ * проверки слова в строке краснеют или зеленеют — строка целиком, как у
+ * таблицы падежей: видно, где именно ошибка.
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun GapsAnswer(
+    ex: Exercise.Gaps,
+    speaker: Speaker,
+    enabled: Boolean,
+    onSubmit: (List<String>) -> Unit
+) {
+    val need = ex.answers
+    // Номер плашки в каждом пропуске, а не слово: одинаковых плашек бывает
+    // две (sam … sam), и вернуться каждая должна на своё место.
+    var slots by remember(ex.id) { mutableStateOf(List<Int?>(need.size) { null }) }
+    val bank = remember(ex.id) { (need + ex.decoys).shuffled() }
+
+    Label("Заполни пропуски")
+    Text(ex.title, style = MaterialTheme.typography.headlineSmall, color = Paper)
+    Spacer(Modifier.height(18.dp))
+
+    var at = 0
+    ex.rows.forEach { row ->
+        val first = at
+        at += row.answers.size
+        val mine = (first until at).map { slots[it]?.let(bank::get) ?: "" }
+        val rowOk = mine.zip(row.answers).all { (a, b) -> LocalCheck.matches(a, b) }
+        val parts = row.text.split(Regex("_{3,}"))
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            parts.forEachIndexed { i, part ->
+                if (part.isNotBlank()) {
+                    Text(
+                        part.trim(),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Paper,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
+                if (i < parts.size - 1) {
+                    val gap = first + i
+                    val word = slots.getOrNull(gap)?.let(bank::get)
+                    val tint = when {
+                        enabled -> Accent
+                        rowOk -> Jade
+                        else -> Crimson
+                    }
+                    Box(
+                        Modifier
+                            .align(Alignment.CenterVertically)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(if (word != null) tint.copy(alpha = 0.18f) else Surface1)
+                            .border(1.dp, if (word != null) tint.copy(alpha = 0.6f) else Muted.copy(alpha = 0.5f), RoundedCornerShape(10.dp))
+                            .clickable(enabled = enabled && word != null) {
+                                slots = slots.toMutableList().also { it[gap] = null }
+                            }
+                            .widthIn(min = 64.dp)
+                            .padding(horizontal = 12.dp, vertical = 7.dp)
+                    ) {
+                        Text(word ?: " ", style = MaterialTheme.typography.bodyLarge, color = Paper)
+                    }
+                }
+            }
+        }
+        if (row.ru.isNotBlank()) {
+            Spacer(Modifier.height(3.dp))
+            Text(row.ru, style = MaterialTheme.typography.bodyMedium, color = Muted)
+        }
+        Spacer(Modifier.height(14.dp))
+    }
+
+    Spacer(Modifier.height(6.dp))
+    // Куча стоит на своих местах, как у word_bank: взятая плашка оставляет
+    // пустое место, и нужное слово не приходится искать заново.
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        bank.forEachIndexed { i, word ->
+            val taken = i in slots
+            Box(Modifier.alpha(if (taken) 0f else 1f)) {
+                Chip(word, filled = false, enabled = enabled && !taken) {
+                    val free = slots.indexOf(null)
+                    if (free >= 0) {
+                        speaker.speak(word)
+                        slots = slots.toMutableList().also { it[free] = i }
+                    }
+                }
+            }
+        }
+    }
+
+    if (enabled) {
+        Spacer(Modifier.height(20.dp))
+        PrimaryButton("Проверить", enabled = null !in slots) {
+            speaker.speak(ex.filled.joinToString(" "))
+            onSubmit(slots.map { it?.let(bank::get) ?: "" })
         }
     }
 }
