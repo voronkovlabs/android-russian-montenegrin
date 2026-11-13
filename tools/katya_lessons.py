@@ -4574,6 +4574,69 @@ L.append(dict(id='k57', title='Piti po vremenima. Osam, devet, deset', section=S
     echo('Jedanaest, dvanaest.', '11, 12.'),
 ]))
 
+# --- Урок 58 ---
+# В начале — jesti по временам (блок TENSES_JESTI). Потом повторение чисел до
+# двенадцати и дней недели, и поговорка «Danas ovako, sjutra onako» — аналог
+# «семи пятниц на неделе»; ovako и onako вводятся каждое своим заданием.
+OVAKO = 'ovako — так, вот так (как здесь, как я показываю). Ovako je lako — так легко.'
+ONAKO = ('onako — этак, по-другому. Пара: ovako — так (как здесь), onako — этак (как там, '
+         'по-другому).')
+POSLOVICA = ('Danas ovako, sjutra onako — «сегодня так, завтра этак». Так говорят о том, кто всё '
+             'время меняет решение, как «семь пятниц на неделе».')
+L.append(dict(id='k58', title='Jesti po vremenima. Danas ovako, sjutra onako', section=S4, words=[
+    ('ovako', 'так, вот так'), ('onako', 'этак, по-другому'),
+    ('Danas ovako, sjutra onako.', 'Сегодня так, завтра этак.')],
+    ex=[
+    *TENSES_JESTI,
+    say('Juče sam jela ribu, a sjutra ću jesti supu.', 'Вчера я ела рыбу, а завтра буду есть суп.'),
+    pick('Koliko je osam i dva?', ['deset', 'devet', 'dvanaest'], 'deset',
+         explanation='osam i dva — восемь и два: deset.', label='Сосчитай'),
+    pick('Koliko je šest i šest?', ['dvanaest', 'jedanaest', 'deset'], 'dvanaest',
+         explanation='šest i šest — dvanaest.', label='Сосчитай'),
+    pairs(('понедельник', 'ponedjeljak'), ('вторник', 'utorak'), ('среда', 'srijeda'),
+          ('четверг', 'četvrtak'), ('суббота', 'subota')),
+    gaps('Какой сегодня день?', [
+        ('Danas je ___.', ['petak'], 'Сегодня пятница.'),
+        ('Juče je ___ ___.', ['bio', 'četvrtak'], 'Вчера был четверг.'),
+        ('Sjutra ___ biti ___.', ['će', 'subota'], 'Завтра будет суббота.'),
+    ], ['bila', 'srijeda', 'ćeš', 'nedjelja'],
+         'četvrtak — он: bio. В будущем род не виден: će biti subota.'),
+    gaps('Какой сегодня день?', [
+        ('Danas je ___.', ['ponedjeljak'], 'Сегодня понедельник.'),
+        ('Juče je ___ ___.', ['bila', 'nedjelja'], 'Вчера было воскресенье.'),
+        ('Sjutra ___ biti ___.', ['će', 'utorak'], 'Завтра будет вторник.'),
+    ], ['bio', 'subota', 'ću', 'srijeda'],
+         'nedjelja — она: bila.'),
+    pick('В четверг — u ___', ['četvrtak', 'četvrtka', 'četvrtku'], 'četvrtak',
+         explanation='četvrtak не меняется: u četvrtak, как u petak.', label='Выбери форму'),
+    pick('Девять кошек — devet ___', ['mačaka', 'mačke', 'mačku'], 'mačaka',
+         explanation='С пяти — «чего?»: devet mačaka, как pet mačaka.', label='Выбери форму'),
+    pick('Сколько тебе лет? — Koliko ___ godina?', ['imaš', 'si', 'ima'], 'imaš',
+         explanation='Возраст — через imati: Koliko imaš godina?', label='Вставь слово'),
+    dict(bank('В субботу мы будем есть рыбу.', 'U subotu ćemo jesti ribu.',
+              ['ribu', 'jesti', 'u', 'subotu', 'ćemo']),
+         explanation='Впереди u subotu — ćemo сразу за ним.'),
+    dict(rubank('Ćerka ima osam godina.', 'Дочери восемь лет.', ['лет', 'дочери', 'восемь']),
+         also=['Восемь лет дочери.'], explanation='Возраст через imati: ćerka ima osam godina.'),
+    earbank('U četvrtak smo jeli ribu.', 'В четверг мы ели рыбу.', ['ribu', 'jeli', 'u', 'četvrtak', 'smo']),
+    dict(new('ovako', 'так, вот так', ['так, вот так', 'этак, по-другому', 'сегодня']), explanation=OVAKO),
+    dict(new('onako', 'этак, по-другому', ['этак, по-другому', 'так, вот так', 'завтра']), explanation=ONAKO),
+    dict(new('Danas ovako, sjutra onako.', 'Сегодня так, завтра этак.',
+             ['Сегодня так, завтра этак.', 'Сегодня здесь, завтра там.', 'Вчера так, сегодня этак.'],
+             label='Новое выражение'), explanation=POSLOVICA),
+    pick('Подруга сказала, что пойдёт на море, а теперь — что не пойдёт. Что скажешь?',
+         ['Danas ovako, sjutra onako!', 'Doći ću sjutra.', 'Danas je ponedjeljak.'],
+         'Danas ovako, sjutra onako!', explanation=POSLOVICA, label='Что скажешь?'),
+    dict(bank('Сегодня так, завтра этак.', 'Danas ovako, sjutra onako.',
+              ['onako', 'danas', 'sjutra', 'ovako']), explanation=POSLOVICA),
+    pick('Почему крокодил будет пить кофе? — Zašto ___ krokodil piti kafu?', ['će', 'li će', 'ćeš'], 'će',
+         explanation='С вопросительным словом li не нужно: Zašto će…?', label='Повторение'),
+    pick('Как правильно сказать «Я не буду есть»?', ['Neću jesti.', 'Neješću.', 'Ne ješću.'], 'Neću jesti.',
+         explanation='Отрицание всегда раздельно: neću + глагол целиком.', label='Повторение'),
+    say('Danas ovako, sjutra onako.', 'Сегодня так, завтра этак.'),
+    echo('Danas je petak, a sjutra će biti subota.', 'Сегодня пятница, а завтра будет суббота.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

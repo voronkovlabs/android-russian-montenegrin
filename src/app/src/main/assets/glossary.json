@@ -1932,7 +1932,9 @@
   "laka": "лёгкая (от lak)",
   "lako": "легко",
   "lak": "лёгкий",
-  "srijedu": "в среду — от srijeda (u srijedu)"
+  "srijedu": "в среду — от srijeda (u srijedu)",
+  "ovako": "так, вот так",
+  "onako": "этак, по-другому"
  },
  "ru": {
   "а": "a",
@@ -2645,6 +2647,8 @@
   "лёгкий": "lak",
   "легко": "lako",
   "трудно": "teško",
-  "среду": "srijedu"
+  "среду": "srijedu",
+  "так": "ovako",
+  "этак": "onako"
  }
 }

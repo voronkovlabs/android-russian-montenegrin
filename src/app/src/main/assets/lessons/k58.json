@@ -1,0 +1,565 @@
+{
+  "id": "k58",
+  "title": "Jesti po vremenima. Danas ovako, sjutra onako",
+  "exercises": [
+    {
+      "id": "k58e01",
+      "type": "gaps",
+      "title": "jesti — есть · ja",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jedem"
+          ],
+          "ru": "Сегодня я ем суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "sam",
+            "jela"
+          ],
+          "ru": "Вчера я ела суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "ću",
+            "jesti"
+          ],
+          "ru": "Завтра я буду есть суп."
+        }
+      ],
+      "decoys": [
+        "jeo",
+        "si",
+        "ćeš",
+        "jedeš"
+      ],
+      "explanation": "ja: jedem — sam jela — ću jesti. sam и ću встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jelo, jeli — без s."
+    },
+    {
+      "id": "k58e02",
+      "type": "gaps",
+      "title": "jesti — есть · ti",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jedeš"
+          ],
+          "ru": "Сегодня ты ешь суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "si",
+            "jeo"
+          ],
+          "ru": "Вчера ты ел суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "ćeš",
+            "jesti"
+          ],
+          "ru": "Завтра ты будешь есть суп."
+        }
+      ],
+      "decoys": [
+        "jela",
+        "sam",
+        "ću",
+        "jede"
+      ],
+      "explanation": "ti: jedeš — si jeo — ćeš jesti. si и ćeš встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jelo, jeli — без s."
+    },
+    {
+      "id": "k58e03",
+      "type": "gaps",
+      "title": "jesti — есть · ono",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jede"
+          ],
+          "ru": "Сегодня оно ест суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "je",
+            "jelo"
+          ],
+          "ru": "Вчера оно ело суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "će",
+            "jesti"
+          ],
+          "ru": "Завтра оно будет есть суп."
+        }
+      ],
+      "decoys": [
+        "jeo",
+        "su",
+        "ćemo",
+        "jedu"
+      ],
+      "explanation": "ono: jede — je jelo — će jesti. je и će встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jelo, jeli — без s."
+    },
+    {
+      "id": "k58e04",
+      "type": "gaps",
+      "title": "jesti — есть · mi",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jedemo"
+          ],
+          "ru": "Сегодня мы едим суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "smo",
+            "jeli"
+          ],
+          "ru": "Вчера мы ели суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "ćemo",
+            "jesti"
+          ],
+          "ru": "Завтра мы будем есть суп."
+        }
+      ],
+      "decoys": [
+        "jeo",
+        "ste",
+        "ćete",
+        "jedete"
+      ],
+      "explanation": "mi: jedemo — smo jeli — ćemo jesti. smo и ćemo встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jelo, jeli — без s."
+    },
+    {
+      "id": "k58e05",
+      "type": "gaps",
+      "title": "jesti — есть · vi",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jedete"
+          ],
+          "ru": "Сегодня вы едите суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "ste",
+            "jeli"
+          ],
+          "ru": "Вчера вы ели суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "ćete",
+            "jesti"
+          ],
+          "ru": "Завтра вы будете есть суп."
+        }
+      ],
+      "decoys": [
+        "jela",
+        "smo",
+        "ćemo",
+        "jedemo"
+      ],
+      "explanation": "vi: jedete — ste jeli — ćete jesti. ste и ćete встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jelo, jeli — без s."
+    },
+    {
+      "id": "k58e06",
+      "type": "gaps",
+      "title": "jesti — есть · oni",
+      "rows": [
+        {
+          "text": "Danas ___ supu.",
+          "answers": [
+            "jedu"
+          ],
+          "ru": "Сегодня они едят суп."
+        },
+        {
+          "text": "Juče ___ ___ supu.",
+          "answers": [
+            "su",
+            "jeli"
+          ],
+          "ru": "Вчера они ели суп."
+        },
+        {
+          "text": "Sjutra ___ ___ supu.",
+          "answers": [
+            "će",
+            "jesti"
+          ],
+          "ru": "Завтра они будут есть суп."
+        }
+      ],
+      "decoys": [
+        "jeo",
+        "je",
+        "ćemo",
+        "jede"
+      ],
+      "explanation": "oni: jedu — su jeli — će jesti. su и će встают сразу за juče и sjutra. Прошедшее от jesti: jeo, jela, jelo, jeli — без s."
+    },
+    {
+      "id": "k58e07",
+      "type": "speaking",
+      "phrase": "Juče sam jela ribu, a sjutra ću jesti supu.",
+      "translation": "Вчера я ела рыбу, а завтра буду есть суп."
+    },
+    {
+      "id": "k58e08",
+      "type": "choice",
+      "prompt": "Koliko je osam i dva?",
+      "options": [
+        "deset",
+        "devet",
+        "dvanaest"
+      ],
+      "answer": "deset",
+      "explanation": "osam i dva — восемь и два: deset.",
+      "label": "Сосчитай"
+    },
+    {
+      "id": "k58e09",
+      "type": "choice",
+      "prompt": "Koliko je šest i šest?",
+      "options": [
+        "dvanaest",
+        "jedanaest",
+        "deset"
+      ],
+      "answer": "dvanaest",
+      "explanation": "šest i šest — dvanaest.",
+      "label": "Сосчитай"
+    },
+    {
+      "id": "k58e10",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "понедельник",
+          "me": "ponedjeljak"
+        },
+        {
+          "ru": "вторник",
+          "me": "utorak"
+        },
+        {
+          "ru": "среда",
+          "me": "srijeda"
+        },
+        {
+          "ru": "четверг",
+          "me": "četvrtak"
+        },
+        {
+          "ru": "суббота",
+          "me": "subota"
+        }
+      ]
+    },
+    {
+      "id": "k58e11",
+      "type": "gaps",
+      "title": "Какой сегодня день?",
+      "rows": [
+        {
+          "text": "Danas je ___.",
+          "answers": [
+            "petak"
+          ],
+          "ru": "Сегодня пятница."
+        },
+        {
+          "text": "Juče je ___ ___.",
+          "answers": [
+            "bio",
+            "četvrtak"
+          ],
+          "ru": "Вчера был четверг."
+        },
+        {
+          "text": "Sjutra ___ biti ___.",
+          "answers": [
+            "će",
+            "subota"
+          ],
+          "ru": "Завтра будет суббота."
+        }
+      ],
+      "decoys": [
+        "bila",
+        "srijeda",
+        "ćeš",
+        "nedjelja"
+      ],
+      "explanation": "četvrtak — он: bio. В будущем род не виден: će biti subota."
+    },
+    {
+      "id": "k58e12",
+      "type": "gaps",
+      "title": "Какой сегодня день?",
+      "rows": [
+        {
+          "text": "Danas je ___.",
+          "answers": [
+            "ponedjeljak"
+          ],
+          "ru": "Сегодня понедельник."
+        },
+        {
+          "text": "Juče je ___ ___.",
+          "answers": [
+            "bila",
+            "nedjelja"
+          ],
+          "ru": "Вчера было воскресенье."
+        },
+        {
+          "text": "Sjutra ___ biti ___.",
+          "answers": [
+            "će",
+            "utorak"
+          ],
+          "ru": "Завтра будет вторник."
+        }
+      ],
+      "decoys": [
+        "bio",
+        "subota",
+        "ću",
+        "srijeda"
+      ],
+      "explanation": "nedjelja — она: bila."
+    },
+    {
+      "id": "k58e13",
+      "type": "choice",
+      "prompt": "В четверг — u ___",
+      "options": [
+        "četvrtak",
+        "četvrtka",
+        "četvrtku"
+      ],
+      "answer": "četvrtak",
+      "explanation": "četvrtak не меняется: u četvrtak, как u petak.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k58e14",
+      "type": "choice",
+      "prompt": "Девять кошек — devet ___",
+      "options": [
+        "mačaka",
+        "mačke",
+        "mačku"
+      ],
+      "answer": "mačaka",
+      "explanation": "С пяти — «чего?»: devet mačaka, как pet mačaka.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k58e15",
+      "type": "choice",
+      "prompt": "Сколько тебе лет? — Koliko ___ godina?",
+      "options": [
+        "imaš",
+        "si",
+        "ima"
+      ],
+      "answer": "imaš",
+      "explanation": "Возраст — через imati: Koliko imaš godina?",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k58e16",
+      "type": "word_bank",
+      "prompt": "В субботу мы будем есть рыбу.",
+      "answer": "U subotu ćemo jesti ribu.",
+      "bank": [
+        "ribu",
+        "jesti",
+        "u",
+        "subotu",
+        "ćemo"
+      ],
+      "explanation": "Впереди u subotu — ćemo сразу за ним."
+    },
+    {
+      "id": "k58e17",
+      "type": "word_bank",
+      "prompt": "Ćerka ima osam godina.",
+      "answer": "Дочери восемь лет.",
+      "bank": [
+        "лет",
+        "дочери",
+        "восемь"
+      ],
+      "also": [
+        "Восемь лет дочери."
+      ],
+      "explanation": "Возраст через imati: ćerka ima osam godina."
+    },
+    {
+      "id": "k58e18",
+      "type": "word_bank",
+      "prompt": "В четверг мы ели рыбу.",
+      "answer": "U četvrtak smo jeli ribu.",
+      "bank": [
+        "ribu",
+        "jeli",
+        "u",
+        "četvrtak",
+        "smo"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k58e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ovako",
+      "hint": "ovako — так, вот так",
+      "options": [
+        "так, вот так",
+        "этак, по-другому",
+        "сегодня"
+      ],
+      "answer": "так, вот так",
+      "explanation": "ovako — так, вот так (как здесь, как я показываю). Ovako je lako — так легко.",
+      "example": "Ovako je lako. — Так легко."
+    },
+    {
+      "id": "k58e20",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "onako",
+      "hint": "onako — этак, по-другому",
+      "options": [
+        "этак, по-другому",
+        "так, вот так",
+        "завтра"
+      ],
+      "answer": "этак, по-другому",
+      "explanation": "onako — этак, по-другому. Пара: ovako — так (как здесь), onako — этак (как там, по-другому).",
+      "example": "Ja radim ovako, a ti radiš onako. — Я делаю так, а ты этак."
+    },
+    {
+      "id": "k58e21",
+      "type": "choice",
+      "label": "Новое выражение",
+      "prompt": "Danas ovako, sjutra onako.",
+      "hint": "Danas ovako, sjutra onako. — Сегодня так, завтра этак.",
+      "options": [
+        "Сегодня так, завтра этак.",
+        "Сегодня здесь, завтра там.",
+        "Вчера так, сегодня этак."
+      ],
+      "answer": "Сегодня так, завтра этак.",
+      "explanation": "Danas ovako, sjutra onako — «сегодня так, завтра этак». Так говорят о том, кто всё время меняет решение, как «семь пятниц на неделе».",
+      "example": "Moja mačka: danas ovako, sjutra onako. — Моя кошка: сегодня так, завтра этак."
+    },
+    {
+      "id": "k58e22",
+      "type": "choice",
+      "prompt": "Подруга сказала, что пойдёт на море, а теперь — что не пойдёт. Что скажешь?",
+      "options": [
+        "Danas ovako, sjutra onako!",
+        "Doći ću sjutra.",
+        "Danas je ponedjeljak."
+      ],
+      "answer": "Danas ovako, sjutra onako!",
+      "explanation": "Danas ovako, sjutra onako — «сегодня так, завтра этак». Так говорят о том, кто всё время меняет решение, как «семь пятниц на неделе».",
+      "label": "Что скажешь?"
+    },
+    {
+      "id": "k58e23",
+      "type": "word_bank",
+      "prompt": "Сегодня так, завтра этак.",
+      "answer": "Danas ovako, sjutra onako.",
+      "bank": [
+        "onako",
+        "danas",
+        "sjutra",
+        "ovako"
+      ],
+      "explanation": "Danas ovako, sjutra onako — «сегодня так, завтра этак». Так говорят о том, кто всё время меняет решение, как «семь пятниц на неделе»."
+    },
+    {
+      "id": "k58e24",
+      "type": "choice",
+      "prompt": "Почему крокодил будет пить кофе? — Zašto ___ krokodil piti kafu?",
+      "options": [
+        "će",
+        "li će",
+        "ćeš"
+      ],
+      "answer": "će",
+      "explanation": "С вопросительным словом li не нужно: Zašto će…?",
+      "label": "Повторение"
+    },
+    {
+      "id": "k58e25",
+      "type": "choice",
+      "prompt": "Как правильно сказать «Я не буду есть»?",
+      "options": [
+        "Neću jesti.",
+        "Neješću.",
+        "Ne ješću."
+      ],
+      "answer": "Neću jesti.",
+      "explanation": "Отрицание всегда раздельно: neću + глагол целиком.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k58e26",
+      "type": "speaking",
+      "phrase": "Danas ovako, sjutra onako.",
+      "translation": "Сегодня так, завтра этак."
+    },
+    {
+      "id": "k58e27",
+      "type": "repeat",
+      "phrase": "Danas je petak, a sjutra će biti subota.",
+      "translation": "Сегодня пятница, а завтра будет суббота."
+    }
+  ],
+  "words": [
+    {
+      "me": "ovako",
+      "ru": "так, вот так"
+    },
+    {
+      "me": "onako",
+      "ru": "этак, по-другому"
+    },
+    {
+      "me": "Danas ovako, sjutra onako.",
+      "ru": "Сегодня так, завтра этак."
+    }
+  ]
+}
