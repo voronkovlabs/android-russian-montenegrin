@@ -4522,6 +4522,58 @@ L.append(dict(id='k56', title='Danas, juče, sjutra', section=S4, words=[('danas
     echo('Ovo nije teško.', 'Это не трудно.'),
 ]))
 
+# --- Урок 57 ---
+# В начале — piti по временам (блок TENSES_PITI). Потом счёт: osam, devet, deset,
+# jedanaest, dvanaest. До семи числа уже были (k09–k23), 13–20 и десятки — дальше.
+OSAM = 'osam — восемь. Osam jaja — восемь яиц: с пяти и дальше «чего?», как pet mačaka.'
+DEVET = 'devet — девять. Devet dana — девять дней.'
+DESET = 'deset — десять. Deset riba — десять рыб.'
+NAEST = ('jedanaest — одиннадцать: jedan + naest, как по-русски один-на-дцать. Так же '
+         'dvanaest, trinaest… до devetnaest.')
+DVANAEST = 'dvanaest — двенадцать: dva + naest. Не путать с dvadeset — двадцать.'
+DANA = 'После пяти и больше — «чего?»: osam dana, как mjesec dana.'
+L.append(dict(id='k57', title='Piti po vremenima. Osam, devet, deset', section=S4, words=[
+    ('osam', 'восемь'), ('devet', 'девять'), ('deset', 'десять'), ('jedanaest', 'одиннадцать'),
+    ('dvanaest', 'двенадцать')],
+    ex=[
+    *TENSES_PITI,
+    say('Juče sam pila čaj, a danas pijem kafu.', 'Вчера я пила чай, а сегодня пью кофе.'),
+    dict(new('osam', 'восемь', ['восемь', 'шесть', 'девять']), explanation=OSAM),
+    dict(new('devet', 'девять', ['девять', 'десять', 'семь']), explanation=DEVET),
+    dict(new('deset', 'десять', ['десять', 'два', 'восемь']), explanation=DESET),
+    pairs(('шесть', 'šest'), ('семь', 'sedam'), ('восемь', 'osam'), ('девять', 'devet'),
+          ('десять', 'deset')),
+    pick('Šest, sedam, ___, devet, deset.', ['osam', 'pet', 'deset'], 'osam',
+         explanation='šest, sedam, osam, devet, deset — 6, 7, 8, 9, 10.', label='Вставь слово'),
+    dict(new('jedanaest', 'одиннадцать', ['одиннадцать', 'двенадцать', 'десять']), explanation=NAEST),
+    dict(new('dvanaest', 'двенадцать', ['двенадцать', 'двадцать', 'два']), explanation=DVANAEST),
+    pick('12 — это…', ['dvanaest', 'dvadeset', 'dvije'], 'dvanaest', explanation=DVANAEST,
+         label='Выбери верное'),
+    dict(pairs(('8', 'osam'), ('9', 'devet'), ('10', 'deset'), ('11', 'jedanaest'), ('12', 'dvanaest')),
+         explanation=NAEST),
+    pick('Десять коров — deset ___', ['krava', 'krave', 'kravu'], 'krava',
+         explanation='С пяти — «чего?»: krava → deset krava, как pet mačaka.', label='Выбери форму'),
+    dict(bank('В восемь я буду пить чай.', 'U osam ću piti čaj.', ['čaj', 'piti', 'u', 'osam', 'ću'],
+              also=['U osam ću čaj piti.']),
+         explanation='Впереди u osam — ću сразу за ним.'),
+    dict(bank('У меня двенадцать яиц.', 'Imam dvanaest jaja.', ['jaja', 'imam', 'dvanaest']),
+         explanation='dvanaest jaja — «чего?», как osam jaja.'),
+    earbank('Imamo jedanaest krava.', 'У нас одиннадцать коров.', ['krava', 'imamo', 'jedanaest']),
+    dict(rubank('Sin ima dvanaest godina.', 'Сыну двенадцать лет.', ['лет', 'сыну', 'двенадцать']),
+         also=['Двенадцать лет сыну.'],
+         explanation='Возраст говорят через imati: sin ima dvanaest godina — «сын имеет двенадцать лет».'),
+    dict(rubank('Devet dana sam bila na moru.', 'Девять дней я была на море.',
+                ['море', 'на', 'девять', 'была', 'я', 'дней']),
+         also=['Я была на море девять дней.', 'Я девять дней была на море.'], explanation=DANA),
+    pick('Вчера была среда. — Juče je ___ srijeda.', ['bila', 'bio', 'bilo'], 'bila',
+         explanation='srijeda — она: bila.', label='Повторение'),
+    pick('Мы пойдём на море? — ___ li ići na more?', ['Hoćemo', 'Hoćete', 'Hoću'], 'Hoćemo',
+         explanation='Mi — hoćemo li.', label='Повторение'),
+    say('Šest, sedam, osam, devet, deset.', '6, 7, 8, 9, 10.'),
+    say('Dvanaest mačaka spava na krevetu.', 'Двенадцать кошек спят на кровати.'),
+    echo('Jedanaest, dvanaest.', '11, 12.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

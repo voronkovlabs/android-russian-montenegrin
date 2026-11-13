@@ -1,0 +1,542 @@
+{
+  "id": "k57",
+  "title": "Piti po vremenima. Osam, devet, deset",
+  "exercises": [
+    {
+      "id": "k57e01",
+      "type": "gaps",
+      "title": "piti — пить · ja",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "pijem"
+          ],
+          "ru": "Сегодня я пью чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "sam",
+            "pio"
+          ],
+          "ru": "Вчера я пил чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "ću",
+            "piti"
+          ],
+          "ru": "Завтра я буду пить чай."
+        }
+      ],
+      "decoys": [
+        "pila",
+        "si",
+        "ćeš",
+        "piju"
+      ],
+      "explanation": "ja: pijem — sam pio — ću piti. sam и ću встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k57e02",
+      "type": "gaps",
+      "title": "piti — пить · ti",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "piješ"
+          ],
+          "ru": "Сегодня ты пьёшь чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "si",
+            "pila"
+          ],
+          "ru": "Вчера ты пила чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "ćeš",
+            "piti"
+          ],
+          "ru": "Завтра ты будешь пить чай."
+        }
+      ],
+      "decoys": [
+        "pio",
+        "sam",
+        "ću",
+        "pije"
+      ],
+      "explanation": "ti: piješ — si pila — ćeš piti. si и ćeš встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k57e03",
+      "type": "gaps",
+      "title": "piti — пить · ono",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "pije"
+          ],
+          "ru": "Сегодня оно пьёт чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "je",
+            "pilo"
+          ],
+          "ru": "Вчера оно пило чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "će",
+            "piti"
+          ],
+          "ru": "Завтра оно будет пить чай."
+        }
+      ],
+      "decoys": [
+        "pio",
+        "su",
+        "ćemo",
+        "piju"
+      ],
+      "explanation": "ono: pije — je pilo — će piti. je и će встают сразу за juče и sjutra. ono — средний род: pilo."
+    },
+    {
+      "id": "k57e04",
+      "type": "gaps",
+      "title": "piti — пить · mi",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "pijemo"
+          ],
+          "ru": "Сегодня мы пьём чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "smo",
+            "pili"
+          ],
+          "ru": "Вчера мы пили чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "ćemo",
+            "piti"
+          ],
+          "ru": "Завтра мы будем пить чай."
+        }
+      ],
+      "decoys": [
+        "pio",
+        "ste",
+        "ćete",
+        "pijete"
+      ],
+      "explanation": "mi: pijemo — smo pili — ćemo piti. smo и ćemo встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k57e05",
+      "type": "gaps",
+      "title": "piti — пить · vi",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "pijete"
+          ],
+          "ru": "Сегодня вы пьёте чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "ste",
+            "pili"
+          ],
+          "ru": "Вчера вы пили чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "ćete",
+            "piti"
+          ],
+          "ru": "Завтра вы будете пить чай."
+        }
+      ],
+      "decoys": [
+        "pila",
+        "smo",
+        "ćemo",
+        "pijemo"
+      ],
+      "explanation": "vi: pijete — ste pili — ćete piti. ste и ćete встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k57e06",
+      "type": "gaps",
+      "title": "piti — пить · oni",
+      "rows": [
+        {
+          "text": "Danas ___ čaj.",
+          "answers": [
+            "piju"
+          ],
+          "ru": "Сегодня они пьют чай."
+        },
+        {
+          "text": "Juče ___ ___ čaj.",
+          "answers": [
+            "su",
+            "pili"
+          ],
+          "ru": "Вчера они пили чай."
+        },
+        {
+          "text": "Sjutra ___ ___ čaj.",
+          "answers": [
+            "će",
+            "piti"
+          ],
+          "ru": "Завтра они будут пить чай."
+        }
+      ],
+      "decoys": [
+        "pio",
+        "je",
+        "ćemo",
+        "pije"
+      ],
+      "explanation": "oni: piju — su pili — će piti. su и će встают сразу за juče и sjutra."
+    },
+    {
+      "id": "k57e07",
+      "type": "speaking",
+      "phrase": "Juče sam pila čaj, a danas pijem kafu.",
+      "translation": "Вчера я пила чай, а сегодня пью кофе."
+    },
+    {
+      "id": "k57e08",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "osam",
+      "hint": "osam — восемь",
+      "options": [
+        "восемь",
+        "шесть",
+        "девять"
+      ],
+      "answer": "восемь",
+      "explanation": "osam — восемь. Osam jaja — восемь яиц: с пяти и дальше «чего?», как pet mačaka.",
+      "example": "Imam osam jaja. — У меня восемь яиц."
+    },
+    {
+      "id": "k57e09",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "devet",
+      "hint": "devet — девять",
+      "options": [
+        "девять",
+        "десять",
+        "семь"
+      ],
+      "answer": "девять",
+      "explanation": "devet — девять. Devet dana — девять дней.",
+      "example": "Imamo devet riba. — У нас девять рыб."
+    },
+    {
+      "id": "k57e10",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "deset",
+      "hint": "deset — десять",
+      "options": [
+        "десять",
+        "два",
+        "восемь"
+      ],
+      "answer": "десять",
+      "explanation": "deset — десять. Deset riba — десять рыб.",
+      "example": "Pas ima deset godina. — Собаке десять лет."
+    },
+    {
+      "id": "k57e11",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "шесть",
+          "me": "šest"
+        },
+        {
+          "ru": "семь",
+          "me": "sedam"
+        },
+        {
+          "ru": "восемь",
+          "me": "osam"
+        },
+        {
+          "ru": "девять",
+          "me": "devet"
+        },
+        {
+          "ru": "десять",
+          "me": "deset"
+        }
+      ]
+    },
+    {
+      "id": "k57e12",
+      "type": "choice",
+      "prompt": "Šest, sedam, ___, devet, deset.",
+      "options": [
+        "osam",
+        "pet",
+        "deset"
+      ],
+      "answer": "osam",
+      "explanation": "šest, sedam, osam, devet, deset — 6, 7, 8, 9, 10.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k57e13",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "jedanaest",
+      "hint": "jedanaest — одиннадцать",
+      "options": [
+        "одиннадцать",
+        "двенадцать",
+        "десять"
+      ],
+      "answer": "одиннадцать",
+      "explanation": "jedanaest — одиннадцать: jedan + naest, как по-русски один-на-дцать. Так же dvanaest, trinaest… до devetnaest.",
+      "example": "Ćerka ima jedanaest godina. — Дочери одиннадцать лет."
+    },
+    {
+      "id": "k57e14",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "dvanaest",
+      "hint": "dvanaest — двенадцать",
+      "options": [
+        "двенадцать",
+        "двадцать",
+        "два"
+      ],
+      "answer": "двенадцать",
+      "explanation": "dvanaest — двенадцать: dva + naest. Не путать с dvadeset — двадцать.",
+      "example": "Dvanaest dana sam bila kod babe. — Двенадцать дней я была у бабушки."
+    },
+    {
+      "id": "k57e15",
+      "type": "choice",
+      "prompt": "12 — это…",
+      "options": [
+        "dvanaest",
+        "dvadeset",
+        "dvije"
+      ],
+      "answer": "dvanaest",
+      "explanation": "dvanaest — двенадцать: dva + naest. Не путать с dvadeset — двадцать.",
+      "label": "Выбери верное"
+    },
+    {
+      "id": "k57e16",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "8",
+          "me": "osam"
+        },
+        {
+          "ru": "9",
+          "me": "devet"
+        },
+        {
+          "ru": "10",
+          "me": "deset"
+        },
+        {
+          "ru": "11",
+          "me": "jedanaest"
+        },
+        {
+          "ru": "12",
+          "me": "dvanaest"
+        }
+      ],
+      "explanation": "jedanaest — одиннадцать: jedan + naest, как по-русски один-на-дцать. Так же dvanaest, trinaest… до devetnaest."
+    },
+    {
+      "id": "k57e17",
+      "type": "choice",
+      "prompt": "Десять коров — deset ___",
+      "options": [
+        "krava",
+        "krave",
+        "kravu"
+      ],
+      "answer": "krava",
+      "explanation": "С пяти — «чего?»: krava → deset krava, как pet mačaka.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k57e18",
+      "type": "word_bank",
+      "prompt": "В восемь я буду пить чай.",
+      "answer": "U osam ću piti čaj.",
+      "bank": [
+        "čaj",
+        "piti",
+        "u",
+        "osam",
+        "ću"
+      ],
+      "also": [
+        "U osam ću čaj piti."
+      ],
+      "explanation": "Впереди u osam — ću сразу за ним."
+    },
+    {
+      "id": "k57e19",
+      "type": "word_bank",
+      "prompt": "У меня двенадцать яиц.",
+      "answer": "Imam dvanaest jaja.",
+      "bank": [
+        "jaja",
+        "imam",
+        "dvanaest"
+      ],
+      "explanation": "dvanaest jaja — «чего?», как osam jaja."
+    },
+    {
+      "id": "k57e20",
+      "type": "word_bank",
+      "prompt": "У нас одиннадцать коров.",
+      "answer": "Imamo jedanaest krava.",
+      "bank": [
+        "krava",
+        "imamo",
+        "jedanaest"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k57e21",
+      "type": "word_bank",
+      "prompt": "Sin ima dvanaest godina.",
+      "answer": "Сыну двенадцать лет.",
+      "bank": [
+        "лет",
+        "сыну",
+        "двенадцать"
+      ],
+      "also": [
+        "Двенадцать лет сыну."
+      ],
+      "explanation": "Возраст говорят через imati: sin ima dvanaest godina — «сын имеет двенадцать лет»."
+    },
+    {
+      "id": "k57e22",
+      "type": "word_bank",
+      "prompt": "Devet dana sam bila na moru.",
+      "answer": "Девять дней я была на море.",
+      "bank": [
+        "море",
+        "на",
+        "девять",
+        "была",
+        "я",
+        "дней"
+      ],
+      "also": [
+        "Я была на море девять дней.",
+        "Я девять дней была на море."
+      ],
+      "explanation": "После пяти и больше — «чего?»: osam dana, как mjesec dana."
+    },
+    {
+      "id": "k57e23",
+      "type": "choice",
+      "prompt": "Вчера была среда. — Juče je ___ srijeda.",
+      "options": [
+        "bila",
+        "bio",
+        "bilo"
+      ],
+      "answer": "bila",
+      "explanation": "srijeda — она: bila.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k57e24",
+      "type": "choice",
+      "prompt": "Мы пойдём на море? — ___ li ići na more?",
+      "options": [
+        "Hoćemo",
+        "Hoćete",
+        "Hoću"
+      ],
+      "answer": "Hoćemo",
+      "explanation": "Mi — hoćemo li.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k57e25",
+      "type": "speaking",
+      "phrase": "Šest, sedam, osam, devet, deset.",
+      "translation": "6, 7, 8, 9, 10."
+    },
+    {
+      "id": "k57e26",
+      "type": "speaking",
+      "phrase": "Dvanaest mačaka spava na krevetu.",
+      "translation": "Двенадцать кошек спят на кровати."
+    },
+    {
+      "id": "k57e27",
+      "type": "repeat",
+      "phrase": "Jedanaest, dvanaest.",
+      "translation": "11, 12."
+    }
+  ],
+  "words": [
+    {
+      "me": "osam",
+      "ru": "восемь"
+    },
+    {
+      "me": "devet",
+      "ru": "девять"
+    },
+    {
+      "me": "deset",
+      "ru": "десять"
+    },
+    {
+      "me": "jedanaest",
+      "ru": "одиннадцать"
+    },
+    {
+      "me": "dvanaest",
+      "ru": "двенадцать"
+    }
+  ]
+}
