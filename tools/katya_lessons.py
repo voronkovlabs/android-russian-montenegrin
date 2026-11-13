@@ -4637,6 +4637,71 @@ L.append(dict(id='k58', title='Jesti po vremenima. Danas ovako, sjutra onako', s
     echo('Danas je petak, a sjutra će biti subota.', 'Сегодня пятница, а завтра будет суббота.'),
 ]))
 
+# --- Урок 59 ---
+# В начале — ići по временам (блок TENSES_ICI), последний из четырёх. Потом šetati,
+# šetalište (так в Баре зовут набережную, по которой гуляют) и odmah. Фразы Кати:
+# «Я пойду гулять с собакой», «Когда приеду в Бар, сразу пойду на набережную».
+SETATI = 'šetati — гулять: šetam, šetaš, šeta, šetamo, šetate, šetaju. Прошедшее: šetao, šetala.'
+SETAM_PSA = ('šetati psa — гулять с собакой, буквально «гулять собаку». Ići ću da šetam — '
+             '«пойду гулять»: после ići — da и глагол в том же лице, как Šta ću da radim?')
+SETALISTE = ('šetalište — место для прогулок, от šetati: пешеходная улица, набережная. В Баре так '
+             'зовут набережную. Средний род: šetalište je lijepo.')
+NA_SETALISTU = 'na + где? → na šetalištu, как na moru.'
+ODMAH = 'odmah — сразу, тут же. Dođi odmah! — Приходи сразу!'
+KAD_DODJEM = ('kad dođem — «когда приду, приеду»: после kad о будущем — dođem, а не doći ću. '
+              'Дальше как обычно: odmah ću ići — сразу пойду.')
+L.append(dict(id='k59', title='Ići po vremenima. Šetalište u Baru', section=S4, words=[
+    ('šetati', 'гулять'), ('šetalište', 'пешеходная зона, набережная'), ('odmah', 'сразу')],
+    ex=[
+    *TENSES_ICI,
+    say('Juče sam išla u grad, a sjutra ću ići na more.', 'Вчера я ходила в город, а завтра пойду на море.'),
+    dict(new('šetati', 'гулять', ['гулять', 'спать', 'плавать'], label='Новый глагол'), explanation=SETATI),
+    dict(phrase('Ići ću da šetam psa.', 'Я пойду гулять с собакой.',
+                ['Я пойду гулять с собакой.', 'Я гуляла с собакой.', 'Я пойду гулять с мамой.']),
+         explanation=SETAM_PSA),
+    pick('Я пойду гулять с собакой. — Ići ću da ___ psa.', ['šetam', 'šetati', 'šeta'], 'šetam',
+         explanation='После ići ću — da и глагол в том же лице: da šetam.', label='Вставь слово'),
+    gaps('šetati — гулять · mi', [
+        ('Danas ___.', ['šetamo'], 'Сегодня мы гуляем.'),
+        ('Juče ___ ___.', ['smo', 'šetali'], 'Вчера мы гуляли.'),
+        ('Sjutra ___ ___.', ['ćemo', 'šetati'], 'Завтра мы будем гулять.'),
+    ], ['šetam', 'ste', 'ćete', 'šetao'], 'mi: šetamo — smo šetali — ćemo šetati.'),
+    dict(new('šetalište', 'пешеходная зона, набережная',
+             ['пешеходная зона, набережная', 'пляж', 'центр города']), explanation=SETALISTE),
+    pick('Мы на набережной. — Mi smo na ___.', ['šetalištu', 'šetalište', 'šetališta'], 'šetalištu',
+         explanation=NA_SETALISTU, label='Выбери форму'),
+    dict(new('odmah', 'сразу', ['сразу', 'завтра', 'потом']), explanation=ODMAH),
+    pick('Он сразу пришёл. — On je ___ došao.', ['odmah', 'sjutra', 'danas'], 'odmah',
+         explanation=ODMAH, label='Вставь слово'),
+    dict(phrase('Kad dođem u Bar, odmah ću ići na šetalište.',
+                'Когда приеду в Бар, сразу пойду на набережную.',
+                ['Когда приеду в Бар, сразу пойду на набережную.',
+                 'Когда приеду в Бар, сразу пойду на море.',
+                 'Когда я была в Баре, я сразу пошла на набережную.']), explanation=KAD_DODJEM),
+    dict(bank('Когда приеду в Бар, сразу пойду на набережную.',
+              'Kad dođem u Bar, odmah ću ići na šetalište.',
+              ['šetalište', 'kad', 'Bar', 'odmah', 'na', 'u', 'ići', 'dođem', 'ću']),
+         explanation=KAD_DODJEM),
+    pairs(('гулять', 'šetati'), ('набережная', 'šetalište'), ('сразу', 'odmah'), ('сегодня', 'danas'),
+          ('завтра', 'sjutra')),
+    pick('Где ты гуляешь? — Gdje ___?', ['šetaš', 'šetam', 'šeta'], 'šetaš',
+         explanation='Ti — šetaš.', label='Вставь слово'),
+    earbank('Uveče šetamo na šetalištu.', 'Вечером мы гуляем на набережной.',
+            ['šetalištu', 'šetamo', 'na', 'uveče']),
+    dict(rubank('Sjutra ćemo šetati na šetalištu.', 'Завтра мы будем гулять на набережной.',
+                ['набережной', 'на', 'будем', 'мы', 'гулять', 'завтра']),
+         also=['Завтра будем гулять на набережной.', 'Мы завтра будем гулять на набережной.'],
+         explanation='Впереди sjutra — ćemo сразу за ним.'),
+    dict(rubank('Odmah idem kući.', 'Я сразу иду домой.', ['домой', 'иду', 'я', 'сразу']),
+         also=['Сразу иду домой.', 'Я иду домой сразу.'], explanation=ODMAH),
+    pick('Koliko je pet i pet?', ['deset', 'devet', 'dvanaest'], 'deset',
+         explanation='pet i pet — deset.', label='Повторение'),
+    pick('Danas ovako, ___ onako.', ['sjutra', 'juče', 'danas'], 'sjutra',
+         explanation='Danas ovako, sjutra onako — «семь пятниц на неделе».', label='Повторение'),
+    say('Ići ću da šetam psa.', 'Я пойду гулять с собакой.'),
+    echo('Kad dođem u Bar, odmah ću ići na šetalište.', 'Когда приеду в Бар, сразу пойду на набережную.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

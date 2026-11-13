@@ -1,0 +1,541 @@
+{
+  "id": "k59",
+  "title": "Ići po vremenima. Šetalište u Baru",
+  "exercises": [
+    {
+      "id": "k59e01",
+      "type": "gaps",
+      "title": "ići — идти · ja",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "idem"
+          ],
+          "ru": "Сегодня я иду в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "sam",
+            "išao"
+          ],
+          "ru": "Вчера я ходил в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "ću",
+            "ići"
+          ],
+          "ru": "Завтра я пойду в город."
+        }
+      ],
+      "decoys": [
+        "išla",
+        "si",
+        "ćeš",
+        "ideš"
+      ],
+      "explanation": "ja: idem — sam išao — ću ići. sam и ću встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išlo, išli. Как došao от doći."
+    },
+    {
+      "id": "k59e02",
+      "type": "gaps",
+      "title": "ići — идти · ti",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "ideš"
+          ],
+          "ru": "Сегодня ты идёшь в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "si",
+            "išla"
+          ],
+          "ru": "Вчера ты ходила в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "ćeš",
+            "ići"
+          ],
+          "ru": "Завтра ты пойдёшь в город."
+        }
+      ],
+      "decoys": [
+        "išao",
+        "sam",
+        "ću",
+        "ide"
+      ],
+      "explanation": "ti: ideš — si išla — ćeš ići. si и ćeš встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išlo, išli. Как došao от doći."
+    },
+    {
+      "id": "k59e03",
+      "type": "gaps",
+      "title": "ići — идти · ono",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "ide"
+          ],
+          "ru": "Сегодня оно идёт в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "je",
+            "išlo"
+          ],
+          "ru": "Вчера оно ходило в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "će",
+            "ići"
+          ],
+          "ru": "Завтра оно пойдёт в город."
+        }
+      ],
+      "decoys": [
+        "išao",
+        "su",
+        "ćemo",
+        "idu"
+      ],
+      "explanation": "ono: ide — je išlo — će ići. je и će встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išlo, išli. Как došao от doći."
+    },
+    {
+      "id": "k59e04",
+      "type": "gaps",
+      "title": "ići — идти · mi",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "idemo"
+          ],
+          "ru": "Сегодня мы идём в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "smo",
+            "išli"
+          ],
+          "ru": "Вчера мы ходили в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "ćemo",
+            "ići"
+          ],
+          "ru": "Завтра мы пойдём в город."
+        }
+      ],
+      "decoys": [
+        "išao",
+        "ste",
+        "ćete",
+        "idete"
+      ],
+      "explanation": "mi: idemo — smo išli — ćemo ići. smo и ćemo встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išlo, išli. Как došao от doći."
+    },
+    {
+      "id": "k59e05",
+      "type": "gaps",
+      "title": "ići — идти · vi",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "idete"
+          ],
+          "ru": "Сегодня вы идёте в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "ste",
+            "išli"
+          ],
+          "ru": "Вчера вы ходили в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "ćete",
+            "ići"
+          ],
+          "ru": "Завтра вы пойдёте в город."
+        }
+      ],
+      "decoys": [
+        "išla",
+        "smo",
+        "ćemo",
+        "idemo"
+      ],
+      "explanation": "vi: idete — ste išli — ćete ići. ste и ćete встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išlo, išli. Как došao от doći."
+    },
+    {
+      "id": "k59e06",
+      "type": "gaps",
+      "title": "ići — идти · oni",
+      "rows": [
+        {
+          "text": "Danas ___ u grad.",
+          "answers": [
+            "idu"
+          ],
+          "ru": "Сегодня они идут в город."
+        },
+        {
+          "text": "Juče ___ ___ u grad.",
+          "answers": [
+            "su",
+            "išli"
+          ],
+          "ru": "Вчера они ходили в город."
+        },
+        {
+          "text": "Sjutra ___ ___ u grad.",
+          "answers": [
+            "će",
+            "ići"
+          ],
+          "ru": "Завтра они пойдут в город."
+        }
+      ],
+      "decoys": [
+        "išao",
+        "je",
+        "ćemo",
+        "ide"
+      ],
+      "explanation": "oni: idu — su išli — će ići. su и će встают сразу за juče и sjutra. Прошедшее от ići меняет основу: išao, išla, išlo, išli. Как došao от doći."
+    },
+    {
+      "id": "k59e07",
+      "type": "speaking",
+      "phrase": "Juče sam išla u grad, a sjutra ću ići na more.",
+      "translation": "Вчера я ходила в город, а завтра пойду на море."
+    },
+    {
+      "id": "k59e08",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "šetati",
+      "hint": "šetati — гулять",
+      "options": [
+        "гулять",
+        "спать",
+        "плавать"
+      ],
+      "answer": "гулять",
+      "explanation": "šetati — гулять: šetam, šetaš, šeta, šetamo, šetate, šetaju. Прошедшее: šetao, šetala.",
+      "example": "Ja šetam, a ti spavaš. — Я гуляю, а ты спишь."
+    },
+    {
+      "id": "k59e09",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ići ću da šetam psa.",
+      "hint": "Ići ću da šetam psa. — Я пойду гулять с собакой.",
+      "options": [
+        "Я пойду гулять с собакой.",
+        "Я гуляла с собакой.",
+        "Я пойду гулять с мамой."
+      ],
+      "answer": "Я пойду гулять с собакой.",
+      "explanation": "šetati psa — гулять с собакой, буквально «гулять собаку». Ići ću da šetam — «пойду гулять»: после ići — da и глагол в том же лице, как Šta ću da radim?"
+    },
+    {
+      "id": "k59e10",
+      "type": "choice",
+      "prompt": "Я пойду гулять с собакой. — Ići ću da ___ psa.",
+      "options": [
+        "šetam",
+        "šetati",
+        "šeta"
+      ],
+      "answer": "šetam",
+      "explanation": "После ići ću — da и глагол в том же лице: da šetam.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k59e11",
+      "type": "gaps",
+      "title": "šetati — гулять · mi",
+      "rows": [
+        {
+          "text": "Danas ___.",
+          "answers": [
+            "šetamo"
+          ],
+          "ru": "Сегодня мы гуляем."
+        },
+        {
+          "text": "Juče ___ ___.",
+          "answers": [
+            "smo",
+            "šetali"
+          ],
+          "ru": "Вчера мы гуляли."
+        },
+        {
+          "text": "Sjutra ___ ___.",
+          "answers": [
+            "ćemo",
+            "šetati"
+          ],
+          "ru": "Завтра мы будем гулять."
+        }
+      ],
+      "decoys": [
+        "šetam",
+        "ste",
+        "ćete",
+        "šetao"
+      ],
+      "explanation": "mi: šetamo — smo šetali — ćemo šetati."
+    },
+    {
+      "id": "k59e12",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "šetalište",
+      "hint": "šetalište — пешеходная зона, набережная",
+      "options": [
+        "пешеходная зона, набережная",
+        "пляж",
+        "центр города"
+      ],
+      "answer": "пешеходная зона, набережная",
+      "explanation": "šetalište — место для прогулок, от šetati: пешеходная улица, набережная. В Баре так зовут набережную. Средний род: šetalište je lijepo.",
+      "example": "Šetalište je lijepo. — Набережная красивая."
+    },
+    {
+      "id": "k59e13",
+      "type": "choice",
+      "prompt": "Мы на набережной. — Mi smo na ___.",
+      "options": [
+        "šetalištu",
+        "šetalište",
+        "šetališta"
+      ],
+      "answer": "šetalištu",
+      "explanation": "na + где? → na šetalištu, как na moru.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k59e14",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "odmah",
+      "hint": "odmah — сразу",
+      "options": [
+        "сразу",
+        "завтра",
+        "потом"
+      ],
+      "answer": "сразу",
+      "explanation": "odmah — сразу, тут же. Dođi odmah! — Приходи сразу!",
+      "example": "Odmah ću doći. — Я сразу приду."
+    },
+    {
+      "id": "k59e15",
+      "type": "choice",
+      "prompt": "Он сразу пришёл. — On je ___ došao.",
+      "options": [
+        "odmah",
+        "sjutra",
+        "danas"
+      ],
+      "answer": "odmah",
+      "explanation": "odmah — сразу, тут же. Dođi odmah! — Приходи сразу!",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k59e16",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kad dođem u Bar, odmah ću ići na šetalište.",
+      "hint": "Kad dođem u Bar, odmah ću ići na šetalište. — Когда приеду в Бар, сразу пойду на набережную.",
+      "options": [
+        "Когда приеду в Бар, сразу пойду на набережную.",
+        "Когда приеду в Бар, сразу пойду на море.",
+        "Когда я была в Баре, я сразу пошла на набережную."
+      ],
+      "answer": "Когда приеду в Бар, сразу пойду на набережную.",
+      "explanation": "kad dođem — «когда приду, приеду»: после kad о будущем — dođem, а не doći ću. Дальше как обычно: odmah ću ići — сразу пойду."
+    },
+    {
+      "id": "k59e17",
+      "type": "word_bank",
+      "prompt": "Когда приеду в Бар, сразу пойду на набережную.",
+      "answer": "Kad dođem u Bar, odmah ću ići na šetalište.",
+      "bank": [
+        "šetalište",
+        "kad",
+        "Bar",
+        "odmah",
+        "na",
+        "u",
+        "ići",
+        "dođem",
+        "ću"
+      ],
+      "explanation": "kad dođem — «когда приду, приеду»: после kad о будущем — dođem, а не doći ću. Дальше как обычно: odmah ću ići — сразу пойду."
+    },
+    {
+      "id": "k59e18",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "гулять",
+          "me": "šetati"
+        },
+        {
+          "ru": "набережная",
+          "me": "šetalište"
+        },
+        {
+          "ru": "сразу",
+          "me": "odmah"
+        },
+        {
+          "ru": "сегодня",
+          "me": "danas"
+        },
+        {
+          "ru": "завтра",
+          "me": "sjutra"
+        }
+      ]
+    },
+    {
+      "id": "k59e19",
+      "type": "choice",
+      "prompt": "Где ты гуляешь? — Gdje ___?",
+      "options": [
+        "šetaš",
+        "šetam",
+        "šeta"
+      ],
+      "answer": "šetaš",
+      "explanation": "Ti — šetaš.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k59e20",
+      "type": "word_bank",
+      "prompt": "Вечером мы гуляем на набережной.",
+      "answer": "Uveče šetamo na šetalištu.",
+      "bank": [
+        "šetalištu",
+        "šetamo",
+        "na",
+        "uveče"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k59e21",
+      "type": "word_bank",
+      "prompt": "Sjutra ćemo šetati na šetalištu.",
+      "answer": "Завтра мы будем гулять на набережной.",
+      "bank": [
+        "набережной",
+        "на",
+        "будем",
+        "мы",
+        "гулять",
+        "завтра"
+      ],
+      "also": [
+        "Завтра будем гулять на набережной.",
+        "Мы завтра будем гулять на набережной."
+      ],
+      "explanation": "Впереди sjutra — ćemo сразу за ним."
+    },
+    {
+      "id": "k59e22",
+      "type": "word_bank",
+      "prompt": "Odmah idem kući.",
+      "answer": "Я сразу иду домой.",
+      "bank": [
+        "домой",
+        "иду",
+        "я",
+        "сразу"
+      ],
+      "also": [
+        "Сразу иду домой.",
+        "Я иду домой сразу."
+      ],
+      "explanation": "odmah — сразу, тут же. Dođi odmah! — Приходи сразу!"
+    },
+    {
+      "id": "k59e23",
+      "type": "choice",
+      "prompt": "Koliko je pet i pet?",
+      "options": [
+        "deset",
+        "devet",
+        "dvanaest"
+      ],
+      "answer": "deset",
+      "explanation": "pet i pet — deset.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k59e24",
+      "type": "choice",
+      "prompt": "Danas ovako, ___ onako.",
+      "options": [
+        "sjutra",
+        "juče",
+        "danas"
+      ],
+      "answer": "sjutra",
+      "explanation": "Danas ovako, sjutra onako — «семь пятниц на неделе».",
+      "label": "Повторение"
+    },
+    {
+      "id": "k59e25",
+      "type": "speaking",
+      "phrase": "Ići ću da šetam psa.",
+      "translation": "Я пойду гулять с собакой."
+    },
+    {
+      "id": "k59e26",
+      "type": "repeat",
+      "phrase": "Kad dođem u Bar, odmah ću ići na šetalište.",
+      "translation": "Когда приеду в Бар, сразу пойду на набережную."
+    }
+  ],
+  "words": [
+    {
+      "me": "šetati",
+      "ru": "гулять"
+    },
+    {
+      "me": "šetalište",
+      "ru": "пешеходная зона, набережная"
+    },
+    {
+      "me": "odmah",
+      "ru": "сразу"
+    }
+  ]
+}

@@ -368,6 +368,12 @@
       "title": "Jesti po vremenima. Danas ovako, sjutra onako",
       "file": "k58.json",
       "section": "Раздел 4"
+    },
+    {
+      "id": "k59",
+      "title": "Ići po vremenima. Šetalište u Baru",
+      "file": "k59.json",
+      "section": "Раздел 4"
     }
   ]
 }
