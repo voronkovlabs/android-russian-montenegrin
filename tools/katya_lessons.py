@@ -4266,6 +4266,89 @@ L.append(dict(id='k54', title='Neću spavati. Sjutra neće padati kiša', sectio
     echo('Neću se kupati.', 'Я не буду купаться.'),
 ]))
 
+# --- Урок 55 (абсурдный) ---
+# Вопросы в будущем со словами zašto (новое), gdje, kuda, kako, kada — для всех лиц.
+# Каждый раз сперва вопрос в настоящем, сразу за ним тот же в будущем. Герои прошлого
+# абсурдного урока: крокодил, волк, рыбы, цыплёнок, кошка, акула, свинья.
+ZASTO = ('zašto — и «почему», и «зачем»: одно слово на оба. Zašto spavaš? — Почему (зачем) '
+         'ты спишь?')
+UPITNA = ('С вопросительным словом li не нужно: Zašto će…?, Gdje ćeš…?, Kada ćemo…? '
+          'ću / ćeš / će встаёт сразу за вопросительным словом.')
+ZASTO_CE = 'Zašto, сразу за ним će, потом кто и глагол целиком: Zašto će krokodil piti kafu?'
+GDJE_KUDA = ('gdje — где (место): Gdje spava vuk? kuda — куда (направление): Kuda idu ribe? '
+             'Как по-русски.')
+KAKO_SE = ('Пачка мелочи в порядке ću → se: Kako će se mačka šminkati? Сперва će, потом se, '
+           'как ja ću se šminkati.')
+SA_AJKULOM = 'sa ajkulom — «с акулой», как sa ledom, sa povrćem.'
+L.append(dict(id='k55', title='Zašto će krokodil piti kafu?', section=S4, words=[
+    ('zašto', 'почему, зачем'), ('Gdje ćeš…? / Kuda ćeš…?', 'Где ты будешь…? / Куда ты пойдёшь…?'),
+    ('Kako ćemo…? / Kada ćete…?', 'Как мы будем…? / Когда вы будете…?')],
+    ex=[
+    dict(new('zašto', 'почему, зачем', ['почему, зачем', 'где', 'когда']), explanation=ZASTO),
+    dict(pairs(('почему', 'zašto'), ('где', 'gdje'), ('куда', 'kuda'), ('как', 'kako'),
+               ('когда', 'kada')), explanation=GDJE_KUDA),
+    dict(phrase('Zašto krokodil pije kafu?', 'Почему крокодил пьёт кофе?',
+                ['Почему крокодил пьёт кофе?', 'Где крокодил пьёт кофе?', 'Почему крокодил не пьёт кофе?']),
+         explanation=ZASTO),
+    pick('Почему крокодил будет пить кофе? — Zašto ___ krokodil piti kafu?', ['će', 'ćeš', 'li će'], 'će',
+         explanation=UPITNA + ' ' + ZASTO_CE, label='Вставь слово'),
+    dict(phrase('Gdje spava vuk?', 'Где спит волк?', ['Где спит волк?', 'Куда идёт волк?', 'Когда спит волк?']),
+         explanation=GDJE_KUDA),
+    pick('Где ты будешь спать? — Gdje ___ spavati?', ['ćeš', 'će', 'ćemo'], 'ćeš',
+         explanation='Ti — ćeš. ' + UPITNA, label='Вставь слово'),
+    dict(phrase('Kuda idu ribe? — U kafić.', 'Куда идут рыбы? — В кафе.',
+                ['Куда идут рыбы? — В кафе.', 'Где рыбы? — В кафе.', 'Куда идут рыбы? — В лес.']),
+         explanation=GDJE_KUDA),
+    dict(bank('Куда пойдут рыбы?', 'Kuda će ići ribe?', ['ribe', 'ići', 'kuda', 'će'],
+              also=['Kuda će ribe ići?']), explanation='Oni — će. ići — на -ći, раздельно.'),
+    pick('___ idu ribe? — U kafić.', ['Kuda', 'Gdje', 'Kada'], 'Kuda',
+         explanation=GDJE_KUDA, label='Вставь слово'),
+    dict(phrase('Kako se mačka šminka?', 'Как кошка красится?',
+                ['Как кошка красится?', 'Почему кошка красится?', 'Как кошка купается?']),
+         explanation='Kako, сразу за ним se: Kako se mačka šminka?'),
+    pick('Как кошка будет краситься? — Kako ___ mačka šminkati?', ['će se', 'se će', 'ćeš se'], 'će se',
+         explanation=KAKO_SE, label='Вставь слово'),
+    dict(phrase('Kada pile pije čaj?', 'Когда цыплёнок пьёт чай?',
+                ['Когда цыплёнок пьёт чай?', 'Почему цыплёнок пьёт чай?', 'Когда цыплёнок пьёт кофе?']),
+         explanation='kada — когда. Kafu pile ne pije, a čaj pije.'),
+    dict(rubank('Kada će pile piti čaj?', 'Когда цыплёнок будет пить чай?',
+                ['чай', 'когда', 'пить', 'цыплёнок', 'будет']),
+         also=['Когда будет цыплёнок пить чай?', 'Когда цыплёнок чай будет пить?'],
+         explanation='On — će. ' + UPITNA),
+    dict(rubank('Zašto se svinja kupa u moru?', 'Почему свинья купается в море?',
+                ['море', 'купается', 'почему', 'в', 'свинья']),
+         also=['Почему свинья в море купается?', 'Зачем свинья купается в море?'],
+         explanation='Zašto, сразу за ним se: Zašto se svinja kupa?'),
+    dict(bank('Почему вы будете купаться в море?', 'Zašto ćete se kupati u moru?',
+              ['moru', 'kupati', 'zašto', 'u', 'se', 'ćete']),
+         explanation='Vi — ćete. Порядок ćete → se, как ja ću se kupati.'),
+    dict(bank('Где мы будем спать?', 'Gdje ćemo spavati?', ['spavati', 'gdje', 'ćemo']),
+         explanation='Mi — ćemo. ' + UPITNA),
+    dict(rubank('Kuda ću ići?', 'Куда я пойду?', ['пойду', 'я', 'куда']),
+         also=['Куда пойду я?'], explanation='Ja — ću. Kuda ću ići? — так спрашивают и сами себя.'),
+    dict(phrase('Zašto ajkula kuva supu?', 'Почему акула варит суп?',
+                ['Почему акула варит суп?', 'Когда акула варит суп?', 'Почему акула ест суп?']),
+         explanation=ZASTO),
+    earbank('Zašto će ajkula kuvati supu?', 'Почему акула будет варить суп?',
+            ['supu', 'kuvati', 'ajkula', 'zašto', 'će']),
+    dict(pairs(('gdje spavaš', 'gdje ćeš spavati'), ('kuda ideš', 'kuda ćeš ići'),
+               ('kada piješ', 'kada ćeš piti'), ('zašto jedeš', 'zašto ćeš jesti'),
+               ('kako se šminkaš', 'kako ćeš se šminkati')),
+         explanation='Сейчас — один глагол. Будущее — ćeš сразу за вопросительным словом, глагол целиком.'),
+    pick('Как правильно спросить «Когда ты придёшь?»',
+         ['Kada ćeš doći?', 'Kada li ćeš doći?', 'Kada doćićeš?'], 'Kada ćeš doći?',
+         explanation=UPITNA + ' doći — на -ći, всегда раздельно.', label='Выбери верное'),
+    pick('— Kada će krokodil doći?\n— Doći će sjutra, sa ajkulom.\n\nС кем придёт крокодил?',
+         ['С акулой.', 'С волком.', 'Один.'], 'С акулой.', explanation=SA_AJKULOM, label='Мини-диалог'),
+    pick('Krokodil je ___ kafu.', ['pio', 'pila', 'pili'], 'pio',
+         explanation='Krokodil — он: pio.', label='Повторение'),
+    pick('Я не буду купаться. — Neću ___ kupati.', ['se', 'je', 'ću'], 'se',
+         explanation='neću, потом se: neću se kupati.', label='Повторение'),
+    say('Zašto će krokodil piti kafu?', 'Почему крокодил будет пить кофе?'),
+    say('Kako će se mačka šminkati?', 'Как кошка будет краситься?'),
+    echo('Gdje ćeš spavati?', 'Где ты будешь спать?'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.

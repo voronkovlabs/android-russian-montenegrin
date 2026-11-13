@@ -1,0 +1,403 @@
+{
+  "id": "k55",
+  "title": "Zašto će krokodil piti kafu?",
+  "exercises": [
+    {
+      "id": "k55e01",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "zašto",
+      "hint": "zašto — почему, зачем",
+      "options": [
+        "почему, зачем",
+        "где",
+        "когда"
+      ],
+      "answer": "почему, зачем",
+      "explanation": "zašto — и «почему», и «зачем»: одно слово на оба. Zašto spavaš? — Почему (зачем) ты спишь?",
+      "example": "Zašto spavaš u šumi? — Почему ты спишь в лесу?"
+    },
+    {
+      "id": "k55e02",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "почему",
+          "me": "zašto"
+        },
+        {
+          "ru": "где",
+          "me": "gdje"
+        },
+        {
+          "ru": "куда",
+          "me": "kuda"
+        },
+        {
+          "ru": "как",
+          "me": "kako"
+        },
+        {
+          "ru": "когда",
+          "me": "kada"
+        }
+      ],
+      "explanation": "gdje — где (место): Gdje spava vuk? kuda — куда (направление): Kuda idu ribe? Как по-русски."
+    },
+    {
+      "id": "k55e03",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Zašto krokodil pije kafu?",
+      "hint": "Zašto krokodil pije kafu? — Почему крокодил пьёт кофе?",
+      "options": [
+        "Почему крокодил пьёт кофе?",
+        "Где крокодил пьёт кофе?",
+        "Почему крокодил не пьёт кофе?"
+      ],
+      "answer": "Почему крокодил пьёт кофе?",
+      "explanation": "zašto — и «почему», и «зачем»: одно слово на оба. Zašto spavaš? — Почему (зачем) ты спишь?"
+    },
+    {
+      "id": "k55e04",
+      "type": "choice",
+      "prompt": "Почему крокодил будет пить кофе? — Zašto ___ krokodil piti kafu?",
+      "options": [
+        "će",
+        "ćeš",
+        "li će"
+      ],
+      "answer": "će",
+      "explanation": "С вопросительным словом li не нужно: Zašto će…?, Gdje ćeš…?, Kada ćemo…? ću / ćeš / će встаёт сразу за вопросительным словом. Zašto, сразу за ним će, потом кто и глагол целиком: Zašto će krokodil piti kafu?",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k55e05",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Gdje spava vuk?",
+      "hint": "Gdje spava vuk? — Где спит волк?",
+      "options": [
+        "Где спит волк?",
+        "Куда идёт волк?",
+        "Когда спит волк?"
+      ],
+      "answer": "Где спит волк?",
+      "explanation": "gdje — где (место): Gdje spava vuk? kuda — куда (направление): Kuda idu ribe? Как по-русски."
+    },
+    {
+      "id": "k55e06",
+      "type": "choice",
+      "prompt": "Где ты будешь спать? — Gdje ___ spavati?",
+      "options": [
+        "ćeš",
+        "će",
+        "ćemo"
+      ],
+      "answer": "ćeš",
+      "explanation": "Ti — ćeš. С вопросительным словом li не нужно: Zašto će…?, Gdje ćeš…?, Kada ćemo…? ću / ćeš / će встаёт сразу за вопросительным словом.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k55e07",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kuda idu ribe? — U kafić.",
+      "hint": "Kuda idu ribe? — U kafić. — Куда идут рыбы? — В кафе.",
+      "options": [
+        "Куда идут рыбы? — В кафе.",
+        "Где рыбы? — В кафе.",
+        "Куда идут рыбы? — В лес."
+      ],
+      "answer": "Куда идут рыбы? — В кафе.",
+      "explanation": "gdje — где (место): Gdje spava vuk? kuda — куда (направление): Kuda idu ribe? Как по-русски."
+    },
+    {
+      "id": "k55e08",
+      "type": "word_bank",
+      "prompt": "Куда пойдут рыбы?",
+      "answer": "Kuda će ići ribe?",
+      "bank": [
+        "ribe",
+        "ići",
+        "kuda",
+        "će"
+      ],
+      "also": [
+        "Kuda će ribe ići?"
+      ],
+      "explanation": "Oni — će. ići — на -ći, раздельно."
+    },
+    {
+      "id": "k55e09",
+      "type": "choice",
+      "prompt": "___ idu ribe? — U kafić.",
+      "options": [
+        "Kuda",
+        "Gdje",
+        "Kada"
+      ],
+      "answer": "Kuda",
+      "explanation": "gdje — где (место): Gdje spava vuk? kuda — куда (направление): Kuda idu ribe? Как по-русски.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k55e10",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kako se mačka šminka?",
+      "hint": "Kako se mačka šminka? — Как кошка красится?",
+      "options": [
+        "Как кошка красится?",
+        "Почему кошка красится?",
+        "Как кошка купается?"
+      ],
+      "answer": "Как кошка красится?",
+      "explanation": "Kako, сразу за ним se: Kako se mačka šminka?"
+    },
+    {
+      "id": "k55e11",
+      "type": "choice",
+      "prompt": "Как кошка будет краситься? — Kako ___ mačka šminkati?",
+      "options": [
+        "će se",
+        "se će",
+        "ćeš se"
+      ],
+      "answer": "će se",
+      "explanation": "Пачка мелочи в порядке ću → se: Kako će se mačka šminkati? Сперва će, потом se, как ja ću se šminkati.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k55e12",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Kada pile pije čaj?",
+      "hint": "Kada pile pije čaj? — Когда цыплёнок пьёт чай?",
+      "options": [
+        "Когда цыплёнок пьёт чай?",
+        "Почему цыплёнок пьёт чай?",
+        "Когда цыплёнок пьёт кофе?"
+      ],
+      "answer": "Когда цыплёнок пьёт чай?",
+      "explanation": "kada — когда. Kafu pile ne pije, a čaj pije."
+    },
+    {
+      "id": "k55e13",
+      "type": "word_bank",
+      "prompt": "Kada će pile piti čaj?",
+      "answer": "Когда цыплёнок будет пить чай?",
+      "bank": [
+        "чай",
+        "когда",
+        "пить",
+        "цыплёнок",
+        "будет"
+      ],
+      "also": [
+        "Когда будет цыплёнок пить чай?",
+        "Когда цыплёнок чай будет пить?"
+      ],
+      "explanation": "On — će. С вопросительным словом li не нужно: Zašto će…?, Gdje ćeš…?, Kada ćemo…? ću / ćeš / će встаёт сразу за вопросительным словом."
+    },
+    {
+      "id": "k55e14",
+      "type": "word_bank",
+      "prompt": "Zašto se svinja kupa u moru?",
+      "answer": "Почему свинья купается в море?",
+      "bank": [
+        "море",
+        "купается",
+        "почему",
+        "в",
+        "свинья"
+      ],
+      "also": [
+        "Почему свинья в море купается?",
+        "Зачем свинья купается в море?"
+      ],
+      "explanation": "Zašto, сразу за ним se: Zašto se svinja kupa?"
+    },
+    {
+      "id": "k55e15",
+      "type": "word_bank",
+      "prompt": "Почему вы будете купаться в море?",
+      "answer": "Zašto ćete se kupati u moru?",
+      "bank": [
+        "moru",
+        "kupati",
+        "zašto",
+        "u",
+        "se",
+        "ćete"
+      ],
+      "explanation": "Vi — ćete. Порядок ćete → se, как ja ću se kupati."
+    },
+    {
+      "id": "k55e16",
+      "type": "word_bank",
+      "prompt": "Где мы будем спать?",
+      "answer": "Gdje ćemo spavati?",
+      "bank": [
+        "spavati",
+        "gdje",
+        "ćemo"
+      ],
+      "explanation": "Mi — ćemo. С вопросительным словом li не нужно: Zašto će…?, Gdje ćeš…?, Kada ćemo…? ću / ćeš / će встаёт сразу за вопросительным словом."
+    },
+    {
+      "id": "k55e17",
+      "type": "word_bank",
+      "prompt": "Kuda ću ići?",
+      "answer": "Куда я пойду?",
+      "bank": [
+        "пойду",
+        "я",
+        "куда"
+      ],
+      "also": [
+        "Куда пойду я?"
+      ],
+      "explanation": "Ja — ću. Kuda ću ići? — так спрашивают и сами себя."
+    },
+    {
+      "id": "k55e18",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Zašto ajkula kuva supu?",
+      "hint": "Zašto ajkula kuva supu? — Почему акула варит суп?",
+      "options": [
+        "Почему акула варит суп?",
+        "Когда акула варит суп?",
+        "Почему акула ест суп?"
+      ],
+      "answer": "Почему акула варит суп?",
+      "explanation": "zašto — и «почему», и «зачем»: одно слово на оба. Zašto spavaš? — Почему (зачем) ты спишь?"
+    },
+    {
+      "id": "k55e19",
+      "type": "word_bank",
+      "prompt": "Почему акула будет варить суп?",
+      "answer": "Zašto će ajkula kuvati supu?",
+      "bank": [
+        "supu",
+        "kuvati",
+        "ajkula",
+        "zašto",
+        "će"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k55e20",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "gdje spavaš",
+          "me": "gdje ćeš spavati"
+        },
+        {
+          "ru": "kuda ideš",
+          "me": "kuda ćeš ići"
+        },
+        {
+          "ru": "kada piješ",
+          "me": "kada ćeš piti"
+        },
+        {
+          "ru": "zašto jedeš",
+          "me": "zašto ćeš jesti"
+        },
+        {
+          "ru": "kako se šminkaš",
+          "me": "kako ćeš se šminkati"
+        }
+      ],
+      "explanation": "Сейчас — один глагол. Будущее — ćeš сразу за вопросительным словом, глагол целиком."
+    },
+    {
+      "id": "k55e21",
+      "type": "choice",
+      "prompt": "Как правильно спросить «Когда ты придёшь?»",
+      "options": [
+        "Kada ćeš doći?",
+        "Kada li ćeš doći?",
+        "Kada doćićeš?"
+      ],
+      "answer": "Kada ćeš doći?",
+      "explanation": "С вопросительным словом li не нужно: Zašto će…?, Gdje ćeš…?, Kada ćemo…? ću / ćeš / će встаёт сразу за вопросительным словом. doći — на -ći, всегда раздельно.",
+      "label": "Выбери верное"
+    },
+    {
+      "id": "k55e22",
+      "type": "choice",
+      "prompt": "— Kada će krokodil doći?\n— Doći će sjutra, sa ajkulom.\n\nС кем придёт крокодил?",
+      "options": [
+        "С акулой.",
+        "С волком.",
+        "Один."
+      ],
+      "answer": "С акулой.",
+      "explanation": "sa ajkulom — «с акулой», как sa ledom, sa povrćem.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k55e23",
+      "type": "choice",
+      "prompt": "Krokodil je ___ kafu.",
+      "options": [
+        "pio",
+        "pila",
+        "pili"
+      ],
+      "answer": "pio",
+      "explanation": "Krokodil — он: pio.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k55e24",
+      "type": "choice",
+      "prompt": "Я не буду купаться. — Neću ___ kupati.",
+      "options": [
+        "se",
+        "je",
+        "ću"
+      ],
+      "answer": "se",
+      "explanation": "neću, потом se: neću se kupati.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k55e25",
+      "type": "speaking",
+      "phrase": "Zašto će krokodil piti kafu?",
+      "translation": "Почему крокодил будет пить кофе?"
+    },
+    {
+      "id": "k55e26",
+      "type": "speaking",
+      "phrase": "Kako će se mačka šminkati?",
+      "translation": "Как кошка будет краситься?"
+    },
+    {
+      "id": "k55e27",
+      "type": "repeat",
+      "phrase": "Gdje ćeš spavati?",
+      "translation": "Где ты будешь спать?"
+    }
+  ],
+  "words": [
+    {
+      "me": "zašto",
+      "ru": "почему, зачем"
+    },
+    {
+      "me": "Gdje ćeš…? / Kuda ćeš…?",
+      "ru": "Где ты будешь…? / Куда ты пойдёшь…?"
+    },
+    {
+      "me": "Kako ćemo…? / Kada ćete…?",
+      "ru": "Как мы будем…? / Когда вы будете…?"
+    }
+  ]
+}
