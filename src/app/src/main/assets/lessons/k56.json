@@ -244,12 +244,362 @@
       "type": "speaking",
       "phrase": "Juče sam spavala, a sjutra ću spavati.",
       "translation": "Вчера я спала, а завтра буду спать."
+    },
+    {
+      "id": "k56e09",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "težak",
+      "hint": "težak — трудный, тяжёлый",
+      "options": [
+        "трудный, тяжёлый",
+        "лёгкий",
+        "длинный"
+      ],
+      "answer": "трудный, тяжёлый",
+      "explanation": "težak — и «трудный», и «тяжёлый»: težak dan — трудный день. Она — teška, оно — teško: Ovo je teško — это трудно.",
+      "example": "Ponedjeljak je težak dan. — Понедельник — трудный день."
+    },
+    {
+      "id": "k56e10",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "lak",
+      "hint": "lak — лёгкий",
+      "options": [
+        "лёгкий",
+        "трудный",
+        "быстрый"
+      ],
+      "answer": "лёгкий",
+      "explanation": "lak — лёгкий: lak dan — лёгкий день. Она — laka, оно — lako: Ovo je lako — это легко.",
+      "example": "Ovo je lako. — Это легко."
+    },
+    {
+      "id": "k56e11",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "трудный",
+          "me": "težak"
+        },
+        {
+          "ru": "трудная",
+          "me": "teška"
+        },
+        {
+          "ru": "трудно",
+          "me": "teško"
+        },
+        {
+          "ru": "лёгкий",
+          "me": "lak"
+        },
+        {
+          "ru": "легко",
+          "me": "lako"
+        }
+      ]
+    },
+    {
+      "id": "k56e12",
+      "type": "choice",
+      "prompt": "Платье лёгкое. — Haljina je ___.",
+      "options": [
+        "laka",
+        "lak",
+        "lako"
+      ],
+      "answer": "laka",
+      "explanation": "haljina — она: laka.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k56e13",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "ponedjeljak",
+      "hint": "ponedjeljak — понедельник",
+      "options": [
+        "понедельник",
+        "вторник",
+        "пятница"
+      ],
+      "answer": "понедельник",
+      "explanation": "ponedjeljak, utorak, četvrtak, petak — мужского рода: Juče je bio ponedjeljak. u utorak — во вторник, слово не меняется.",
+      "example": "U ponedjeljak sam u gradu. — В понедельник я в городе."
+    },
+    {
+      "id": "k56e14",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "utorak",
+      "hint": "utorak — вторник",
+      "options": [
+        "вторник",
+        "четверг",
+        "суббота"
+      ],
+      "answer": "вторник",
+      "explanation": "ponedjeljak, utorak, četvrtak, petak — мужского рода: Juče je bio ponedjeljak. u utorak — во вторник, слово не меняется.",
+      "example": "Utorak je dobar dan. — Вторник — хороший день."
+    },
+    {
+      "id": "k56e15",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "srijeda",
+      "hint": "srijeda — среда",
+      "options": [
+        "среда",
+        "суббота",
+        "неделя"
+      ],
+      "answer": "среда",
+      "explanation": "srijeda — среда, женского рода, как subota и nedjelja: Juče je bila srijeda. u srijedu — в среду.",
+      "example": "Srijeda je lak dan. — Среда — лёгкий день."
+    },
+    {
+      "id": "k56e16",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "četvrtak",
+      "hint": "četvrtak — четверг",
+      "options": [
+        "четверг",
+        "вторник",
+        "пятница"
+      ],
+      "answer": "четверг",
+      "explanation": "ponedjeljak, utorak, četvrtak, petak — мужского рода: Juče je bio ponedjeljak. u utorak — во вторник, слово не меняется.",
+      "example": "Četvrtak je moj dan. — Четверг — мой день."
+    },
+    {
+      "id": "k56e17",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "понедельник",
+          "me": "ponedjeljak"
+        },
+        {
+          "ru": "вторник",
+          "me": "utorak"
+        },
+        {
+          "ru": "среда",
+          "me": "srijeda"
+        },
+        {
+          "ru": "четверг",
+          "me": "četvrtak"
+        },
+        {
+          "ru": "пятница",
+          "me": "petak"
+        }
+      ]
+    },
+    {
+      "id": "k56e18",
+      "type": "choice",
+      "prompt": "В среду — u ___",
+      "options": [
+        "srijedu",
+        "srijeda",
+        "srijedi"
+      ],
+      "answer": "srijedu",
+      "explanation": "srijeda → u srijedu, как subota → u subotu. ponedjeljak, utorak, četvrtak, petak не меняются: u utorak.",
+      "label": "Выбери форму"
+    },
+    {
+      "id": "k56e19",
+      "type": "gaps",
+      "title": "Какой сегодня день?",
+      "rows": [
+        {
+          "text": "Danas je ___.",
+          "answers": [
+            "utorak"
+          ],
+          "ru": "Сегодня вторник."
+        },
+        {
+          "text": "Juče je ___ ___.",
+          "answers": [
+            "bio",
+            "ponedjeljak"
+          ],
+          "ru": "Вчера был понедельник."
+        },
+        {
+          "text": "Sjutra ___ biti ___.",
+          "answers": [
+            "će",
+            "srijeda"
+          ],
+          "ru": "Завтра будет среда."
+        }
+      ],
+      "decoys": [
+        "bila",
+        "srijedu",
+        "ću",
+        "petak"
+      ],
+      "explanation": "ponedjeljak — он: bio. В будущем род не виден: će biti srijeda."
+    },
+    {
+      "id": "k56e20",
+      "type": "gaps",
+      "title": "Какой сегодня день?",
+      "rows": [
+        {
+          "text": "Danas je ___.",
+          "answers": [
+            "četvrtak"
+          ],
+          "ru": "Сегодня четверг."
+        },
+        {
+          "text": "Juče je ___ ___.",
+          "answers": [
+            "bila",
+            "srijeda"
+          ],
+          "ru": "Вчера была среда."
+        },
+        {
+          "text": "Sjutra ___ biti ___.",
+          "answers": [
+            "će",
+            "petak"
+          ],
+          "ru": "Завтра будет пятница."
+        }
+      ],
+      "decoys": [
+        "bio",
+        "subota",
+        "ćemo",
+        "srijedu"
+      ],
+      "explanation": "srijeda — она: bila. petak — он, но будущее одно: će biti petak."
+    },
+    {
+      "id": "k56e21",
+      "type": "word_bank",
+      "prompt": "В понедельник я буду дома.",
+      "answer": "U ponedjeljak ću biti kod kuće.",
+      "bank": [
+        "kuće",
+        "biti",
+        "u",
+        "kod",
+        "ponedjeljak",
+        "ću"
+      ],
+      "explanation": "Впереди u ponedjeljak — ću сразу за ним."
+    },
+    {
+      "id": "k56e22",
+      "type": "word_bank",
+      "prompt": "U srijedu ću ići na more.",
+      "answer": "В среду я пойду на море.",
+      "bank": [
+        "море",
+        "на",
+        "в",
+        "пойду",
+        "я",
+        "среду"
+      ],
+      "also": [
+        "В среду пойду на море.",
+        "Я в среду пойду на море."
+      ],
+      "explanation": "u srijedu — в среду. ići — на -ći, раздельно: ću ići."
+    },
+    {
+      "id": "k56e23",
+      "type": "word_bank",
+      "prompt": "Завтра четверг.",
+      "answer": "Sjutra je četvrtak.",
+      "bank": [
+        "četvrtak",
+        "je",
+        "sjutra"
+      ],
+      "byEar": true
+    },
+    {
+      "id": "k56e24",
+      "type": "choice",
+      "prompt": "Когда ты придёшь? — ___ ćeš doći?",
+      "options": [
+        "Kada",
+        "Kada li",
+        "Hoćeš li"
+      ],
+      "answer": "Kada",
+      "explanation": "С вопросительным словом li не нужно: Kada ćeš doći?",
+      "label": "Повторение"
+    },
+    {
+      "id": "k56e25",
+      "type": "choice",
+      "prompt": "Мне нравится это платье. — ___ mi se ova haljina.",
+      "options": [
+        "Sviđa",
+        "Sviđaju",
+        "Sviđam"
+      ],
+      "answer": "Sviđa",
+      "explanation": "haljina — одна: sviđa.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k56e26",
+      "type": "speaking",
+      "phrase": "Danas je utorak, a sjutra će biti srijeda.",
+      "translation": "Сегодня вторник, а завтра будет среда."
+    },
+    {
+      "id": "k56e27",
+      "type": "repeat",
+      "phrase": "Ovo nije teško.",
+      "translation": "Это не трудно."
     }
   ],
   "words": [
     {
       "me": "danas",
       "ru": "сегодня"
+    },
+    {
+      "me": "težak",
+      "ru": "трудный, тяжёлый"
+    },
+    {
+      "me": "lak",
+      "ru": "лёгкий"
+    },
+    {
+      "me": "ponedjeljak",
+      "ru": "понедельник"
+    },
+    {
+      "me": "utorak",
+      "ru": "вторник"
+    },
+    {
+      "me": "srijeda",
+      "ru": "среда"
+    },
+    {
+      "me": "četvrtak",
+      "ru": "четверг"
     }
   ]
 }

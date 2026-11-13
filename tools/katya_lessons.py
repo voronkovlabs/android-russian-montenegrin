@@ -4464,11 +4464,62 @@ TENSES_ICI = [
            ['Сегодня они идут в город.', 'Вчера они ходили в город.', 'Завтра они пойдут в город.'],
            ['išao', 'je', 'ćemo', 'ide'], ISAO),
 ]
-L.append(dict(id='k56', title='Danas, juče, sjutra', section=S4, words=[('danas', 'сегодня')],
+TEZAK = ('težak — и «трудный», и «тяжёлый»: težak dan — трудный день. Она — teška, оно — '
+         'teško: Ovo je teško — это трудно.')
+LAK = 'lak — лёгкий: lak dan — лёгкий день. Она — laka, оно — lako: Ovo je lako — это легко.'
+DANI_M = ('ponedjeljak, utorak, četvrtak, petak — мужского рода: Juče je bio ponedjeljak. '
+          'u utorak — во вторник, слово не меняется.')
+SRIJEDA = ('srijeda — среда, женского рода, как subota и nedjelja: Juče je bila srijeda. '
+           'u srijedu — в среду.')
+L.append(dict(id='k56', title='Danas, juče, sjutra', section=S4, words=[('danas', 'сегодня'), ('težak', 'трудный, тяжёлый'), ('lak', 'лёгкий'),
+    ('ponedjeljak', 'понедельник'), ('utorak', 'вторник'), ('srijeda', 'среда'), ('četvrtak', 'четверг')],
     ex=[
     dict(new('danas', 'сегодня', ['сегодня', 'вчера', 'завтра']), explanation=DANAS),
     *TENSES_SPAVATI,
     say('Juče sam spavala, a sjutra ću spavati.', 'Вчера я спала, а завтра буду спать.'),
+    # После глагола — обычные задания: težak / lak и дни недели, которых не было.
+    dict(new('težak', 'трудный, тяжёлый', ['трудный, тяжёлый', 'лёгкий', 'длинный']),
+         explanation=TEZAK),
+    dict(new('lak', 'лёгкий', ['лёгкий', 'трудный', 'быстрый']), explanation=LAK),
+    pairs(('трудный', 'težak'), ('трудная', 'teška'), ('трудно', 'teško'), ('лёгкий', 'lak'),
+          ('легко', 'lako')),
+    pick('Платье лёгкое. — Haljina je ___.', ['laka', 'lak', 'lako'], 'laka',
+         explanation='haljina — она: laka.', label='Вставь слово'),
+    dict(new('ponedjeljak', 'понедельник', ['понедельник', 'вторник', 'пятница']), explanation=DANI_M),
+    dict(new('utorak', 'вторник', ['вторник', 'четверг', 'суббота']), explanation=DANI_M),
+    dict(new('srijeda', 'среда', ['среда', 'суббота', 'неделя']), explanation=SRIJEDA),
+    dict(new('četvrtak', 'четверг', ['четверг', 'вторник', 'пятница']), explanation=DANI_M),
+    pairs(('понедельник', 'ponedjeljak'), ('вторник', 'utorak'), ('среда', 'srijeda'),
+          ('четверг', 'četvrtak'), ('пятница', 'petak')),
+    pick('В среду — u ___', ['srijedu', 'srijeda', 'srijedi'], 'srijedu',
+         explanation='srijeda → u srijedu, как subota → u subotu. ponedjeljak, utorak, četvrtak, '
+                     'petak не меняются: u utorak.', label='Выбери форму'),
+    gaps('Какой сегодня день?', [
+        ('Danas je ___.', ['utorak'], 'Сегодня вторник.'),
+        ('Juče je ___ ___.', ['bio', 'ponedjeljak'], 'Вчера был понедельник.'),
+        ('Sjutra ___ biti ___.', ['će', 'srijeda'], 'Завтра будет среда.'),
+    ], ['bila', 'srijedu', 'ću', 'petak'],
+         'ponedjeljak — он: bio. В будущем род не виден: će biti srijeda.'),
+    gaps('Какой сегодня день?', [
+        ('Danas je ___.', ['četvrtak'], 'Сегодня четверг.'),
+        ('Juče je ___ ___.', ['bila', 'srijeda'], 'Вчера была среда.'),
+        ('Sjutra ___ biti ___.', ['će', 'petak'], 'Завтра будет пятница.'),
+    ], ['bio', 'subota', 'ćemo', 'srijedu'],
+         'srijeda — она: bila. petak — он, но будущее одно: će biti petak.'),
+    dict(bank('В понедельник я буду дома.', 'U ponedjeljak ću biti kod kuće.',
+              ['kuće', 'biti', 'u', 'kod', 'ponedjeljak', 'ću']),
+         explanation='Впереди u ponedjeljak — ću сразу за ним.'),
+    dict(rubank('U srijedu ću ići na more.', 'В среду я пойду на море.',
+                ['море', 'на', 'в', 'пойду', 'я', 'среду']),
+         also=['В среду пойду на море.', 'Я в среду пойду на море.'],
+         explanation='u srijedu — в среду. ići — на -ći, раздельно: ću ići.'),
+    earbank('Sjutra je četvrtak.', 'Завтра четверг.', ['četvrtak', 'je', 'sjutra']),
+    pick('Когда ты придёшь? — ___ ćeš doći?', ['Kada', 'Kada li', 'Hoćeš li'], 'Kada',
+         explanation='С вопросительным словом li не нужно: Kada ćeš doći?', label='Повторение'),
+    pick('Мне нравится это платье. — ___ mi se ova haljina.', ['Sviđa', 'Sviđaju', 'Sviđam'], 'Sviđa',
+         explanation='haljina — одна: sviđa.', label='Повторение'),
+    say('Danas je utorak, a sjutra će biti srijeda.', 'Сегодня вторник, а завтра будет среда.'),
+    echo('Ovo nije teško.', 'Это не трудно.'),
 ]))
 
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
