@@ -34,6 +34,17 @@ def earbank(me, ru, tiles):
     """Собери на слух: фраза me звучит, перевод ru открывается после ответа."""
     return dict(type='word_bank', prompt=ru, answer=me, bank=tiles, byEar=True)
 
+def gaps(title, rows, decoys, explanation=''):
+    """Столбец с пропусками: rows — (строка с ___, [слова в пропуски], перевод).
+    Плашки — все нужные слова плюс ловушки decoys (другой род, лицо, слитная форма)."""
+    out = []
+    for text, answers, ru in rows:
+        assert text.count('___') == len(answers), (text, answers)
+        out.append(dict(text=text, answers=answers, ru=ru))
+    d = dict(type='gaps', title=title, rows=out, decoys=decoys)
+    if explanation: d['explanation'] = explanation
+    return d
+
 def pairs(*ps):
     return dict(type='match', pairs=[dict(ru=r, me=m) for r, m in ps])
 
