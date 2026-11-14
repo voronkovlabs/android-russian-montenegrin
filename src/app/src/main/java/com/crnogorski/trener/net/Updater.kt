@@ -228,7 +228,12 @@ class Updater(private val context: Context) {
                     }
                 }
             }
-            if (target.length() < 1_000_000) {
+            // Сверяем с размером вложения из релиза, а не с порогом «меньше
+            // мегабайта — недокачано»: тот был написан под APK и молча
+            // выбрасывал пакет уроков в двести килобайт (0.54).
+            val whole = if (release.sizeBytes > 0) target.length() == release.sizeBytes
+                else target.length() > 0
+            if (!whole) {
                 target.delete()
                 error("файл скачался не целиком")
             }
