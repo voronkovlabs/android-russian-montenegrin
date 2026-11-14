@@ -241,15 +241,22 @@ class Updater(private val context: Context) {
      * заранее нельзя — система показывает свой экран.
      */
     fun install(file: File) {
+        context.startActivity(installIntent(file))
+    }
+
+    /**
+     * Намерение «поставить этот APK» — и для запуска сразу, и для уведомления
+     * «скачано — нажми» (0.51): там оно уходит в `PendingIntent`.
+     */
+    fun installIntent(file: File): Intent {
         val uri: Uri = FileProvider.getUriForFile(
             context, "${context.packageName}.files", file
         )
-        val intent = Intent(Intent.ACTION_VIEW).apply {
+        return Intent(Intent.ACTION_VIEW).apply {
             setDataAndType(uri, "application/vnd.android.package-archive")
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        context.startActivity(intent)
     }
 
     /** Разрешено ли нам вообще предлагать установку. */

@@ -860,8 +860,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * одно и то же число видно и на главном, и в настройках — нажать
      * «обновить» можно с обоих экранов.
      */
-    private val _download = MutableStateFlow<Float?>(null)
-    val download: StateFlow<Float?> = _download
+    // С 0.51 — поток службы скачивания: качается и при свёрнутом приложении.
+    val download: StateFlow<Float?> = com.crnogorski.trener.work.UpdateWork.progress
 
     /** Контекст для того, что зовут из методов: `app` виден только в инициализации. */
     private val ctx: android.content.Context = app.applicationContext
@@ -2039,21 +2039,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
         // Второе нажатие во время скачивания начало бы всё заново: каталог
         // чистится перед закачкой, и первый проход писал бы в удалённый файл.
-        if (_download.value != null) return
-        say("Скачиваю ${release.sizeMb} МБ…")
-        _download.value = 0f
-        viewModelScope.launch {
-            updater.download(release) { part -> _download.value = part }
-                .onSuccess {
-                    _download.value = null
-                    say("Открываю установщик…")
-                    updater.install(it)
-                }
-                .onFailure {
-                    _download.value = null
-                    say("Не скачалось: ${it.message}")
-                }
-        }
+        if (download.value != null) return
+        // Качает служба (0.51): приложение можно свернуть, а скачанное
+        // ставится нажатием на уведомление.
+        say("Скачиваю ${release.sizeMb} МБ — можно свернуть, по готовности придёт уведомление")
+        com.crnogorski.trener.work.UpdateWork.start(ctx, release) { say(it) }
     }
 
     /**

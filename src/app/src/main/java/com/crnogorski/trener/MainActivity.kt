@@ -318,7 +318,15 @@ class MainActivity : ComponentActivity() {
      * систему прижмёт память. Трасса запуска нужна целиком, и дописывается она
      * уже после того, как запуск кончился.
      */
+    override fun onStart() {
+        super.onStart()
+        // Скачанное обновление на экране ставится сразу, в фоне — через
+        // уведомление (0.51).
+        com.crnogorski.trener.work.UpdateWork.visible = true
+    }
+
     override fun onStop() {
+        com.crnogorski.trener.work.UpdateWork.visible = false
         Trace.parkAsync(this)
         super.onStop()
     }
