@@ -81,7 +81,18 @@ data class VocabFile(
     val frames: Map<String, String> = emptyMap(),
     val slots: Map<String, String> = emptyMap(),
     val words: List<VocabWord> = emptyList()
-)
+) {
+    /**
+     * Указатель синонимов — свой у каждого экземпляра, см. [synonymIndex].
+     * Делегат в файл не пишется и в равенство не входит.
+     */
+    internal val synonymsByGloss: Map<String, List<String>> by lazy {
+        words
+            .groupBy { LocalCheck.glossVariants(it.gloss).firstOrNull().orEmpty() }
+            .filterKeys { it.isNotBlank() }
+            .mapValues { (_, same) -> same.map { it.id } }
+    }
+}
 
 /** Что именно спрашивает карточка. Ключ уходит в `exerciseId` и не меняется. */
 enum class VocabKind(val key: String) {
@@ -157,7 +168,11 @@ class VocabRepository(private val context: Context) {
      */
     suspend fun load(): VocabFile = withContext(Dispatchers.IO) {
         val done = dao.lessonProgress().map { it.lessonId }.toSet()
-        cached?.takeIf { cachedFor == done } ?: Trace.span("словарь из уроков") {
+        // Номер пакета — до чтения уроков: сменится посреди сборки — следующий
+        // вызов соберёт заново, а не примет устаревшее за свежее.
+        val generation = Content.generation
+        cached?.takeIf { cachedFor == done && cachedGeneration == generation }
+            ?: Trace.span("словарь из уроков") {
             runCatching {
                 VocabFile(
                     words = lessons.courseWords()
@@ -171,6 +186,7 @@ class VocabRepository(private val context: Context) {
         }.also {
             cached = it
             cachedFor = done
+            cachedGeneration = generation
         }
     }
 
@@ -179,6 +195,14 @@ class VocabRepository(private val context: Context) {
 
     /** Для какого набора пройденных уроков собран [cached]. */
     private var cachedFor: Set<String> = emptySet()
+
+    /**
+     * Для какого пакета уроков собран [cached] ([Content.generation]). Пришёл
+     * пакет — у пройденных уроков могли смениться списки слов, а набор
+     * пройденных тот же, и без этого словарь остался бы прежним до первого
+     * нового пройденного урока.
+     */
+    private var cachedGeneration = -1
 
     /**
      * Парадигмы форм для этих слов — читаются полосами и по требованию.
@@ -657,25 +681,15 @@ private fun VocabFile.synonyms(word: VocabWord): List<String> {
  * место, которое этого роста не выдерживало. Второе следует за первым, и
  * искать такое надо сразу после того, как что-то в приложении начало расти.
  *
- * Хранится по **ссылке на файл**, а не по равенству: у `VocabFile` равенство
- * сравнивает все 1152 слова, и проверка кэша стоила бы дороже самого кэша.
- * Файл живёт один на запуск (`VocabRepository.load` его кэширует), поэтому
- * индекс строится ровно однажды.
+ * Живёт **в самом экземпляре словаря** (`VocabFile.synonymsByGloss`), а не в
+ * общей ячейке на всё приложение. Ячейка была одна и помнила один файл —
+ * расчёт был на то, что файл один на запуск. В 0.54 (отчёт 381) экземпляров
+ * оказалось два: после пакета уроков словарь собрался заново, экран создался
+ * повторно, и две сборки «Сегодня» шли разом. Каждый вызов вытеснял указатель
+ * соседа, он перестраивался на каждой карточке, и сборка заняла 118 секунд
+ * вместо трёх — тот же квадрат, что и до 1.83.
  */
-private val indexLock = Any()
-private var indexedFile: VocabFile? = null
-private var indexedGlosses: Map<String, List<String>> = emptyMap()
-
-private fun VocabFile.synonymIndex(): Map<String, List<String>> = synchronized(indexLock) {
-    if (indexedFile !== this) {
-        indexedGlosses = words
-            .groupBy { LocalCheck.glossVariants(it.gloss).firstOrNull().orEmpty() }
-            .filterKeys { it.isNotBlank() }
-            .mapValues { (_, same) -> same.map { it.id } }
-        indexedFile = this
-    }
-    indexedGlosses
-}
+private fun VocabFile.synonymIndex(): Map<String, List<String>> = synonymsByGloss
 
 /**
  * Пара для экрана сопоставления, или `null`, если слово на него не годится.
