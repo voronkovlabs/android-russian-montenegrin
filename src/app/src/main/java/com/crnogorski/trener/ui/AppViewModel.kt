@@ -65,6 +65,8 @@ import com.crnogorski.trener.net.CheckResult
 import com.crnogorski.trener.net.GithubIssues
 import com.crnogorski.trener.net.HaikuChecker
 import com.crnogorski.trener.net.Release
+import com.crnogorski.trener.data.Content
+import com.crnogorski.trener.net.LessonPack
 import com.crnogorski.trener.net.Updater
 import com.crnogorski.trener.net.Verdict
 import com.crnogorski.trener.srs.Scheduler
@@ -1985,6 +1987,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      */
     private fun lookForUpdate() {
         updateCheckedAt = System.currentTimeMillis()
+        lookForLessons()
         viewModelScope.launch {
             Trace.span("сеть: проверка обновления") { updater.check() }.getOrNull()?.let { release ->
                 // Один запрос отвечает на два вопроса. Пришёл ответ про
@@ -1997,6 +2000,43 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 freshRelease = release
                 _home.value = _home.value.copy(update = release)
             }
+        }
+    }
+
+    /** Уроки до прихода пакета — чтобы сказать, какие появились. */
+    private var lessonsBefore: List<String> = emptyList()
+
+    /** Пакет уроков скачан, но открыто занятие — применим при выходе. */
+    private var lessonsPending = false
+
+    /**
+     * Пакет уроков (0.51): новые уроки без нового APK. Скачивается сам, без
+     * кнопки, — весит сотни килобайт. Посреди занятия не применяется.
+     */
+    private fun lookForLessons() {
+        viewModelScope.launch {
+            val before = runCatching { repo.index().lessons.map { it.id } }.getOrDefault(emptyList())
+            when (Trace.span("сеть: пакет уроков") { LessonPack(ctx).update() }) {
+                is LessonPack.Outcome.NeedsApp ->
+                    say("Есть новые уроки — для них нужно обновить приложение")
+                is LessonPack.Outcome.Installed -> {
+                    lessonsBefore = before
+                    if (_session.value == null && _story.value == null) applyLessons()
+                    else lessonsPending = true
+                }
+                LessonPack.Outcome.Nothing -> Unit
+            }
+        }
+    }
+
+    private fun applyLessons() {
+        lessonsPending = false
+        Content.refresh(ctx)
+        viewModelScope.launch {
+            val now = runCatching { repo.index().lessons.map { it.id } }.getOrDefault(emptyList())
+            val added = now - lessonsBefore.toSet()
+            refreshHome()
+            say(if (added.isEmpty()) "Уроки обновлены" else "Новые уроки: ${added.joinToString()}")
         }
     }
 
@@ -2959,7 +2999,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
         _session.value = null
         autoSaveProgress()
-        refreshHome()
+        if (lessonsPending && _story.value == null) applyLessons() else refreshHome()
     }
 
     // --- Настройки ---
@@ -2972,7 +3012,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 complaintsLeft = complaints.count(),
                 issuesReady = issues.configured,
                 filePath = complaints.file().absolutePath,
-                versionName = BuildConfig.VERSION_NAME,
+                versionName = BuildConfig.VERSION_NAME + " · уроки ${Content.version(ctx)}",
                 versionCode = BuildConfig.VERSION_CODE,
                 progressFolder = progress.folderLabel(),
                 progressLocal = progress.localFile().absolutePath,
@@ -3130,7 +3170,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         storyClock = 0L
         _story.value = null
         autoSaveProgress()
-        refreshHome()
+        if (lessonsPending && _session.value == null) applyLessons() else refreshHome()
         // История — тоже занятие, и время с неё идёт в тот же дневной счёт.
         // Заставка показывается при выходе, а не посреди чтения: костёр
         // во весь экран поверх недочитанной фразы — это помеха, а не награда.

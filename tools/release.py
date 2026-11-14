@@ -72,7 +72,7 @@ def publish(tag, title, notes, apk):
     return (r.stdout or '').strip()
 
 
-def prune(keep):
+def prune(keep, prefix=TAG_PREFIX):
     """
     Удаляет всё, что старше последних [keep] релизов.
 
@@ -85,8 +85,8 @@ def prune(keep):
         sys.exit((r.stderr or r.stdout).strip())
     # Только свои: релизы основного приложения лежат в том же репозитории.
     releases = sorted((x for x in json.loads(r.stdout)
-                       if x['tagName'].startswith(TAG_PREFIX)),
-                      key=lambda x: version_key(x['tagName']), reverse=True)
+                       if x['tagName'].startswith(prefix)),
+                      key=lambda x: version_key(x['tagName'], prefix), reverse=True)
     for old in releases[keep:]:
         tag = old['tagName']
         # Метку сносим вместе с релизом: без --cleanup-tag в репозитории
@@ -96,10 +96,10 @@ def prune(keep):
     return len(releases[keep:])
 
 
-def version_key(tag):
+def version_key(tag, prefix=TAG_PREFIX):
     """Порядок Катиных релизов — по номеру версии, а не по дате: до 0.11 метки
     стояли на одном коммите main, и даты у них совпадали."""
-    return [int(p) for p in tag[len(TAG_PREFIX):].split('.') if p.isdigit()]
+    return [int(p) for p in tag[len(prefix):].split('.') if p.isdigit()]
 
 
 def latest_tag():
@@ -200,6 +200,61 @@ def coverage(prev_tag):
 
 NEWS_MARK = '<!--news-->'
 
+# Пакет уроков (0.51): новые уроки без нового APK. Двойник `TAG_PREFIX` в
+# net/LessonPack.kt. Метка minApp — двойник `MIN_APP` там же.
+LESSONS_PREFIX = 'katya-lessons-'
+ASSETS = 'src/app/src/main/assets'
+PACK = ['lessons', 'stories', 'glossary.json']
+INFO = os.path.join(ASSETS, 'content.json')
+
+
+def lessons(keep):
+    """
+    Выпустить пакет уроков: zip из assets, релиз `katya-lessons-N`.
+
+    Номер N — следующий после последнего пакета и после номера уроков в APK.
+    Он же записывается в `assets/content.json`, чтобы следующий APK знал, какие
+    уроки у него внутри: иначе свежий APK уступил бы старому пакету.
+
+    minApp — versionCode из gradle: уроки могут опираться на код этой версии.
+    Если такого APK ещё нет в релизах, пакет будет ждать приложения, которого
+    ни у кого нет, — об этом предупреждаем.
+    """
+    name, code = version()
+    if run('release', 'view', TAG_PREFIX + name, '--repo', REPO).returncode != 0:
+        print('ВНИМАНИЕ: APK %s ещё не выпущен — пакет поставится только после него' % name)
+    r = run('release', 'list', '--repo', REPO, '--limit', '100', '--json', 'tagName')
+    if r.returncode != 0:
+        sys.exit((r.stderr or r.stdout).strip())
+    packs = [int(x['tagName'][len(LESSONS_PREFIX):]) for x in json.loads(r.stdout)
+             if x['tagName'].startswith(LESSONS_PREFIX)
+             and x['tagName'][len(LESSONS_PREFIX):].isdigit()]
+    bundled = json.load(open(INFO, encoding='utf-8')).get('version', 0)
+    n = max(packs + [bundled]) + 1
+    with open(INFO, 'w', encoding='utf-8') as f:
+        json.dump({'version': n}, f)
+        f.write('\n')
+
+    import zipfile
+    zpath = os.path.join(tempfile.gettempdir(), 'lessons-%d.zip' % n)
+    with zipfile.ZipFile(zpath, 'w', zipfile.ZIP_DEFLATED) as z:
+        z.writestr('content.json', json.dumps({'version': n, 'minApp': int(code)}))
+        for item in PACK:
+            top = os.path.join(ASSETS, item)
+            if os.path.isfile(top):
+                z.write(top, item)
+                continue
+            for folder, _, files in os.walk(top):
+                for fname in files:
+                    full = os.path.join(folder, fname)
+                    z.write(full, os.path.relpath(full, ASSETS).replace(os.sep, '/'))
+    tag = LESSONS_PREFIX + str(n)
+    url = publish(tag, 'Уроки %d' % n, '<!--minApp %s-->' % code, zpath)
+    print('пакет уроков:', url or tag, '· %d КБ' % (os.path.getsize(zpath) // 1024))
+    os.remove(zpath)
+    print('прополото:', prune(keep, LESSONS_PREFIX))
+    print('assets/content.json → %d: закоммить его вместе с уроками' % n)
+
 
 def main():
     ap = argparse.ArgumentParser()
@@ -209,7 +264,14 @@ def main():
         '--news', default='',
         help='текст для телефона: строка на главном и уведомление после '
              'установки. Нет ключа — нет и уведомления')
+    ap.add_argument(
+        '--lessons', action='store_true',
+        help='выпустить только пакет уроков, без APK')
     args = ap.parse_args()
+
+    if args.lessons:
+        lessons(args.keep)
+        return
 
     if not os.path.exists(APK):
         sys.exit('нет собранного APK: ' + APK + '\nсперва cd src && ./gradlew assembleDebug')

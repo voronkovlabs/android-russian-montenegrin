@@ -16,14 +16,30 @@ class LessonRepository(private val context: Context) {
     private var cachedGlossary: Glossary? = null
     private var cachedStories: StoryIndex? = null
     private val cachedLessons = mutableMapOf<String, Lesson>()
+    private var generation = -1
+
+    /**
+     * Сменился источник уроков (пришёл пакет, 0.51) — кэш больше не про то.
+     * Экземпляров репозитория несколько, поэтому сверяемся с общим счётчиком.
+     */
+    private fun sync() {
+        if (generation == Content.generation) return
+        cachedIndex = null
+        cachedGlossary = null
+        cachedStories = null
+        cachedLessons.clear()
+        generation = Content.generation
+    }
 
     suspend fun index(): LessonIndex = withContext(Dispatchers.IO) {
+        sync()
         cachedIndex ?: Trace.span("assets: оглавление уроков") {
             json.decodeFromString<LessonIndex>(read("lessons/index.json"))
         }.also { cachedIndex = it }
     }
 
     suspend fun lesson(id: String): Lesson = withContext(Dispatchers.IO) {
+        sync()
         cachedLessons[id] ?: run {
             val ref = index().lessons.first { it.id == id }
             Trace.span("assets: урок", id) {
@@ -59,12 +75,14 @@ class LessonRepository(private val context: Context) {
 
     /** Оглавление историй; отсутствие файла — не ошибка, просто раздел пустой. */
     suspend fun stories(): StoryIndex = withContext(Dispatchers.IO) {
+        sync()
         cachedStories ?: runCatching {
             json.decodeFromString<StoryIndex>(read("stories/index.json"))
         }.getOrDefault(StoryIndex()).also { cachedStories = it }
     }
 
     suspend fun story(id: String): Story = withContext(Dispatchers.IO) {
+        sync()
         val ref = stories().stories.first { it.id == id }
         json.decodeFromString<Story>(read("stories/" + ref.file))
     }
@@ -74,6 +92,7 @@ class LessonRepository(private val context: Context) {
      * битый, подсказки просто не появятся — задания от этого не ломаются.
      */
     suspend fun glossary(): Glossary = withContext(Dispatchers.IO) {
+        sync()
         cachedGlossary ?: Trace.span("assets: подсказки по словам") {
             runCatching {
                 json.decodeFromString<Glossary>(read("glossary.json"))
@@ -100,8 +119,7 @@ class LessonRepository(private val context: Context) {
           }
         }
 
-    private fun read(path: String): String =
-        context.assets.open(path).bufferedReader().use { it.readText() }
+    private fun read(path: String): String = Content.read(context, path)
 }
 
 /**

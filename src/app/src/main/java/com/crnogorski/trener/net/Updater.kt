@@ -166,10 +166,13 @@ class Updater(private val context: Context) {
      */
     suspend fun download(
         release: Release,
-        onProgress: (Float) -> Unit = {}
+        onProgress: (Float) -> Unit = {},
+        // Каталог в кэше. Свой у пакета уроков (0.51): каталог чистится перед
+        // закачкой, и общий стёр бы недокачанный APK.
+        dirName: String = "update"
     ): Result<File> = withContext(Dispatchers.IO) {
         runCatching {
-            val dir = File(context.cacheDir, "update").apply { mkdirs() }
+            val dir = File(context.cacheDir, dirName).apply { mkdirs() }
             dir.listFiles()?.forEach { it.delete() }
             val target = File(dir, release.assetName)
 

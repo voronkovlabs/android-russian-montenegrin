@@ -68,7 +68,7 @@ object UpdateWork {
         ContextCompat.startForegroundService(app, Intent(app, UpdateService::class.java))
         scope.launch {
             val updater = Updater(app)
-            updater.download(release) { part -> _progress.value = part }
+            updater.download(release, onProgress = { part -> _progress.value = part })
                 .onSuccess { file ->
                     _progress.value = null
                     val install = updater.installIntent(file)
