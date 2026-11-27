@@ -4857,7 +4857,8 @@ L.append(dict(id='k61', title='Nije bilo struje. Ne bacajte smeće!', section=S4
          explanation=NIJE_BILO),
     dict(rubank('Sjutra će biti gužva na moru.', 'Завтра на море будет многолюдно.',
                 ['многолюдно', 'будет', 'море', 'на', 'завтра']),
-         also=['Завтра будет многолюдно на море.', 'На море завтра будет многолюдно.'],
+         also=['Завтра будет многолюдно на море.', 'На море завтра будет многолюдно.',
+               'Завтра будет толпа на море.', 'Завтра на море будет толпа.', 'На море завтра будет толпа.'],
          explanation=GUZVA_BILA),
     pick('— Ima li hljeba?\n— Nema. Juče je bilo, a danas nema. Sjutra će biti.\n\nКогда будет хлеб?',
          ['Завтра.', 'Сегодня.', 'Вчера.'], 'Завтра.',
@@ -4893,7 +4894,7 @@ L.append(dict(id='k61', title='Nije bilo struje. Ne bacajte smeće!', section=S4
     say('Juče nije bilo struje, a sjutra neće biti vode.',
         'Вчера не было света, а завтра не будет воды.'),
     say('Bilo nam je lijepo na moru.', 'Нам было хорошо на море.'),
-    echo('Ne bacajte smeće!', 'Не бросайте мусор!'),
+    echo('Sjutra će biti gužva na moru.', 'Завтра на море будет многолюдно.'),
 ]))
 
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
