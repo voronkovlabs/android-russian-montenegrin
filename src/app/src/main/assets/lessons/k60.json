@@ -1,0 +1,608 @@
+{
+  "id": "k60",
+  "title": "Reći po vremenima. Šta je rekla ajkula?",
+  "exercises": [
+    {
+      "id": "k60e01",
+      "type": "choice",
+      "label": "Новый глагол",
+      "prompt": "reći",
+      "hint": "reći — сказать",
+      "options": [
+        "сказать",
+        "слышать",
+        "писать"
+      ],
+      "answer": "сказать",
+      "explanation": "reći — сказать. Сейчас говорят kažem (от kazati), а прошедшее и будущее — от reći: rekao, rekla, reklo, rekli; reći ću. reći — на -ći, поэтому всегда раздельно: reći ću.",
+      "example": "Šta ćeš reći babi? — Что ты скажешь бабушке?"
+    },
+    {
+      "id": "k60e02",
+      "type": "gaps",
+      "title": "reći — сказать · ja",
+      "rows": [
+        {
+          "text": "Danas ___ hvala.",
+          "answers": [
+            "kažem"
+          ],
+          "ru": "Сегодня я говорю спасибо."
+        },
+        {
+          "text": "Juče ___ ___ hvala.",
+          "answers": [
+            "sam",
+            "rekla"
+          ],
+          "ru": "Вчера я сказала спасибо."
+        },
+        {
+          "text": "Sjutra ___ ___ hvala.",
+          "answers": [
+            "ću",
+            "reći"
+          ],
+          "ru": "Завтра я скажу спасибо."
+        }
+      ],
+      "decoys": [
+        "rekao",
+        "si",
+        "ćeš",
+        "kažeš"
+      ],
+      "explanation": "ja: kažem — sam rekla — ću reći. sam и ću встают сразу за juče и sjutra. Сейчас — kažem, от kazati. Прошедшее — rekao, rekla, reklo, rekli; будущее — reći ću, раздельно."
+    },
+    {
+      "id": "k60e03",
+      "type": "gaps",
+      "title": "reći — сказать · ti",
+      "rows": [
+        {
+          "text": "Danas ___ hvala.",
+          "answers": [
+            "kažeš"
+          ],
+          "ru": "Сегодня ты говоришь спасибо."
+        },
+        {
+          "text": "Juče ___ ___ hvala.",
+          "answers": [
+            "si",
+            "rekao"
+          ],
+          "ru": "Вчера ты сказал спасибо."
+        },
+        {
+          "text": "Sjutra ___ ___ hvala.",
+          "answers": [
+            "ćeš",
+            "reći"
+          ],
+          "ru": "Завтра ты скажешь спасибо."
+        }
+      ],
+      "decoys": [
+        "rekla",
+        "sam",
+        "ću",
+        "kaže"
+      ],
+      "explanation": "ti: kažeš — si rekao — ćeš reći. si и ćeš встают сразу за juče и sjutra. Сейчас — kažem, от kazati. Прошедшее — rekao, rekla, reklo, rekli; будущее — reći ću, раздельно."
+    },
+    {
+      "id": "k60e04",
+      "type": "gaps",
+      "title": "reći — сказать · ono",
+      "rows": [
+        {
+          "text": "Danas ___ hvala.",
+          "answers": [
+            "kaže"
+          ],
+          "ru": "Сегодня оно говорит спасибо."
+        },
+        {
+          "text": "Juče ___ ___ hvala.",
+          "answers": [
+            "je",
+            "reklo"
+          ],
+          "ru": "Вчера оно сказало спасибо."
+        },
+        {
+          "text": "Sjutra ___ ___ hvala.",
+          "answers": [
+            "će",
+            "reći"
+          ],
+          "ru": "Завтра оно скажет спасибо."
+        }
+      ],
+      "decoys": [
+        "rekao",
+        "su",
+        "ćemo",
+        "kažu"
+      ],
+      "explanation": "ono: kaže — je reklo — će reći. je и će встают сразу за juče и sjutra. ono — средний род: reklo. Сейчас — kažem, от kazati. Прошедшее — rekao, rekla, reklo, rekli; будущее — reći ću, раздельно."
+    },
+    {
+      "id": "k60e05",
+      "type": "gaps",
+      "title": "reći — сказать · mi",
+      "rows": [
+        {
+          "text": "Danas ___ hvala.",
+          "answers": [
+            "kažemo"
+          ],
+          "ru": "Сегодня мы говорим спасибо."
+        },
+        {
+          "text": "Juče ___ ___ hvala.",
+          "answers": [
+            "smo",
+            "rekli"
+          ],
+          "ru": "Вчера мы сказали спасибо."
+        },
+        {
+          "text": "Sjutra ___ ___ hvala.",
+          "answers": [
+            "ćemo",
+            "reći"
+          ],
+          "ru": "Завтра мы скажем спасибо."
+        }
+      ],
+      "decoys": [
+        "rekao",
+        "ste",
+        "ćete",
+        "kažete"
+      ],
+      "explanation": "mi: kažemo — smo rekli — ćemo reći. smo и ćemo встают сразу за juče и sjutra. Сейчас — kažem, от kazati. Прошедшее — rekao, rekla, reklo, rekli; будущее — reći ću, раздельно."
+    },
+    {
+      "id": "k60e06",
+      "type": "gaps",
+      "title": "reći — сказать · vi",
+      "rows": [
+        {
+          "text": "Danas ___ hvala.",
+          "answers": [
+            "kažete"
+          ],
+          "ru": "Сегодня вы говорите спасибо."
+        },
+        {
+          "text": "Juče ___ ___ hvala.",
+          "answers": [
+            "ste",
+            "rekli"
+          ],
+          "ru": "Вчера вы сказали спасибо."
+        },
+        {
+          "text": "Sjutra ___ ___ hvala.",
+          "answers": [
+            "ćete",
+            "reći"
+          ],
+          "ru": "Завтра вы скажете спасибо."
+        }
+      ],
+      "decoys": [
+        "rekla",
+        "smo",
+        "ćemo",
+        "kažemo"
+      ],
+      "explanation": "vi: kažete — ste rekli — ćete reći. ste и ćete встают сразу за juče и sjutra. Сейчас — kažem, от kazati. Прошедшее — rekao, rekla, reklo, rekli; будущее — reći ću, раздельно."
+    },
+    {
+      "id": "k60e07",
+      "type": "gaps",
+      "title": "reći — сказать · oni",
+      "rows": [
+        {
+          "text": "Danas ___ hvala.",
+          "answers": [
+            "kažu"
+          ],
+          "ru": "Сегодня они говорят спасибо."
+        },
+        {
+          "text": "Juče ___ ___ hvala.",
+          "answers": [
+            "su",
+            "rekli"
+          ],
+          "ru": "Вчера они сказали спасибо."
+        },
+        {
+          "text": "Sjutra ___ ___ hvala.",
+          "answers": [
+            "će",
+            "reći"
+          ],
+          "ru": "Завтра они скажут спасибо."
+        }
+      ],
+      "decoys": [
+        "rekao",
+        "je",
+        "ćemo",
+        "kaže"
+      ],
+      "explanation": "oni: kažu — su rekli — će reći. su и će встают сразу за juče и sjutra. Сейчас — kažem, от kazati. Прошедшее — rekao, rekla, reklo, rekli; будущее — reći ću, раздельно."
+    },
+    {
+      "id": "k60e08",
+      "type": "speaking",
+      "phrase": "Juče sam rekla da, a danas kažem ne.",
+      "translation": "Вчера я сказала «да», а сегодня говорю «нет»."
+    },
+    {
+      "id": "k60e09",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Šta si rekao?",
+      "hint": "Šta si rekao? — Что ты сказал?",
+      "options": [
+        "Что ты сказал?",
+        "Что ты скажешь?",
+        "Что ты делал?"
+      ],
+      "answer": "Что ты сказал?"
+    },
+    {
+      "id": "k60e10",
+      "type": "choice",
+      "prompt": "Она сказала. — Ona je ___.",
+      "options": [
+        "rekla",
+        "rekao",
+        "reći"
+      ],
+      "answer": "rekla",
+      "explanation": "Ona — женский род: rekla. Он — rekao.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k60e11",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Reći ću ti sjutra.",
+      "hint": "Reći ću ti sjutra. — Скажу тебе завтра.",
+      "options": [
+        "Скажу тебе завтра.",
+        "Я сказала тебе вчера.",
+        "Приходи ко мне завтра."
+      ],
+      "answer": "Скажу тебе завтра."
+    },
+    {
+      "id": "k60e12",
+      "type": "choice",
+      "prompt": "— Šta je rekla ajkula?\n— Rekla je da nije gladna.\n\nЧто сказала акула?",
+      "options": [
+        "Что она не голодна.",
+        "Что она голодна.",
+        "Что она хочет пить."
+      ],
+      "answer": "Что она не голодна.",
+      "explanation": "Rekla je da… — сказала, что…: da здесь — «что», как Nisam znala da si ovdje.",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k60e13",
+      "type": "choice",
+      "label": "Новое выражение",
+      "prompt": "Šta da ti rečem…",
+      "hint": "Šta da ti rečem… — Что тебе сказать…",
+      "options": [
+        "Что тебе сказать…",
+        "Что ты сказал?",
+        "Скажу тебе завтра."
+      ],
+      "answer": "Что тебе сказать…",
+      "explanation": "Šta da ti rečem… — «что тебе сказать…», со вздохом: когда новости так себе или рассказывать долго. rečem — от reći, но только после da, kad, ako, как dođem и sjednem. Просто «я говорю» — kažem.",
+      "example": "Šta da ti rečem… Puno posla! — Что тебе сказать… Много работы!"
+    },
+    {
+      "id": "k60e14",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "kuvati",
+          "me": "kuvao"
+        },
+        {
+          "ru": "igrati",
+          "me": "igrao"
+        },
+        {
+          "ru": "pisati",
+          "me": "pisao"
+        },
+        {
+          "ru": "govoriti",
+          "me": "govorio"
+        },
+        {
+          "ru": "reći",
+          "me": "rekao"
+        }
+      ],
+      "explanation": "Прошедшее: -ati → -ao, -ala, -ali (kuvao, kuvala); -iti → -io, -ila, -ili (govorio, govorila). reći — своё: rekao, rekla."
+    },
+    {
+      "id": "k60e15",
+      "type": "gaps",
+      "title": "kuvati — варить · ja",
+      "rows": [
+        {
+          "text": "Danas ___ čorbu za krokodila.",
+          "answers": [
+            "kuvam"
+          ],
+          "ru": "Сегодня я варю похлёбку для крокодила."
+        },
+        {
+          "text": "Juče ___ ___ čorbu za krokodila.",
+          "answers": [
+            "sam",
+            "kuvao"
+          ],
+          "ru": "Вчера я варил похлёбку для крокодила."
+        },
+        {
+          "text": "Sjutra ___ ___ čorbu za krokodila.",
+          "answers": [
+            "ću",
+            "kuvati"
+          ],
+          "ru": "Завтра я буду варить похлёбку для крокодила."
+        }
+      ],
+      "decoys": [
+        "kuvala",
+        "si",
+        "ćeš",
+        "kuvaš"
+      ],
+      "explanation": "ja: kuvam — sam kuvao — ću kuvati. sam и ću встают сразу за juče и sjutra. za krokodila — для крокодила, как za djeda."
+    },
+    {
+      "id": "k60e16",
+      "type": "choice",
+      "prompt": "Ajkula je kuvala supu od krompira.",
+      "options": [
+        "Акула варила суп из картошки.",
+        "Акула варит суп из картошки.",
+        "Акула будет варить суп из рыбы."
+      ],
+      "answer": "Акула варила суп из картошки.",
+      "explanation": "ajkula — она, значит kuvala. od krompira — из картошки, как čorba od kornjače.",
+      "label": "Выбери перевод"
+    },
+    {
+      "id": "k60e17",
+      "type": "gaps",
+      "title": "igrati — играть · mi",
+      "rows": [
+        {
+          "text": "Danas ___ sa kravom.",
+          "answers": [
+            "igramo"
+          ],
+          "ru": "Сегодня мы играем с коровой."
+        },
+        {
+          "text": "Juče ___ ___ sa kravom.",
+          "answers": [
+            "smo",
+            "igrali"
+          ],
+          "ru": "Вчера мы играли с коровой."
+        },
+        {
+          "text": "Sjutra ___ ___ sa kravom.",
+          "answers": [
+            "ćemo",
+            "igrati"
+          ],
+          "ru": "Завтра мы будем играть с коровой."
+        }
+      ],
+      "decoys": [
+        "igram",
+        "ste",
+        "ćete",
+        "igrao"
+      ],
+      "explanation": "mi: igramo — smo igrali — ćemo igrati. smo и ćemo встают сразу за juče и sjutra. sa kravom — с коровой, как sa sestrom."
+    },
+    {
+      "id": "k60e18",
+      "type": "word_bank",
+      "prompt": "Krava je igrala kompjuterske igre sa medvjedom.",
+      "answer": "Корова играла в компьютерные игры с медведем.",
+      "bank": [
+        "медведем",
+        "с",
+        "игры",
+        "компьютерные",
+        "в",
+        "играла",
+        "корова"
+      ],
+      "also": [
+        "Корова играла с медведем в компьютерные игры."
+      ],
+      "explanation": "krava — она: igrala. sa medvjedom — с медведем, как sa prijateljem."
+    },
+    {
+      "id": "k60e19",
+      "type": "gaps",
+      "title": "govoriti — говорить · mače",
+      "rows": [
+        {
+          "text": "Danas mače ___ ruski.",
+          "answers": [
+            "govori"
+          ],
+          "ru": "Сегодня котёнок говорит по-русски."
+        },
+        {
+          "text": "Juče ___ mače ___ ruski.",
+          "answers": [
+            "je",
+            "govorilo"
+          ],
+          "ru": "Вчера котёнок говорил по-русски."
+        },
+        {
+          "text": "Sjutra ___ mače ___ ruski.",
+          "answers": [
+            "će",
+            "govoriti"
+          ],
+          "ru": "Завтра котёнок будет говорить по-русски."
+        }
+      ],
+      "decoys": [
+        "govorio",
+        "su",
+        "ćemo",
+        "govore"
+      ],
+      "explanation": "mače — среднего рода, значит govorilo, а не govorio. je и će встают сразу за juče и sjutra, mače — после них."
+    },
+    {
+      "id": "k60e20",
+      "type": "word_bank",
+      "prompt": "Кошка говорила по-русски.",
+      "answer": "Mačka je govorila ruski.",
+      "bank": [
+        "ruski",
+        "govorila",
+        "je",
+        "mačka"
+      ],
+      "explanation": "mačka — она: govorila."
+    },
+    {
+      "id": "k60e21",
+      "type": "gaps",
+      "title": "pisati — писать · ti",
+      "rows": [
+        {
+          "text": "Danas ___ pismo ajkuli.",
+          "answers": [
+            "pišeš"
+          ],
+          "ru": "Сегодня ты пишешь письмо акуле."
+        },
+        {
+          "text": "Juče ___ ___ pismo ajkuli.",
+          "answers": [
+            "si",
+            "pisala"
+          ],
+          "ru": "Вчера ты писала письмо акуле."
+        },
+        {
+          "text": "Sjutra ___ ___ pismo ajkuli.",
+          "answers": [
+            "ćeš",
+            "pisati"
+          ],
+          "ru": "Завтра ты будешь писать письмо акуле."
+        }
+      ],
+      "decoys": [
+        "pisao",
+        "sam",
+        "ću",
+        "piše"
+      ],
+      "explanation": "ti: pišeš — si pisala — ćeš pisati. si и ćeš встают сразу за juče и sjutra. s → š только сейчас (pišem); в прошедшем и будущем s остаётся: pisala, pisati. ajkuli — акуле, как svinji."
+    },
+    {
+      "id": "k60e22",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "ja ću kuvati",
+          "me": "kuvaću"
+        },
+        {
+          "ru": "ja ću igrati",
+          "me": "igraću"
+        },
+        {
+          "ru": "ja ću pisati",
+          "me": "pisaću"
+        },
+        {
+          "ru": "ja ću govoriti",
+          "me": "govoriću"
+        }
+      ],
+      "explanation": "Впереди ничего — слитно, -ti отпадает: kuvati → kuvaću, как spavaću. reći — на -ći, всегда раздельно: reći ću."
+    },
+    {
+      "id": "k60e23",
+      "type": "word_bank",
+      "prompt": "Я буду писать письмо брату Волку.",
+      "answer": "Pisaću pismo bratu Vuku.",
+      "bank": [
+        "Vuku",
+        "bratu",
+        "pismo",
+        "pisaću"
+      ],
+      "byEar": true,
+      "explanation": "bratu Vuku — брату Волку: кому — -u у обоих слов, как konju. Vuk — и «волк», и обычное мужское имя: так звали, например, Вука Караджича."
+    },
+    {
+      "id": "k60e24",
+      "type": "choice",
+      "prompt": "Kad ___ u Bar, odmah ću ići na šetalište.",
+      "options": [
+        "dođem",
+        "doći",
+        "došla"
+      ],
+      "answer": "dođem",
+      "explanation": "kad dođem — «когда приду, приеду»: после kad о будущем — dođem, а не doći ću. Дальше как обычно: odmah ću ići — сразу пойду.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k60e25",
+      "type": "speaking",
+      "phrase": "Šta si rekao? Reći ću ti sjutra.",
+      "translation": "Что ты сказал? Скажу тебе завтра."
+    },
+    {
+      "id": "k60e26",
+      "type": "repeat",
+      "phrase": "Krava je igrala sa medvjedom.",
+      "translation": "Корова играла с медведем."
+    }
+  ],
+  "words": [
+    {
+      "me": "reći",
+      "ru": "сказать"
+    },
+    {
+      "me": "Šta da ti rečem…",
+      "ru": "Что тебе сказать…"
+    }
+  ]
+}

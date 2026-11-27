@@ -4702,6 +4702,106 @@ L.append(dict(id='k59', title='Ići po vremenima. Šetalište u Baru', section=S
     echo('Kad dođem u Bar, odmah ću ići na šetalište.', 'Когда приеду в Бар, сразу пойду на набережную.'),
 ]))
 
+# --- Урок 60 ---
+# Абсурдный (каждый пятый). В начале — reći по временам: сейчас говорят kažem (от
+# kazati, урок 28), а прошедшее и будущее — от reći. Потом kuvati, igrati, govoriti,
+# pisati в прошедшем и будущем, по таблице на глагол, и слитное будущее. Выражение
+# «Šta da ti rečem…» — единственное место, где звучит rečem (после da).
+RECI = ('reći — сказать. Сейчас говорят kažem (от kazati), а прошедшее и будущее — от reći: '
+        'rekao, rekla, reklo, rekli; reći ću. reći — на -ći, поэтому всегда раздельно: reći ću.')
+RECI_NOTE = 'Сейчас — kažem, от kazati. Прошедшее — rekao, rekla, reklo, rekli; будущее — reći ću, раздельно.'
+TENSES_RECI = [
+    tenses('reći', 'сказать', 'ja', 'kažem', 'rekla', 'hvala',
+           ['Сегодня я говорю спасибо.', 'Вчера я сказала спасибо.', 'Завтра я скажу спасибо.'],
+           ['rekao', 'si', 'ćeš', 'kažeš'], RECI_NOTE),
+    tenses('reći', 'сказать', 'ti', 'kažeš', 'rekao', 'hvala',
+           ['Сегодня ты говоришь спасибо.', 'Вчера ты сказал спасибо.', 'Завтра ты скажешь спасибо.'],
+           ['rekla', 'sam', 'ću', 'kaže'], RECI_NOTE),
+    tenses('reći', 'сказать', 'ono', 'kaže', 'reklo', 'hvala',
+           ['Сегодня оно говорит спасибо.', 'Вчера оно сказало спасибо.', 'Завтра оно скажет спасибо.'],
+           ['rekao', 'su', 'ćemo', 'kažu'], 'ono — средний род: reklo. ' + RECI_NOTE),
+    tenses('reći', 'сказать', 'mi', 'kažemo', 'rekli', 'hvala',
+           ['Сегодня мы говорим спасибо.', 'Вчера мы сказали спасибо.', 'Завтра мы скажем спасибо.'],
+           ['rekao', 'ste', 'ćete', 'kažete'], RECI_NOTE),
+    tenses('reći', 'сказать', 'vi', 'kažete', 'rekli', 'hvala',
+           ['Сегодня вы говорите спасибо.', 'Вчера вы сказали спасибо.', 'Завтра вы скажете спасибо.'],
+           ['rekla', 'smo', 'ćemo', 'kažemo'], RECI_NOTE),
+    tenses('reći', 'сказать', 'oni', 'kažu', 'rekli', 'hvala',
+           ['Сегодня они говорят спасибо.', 'Вчера они сказали спасибо.', 'Завтра они скажут спасибо.'],
+           ['rekao', 'je', 'ćemo', 'kaže'], RECI_NOTE),
+]
+RECEM = ('Šta da ti rečem… — «что тебе сказать…», со вздохом: когда новости так себе или '
+         'рассказывать долго. rečem — от reći, но только после da, kad, ako, как dođem и sjednem. '
+         'Просто «я говорю» — kažem.')
+PROSLO = ('Прошедшее: -ati → -ao, -ala, -ali (kuvao, kuvala); -iti → -io, -ila, -ili (govorio, '
+          'govorila). reći — своё: rekao, rekla.')
+SLITNO = ('Впереди ничего — слитно, -ti отпадает: kuvati → kuvaću, как spavaću. reći — на -ći, '
+          'всегда раздельно: reći ću.')
+L.append(dict(id='k60', title='Reći po vremenima. Šta je rekla ajkula?', section=S4, words=[
+    ('reći', 'сказать'), ('Šta da ti rečem…', 'Что тебе сказать…')],
+    ex=[
+    dict(new('reći', 'сказать', ['сказать', 'слышать', 'писать'], label='Новый глагол'),
+         explanation=RECI),
+    *TENSES_RECI,
+    say('Juče sam rekla da, a danas kažem ne.', 'Вчера я сказала «да», а сегодня говорю «нет».'),
+    phrase('Šta si rekao?', 'Что ты сказал?', ['Что ты сказал?', 'Что ты скажешь?', 'Что ты делал?']),
+    pick('Она сказала. — Ona je ___.', ['rekla', 'rekao', 'reći'], 'rekla',
+         explanation='Ona — женский род: rekla. Он — rekao.', label='Вставь слово'),
+    phrase('Reći ću ti sjutra.', 'Скажу тебе завтра.',
+           ['Скажу тебе завтра.', 'Я сказала тебе вчера.', 'Приходи ко мне завтра.']),
+    pick('— Šta je rekla ajkula?\n— Rekla je da nije gladna.\n\nЧто сказала акула?',
+         ['Что она не голодна.', 'Что она голодна.', 'Что она хочет пить.'], 'Что она не голодна.',
+         explanation='Rekla je da… — сказала, что…: da здесь — «что», как Nisam znala da si ovdje.',
+         label='Мини-диалог'),
+    dict(new('Šta da ti rečem…', 'Что тебе сказать…',
+             ['Что тебе сказать…', 'Что ты сказал?', 'Скажу тебе завтра.'], label='Новое выражение'),
+         explanation=RECEM),
+    dict(pairs(('kuvati', 'kuvao'), ('igrati', 'igrao'), ('pisati', 'pisao'), ('govoriti', 'govorio'),
+               ('reći', 'rekao')), explanation=PROSLO),
+    tenses('kuvati', 'варить', 'ja', 'kuvam', 'kuvao', 'čorbu za krokodila',
+           ['Сегодня я варю похлёбку для крокодила.', 'Вчера я варил похлёбку для крокодила.',
+            'Завтра я буду варить похлёбку для крокодила.'],
+           ['kuvala', 'si', 'ćeš', 'kuvaš'], 'za krokodila — для крокодила, как za djeda.'),
+    pick('Ajkula je kuvala supu od krompira.',
+         ['Акула варила суп из картошки.', 'Акула варит суп из картошки.', 'Акула будет варить суп из рыбы.'],
+         'Акула варила суп из картошки.',
+         explanation='ajkula — она, значит kuvala. od krompira — из картошки, как čorba od kornjače.',
+         label='Выбери перевод'),
+    tenses('igrati', 'играть', 'mi', 'igramo', 'igrali', 'sa kravom',
+           ['Сегодня мы играем с коровой.', 'Вчера мы играли с коровой.', 'Завтра мы будем играть с коровой.'],
+           ['igram', 'ste', 'ćete', 'igrao'], 'sa kravom — с коровой, как sa sestrom.'),
+    dict(rubank('Krava je igrala kompjuterske igre sa medvjedom.',
+                'Корова играла в компьютерные игры с медведем.',
+                ['медведем', 'с', 'игры', 'компьютерные', 'в', 'играла', 'корова']),
+         also=['Корова играла с медведем в компьютерные игры.'],
+         explanation='krava — она: igrala. sa medvjedom — с медведем, как sa prijateljem.'),
+    gaps('govoriti — говорить · mače', [
+        ('Danas mače ___ ruski.', ['govori'], 'Сегодня котёнок говорит по-русски.'),
+        ('Juče ___ mače ___ ruski.', ['je', 'govorilo'], 'Вчера котёнок говорил по-русски.'),
+        ('Sjutra ___ mače ___ ruski.', ['će', 'govoriti'], 'Завтра котёнок будет говорить по-русски.'),
+    ], ['govorio', 'su', 'ćemo', 'govore'],
+         'mače — среднего рода, значит govorilo, а не govorio. je и će встают сразу за juče и '
+         'sjutra, mače — после них.'),
+    dict(bank('Кошка говорила по-русски.', 'Mačka je govorila ruski.', ['ruski', 'govorila', 'je', 'mačka']),
+         explanation='mačka — она: govorila.'),
+    tenses('pisati', 'писать', 'ti', 'pišeš', 'pisala', 'pismo ajkuli',
+           ['Сегодня ты пишешь письмо акуле.', 'Вчера ты писала письмо акуле.',
+            'Завтра ты будешь писать письмо акуле.'],
+           ['pisao', 'sam', 'ću', 'piše'],
+           's → š только сейчас (pišem); в прошедшем и будущем s остаётся: pisala, pisati. '
+           'ajkuli — акуле, как svinji.'),
+    dict(pairs(('ja ću kuvati', 'kuvaću'), ('ja ću igrati', 'igraću'), ('ja ću pisati', 'pisaću'),
+               ('ja ću govoriti', 'govoriću')), explanation=SLITNO),
+    dict(earbank('Pisaću pismo bratu Vuku.', 'Я буду писать письмо брату Волку.',
+                 ['Vuku', 'bratu', 'pismo', 'pisaću']),
+         explanation='bratu Vuku — брату Волку: кому — -u у обоих слов, как konju. Vuk — и «волк», и '
+                     'обычное мужское имя: так звали, например, Вука Караджича.'),
+    pick('Kad ___ u Bar, odmah ću ići na šetalište.', ['dođem', 'doći', 'došla'], 'dođem',
+         explanation=KAD_DODJEM, label='Повторение'),
+    say('Šta si rekao? Reći ću ti sjutra.', 'Что ты сказал? Скажу тебе завтра.'),
+    echo('Krava je igrala sa medvjedom.', 'Корова играла с медведем.'),
+]))
+
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу
 # после «нового слова» повторял его. Номера остальных заданий не сдвигаются —
 # id задания это ключ карточки SRS, и по урокам 1–2 прогресс уже есть.
