@@ -4707,7 +4707,7 @@ L.append(dict(id='k59', title='Ići po vremenima. Šetalište u Baru', section=S
 # kazati, урок 28), а прошедшее и будущее — от reći. Потом kuvati, igrati, govoriti,
 # pisati в прошедшем и будущем, по таблице на глагол, и слитное будущее. Выражение
 # «Šta da ti rečem…» — единственное место, где звучит rečem (после da).
-RECI = ('reći — сказать. Сейчас говорят kažem (от kazati), а прошедшее и будущее — от reći: '
+RECI = ('reći — сказать. В настоящем времени говорят kažem (от kazati), а прошедшее и будущее — от reći: '
         'rekao, rekla, reklo, rekli; reći ću. reći — на -ći, поэтому всегда раздельно: reći ću.')
 RECI_NOTE = 'Сейчас — kažem, от kazati. Прошедшее — rekao, rekla, reklo, rekli; будущее — reći ću, раздельно.'
 TENSES_RECI = [
@@ -4800,6 +4800,100 @@ L.append(dict(id='k60', title='Reći po vremenima. Šta je rekla ajkula?', secti
          explanation=KAD_DODJEM, label='Повторение'),
     say('Šta si rekao? Reći ću ti sjutra.', 'Что ты сказал? Скажу тебе завтра.'),
     echo('Krava je igrala sa medvjedom.', 'Корова играла с медведем.'),
+]))
+
+# --- Урок 61 ---
+# «Было / не было / будет»: ima → bilo je → biće, nema → nije bilo → neće biti; рядом
+# gužva, которая сама подлежащее (bila je gužva). Потом «кому как»: hladno mi je →
+# bilo mi je hladno → biće mi hladno. В конце фраза Кати «Не бросайте мусор».
+BILO = ('Есть — ima, было — bilo je, будет — će biti. bilo всегда среднего рода, сколько бы '
+        'чего ни было: bilo je vode, bilo je pet mačaka. vode — «воды», чего? как čaša vode.')
+STRUJA = 'struja — электричество, ток. «Свет» дома — тоже struja: Nema struje — нет света. Женский род.'
+NIJE_BILO = ('Нет — nema, не было — nije bilo, не будет — neće biti. После них, как по-русски, '
+             '«чего?»: struja → nema struje, voda → nema vode.')
+GUZVA = ('gužva — толпа, давка, многолюдно; на дороге — пробка. Женский род: velika gužva. '
+         'U gradu je gužva — в городе многолюдно.')
+GUZVA_BILA = ('Здесь gužva — сама «она», поэтому bila je gužva. А когда «чего-то было» — bilo: '
+              'bilo je ljudi.')
+BILO_MI = ('hladno mi je → bilo mi je hladno → biće mi hladno. mi встаёт перед je, но после će: '
+           'juče mi je bilo, sjutra će mi biti.')
+LIJEPO = ('lijepo — и «красиво», и «хорошо, приятно»: Bilo nam je lijepo na moru — нам было хорошо '
+          'на море. Так говорят после отпуска, праздника, встречи.')
+SMECE = 'smeće — мусор, среднего рода. Мусорный бак — kanta za smeće.'
+NE_BACAJTE = ('bacati — бросать (урок 39: Nemoj da bacaš tegle!). Ne bacajte! — на «вы» или многим, '
+              'так пишут на табличках у моря и в парке. На «ты» — Ne bacaj! или мягче Nemoj da bacaš.')
+L.append(dict(id='k61', title='Nije bilo struje. Ne bacajte smeće!', section=S4, words=[
+    ('struja', 'электричество, свет'), ('gužva', 'толпа, давка; пробка'), ('smeće', 'мусор'),
+    ('bacati', 'бросать')],
+    ex=[
+    gaps('ima — есть · voda', [
+        ('Danas ___ vode.', ['ima'], 'Сегодня есть вода.'),
+        ('Juče ___ ___ vode.', ['je', 'bilo'], 'Вчера была вода.'),
+        ('Sjutra ___ ___ vode.', ['će', 'biti'], 'Завтра будет вода.'),
+    ], ['bila', 'su', 'ćeš', 'imaju'], BILO),
+    dict(new('struja', 'электричество, свет', ['электричество, свет', 'вода', 'ветер']),
+         explanation=STRUJA),
+    gaps('nema — нет · struja', [
+        ('Danas ___ struje.', ['nema'], 'Сегодня нет света.'),
+        ('Juče ___ ___ struje.', ['nije', 'bilo'], 'Вчера не было света.'),
+        ('Sjutra ___ ___ struje.', ['neće', 'biti'], 'Завтра не будет света.'),
+    ], ['nisu', 'bila', 'nemam', 'nećeš'], NIJE_BILO),
+    phrase('Juče nije bilo struje.', 'Вчера не было света.',
+           ['Вчера не было света.', 'Вчера не было воды.', 'Завтра не будет света.']),
+    pick('Завтра не будет воды. — Sjutra ___ biti vode.', ['neće', 'nije', 'nema'], 'neće',
+         explanation=NIJE_BILO, label='Вставь слово'),
+    pick('Вчера было много людей. — Juče ___ puno ljudi.', ['je bilo', 'su bili', 'je bila'], 'je bilo',
+         explanation='Всегда bilo je, хотя людей много: juče je bilo puno ljudi.', label='Вставь слово'),
+    dict(new('gužva', 'толпа, давка; пробка', ['толпа, давка; пробка', 'тишина', 'очередь']),
+         explanation=GUZVA),
+    gaps('gužva — многолюдно', [
+        ('Danas ___ gužva u gradu.', ['je'], 'Сегодня в городе многолюдно.'),
+        ('Juče ___ ___ gužva u gradu.', ['je', 'bila'], 'Вчера в городе было многолюдно.'),
+        ('Sjutra ___ ___ gužva u gradu.', ['će', 'biti'], 'Завтра в городе будет многолюдно.'),
+    ], ['bilo', 'su', 'ćeš', 'ima'], GUZVA_BILA),
+    pairs(('есть', 'ima'), ('нет', 'nema'), ('было', 'bilo je'), ('не было', 'nije bilo'),
+          ('будет', 'biće'), ('не будет', 'neće biti')),
+    dict(bank('Вчера не было света.', 'Juče nije bilo struje.', ['struje', 'bilo', 'nije', 'juče']),
+         explanation=NIJE_BILO),
+    dict(rubank('Sjutra će biti gužva na moru.', 'Завтра на море будет многолюдно.',
+                ['многолюдно', 'будет', 'море', 'на', 'завтра']),
+         also=['Завтра будет многолюдно на море.', 'На море завтра будет многолюдно.'],
+         explanation=GUZVA_BILA),
+    pick('— Ima li hljeba?\n— Nema. Juče je bilo, a danas nema. Sjutra će biti.\n\nКогда будет хлеб?',
+         ['Завтра.', 'Сегодня.', 'Вчера.'], 'Завтра.',
+         explanation='hljeba — «хлеба», чего? Ima li hljeba? — Есть ли хлеб?', label='Мини-диалог'),
+    dict(phrase('Bilo mi je hladno.', 'Мне было холодно.',
+                ['Мне было холодно.', 'Мне холодно.', 'Мне будет холодно.']), explanation=BILO_MI),
+    gaps('hladno mi je — мне холодно', [
+        ('Danas mi ___ hladno.', ['je'], 'Сегодня мне холодно.'),
+        ('Juče mi ___ ___ hladno.', ['je', 'bilo'], 'Вчера мне было холодно.'),
+        ('Sjutra ___ mi ___ hladno.', ['će', 'biti'], 'Завтра мне будет холодно.'),
+    ], ['sam', 'bila', 'ću', 'ćeš'],
+         'Кому холодно — mi, ti, mu, joj, nam, im. В прошедшем mi перед je: juče mi je bilo; '
+         'в будущем после će: sjutra će mi biti.'),
+    dict(phrase('Bilo nam je lijepo.', 'Нам было хорошо.',
+                ['Нам было хорошо.', 'Нам было красиво.', 'Нам будет хорошо.']), explanation=LIJEPO),
+    pick('Ей было холодно. — Bilo ___ je hladno.', ['joj', 'mu', 'mi'], 'joj',
+         explanation='Ей — joj: bilo joj je hladno.', label='Вставь слово'),
+    pick('Завтра тебе будет тепло. — Sjutra ___ ti biti toplo.', ['će', 'ćeš', 'je'], 'će',
+         explanation='ti — тебе; će перед ti, как sjutra će mi biti.', label='Вставь слово'),
+    dict(bank('Нам было хорошо на море.', 'Bilo nam je lijepo na moru.',
+              ['moru', 'na', 'lijepo', 'je', 'nam', 'bilo']), explanation=LIJEPO),
+    dict(new('smeće', 'мусор', ['мусор', 'пакет', 'банка']), explanation=SMECE),
+    dict(phrase('Ne bacajte smeće!', 'Не бросайте мусор!',
+                ['Не бросайте мусор!', 'Не выбрасывай банки!', 'Не трогайте мусор!']),
+         explanation=NE_BACAJTE),
+    pick('На пляже кто-то бросает обёртку на песок. Что написано на табличке?',
+         ['Ne bacajte smeće!', 'Nemoj da bacaš tegle!', 'Nema struje.'], 'Ne bacajte smeće!',
+         explanation=NE_BACAJTE, label='Выбери фразу'),
+    dict(bank('Не бросайте мусор!', 'Ne bacajte smeće!', ['smeće', 'bacajte', 'ne']),
+         explanation=NE_BACAJTE),
+    pick('Šta da ti ___…', ['rečem', 'reći', 'kažeš'], 'rečem',
+         explanation='Šta da ti rečem… — «что тебе сказать…»: после da — rečem.', label='Повторение'),
+    say('Juče nije bilo struje, a sjutra neće biti vode.',
+        'Вчера не было света, а завтра не будет воды.'),
+    say('Bilo nam je lijepo na moru.', 'Нам было хорошо на море.'),
+    echo('Ne bacajte smeće!', 'Не бросайте мусор!'),
 ]))
 
 # Убраны по жалобам Кати 170, 171 (30.09.2026): вопрос того же слова сразу

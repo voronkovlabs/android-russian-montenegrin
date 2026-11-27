@@ -1,0 +1,469 @@
+{
+  "id": "k61",
+  "title": "Nije bilo struje. Ne bacajte smeće!",
+  "exercises": [
+    {
+      "id": "k61e01",
+      "type": "gaps",
+      "title": "ima — есть · voda",
+      "rows": [
+        {
+          "text": "Danas ___ vode.",
+          "answers": [
+            "ima"
+          ],
+          "ru": "Сегодня есть вода."
+        },
+        {
+          "text": "Juče ___ ___ vode.",
+          "answers": [
+            "je",
+            "bilo"
+          ],
+          "ru": "Вчера была вода."
+        },
+        {
+          "text": "Sjutra ___ ___ vode.",
+          "answers": [
+            "će",
+            "biti"
+          ],
+          "ru": "Завтра будет вода."
+        }
+      ],
+      "decoys": [
+        "bila",
+        "su",
+        "ćeš",
+        "imaju"
+      ],
+      "explanation": "Есть — ima, было — bilo je, будет — će biti. bilo всегда среднего рода, сколько бы чего ни было: bilo je vode, bilo je pet mačaka. vode — «воды», чего? как čaša vode."
+    },
+    {
+      "id": "k61e02",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "struja",
+      "hint": "struja — электричество, свет",
+      "options": [
+        "электричество, свет",
+        "вода",
+        "ветер"
+      ],
+      "answer": "электричество, свет",
+      "explanation": "struja — электричество, ток. «Свет» дома — тоже struja: Nema struje — нет света. Женский род.",
+      "example": "Ima li struje kod babe? — Есть ли свет у бабушки?"
+    },
+    {
+      "id": "k61e03",
+      "type": "gaps",
+      "title": "nema — нет · struja",
+      "rows": [
+        {
+          "text": "Danas ___ struje.",
+          "answers": [
+            "nema"
+          ],
+          "ru": "Сегодня нет света."
+        },
+        {
+          "text": "Juče ___ ___ struje.",
+          "answers": [
+            "nije",
+            "bilo"
+          ],
+          "ru": "Вчера не было света."
+        },
+        {
+          "text": "Sjutra ___ ___ struje.",
+          "answers": [
+            "neće",
+            "biti"
+          ],
+          "ru": "Завтра не будет света."
+        }
+      ],
+      "decoys": [
+        "nisu",
+        "bila",
+        "nemam",
+        "nećeš"
+      ],
+      "explanation": "Нет — nema, не было — nije bilo, не будет — neće biti. После них, как по-русски, «чего?»: struja → nema struje, voda → nema vode."
+    },
+    {
+      "id": "k61e04",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Juče nije bilo struje.",
+      "hint": "Juče nije bilo struje. — Вчера не было света.",
+      "options": [
+        "Вчера не было света.",
+        "Вчера не было воды.",
+        "Завтра не будет света."
+      ],
+      "answer": "Вчера не было света."
+    },
+    {
+      "id": "k61e05",
+      "type": "choice",
+      "prompt": "Завтра не будет воды. — Sjutra ___ biti vode.",
+      "options": [
+        "neće",
+        "nije",
+        "nema"
+      ],
+      "answer": "neće",
+      "explanation": "Нет — nema, не было — nije bilo, не будет — neće biti. После них, как по-русски, «чего?»: struja → nema struje, voda → nema vode.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k61e06",
+      "type": "choice",
+      "prompt": "Вчера было много людей. — Juče ___ puno ljudi.",
+      "options": [
+        "je bilo",
+        "su bili",
+        "je bila"
+      ],
+      "answer": "je bilo",
+      "explanation": "Всегда bilo je, хотя людей много: juče je bilo puno ljudi.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k61e07",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "gužva",
+      "hint": "gužva — толпа, давка; пробка",
+      "options": [
+        "толпа, давка; пробка",
+        "тишина",
+        "очередь"
+      ],
+      "answer": "толпа, давка; пробка",
+      "explanation": "gužva — толпа, давка, многолюдно; на дороге — пробка. Женский род: velika gužva. U gradu je gužva — в городе многолюдно.",
+      "example": "U prodavnici je gužva. — В магазине многолюдно."
+    },
+    {
+      "id": "k61e08",
+      "type": "gaps",
+      "title": "gužva — многолюдно",
+      "rows": [
+        {
+          "text": "Danas ___ gužva u gradu.",
+          "answers": [
+            "je"
+          ],
+          "ru": "Сегодня в городе многолюдно."
+        },
+        {
+          "text": "Juče ___ ___ gužva u gradu.",
+          "answers": [
+            "je",
+            "bila"
+          ],
+          "ru": "Вчера в городе было многолюдно."
+        },
+        {
+          "text": "Sjutra ___ ___ gužva u gradu.",
+          "answers": [
+            "će",
+            "biti"
+          ],
+          "ru": "Завтра в городе будет многолюдно."
+        }
+      ],
+      "decoys": [
+        "bilo",
+        "su",
+        "ćeš",
+        "ima"
+      ],
+      "explanation": "Здесь gužva — сама «она», поэтому bila je gužva. А когда «чего-то было» — bilo: bilo je ljudi."
+    },
+    {
+      "id": "k61e09",
+      "type": "match",
+      "pairs": [
+        {
+          "ru": "есть",
+          "me": "ima"
+        },
+        {
+          "ru": "нет",
+          "me": "nema"
+        },
+        {
+          "ru": "было",
+          "me": "bilo je"
+        },
+        {
+          "ru": "не было",
+          "me": "nije bilo"
+        },
+        {
+          "ru": "будет",
+          "me": "biće"
+        },
+        {
+          "ru": "не будет",
+          "me": "neće biti"
+        }
+      ]
+    },
+    {
+      "id": "k61e10",
+      "type": "word_bank",
+      "prompt": "Вчера не было света.",
+      "answer": "Juče nije bilo struje.",
+      "bank": [
+        "struje",
+        "bilo",
+        "nije",
+        "juče"
+      ],
+      "explanation": "Нет — nema, не было — nije bilo, не будет — neće biti. После них, как по-русски, «чего?»: struja → nema struje, voda → nema vode."
+    },
+    {
+      "id": "k61e11",
+      "type": "word_bank",
+      "prompt": "Sjutra će biti gužva na moru.",
+      "answer": "Завтра на море будет многолюдно.",
+      "bank": [
+        "многолюдно",
+        "будет",
+        "море",
+        "на",
+        "завтра"
+      ],
+      "also": [
+        "Завтра будет многолюдно на море.",
+        "На море завтра будет многолюдно."
+      ],
+      "explanation": "Здесь gužva — сама «она», поэтому bila je gužva. А когда «чего-то было» — bilo: bilo je ljudi."
+    },
+    {
+      "id": "k61e12",
+      "type": "choice",
+      "prompt": "— Ima li hljeba?\n— Nema. Juče je bilo, a danas nema. Sjutra će biti.\n\nКогда будет хлеб?",
+      "options": [
+        "Завтра.",
+        "Сегодня.",
+        "Вчера."
+      ],
+      "answer": "Завтра.",
+      "explanation": "hljeba — «хлеба», чего? Ima li hljeba? — Есть ли хлеб?",
+      "label": "Мини-диалог"
+    },
+    {
+      "id": "k61e13",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Bilo mi je hladno.",
+      "hint": "Bilo mi je hladno. — Мне было холодно.",
+      "options": [
+        "Мне было холодно.",
+        "Мне холодно.",
+        "Мне будет холодно."
+      ],
+      "answer": "Мне было холодно.",
+      "explanation": "hladno mi je → bilo mi je hladno → biće mi hladno. mi встаёт перед je, но после će: juče mi je bilo, sjutra će mi biti."
+    },
+    {
+      "id": "k61e14",
+      "type": "gaps",
+      "title": "hladno mi je — мне холодно",
+      "rows": [
+        {
+          "text": "Danas mi ___ hladno.",
+          "answers": [
+            "je"
+          ],
+          "ru": "Сегодня мне холодно."
+        },
+        {
+          "text": "Juče mi ___ ___ hladno.",
+          "answers": [
+            "je",
+            "bilo"
+          ],
+          "ru": "Вчера мне было холодно."
+        },
+        {
+          "text": "Sjutra ___ mi ___ hladno.",
+          "answers": [
+            "će",
+            "biti"
+          ],
+          "ru": "Завтра мне будет холодно."
+        }
+      ],
+      "decoys": [
+        "sam",
+        "bila",
+        "ću",
+        "ćeš"
+      ],
+      "explanation": "Кому холодно — mi, ti, mu, joj, nam, im. В прошедшем mi перед je: juče mi je bilo; в будущем после će: sjutra će mi biti."
+    },
+    {
+      "id": "k61e15",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Bilo nam je lijepo.",
+      "hint": "Bilo nam je lijepo. — Нам было хорошо.",
+      "options": [
+        "Нам было хорошо.",
+        "Нам было красиво.",
+        "Нам будет хорошо."
+      ],
+      "answer": "Нам было хорошо.",
+      "explanation": "lijepo — и «красиво», и «хорошо, приятно»: Bilo nam je lijepo na moru — нам было хорошо на море. Так говорят после отпуска, праздника, встречи."
+    },
+    {
+      "id": "k61e16",
+      "type": "choice",
+      "prompt": "Ей было холодно. — Bilo ___ je hladno.",
+      "options": [
+        "joj",
+        "mu",
+        "mi"
+      ],
+      "answer": "joj",
+      "explanation": "Ей — joj: bilo joj je hladno.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k61e17",
+      "type": "choice",
+      "prompt": "Завтра тебе будет тепло. — Sjutra ___ ti biti toplo.",
+      "options": [
+        "će",
+        "ćeš",
+        "je"
+      ],
+      "answer": "će",
+      "explanation": "ti — тебе; će перед ti, как sjutra će mi biti.",
+      "label": "Вставь слово"
+    },
+    {
+      "id": "k61e18",
+      "type": "word_bank",
+      "prompt": "Нам было хорошо на море.",
+      "answer": "Bilo nam je lijepo na moru.",
+      "bank": [
+        "moru",
+        "na",
+        "lijepo",
+        "je",
+        "nam",
+        "bilo"
+      ],
+      "explanation": "lijepo — и «красиво», и «хорошо, приятно»: Bilo nam je lijepo na moru — нам было хорошо на море. Так говорят после отпуска, праздника, встречи."
+    },
+    {
+      "id": "k61e19",
+      "type": "choice",
+      "label": "Новое слово",
+      "prompt": "smeće",
+      "hint": "smeće — мусор",
+      "options": [
+        "мусор",
+        "пакет",
+        "банка"
+      ],
+      "answer": "мусор",
+      "explanation": "smeće — мусор, среднего рода. Мусорный бак — kanta za smeće.",
+      "example": "Smeće je u kesi. — Мусор в пакете."
+    },
+    {
+      "id": "k61e20",
+      "type": "choice",
+      "label": "Новая фраза",
+      "prompt": "Ne bacajte smeće!",
+      "hint": "Ne bacajte smeće! — Не бросайте мусор!",
+      "options": [
+        "Не бросайте мусор!",
+        "Не выбрасывай банки!",
+        "Не трогайте мусор!"
+      ],
+      "answer": "Не бросайте мусор!",
+      "explanation": "bacati — бросать (урок 39: Nemoj da bacaš tegle!). Ne bacajte! — на «вы» или многим, так пишут на табличках у моря и в парке. На «ты» — Ne bacaj! или мягче Nemoj da bacaš."
+    },
+    {
+      "id": "k61e21",
+      "type": "choice",
+      "prompt": "На пляже кто-то бросает обёртку на песок. Что написано на табличке?",
+      "options": [
+        "Ne bacajte smeće!",
+        "Nemoj da bacaš tegle!",
+        "Nema struje."
+      ],
+      "answer": "Ne bacajte smeće!",
+      "explanation": "bacati — бросать (урок 39: Nemoj da bacaš tegle!). Ne bacajte! — на «вы» или многим, так пишут на табличках у моря и в парке. На «ты» — Ne bacaj! или мягче Nemoj da bacaš.",
+      "label": "Выбери фразу"
+    },
+    {
+      "id": "k61e22",
+      "type": "word_bank",
+      "prompt": "Не бросайте мусор!",
+      "answer": "Ne bacajte smeće!",
+      "bank": [
+        "smeće",
+        "bacajte",
+        "ne"
+      ],
+      "explanation": "bacati — бросать (урок 39: Nemoj da bacaš tegle!). Ne bacajte! — на «вы» или многим, так пишут на табличках у моря и в парке. На «ты» — Ne bacaj! или мягче Nemoj da bacaš."
+    },
+    {
+      "id": "k61e23",
+      "type": "choice",
+      "prompt": "Šta da ti ___…",
+      "options": [
+        "rečem",
+        "reći",
+        "kažeš"
+      ],
+      "answer": "rečem",
+      "explanation": "Šta da ti rečem… — «что тебе сказать…»: после da — rečem.",
+      "label": "Повторение"
+    },
+    {
+      "id": "k61e24",
+      "type": "speaking",
+      "phrase": "Juče nije bilo struje, a sjutra neće biti vode.",
+      "translation": "Вчера не было света, а завтра не будет воды."
+    },
+    {
+      "id": "k61e25",
+      "type": "speaking",
+      "phrase": "Bilo nam je lijepo na moru.",
+      "translation": "Нам было хорошо на море."
+    },
+    {
+      "id": "k61e26",
+      "type": "repeat",
+      "phrase": "Ne bacajte smeće!",
+      "translation": "Не бросайте мусор!"
+    }
+  ],
+  "words": [
+    {
+      "me": "struja",
+      "ru": "электричество, свет"
+    },
+    {
+      "me": "gužva",
+      "ru": "толпа, давка; пробка"
+    },
+    {
+      "me": "smeće",
+      "ru": "мусор"
+    },
+    {
+      "me": "bacati",
+      "ru": "бросать"
+    }
+  ]
+}
